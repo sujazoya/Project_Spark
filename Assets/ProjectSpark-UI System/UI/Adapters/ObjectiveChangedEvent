@@ -1,0 +1,21 @@
+namespace ProjectSpark.UI.Events
+{
+    public readonly struct ObjectiveChangedEvent
+    {
+        public readonly string ObjectiveId;
+
+        public readonly float Progress;
+
+        public readonly bool Completed;
+
+        public ObjectiveChangedEvent(
+            string objectiveId,
+            float progress,
+            bool completed)
+        {
+            ObjectiveId = objectiveId;
+            Progress = progress;
+            Completed = completed;
+        }
+    }
+}

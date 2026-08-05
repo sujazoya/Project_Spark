@@ -1,0 +1,458 @@
+Shader "ProjectSpark/UI/TMP Advanced FX"
+{
+    Properties
+    {
+        // ------------------------------------------------------------
+        // TMP
+        // ------------------------------------------------------------
+
+        [PerRendererData] _MainTex ("Font Atlas", 2D) = "white" {}
+        _FaceColor ("Face Color", Color) = (1,1,1,1)
+
+        // ------------------------------------------------------------
+        // OUTLINE
+        // ------------------------------------------------------------
+
+        _OutlineColor ("Outline Color", Color) = (0,0,0,1)
+        _OutlineWidth ("Outline Width", Range(0,1)) = 0.1
+
+        // ------------------------------------------------------------
+        // GRADIENT
+        // ------------------------------------------------------------
+
+        [Toggle] _UseGradient ("Enable Gradient", Float) = 0
+
+        _GradientTop ("Gradient Top", Color) = (1,1,1,1)
+        _GradientBottom ("Gradient Bottom", Color) = (0.2,0.8,1,1)
+
+        _GradientOffset ("Gradient Offset", Range(-1,1)) = 0
+        _GradientScale ("Gradient Scale", Range(0.1,5)) = 1
+
+        // ------------------------------------------------------------
+        // EMISSION
+        // ------------------------------------------------------------
+
+        [Toggle] _UseEmission ("Enable Emission", Float) = 0
+
+        _EmissionColor ("Emission Color", Color) = (0,1,1,1)
+        _EmissionStrength ("Emission Strength", Range(0,10)) = 1
+
+        // ------------------------------------------------------------
+        // EMISSION PULSE
+        // ------------------------------------------------------------
+
+        [Toggle] _EmissionPulse ("Emission Pulse", Float) = 0
+
+        _PulseSpeed ("Pulse Speed", Range(0,10)) = 2
+        _PulseMin ("Pulse Minimum", Range(0,1)) = 0.5
+        _PulseMax ("Pulse Maximum", Range(0,2)) = 1
+
+        // ------------------------------------------------------------
+        // ANIMATED GRADIENT
+        // ------------------------------------------------------------
+
+        [Toggle] _AnimatedGradient ("Animated Gradient", Float) = 0
+
+        _GradientSpeed ("Gradient Speed", Range(-5,5)) = 1
+
+        // ------------------------------------------------------------
+        // FLICKER
+        // ------------------------------------------------------------
+
+        [Toggle] _UseFlicker ("Enable Flicker", Float) = 0
+
+        _FlickerSpeed ("Flicker Speed", Range(0,30)) = 10
+        _FlickerAmount ("Flicker Amount", Range(0,1)) = 0.1
+
+        // ------------------------------------------------------------
+        // STENCIL
+        // ------------------------------------------------------------
+
+        _StencilComp ("Stencil Comparison", Float) = 8
+        _Stencil ("Stencil ID", Float) = 0
+        _StencilOp ("Stencil Operation", Float) = 0
+        _StencilWriteMask ("Stencil Write Mask", Float) = 255
+        _StencilReadMask ("Stencil Read Mask", Float) = 255
+
+        // ------------------------------------------------------------
+        // COLOR MASK
+        // ------------------------------------------------------------
+
+        _ColorMask ("Color Mask", Float) = 15
+    }
+
+    SubShader
+    {
+        Tags
+        {
+            "Queue"="Transparent"
+            "IgnoreProjector"="True"
+            "RenderType"="Transparent"
+            "PreviewType"="Plane"
+        }
+
+        Stencil
+        {
+            Ref [_Stencil]
+            Comp [_StencilComp]
+            Pass [_StencilOp]
+            ReadMask [_StencilReadMask]
+            WriteMask [_StencilWriteMask]
+        }
+
+        Cull Off
+        Lighting Off
+        ZWrite Off
+        ZTest [unity_GUIZTestMode]
+
+        Blend SrcAlpha OneMinusSrcAlpha
+
+        ColorMask [_ColorMask]
+
+        Pass
+        {
+            CGPROGRAM
+
+            #pragma vertex vert
+            #pragma fragment frag
+
+            #include "UnityCG.cginc"
+            #include "UnityUI.cginc"
+
+            // --------------------------------------------------------
+            // STRUCTS
+            // --------------------------------------------------------
+
+            struct appdata_t
+            {
+                float4 vertex : POSITION;
+                float4 color : COLOR;
+                float2 uv : TEXCOORD0;
+            };
+
+            struct v2f
+            {
+                float4 vertex : SV_POSITION;
+                float4 color : COLOR;
+                float2 uv : TEXCOORD0;
+                float4 worldPosition : TEXCOORD1;
+            };
+
+            // --------------------------------------------------------
+            // TEXTURE
+            // --------------------------------------------------------
+
+            sampler2D _MainTex;
+
+            // --------------------------------------------------------
+            // COLORS
+            // --------------------------------------------------------
+
+            float4 _FaceColor;
+
+            float4 _OutlineColor;
+            float _OutlineWidth;
+
+            float4 _GradientTop;
+            float4 _GradientBottom;
+
+            float _GradientOffset;
+            float _GradientScale;
+
+            // --------------------------------------------------------
+            // EMISSION
+            // --------------------------------------------------------
+
+            float4 _EmissionColor;
+            float _EmissionStrength;
+
+            float _UseEmission;
+
+            // --------------------------------------------------------
+            // ANIMATION
+            // --------------------------------------------------------
+
+            float _UseGradient;
+
+            float _EmissionPulse;
+            float _PulseSpeed;
+            float _PulseMin;
+            float _PulseMax;
+
+            float _AnimatedGradient;
+            float _GradientSpeed;
+
+            float _UseFlicker;
+            float _FlickerSpeed;
+            float _FlickerAmount;
+
+            // --------------------------------------------------------
+            // UI CLIPPING
+            // --------------------------------------------------------
+
+            float4 _ClipRect;
+
+            // --------------------------------------------------------
+            // VERTEX
+            // --------------------------------------------------------
+
+            v2f vert(appdata_t v)
+            {
+                v2f o;
+
+                o.vertex = UnityObjectToClipPos(v.vertex);
+
+                o.uv = v.uv;
+
+                o.color = v.color;
+
+                o.worldPosition = v.vertex;
+
+                return o;
+            }
+
+            // --------------------------------------------------------
+            // SIMPLE HASH
+            // Used for flicker animation
+            // --------------------------------------------------------
+
+            float hash21(float2 p)
+            {
+                p = frac(p * float2(123.34, 456.21));
+
+                p += dot(p, p + 45.32);
+
+                return frac(p.x * p.y);
+            }
+
+            // --------------------------------------------------------
+            // FRAGMENT
+            // --------------------------------------------------------
+
+            fixed4 frag(v2f i) : SV_Target
+            {
+                // ----------------------------------------------------
+                // SAMPLE TMP FONT
+                // ----------------------------------------------------
+
+                float atlas = tex2D(_MainTex, i.uv).a;
+
+                // ----------------------------------------------------
+                // GRADIENT
+                // ----------------------------------------------------
+
+                float gradientPosition =
+                    saturate(
+                        (i.uv.y + _GradientOffset)
+                        * _GradientScale
+                    );
+
+                // Animated gradient
+
+                if (_AnimatedGradient > 0.5)
+                {
+                    gradientPosition =
+                        saturate(
+                            gradientPosition
+                            + sin(_Time.y * _GradientSpeed) * 0.5
+                        );
+                }
+
+                float4 gradientColor =
+                    lerp(
+                        _GradientBottom,
+                        _GradientTop,
+                        gradientPosition
+                    );
+
+                // ----------------------------------------------------
+                // FACE COLOR
+                // ----------------------------------------------------
+
+                float4 faceColor =
+                    lerp(
+                        _FaceColor,
+                        gradientColor,
+                        _UseGradient
+                    );
+
+                // TMP vertex color
+
+                faceColor *= i.color;
+
+                // ----------------------------------------------------
+                // OUTLINE
+                // ----------------------------------------------------
+
+                float2 pixelSize =
+                    float2(
+                        1.0 / 1024.0,
+                        1.0 / 1024.0
+                    );
+
+                float outline =
+                    0;
+
+                outline +=
+                    tex2D(
+                        _MainTex,
+                        i.uv + float2(_OutlineWidth, 0)
+                        * pixelSize
+                    ).a;
+
+                outline +=
+                    tex2D(
+                        _MainTex,
+                        i.uv - float2(_OutlineWidth, 0)
+                        * pixelSize
+                    ).a;
+
+                outline +=
+                    tex2D(
+                        _MainTex,
+                        i.uv + float2(0, _OutlineWidth)
+                        * pixelSize
+                    ).a;
+
+                outline +=
+                    tex2D(
+                        _MainTex,
+                        i.uv - float2(0, _OutlineWidth)
+                        * pixelSize
+                    ).a;
+
+                outline =
+                    saturate(
+                        outline * 0.25
+                    );
+
+                float outlineMask =
+                    saturate(
+                        outline - atlas
+                    );
+
+                // ----------------------------------------------------
+                // BASE TEXT
+                // ----------------------------------------------------
+
+                float4 finalColor =
+                    faceColor;
+
+                // ----------------------------------------------------
+                // OUTLINE
+                // ----------------------------------------------------
+
+                finalColor.rgb =
+                    lerp(
+                        _OutlineColor.rgb,
+                        finalColor.rgb,
+                        atlas
+                    );
+
+                float finalAlpha =
+                    max(
+                        atlas,
+                        outlineMask
+                    );
+
+                // ----------------------------------------------------
+                // EMISSION
+                // ----------------------------------------------------
+
+                float emissionPower =
+                    _EmissionStrength;
+
+                // Pulse animation
+
+                if (_EmissionPulse > 0.5)
+                {
+                    float pulse =
+                        sin(
+                            _Time.y
+                            * _PulseSpeed
+                        );
+
+                    pulse =
+                        pulse * 0.5 + 0.5;
+
+                    pulse =
+                        lerp(
+                            _PulseMin,
+                            _PulseMax,
+                            pulse
+                        );
+
+                    emissionPower *= pulse;
+                }
+
+                // ----------------------------------------------------
+                // FLICKER
+                // ----------------------------------------------------
+
+                if (_UseFlicker > 0.5)
+                {
+                    float flicker =
+                        sin(
+                            _Time.y
+                            * _FlickerSpeed
+                        );
+
+                    flicker =
+                        flicker * 0.5 + 0.5;
+
+                    emissionPower *=
+                        lerp(
+                            1.0 - _FlickerAmount,
+                            1.0,
+                            flicker
+                        );
+                }
+
+                // ----------------------------------------------------
+                // APPLY EMISSION
+                // ----------------------------------------------------
+
+                if (_UseEmission > 0.5)
+                {
+                    finalColor.rgb +=
+                        _EmissionColor.rgb
+                        * emissionPower
+                        * atlas;
+                }
+
+                // ----------------------------------------------------
+                // UI CLIPPING
+                // ----------------------------------------------------
+
+                float2 inside =
+                    step(
+                        _ClipRect.xy,
+                        i.worldPosition.xy
+                    )
+                    *
+                    step(
+                        i.worldPosition.xy,
+                        _ClipRect.zw
+                    );
+
+                finalAlpha *=
+                    inside.x
+                    * inside.y;
+
+                // ----------------------------------------------------
+                // OUTPUT
+                // ----------------------------------------------------
+
+                finalColor.a =
+                    finalAlpha
+                    * faceColor.a;
+
+                return finalColor;
+            }
+
+            ENDCG
+        }
+    }
+
+    FallBack "UI/Default"
+}

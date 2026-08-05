@@ -1,0 +1,138 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551aa9d96aeae0740954e8fa4c46b435, type: 3}
+  m_Name: Glitch_Test_Profile
+  m_EditorClassIdentifier: AAAUI.Runtime::AAAUI.UIAnimationProfile
+  openSequence:
+    rid: 9180381191707820108
+  closeSequence:
+    rid: 9180381191707820109
+  loopSequence:
+    rid: 9180381205122252878
+  defaultDuration: 1.5
+  defaultEase: 2
+  references:
+    version: 2
+    RefIds:
+    - rid: 9180381191707820108
+      type: {class: UIAnimationSequence, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        duration: 1.5
+        tracks:
+        - rid: 9180381205122252877
+        - rid: 9180381205122252880
+        - rid: 9180381218297086028
+        - rid: 9180381218297086050
+        events: []
+    - rid: 9180381191707820109
+      type: {class: UIAnimationSequence, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        duration: 0.25
+        tracks: []
+        events: []
+    - rid: 9180381205122252877
+      type: {class: ScaleTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0.04
+        duration: 1.03
+        ease: 2
+        targetIndex: 1
+        useSequenceDuration: 0
+        from: {x: 0.7, y: 0.7, z: 0.98}
+        to: {x: 1, y: 1, z: 1}
+    - rid: 9180381205122252878
+      type: {class: UIAnimationSequence, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        duration: 0.25
+        tracks:
+        - rid: 9180381205122252879
+        - rid: 9180381218297086029
+        - rid: 9180381218297086030
+        events: []
+    - rid: 9180381205122252879
+      type: {class: ShakeTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 0.7
+        ease: 2
+        targetIndex: 1
+        useSequenceDuration: 0
+        amplitude: {x: 2, y: 2, z: 0}
+        frequency: 20
+        seed: 17
+    - rid: 9180381205122252880
+      type: {class: DissolveTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 1.0699999
+        ease: 2
+        targetIndex: 1
+        useSequenceDuration: 0
+        property: _DissolveAmount
+        from: 0
+        to: 1
+    - rid: 9180381218297086028
+      type: {class: GlitchTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0.26
+        duration: 0.67
+        ease: 2
+        targetIndex: 1
+        useSequenceDuration: 0
+        amountFrom: 0.2
+        amountTo: 0.3
+        speedFrom: 0
+        speedTo: 1
+        bandScaleFrom: 1
+        bandScaleTo: 10
+        frequencyFrom: 0
+        frequencyTo: 1
+        bandWidthFrom: 0.1
+        bandWidthTo: 0.5
+    - rid: 9180381218297086029
+      type: {class: SlideTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 0.2
+        ease: 2
+        targetIndex: 0
+        useSequenceDuration: 0
+        from: {x: -32, y: 0, z: 0}
+        to: {x: 0, y: 0, z: 0}
+    - rid: 9180381218297086030
+      type: {class: SlideTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 0.6
+        ease: 2
+        targetIndex: 1
+        useSequenceDuration: 0
+        from: {x: -32, y: 0, z: 0}
+        to: {x: 0, y: 0, z: 0}
+    - rid: 9180381218297086050
+      type: {class: GlitchTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0.03
+        duration: 0.90000004
+        ease: 2
+        targetIndex: 0
+        useSequenceDuration: 0
+        amountFrom: 0.05
+        amountTo: 0.5
+        speedFrom: 0
+        speedTo: 1
+        bandScaleFrom: 1
+        bandScaleTo: 10
+        frequencyFrom: 0
+        frequencyTo: 1
+        bandWidthFrom: 0.1
+        bandWidthTo: 0.5

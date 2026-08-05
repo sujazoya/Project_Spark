@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551aa9d96aeae0740954e8fa4c46b435, type: 3}
+  m_Name: UIAnimationProfile_i
+  m_EditorClassIdentifier: AAAUI.Runtime::AAAUI.UIAnimationProfile
+  openSequence:
+    rid: 9180381218297086031
+  closeSequence:
+    rid: 9180381218297086032
+  loopSequence:
+    rid: 9180381218297086041
+  defaultDuration: 10
+  defaultEase: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 9180381218297086031
+      type: {class: UIAnimationSequence, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        duration: 10
+        tracks:
+        - rid: 9180381227010490455
+        - rid: 9180381227010490467
+        - rid: 9180381218297086048
+        - rid: 9180381227010490456
+        - rid: 9180381227010490468
+        - rid: 9180381227010490459
+        events: []
+    - rid: 9180381218297086032
+      type: {class: UIAnimationSequence, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        duration: 0.25
+        tracks: []
+        events: []
+    - rid: 9180381218297086041
+      type: {class: UIAnimationSequence, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        duration: 1.5
+        tracks:
+        - rid: 9180381218297086042
+        - rid: 9180381218297086049
+        events: []
+    - rid: 9180381218297086042
+      type: {class: DissolveTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 2
+        ease: 2
+        targetIndex: 1
+        useSequenceDuration: 0
+        property: _DissolveAmount
+        from: 0.3
+        to: 0.7
+    - rid: 9180381218297086048
+      type: {class: GlitchTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0.12
+        duration: 4.37
+        ease: 3
+        targetIndex: 0
+        useSequenceDuration: 0
+        amountFrom: 0
+        amountTo: 5
+        speedFrom: 0
+        speedTo: 10
+        bandScaleFrom: 1
+        bandScaleTo: 10
+        frequencyFrom: 0
+        frequencyTo: 1
+        bandWidthFrom: 0.1
+        bandWidthTo: 0.5
+    - rid: 9180381218297086049
+      type: {class: GlowTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 2
+        ease: 2
+        targetIndex: 0
+        useSequenceDuration: 0
+        property: _Glow
+        from: 0
+        to: 1
+    - rid: 9180381227010490455
+      type: {class: SlideTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 1.15
+        duration: 6.65
+        ease: 2
+        targetIndex: 0
+        useSequenceDuration: 0
+        from: {x: -600, y: 0, z: 0}
+        to: {x: 0, y: 0, z: 0}
+    - rid: 9180381227010490456
+      type: {class: DissolveTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 1.04
+        duration: 8.16
+        ease: 2
+        targetIndex: 0
+        useSequenceDuration: 0
+        property: _DissolveAmount
+        from: 0.2
+        to: 0.9
+    - rid: 9180381227010490459
+      type: {class: GlowTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 7.81
+        ease: 2
+        targetIndex: 0
+        useSequenceDuration: 0
+        property: _Glow
+        from: 0
+        to: 1
+    - rid: 9180381227010490467
+      type: {class: SlideTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 8.26
+        ease: 2
+        targetIndex: 0
+        useSequenceDuration: 0
+        from: {x: -32, y: 0, z: 0}
+        to: {x: 0, y: 0, z: 0}
+    - rid: 9180381227010490468
+      type: {class: DissolveTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 0.2
+        ease: 2
+        targetIndex: 0
+        useSequenceDuration: 0
+        property: _DissolveAmount
+        from: 0
+        to: 1

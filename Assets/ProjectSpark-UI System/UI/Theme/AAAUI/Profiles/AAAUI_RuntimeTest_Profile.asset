@@ -1,0 +1,132 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551aa9d96aeae0740954e8fa4c46b435, type: 3}
+  m_Name: AAAUI_RuntimeTest_Profile
+  m_EditorClassIdentifier: AAAUI.Runtime::AAAUI.UIAnimationProfile
+  openSequence:
+    rid: 4852932747975983180
+  closeSequence:
+    rid: 4852932747975983181
+  loopSequence:
+    rid: 4852932747975983188
+  defaultDuration: 0.2
+  defaultEase: 2
+  references:
+    version: 2
+    RefIds:
+    - rid: 4852932747975983180
+      type: {class: UIAnimationSequence, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        duration: 1.5
+        tracks:
+        - rid: 4852932747975983184
+        - rid: 4852932747975983185
+        - rid: 4852932747975983190
+    - rid: 4852932747975983181
+      type: {class: UIAnimationSequence, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        duration: 0.25
+        tracks:
+        - rid: 4852932747975983186
+        - rid: 4852932747975983187
+    - rid: 4852932747975983184
+      type: {class: ScaleTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 1.5
+        ease: 4
+        targetIndex: 0
+        from: {x: 0, y: 1, z: 1}
+        to: {x: 1, y: 1, z: 1}
+    - rid: 4852932747975983185
+      type: {class: SlideTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 1.5
+        ease: 2
+        targetIndex: 0
+        from: {x: -200, y: 0, z: 0}
+        to: {x: 0, y: 0, z: 0}
+    - rid: 4852932747975983186
+      type: {class: FadeTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 0.2
+        ease: 2
+        targetIndex: 0
+        from: 1
+        to: 0
+    - rid: 4852932747975983187
+      type: {class: ScaleTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 0.2
+        ease: 2
+        targetIndex: 0
+        from: {x: 1, y: 1, z: 1}
+        to: {x: 0.7, y: 0, z: 0}
+    - rid: 4852932747975983188
+      type: {class: UIAnimationSequence, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        duration: 2
+        tracks:
+        - rid: 4852932747975983191
+        - rid: 4852932747975983196
+        - rid: 4852932747975983197
+        - rid: 4852932747975983198
+    - rid: 4852932747975983190
+      type: {class: ShakeTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0.3
+        duration: 0.5
+        ease: 2
+        targetIndex: 0
+        amplitude: {x: 5, y: 5, z: 0}
+        frequency: 20
+        seed: 17
+    - rid: 4852932747975983191
+      type: {class: ShakeTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 0.2
+        ease: 2
+        targetIndex: 0
+        amplitude: {x: 10, y: 15, z: 0}
+        frequency: 20
+        seed: 17
+    - rid: 4852932747975983196
+      type: {class: ScaleTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 0.2
+        ease: 2
+        targetIndex: 0
+        from: {x: 0.98, y: 0.98, z: 0.98}
+        to: {x: 1, y: 1, z: 1}
+    - rid: 4852932747975983197
+      type: {class: ScaleTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 0.2
+        ease: 2
+        targetIndex: 0
+        from: {x: 0.98, y: 0.98, z: 0.98}
+        to: {x: 1, y: 1, z: 1}
+    - rid: 4852932747975983198
+      type: {class: SlideTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 2
+        ease: 2
+        targetIndex: 0
+        from: {x: -500, y: 0, z: 0}
+        to: {x: 0, y: 0, z: 0}

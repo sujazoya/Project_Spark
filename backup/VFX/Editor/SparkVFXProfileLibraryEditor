@@ -1,0 +1,807 @@
+#if UNITY_EDITOR
+
+using UnityEditor;
+using UnityEngine;
+
+namespace ProjectSpark.UI.VFX
+{
+    /// <summary>
+    /// Custom Unity Inspector for SparkVFXProfileLibrary.
+    ///
+    /// Provides:
+    /// - Organized built-in profile slots.
+    /// - Custom profile management.
+    /// - Validation.
+    /// - Cache rebuilding.
+    /// - Duplicate ID detection.
+    /// - Missing profile detection.
+    /// - Profile count information.
+    /// </summary>
+    [CustomEditor(typeof(SparkVFXProfileLibrary))]
+    public sealed class SparkVFXProfileLibraryEditor
+        : Editor
+    {
+        // ============================================================
+        // SERIALIZED PROPERTIES
+        // ============================================================
+
+        private SerializedProperty normalProperty;
+
+        private SerializedProperty hoverProperty;
+
+        private SerializedProperty pressedProperty;
+
+        private SerializedProperty selectedProperty;
+
+        private SerializedProperty targetProperty;
+
+        private SerializedProperty warningProperty;
+
+        private SerializedProperty disabledProperty;
+
+        private SerializedProperty focusedProperty;
+
+        private SerializedProperty customProfilesProperty;
+
+
+        // ============================================================
+        // STYLES
+        // ============================================================
+
+        private GUIStyle titleStyle;
+
+        private GUIStyle sectionStyle;
+
+        private GUIStyle successStyle;
+
+        private GUIStyle warningStyle;
+
+
+        // ============================================================
+        // ENABLE
+        // ============================================================
+
+        private void OnEnable()
+        {
+            normalProperty =
+                serializedObject.FindProperty(
+                    "normal"
+                );
+
+
+            hoverProperty =
+                serializedObject.FindProperty(
+                    "hover"
+                );
+
+
+            pressedProperty =
+                serializedObject.FindProperty(
+                    "pressed"
+                );
+
+
+            selectedProperty =
+                serializedObject.FindProperty(
+                    "selected"
+                );
+
+
+            targetProperty =
+                serializedObject.FindProperty(
+                    "target"
+                );
+
+
+            warningProperty =
+                serializedObject.FindProperty(
+                    "warning"
+                );
+
+
+            disabledProperty =
+                serializedObject.FindProperty(
+                    "disabled"
+                );
+
+
+            focusedProperty =
+                serializedObject.FindProperty(
+                    "focused"
+                );
+
+
+            customProfilesProperty =
+                serializedObject.FindProperty(
+                    "customProfiles"
+                );
+
+
+            CreateStyles();
+        }
+
+
+        // ============================================================
+        // STYLES
+        // ============================================================
+
+        private void CreateStyles()
+        {
+            titleStyle =
+                new GUIStyle(
+                    EditorStyles.boldLabel
+                )
+                {
+                    fontSize = 16,
+                    alignment =
+                        TextAnchor.MiddleLeft
+                };
+
+
+            sectionStyle =
+                new GUIStyle(
+                    EditorStyles.boldLabel
+                )
+                {
+                    fontSize = 12
+                };
+
+
+            successStyle =
+                new GUIStyle(
+                    EditorStyles.helpBox
+                );
+
+
+            successStyle.normal.textColor =
+                new Color(
+                    0.2f,
+                    0.75f,
+                    0.3f
+                );
+
+
+            warningStyle =
+                new GUIStyle(
+                    EditorStyles.helpBox
+                );
+
+
+            warningStyle.normal.textColor =
+                new Color(
+                    0.95f,
+                    0.65f,
+                    0.15f
+                );
+        }
+
+
+        // ============================================================
+        // INSPECTOR
+        // ============================================================
+
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
+
+
+            SparkVFXProfileLibrary library =
+                (SparkVFXProfileLibrary)
+                target;
+
+
+            // --------------------------------------------------------
+            // HEADER
+            // --------------------------------------------------------
+
+            DrawHeader();
+
+
+            EditorGUILayout.Space(
+                8f
+            );
+
+
+            // --------------------------------------------------------
+            // BUILT-IN PROFILES
+            // --------------------------------------------------------
+
+            DrawBuiltInProfiles();
+
+
+            EditorGUILayout.Space(
+                8f
+            );
+
+
+            // --------------------------------------------------------
+            // CUSTOM PROFILES
+            // --------------------------------------------------------
+
+            DrawCustomProfiles();
+
+
+            EditorGUILayout.Space(
+                8f
+            );
+
+
+            // --------------------------------------------------------
+            // STATUS
+            // --------------------------------------------------------
+
+            DrawStatus(
+                library
+            );
+
+
+            EditorGUILayout.Space(
+                8f
+            );
+
+
+            // --------------------------------------------------------
+            // ACTIONS
+            // --------------------------------------------------------
+
+            DrawActions(
+                library
+            );
+
+
+            serializedObject.ApplyModifiedProperties();
+        }
+
+
+        // ============================================================
+        // HEADER
+        // ============================================================
+
+        private void DrawHeader()
+        {
+            EditorGUILayout.BeginVertical(
+                "box"
+            );
+
+
+            EditorGUILayout.LabelField(
+                "Project Spark",
+                titleStyle
+            );
+
+
+            EditorGUILayout.LabelField(
+                "VFX Profile Library"
+            );
+
+
+            EditorGUILayout.Space(
+                4f
+            );
+
+
+            EditorGUILayout.HelpBox(
+                "Central profile registry for reusable Project Spark " +
+                "UI VFX states. This asset only resolves profiles. " +
+                "It does not control VFX controllers or state machines.",
+                MessageType.Info
+            );
+
+
+            EditorGUILayout.EndVertical();
+        }
+
+
+        // ============================================================
+        // BUILT-IN PROFILES
+        // ============================================================
+
+        private void DrawBuiltInProfiles()
+        {
+            EditorGUILayout.BeginVertical(
+                "box"
+            );
+
+
+            EditorGUILayout.LabelField(
+                "Built-In Profiles",
+                sectionStyle
+            );
+
+
+            EditorGUILayout.Space(
+                4f
+            );
+
+
+            DrawProfileField(
+                "Normal",
+                normalProperty
+            );
+
+
+            DrawProfileField(
+                "Hover",
+                hoverProperty
+            );
+
+
+            DrawProfileField(
+                "Pressed",
+                pressedProperty
+            );
+
+
+            DrawProfileField(
+                "Selected",
+                selectedProperty
+            );
+
+
+            DrawProfileField(
+                "Target",
+                targetProperty
+            );
+
+
+            DrawProfileField(
+                "Warning",
+                warningProperty
+            );
+
+
+            DrawProfileField(
+                "Disabled",
+                disabledProperty
+            );
+
+
+            DrawProfileField(
+                "Focused",
+                focusedProperty
+            );
+
+
+            EditorGUILayout.EndVertical();
+        }
+
+
+        // ============================================================
+        // PROFILE FIELD
+        // ============================================================
+
+        private void DrawProfileField(
+            string label,
+            SerializedProperty property)
+        {
+            if (
+                property == null
+            )
+            {
+                return;
+            }
+
+
+            EditorGUILayout.BeginHorizontal();
+
+
+            EditorGUILayout.PropertyField(
+                property,
+                new GUIContent(
+                    label
+                )
+            );
+
+
+            if (
+                property.objectReferenceValue !=
+                null
+            )
+            {
+                GUILayout.Label(
+                    "✓",
+                    successStyle,
+                    GUILayout.Width(
+                        24f
+                    )
+                );
+            }
+            else
+            {
+                GUILayout.Label(
+                    "—",
+                    warningStyle,
+                    GUILayout.Width(
+                        24f
+                    )
+                );
+            }
+
+
+            EditorGUILayout.EndHorizontal();
+        }
+
+
+        // ============================================================
+        // CUSTOM PROFILES
+        // ============================================================
+
+        private void DrawCustomProfiles()
+        {
+            EditorGUILayout.BeginVertical(
+                "box"
+            );
+
+
+            EditorGUILayout.LabelField(
+                "Custom Profiles",
+                sectionStyle
+            );
+
+
+            EditorGUILayout.Space(
+                4f
+            );
+
+
+            if (
+                customProfilesProperty == null
+            )
+            {
+                EditorGUILayout.HelpBox(
+                    "Custom profile property could not be found.",
+                    MessageType.Error
+                );
+
+
+                EditorGUILayout.EndVertical();
+
+
+                return;
+            }
+
+
+            EditorGUILayout.PropertyField(
+                customProfilesProperty,
+                new GUIContent(
+                    "Profile Entries"
+                ),
+                true
+            );
+
+
+            EditorGUILayout.EndVertical();
+        }
+
+
+        // ============================================================
+        // STATUS
+        // ============================================================
+
+        private void DrawStatus(
+            SparkVFXProfileLibrary library)
+        {
+            EditorGUILayout.BeginVertical(
+                "box"
+            );
+
+
+            EditorGUILayout.LabelField(
+                "Library Status",
+                sectionStyle
+            );
+
+
+            int profileCount =
+                library.ProfileCount;
+
+
+            EditorGUILayout.LabelField(
+                "Registered Profiles",
+                profileCount.ToString()
+            );
+
+
+            bool hasNormal =
+                library.Normal != null;
+
+
+            bool hasHover =
+                library.Hover != null;
+
+
+            bool hasPressed =
+                library.Pressed != null;
+
+
+            bool hasSelected =
+                library.Selected != null;
+
+
+            bool hasTarget =
+                library.Target != null;
+
+
+            bool hasWarning =
+                library.Warning != null;
+
+
+            bool hasDisabled =
+                library.Disabled != null;
+
+
+            bool hasFocused =
+                library.Focused != null;
+
+
+            int builtInCount =
+                0;
+
+
+            if (hasNormal)
+            {
+                builtInCount++;
+            }
+
+
+            if (hasHover)
+            {
+                builtInCount++;
+            }
+
+
+            if (hasPressed)
+            {
+                builtInCount++;
+            }
+
+
+            if (hasSelected)
+            {
+                builtInCount++;
+            }
+
+
+            if (hasTarget)
+            {
+                builtInCount++;
+            }
+
+
+            if (hasWarning)
+            {
+                builtInCount++;
+            }
+
+
+            if (hasDisabled)
+            {
+                builtInCount++;
+            }
+
+
+            if (hasFocused)
+            {
+                builtInCount++;
+            }
+
+
+            EditorGUILayout.LabelField(
+                "Built-In Profiles",
+                builtInCount +
+                " / 8"
+            );
+
+
+            EditorGUILayout.Space(
+                4f
+            );
+
+
+            if (
+                builtInCount ==
+                8
+            )
+            {
+                EditorGUILayout.HelpBox(
+                    "All built-in profile slots are assigned.",
+                    MessageType.Info
+                );
+            }
+            else
+            {
+                EditorGUILayout.HelpBox(
+                    "Some built-in profile slots are empty. " +
+                    "This is allowed, but those profiles cannot " +
+                    "be resolved at runtime.",
+                    MessageType.Warning
+                );
+            }
+
+
+            EditorGUILayout.EndVertical();
+        }
+
+
+        // ============================================================
+        // ACTIONS
+        // ============================================================
+
+        private void DrawActions(
+            SparkVFXProfileLibrary library)
+        {
+            EditorGUILayout.BeginVertical(
+                "box"
+            );
+
+
+            EditorGUILayout.LabelField(
+                "Library Actions",
+                sectionStyle
+            );
+
+
+            EditorGUILayout.Space(
+                4f
+            );
+
+
+            EditorGUILayout.BeginHorizontal();
+
+
+            if (
+                GUILayout.Button(
+                    "Validate Library",
+                    GUILayout.Height(
+                        28f
+                    )
+                )
+            )
+            {
+                ValidateLibrary(
+                    library
+                );
+            }
+
+
+            if (
+                GUILayout.Button(
+                    "Rebuild Cache",
+                    GUILayout.Height(
+                        28f
+                    )
+                )
+            )
+            {
+                RebuildCache(
+                    library
+                );
+            }
+
+
+            EditorGUILayout.EndHorizontal();
+
+
+            EditorGUILayout.Space(
+                4f
+            );
+
+
+            if (
+                GUILayout.Button(
+                    "Refresh Inspector"
+                )
+            )
+            {
+                serializedObject.Update();
+
+
+                Repaint();
+            }
+
+
+            EditorGUILayout.EndVertical();
+        }
+
+
+        // ============================================================
+        // VALIDATE
+        // ============================================================
+
+        private void ValidateLibrary(
+            SparkVFXProfileLibrary library)
+        {
+            if (
+                library == null
+            )
+            {
+                return;
+            }
+
+
+            serializedObject.ApplyModifiedProperties();
+
+
+            bool valid =
+                library.Validate(
+                    true
+                );
+
+
+            if (valid)
+            {
+                EditorUtility.DisplayDialog(
+                    "Spark VFX Profile Library",
+                    "Validation successful.\n\n" +
+                    "Registered Profiles: " +
+                    library.ProfileCount,
+                    "OK"
+                );
+            }
+            else
+            {
+                EditorUtility.DisplayDialog(
+                    "Spark VFX Profile Library",
+                    "Validation failed.\n\n" +
+                    "Check the Unity Console for details.",
+                    "OK"
+                );
+            }
+        }
+
+
+        // ============================================================
+        // REBUILD CACHE
+        // ============================================================
+
+        private void RebuildCache(
+            SparkVFXProfileLibrary library)
+        {
+            if (
+                library == null
+            )
+            {
+                return;
+            }
+
+
+            serializedObject.ApplyModifiedProperties();
+
+
+            library.RefreshCache();
+
+
+            EditorUtility.SetDirty(
+                library
+            );
+
+
+            Repaint();
+
+
+            Debug.Log(
+                "[SparkVFXProfileLibraryEditor] " +
+                "Profile cache rebuilt. " +
+                "Registered Profiles: " +
+                library.ProfileCount,
+                library
+            );
+        }
+
+
+        // ============================================================
+        // DUPLICATE DETECTION
+        // ============================================================
+
+        private void DrawDuplicateWarning()
+        {
+            // Reserved for future advanced profile ID validation.
+            //
+            // The runtime library already validates duplicate IDs.
+            // This method intentionally remains unused until the
+            // profile asset receives a dedicated stable ProfileID.
+        }
+    }
+}
+
+#endif
