@@ -1,15 +1,10 @@
 using UnityEngine;
-using UnityEngine.VFX;
 
 namespace AAAUI
 {
     [DisallowMultipleComponent]
     public sealed class SignalFlowVFX : MonoBehaviour
     {
-        [Header("VFX Graph")]
-        [SerializeField]
-        private VisualEffect visualEffect;
-
         [Header("Flow")]
         [SerializeField]
         private bool playing = true;
@@ -23,6 +18,15 @@ namespace AAAUI
         [SerializeField]
         private bool reverse;
 
+        [Header("Polarity")]
+        [SerializeField]
+        private Color positiveColor =
+            new Color(1f, 0.03f, 0.03f, 0.40f);
+
+        [SerializeField]
+        private Color negativeColor =
+            new Color(0.03f, 0.20f, 1f, 0.40f);
+
         [Header("Pulse")]
         [SerializeField, Min(0f)]
         private float pulseSpeed = 4f;
@@ -30,38 +34,68 @@ namespace AAAUI
         [SerializeField, Range(0f, 1f)]
         private float pulseAmount = 0.25f;
 
+        private MaterialPropertyBlock propertyBlock;
+        private Renderer targetRenderer;
+
         private float time;
 
-        private static readonly int SpeedID =
-            Shader.PropertyToID("SignalSpeed");
+        private bool positivePolarity = true;
 
-        private static readonly int IntensityID =
-            Shader.PropertyToID("SignalIntensity");
+        [Header("Wire Materials")]
+        [SerializeField]
+        private Material positiveMaterial;
 
-        private static readonly int DirectionID =
-            Shader.PropertyToID("SignalDirection");
+        [SerializeField]
+        private Material negativeMaterial;
 
-        private static readonly int PulseID =
-            Shader.PropertyToID("SignalPulse");
+        private static readonly int FlowOffset =
+            Shader.PropertyToID("_SignalFlowOffset");
+
+        private static readonly int FlowIntensity =
+            Shader.PropertyToID("_SignalFlowIntensity");
+
+        private static readonly int FlowPulse =
+            Shader.PropertyToID("_SignalFlowPulse");
+
+        private static readonly int WireColor =
+            Shader.PropertyToID("_WireColor");
 
         private void Awake()
         {
-            if (visualEffect == null)
-            {
-                visualEffect =
-                    GetComponent<VisualEffect>();
-            }
+            propertyBlock =
+                new MaterialPropertyBlock();
 
-            Apply();
+            targetRenderer =
+                GetComponent<Renderer>();
+
+            ApplyColor();
         }
+        public void SetPolarity(bool positive)
+        {
+            if (targetRenderer == null)
+                return;
 
+            targetRenderer.sharedMaterial =
+                positive
+                    ? positiveMaterial
+                    : negativeMaterial;
+        }
+      
         private void Update()
         {
             if (!playing ||
-                visualEffect == null)
+                targetRenderer == null)
                 return;
 
             time += Time.deltaTime;
+
+            float direction =
+                reverse ? -1f : 1f;
+
+            float offset =
+                time *
+                speed *
+                direction;
 
             float pulse =
                 0.5f +
@@ -77,111 +111,91 @@ namespace AAAUI
                     pulseAmount
                 );
 
-            visualEffect.SetFloat(
-                SpeedID,
-                speed
+            targetRenderer.GetPropertyBlock(
+                propertyBlock
             );
 
-            visualEffect.SetFloat(
-                IntensityID,
+            propertyBlock.SetFloat(
+                FlowOffset,
+                offset
+            );
+
+            propertyBlock.SetFloat(
+                FlowIntensity,
                 intensity
             );
 
-            visualEffect.SetFloat(
-                DirectionID,
-                reverse ? -1f : 1f
-            );
-
-            visualEffect.SetFloat(
-                PulseID,
+            propertyBlock.SetFloat(
+                FlowPulse,
                 pulse
             );
-        }
 
-        private void Apply()
-        {
-            if (visualEffect == null)
-                return;
-
-            visualEffect.SetFloat(
-                SpeedID,
-                speed
+            propertyBlock.SetColor(
+                WireColor,
+                positivePolarity
+                    ? positiveColor
+                    : negativeColor
             );
 
-            visualEffect.SetFloat(
-                IntensityID,
-                intensity
+            targetRenderer.SetPropertyBlock(
+                propertyBlock
             );
-
-            visualEffect.SetFloat(
-                DirectionID,
-                reverse ? -1f : 1f
-            );
-
-            visualEffect.SetFloat(
-                PulseID,
-                1f
-            );
-
-            if (playing)
-                visualEffect.Play();
-            else
-                visualEffect.Stop();
         }
 
         public void Play()
         {
             playing = true;
-
-            if (visualEffect != null)
-                visualEffect.Play();
         }
 
         public void Stop()
         {
             playing = false;
-
-            if (visualEffect != null)
-                visualEffect.Stop();
         }
 
         public void SetSpeed(float value)
         {
-            speed = Mathf.Max(0f, value);
-
-            if (visualEffect != null)
-            {
-                visualEffect.SetFloat(
-                    SpeedID,
-                    speed
+            speed =
+                Mathf.Max(
+                    0f,
+                    value
                 );
-            }
         }
 
         public void SetIntensity(float value)
         {
-            intensity = Mathf.Max(0f, value);
-
-            if (visualEffect != null)
-            {
-                visualEffect.SetFloat(
-                    IntensityID,
-                    intensity
+            intensity =
+                Mathf.Max(
+                    0f,
+                    value
                 );
-            }
         }
 
         public void SetDirection(bool backwards)
         {
             reverse = backwards;
+        }
 
-            if (visualEffect != null)
-            {
-                visualEffect.SetFloat(
-                    DirectionID,
-                    reverse ? -1f : 1f
-                );
-            }
+      
+
+        private void ApplyColor()
+        {
+            if (targetRenderer == null)
+                return;
+
+            targetRenderer.GetPropertyBlock(
+                propertyBlock
+            );
+
+            propertyBlock.SetColor(
+                WireColor,
+                positivePolarity
+                    ? positiveColor
+                    : negativeColor
+            );
+
+            targetRenderer.SetPropertyBlock(
+                propertyBlock
+            );
         }
     }
 }

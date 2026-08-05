@@ -3,6 +3,12 @@ using ProjectSpark.Circuit;
 
 namespace AAAUI.VFX
 {
+    public enum WirePolarity
+    {
+        Positive,
+        Negative
+    }
+
     [DisallowMultipleComponent]
     public sealed class SignalWireBuilder : MonoBehaviour
     {
@@ -11,10 +17,7 @@ namespace AAAUI.VFX
         private BreadboardGrid breadboard;
 
         [SerializeField]
-        private SignalPath path;
-
-        [SerializeField]
-        private SignalPathMesh pathMesh;
+        private SignalPath_Manager pathManager;
 
         [Header("Input")]
         [SerializeField]
@@ -27,6 +30,10 @@ namespace AAAUI.VFX
         [SerializeField, Min(0.001f)]
         private float snapDistance = 0.08f;
 
+        private SignalPath currentPath;
+
+        private WirePolarity currentPolarity;
+
         private bool drawing;
 
         private Vector3 currentEnd;
@@ -34,13 +41,120 @@ namespace AAAUI.VFX
         private int lastColumn = -1;
         private int lastRow = -1;
 
-        public bool IsDrawing => drawing;
+        public SignalPath CurrentPath =>
+            currentPath;
+
+        public bool IsDrawing =>
+            drawing;
+
+        private CircuitTerminal startTerminal;
 
         private void Awake()
         {
             if (targetCamera == null)
                 targetCamera = Camera.main;
         }
+        public void BeginWire(
+    Vector3 startPosition,
+    WirePolarity polarity,
+    CircuitTerminal terminal)
+        {
+            startTerminal =
+                terminal;
+
+            BeginWire(
+                startPosition,
+                polarity
+            );
+        }
+
+        // =========================================================
+        // START
+        // =========================================================
+
+        public void BeginWire(
+            Vector3 startPosition,
+            WirePolarity polarity)
+        {
+            currentPolarity =
+                polarity;
+
+            if (breadboard == null)
+            {
+                Debug.LogError(
+                    "SignalWireBuilder: Breadboard is NULL."
+                );
+
+                return;
+            }
+
+            if (pathManager == null)
+            {
+                Debug.LogError(
+                    "SignalWireBuilder: Path Manager is NULL."
+                );
+
+                return;
+            }
+
+            if (!breadboard.TryGetNearestHole(
+                    startPosition,
+                    snapDistance,
+                    out Vector3 hole,
+                    out int column,
+                    out int row))
+            {
+                Debug.LogWarning(
+                    "SignalWireBuilder: No breadboard hole found."
+                );
+
+                return;
+            }
+
+            // Manager creates a NEW path + NEW mesh.
+            // Previous wires remain untouched.
+            pathManager.CreateNextWire(
+                polarity
+            );
+
+            currentPath =
+                pathManager.CurrentPath;
+
+            if (currentPath == null)
+            {
+                Debug.LogError(
+                    "SignalWireBuilder: Manager did not create a path."
+                );
+
+                return;
+            }
+
+            currentPath.AddPoint(
+                hole
+            );
+
+            currentPath.SetPreviewPoint(
+                hole
+            );
+
+            lastColumn =
+                column;
+
+            lastRow =
+                row;
+
+            currentEnd =
+                hole;
+
+            drawing =
+                true;
+
+            Rebuild();
+        }
+
+        // =========================================================
+        // INPUT
+        // =========================================================
 
         private void Update()
         {
@@ -81,11 +195,24 @@ namespace AAAUI.VFX
                 return;
             }
 
-            BeginWire(hit.point);
+            // Default input mode.
+            // Your CircuitTerminal can call the
+            // overload with explicit polarity.
+            BeginWire(
+                hit.point,
+                WirePolarity.Positive
+            );
         }
+
+        // =========================================================
+        // DRAGGING
+        // =========================================================
 
         private void UpdateDragging()
         {
+            if (currentPath == null)
+                return;
+
             Ray ray =
                 targetCamera.ScreenPointToRay(
                     Input.mousePosition
@@ -113,45 +240,22 @@ namespace AAAUI.VFX
             Vector3 worldPosition =
                 ray.GetPoint(distance);
 
-            UpdateWire(worldPosition);
+            UpdateWire(
+                worldPosition
+            );
         }
 
-        public void BeginWire(Vector3 startPosition)
+        public void UpdateWire(
+            Vector3 worldPosition)
         {
-            if (breadboard == null ||
-                path == null)
-                return;
-
-            if (!breadboard.TryGetNearestHole(
-                    startPosition,
-                    snapDistance,
-                    out Vector3 hole,
-                    out int column,
-                    out int row))
+            if (!drawing ||
+                currentPath == null)
             {
                 return;
             }
 
-            path.Clear();
-
-            path.AddPoint(hole);
-
-            lastColumn = column;
-            lastRow = row;
-
-            currentEnd = hole;
-
-            drawing = true;
-
-            Rebuild();
-        }
-
-        public void UpdateWire(Vector3 worldPosition)
-        {
-            if (!drawing)
-                return;
-
-            currentEnd = worldPosition;
+            currentEnd =
+                worldPosition;
 
             if (breadboard.TryGetNearestHole(
                     worldPosition,
@@ -160,55 +264,184 @@ namespace AAAUI.VFX
                     out int column,
                     out int row))
             {
-                currentEnd = hole;
+                currentEnd =
+                    hole;
 
-                // Show the snapped endpoint.
-                path.SetPreviewPoint(hole);
+                currentPath.SetPreviewPoint(
+                    hole
+                );
 
-                // Add the hole only once.
+                // EXACTLY your existing point-add logic.
                 if (column != lastColumn ||
                     row != lastRow)
                 {
-                    path.AddPoint(hole);
+                    currentPath.AddPoint(
+                        hole
+                    );
 
-                    lastColumn = column;
-                    lastRow = row;
+                    lastColumn =
+                        column;
+
+                    lastRow =
+                        row;
                 }
             }
             else
             {
-                // Free endpoint follows mouse.
-                path.SetPreviewPoint(worldPosition);
+                currentPath.SetPreviewPoint(
+                    worldPosition
+                );
             }
 
             Rebuild();
         }
+
+        // =========================================================
+        // FINISH
+        // =========================================================
+
         public void EndWire()
         {
             if (!drawing)
                 return;
 
+            if (!drawing)
+                return;
+
+            Debug.Log("[WIRE] RELEASE");
+
+            CircuitTerminal endTerminal =
+                FindTerminalUnderMouse();
+
+            if (endTerminal == null)
+            {
+                Debug.Log(
+                    "[WIRE] END TERMINAL = NULL"
+                );
+            }
+            else
+            {
+                Debug.Log(
+                    $"[WIRE] END = {endTerminal.name} | " +
+                    $"Polarity = {endTerminal.Polarity}"
+                );
+            }           
+
+            if (endTerminal != null &&
+                startTerminal != null &&
+                endTerminal != startTerminal)
+            {
+                startTerminal.ReceiveConnection(
+                    endTerminal
+                );
+            }
+
             drawing = false;
 
-            path.ClearPreview();
+            if (currentPath != null)
+            {
+                currentPath.ClearPreview();
+            }
 
             Rebuild();
+
+            if (pathManager != null)
+            {
+                pathManager.FinishCurrentPath();
+            }
+
+            currentPath = null;
+            startTerminal = null;
+
+            lastColumn = -1;
+            lastRow = -1;
         }
 
         public void CancelWire()
         {
-            drawing = false;
+            if (!drawing)
+                return;
 
-            if (path != null)
-                path.Clear();
+            drawing =
+                false;
+
+            /*
+             * We intentionally do NOT clear the path here.
+             *
+             * If you later want Cancel to remove ONLY
+             * the currently created wire, we can add that
+             * separately.
+             */
+
+            if (currentPath != null)
+            {
+                currentPath.ClearPreview();
+            }
 
             Rebuild();
+
+            pathManager.FinishCurrentPath();
+
+            currentPath =
+                null;
+
+            lastColumn =
+                -1;
+
+            lastRow =
+                -1;
         }
+
+        // =========================================================
+        // MESH
+        // =========================================================
 
         private void Rebuild()
         {
-            if (pathMesh != null)
-                pathMesh.Rebuild();
+            if (pathManager == null)
+                return;
+
+            SignalPathMesh mesh =
+                pathManager.CurrentMesh;
+
+            if (mesh == null)
+                return;
+
+            mesh.Rebuild();
+        }
+        private CircuitTerminal FindTerminalUnderMouse()
+        {
+            if (targetCamera == null)
+                return null;
+
+            Ray ray =
+                targetCamera.ScreenPointToRay(
+                    Input.mousePosition
+                );
+
+            RaycastHit[] hits =
+                Physics.RaycastAll(
+                    ray,
+                    1000f
+                );
+
+            for (int i = 0; i < hits.Length; i++)
+            {
+                CircuitTerminal terminal =
+                    hits[i].collider
+                        .GetComponentInParent<CircuitTerminal>();
+
+                if (terminal != null)
+                {
+                    Debug.Log(
+                        $"[WIRE] TERMINAL HIT = {terminal.name}"
+                    );
+
+                    return terminal;
+                }
+            }
+
+            return null;
         }
     }
 }

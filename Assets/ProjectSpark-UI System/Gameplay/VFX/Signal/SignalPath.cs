@@ -55,6 +55,7 @@ namespace AAAUI.VFX
             hasPreview = false;
         }
 
+
         public Vector3[] GetRenderPoints()
         {
             int count = runtimePoints.Count;

@@ -9,10 +9,6 @@ namespace AAAUI.VFX
     [RequireComponent(typeof(MeshRenderer))]
     public sealed class SignalPathMesh : MonoBehaviour
     {
-        [Header("Path")]
-        [SerializeField]
-        private SignalPath path;
-
         [Header("Wire")]
         [SerializeField, Min(0.001f)]
         private float radius = 0.018f;
@@ -30,9 +26,17 @@ namespace AAAUI.VFX
         [SerializeField, Range(0f, 1f)]
         private float curveTension = 0.35f;
 
+        [Header("Cable")]
+        [SerializeField, Min(0f)]
+        private float sag = 0.015f;
+
         [Header("Mesh")]
         [SerializeField]
         private bool recalculateBounds = true;
+
+        // THIS wire's path.
+        // No dependency on SignalWireBuilder.
+        private SignalPath path;
 
         private Mesh mesh;
 
@@ -42,6 +46,28 @@ namespace AAAUI.VFX
         private readonly List<float> curveDistances =
             new List<float>();
 
+        // =========================================================
+        // PATH
+        // =========================================================
+
+        public void SetPath(
+            SignalPath newPath)
+        {
+            path =
+                newPath;
+
+            Rebuild();
+        }
+
+        public SignalPath GetPath()
+        {
+            return path;
+        }
+
+        // =========================================================
+        // LIFECYCLE
+        // =========================================================
+
         private void OnEnable()
         {
             Rebuild();
@@ -49,7 +75,13 @@ namespace AAAUI.VFX
 
         private void OnValidate()
         {
-            sides = Mathf.Clamp(sides, 6, 24);
+            sides =
+                Mathf.Clamp(
+                    sides,
+                    6,
+                    24
+                );
+
             subdivisionsPerSegment =
                 Mathf.Clamp(
                     subdivisionsPerSegment,
@@ -58,7 +90,9 @@ namespace AAAUI.VFX
                 );
 
             curveTension =
-                Mathf.Clamp01(curveTension);
+                Mathf.Clamp01(
+                    curveTension
+                );
 
             radius =
                 Mathf.Max(
@@ -68,6 +102,10 @@ namespace AAAUI.VFX
 
             Rebuild();
         }
+
+        // =========================================================
+        // REBUILD
+        // =========================================================
 
         public void Rebuild()
         {
@@ -87,7 +125,9 @@ namespace AAAUI.VFX
                 return;
             }
 
-            BuildCurve(sourcePoints);
+            BuildCurve(
+                sourcePoints
+            );
 
             if (curvePoints.Count < 2)
             {
@@ -102,7 +142,9 @@ namespace AAAUI.VFX
             BuildTube();
 
             if (recalculateBounds)
+            {
                 mesh.RecalculateBounds();
+            }
         }
 
         // =========================================================
@@ -115,25 +157,31 @@ namespace AAAUI.VFX
             curvePoints.Clear();
             curveDistances.Clear();
 
+            if (points == null ||
+                points.Length < 2)
+            {
+                return;
+            }
+
             if (!smoothCurve ||
                 points.Length == 2)
             {
-                for (int i = 0; i < points.Length; i++)
-                    curvePoints.Add(points[i]);
+                for (int i = 0;
+                     i < points.Length;
+                     i++)
+                {
+                    curvePoints.Add(
+                        points[i]
+                    );
+                }
 
                 CalculateDistances();
 
                 return;
             }
 
-            /*
-             * Centripetal Catmull-Rom style interpolation.
-             *
-             * The curve passes through the actual breadboard
-             * holes instead of cutting across them.
-             */
-
-            int count = points.Length;
+            int count =
+                points.Length;
 
             for (int segment = 0;
                  segment < count - 1;
@@ -159,8 +207,6 @@ namespace AAAUI.VFX
                      step < subdivisionsPerSegment;
                      step++)
                 {
-                    // Avoid duplicating the first point of
-                    // every segment.
                     if (segment > 0 &&
                         step == 0)
                     {
@@ -181,13 +227,24 @@ namespace AAAUI.VFX
                             curveTension
                         );
 
-                    curvePoints.Add(position);
+                    float sagFactor =
+                        Mathf.Sin(
+                            t * Mathf.PI
+                        );
+
+                    position -=
+                        transform.up *
+                        sag *
+                        sagFactor;
+
+                    curvePoints.Add(
+                        position
+                    );
                 }
             }
 
-            // Always guarantee the final breadboard hole.
             curvePoints.Add(
-                points[points.Length - 1]
+                points[count - 1]
             );
 
             CalculateDistances();
@@ -201,17 +258,11 @@ namespace AAAUI.VFX
             float t,
             float tension)
         {
-            float t2 = t * t;
-            float t3 = t2 * t;
+            float t2 =
+                t * t;
 
-            /*
-             * Tension controls how aggressively the wire
-             * bends between holes.
-             *
-             * 0   = softer / rounder
-             * 0.5 = balanced
-             * 1   = tighter
-             */
+            float t3 =
+                t2 * t;
 
             float tangentScale =
                 (1f - tension) * 0.5f;
@@ -253,20 +304,26 @@ namespace AAAUI.VFX
         {
             curveDistances.Clear();
 
-            float total = 0f;
+            float total =
+                0f;
 
-            curveDistances.Add(0f);
+            curveDistances.Add(
+                0f
+            );
 
             for (int i = 1;
                  i < curvePoints.Count;
                  i++)
             {
-                total += Vector3.Distance(
-                    curvePoints[i - 1],
-                    curvePoints[i]
-                );
+                total +=
+                    Vector3.Distance(
+                        curvePoints[i - 1],
+                        curvePoints[i]
+                    );
 
-                curveDistances.Add(total);
+                curveDistances.Add(
+                    total
+                );
             }
         }
 
@@ -280,7 +337,8 @@ namespace AAAUI.VFX
                 curvePoints.Count;
 
             int vertexCount =
-                pointCount * sides;
+                pointCount *
+                sides;
 
             Vector3[] vertices =
                 new Vector3[vertexCount];
@@ -326,13 +384,6 @@ namespace AAAUI.VFX
                 }
                 else
                 {
-                    /*
-                     * Parallel transport the previous frame.
-                     *
-                     * This prevents the tube from randomly
-                     * twisting when the wire bends.
-                     */
-
                     normal =
                         TransportNormal(
                             previousNormal,
@@ -375,7 +426,8 @@ namespace AAAUI.VFX
                     float angle =
                         side /
                         (float)sides *
-                        Mathf.PI * 2f;
+                        Mathf.PI *
+                        2f;
 
                     float cos =
                         Mathf.Cos(angle);
@@ -405,13 +457,7 @@ namespace AAAUI.VFX
                             radial
                         ).normalized;
 
-                    /*
-                     * UV.x follows actual physical
-                     * distance along the curved wire.
-                     *
-                     * 0 = beginning
-                     * 1 = end
-                     */
+                    // 0 → 1 along the actual wire length.
                     uv[index] =
                         new Vector2(
                             u,
@@ -439,7 +485,8 @@ namespace AAAUI.VFX
                 triangles;
         }
 
-        private Vector3 GetTangent(int index)
+        private Vector3 GetTangent(
+            int index)
         {
             if (index == 0)
             {
@@ -511,7 +558,8 @@ namespace AAAUI.VFX
                 return previousNormal.normalized;
             }
 
-            axis /= axisLength;
+            axis /=
+                axisLength;
 
             float angle =
                 Vector3.Angle(
@@ -640,6 +688,23 @@ namespace AAAUI.VFX
             {
                 filter.sharedMesh.Clear();
             }
+        }
+
+        // =========================================================
+        // MATERIAL
+        // =========================================================
+
+        public void SetMaterial(
+            Material material)
+        {
+            MeshRenderer renderer =
+                GetComponent<MeshRenderer>();
+
+            if (renderer == null)
+                return;
+
+            renderer.sharedMaterial =
+                material;
         }
     }
 }
