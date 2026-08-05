@@ -1,11 +1,11 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 namespace AAAUI
 {
     [DisallowMultipleComponent]
     public sealed class Level1CircuitChecker : MonoBehaviour
     {
-        [Header("Required Connections")]
+        [Header("Correct Terminals")]
         [SerializeField]
         private CircuitTerminal positiveSource;
 
@@ -18,60 +18,70 @@ namespace AAAUI
         [SerializeField]
         private CircuitTerminal negativeLight;
 
+
+
+
         [Header("Light")]
         [SerializeField]
         private GameObject lightObject;
 
         private bool positiveConnected;
         private bool negativeConnected;
-        private bool won;
+        private bool gameWon;
 
         public void RegisterConnection(
             CircuitTerminal a,
             CircuitTerminal b)
         {
-            if (won ||
+            if (gameWon ||
                 a == null ||
                 b == null)
+            {
                 return;
+            }
 
-            CheckPositive(
-                a,
-                b
+            Debug.Log(
+                $"[LEVEL 1] Connection: {a.name} ({a.Polarity}) → {b.name} ({b.Polarity})"
             );
 
-            CheckNegative(
-                a,
-                b
-            );
+            if (IsPair(
+                    a,
+                    b,
+                    positiveSource,
+                    positiveLight))
+            {
+                positiveConnected = true;
+
+                Debug.Log(
+                    "[LEVEL 1] + → + CORRECT"
+                );
+            }
+
+            if (IsPair(
+                    a,
+                    b,
+                    negativeSource,
+                    negativeLight))
+            {
+                negativeConnected = true;
+
+                Debug.Log(
+                    "[LEVEL 1] - → - CORRECT"
+                );
+            }
 
             CheckWin();
         }
 
-        private void CheckPositive(
+        private bool IsPair(
             CircuitTerminal a,
-            CircuitTerminal b)
+            CircuitTerminal b,
+            CircuitTerminal first,
+            CircuitTerminal second)
         {
-            if ((a == positiveSource &&
-                 b == positiveLight) ||
-                (a == positiveLight &&
-                 b == positiveSource))
-            {
-                positiveConnected = true;
-            }
-        }
-
-        private void CheckNegative(
-            CircuitTerminal a,
-            CircuitTerminal b)
-        {
-            if ((a == negativeSource &&
-                 b == negativeLight) ||
-                (a == negativeLight &&
-                 b == negativeSource))
-            {
-                negativeConnected = true;
-            }
+            return
+                (a == first && b == second) ||
+                (a == second && b == first);
         }
 
         private void CheckWin()
@@ -82,23 +92,16 @@ namespace AAAUI
                 return;
             }
 
-            won = true;
+            gameWon = true;
+
+            Debug.Log(
+                "[LEVEL 1] GAME WON!"
+            );
 
             if (lightObject != null)
             {
                 lightObject.SetActive(true);
             }
-
-            GameWon();
-        }
-
-        private void GameWon()
-        {
-            Debug.Log(
-                "LEVEL 1 COMPLETE!"
-            );
-
-            // Call your game-won system here.
         }
     }
 }
