@@ -16,7 +16,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 1998
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
@@ -37,31 +37,58 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AnimationSpeed: 0.05
+    - _AnimationSpeed: -0.63
+    - _AnimationStrength: 5
+    - _BUILTIN_QueueControl: -1
+    - _BUILTIN_QueueOffset: 0
     - _DecalMeshBiasType: 0
     - _DecalMeshDepthBias: 0
     - _DecalMeshViewBias: 0
-    - _Distortion: 0.03
+    - _Distortion: 0.138
     - _DrawOrder: 0
-    - _GlowIntensity: 1.5
-    - _GlowSize: 0.12
-    - _ProjectionFalloff: 1
-    - _ProjectionScale: 0.73
-    - _Rotation: 0
-    - _StarBrightness: 3
-    - _StarDensity: 10
-    - _StarSharpness: 8
-    - _StarSize: 0.18
+    - _GlobalOpacity: 0.82
+    - _GlowIntensity: 3.12
+    - _GlowSize: 0.142
+    - _GridDensity: 15.7
+    - _HDRIntensity: 0.98
+    - _ProjectionFalloff: 1.64
+    - _ProjectionRotation: 0.1
+    - _ProjectionScale: 7.64
+    - _Rotation: 10
+    - _StarBrightness: 2.41
+    - _StarDensity: 8.4
+    - _StarMaxSize: 1.44
+    - _StarMinSize: 0.7
+    - _StarProbability: 0.03
+    - _StarRadius: 13.32
+    - _StarRotation: 10.53
+    - _StarSharpness: 15.1
+    - _StarSize: 0.5
+    - _Star_power1: 4.4
+    - _Star_power2: 63.58
     m_Colors:
     - _Color_Blue: {r: 0, g: 0.5239511, b: 1, a: 1}
     - _Color_Cyan: {r: 0, g: 0.79877, b: 1, a: 1}
     - _Color_Green: {r: 0, g: 1, b: 0.30524296, a: 1}
     - _Color_Orange: {r: 1, g: 0.5670936, b: 0, a: 1}
     - _Color_Pink: {r: 1, g: 0.27830186, b: 0.9381322, a: 1}
-    - _Color_Red: {r: 1, g: 0, b: 0, a: 1}
-    - _ProjectionOffset: {r: 1, g: 10, b: 0, a: 0}
+    - _Color_Red: {r: 0.9622642, g: 0, b: 0, a: 1}
+    - _ProjectionOffset: {r: 2, g: 4.82, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!114 &4699443117170248623
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.ShaderGraph.Editor::UnityEditor.Rendering.BuiltIn.AssetVersion
+  version: 0
 --- !u!114 &6593896314249298887
 MonoBehaviour:
   m_ObjectHideFlags: 11
