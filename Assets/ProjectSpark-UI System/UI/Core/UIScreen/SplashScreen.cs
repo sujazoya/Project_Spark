@@ -6,12 +6,13 @@ namespace ProjectSpark.UI.Screens
 {
     public sealed class SplashScreen : UIScreen
     {
+        [Header("Splash Settings")]
         [SerializeField]
+        [Min(0f)]
         private float displayDuration = 2f;
 
         [SerializeField]
-        private string nextScreenId =
-            UIScreenIds.MainMenu;
+        private string nextScreenId = UIScreenIds.MainMenu;
 
         private Coroutine transitionRoutine;
 
@@ -19,40 +20,47 @@ namespace ProjectSpark.UI.Screens
         {
             base.OnOpen();
 
-            if (transitionRoutine != null)
-            {
-                StopCoroutine(
-                    transitionRoutine);
-            }
-
-            transitionRoutine =
-                StartCoroutine(
-                    ShowSplashRoutine());
+            StopTransitionRoutine();
+            transitionRoutine = StartCoroutine(ShowSplashRoutine());
         }
 
         protected override void OnClose()
         {
-            if (transitionRoutine != null)
-            {
-                StopCoroutine(
-                    transitionRoutine);
-
-                transitionRoutine = null;
-            }
-
+            StopTransitionRoutine();
             base.OnClose();
         }
 
         private IEnumerator ShowSplashRoutine()
         {
-            yield return new WaitForSecondsRealtime(
-                displayDuration);
+            yield return new WaitForSecondsRealtime(displayDuration);
 
-            if (UIManager.Instance != null)
+            transitionRoutine = null;
+
+            if (UIManager.Instance == null)
             {
-                UIManager.Instance.ShowScreen(
-                    nextScreenId);
+                yield break;
             }
+
+            if (string.IsNullOrWhiteSpace(nextScreenId))
+            {
+                Debug.LogWarning(
+                    $"{nameof(SplashScreen)} on '{name}' has no next screen ID.",
+                    this);
+                yield break;
+            }
+
+            UIManager.Instance.ShowScreen(nextScreenId);
+        }
+
+        private void StopTransitionRoutine()
+        {
+            if (transitionRoutine == null)
+            {
+                return;
+            }
+
+            StopCoroutine(transitionRoutine);
+            transitionRoutine = null;
         }
     }
 }

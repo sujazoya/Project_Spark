@@ -5,11 +5,12 @@ namespace ProjectSpark.UI.Core
 {
     /// <summary>
     /// Base class for Project Spark full-screen UI pages.
+    /// UIManager controls the public lifecycle through Open and Close.
+    /// Derived screens customize behavior through OnOpen and OnClose.
     /// </summary>
     public abstract class UIScreen : MonoBehaviour
     {
         [Header("Screen Identity")]
-
         [SerializeField]
         private string screenId;
 
@@ -17,7 +18,6 @@ namespace ProjectSpark.UI.Core
         private UIContext context = UIContext.None;
 
         [Header("Behaviour")]
-
         [SerializeField]
         private bool deactivateWhenHidden = true;
 
@@ -28,12 +28,13 @@ namespace ProjectSpark.UI.Core
         public bool IsVisible { get; private set; }
 
         public event Action<UIScreen> Opened;
-
         public event Action<UIScreen> Closed;
 
         protected virtual void Awake()
         {
-            if (deactivateWhenHidden)
+            IsVisible = false;
+
+            if (deactivateWhenHidden && gameObject.activeSelf)
             {
                 gameObject.SetActive(false);
             }
@@ -42,7 +43,9 @@ namespace ProjectSpark.UI.Core
         public void Open()
         {
             if (IsVisible)
+            {
                 return;
+            }
 
             IsVisible = true;
 
@@ -52,14 +55,15 @@ namespace ProjectSpark.UI.Core
             }
 
             OnOpen();
-
             Opened?.Invoke(this);
         }
 
         public void Close()
         {
             if (!IsVisible)
+            {
                 return;
+            }
 
             IsVisible = false;
 
@@ -71,6 +75,10 @@ namespace ProjectSpark.UI.Core
             }
 
             Closed?.Invoke(this);
+        }
+
+        public virtual void Refresh()
+        {
         }
 
         protected virtual void OnOpen()
