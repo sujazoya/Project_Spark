@@ -1,56 +1,115 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace ProjectSpark.Scanner
 {
+    [DisallowMultipleComponent]
     public sealed class ScannerReconstructionVFXTest : MonoBehaviour
     {
+        [Header("Controller")]
         [SerializeField]
         private ScannerReconstructionVFXController controller;
 
+        [Header("Test")]
         [SerializeField, Min(0.01f)]
         private float testSpeed = 0.4f;
 
+        [SerializeField]
+        private bool holdVToScan = true;
+
         private float progress;
+        private bool scanning;
 
         private void Update()
         {
             if (controller == null)
                 return;
 
-            if (Input.GetKeyDown(KeyCode.V))
-            {
-                progress = 0f;
-                controller.StartReconstruction();
-            }
+            Keyboard keyboard = Keyboard.current;
 
-            if (Input.GetKey(KeyCode.V))
-            {
-                progress +=
-                    testSpeed *
-                    Time.deltaTime;
+            if (keyboard == null)
+                return;
 
-                progress =
-                    Mathf.Clamp01(progress);
+            HandleStart(keyboard);
+            HandleScan(keyboard);
+            HandleComplete(keyboard);
+            HandleReset(keyboard);
+        }
 
-                controller.SetProgress(progress);
-            }
+        // =========================================================
+        // START
+        // =========================================================
 
-            if (Input.GetKeyUp(KeyCode.V))
-            {
-                controller.StopReconstruction();
-            }
+        private void HandleStart(Keyboard keyboard)
+        {
+            if (!keyboard.vKey.wasPressedThisFrame)
+                return;
 
-            if (Input.GetKeyDown(KeyCode.B))
+            progress = 0f;
+            scanning = true;
+
+            controller.StartReconstruction();
+            controller.SetProgress(0f);
+        }
+
+        // =========================================================
+        // SCAN
+        // =========================================================
+
+        private void HandleScan(Keyboard keyboard)
+        {
+            if (!scanning)
+                return;
+
+            if (holdVToScan && !keyboard.vKey.isPressed)
+                return;
+
+            progress +=
+                testSpeed *
+                Time.deltaTime;
+
+            progress =
+                Mathf.Clamp01(progress);
+
+            controller.SetProgress(progress);
+
+            if (progress >= 1f)
             {
                 progress = 1f;
+                scanning = false;
+
                 controller.CompleteReconstruction();
             }
+        }
 
-            if (Input.GetKeyDown(KeyCode.N))
-            {
-                progress = 0f;
-                controller.ResetVFX();
-            }
+        // =========================================================
+        // COMPLETE
+        // =========================================================
+
+        private void HandleComplete(Keyboard keyboard)
+        {
+            if (!keyboard.bKey.wasPressedThisFrame)
+                return;
+
+            progress = 1f;
+            scanning = false;
+
+            controller.CompleteReconstruction();
+        }
+
+        // =========================================================
+        // RESET
+        // =========================================================
+
+        private void HandleReset(Keyboard keyboard)
+        {
+            if (!keyboard.nKey.wasPressedThisFrame)
+                return;
+
+            progress = 0f;
+            scanning = false;
+
+            controller.ResetVFX();
         }
     }
 }
