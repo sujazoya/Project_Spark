@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -7,29 +6,36 @@ namespace ProjectSpark.Scanner
     [DisallowMultipleComponent]
     public sealed class ScannerReconstructionVFXController : MonoBehaviour
     {
-        [Header("Target")]
+        [Header("References")]
         [SerializeField]
         private Transform targetRoot;
 
         [SerializeField]
-        private bool includeInactiveRenderers = false;
-
-        [Header("Effect04")]
-        [SerializeField]
-        private VisualEffect effect04Prefab;
+        private VisualEffect visualEffect;
 
         [SerializeField]
-        private Transform effectParent;
+        private ScannerReconstructionPointGenerator pointGenerator;
 
-        [Header("Particle Settings")]
+        [Header("Geometry Sampling")]
+        [SerializeField, Min(256)]
+        private int pointCount = 30000;
+
+        [SerializeField]
+        private bool buildOnStart;
+
+        [Header("Particle System")]
         [SerializeField, Min(0f)]
-        private float particleRate = 700f;
-
-        [Header("Rebuild")]
-        [SerializeField]
-        private bool rebuildOnAwake = true;
+        private float particleRate = 30000f;
 
         [Header("VFX Property Names")]
+        [SerializeField]
+        private string positionsProperty =
+            "_ReconstructionPositions";
+
+        [SerializeField]
+        private string pointCountProperty =
+            "_PointCount";
+
         [SerializeField]
         private string reconstructingProperty =
             "_IsReconstructing";
@@ -38,204 +44,131 @@ namespace ProjectSpark.Scanner
         private string particleRateProperty =
             "_ParticleRate";
 
-        private readonly List<ScannerReconstructionVFXTarget>
-            targets =
-                new List<ScannerReconstructionVFXTarget>();
+        [SerializeField]
+        private string revealHeightProperty =
+            "_RevealHeight";
 
-        private Bounds scannerBounds;
+        [SerializeField]
+        private string boundsMinProperty =
+            "_BoundsMin";
 
-        private bool scannerBoundsValid;
-        private bool isPlaying;
+        [SerializeField]
+        private string boundsMaxProperty =
+            "_BoundsMax";
+
+        private bool initialized;
+        private bool playing;
         private float revealHeight;
 
         public float RevealHeight =>
             revealHeight;
 
         public bool IsPlaying =>
-            isPlaying;
+            playing;
 
-        public IReadOnlyList<
-            ScannerReconstructionVFXTarget>
-            Targets =>
-            targets;
+        public int PointCount =>
+            pointGenerator != null
+                ? pointGenerator.PointCount
+                : 0;
 
         private void Awake()
         {
-            if (!rebuildOnAwake)
-                return;
+            ValidateReferences();
 
-            RebuildTargets();
-            ResetVFX();
+            // Deliberately do NOT build here.
+            // Building 30,000+ reconstruction points can be expensive.
         }
 
-        private void OnDestroy()
+        private void Start()
         {
-            ClearTargets();
+            if (buildOnStart)
+            {
+                BuildReconstructionData();
+                ResetVFX();
+            }
         }
 
         // =========================================================
         // BUILD
         // =========================================================
 
-        public void RebuildTargets()
+        public bool BuildReconstructionData()
         {
-            ClearTargets();
+            if (!ValidateReferences())
+                return false;
 
-            if (targetRoot == null)
+            ConfigureGenerator();
+
+            bool success =
+                pointGenerator.Build();
+
+            if (!success)
+            {
+                initialized = false;
+                return false;
+            }
+
+            GraphicsBuffer buffer =
+                pointGenerator.PositionBuffer;
+
+            if (buffer == null)
             {
                 Debug.LogError(
-                    $"{name}: Target Root is not assigned.",
+                    $"{name}: Point generator returned no GraphicsBuffer.",
                     this);
 
-                return;
+                initialized = false;
+                return false;
             }
 
-            if (effect04Prefab == null)
+            if (string.IsNullOrWhiteSpace(
+                    positionsProperty))
             {
                 Debug.LogError(
-                    $"{name}: Effect04 Prefab is not assigned.",
+                    $"{name}: Positions property name is empty.",
                     this);
 
-                return;
+                initialized = false;
+                return false;
             }
 
-            MeshRenderer[] renderers =
-                targetRoot.GetComponentsInChildren<MeshRenderer>(
-                    includeInactiveRenderers);
+            // Bind the Vector3 GraphicsBuffer.
+            visualEffect.SetGraphicsBuffer(
+                positionsProperty,
+                buffer);
 
-            if (renderers == null ||
-                renderers.Length == 0)
-            {
-                Debug.LogWarning(
-                    $"{name}: No MeshRenderers found under Target Root.",
-                    this);
+            visualEffect.SetUInt(
+                pointCountProperty,
+                (uint)pointGenerator.PointCount);
 
-                return;
-            }
+            Bounds bounds =
+                pointGenerator.WorldBounds;
 
-            CalculateScannerBounds(
-                renderers);
+            visualEffect.SetVector3(
+                boundsMinProperty,
+                bounds.min);
 
-            if (!scannerBoundsValid)
-            {
-                Debug.LogWarning(
-                    $"{name}: Scanner bounds could not be calculated.",
-                    this);
+            visualEffect.SetVector3(
+                boundsMaxProperty,
+                bounds.max);
 
-                return;
-            }
+            initialized = true;
 
-            Transform parent =
-                effectParent != null
-                    ? effectParent
-                    : transform;
-
-            for (int i = 0;
-                 i < renderers.Length;
-                 i++)
-            {
-                MeshRenderer renderer =
-                    renderers[i];
-
-                if (renderer == null)
-                    continue;
-
-                CreateTarget(
-                    renderer,
-                    parent);
-            }
-
-            revealHeight = 0f;
+            return true;
         }
 
-        private void CreateTarget(
-            MeshRenderer renderer,
-            Transform parent)
+        private void ConfigureGenerator()
         {
-            VisualEffect effect =
-                Instantiate(
-                    effect04Prefab,
-                    parent);
+            if (pointGenerator == null)
+                return;
 
-            effect.name =
-                $"Effect04_{renderer.gameObject.name}";
+            // Runtime value is copied here so the controller
+            // remains the single place controlling point density.
+            pointGenerator.SetPointCount(
+                pointCount);
 
-            ScannerReconstructionVFXTarget target =
-                effect.GetComponent<
-                    ScannerReconstructionVFXTarget>();
-
-            if (target == null)
-            {
-                target =
-                    effect.gameObject.AddComponent<
-                        ScannerReconstructionVFXTarget>();
-            }
-
-            target.Initialize(
-                renderer,
-                effect,
-                scannerBounds,
-                particleRate);
-
-            targets.Add(target);
-        }
-
-        private void ClearTargets()
-        {
-            for (int i = targets.Count - 1;
-                 i >= 0;
-                 i--)
-            {
-                ScannerReconstructionVFXTarget target =
-                    targets[i];
-
-                if (target == null)
-                    continue;
-
-                DestroyRuntime(
-                    target.gameObject);
-            }
-
-            targets.Clear();
-        }
-
-        // =========================================================
-        // BOUNDS
-        // =========================================================
-
-        private void CalculateScannerBounds(
-            MeshRenderer[] renderers)
-        {
-            scannerBounds =
-                new Bounds();
-
-            scannerBoundsValid =
-                false;
-
-            for (int i = 0;
-                 i < renderers.Length;
-                 i++)
-            {
-                MeshRenderer renderer =
-                    renderers[i];
-
-                if (renderer == null)
-                    continue;
-
-                if (!scannerBoundsValid)
-                {
-                    scannerBounds =
-                        renderer.bounds;
-
-                    scannerBoundsValid =
-                        true;
-                }
-                else
-                {
-                    scannerBounds.Encapsulate(
-                        renderer.bounds);
-                }
-            }
+            pointGenerator.SetTargetRoot(
+                targetRoot);
         }
 
         // =========================================================
@@ -244,32 +177,30 @@ namespace ProjectSpark.Scanner
 
         public void StartReconstruction()
         {
-            if (targets.Count == 0)
-                RebuildTargets();
+            if (!initialized)
+            {
+                if (!BuildReconstructionData())
+                    return;
+            }
 
-            if (targets.Count == 0)
+            if (visualEffect == null)
                 return;
 
-            isPlaying = true;
+            playing = true;
             revealHeight = 0f;
 
-            RefreshTargets();
+            ApplyRevealHeight();
 
-            for (int i = 0;
-                 i < targets.Count;
-                 i++)
-            {
-                ScannerReconstructionVFXTarget target =
-                    targets[i];
+            visualEffect.SetBool(
+                reconstructingProperty,
+                true);
 
-                if (target == null)
-                    continue;
+            visualEffect.SetFloat(
+                particleRateProperty,
+                particleRate);
 
-                target.SetRevealHeight(
-                    revealHeight);
-
-                target.Play();
-            }
+            visualEffect.Reinit();
+            visualEffect.Play();
         }
 
         // =========================================================
@@ -278,20 +209,18 @@ namespace ProjectSpark.Scanner
 
         public void StopReconstruction()
         {
-            isPlaying = false;
+            playing = false;
 
-            for (int i = 0;
-                 i < targets.Count;
-                 i++)
-            {
-                ScannerReconstructionVFXTarget target =
-                    targets[i];
+            if (visualEffect == null)
+                return;
 
-                if (target == null)
-                    continue;
+            visualEffect.SetBool(
+                reconstructingProperty,
+                false);
 
-                target.Stop();
-            }
+            visualEffect.SetFloat(
+                particleRateProperty,
+                0f);
         }
 
         // =========================================================
@@ -300,21 +229,25 @@ namespace ProjectSpark.Scanner
 
         public void ResetVFX()
         {
-            isPlaying = false;
+            playing = false;
             revealHeight = 0f;
 
-            for (int i = 0;
-                 i < targets.Count;
-                 i++)
-            {
-                ScannerReconstructionVFXTarget target =
-                    targets[i];
+            if (visualEffect == null)
+                return;
 
-                if (target == null)
-                    continue;
+            visualEffect.SetBool(
+                reconstructingProperty,
+                false);
 
-                target.ResetTarget();
-            }
+            visualEffect.SetFloat(
+                particleRateProperty,
+                0f);
+
+            visualEffect.SetFloat(
+                revealHeightProperty,
+                0f);
+
+            visualEffect.Reinit();
         }
 
         // =========================================================
@@ -323,22 +256,28 @@ namespace ProjectSpark.Scanner
 
         public void CompleteReconstruction()
         {
-            revealHeight = 1f;
-
-            for (int i = 0;
-                 i < targets.Count;
-                 i++)
+            if (!initialized)
             {
-                ScannerReconstructionVFXTarget target =
-                    targets[i];
-
-                if (target == null)
-                    continue;
-
-                target.Complete();
+                if (!BuildReconstructionData())
+                    return;
             }
 
-            isPlaying = true;
+            revealHeight = 1f;
+
+            ApplyRevealHeight();
+
+            if (visualEffect == null)
+                return;
+
+            visualEffect.SetBool(
+                reconstructingProperty,
+                true);
+
+            visualEffect.SetFloat(
+                particleRateProperty,
+                particleRate);
+
+            playing = true;
         }
 
         // =========================================================
@@ -352,95 +291,92 @@ namespace ProjectSpark.Scanner
                 Mathf.Clamp01(
                     normalized);
 
-            ApplyReveal();
+            ApplyRevealHeight();
         }
 
         public void SetRevealHeight(
             float normalized)
         {
-            SetProgress(normalized);
+            SetProgress(
+                normalized);
         }
 
-        private void ApplyReveal()
+        private void ApplyRevealHeight()
         {
-            for (int i = 0;
-                 i < targets.Count;
-                 i++)
-            {
-                ScannerReconstructionVFXTarget target =
-                    targets[i];
-
-                if (target == null)
-                    continue;
-
-                target.SetRevealHeight(
-                    revealHeight);
-            }
-        }
-
-        // =========================================================
-        // REFRESH
-        // =========================================================
-
-        public void RefreshTargets()
-        {
-            if (!scannerBoundsValid)
+            if (visualEffect == null)
                 return;
 
-            for (int i = 0;
-                 i < targets.Count;
-                 i++)
+            visualEffect.SetFloat(
+                revealHeightProperty,
+                revealHeight);
+        }
+
+        // =========================================================
+        // REBUILD
+        // =========================================================
+
+        public void Rebuild()
+        {
+            bool wasPlaying =
+                playing;
+
+            if (wasPlaying)
             {
-                ScannerReconstructionVFXTarget target =
-                    targets[i];
+                StopReconstruction();
+            }
 
-                if (target == null)
-                    continue;
+            initialized =
+                BuildReconstructionData();
 
-                target.Refresh(
-                    scannerBounds);
+            revealHeight = 0f;
 
-                target.SetRevealHeight(
-                    revealHeight);
+            if (initialized)
+            {
+                ResetVFX();
+            }
+
+            if (wasPlaying)
+            {
+                StartReconstruction();
             }
         }
 
         // =========================================================
-        // RUNTIME
+        // VALIDATION
         // =========================================================
 
-        private void Update()
+        private bool ValidateReferences()
         {
-            if (!isPlaying)
-                return;
+            bool valid = true;
 
-            /*
-             * We deliberately do not update the target bounds
-             * every frame.
-             *
-             * Renderer bounds normally remain stable and
-             * constantly rebuilding them would be wasteful.
-             */
-        }
-
-        // =========================================================
-        // CLEANUP
-        // =========================================================
-
-        private static void DestroyRuntime(
-            GameObject target)
-        {
-            if (target == null)
-                return;
-
-            if (Application.isPlaying)
+            if (targetRoot == null)
             {
-                Destroy(target);
+                Debug.LogError(
+                    $"{name}: Target Root is not assigned.",
+                    this);
+
+                valid = false;
             }
-            else
+
+            if (visualEffect == null)
             {
-                DestroyImmediate(target);
+                Debug.LogError(
+                    $"{name}: Visual Effect is not assigned.",
+                    this);
+
+                valid = false;
             }
+
+            if (pointGenerator == null)
+            {
+                Debug.LogError(
+                    $"{name}: Point Generator is not assigned.",
+                    this);
+
+                valid = false;
+            }
+
+            return valid;
         }
     }
 }

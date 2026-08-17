@@ -25,22 +25,27 @@ namespace ProjectSpark.Scanner
             if (controller == null)
                 return;
 
-            Keyboard keyboard = Keyboard.current;
+            Keyboard keyboard =
+                Keyboard.current;
 
             if (keyboard == null)
                 return;
 
-            HandleStart(keyboard);
-            HandleScan(keyboard);
-            HandleComplete(keyboard);
-            HandleReset(keyboard);
+            HandleStart(
+                keyboard);
+
+            HandleScan(
+                keyboard);
+
+            HandleComplete(
+                keyboard);
+
+            HandleReset(
+                keyboard);
         }
 
-        // =========================================================
-        // START
-        // =========================================================
-
-        private void HandleStart(Keyboard keyboard)
+        private void HandleStart(
+            Keyboard keyboard)
         {
             if (!keyboard.vKey.wasPressedThisFrame)
                 return;
@@ -49,29 +54,30 @@ namespace ProjectSpark.Scanner
             scanning = true;
 
             controller.StartReconstruction();
-            controller.SetProgress(0f);
         }
 
-        // =========================================================
-        // SCAN
-        // =========================================================
-
-        private void HandleScan(Keyboard keyboard)
+        private void HandleScan(
+            Keyboard keyboard)
         {
             if (!scanning)
                 return;
 
-            if (holdVToScan && !keyboard.vKey.isPressed)
+            if (holdVToScan &&
+                !keyboard.vKey.isPressed)
+            {
                 return;
+            }
 
             progress +=
                 testSpeed *
                 Time.deltaTime;
 
             progress =
-                Mathf.Clamp01(progress);
+                Mathf.Clamp01(
+                    progress);
 
-            controller.SetProgress(progress);
+            controller.SetProgress(
+                progress);
 
             if (progress >= 1f)
             {
@@ -82,32 +88,26 @@ namespace ProjectSpark.Scanner
             }
         }
 
-        // =========================================================
-        // COMPLETE
-        // =========================================================
-
-        private void HandleComplete(Keyboard keyboard)
+        private void HandleComplete(
+            Keyboard keyboard)
         {
             if (!keyboard.bKey.wasPressedThisFrame)
                 return;
 
-            progress = 1f;
             scanning = false;
+            progress = 1f;
 
             controller.CompleteReconstruction();
         }
 
-        // =========================================================
-        // RESET
-        // =========================================================
-
-        private void HandleReset(Keyboard keyboard)
+        private void HandleReset(
+            Keyboard keyboard)
         {
             if (!keyboard.nKey.wasPressedThisFrame)
                 return;
 
-            progress = 0f;
             scanning = false;
+            progress = 0f;
 
             controller.ResetVFX();
         }
