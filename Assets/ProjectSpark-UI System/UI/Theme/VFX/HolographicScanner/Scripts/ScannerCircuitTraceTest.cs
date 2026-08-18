@@ -17,6 +17,7 @@ namespace ProjectSpark.Scanner
             if (controller == null)
                 return;
 
+            // C = Start trace from 0
             if (Input.GetKeyDown(KeyCode.C))
             {
                 progress = 0f;
@@ -24,6 +25,7 @@ namespace ProjectSpark.Scanner
                 controller.StartTrace();
             }
 
+            // Hold C = animate 0 -> 1
             if (Input.GetKey(KeyCode.C))
             {
                 progress +=
@@ -37,11 +39,15 @@ namespace ProjectSpark.Scanner
                     progress);
             }
 
+            // X = stop/reset
             if (Input.GetKeyDown(KeyCode.X))
             {
+                progress = 0f;
+
                 controller.StopTrace();
             }
 
+            // Z = complete immediately
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 progress = 1f;

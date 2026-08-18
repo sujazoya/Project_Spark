@@ -151,6 +151,7 @@ namespace AAAUI.VFX
         // CURVE
         // =========================================================
 
+
         private void BuildCurve(
             Vector3[] points)
         {
@@ -705,6 +706,36 @@ namespace AAAUI.VFX
 
             renderer.sharedMaterial =
                 material;
+        }
+        public void SetScannerOverlayMaterial(
+     Material scannerMaterial)
+        {
+            MeshRenderer renderer =
+                GetComponent<MeshRenderer>();
+
+            if (renderer == null ||
+                scannerMaterial == null)
+                return;
+
+            Material[] materials =
+                renderer.sharedMaterials;
+
+            if (materials.Length == 0)
+                return;
+
+            if (materials.Length == 1)
+            {
+                renderer.sharedMaterials = new[]
+                {
+            materials[0],
+            scannerMaterial
+        };
+
+                return;
+            }
+
+            materials[1] = scannerMaterial;
+            renderer.sharedMaterials = materials;
         }
     }
 }

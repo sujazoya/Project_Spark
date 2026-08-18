@@ -1,37 +1,61 @@
+using AAAUI.VFX;
 using UnityEngine;
 
 namespace ProjectSpark.Scanner
 {
     public sealed class ScannerCircuitTraceController : MonoBehaviour
     {
-        [Header("Wire Renderers")]
+        [Header("Wire System")]
         [SerializeField]
-        private Renderer[] wireRenderers;
+        private SignalPath_Manager pathManager;
+
+        [Header("Scanner Overlay")]
+        [SerializeField]
+        private Material scannerMaterial;
 
         [Header("Shader Property")]
         [SerializeField]
-        private string progressProperty = "_ScanProgress";
-
-        [Header("Animation")]
-        [SerializeField, Range(0f, 1f)]
-        private float progress;
-
-        [SerializeField]
-        private bool active;
+        private string progressProperty = "_ScannerProgress";
 
         private MaterialPropertyBlock propertyBlock;
         private int progressId;
 
+        private float progress;
+        private bool tracing;
+
+        public float Progress => progress;
+        public bool IsTracing => tracing;
+
         private void Awake()
         {
-            propertyBlock =
-                new MaterialPropertyBlock();
+            propertyBlock = new MaterialPropertyBlock();
 
             progressId =
-                Shader.PropertyToID(
-                    progressProperty);
+                Shader.PropertyToID(progressProperty);
+        }
 
-            ApplyProgress();
+        public void StartTrace()
+        {
+            tracing = true;
+            progress = 0f;
+
+            RefreshMeshes();
+        }
+
+        public void StopTrace()
+        {
+            tracing = false;
+            progress = 0f;
+
+            RefreshMeshes();
+        }
+
+        public void CompleteTrace()
+        {
+            tracing = false;
+            progress = 1f;
+
+            RefreshMeshes();
         }
 
         public void SetProgress(float normalized)
@@ -39,44 +63,39 @@ namespace ProjectSpark.Scanner
             progress =
                 Mathf.Clamp01(normalized);
 
-            ApplyProgress();
+            RefreshMeshes();
         }
 
-        public void StartTrace()
+        public void RefreshMeshes()
         {
-            active = true;
-            ApplyProgress();
-        }
+            if (pathManager == null)
+                return;
 
-        public void StopTrace()
-        {
-            active = false;
+            SignalPath[] paths =
+                pathManager.Paths;
 
-            progress = 0f;
-
-            ApplyProgress();
-        }
-
-        public void CompleteTrace()
-        {
-            active = false;
-
-            progress = 1f;
-
-            ApplyProgress();
-        }
-
-        private void ApplyProgress()
-        {
-            if (wireRenderers == null)
+            if (paths == null)
                 return;
 
             for (int i = 0;
-                 i < wireRenderers.Length;
+                 i < paths.Length;
                  i++)
             {
-                Renderer renderer =
-                    wireRenderers[i];
+                SignalPath path = paths[i];
+
+                if (path == null)
+                    continue;
+
+                SignalPathMesh mesh =
+                    path.GetComponent<SignalPathMesh>();
+
+                if (mesh == null)
+                    continue;
+
+                EnsureOverlay(mesh);
+
+                MeshRenderer renderer =
+                    mesh.GetComponent<MeshRenderer>();
 
                 if (renderer == null)
                     continue;
@@ -86,13 +105,21 @@ namespace ProjectSpark.Scanner
 
                 propertyBlock.SetFloat(
                     progressId,
-                    active || progress > 0f
-                        ? progress
-                        : 0f);
+                    progress);
 
                 renderer.SetPropertyBlock(
                     propertyBlock);
             }
+        }
+
+        private void EnsureOverlay(
+            SignalPathMesh mesh)
+        {
+            if (scannerMaterial == null)
+                return;
+
+            mesh.SetScannerOverlayMaterial(
+                scannerMaterial);
         }
     }
 }

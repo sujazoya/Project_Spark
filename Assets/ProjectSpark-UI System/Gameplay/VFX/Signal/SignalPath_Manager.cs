@@ -125,6 +125,8 @@ namespace AAAUI.VFX
         {
             return currentPath;
         }
+        public SignalPath[] Paths =>
+    paths;
 
         /// <summary>
         /// Returns the mesh belonging to the current path.
