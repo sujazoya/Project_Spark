@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2860495927598346408
+--- !u!114 &-8237876440622475137
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ScannerScanPlane
-  m_Shader: {fileID: -6465566751694194690, guid: 190192e26cdb8e547acf55fa8c29fd1d, type: 3}
+  m_Name: ScannerComponent
+  m_Shader: {fileID: -6465566751694194690, guid: 3072095a9bfc53a47aa6730cc1a83230, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -59,29 +59,35 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 2
     - _CastShadows: 0
+    - _ComponentBodyIntensity: 0.1
+    - _ComponentEdgeIntensity: 6
+    - _ComponentEdgeWidth: 0.035
+    - _ComponentFresnelIntensity: 0.35
+    - _ComponentFresnelPower: 4
+    - _ComponentIdentified: 0.651
+    - _ComponentNoiseScale: 5
+    - _ComponentNoiseStrength: 0.443
+    - _ComponentNoiseStrength_1: 0.05
+    - _ComponentScanIntensity: 3.02
+    - _ComponentScanOpacity: 0.076
+    - _ComponentScanProgress: 0
+    - _ComponentSegmentCount: 12
+    - _ComponentSegmentWidth: 0.35
     - _Cull: 0
     - _DstBlend: 1
     - _DstBlendAlpha: 1
-    - _EdgeWidth: 0.054
-    - _GridScale: 29.7
-    - _GridStrength: 0.08
-    - _Grid_Strength: 0.181
-    - _NoiseScale: 3.6
-    - _Noise_Strength: 0.29
+    - _IdentificationIntensity: 0.45
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ScanAlpha: 0.35
-    - _ScanIntensity: 5.04
-    - _ScanPosition: 0.647
-    - _ScanWidth: 0.01
+    - _ScanMaxY: 0.5
+    - _ScanMinY: -0.5
     - _SrcBlend: 5
     - _SrcBlendAlpha: 1
     - _Surface: 1
-    - _ZTest: 4
+    - _ZTest: 8
     - _ZWrite: 0
-    - _ZWriteControl: 2
+    - _ZWriteControl: 0
     m_Colors:
-    - _ScanColor: {r: 0, g: 1.5157166, b: 1.0007694, a: 1}
-    - _Scan_Color: {r: 0, g: 1, b: 0.6602616, a: 1}
+    - _TraceColor: {r: 0, g: 1, b: 0.9515676, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
