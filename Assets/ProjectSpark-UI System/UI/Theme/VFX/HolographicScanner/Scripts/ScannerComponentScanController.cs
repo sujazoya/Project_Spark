@@ -20,39 +20,50 @@ namespace ProjectSpark.Scanner
         // Effect 07
         // ---------------------------------------------------------------------
 
+        
         public void SetProgress(
-            float globalProgress)
-        {
-            globalProgress =
-                Mathf.Clamp01(globalProgress);
+    float globalProgress)
+{
+    globalProgress =
+        Mathf.Clamp01(globalProgress);
 
-            if (targets == null)
-                return;
+    if (targets == null)
+        return;
 
-            for (int i = 0;
-                 i < targets.Length;
-                 i++)
-            {
-                ScannerComponentTarget target =
-                    targets[i];
+    for (int i = 0;
+         i < targets.Length;
+         i++)
+    {
+        ScannerComponentTarget target =
+            targets[i];
 
-                if (target == null)
-                    continue;
+        if (target == null)
+            continue;
 
-                float localProgress =
-                    target.EvaluateLocalProgress(
-                        globalProgress);
+        float localProgress =
+            target.EvaluateLocalProgress(
+                globalProgress);
 
-                target.SetScanProgress(
-                    localProgress);
+        target.SetScanProgress(
+            localProgress);
 
-                bool identified =
-                    localProgress >= 1f;
+        bool identified =
+            localProgress >= 1f;
 
-                target.SetIdentified(
-                    identified);
-            }
-        }
+        target.SetIdentified(
+            identified);
+
+        float interaction =
+            target.EvaluateInteractionPulse(
+                globalProgress);
+
+        target.SetInteractionProgress(
+            interaction);
+
+        target.SetInteractionVisible(
+            interaction > 0.001f);
+    }
+}
 
         // ---------------------------------------------------------------------
         // Reset
@@ -200,6 +211,25 @@ namespace ProjectSpark.Scanner
                 target.SetProjectionProgress(0f);
                 target.SetProjectionVisible(false);
             }
+        }
+        public void SetInteractionProgress(
+            ScannerComponentTarget target,
+            float progress)
+        {
+            if (target == null)
+                return;
+
+            target.SetInteractionProgress(progress);
+        }
+
+        public void SetInteractionVisible(
+            ScannerComponentTarget target,
+            bool visible)
+        {
+            if (target == null)
+                return;
+
+            target.SetInteractionVisible(visible);
         }
     }
 }

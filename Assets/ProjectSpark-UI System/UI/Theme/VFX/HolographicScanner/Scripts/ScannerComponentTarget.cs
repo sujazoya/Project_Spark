@@ -36,12 +36,28 @@ namespace ProjectSpark.Scanner
         private static readonly int IdentifiedID =
             Shader.PropertyToID("_ComponentIdentified");
 
+            private static readonly int InteractionProgressID =
+    Shader.PropertyToID("_InteractionProgress");
+
+    [Header("Effect 09 - Component Interaction")]
+[SerializeField]
+private Material interactionMaterial;
+
+private Renderer[] interactionOverlays;
+private MaterialPropertyBlock[] interactionPropertyBlocks;
+
         // ---------------------------------------------------------------------
         // Effect 08 shader properties
         // ---------------------------------------------------------------------
 
         private static readonly int ProjectionProgressID =
             Shader.PropertyToID("_ProjectionProgress");
+
+            [SerializeField, Range(0.001f, 0.25f)]
+        private float interactionWindow = 0.05f;
+
+        public float InteractionWindow =>
+            interactionWindow;
 
         // ---------------------------------------------------------------------
         // Identity
@@ -146,13 +162,39 @@ namespace ProjectSpark.Scanner
 
             CreateScannerOverlays();
             CreateProjectionOverlays();
+            CreateInteractionOverlays();
 
             SetScanProgress(0f);
             SetIdentified(false);
 
             SetProjectionProgress(0f);
             SetProjectionVisible(false);
+            SetInteractionProgress(0f);
+            SetInteractionVisible(false);
         }
+        public float EvaluateInteractionPulse(
+        float globalProgress)
+            {
+                float center =
+                    scanStart;
+
+                float halfWindow =
+                    interactionWindow;
+
+                float distance =
+                    Mathf.Abs(
+                        globalProgress - center);
+
+                if (distance >= halfWindow)
+                    return 0f;
+
+                float normalized =
+                    1f -
+                    Mathf.Clamp01(
+                        distance / halfWindow);
+
+                return normalized;
+            }
 
         private void ValidateSources()
         {
@@ -176,6 +218,65 @@ namespace ProjectSpark.Scanner
                 Debug.LogWarning(
                     $"[{name}] No source renderers assigned.",
                     this);
+            }
+        }
+        public void SetInteractionProgress(
+             float progress)
+        {
+            progress = Mathf.Clamp01(progress);
+
+            if (interactionOverlays == null)
+                return;
+
+            for (int i = 0;
+                i < interactionOverlays.Length;
+                i++)
+            {
+                Renderer renderer =
+                    interactionOverlays[i];
+
+                if (renderer == null)
+                    continue;
+
+                MaterialPropertyBlock block =
+                    interactionPropertyBlocks[i];
+
+                if (block == null)
+                {
+                    block =
+                        new MaterialPropertyBlock();
+
+                    interactionPropertyBlocks[i] =
+                        block;
+                }
+
+                renderer.GetPropertyBlock(block);
+
+                block.SetFloat(
+                    InteractionProgressID,
+                    progress);
+
+                renderer.SetPropertyBlock(block);
+            }
+        }
+
+        public void SetInteractionVisible(
+            bool visible)
+        {
+            if (interactionOverlays == null)
+                return;
+
+            for (int i = 0;
+                i < interactionOverlays.Length;
+                i++)
+            {
+                Renderer renderer =
+                    interactionOverlays[i];
+
+                if (renderer == null)
+                    continue;
+
+                renderer.enabled = visible;
             }
         }
 
@@ -672,5 +773,64 @@ namespace ProjectSpark.Scanner
                     Destroy(renderer.gameObject);
             }
         }
+        private void CreateInteractionOverlays()
+{
+    if (sourceRenderers == null ||
+        sourceRenderers.Length == 0)
+    {
+        return;
+    }
+
+    interactionOverlays =
+        new Renderer[sourceRenderers.Length];
+
+    interactionPropertyBlocks =
+        new MaterialPropertyBlock[sourceRenderers.Length];
+
+    if (interactionMaterial == null)
+    {
+        Debug.LogWarning(
+            $"[{name}] Effect 09 interaction material is not assigned.",
+            this);
+
+        return;
+    }
+
+    for (int i = 0; i < sourceRenderers.Length; i++)
+    {
+        Renderer source =
+            sourceRenderers[i];
+
+        if (source == null)
+            continue;
+
+        GameObject overlay =
+            CreateOverlayObject(
+                source,
+                i,
+                "__ScannerInteraction_",
+                interactionMaterial);
+
+        if (overlay == null)
+            continue;
+
+        Renderer overlayRenderer =
+            overlay.GetComponent<Renderer>();
+
+        if (overlayRenderer == null)
+        {
+            Destroy(overlay);
+            continue;
+        }
+
+        interactionOverlays[i] =
+            overlayRenderer;
+
+        interactionPropertyBlocks[i] =
+            new MaterialPropertyBlock();
+
+        overlayRenderer.enabled = false;
+    }
+}
     }
 }

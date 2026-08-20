@@ -170,5 +170,14 @@ namespace AAAUI.VFX
             currentPath = null;
             currentMesh = null;
         }
+
+        public SignalPathMesh GetMeshForPath(
+    SignalPath path)
+{
+    if (path == null)
+        return null;
+
+    return path.GetComponent<SignalPathMesh>();
+}
     }
 }

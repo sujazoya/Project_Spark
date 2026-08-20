@@ -40,6 +40,18 @@ namespace AAAUI.VFX
 
         private Mesh mesh;
 
+        public MeshFilter MeshFilter =>
+    GetComponent<MeshFilter>();
+
+public MeshRenderer MeshRenderer =>
+    GetComponent<MeshRenderer>();
+
+public Mesh GeneratedMesh =>
+    mesh;
+
+    public MeshRenderer ScannerRenderer =>
+    GetComponent<MeshRenderer>();
+
         private readonly List<Vector3> curvePoints =
             new List<Vector3>();
 
