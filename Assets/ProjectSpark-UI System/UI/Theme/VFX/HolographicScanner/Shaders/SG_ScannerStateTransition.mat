@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4966103688202996468
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
-  version: 10
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: _ScannerCircuitTrace
-  m_Shader: {fileID: -6465566751694194690, guid: f7b232f1e8b7c9242b1a71927c7b30e8, type: 3}
+  m_Name: SG_ScannerStateTransition
+  m_Shader: {fileID: -6465566751694194690, guid: 07e827cedef2a654cb2b1998cf833521, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -34,9 +21,9 @@ Material:
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
-  - MOTIONVECTORS
   - DepthOnly
   - SHADOWCASTER
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -62,29 +49,41 @@ Material:
     - _Cull: 0
     - _DstBlend: 1
     - _DstBlendAlpha: 1
-    - _FlowDirection: 1
-    - _FlowIntensity: 3
-    - _FlowSpeed: 1.2
-    - _FlowSpeed_1: 1.2
-    - _FlowWidth: 0.12
-    - _FresnelPower: 3
-    - _NoiseScale: 18
-    - _NoiseStrength: 0.12
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RevealEdgeIntensity: 5
-    - _RevealEdgeWidth: 0.025
-    - _RevealWidth: 0.08
-    - _ScanProgress: 0.175
     - _SrcBlend: 5
     - _SrcBlendAlpha: 1
     - _Surface: 1
-    - _TraceAlpha: 0.5
-    - _TraceIntensity: 20
-    - _ZTest: 4
+    - _TransitionActive: 0
+    - _TransitionDirection: -1
+    - _TransitionEdgeIntensity: 5
+    - _TransitionEdgeWidth: 0.025
+    - _TransitionIntensity: 2
+    - _TransitionNoiseScale: 10
+    - _TransitionNoiseStrength: 0.04
+    - _TransitionOpacity: 0.16
+    - _TransitionProgress: 0
+    - _TransitionScanlineCount: 32
+    - _TransitionScanlineIntensity: 0.25
+    - _TransitionScanlineWidth: 0.025
+    - _TransitionWidth: 0.12
+    - _ZTest: 8
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - _TraceColor: {r: 0.004716992, g: 0.8811976, b: 1, a: 1}
+    - _TransitionColor: {r: 0, g: 0.9587312, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!114 &6322398840887956334
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
+  version: 10

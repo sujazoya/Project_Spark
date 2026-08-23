@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4966103688202996468
+--- !u!114 &-7036289190462308502
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: _ScannerCircuitTrace
-  m_Shader: {fileID: -6465566751694194690, guid: f7b232f1e8b7c9242b1a71927c7b30e8, type: 3}
+  m_Name: SG_HolographicComponentPanel
+  m_Shader: {fileID: -6465566751694194690, guid: ab20a924515b9fc4b89bc1d85354b758, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -34,13 +34,17 @@ Material:
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
-  - MOTIONVECTORS
   - DepthOnly
   - SHADOWCASTER
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -62,29 +66,38 @@ Material:
     - _Cull: 0
     - _DstBlend: 1
     - _DstBlendAlpha: 1
-    - _FlowDirection: 1
-    - _FlowIntensity: 3
-    - _FlowSpeed: 1.2
-    - _FlowSpeed_1: 1.2
-    - _FlowWidth: 0.12
-    - _FresnelPower: 3
-    - _NoiseScale: 18
-    - _NoiseStrength: 0.12
+    - _EdgeIntensity: 5
+    - _EdgeWidth: 0.015
+    - _FlickerAmount: 0.1
+    - _FlickerSpeed: 7
+    - _HorizontalGridAmount: 20
+    - _Line_1: 0.7
+    - _Line_2: 0.58
+    - _Line_3: 0.46
+    - _Line_4: 0.34
+    - _Line_5: 0.22
+    - _NoiseIntensity: 0.15
+    - _NoiseScale: 15
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RevealEdgeIntensity: 5
-    - _RevealEdgeWidth: 0.025
-    - _RevealWidth: 0.08
-    - _ScanProgress: 0.175
+    - _ScanIntensity: 3
+    - _ScanSpeed: 0.5
+    - _ScanWidth: 0
+    - _ShowLines: 1
     - _SrcBlend: 5
     - _SrcBlendAlpha: 1
     - _Surface: 1
-    - _TraceAlpha: 0.5
-    - _TraceIntensity: 20
+    - _SweepIntensity: 4
+    - _SweepSpeed: 0
+    - _SweepWidth: 0.025
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
+    - _alpha: 1
+    - _line_length: 0.008
     m_Colors:
-    - _TraceColor: {r: 0.004716992, g: 0.8811976, b: 1, a: 1}
+    - _AccentColor: {r: 1, g: 0.2098398, b: 0, a: 1}
+    - _BaseColor: {r: 0.003921569, g: 0.2109257, b: 0.2509804, a: 1}
+    - _GlowColor: {r: 0, g: 0.84313726, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

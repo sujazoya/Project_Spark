@@ -39,6 +39,7 @@ namespace AAAUI.VFX
         private SignalPath path;
 
         private Mesh mesh;
+        
 
         public MeshFilter MeshFilter =>
     GetComponent<MeshFilter>();
