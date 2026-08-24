@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ScannerComponentProjection_mat
-  m_Shader: {fileID: -6465566751694194690, guid: 387413c359537f1488a098aea8fff81e, type: 3}
+  m_Name: SG_HologramObject
+  m_Shader: {fileID: -6465566751694194690, guid: 8368bb933dc69c747bb54a5b8c5c1e15, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -22,8 +22,8 @@ Material:
     RenderType: Transparent
   disabledShaderPasses:
   - DepthOnly
-  - MOTIONVECTORS
   - SHADOWCASTER
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -49,32 +49,36 @@ Material:
     - _Cull: 0
     - _DstBlend: 1
     - _DstBlendAlpha: 1
-    - _ProjectionEdgeIntensity: 1.2
-    - _ProjectionFresnelIntensity: 0.75
-    - _ProjectionFresnelPower: 3
-    - _ProjectionHeight: 0.12
-    - _ProjectionIntensity: 0.65
-    - _ProjectionNoiseScale: 5
-    - _ProjectionNoiseStrength: 0.1
-    - _ProjectionOpacity: 0.18
-    - _ProjectionProgress: 1
-    - _ProjectionRisePower: 1.5
-    - _ProjectionScanlineCount: 36
-    - _ProjectionScanlineIntensity: 0.5
-    - _ProjectionScanlineWidth: 0.035
+    - _FlickerAmount: 0.1
+    - _FlickerSpeed: 8
+    - _FresnelPower: 3
+    - _GridDensity: 35
+    - _GridLineWidth: 0.08
+    - _HoloAlpha: 0
+    - _HoloIntensity: 5.54
+    - _InspectionMode: 0
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ScanIntensity: 2
+    - _ScanSpeed: 0.35
+    - _ScanWidth: 0.08
+    - _ScanlineDensity: 120
+    - _ScanlineStrength: 0.25
+    - _ScanlineWidth: 0.12
     - _SrcBlend: 5
     - _SrcBlendAlpha: 1
     - _Surface: 1
+    - _XRayIntensity: 1.5
     - _ZTest: 4
     - _ZWrite: 0
-    - _ZWriteControl: 2
+    - _ZWriteControl: 0
     m_Colors:
-    - _TraceColor: {r: 0, g: 0.8105302, b: 1, a: 1}
+    - _HoloColor: {r: 0, g: 1, b: 0.8844981, a: 1}
+    - _HoloGridColor: {r: 0, g: 0.3825395, b: 0.4811321, a: 1}
+    - _XRayColor: {r: 5, g: 166, b: 288, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &7386053287207211915
+--- !u!114 &926839530001269156
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

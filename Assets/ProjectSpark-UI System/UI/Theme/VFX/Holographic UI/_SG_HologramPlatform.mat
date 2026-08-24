@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SG_ScannerFaultLocalization
-  m_Shader: {fileID: -6465566751694194690, guid: 2230f83b3d47689469d5c9bbb4d0ac1a, type: 3}
+  m_Name: _SG_HologramPlatform
+  m_Shader: {fileID: -6465566751694194690, guid: 092f6b18cec463e48915766509bec183, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -21,9 +21,9 @@ Material:
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
-  - MOTIONVECTORS
   - DepthOnly
   - SHADOWCASTER
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -42,27 +42,29 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Alpha: 1
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _Blend: 2
+    - _BaseAlpha: 1
+    - _Blend: 0
     - _CastShadows: 0
     - _Cull: 0
-    - _DstBlend: 1
-    - _DstBlendAlpha: 1
-    - _FaultActive: 0
-    - _FaultCoreIntensity: 2
-    - _FaultHaloIntensity: 0.7
-    - _FaultIntensity: 4
-    - _FaultNoiseScale: 14
-    - _FaultNoiseStrength: 0.05
-    - _FaultOpacity: 0.22
-    - _FaultPosition: 0.5
-    - _FaultPulseSpeed: 2
-    - _FaultPulseWidth: 0.08
-    - _FaultSeverity: 1
-    - _FaultWidth: 0.035
+    - _DstBlend: 10
+    - _DstBlendAlpha: 10
+    - _EdgeIntensity: 2
+    - _EdgePower: 3
+    - _Intensity: 0.67
+    - _PulseIntensity: 0.3
+    - _PulseSpeed: 2
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _RingDensity: 8
+    - _RingIntensity: 2
+    - _RingSpeed: 0.048
+    - _RingWidth: 0.08
+    - _ScanlineDensity: 80
+    - _ScanlineIntensity: 0.5
+    - _ScanlineSpeed: 2
     - _SrcBlend: 5
     - _SrcBlendAlpha: 1
     - _Surface: 1
@@ -70,10 +72,10 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - _FaultColor: {r: 12.189765, g: 12.268822, b: 0.86807686, a: 1}
+    - _HoloColor: {r: 0, g: 0.2758026, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &9063280655142445405
+--- !u!114 &6378610833798667996
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

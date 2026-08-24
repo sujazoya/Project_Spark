@@ -8,17 +8,23 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: LiberationSans SDF Material
-  m_Shader: {fileID: 4800000, guid: 010af11808e206848820adc789c9ae38, type: 3}
-  m_Parent: {fileID: 2100000, guid: 08ccd4464e06de7479c82a386aa36b2c, type: 2}
+  m_Shader: {fileID: -6465566751694194690, guid: 162cc5c4a7d69534988a18b2d1cf8097, type: 3}
+  m_Parent: {fileID: 2100000, guid: fb93400d22d149f49b5ff5bbcb096946, type: 2}
   m_ModifiedSerializedProperties: 2
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_ValidKeywords:
+  - _SURFACE_TYPE_TRANSPARENT
+  m_InvalidKeywords:
+  - _RECEIVE_SHADOWS_OFF
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - DepthOnly
+  - MOTIONVECTORS
+  - SHADOWCASTER
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -29,7 +35,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Blend: 0
+    - _CastShadows: 0
+    - _DstBlend: 10
+    - _DstBlendAlpha: 10
     - _OutlineWidth: 0
+    - _QueueControl: 0
+    - _ReceiveShadows: 0
+    - _SrcBlend: 5
+    - _ZWriteControl: 2
     m_Colors:
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
