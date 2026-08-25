@@ -7,12 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SG_HologramObject
-  m_Shader: {fileID: -6465566751694194690, guid: 8368bb933dc69c747bb54a5b8c5c1e15, type: 3}
+  m_Name: Projection_Beam_objectView_2
+  m_Shader: {fileID: -6465566751694194690, guid: e1e09a42095815345899073635871ad5, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _MODES_NORMAL
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -45,43 +44,40 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _Blend: 2
+    - _BeamAlpha: 0.12
+    - _Beam_Density: 10
+    - _Beam_Intensity: 0
+    - _Blend: 0
+    - _BottomRadius: 4.68
+    - _BottomRadius_1: 0.98
     - _CastShadows: 0
+    - _CoreWidth: 0
+    - _CoreWidth_1: 4.09
     - _Cull: 0
-    - _DstBlend: 1
-    - _DstBlendAlpha: 1
-    - _FlickerAmount: 0.08
-    - _FlickerSpeed: 8
-    - _FresnelPower: 3
-    - _GridDensity: 35
-    - _GridLineWidth: 0.08
-    - _HoloAlpha: 0.65
-    - _HoloIntensity: 2
-    - _InspectionMode: 0
-    - _MODES: 0
+    - _DstBlend: 10
+    - _DstBlendAlpha: 10
+    - _EdgeSoftness: 0.919
+    - _NoiseScale: 0.1
+    - _NoiseSpeed: 0.5
+    - _NoiseStrength: 3.88
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ScanIntensity: 2
-    - _ScanSpeed: 0.35
-    - _ScanWidth: 0.08
-    - _ScanlineDensity: 120
-    - _ScanlineStrength: 0.35
-    - _ScanlineWidth: 0.12
+    - _ScanCount: 0
+    - _ScanIntensity: 0.01
+    - _ScanSpeed: 0
+    - _Scan_Width: 0.01
     - _SrcBlend: 5
     - _SrcBlendAlpha: 1
     - _Surface: 1
-    - _XRayAlpha: 0.2
-    - _XRayIntensity: 1.5
     - _ZTest: 4
     - _ZWrite: 0
-    - _ZWriteControl: 0
+    - _ZWriteControl: 2
     m_Colors:
-    - _HoloColor: {r: 0.03863991, g: 0.4161221, b: 0.7490198, a: 1}
-    - _HoloGridColor: {r: 0.04245281, g: 0.8048261, b: 1, a: 1}
-    - _XRayColor: {r: 0.01300382, g: 0.4317267, b: 0.7490198, a: 1}
+    - _BeamColor: {r: 0.019607842, g: 0.7647059, b: 0.7017804, a: 1}
+    - _BeamColor_1: {r: 0, g: 0.9622642, b: 0.7645227, a: 0.8862745}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &926839530001269156
+--- !u!114 &5606812036929028358
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

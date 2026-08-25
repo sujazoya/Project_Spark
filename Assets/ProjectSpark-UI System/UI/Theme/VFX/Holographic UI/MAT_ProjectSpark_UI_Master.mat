@@ -7,28 +7,28 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SG_HologramObject
-  m_Shader: {fileID: -6465566751694194690, guid: 8368bb933dc69c747bb54a5b8c5c1e15, type: 3}
+  m_Name: MAT_ProjectSpark_UI_Master
+  m_Shader: {fileID: -6465566751694194690, guid: a618e231752fe6d46898e0c1c3c273e0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _MODES_NORMAL
-  - _SURFACE_TYPE_TRANSPARENT
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap:
-    RenderType: Transparent
+    RenderType: Opaque
   disabledShaderPasses:
-  - DepthOnly
-  - SHADOWCASTER
   - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -45,43 +45,44 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _Blend: 2
-    - _CastShadows: 0
+    - _Blend: 0
+    - _BorderGlow: 3
+    - _BorderWidth: 0.015
+    - _CastShadows: 1
+    - _CornerRadius: 0.05
     - _Cull: 0
-    - _DstBlend: 1
-    - _DstBlendAlpha: 1
-    - _FlickerAmount: 0.08
-    - _FlickerSpeed: 8
-    - _FresnelPower: 3
-    - _GridDensity: 35
-    - _GridLineWidth: 0.08
-    - _HoloAlpha: 0.65
-    - _HoloIntensity: 2
-    - _InspectionMode: 0
-    - _MODES: 0
+    - _Disabled: 0
+    - _DisabledAmount: 0.3
+    - _DstBlend: 0
+    - _DstBlendAlpha: 0
+    - _Focused: 0
+    - _GlitchStrength: 0
+    - _Hover: 0
+    - _NoiseScale: 8
+    - _NoiseStrength: 0.03
+    - _Opacity: 1
+    - _Pressed: 0
+    - _PulseAmount: 0.2
+    - _PulseSpeed: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ScanIntensity: 2
-    - _ScanSpeed: 0.35
-    - _ScanWidth: 0.08
-    - _ScanlineDensity: 120
-    - _ScanlineStrength: 0.35
-    - _ScanlineWidth: 0.12
-    - _SrcBlend: 5
+    - _Reveal: 1
+    - _ScanScale: 0.5
+    - _ScanSpeed: 0.5
+    - _ScanStrength: 0.15
+    - _Selected: 0
+    - _SrcBlend: 1
     - _SrcBlendAlpha: 1
-    - _Surface: 1
-    - _XRayAlpha: 0.2
-    - _XRayIntensity: 1.5
+    - _Surface: 0
     - _ZTest: 4
-    - _ZWrite: 0
+    - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
-    - _HoloColor: {r: 0.03863991, g: 0.4161221, b: 0.7490198, a: 1}
-    - _HoloGridColor: {r: 0.04245281, g: 0.8048261, b: 1, a: 1}
-    - _XRayColor: {r: 0.01300382, g: 0.4317267, b: 0.7490198, a: 1}
+    - _BaseColor: {r: 0.0518868, g: 0.907464, b: 1, a: 1}
+    - _BorderColor: {r: 0.05098039, g: 0.278277, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &926839530001269156
+--- !u!114 &6671016840787700642
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

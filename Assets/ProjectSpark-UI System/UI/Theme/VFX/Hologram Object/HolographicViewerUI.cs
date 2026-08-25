@@ -7,6 +7,8 @@ namespace ProjectSpark.HolographicViewer
     {
         [SerializeField] private HolographicViewerCamera viewerCamera;
         [SerializeField] private HolographicObjectController objectController;
+        [SerializeField]
+private HolographicObjectVisualState visualState;
 
         public void Rotate()
         {
@@ -28,5 +30,29 @@ namespace ProjectSpark.HolographicViewer
             objectController.ResetView();
             viewerCamera.ResetView();
         }
+        public void SetNormal()
+            {
+                visualState.SetMode(0);
+            }
+
+            public void SetXRay()
+            {
+                visualState.SetMode(1);
+            }
+
+            public void SetInternal()
+            {
+                visualState.SetMode(2);
+            }
+
+            public void SetExploded()
+            {
+                visualState.SetMode(3);
+            }
+
+            public void SetWireframe()
+            {
+                visualState.SetMode(4);
+       }
     }
 }

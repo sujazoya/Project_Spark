@@ -9,8 +9,8 @@ namespace ProjectSpark.HolographicViewer
 {
     public sealed class HolographicObjectInteraction : MonoBehaviour
     {
-        private static readonly int HoverAmountID =
-            Shader.PropertyToID("_HoverAmount");
+        [SerializeField]
+private HolographicObjectVisualState visualState;
 
         [Header("References")]
         [SerializeField] private Camera viewerCamera;
@@ -275,9 +275,8 @@ namespace ProjectSpark.HolographicViewer
 
                 renderer.GetPropertyBlock(block);
 
-                block.SetFloat(
-                    HoverAmountID,
-                    amount
+               visualState.SetHover(
+                    value ? 1f : 0f
                 );
 
                 renderer.SetPropertyBlock(block);
