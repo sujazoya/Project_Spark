@@ -45,6 +45,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 230cb9945b47f8b4996498dd3c971599, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _PerimeterFlow:
+        m_Texture: {fileID: 2800000, guid: 88695e8217b2f1441b39ea35480961e3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -59,12 +63,19 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _ActivationRandomness: 0.55
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Blend: 2
     - _Boady_NoiseScale: 25
     - _Boady_NoiseScale_2: 2.9
+    - _BrightnessRandomness: 0.35
     - _CastShadows: 0
+    - _CircuitBrightness: 0.25
+    - _CircuitDensity: 1.33
+    - _CircuitScale: 47.4
+    - _CircuitSpeed: 0.26
+    - _CircuitThickness: 0.057
     - _ColorMask: 15
     - _Cull: 2
     - _DstBlend: 1
@@ -72,17 +83,23 @@ Material:
     - _EdgeIntensity: 20
     - _EdgeWidth: 1.53
     - _ElectricDetailScale: 28
-    - _ElectricDetailStrength: 28
-    - _ElectricIntensity: 6.56
+    - _ElectricDetailStrength: 45.2
+    - _ElectricIntensity: 16.5
     - _ElectricIntensity_1: 4
     - _ElectricNoiseScale: 12.3
     - _ElectricNoiseScale_1: 12
     - _ElectricNoiseStrength: 0.8
     - _ElectricPulseWidth: 0.5
     - _ElectricSharpness: 7.31
-    - _ElectricSpeed: 3.53
+    - _ElectricSpeed: 4.8
     - _ElectricThreshold: 0.58
     - _ElectricWith: 0.615
+    - _EnergyBrightness: 4
+    - _EnergyIntensity: 1.5
+    - _EnergySpeed: 0.65
+    - _EnergyWidth: 0.08
+    - _FlickerAmount: 0.25
+    - _FlickerSpeed: 7
     - _FlowIntensity: 1
     - _FlowScale: 8
     - _FlowSpeed: 1
@@ -93,9 +110,21 @@ Material:
     - _HaloIntensity: 9.1
     - _HaloNearFalloff: 20
     - _HaloNearIntensity: 0.22
+    - _NodeSize: 0.035
+    - _PulseRandomness: 0.65
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Show_Boady_Noise: 1
+    - _ScanIntensity: 0.112
+    - _ScanSoftness: 5
+    - _ScanSpacing: 50
+    - _ScanSpeed: 0.01
+    - _ScanWidth: 0.025
+    - _ShowScan: 1
+    - _ShowScan_Horizontal: 0
+    - _ShowScan_Vertical: 0
+    - _Show_Boady_Noise: 0
+    - _Show_EDGE_ELECTRIC: 0
+    - _SpeedRandomness: 0.45
     - _SrcBlend: 5
     - _SrcBlendAlpha: 1
     - _Stencil: 0
@@ -110,11 +139,14 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
+    - _CircuitColor: {r: 0, g: 0.45, b: 0.75, a: 1}
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
     - _EdgeColor: {r: 0, g: 1, b: 1, a: 1}
     - _ElectricColor: {r: 0.9811321, g: 0.0046279924, b: 0.025008302, a: 1}
+    - _EnergyColor: {r: 0.03301889, g: 0.6152326, b: 1, a: 1}
     - _HaloColor: {r: 0, g: 1, b: 0.990005, a: 1}
     - _HaloColor_2: {r: 0.8958511, g: 1, b: 0.0518868, a: 1}
+    - _ScanColor: {r: 0, g: 0.7622639, b: 0.9528302, a: 1}
     - _UIColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
