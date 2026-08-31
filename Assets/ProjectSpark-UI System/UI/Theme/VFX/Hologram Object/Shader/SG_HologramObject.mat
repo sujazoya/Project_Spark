@@ -12,9 +12,9 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _MODES_NORMAL
   - _SURFACE_TYPE_TRANSPARENT
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _MODES_NORMAL
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -47,29 +47,41 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 2
     - _CastShadows: 0
+    - _ComponentHover: 0
     - _Cull: 0
     - _DstBlend: 1
     - _DstBlendAlpha: 1
     - _FlickerAmount: 0.08
     - _FlickerSpeed: 8
-    - _FresnelPower: 3
+    - _FresnelPower: 4.03
     - _GridDensity: 35
-    - _GridLineWidth: 0.08
+    - _GridLineWidth: 0.02
     - _HoloAlpha: 0.65
     - _HoloIntensity: 2
+    - _HoverIntensity: 1
+    - _HoverSurfaceAmount: 0.25
     - _InspectionMode: 0
     - _MODES: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ScanIntensity: 2
-    - _ScanSpeed: 0.35
+    - _ScanSpeed: 0.5
     - _ScanWidth: 0.08
     - _ScanlineDensity: 120
     - _ScanlineStrength: 0.35
     - _ScanlineWidth: 0.12
+    - _SelectedAmount: 0.029
+    - _SelectionIntensity: 5
+    - _SelectionPulse: 0.15
+    - _SelectionSurfaceAmount: 0.45
     - _SrcBlend: 5
     - _SrcBlendAlpha: 1
     - _Surface: 1
+    - _WarningAmount: 0
+    - _WarningIntensity: 4
+    - _WarningPulseAmount: 0.35
+    - _WarningPulseSpeed: 3
+    - _WarningSurfaceAmount: 0.3
     - _XRayAlpha: 0.2
     - _XRayIntensity: 1.5
     - _ZTest: 4
@@ -78,6 +90,9 @@ Material:
     m_Colors:
     - _HoloColor: {r: 0.03863991, g: 0.4161221, b: 0.7490198, a: 1}
     - _HoloGridColor: {r: 0.04245281, g: 0.8048261, b: 1, a: 1}
+    - _HoverColor: {r: 0.2, g: 0.7, b: 1, a: 1}
+    - _SelectionColor: {r: 0.1, g: 0.9, b: 1, a: 1}
+    - _WarningColor: {r: 1, g: 0.08, b: 0.02, a: 1}
     - _XRayColor: {r: 0.01300382, g: 0.4317267, b: 0.7490198, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

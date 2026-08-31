@@ -32,12 +32,18 @@ private HolographicObjectVisualState visualState;
 
         [Header("Double Click")]
         [SerializeField] private float doubleClickTime = 0.3f;
+        [SerializeField] private float dragThreshold = 5f;
 
         private bool isHovering;
         private bool isRotating;
         private bool isPanning;
 
         private float lastClickTime = -10f;
+
+        public HolographicComponentData SelectedData =>
+    selectedData;
+    public event System.Action<
+    HolographicComponentData> SelectionChanged;
 
 #if ENABLE_INPUT_SYSTEM
         private Vector2 previousMousePosition;
@@ -102,6 +108,7 @@ private HolographicObjectVisualState visualState;
                 pointerOverInteractiveUI
             );
         }
+        
 
         private bool RaycastObject(Vector2 mousePosition)
         {
