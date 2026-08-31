@@ -7,120 +7,184 @@ using UnityEngine.InputSystem;
 
 namespace ProjectSpark.HolographicViewer
 {
-    public sealed class HolographicObjectInteraction : MonoBehaviour
+    public sealed class HolographicComponentInteraction : MonoBehaviour
     {
-        [SerializeField]
-private HolographicObjectVisualState visualState;
-
         [Header("References")]
         [SerializeField] private Camera viewerCamera;
-        [SerializeField] private HolographicObjectController objectController;
-        [SerializeField] private HolographicViewerCamera cameraController;
-
-        [Header("Object")]
-        [SerializeField] private Renderer[] renderers;
+        [SerializeField] private HolographicComponentHUD componentHUD;
 
         [Header("Raycast")]
-        [SerializeField] private LayerMask objectLayer;
+        [SerializeField] private LayerMask componentLayer;
         [SerializeField] private float rayDistance = 100f;
 
-        [Header("Rotation")]
-        [SerializeField] private float rotateSensitivity = 0.25f;
+        private HolographicComponentVisual hoveredVisual;
+        private HolographicComponentVisual selectedVisual;
 
-        [Header("Pan")]
-        [SerializeField] private float panSensitivity = 0.003f;
-
-        [Header("Double Click")]
-        [SerializeField] private float doubleClickTime = 0.3f;
-        [SerializeField] private float dragThreshold = 5f;
-
-        private bool isHovering;
-        private bool isRotating;
-        private bool isPanning;
-
-        private float lastClickTime = -10f;
+        // FIX:
+        // This field was missing.
+        private HolographicComponentData selectedData;
 
         public HolographicComponentData SelectedData =>
-    selectedData;
-    public event System.Action<
-    HolographicComponentData> SelectionChanged;
+            selectedData;
 
 #if ENABLE_INPUT_SYSTEM
-        private Vector2 previousMousePosition;
-#endif
-
-        private void Awake()
-        {
-            if (renderers == null || renderers.Length == 0)
-            {
-                renderers =
-                    GetComponentsInChildren<Renderer>(true);
-            }
-
-            SetHoverVisual(false);
-        }
 
         private void Update()
         {
-#if ENABLE_INPUT_SYSTEM
-            UpdateMouse();
-#endif
+            if (Mouse.current == null)
+                return;
+
+            if (viewerCamera == null)
+                return;
+
+            UpdateHover();
+            UpdateSelection();
         }
 
-#if ENABLE_INPUT_SYSTEM
-
-        private void UpdateMouse()
+        private void UpdateHover()
         {
-            if (Mouse.current == null ||
-                viewerCamera == null)
+            if (IsPointerOverUI())
+            {
+                SetHovered(null);
+                return;
+            }
+
+            Vector2 mousePosition =
+                Mouse.current.position.ReadValue();
+
+            if (!TryRaycastComponent(
+                    mousePosition,
+                    out HolographicComponentVisual visual,
+                    out _))
+            {
+                SetHovered(null);
+                return;
+            }
+
+            SetHovered(visual);
+        }
+
+        private void UpdateSelection()
+        {
+            if (!Mouse.current.leftButton.wasPressedThisFrame)
+                return;
+
+            if (IsPointerOverUI())
                 return;
 
             Vector2 mousePosition =
                 Mouse.current.position.ReadValue();
 
-            bool pointerOverInteractiveUI =
-                IsPointerOverUI();
-
-            bool hitObject = false;
-
-            if (!pointerOverInteractiveUI)
+            if (TryRaycastComponent(
+                    mousePosition,
+                    out HolographicComponentVisual visual,
+                    out HolographicComponentData data))
             {
-                hitObject = RaycastObject(mousePosition);
+                Select(visual, data);
             }
-
-            UpdateHover(hitObject);
-
-            HandleRotation(
-                mousePosition,
-                hitObject,
-                pointerOverInteractiveUI
-            );
-
-            HandlePan(
-                mousePosition,
-                pointerOverInteractiveUI
-            );
-
-            HandleZoom();
-
-            HandleClick(
-                hitObject,
-                pointerOverInteractiveUI
-            );
+            else
+            {
+                ClearSelection();
+            }
         }
-        
 
-        private bool RaycastObject(Vector2 mousePosition)
+        private bool TryRaycastComponent(
+            Vector2 mousePosition,
+            out HolographicComponentVisual visual,
+            out HolographicComponentData data)
         {
+            visual = null;
+            data = null;
+
             Ray ray =
                 viewerCamera.ScreenPointToRay(mousePosition);
 
-            return Physics.Raycast(
-                ray,
-                rayDistance,
-                objectLayer,
-                QueryTriggerInteraction.Ignore
-            );
+            if (!Physics.Raycast(
+                    ray,
+                    out RaycastHit hit,
+                    rayDistance,
+                    componentLayer,
+                    QueryTriggerInteraction.Ignore))
+            {
+                return false;
+            }
+
+            visual =
+                hit.collider.GetComponentInParent<
+                    HolographicComponentVisual>();
+
+            data =
+                hit.collider.GetComponentInParent<
+                    HolographicComponentData>();
+
+            return visual != null &&
+                   data != null;
+        }
+
+        private void SetHovered(
+            HolographicComponentVisual visual)
+        {
+            if (hoveredVisual == visual)
+                return;
+
+            if (hoveredVisual != null &&
+                hoveredVisual != selectedVisual)
+            {
+                hoveredVisual.SetHover(false);
+            }
+
+            hoveredVisual = visual;
+
+            if (hoveredVisual != null &&
+                hoveredVisual != selectedVisual)
+            {
+                hoveredVisual.SetHover(true);
+            }
+        }
+
+        private void Select(
+            HolographicComponentVisual visual,
+            HolographicComponentData data)
+        {
+            if (selectedVisual != null)
+            {
+                selectedVisual.SetSelected(false);
+            }
+
+            if (hoveredVisual != null &&
+                hoveredVisual != visual)
+            {
+                hoveredVisual.SetHover(false);
+            }
+
+            selectedVisual = visual;
+            selectedData = data;
+
+            if (selectedVisual != null)
+            {
+                selectedVisual.SetSelected(true);
+            }
+
+            if (componentHUD != null)
+            {
+                componentHUD.Show(selectedData);
+            }
+        }
+
+        private void ClearSelection()
+        {
+            if (selectedVisual != null)
+            {
+                selectedVisual.SetSelected(false);
+            }
+
+            selectedVisual = null;
+            selectedData = null;
+
+            if (componentHUD != null)
+            {
+                componentHUD.Clear();
+            }
         }
 
         private bool IsPointerOverUI()
@@ -131,163 +195,6 @@ private HolographicObjectVisualState visualState;
             return EventSystem.current.IsPointerOverGameObject();
         }
 
-        private void HandleRotation(
-            Vector2 mousePosition,
-            bool hitObject,
-            bool pointerOverUI)
-        {
-            if (Mouse.current.leftButton.wasPressedThisFrame)
-            {
-                if (hitObject && !pointerOverUI)
-                {
-                    isRotating = true;
-
-                    previousMousePosition =
-                        mousePosition;
-
-                    objectController.BeginDrag();
-                }
-            }
-
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
-            {
-                if (isRotating)
-                {
-                    isRotating = false;
-                    objectController.EndDrag();
-                }
-            }
-
-            if (!isRotating)
-                return;
-
-            Vector2 delta =
-                mousePosition -
-                previousMousePosition;
-
-            objectController.RotateFromDrag(
-                delta * rotateSensitivity
-            );
-
-            previousMousePosition =
-                mousePosition;
-        }
-
-        private void HandlePan(
-            Vector2 mousePosition,
-            bool pointerOverUI)
-        {
-            if (Mouse.current.middleButton.wasPressedThisFrame)
-            {
-                if (!pointerOverUI)
-                {
-                    isPanning = true;
-
-                    previousMousePosition =
-                        mousePosition;
-                }
-            }
-
-            if (Mouse.current.middleButton.wasReleasedThisFrame)
-            {
-                isPanning = false;
-            }
-
-            if (!isPanning)
-                return;
-
-            Vector2 delta =
-                mousePosition -
-                previousMousePosition;
-
-            cameraController.Pan(
-                delta * panSensitivity
-            );
-
-            previousMousePosition =
-                mousePosition;
-        }
-
-        private void HandleZoom()
-        {
-            float scroll =
-                Mouse.current.scroll.ReadValue().y;
-
-            if (Mathf.Abs(scroll) < 0.01f)
-                return;
-
-            cameraController.Zoom(scroll);
-        }
-
-        private void HandleClick(
-            bool hitObject,
-            bool pointerOverUI)
-        {
-            if (!Mouse.current.leftButton.wasPressedThisFrame)
-                return;
-
-            if (pointerOverUI)
-                return;
-
-            if (!hitObject)
-                return;
-
-            float currentTime =
-                Time.unscaledTime;
-
-            float delta =
-                currentTime -
-                lastClickTime;
-
-            if (delta <= doubleClickTime)
-            {
-                objectController.ResetView();
-                cameraController.ResetView();
-
-                lastClickTime = -10f;
-                return;
-            }
-
-            lastClickTime = currentTime;
-        }
-
 #endif
-
-        private void UpdateHover(bool value)
-        {
-            if (isHovering == value)
-                return;
-
-            isHovering = value;
-
-            SetHoverVisual(value);
-        }
-
-        private void SetHoverVisual(bool value)
-        {
-            float amount = value ? 1f : 0f;
-
-            if (renderers == null)
-                return;
-
-            for (int i = 0; i < renderers.Length; i++)
-            {
-                Renderer renderer = renderers[i];
-
-                if (renderer == null)
-                    continue;
-
-                MaterialPropertyBlock block =
-                    new MaterialPropertyBlock();
-
-                renderer.GetPropertyBlock(block);
-
-               visualState.SetHover(
-                    value ? 1f : 0f
-                );
-
-                renderer.SetPropertyBlock(block);
-            }
-        }
     }
 }
