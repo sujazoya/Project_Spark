@@ -7,11 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: _chamfer
-  m_Shader: {fileID: -6465566751694194690, guid: a6c163a40e5db0c45ac496c5ca7dd687, type: 3}
+  m_Name: SG_ChamferAdvanced
+  m_Shader: {fileID: -6465566751694194690, guid: e03a1b1c9b4123b40946b92f420a946d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _SHAPETYPE_ROUNDED
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -41,10 +42,17 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BorderWidth: 0
-    - _Chamfer: 0.26
+    - _BorderWidth: 0.13
+    - _Chamfer: 0.089
+    - _CircleSize: 0.5
     - _ColorMask: 15
-    - _EdgeSoftness: 0.5
+    - _DiamondSize: 0.35
+    - _EdgeSoftness: 0.0001
+    - _GlowFalloff: 2
+    - _GlowSize: 0.008
+    - _RoundRadius: 0.155
+    - _RoundShapeSize: 0.465
+    - _SHAPETYPE: 1
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -54,7 +62,7 @@ Material:
     - _UIMaskSoftnessY: 1
     m_Colors:
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
-    - _Color: {r: 0.2688679, g: 0.784142, b: 1, a: 1}
-    - _Size: {r: 4.8, g: -1.99, b: 0, a: 0}
+    - _Color: {r: 0, g: 0.972549, b: 0.24680828, a: 1}
+    - _Size: {r: 1, g: 0.5, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
