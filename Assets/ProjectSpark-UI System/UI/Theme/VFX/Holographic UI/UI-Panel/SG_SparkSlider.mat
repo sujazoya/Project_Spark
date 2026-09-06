@@ -7,12 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SG_ChamferAdvanced
-  m_Shader: {fileID: -6465566751694194690, guid: e03a1b1c9b4123b40946b92f420a946d, type: 3}
+  m_Name: SG_SparkSlider
+  m_Shader: {fileID: -6465566751694194690, guid: 93f67ffdfbddcbd40a87d171db02ec14, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SHAPETYPE_HEXAGON
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -42,28 +41,29 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BorderWidth: 0.0369
-    - _Chamfer: 0.089
-    - _CircleSize: 0.5
+    - _BorderWidth: 0.01
     - _ColorMask: 15
-    - _DiamondSize: 0.35
-    - _EdgeSoftness: 0.0001
-    - _GlowFalloff: 0.5
-    - _GlowIntensity: 1.71
-    - _GlowSize: 0.027
-    - _RoundRadius: 0.155
-    - _RoundShapeSize: 0.465
-    - _SHAPETYPE: 4
+    - _EdgeSoftness: 0.002
+    - _GlowColor_1: 0.5
+    - _GlowIntensity: 2
+    - _GlowWidth: 0.025
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
+    - _TrackHeight: 0.08
+    - _TrackRadius: 0.04
     - _UIMaskSoftnessX: 1
     - _UIMaskSoftnessY: 1
+    - _Value: 0.5
     m_Colors:
+    - _BorderColor: {r: 0.9716981, g: 0.9402515, b: 0, a: 1}
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
-    - _Color: {r: 0, g: 0.972549, b: 0.24680828, a: 1}
-    - _Size: {r: 1, g: 0.5, b: 0, a: 0}
+    - _FillColor: {r: 0, g: 0.8105302, b: 1, a: 1}
+    - _GlowColor: {r: 0.3066038, g: 0.7513338, b: 1, a: 1}
+    - _HandleColor: {r: 1, g: 0.7885943, b: 0.2877358, a: 1}
+    - _HandleSize: {r: 0.08, g: 0.2, b: 0, a: 0}
+    - _TrackColor: {r: 0.6273585, g: 0.93319184, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
