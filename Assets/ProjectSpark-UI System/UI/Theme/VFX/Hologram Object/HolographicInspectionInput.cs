@@ -31,6 +31,8 @@ namespace ProjectSpark.HolographicViewer
 
             if (Keyboard.current.digit5Key.wasPressedThisFrame)
                 visualState.SetMode(4);
+                if (Keyboard.current.digit6Key.wasPressedThisFrame)
+                visualState.SetMode(5);
         }
 #endif
     }

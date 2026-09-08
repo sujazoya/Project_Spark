@@ -6,7 +6,8 @@ namespace ProjectSpark.HolographicViewer
         XRay = 1,
         Internal = 2,
         Exploded = 3,
-        Wireframe = 4
+        Wireframe = 4,
+        Section = 5
     }
 
     public static class HolographicInspectionModeInfo
@@ -30,6 +31,9 @@ namespace ProjectSpark.HolographicViewer
 
                 HolographicInspectionMode.Wireframe =>
                     "WIREFRAME VIEW",
+
+                HolographicInspectionMode.Section =>
+                    "SECTION VIEW",
 
                 _ =>
                     "NORMAL VIEW"
@@ -56,6 +60,9 @@ namespace ProjectSpark.HolographicViewer
                 HolographicInspectionMode.Wireframe =>
                     "Geometric edge representation of the selected object.",
 
+                HolographicInspectionMode.Section =>
+                    "Cross-section inspection view revealing internal geometry through a controlled cutting plane.",
+
                 _ =>
                     "Standard holographic object visualization."
             };
@@ -66,12 +73,26 @@ namespace ProjectSpark.HolographicViewer
         {
             return mode switch
             {
-                HolographicInspectionMode.Normal => "NORMAL",
-                HolographicInspectionMode.XRay => "X-RAY",
-                HolographicInspectionMode.Internal => "INTERNAL",
-                HolographicInspectionMode.Exploded => "EXPLODED",
-                HolographicInspectionMode.Wireframe => "WIREFRAME",
-                _ => "NORMAL"
+                HolographicInspectionMode.Normal =>
+                    "NORMAL",
+
+                HolographicInspectionMode.XRay =>
+                    "X-RAY",
+
+                HolographicInspectionMode.Internal =>
+                    "INTERNAL",
+
+                HolographicInspectionMode.Exploded =>
+                    "EXPLODED",
+
+                HolographicInspectionMode.Wireframe =>
+                    "WIREFRAME",
+
+                HolographicInspectionMode.Section =>
+                    "SECTION",
+
+                _ =>
+                    "NORMAL"
             };
         }
     }

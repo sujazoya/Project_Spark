@@ -13,6 +13,10 @@ namespace ProjectSpark.HolographicViewer
         [SerializeField] private TMP_Text objectName;
         [SerializeField] private TMP_Text objectType;
         [SerializeField] private TMP_Text systemStatus;
+        [SerializeField]
+        private TMP_Text sectionPositionText;
+        [SerializeField]
+        private HolographicSectionController sectionController;
 
         private HolographicInspectionMode currentMode =
             HolographicInspectionMode.Normal;
@@ -72,6 +76,22 @@ namespace ProjectSpark.HolographicViewer
             {
                 systemStatus.text =
                     "SYSTEM READY";
+            }
+            if (currentMode ==
+                HolographicInspectionMode.Section &&
+                sectionController != null)
+            {
+                float percent =
+                    sectionController.GetNormalizedPosition()
+                    * 100f;
+
+                sectionPositionText.text =
+                    $"SECTION {percent:0}%";
+            }
+            else
+            {
+                sectionPositionText.text =
+                    string.Empty;
             }
         }
     }

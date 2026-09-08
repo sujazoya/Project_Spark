@@ -21,7 +21,25 @@ namespace ProjectSpark.HolographicViewer
 
         private MaterialPropertyBlock propertyBlock;
         [SerializeField] private HolographicInspectionHUD inspectionHUD;
-private HolographicExplodedView explodedView;
+
+        private static readonly int IsolationAmountID =
+        Shader.PropertyToID("_IsolationAmount");
+        [SerializeField]
+        private HolographicSectionController sectionController;
+
+        private static readonly int ComponentDimAmountID =
+        Shader.PropertyToID("_ComponentDimAmount");
+        [SerializeField] private float isolationAmount = 0f;
+        [SerializeField] private float componentDimAmount = 0f;
+        private HolographicExplodedView explodedView;
+
+        public void SetIsolation(bool enabled)
+        {
+            isolationAmount =
+                enabled ? 1f : 0f;
+
+            Apply();
+        }
 
         private float hoverAmount;
         private int inspectionMode;
@@ -45,6 +63,8 @@ private HolographicExplodedView explodedView;
 
             if (wireframeOverlay != null)
                 wireframeOverlay.SetActive(false);
+
+                sectionController.ResetSection();
         }
 
         public void SetHover(float value)
@@ -93,6 +113,13 @@ private HolographicExplodedView explodedView;
             currentMode
         );
     }
+            if (sectionController != null)
+        {
+            sectionController.SetEnabled(
+                currentMode ==
+                HolographicInspectionMode.Section
+            );
+        }
 }
 
         public int GetMode()
@@ -100,7 +127,7 @@ private HolographicExplodedView explodedView;
             return inspectionMode;
         }
 
-        private void Apply()
+            private void Apply()
         {
             if (renderers == null)
                 return;
@@ -124,6 +151,16 @@ private HolographicExplodedView explodedView;
                 propertyBlock.SetFloat(
                     InspectionModeID,
                     inspectionMode
+                );
+
+                propertyBlock.SetFloat(
+                    IsolationAmountID,
+                    isolationAmount
+                );
+
+                propertyBlock.SetFloat(
+                    ComponentDimAmountID,
+                    componentDimAmount
                 );
 
                 renderer.SetPropertyBlock(

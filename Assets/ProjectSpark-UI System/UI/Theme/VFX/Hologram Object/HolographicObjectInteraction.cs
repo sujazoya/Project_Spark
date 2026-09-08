@@ -9,6 +9,8 @@ namespace ProjectSpark.HolographicViewer
 {
     public sealed class HolographicComponentInteraction : MonoBehaviour
     {
+        [SerializeField]
+        private HolographicComponentVisual[] components;
         [Header("References")]
         [SerializeField] private Camera viewerCamera;
         [SerializeField] private HolographicComponentHUD componentHUD;
@@ -27,10 +29,79 @@ namespace ProjectSpark.HolographicViewer
         public HolographicComponentData SelectedData =>
             selectedData;
 
+            [SerializeField]
+        private float nonSelectedDim = 0.18f;
+        [SerializeField]
+private HolographicMeasurementController measurement;
+
+        [SerializeField]
+private HolographicComponentCallout callout;
+
+[SerializeField]
+private HolographicSectionController sectionController;
+
+
 #if ENABLE_INPUT_SYSTEM
+
+        private void Awake()
+        {
+            if (components == null ||
+                components.Length == 0)
+            {
+                components =
+                    FindComponents();
+            }
+        }
+        private HolographicComponentVisual[]
+    FindComponents()
+        {
+            return FindObjectsByType<
+                HolographicComponentVisual>(
+                    FindObjectsInactive.Include,
+                    FindObjectsSortMode.None
+                );
+        }
+        private void HandleSectionInput()
+        {
+            if (!Mouse.current.leftButton.isPressed)
+                return;
+        }
+        private void ApplyIsolation()
+        {
+            if (components == null)
+                return;
+
+            for (int i = 0;
+                i < components.Length;
+                i++)
+            {
+                HolographicComponentVisual component =
+                    components[i];
+
+                if (component == null)
+                    continue;
+
+                bool isSelected =
+                    component == selectedVisual;
+
+                component.SetIsolation(true);
+
+                component.SetDimAmount(
+                    isSelected
+                        ? 0f
+                        : nonSelectedDim
+                );
+            }
+        }
 
         private void Update()
         {
+                    if (measurement != null &&
+            measurement.IsActive)
+        {
+            SetHovered(null);
+            return;
+        }
             if (Mouse.current == null)
                 return;
 
@@ -66,6 +137,11 @@ namespace ProjectSpark.HolographicViewer
 
         private void UpdateSelection()
         {
+                        if (measurement != null &&
+                measurement.IsActive)
+            {
+                return;
+            }
             if (!Mouse.current.leftButton.wasPressedThisFrame)
                 return;
 
@@ -142,19 +218,15 @@ namespace ProjectSpark.HolographicViewer
             }
         }
 
-        private void Select(
-            HolographicComponentVisual visual,
-            HolographicComponentData data)
+       private void Select(
+    HolographicComponentVisual visual,
+    HolographicComponentData data)
         {
             if (selectedVisual != null)
             {
                 selectedVisual.SetSelected(false);
-            }
-
-            if (hoveredVisual != null &&
-                hoveredVisual != visual)
-            {
-                hoveredVisual.SetHover(false);
+                selectedVisual.SetIsolation(false);
+                selectedVisual.SetDimAmount(0f);
             }
 
             selectedVisual = visual;
@@ -163,19 +235,40 @@ namespace ProjectSpark.HolographicViewer
             if (selectedVisual != null)
             {
                 selectedVisual.SetSelected(true);
+
+                selectedVisual.SetIsolation(true);
+                selectedVisual.SetDimAmount(0f);
             }
 
             if (componentHUD != null)
             {
                 componentHUD.Show(selectedData);
             }
+            ApplyIsolation();
+            if (callout != null)
+            {
+                callout.Show(
+                    selectedData,
+                    selectedData.CalloutAnchor
+                );
+            }
         }
 
         private void ClearSelection()
         {
-            if (selectedVisual != null)
+            if (components != null)
             {
-                selectedVisual.SetSelected(false);
+                for (int i = 0;
+                    i < components.Length;
+                    i++)
+                {
+                    if (components[i] == null)
+                        continue;
+
+                    components[i].SetIsolation(false);
+                    components[i].SetDimAmount(0f);
+                    components[i].SetSelected(false);
+                }
             }
 
             selectedVisual = null;
@@ -185,6 +278,10 @@ namespace ProjectSpark.HolographicViewer
             {
                 componentHUD.Clear();
             }
+            if (callout != null)
+{
+            callout.Hide();
+}
         }
 
         private bool IsPointerOverUI()

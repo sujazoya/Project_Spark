@@ -26,5 +26,10 @@ namespace ProjectSpark.HolographicViewer
         public string Specification01 => specification01;
         public string Specification02 => specification02;
         public string Specification03 => specification03;
+        [SerializeField]
+private Transform calloutAnchor;
+
+public Transform CalloutAnchor =>
+    calloutAnchor;
     }
 }
