@@ -23,25 +23,40 @@ namespace ProjectSpark.HolographicViewer
 
         private bool enabledState;
 
+        // =========================================================
+        // UNITY
+        // =========================================================
+
         private void Awake()
         {
-            propertyBlock =
-                new MaterialPropertyBlock();
+            EnsurePropertyBlock();
 
             if (renderers == null ||
                 renderers.Length == 0)
             {
                 renderers =
-                    GetComponentsInChildren<
-                        Renderer>(true);
+                    GetComponentsInChildren<Renderer>(true);
             }
+
+            // Make sure the starting position is valid.
+            position =
+                Mathf.Clamp(
+                    position,
+                    minimum,
+                    maximum
+                );
 
             Apply();
         }
 
+        // =========================================================
+        // PUBLIC CONTROL
+        // =========================================================
+
         public void SetEnabled(bool value)
         {
             enabledState = value;
+
             Apply();
         }
 
@@ -76,6 +91,10 @@ namespace ProjectSpark.HolographicViewer
             Apply();
         }
 
+        // =========================================================
+        // POSITION INFORMATION
+        // =========================================================
+
         public float GetNormalizedPosition()
         {
             if (Mathf.Approximately(
@@ -97,10 +116,25 @@ namespace ProjectSpark.HolographicViewer
             return position;
         }
 
+        // =========================================================
+        // INTERNAL
+        // =========================================================
+
+        private void EnsurePropertyBlock()
+        {
+            if (propertyBlock == null)
+            {
+                propertyBlock =
+                    new MaterialPropertyBlock();
+            }
+        }
+
         private void Apply()
         {
             if (renderers == null)
                 return;
+
+            EnsurePropertyBlock();
 
             float enabled =
                 enabledState ? 1f : 0f;
@@ -115,20 +149,25 @@ namespace ProjectSpark.HolographicViewer
                 if (renderer == null)
                     continue;
 
+                // Read the renderer's existing
+                // MaterialPropertyBlock values.
                 renderer.GetPropertyBlock(
                     propertyBlock
                 );
 
+                // Section enabled state.
                 propertyBlock.SetFloat(
                     SectionEnabledID,
                     enabled
                 );
 
+                // Section position.
                 propertyBlock.SetFloat(
                     SectionPositionID,
                     position
                 );
 
+                // Apply the modified property block.
                 renderer.SetPropertyBlock(
                     propertyBlock
                 );
