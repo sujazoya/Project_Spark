@@ -77,7 +77,7 @@ namespace ProjectSpark.HolographicViewer
             }
         }
 
-        private void Activate(
+        public void Activate(
             HolographicMeasurementType type)
         {
             measurement.SetMeasurementType(
@@ -87,6 +87,25 @@ namespace ProjectSpark.HolographicViewer
             measurement.SetActive(
                 true
             );
+        }
+                public void ActivateDistance()
+        {
+            Activate(HolographicMeasurementType.Distance);
+        }
+
+        public void ActivateAngle()
+        {
+            Activate(HolographicMeasurementType.Angle);
+        }
+
+        public void ActivateRadius()
+        {
+            Activate(HolographicMeasurementType.Radius);
+        }
+
+        public void ActivateDiameter()
+        {
+            Activate(HolographicMeasurementType.Diameter);
         }
 
 #endif

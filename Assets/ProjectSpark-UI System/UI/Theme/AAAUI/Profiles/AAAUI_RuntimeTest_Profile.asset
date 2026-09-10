@@ -23,6 +23,16 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 42472176070950992
+      type: {class: FadeTrack, ns: AAAUI, asm: AAAUI.Runtime}
+      data:
+        startTime: 0
+        duration: 0.2
+        ease: 2
+        targetIndex: 0
+        useSequenceDuration: 0
+        from: 0
+        to: 1
     - rid: 4852932747975983180
       type: {class: UIAnimationSequence, ns: AAAUI, asm: AAAUI.Runtime}
       data:
@@ -31,6 +41,8 @@ MonoBehaviour:
         - rid: 4852932747975983184
         - rid: 4852932747975983185
         - rid: 4852932747975983190
+        - rid: 42472176070950992
+        events: []
     - rid: 4852932747975983181
       type: {class: UIAnimationSequence, ns: AAAUI, asm: AAAUI.Runtime}
       data:
@@ -38,6 +50,7 @@ MonoBehaviour:
         tracks:
         - rid: 4852932747975983186
         - rid: 4852932747975983187
+        events: []
     - rid: 4852932747975983184
       type: {class: ScaleTrack, ns: AAAUI, asm: AAAUI.Runtime}
       data:
@@ -45,6 +58,7 @@ MonoBehaviour:
         duration: 1.5
         ease: 4
         targetIndex: 0
+        useSequenceDuration: 0
         from: {x: 0, y: 1, z: 1}
         to: {x: 1, y: 1, z: 1}
     - rid: 4852932747975983185
@@ -54,6 +68,7 @@ MonoBehaviour:
         duration: 1.5
         ease: 2
         targetIndex: 0
+        useSequenceDuration: 0
         from: {x: -200, y: 0, z: 0}
         to: {x: 0, y: 0, z: 0}
     - rid: 4852932747975983186
@@ -63,6 +78,7 @@ MonoBehaviour:
         duration: 0.2
         ease: 2
         targetIndex: 0
+        useSequenceDuration: 0
         from: 1
         to: 0
     - rid: 4852932747975983187
@@ -72,6 +88,7 @@ MonoBehaviour:
         duration: 0.2
         ease: 2
         targetIndex: 0
+        useSequenceDuration: 0
         from: {x: 1, y: 1, z: 1}
         to: {x: 0.7, y: 0, z: 0}
     - rid: 4852932747975983188
@@ -83,6 +100,7 @@ MonoBehaviour:
         - rid: 4852932747975983196
         - rid: 4852932747975983197
         - rid: 4852932747975983198
+        events: []
     - rid: 4852932747975983190
       type: {class: ShakeTrack, ns: AAAUI, asm: AAAUI.Runtime}
       data:
@@ -90,6 +108,7 @@ MonoBehaviour:
         duration: 0.5
         ease: 2
         targetIndex: 0
+        useSequenceDuration: 0
         amplitude: {x: 5, y: 5, z: 0}
         frequency: 20
         seed: 17
@@ -100,6 +119,7 @@ MonoBehaviour:
         duration: 0.2
         ease: 2
         targetIndex: 0
+        useSequenceDuration: 0
         amplitude: {x: 10, y: 15, z: 0}
         frequency: 20
         seed: 17
@@ -110,6 +130,7 @@ MonoBehaviour:
         duration: 0.2
         ease: 2
         targetIndex: 0
+        useSequenceDuration: 0
         from: {x: 0.98, y: 0.98, z: 0.98}
         to: {x: 1, y: 1, z: 1}
     - rid: 4852932747975983197
@@ -119,6 +140,7 @@ MonoBehaviour:
         duration: 0.2
         ease: 2
         targetIndex: 0
+        useSequenceDuration: 0
         from: {x: 0.98, y: 0.98, z: 0.98}
         to: {x: 1, y: 1, z: 1}
     - rid: 4852932747975983198
@@ -128,5 +150,6 @@ MonoBehaviour:
         duration: 2
         ease: 2
         targetIndex: 0
+        useSequenceDuration: 0
         from: {x: -500, y: 0, z: 0}
         to: {x: 0, y: 0, z: 0}

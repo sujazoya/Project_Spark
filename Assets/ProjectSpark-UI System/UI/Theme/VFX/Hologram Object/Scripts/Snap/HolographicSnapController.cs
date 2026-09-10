@@ -21,6 +21,12 @@ namespace ProjectSpark.HolographicViewer
         [SerializeField]
         private HolographicSnapSettings settings;
 
+        [SerializeField]
+        private bool snapEnabled = true;
+
+        public bool IsSnapEnabled =>
+            snapEnabled;
+
         private HolographicSnapResult currentSnap;
 
         private bool hasCurrentSnap;
@@ -79,6 +85,32 @@ namespace ProjectSpark.HolographicViewer
                     requireFrontFacingFace = true
                 };
         }
+
+        public void SetSnapEnabled(
+    bool value)
+{
+    snapEnabled = value;
+
+    if (!snapEnabled)
+    {
+        ClearSnap();
+    }
+}
+
+public void StartSnapping()
+{
+    SetSnapEnabled(true);
+}
+
+public void StopSnapping()
+{
+    SetSnapEnabled(false);
+}
+
+public void ToggleSnapping()
+{
+    SetSnapEnabled(!snapEnabled);
+}
 
         private void Awake()
         {
