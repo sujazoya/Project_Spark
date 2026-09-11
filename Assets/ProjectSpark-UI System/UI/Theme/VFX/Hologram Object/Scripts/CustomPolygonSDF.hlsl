@@ -2,6 +2,10 @@
 #define PROJECT_SPARK_CUSTOM_POLYGON_SDF_INCLUDED
 
 
+/* ============================================================
+   SEGMENT DISTANCE
+   ============================================================ */
+
 float ProjectSparkPolygonSegmentDistance(
     float2 p,
     float2 a,
@@ -10,27 +14,36 @@ float ProjectSparkPolygonSegmentDistance(
     float2 pa = p - a;
     float2 ba = b - a;
 
-    float denominator = max(
-        dot(ba, ba),
-        0.000001
+    float denominator =
+        max(
+            dot(ba, ba),
+            0.000001
+        );
+
+    float h =
+        saturate(
+            dot(pa, ba) /
+            denominator
+        );
+
+    float2 closest =
+        a + ba * h;
+
+    return length(
+        p - closest
     );
-
-    float h = saturate(
-        dot(pa, ba) / denominator
-    );
-
-    float2 closest = a + ba * h;
-
-    return length(p - closest);
 }
 
 
-void ProjectSparkPolygonEdge(
+/* ============================================================
+   MINIMUM EDGE DISTANCE
+   ============================================================ */
+
+void ProjectSparkPolygonEdgeDistance(
     float2 p,
     float2 a,
     float2 b,
-    float minDistanceIn,
-    out float minDistanceOut)
+    inout float minimumDistance)
 {
     float distanceValue =
         ProjectSparkPolygonSegmentDistance(
@@ -39,114 +52,126 @@ void ProjectSparkPolygonEdge(
             b
         );
 
-    minDistanceOut =
+    minimumDistance =
         min(
-            minDistanceIn,
+            minimumDistance,
             distanceValue
         );
 }
 
 
-/*
-    General 2D polygon point-in-polygon test.
+/* ============================================================
+   ROBUST RAY CROSSING
+   ============================================================
 
-    Uses ray crossing.
+   Uses the standard half-open interval rule:
 
-    Works for:
-        - convex polygons
-        - concave polygons
-        - triangles
-        - quadrilaterals
-        - pentagons
-        - hexagons
-        - heptagons
-        - octagons
+       (a.y > p.y) != (b.y > p.y)
 
-    No arrays.
-    No dynamic indexing.
-    No modulo.
-    No bool output.
-*/
+   This prevents a polygon vertex from being counted twice.
+
+   The ray travels toward +X.
+   ============================================================ */
+
 void ProjectSparkPolygonCrossing(
     float2 p,
     float2 a,
     float2 b,
-    float insideIn,
-    out float insideOut)
+    inout float crossingCount)
 {
-    float ay = a.y;
-    float by = b.y;
-
-    float crossesVerticalRange =
-        step(
-            min(ay, by),
-            p.y
-        ) *
+    float aAbove =
         step(
             p.y,
-            max(ay, by)
+            a.y
         );
 
-    float differentY =
+    float bAbove =
+        step(
+            p.y,
+            b.y
+        );
+
+    /*
+        XOR.
+
+        0 = both on same side
+        1 = edge crosses horizontal ray level
+    */
+    float differentSide =
+        abs(
+            aAbove -
+            bAbove
+        );
+
+    /*
+        Avoid horizontal edges.
+    */
+    float nonHorizontal =
         step(
             0.000001,
-            abs(by - ay)
+            abs(
+                b.y -
+                a.y
+            )
         );
 
-    float validRange =
-        crossesVerticalRange *
-        differentY;
+    float valid =
+        differentSide *
+        nonHorizontal;
+
+    /*
+        Exact X coordinate of intersection.
+    */
+    float denominator =
+        b.y -
+        a.y;
+
+    /*
+        Preserve the sign of the denominator.
+    */
+    float safeDenominator =
+        denominator +
+        (
+            step(
+                abs(denominator),
+                0.000001
+            )
+            *
+            (
+                denominator >= 0.0
+                    ? 0.000001
+                    : -0.000001
+            )
+        );
 
     float intersectionX =
         a.x +
-        (p.y - ay) *
-        (b.x - a.x) /
-        max(
-            by - ay,
-            0.000001
-        );
+        (
+            (p.y - a.y) *
+            (b.x - a.x)
+        )
+        /
+        safeDenominator;
 
+    /*
+        Ray goes toward +X.
+    */
     float crossesRight =
         step(
             p.x,
             intersectionX
         );
 
-    /*
-        Toggle using a fractional state.
-
-        For each crossing:
-            0 -> 1
-            1 -> 0
-    */
-    float toggle =
-        validRange *
+    crossingCount +=
+        valid *
         crossesRight;
-
-    insideOut =
-        abs(
-            insideIn - toggle
-        );
 }
 
 
-/*
-    Main Project Spark polygon SDF.
+/* ============================================================
+   MAIN FLOAT FUNCTION
+   ============================================================ */
 
-    P:
-        Centered UV coordinate.
-
-    P0-P7:
-        Polygon vertices in perimeter order.
-
-    PointCount:
-        Number of active vertices, 3-8.
-
-    SDF:
-        Negative = inside
-         0      = boundary
-        Positive = outside
-*/
 void CustomPolygonSDF_float(
     float2 P,
     float2 P0,
@@ -162,20 +187,13 @@ void CustomPolygonSDF_float(
     out float SDF)
 {
     /*
-        IMPORTANT:
-
-        Shader Graph / D3D11 requires
-        the output to be initialized.
+        ALWAYS initialize the output.
     */
     SDF = 0.0;
 
 
     /*
         Reconstruct P7.
-
-        This avoids passing a Vector2 P7 through
-        some Shader Graph versions that generate
-        problematic preview code.
     */
     float2 P7 =
         float2(
@@ -185,7 +203,7 @@ void CustomPolygonSDF_float(
 
 
     /*
-        Clamp polygon vertex count.
+        Clamp vertex count.
     */
     float count =
         clamp(
@@ -196,301 +214,328 @@ void CustomPolygonSDF_float(
 
 
     /*
-        Start with a very large distance.
+        Start with a large distance.
     */
-    float minDistance =
+    float minimumDistance =
         100000.0;
 
 
     /*
-        Point-in-polygon state.
-
-        0 = outside
-        1 = inside
+        Ray crossing count.
     */
-    float inside =
+    float crossingCount =
         0.0;
 
 
-    /*
-        ------------------------------------------------
-        EDGE 0
-        P0 -> P1
-        ------------------------------------------------
-    */
+    /* ========================================================
+       EDGE 0
 
-    if (count >= 3.0)
-    {
-        ProjectSparkPolygonEdge(
-            P,
-            P0,
-            P1,
-            minDistance,
-            minDistance
-        );
+       P0 -> P1
+       ======================================================== */
 
-        ProjectSparkPolygonCrossing(
-            P,
-            P0,
-            P1,
-            inside,
-            inside
-        );
-    }
+    ProjectSparkPolygonEdgeDistance(
+        P,
+        P0,
+        P1,
+        minimumDistance
+    );
+
+    ProjectSparkPolygonCrossing(
+        P,
+        P0,
+        P1,
+        crossingCount
+    );
 
 
-    /*
-        ------------------------------------------------
-        EDGE 1
-        P1 -> P2
-        ------------------------------------------------
-    */
+    /* ========================================================
+       EDGE 1
 
-    if (count >= 3.0)
-    {
-        ProjectSparkPolygonEdge(
-            P,
-            P1,
-            P2,
-            minDistance,
-            minDistance
-        );
+       P1 -> P2
+       ======================================================== */
 
-        ProjectSparkPolygonCrossing(
-            P,
-            P1,
-            P2,
-            inside,
-            inside
-        );
-    }
+    ProjectSparkPolygonEdgeDistance(
+        P,
+        P1,
+        P2,
+        minimumDistance
+    );
+
+    ProjectSparkPolygonCrossing(
+        P,
+        P1,
+        P2,
+        crossingCount
+    );
 
 
-    /*
-        ------------------------------------------------
-        EDGE 2
-        P2 -> P3
-        ------------------------------------------------
-    */
+    /* ========================================================
+       EDGE 2
+
+       P2 -> P3
+       ======================================================== */
 
     if (count >= 4.0)
     {
-        ProjectSparkPolygonEdge(
+        ProjectSparkPolygonEdgeDistance(
             P,
             P2,
             P3,
-            minDistance,
-            minDistance
+            minimumDistance
         );
 
         ProjectSparkPolygonCrossing(
             P,
             P2,
             P3,
-            inside,
-            inside
+            crossingCount
         );
     }
 
 
-    /*
-        ------------------------------------------------
-        EDGE 3
-        P3 -> P4
-        ------------------------------------------------
-    */
+    /* ========================================================
+       EDGE 3
+
+       P3 -> P4
+       ======================================================== */
 
     if (count >= 5.0)
     {
-        ProjectSparkPolygonEdge(
+        ProjectSparkPolygonEdgeDistance(
             P,
             P3,
             P4,
-            minDistance,
-            minDistance
+            minimumDistance
         );
 
         ProjectSparkPolygonCrossing(
             P,
             P3,
             P4,
-            inside,
-            inside
+            crossingCount
         );
     }
 
 
-    /*
-        ------------------------------------------------
-        EDGE 4
-        P4 -> P5
-        ------------------------------------------------
-    */
+    /* ========================================================
+       EDGE 4
+
+       P4 -> P5
+       ======================================================== */
 
     if (count >= 6.0)
     {
-        ProjectSparkPolygonEdge(
+        ProjectSparkPolygonEdgeDistance(
             P,
             P4,
             P5,
-            minDistance,
-            minDistance
+            minimumDistance
         );
 
         ProjectSparkPolygonCrossing(
             P,
             P4,
             P5,
-            inside,
-            inside
+            crossingCount
         );
     }
 
 
-    /*
-        ------------------------------------------------
-        EDGE 5
-        P5 -> P6
-        ------------------------------------------------
-    */
+    /* ========================================================
+       EDGE 5
+
+       P5 -> P6
+       ======================================================== */
 
     if (count >= 7.0)
     {
-        ProjectSparkPolygonEdge(
+        ProjectSparkPolygonEdgeDistance(
             P,
             P5,
             P6,
-            minDistance,
-            minDistance
+            minimumDistance
         );
 
         ProjectSparkPolygonCrossing(
             P,
             P5,
             P6,
-            inside,
-            inside
+            crossingCount
         );
     }
 
 
-    /*
-        ------------------------------------------------
-        EDGE 6
-        P6 -> P7
-        ------------------------------------------------
-    */
+    /* ========================================================
+       EDGE 6
+
+       P6 -> P7
+       ======================================================== */
 
     if (count >= 8.0)
     {
-        ProjectSparkPolygonEdge(
+        ProjectSparkPolygonEdgeDistance(
             P,
             P6,
             P7,
-            minDistance,
-            minDistance
+            minimumDistance
         );
 
         ProjectSparkPolygonCrossing(
             P,
             P6,
             P7,
-            inside,
-            inside
+            crossingCount
         );
     }
 
 
-    /*
-        ------------------------------------------------
-        CLOSING EDGE
-        ------------------------------------------------
+    /* ========================================================
+       CLOSING EDGE
 
-        Triangle:
-            P2 -> P0
+       Triangle:
+           P2 -> P0
 
-        Quad:
-            P3 -> P0
+       Quad:
+           P3 -> P0
 
-        Pentagon:
-            P4 -> P0
+       Pentagon:
+           P4 -> P0
 
-        ...
+       Hexagon:
+           P5 -> P0
 
-        Octagon:
-            P7 -> P0
-    */
+       Heptagon:
+           P6 -> P0
+
+       Octagon:
+           P7 -> P0
+       ======================================================== */
 
     float2 closingPoint =
         P2;
 
+
     if (count >= 4.0)
     {
-        closingPoint = P3;
+        closingPoint =
+            P3;
     }
 
     if (count >= 5.0)
     {
-        closingPoint = P4;
+        closingPoint =
+            P4;
     }
 
     if (count >= 6.0)
     {
-        closingPoint = P5;
+        closingPoint =
+            P5;
     }
 
     if (count >= 7.0)
     {
-        closingPoint = P6;
+        closingPoint =
+            P6;
     }
 
     if (count >= 8.0)
     {
-        closingPoint = P7;
+        closingPoint =
+            P7;
     }
 
 
-    ProjectSparkPolygonEdge(
+    ProjectSparkPolygonEdgeDistance(
         P,
         closingPoint,
         P0,
-        minDistance,
-        minDistance
+        minimumDistance
     );
-
 
     ProjectSparkPolygonCrossing(
         P,
         closingPoint,
         P0,
-        inside,
-        inside
+        crossingCount
     );
 
 
-    /*
-        ------------------------------------------------
-        FINAL SIGN
-        ------------------------------------------------
-    */
+    /* ========================================================
+       EVEN / ODD TEST
+       ======================================================== */
 
-    float insideMask =
-        step(
-            0.5,
-            inside
+    float halfCount =
+        floor(
+            crossingCount *
+            0.5
         );
 
+    float evenCount =
+        halfCount *
+        2.0;
+
+    float inside =
+        crossingCount -
+        evenCount;
+
 
     /*
-        Negative inside.
-        Positive outside.
+        inside = 0
+            outside
+
+        inside = 1
+            inside
     */
+
     SDF =
         lerp(
-            minDistance,
-            -minDistance,
-            insideMask
+            minimumDistance,
+            -minimumDistance,
+            inside
         );
+}
+
+
+/* ============================================================
+   HALF PRECISION ENTRY POINT
+   ============================================================ */
+
+void CustomPolygonSDF_half(
+    half2 P,
+    half2 P0,
+    half2 P1,
+    half2 P2,
+    half2 P3,
+    half2 P4,
+    half2 P5,
+    half2 P6,
+    half P7X,
+    half P7Y,
+    half PointCount,
+    out half SDF)
+{
+    float result;
+
+
+    CustomPolygonSDF_float(
+        (float2)P,
+        (float2)P0,
+        (float2)P1,
+        (float2)P2,
+        (float2)P3,
+        (float2)P4,
+        (float2)P5,
+        (float2)P6,
+        (float)P7X,
+        (float)P7Y,
+        (float)PointCount,
+        result
+    );
+
+
+    SDF =
+        (half)result;
 }
 
 
