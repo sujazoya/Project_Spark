@@ -7,12 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_MeasurementPanel
-  m_Shader: {fileID: -6465566751694194690, guid: 5b603b6954888f14ba7d8f3cf2e0a81e, type: 3}
+  m_Name: Measurement_Button
+  m_Shader: {fileID: -6465566751694194690, guid: b1d7e6788704b7a44a4c8618351de1c1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _SHAPETYPE_CUSTOM
+  - _SHAPETYPE_HEXAGON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -25,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _IconTexture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 47c6f66c812e99e48ac7766a5be2d9c6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -46,92 +46,79 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BorderBrightness: 20
-    - _BorderWidth: 0.03
-    - _ButtonHeight: 0.514
-    - _ButtonStyle: 0.5
-    - _ButtonWidth: 0.42
-    - _Chamfer: 0.1
+    - _BorderBrightness: 10
+    - _BorderWidth: 0.05
+    - _ButtonHeight: 0.518
+    - _ButtonStyle: 0
+    - _ButtonWidth: 0.758
+    - _CamferBorderWidth: 0.5
+    - _Chamfer: 0.036
     - _ColorMask: 15
-    - _CornerRadius: 0.15
-    - _CornerWidth: 0.02
+    - _CornerRadius: 0.028
+    - _CornerWidth: 0.545
     - _Disabled: 0
-    - _DissolveAmount: 0.12
-    - _DissolveEdge: 0.05
-    - _EdgeSoftness: 0.003
-    - _Enabled: 1
-    - _Fade_End: 1
-    - _Fade_Start: 0.661
-    - _GlitchAmount: 1
-    - _GlitchBandScale: 18
-    - _GlitchBandWidth: 0.15
-    - _GlitchFrequency: 0.25
-    - _GlitchSpeed: 20.3
+    - _EdgeSoftness: 0.23
+    - _Enabled: 0
+    - _Glow: 2
     - _GlowFalloff: 2
-    - _GlowIntensity: 5
-    - _GlowSize: 0.008
+    - _GlowIntensity: 2
+    - _GlowSize: 0.11
     - _GlowSoftness: 0.04
-    - _GlowWidth: 0.06
-    - _HexRadius: 0.329
-    - _Hex_Alpha: 0.873
-    - _Hex_Border: 0.102
-    - _Hex_Intensity: 0.5
-    - _Hex_Size: 0.358
+    - _GlowWidth: 0
     - _Hover: 0
-    - _IconBrightness: 1
+    - _IconBrightness: 0
     - _IconEnabled: 0
-    - _IconGlow: 1.5
-    - _IconOpacity: 1
-    - _IconSoftness: 0.01
-    - _NoiseScale: 5
-    - _Opacity: 0.75
-    - _P7X: 0.1
-    - _P7Y: 0.5
+    - _IconGlow: 1.77
+    - _IconOpacity: 0
+    - _IconSize: 5
+    - _IconSoftness: 1.32
+    - _Opacity: 1.76
+    - _P7X: 0
+    - _P7Y: 0
     - _PointCount: 6
     - _Pressed: 0
+    - _Pulse: 0.48
     - _PulseAmount: 0.25
     - _PulseSpeed: 2
-    - _Radius: 0.4
+    - _Radius: 0.594
     - _Rotation: 0
-    - _RoundRadius: 0.08
-    - _RoundShapeSize: 0.137
-    - _SHAPETYPE: 6
-    - _Scale: 2.38
+    - _RoundRadius: 0.079
+    - _RoundShapeSize: 0.274
+    - _SHAPETYPE: 4
+    - _Scale: 2
     - _ScanDensity: 80
-    - _ScanSpeed: 2
+    - _ScanSpeed: 0
     - _ScanStrength: 0
     - _Selected: 0
-    - _Softnes: 0.02
+    - _Selected_: 0
+    - _Softnes: 0.936
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
     - _Sweep: 0
-    - _SweepSpeed: 1
-    - _SweepWidth: 0.08
+    - _SweepSpeed: 0.1
+    - _SweepWidth: 0.01
     - _UIMaskSoftnessX: 1
     - _UIMaskSoftnessY: 1
     - _Warning: 0
     m_Colors:
+    - _ButtonColor: {r: 0.7075472, g: 0.49767062, b: 0.34376115, a: 1}
+    - _Chafer_ButtonSize: {r: 1, g: -1.5, b: 0, a: 0}
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
-    - _DissolveEdgeColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GridSize: {r: 20, g: 20, b: 0, a: 0}
-    - _HexColor: {r: 1, g: 1, b: 1, a: 1}
-    - _IconPosition: {r: 0, g: 0, b: 0, a: 0}
-    - _IconSize: {r: 0.25, g: 0.25, b: 0, a: 0}
-    - _Icon_Color: {r: 1, g: 0, b: 0, a: 1}
+    - _IconPosition: {r: 0.66, g: 0.42, b: 0, a: 0}
+    - _IconSize: {r: 0.2, g: 0.2, b: 0, a: 0}
+    - _Icon_Color: {r: 1, g: 1, b: 1, a: 1}
     - _P0: {r: -0.85, g: -0.55, b: 0, a: 0}
     - _P1: {r: 0.65, g: -0.55, b: 0, a: 0}
-    - _P2: {r: 0.98, g: -0.38, b: 0, a: 0}
-    - _P3: {r: 0.57, g: 0.55, b: 0, a: 0}
+    - _P2: {r: 0.85, g: -0.25, b: 0, a: 0}
+    - _P3: {r: 0.85, g: 0.55, b: 0, a: 0}
     - _P4: {r: -0.5, g: 0.55, b: 0, a: 0}
     - _P5: {r: -0.85, g: 0.2, b: 0, a: 0}
     - _P6: {r: -0.866, g: -0.5, b: 0, a: 0}
-    - _P7: {r: 0, g: 1, b: 0, a: 0}
-    - _PanelColor: {r: 0, g: 0.7524567, b: 1, a: 1}
     - _Position: {r: 0.5, g: 0.5, b: 0, a: 0}
-    - _Scale: {r: -2.42, g: 1.63, b: 0, a: 0}
-    - _Size: {r: 2.63, g: 1.6, b: 0, a: 0}
+    - _Scale: {r: 0.5, g: 0.2, b: 0, a: 0}
+    - _Size: {r: 0.5, g: 0.5, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
