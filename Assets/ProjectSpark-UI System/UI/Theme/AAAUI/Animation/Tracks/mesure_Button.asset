@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 551aa9d96aeae0740954e8fa4c46b435, type: 3}
-  m_Name: MeasurementHud
+  m_Name: mesure_Button
   m_EditorClassIdentifier: AAAUI.Runtime::AAAUI.UIAnimationProfile
   openSequence:
-    rid: 42472225087946828
+    rid: 42472242579505231
   closeSequence:
-    rid: 42472225087946829
+    rid: 42472242579505232
   loopSequence:
     rid: -2
   defaultDuration: 2
@@ -25,21 +25,20 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 42472225087946828
+    - rid: 42472242579505231
       type: {class: UIAnimationSequence, ns: AAAUI, asm: AAAUI.Runtime}
       data:
         duration: 2
         tracks:
-        - rid: 42472242579505234
+        - rid: 42472242579505233
         events: []
-    - rid: 42472225087946829
+    - rid: 42472242579505232
       type: {class: UIAnimationSequence, ns: AAAUI, asm: AAAUI.Runtime}
       data:
-        duration: 2
-        tracks:
-        - rid: 42472242579505230
+        duration: 0.25
+        tracks: []
         events: []
-    - rid: 42472242579505230
+    - rid: 42472242579505233
       type: {class: DissolveTrack, ns: AAAUI, asm: AAAUI.Runtime}
       data:
         startTime: 0
@@ -48,15 +47,5 @@ MonoBehaviour:
         targetIndex: 0
         useSequenceDuration: 0
         property: _DissolveAmount
-        from: 0
-        to: 1
-    - rid: 42472242579505234
-      type: {class: SlideTrack, ns: AAAUI, asm: AAAUI.Runtime}
-      data:
-        startTime: 0
-        duration: 2
-        ease: 1
-        targetIndex: 0
-        useSequenceDuration: 0
-        from: {x: 400, y: 0, z: 0}
-        to: {x: -125, y: 0, z: 0}
+        from: 1
+        to: 0

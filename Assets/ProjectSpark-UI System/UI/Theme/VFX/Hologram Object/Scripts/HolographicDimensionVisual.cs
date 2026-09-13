@@ -723,220 +723,201 @@ namespace ProjectSpark.HolographicViewer
         // ANGLE VISUAL
         // ============================================================
 
-        private void UpdateAngleVisual()
-        {
-            Vector3 fromVertex =
-                pointA -
-                pointB;
+      private void UpdateAngleVisual()
+{
+    Vector3 vertex = pointB;
 
-            Vector3 toVertex =
-                pointC -
-                pointB;
+    Vector3 fromVertex = pointA - vertex;
+    Vector3 toVertex   = pointC - vertex;
 
-            float lengthA =
-                fromVertex.magnitude;
+    float lengthA = fromVertex.magnitude;
+    float lengthC = toVertex.magnitude;
 
-            float lengthC =
-                toVertex.magnitude;
+    if (lengthA <= 0.000001f ||
+        lengthC <= 0.000001f)
+    {
+        HideAngleGeometry();
+        return;
+    }
 
-            if (lengthA <= 0.000001f ||
-                lengthC <= 0.000001f)
-            {
-                HideAngleGeometry();
-                return;
-            }
+    Vector3 directionA = fromVertex / lengthA;
+    Vector3 directionC = toVertex / lengthC;
 
-            Vector3 directionA =
-                fromVertex /
-                lengthA;
+    float angle = Vector3.Angle(directionA, directionC);
 
-            Vector3 directionC =
-                toVertex /
-                lengthC;
+    if (angle <= 0.001f)
+    {
+        HideAngleGeometry();
+        return;
+    }
 
-            float angle =
-                Vector3.Angle(
-                    directionA,
-                    directionC
-                );
+    // Plane of the angle.
+    Vector3 normal = Vector3.Cross(directionA, directionC);
 
-            if (angle <= 0.001f)
-            {
-                HideAngleGeometry();
-                return;
-            }
+    if (normal.sqrMagnitude <= 0.000001f)
+    {
+        normal = GetStableAngleNormal(directionA);
+    }
 
-            Vector3 normal =
-                Vector3.Cross(
-                    directionA,
-                    directionC
-                );
+    normal.Normalize();
 
-            if (normal.sqrMagnitude <=
-                0.000001f)
-            {
-                normal =
-                    GetStableAngleNormal(
-                        directionA
-                    );
-            }
+    // Keep the angle plane facing the camera.
+    Vector3 cameraToVertex =
+        vertex - viewerCamera.transform.position;
 
-            normal.Normalize();
+    if (Vector3.Dot(normal, cameraToVertex) < 0.0f)
+    {
+        normal = -normal;
+    }
 
-            Vector3 cameraToVertex =
-                pointB -
-                viewerCamera.transform.position;
+    // Arms start EXACTLY from the vertex.
+    Vector3 armEndA =
+        vertex + directionA * angleArmLength;
 
-            if (Vector3.Dot(
-                    normal,
-                    cameraToVertex) < 0.0f)
-            {
-                normal = -normal;
-            }
+    Vector3 armEndC =
+        vertex + directionC * angleArmLength;
 
-            Vector3 armEndA =
-                pointB +
-                directionA *
-                angleArmLength;
+    SetLine(
+        angleArmA,
+        vertex,
+        armEndA
+    );
 
-            Vector3 armEndC =
-                pointB +
-                directionC *
-                angleArmLength;
+    SetLine(
+        angleArmB,
+        vertex,
+        armEndC
+    );
 
-            SetLine(
-                angleArmA,
-                pointB,
-                armEndA
-            );
+    // ARC — same vertex, same directions, same plane.
+    SetAngleArc(
+        vertex,
+        directionA,
+        directionC,
+        normal,
+        angle
+    );
 
-            SetLine(
-                angleArmB,
-                pointB,
-                armEndC
-            );
+    // Angle bisector.
+    Vector3 bisector = directionA + directionC;
 
-            SetAngleArc(
-                pointB,
-                directionA,
-                directionC,
-                normal,
-                angle
-            );
+    if (bisector.sqrMagnitude <= 0.000001f)
+    {
+        bisector = Vector3.Cross(
+            normal,
+            directionA
+        );
+    }
 
-            Vector3 bisector =
-                directionA +
-                directionC;
+    bisector.Normalize();
 
-            if (bisector.sqrMagnitude <=
-                0.000001f)
-            {
-                bisector =
-                    Vector3.Cross(
-                        normal,
-                        directionA
-                    );
-            }
+    Vector3 labelPosition =
+        vertex +
+        bisector *
+        (angleArcRadius + angleLabelOffset);
 
-            bisector.Normalize();
+    UpdateLabelPosition(
+        labelPosition,
+        0.0f
+    );
 
-            Vector3 labelPosition =
-                pointB +
-                bisector *
-                (
-                    angleArcRadius +
-                    angleLabelOffset
-                );
+    SetArrowActive(
+        arrowA,
+        false
+    );
 
-            UpdateLabelPosition(
-                labelPosition,
-                0.0f
-            );
-
-            SetArrowActive(
-                arrowA,
-                false
-            );
-
-            SetArrowActive(
-                arrowB,
-                false
-            );
-        }
+    SetArrowActive(
+        arrowB,
+        false
+    );
+}
 
 
         // ============================================================
         // ANGLE ARC
         // ============================================================
+private void SetAngleArc(
+    Vector3 center,
+    Vector3 startDirection,
+    Vector3 endDirection,
+    Vector3 normal,
+    float angle)
+{
+    if (angleArc == null)
+        return;
 
-        private void SetAngleArc(
-            Vector3 center,
-            Vector3 startDirection,
-            Vector3 endDirection,
-            Vector3 normal,
-            float angle)
-        {
-            if (angleArc == null)
-            {
-                return;
-            }
+    if (startDirection.sqrMagnitude <= 0.000001f ||
+        endDirection.sqrMagnitude <= 0.000001f ||
+        normal.sqrMagnitude <= 0.000001f)
+    {
+        angleArc.enabled = false;
+        return;
+    }
 
-            int segments =
-                Mathf.Clamp(
-                    Mathf.CeilToInt(
-                        angleArcSegments *
-                        Mathf.Clamp01(
-                            angle /
-                            180.0f
-                        )
-                    ),
-                    2,
-                    128
-                );
+    startDirection.Normalize();
+    endDirection.Normalize();
+    normal.Normalize();
 
-            angleArc.positionCount =
-                segments + 1;
+    float signedAngle = Vector3.SignedAngle(
+        startDirection,
+        endDirection,
+        normal
+    );
 
-            float step =
-                angle /
-                segments;
+    float arcAngle = Mathf.Clamp(
+        Mathf.Abs(angle),
+        0.0f,
+        180.0f
+    );
 
-            Quaternion rotation =
-                Quaternion.AngleAxis(
-                    step,
-                    normal
-                );
+    if (arcAngle <= 0.001f)
+    {
+        angleArc.enabled = false;
+        return;
+    }
 
-            Vector3 direction =
-                startDirection;
+    float sign = Mathf.Sign(signedAngle);
 
-            for (int i = 0;
-                 i <= segments;
-                 i++)
-            {
-                angleArc.SetPosition(
-                    i,
-                    center +
-                    direction *
-                    angleArcRadius
-                );
+    if (Mathf.Abs(sign) < 0.001f)
+        sign = 1.0f;
 
-                direction =
-                    rotation *
-                    direction;
-            }
+    int segments = Mathf.Clamp(
+        Mathf.CeilToInt(
+            angleArcSegments *
+            (arcAngle / 180.0f)
+        ),
+        2,
+        128
+    );
 
-            angleArc.SetPosition(
-                segments,
-                center +
-                endDirection *
-                angleArcRadius
-            );
+    angleArc.useWorldSpace = true;
+    angleArc.positionCount = segments + 1;
 
-            angleArc.enabled = true;
-        }
+    float radius = angleArcRadius;
 
+    for (int i = 0; i <= segments; i++)
+    {
+        float t = (float)i / segments;
 
+        float currentAngle =
+            sign * arcAngle * t;
+
+        Vector3 direction =
+            Quaternion.AngleAxis(
+                currentAngle,
+                normal
+            ) * startDirection;
+
+        direction.Normalize();
+
+        angleArc.SetPosition(
+            i,
+            center + direction * radius
+        );
+    }
+
+    angleArc.enabled = true;
+}
         // ============================================================
         // STABLE PERPENDICULAR
         // ============================================================
