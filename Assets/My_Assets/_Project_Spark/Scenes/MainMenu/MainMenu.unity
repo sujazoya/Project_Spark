@@ -4768,97 +4768,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128947882}
   m_CullTransparentMesh: 1
---- !u!1 &133705742
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 133705744}
-  - component: {fileID: 133705743}
-  m_Layer: 0
-  m_Name: Square
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!212 &133705743
-SpriteRenderer:
-  serializedVersion: 2
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 133705742}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: b2088558e7d2e4e498bb059b99e6a957, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
---- !u!4 &133705744
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 133705742}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3555, y: 1.30608, z: -2.89961}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &136371019
 GameObject:
   m_ObjectHideFlags: 0
@@ -5342,12 +5251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3561758006b82984b8722bd16d8a3c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.Animation.UIAnimationController
-  canvasGroup: {fileID: 141547564}
-  animatedTarget: {fileID: 1053338299}
-  openDuration: 0.2
-  openOffset: {x: 0, y: -30}
-  closeDuration: 0.15
-  originalPosition: {x: 0, y: 0}
 --- !u!114 &141547566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7083,6 +6986,63 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &186517474
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 186517475}
+  - component: {fileID: 186517476}
+  m_Layer: 13
+  m_Name: CircularFeature_Shaft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &186517475
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186517474}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 347019428}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &186517476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186517474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566bb93cdea9e1747a7a1a78d2668364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicCircularFeature
+  featureId: CircularFeature
+  featureType: 10
+  featureTransform: {fileID: 186517475}
+  localCenter: {x: 0, y: 0, z: 0}
+  localAxis: {x: 0, y: 1, z: 0}
+  radius: 0.01
+  depth: 0.01
+  enabledForMeasurement: 1
+  measurementCapabilities: -1
+  visibleInViewer: 1
+  showCenterMarker: 1
+  showAxis: 1
+  showRim: 1
 --- !u!1 &186903156
 GameObject:
   m_ObjectHideFlags: 0
@@ -9988,6 +9948,7 @@ GameObject:
   - component: {fileID: 263075051}
   - component: {fileID: 263075050}
   - component: {fileID: 263075049}
+  - component: {fileID: 263075052}
   m_Layer: 8
   m_Name: mother board holo
   m_TagString: Untagged
@@ -10094,6 +10055,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 263075047}
   m_Mesh: {fileID: -5053925668127403250, guid: be2cf8bd58142964b9b257b3b94dcaaf, type: 3}
+--- !u!114 &263075052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263075047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fa7db66f42ee634cbf56066cdbb1ac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicSnapGeometry
+  source: {fileID: 263075051}
+  buildOnAwake: 1
 --- !u!1 &264164655
 GameObject:
   m_ObjectHideFlags: 0
@@ -11154,6 +11129,63 @@ MonoBehaviour:
   includeInactiveChildren: 0
   applyThemeColor: 1
   applyThemeFont: 1
+--- !u!1 &284373878
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 284373879}
+  - component: {fileID: 284373880}
+  m_Layer: 13
+  m_Name: CircularFeature_Shaft (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &284373879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284373878}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.2420002, z: 0}
+  m_LocalScale: {x: 0.6, y: 1.3999999, z: 0.6}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 596441959}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &284373880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284373878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566bb93cdea9e1747a7a1a78d2668364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicCircularFeature
+  featureId: CircularFeature
+  featureType: 20
+  featureTransform: {fileID: 284373879}
+  localCenter: {x: 0, y: 0, z: 0}
+  localAxis: {x: 0, y: 1, z: 0}
+  radius: 0.01
+  depth: 0.01
+  enabledForMeasurement: 1
+  measurementCapabilities: -1
+  visibleInViewer: 1
+  showCenterMarker: 1
+  showAxis: 1
+  showRim: 1
 --- !u!1 &286407838
 GameObject:
   m_ObjectHideFlags: 0
@@ -13275,7 +13307,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.3, y: 0.7, z: 0.3}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 186517475}
   m_Father: {fileID: 1679771681}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &347019429
@@ -15082,7 +15115,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 496954490}
+      - m_Target: {fileID: 800773878}
         m_TargetAssemblyTypeName: ProjectSpark.HolographicViewer.HolographicSnapInteractor,
           Assembly-CSharp
         m_MethodName: ToggleSnapping
@@ -15581,118 +15614,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 713392951178259334, guid: c2685527c04dcf74f8e8192b682c9851, type: 3}
   m_PrefabInstance: {fileID: 7065708414698018336}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &408223686
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 408223690}
-  - component: {fileID: 408223689}
-  - component: {fileID: 408223688}
-  - component: {fileID: 408223687}
-  m_Layer: 0
-  m_Name: Sphere
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!135 &408223687
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 408223686}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &408223688
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 408223686}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 563351c5b025f464a80a9bdb84546cdd, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &408223689
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 408223686}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &408223690
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 408223686}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.77, y: 1.121, z: -2.69}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410109391
 GameObject:
   m_ObjectHideFlags: 0
@@ -15939,6 +15860,63 @@ MonoBehaviour:
   hoverMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
   hoverInSpeed: 8
   hoverOutSpeed: 6
+--- !u!1 &417621433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 417621434}
+  - component: {fileID: 417621435}
+  m_Layer: 13
+  m_Name: CircularFeature_Shaft (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &417621434
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417621433}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.7899998, y: 1.3766665, z: 0}
+  m_LocalScale: {x: 1, y: 2.333332, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1445802398}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &417621435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417621433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566bb93cdea9e1747a7a1a78d2668364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicCircularFeature
+  featureId: CircularFeature
+  featureType: 0
+  featureTransform: {fileID: 417621434}
+  localCenter: {x: 0, y: 0, z: 0}
+  localAxis: {x: 0, y: 1, z: 0}
+  radius: 0.01
+  depth: 0.01
+  enabledForMeasurement: 1
+  measurementCapabilities: -1
+  visibleInViewer: 1
+  showCenterMarker: 1
+  showAxis: 1
+  showRim: 1
 --- !u!1 &420962083
 GameObject:
   m_ObjectHideFlags: 0
@@ -18901,116 +18879,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 494104479}
   m_CullTransparentMesh: 1
---- !u!1 &496954486
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 496954487}
-  - component: {fileID: 496954488}
-  - component: {fileID: 496954489}
-  - component: {fileID: 496954490}
-  m_Layer: 12
-  m_Name: SnapSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &496954487
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 496954486}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1093371129}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &496954488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 496954486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f57ff84a0ef720f448e73a31058e69ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicSnapController
-  viewerCamera: {fileID: 1360671976}
-  geometries:
-  - {fileID: 908954557}
-  settings:
-    vertexEnabled: 1
-    edgeEnabled: 1
-    faceCenterEnabled: 1
-    surfaceEnabled: 1
-    vertexPixelDistance: 16
-    edgePixelDistance: 12
-    facePixelDistance: 18
-    vertexPriority: 1
-    edgePriority: 0.75
-    facePriority: 0.5
-    distanceWeight: 1
-    priorityWeight: 0.35
-    useDepthFiltering: 1
-    maxDepthDifference: 0.05
-    depthWeight: 0.25
-    useHysteresis: 1
-    switchMarginPixels: 3
-    stickyDistancePixels: 20
-    restrictToHitObject: 1
-    requireFrontFacingFace: 1
-  snapEnabled: 1
---- !u!114 &496954489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 496954486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0890e1fa7b8da284fa654f71f2a7ad02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicSnapMarker
-  marker: {fileID: 1743105314}
-  markerPivot: {fileID: 1743105314}
-  typeLabel: {fileID: 1276080749}
-  positionLabel: {fileID: 453922953}
-  indexLabel: {fileID: 1714273742}
-  surfaceOffset: 0.0025
-  labelOffset: 0.12
---- !u!114 &496954490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 496954486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75f14fe47c75e114f93b47e12107bd24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicSnapInteractor
-  viewerCamera: {fileID: 1360671976}
-  snapController: {fileID: 496954488}
-  snapMarker: {fileID: 496954489}
-  snapLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  rayDistance: 100
-  snapEnabled: 1
 --- !u!1 &499657335
 GameObject:
   m_ObjectHideFlags: 0
@@ -20556,7 +20424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -270.36905, y: 188.26208}
+  m_AnchoredPosition: {x: -328, y: 188.26208}
   m_SizeDelta: {x: 261.7, y: 136.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &570474293
@@ -21635,7 +21503,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.6210001, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 284373879}
   m_Father: {fileID: 1679771681}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &596441960
@@ -26824,7 +26693,8 @@ Transform:
   m_LocalPosition: {x: -0.274, y: 0.051, z: 0}
   m_LocalScale: {x: 0.3, y: 0.4, z: 0.2}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1834231474}
   m_Father: {fileID: 1679771681}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &705743041
@@ -29656,6 +29526,63 @@ RectTransform:
   m_AnchoredPosition: {x: -1, y: -0.34490204}
   m_SizeDelta: {x: 2, y: 1.8353996}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &776990300
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 776990301}
+  - component: {fileID: 776990302}
+  m_Layer: 13
+  m_Name: CircularFeature_Shaft (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &776990301
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776990300}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.7899998, y: -0.006666667, z: 0}
+  m_LocalScale: {x: 1, y: 2.3333318, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1129449902}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &776990302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776990300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566bb93cdea9e1747a7a1a78d2668364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicCircularFeature
+  featureId: CircularFeature
+  featureType: 30
+  featureTransform: {fileID: 776990301}
+  localCenter: {x: 0, y: 0, z: 0}
+  localAxis: {x: 0, y: 1, z: 0}
+  radius: 0.01
+  depth: 0.01
+  enabledForMeasurement: 1
+  measurementCapabilities: -1
+  visibleInViewer: 1
+  showCenterMarker: 1
+  showAxis: 1
+  showRim: 1
 --- !u!1 &778856977
 GameObject:
   m_ObjectHideFlags: 0
@@ -30818,9 +30745,11 @@ GameObject:
   - component: {fileID: 800773873}
   - component: {fileID: 800773874}
   - component: {fileID: 800773875}
-  - component: {fileID: 800773876}
-  - component: {fileID: 800773877}
   - component: {fileID: 800773878}
+  - component: {fileID: 800773877}
+  - component: {fileID: 800773876}
+  - component: {fileID: 800773880}
+  - component: {fileID: 800773879}
   m_Layer: 5
   m_Name: MeasurementHUD
   m_TagString: Untagged
@@ -30836,7 +30765,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800773871}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -86.517}
+  m_LocalPosition: {x: 0, y: 0, z: -142}
   m_LocalScale: {x: 0.94, y: 0.94, z: 0.94}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30845,7 +30774,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: -30}
+  m_AnchoredPosition: {x: -342, y: 750}
   m_SizeDelta: {x: 452.334, y: 470.132}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &800773873
@@ -30861,7 +30790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicMeasurementController
   measurementType: 0
-  snapController: {fileID: 496954488}
+  snapController: {fileID: 800773876}
   requireSnap: 1
   dimensionVisual: {fileID: 696521180}
   viewerCamera: {fileID: 1360671976}
@@ -30902,9 +30831,9 @@ CanvasGroup:
   m_GameObject: {fileID: 800773871}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 1
 --- !u!114 &800773876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30912,39 +30841,55 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800773871}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da8445cd6f951b24b8893c0ff8aac9ba, type: 3}
+  m_Script: {fileID: 11500000, guid: f57ff84a0ef720f448e73a31058e69ac, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: AAAUI.Runtime::AAAUI.UIAnimator
-  profile: {fileID: 11400000, guid: 30f1b476c704689429a6ef246900af34, type: 2}
-  targets:
-  - transform: {fileID: 79751344}
-    canvasGroup: {fileID: 0}
-    graphic: {fileID: 79751345}
-    renderer: {fileID: 0}
---- !u!95 &800773877
-Animator:
-  serializedVersion: 7
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicSnapController
+  viewerCamera: {fileID: 1360671976}
+  geometries:
+  - {fileID: 908954557}
+  settings:
+    vertexEnabled: 1
+    edgeEnabled: 1
+    faceCenterEnabled: 1
+    surfaceEnabled: 1
+    vertexPixelDistance: 16
+    edgePixelDistance: 12
+    facePixelDistance: 18
+    vertexPriority: 1
+    edgePriority: 0.75
+    facePriority: 0.5
+    distanceWeight: 1
+    priorityWeight: 0.35
+    useDepthFiltering: 1
+    maxDepthDifference: 0.05
+    depthWeight: 0.25
+    useHysteresis: 1
+    switchMarginPixels: 3
+    stickyDistancePixels: 20
+    restrictToHitObject: 1
+    requireFrontFacingFace: 1
+  snapEnabled: 1
+--- !u!114 &800773877
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800773871}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 05d03b465ab477f448d779c4f4b164ed, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0890e1fa7b8da284fa654f71f2a7ad02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicSnapMarker
+  marker: {fileID: 1743105314}
+  markerPivot: {fileID: 1743105314}
+  typeLabel: {fileID: 1276080749}
+  positionLabel: {fileID: 453922953}
+  indexLabel: {fileID: 1714273742}
+  surfaceOffset: 0.0025
+  labelOffset: 0.12
 --- !u!114 &800773878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30954,14 +30899,48 @@ MonoBehaviour:
   m_GameObject: {fileID: 800773871}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 543e3168416ad1845bd8162aaa089a12, type: 3}
+  m_Script: {fileID: 11500000, guid: 75f14fe47c75e114f93b47e12107bd24, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.Animation.UIAnimator
-  target: {fileID: 800773872}
-  canvasGroup: {fileID: 800773875}
-  preset: {fileID: 11400000, guid: c50410ac95295324fb3541d4bc501411, type: 2}
-  startHidden: 1
-  useUnscaledTime: 1
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicSnapInteractor
+  viewerCamera: {fileID: 1360671976}
+  snapController: {fileID: 800773876}
+  snapMarker: {fileID: 800773877}
+  snapLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  rayDistance: 100
+  snapEnabled: 1
+--- !u!114 &800773879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800773871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cdf24450f2399745b1633cd084d282a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicCircularFeatureService
+  viewerCamera: {fileID: 1360671976}
+  registry: {fileID: 800773880}
+  centerPixelDistance: 18
+  rimPixelDistance: 14
+--- !u!114 &800773880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800773871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034c464546e67b48bff13fce5f870ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicCircularFeatureRegistry
+  features: []
+  autoDiscover: 1
+  includeInactiveChildren: 1
 --- !u!4 &801908991 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7ed976bf4beae7b459a4b53d49c8499b, type: 3}
@@ -32601,6 +32580,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 846498502}
   m_CullTransparentMesh: 1
+--- !u!1 &846817576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 846817577}
+  - component: {fileID: 846817578}
+  m_Layer: 13
+  m_Name: CircularFeature_Shaft (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &846817577
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846817576}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.3700002, y: -0.255, z: 0}
+  m_LocalScale: {x: 1.4999999, y: 3.4999993, z: 1.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1488335042}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &846817578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846817576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566bb93cdea9e1747a7a1a78d2668364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicCircularFeature
+  featureId: CircularFeature
+  featureType: 30
+  featureTransform: {fileID: 846817577}
+  localCenter: {x: 0, y: 0, z: 0}
+  localAxis: {x: 0, y: 1, z: 0}
+  radius: 0.01
+  depth: 0.01
+  enabledForMeasurement: 1
+  measurementCapabilities: -1
+  visibleInViewer: 1
+  showCenterMarker: 1
+  showAxis: 1
+  showRim: 1
 --- !u!1 &847816997
 GameObject:
   m_ObjectHideFlags: 0
@@ -34662,14 +34698,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 908954544}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b594743b5490e04b9e405f56386c895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicSnapTest
   viewerCamera: {fileID: 1360671976}
-  controller: {fileID: 496954488}
-  marker: {fileID: 496954489}
+  controller: {fileID: 0}
+  marker: {fileID: 0}
 --- !u!114 &908954557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42259,7 +42295,6 @@ Transform:
   - {fileID: 191412831}
   - {fileID: 1994137950}
   - {fileID: 696521179}
-  - {fileID: 496954487}
   - {fileID: 1743105314}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -43302,7 +43337,8 @@ Transform:
   m_LocalPosition: {x: 0.237, y: 0.002, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 776990301}
   m_Father: {fileID: 1679771681}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1129449903
@@ -54837,7 +54873,8 @@ Transform:
   m_LocalPosition: {x: 0.237, y: -0.413, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 417621434}
   m_Father: {fileID: 1679771681}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1445802399
@@ -56754,6 +56791,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480781176}
   m_CullTransparentMesh: 1
+--- !u!1 &1481027063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1481027064}
+  - component: {fileID: 1481027065}
+  m_Layer: 13
+  m_Name: CircularFeature_Shaft (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1481027064
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481027063}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.1000004, z: 0}
+  m_LocalScale: {x: 1, y: 2.3333323, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1892028493}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1481027065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481027063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566bb93cdea9e1747a7a1a78d2668364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicCircularFeature
+  featureId: CircularFeature
+  featureType: 50
+  featureTransform: {fileID: 1481027064}
+  localCenter: {x: 0, y: 0, z: 0}
+  localAxis: {x: 0, y: 1, z: 0}
+  radius: 0.01
+  depth: 0.01
+  enabledForMeasurement: 1
+  measurementCapabilities: -1
+  visibleInViewer: 1
+  showCenterMarker: 1
+  showAxis: 1
+  showRim: 1
 --- !u!1 &1481212973
 GameObject:
   m_ObjectHideFlags: 0
@@ -56854,7 +56948,8 @@ Transform:
   m_LocalPosition: {x: -0.274, y: 0.051, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 846817577}
   m_Father: {fileID: 1679771681}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1488335043
@@ -57457,7 +57552,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1512548641}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -63}
+  m_LocalPosition: {x: 0, y: 0, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -57465,7 +57560,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 155, y: -49}
+  m_AnchoredPosition: {x: 125, y: -62}
   m_SizeDelta: {x: 338, y: 228.20001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1512548643
@@ -67697,6 +67792,39 @@ MonoBehaviour:
   hoverMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
   hoverInSpeed: 8
   hoverOutSpeed: 6
+--- !u!114 &1785396295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973902138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983e71ade8659f84680075aff6bee52f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentVisual
+  renderers: []
+--- !u!114 &1785396296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973902138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 970b69793b650cb43bede2f3a93c4488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentData
+  componentName: Component
+  partNumber: N/A
+  componentType: Mechanical
+  description: No description available.
+  specification01: 
+  specification02: 
+  specification03: 
+  calloutAnchor: {fileID: 0}
 --- !u!1 &1786913041
 GameObject:
   m_ObjectHideFlags: 0
@@ -69680,6 +69808,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1833444868}
   m_CullTransparentMesh: 1
+--- !u!1 &1834231473
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1834231474}
+  - component: {fileID: 1834231475}
+  m_Layer: 13
+  m_Name: CircularFeature_Shaft (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1834231474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834231473}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.9133335, y: -0.1275, z: 0}
+  m_LocalScale: {x: 1, y: 1.7499995, z: 1.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 705743040}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1834231475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834231473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566bb93cdea9e1747a7a1a78d2668364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicCircularFeature
+  featureId: CircularFeature
+  featureType: 40
+  featureTransform: {fileID: 1834231474}
+  localCenter: {x: 0, y: 0, z: 0}
+  localAxis: {x: 0, y: 1, z: 0}
+  radius: 0.01
+  depth: 0.01
+  enabledForMeasurement: 1
+  measurementCapabilities: -1
+  visibleInViewer: 1
+  showCenterMarker: 1
+  showAxis: 1
+  showRim: 1
 --- !u!1 &1840348220
 GameObject:
   m_ObjectHideFlags: 0
@@ -71550,7 +71735,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.6300001, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1481027064}
   m_Father: {fileID: 1679771681}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1892028494
@@ -75255,7 +75441,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1980748166
 RectTransform:
   m_ObjectHideFlags: 0
@@ -81165,6 +81351,60 @@ MonoBehaviour:
   hoverMaterial: {fileID: 2100000, guid: c1b4ed26655273f458a7d2c8dd916e16, type: 2}
   hoverInSpeed: 8
   hoverOutSpeed: 6
+--- !u!114 &3605488465237950928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345420251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983e71ade8659f84680075aff6bee52f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentVisual
+  renderers: []
+--- !u!114 &3605488465237950929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345420251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 970b69793b650cb43bede2f3a93c4488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentData
+  componentName: Component
+  partNumber: N/A
+  componentType: Mechanical
+  description: No description available.
+  specification01: 
+  specification02: 
+  specification03: 
+  calloutAnchor: {fileID: 0}
+--- !u!65 &3605488465237950930
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345420251}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.019388365, y: 0.025630087, z: 0.01}
+  m_Center: {x: -0.0005051046, y: 0.025993126, z: 4.3243002e-13}
 --- !u!1 &3621264157086299888
 GameObject:
   m_ObjectHideFlags: 0
@@ -81824,6 +82064,9 @@ GameObject:
   - component: {fileID: 6461748367603683296}
   - component: {fileID: 6461748367603683297}
   - component: {fileID: 6461748367603683298}
+  - component: {fileID: 6461748367603683301}
+  - component: {fileID: 6461748367603683300}
+  - component: {fileID: 6461748367603683299}
   m_Layer: 8
   m_Name: Switch
   m_TagString: Untagged
@@ -81957,6 +82200,60 @@ MonoBehaviour:
   sourceRenderers:
   - {fileID: 7967186316407988832}
   faultMaterial: {fileID: 2100000, guid: 277eb5cb3f04069408e896e05361d722, type: 2}
+--- !u!114 &6461748367603683299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5973863599960626522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983e71ade8659f84680075aff6bee52f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentVisual
+  renderers: []
+--- !u!114 &6461748367603683300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5973863599960626522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 970b69793b650cb43bede2f3a93c4488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentData
+  componentName: Component
+  partNumber: N/A
+  componentType: Mechanical
+  description: No description available.
+  specification01: 
+  specification02: 
+  specification03: 
+  calloutAnchor: {fileID: 0}
+--- !u!65 &6461748367603683301
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5973863599960626522}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.083098516, y: 0.02, z: 0.09137786}
+  m_Center: {x: 0.004550943, y: 0, z: -0.003814246}
 --- !u!4 &6529633473367131462
 Transform:
   m_ObjectHideFlags: 0
@@ -82919,6 +83216,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6998843224335310597, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1785396291}
+    - targetCorrespondingSourceObject: {fileID: 6998843224335310597, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1785396296}
+    - targetCorrespondingSourceObject: {fileID: 6998843224335310597, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1785396295}
     - targetCorrespondingSourceObject: {fileID: 5001071280941481071, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1763157582}
@@ -83146,7 +83449,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: BATTERY
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 436744596940962536, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -83159,6 +83463,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4394618107515876301, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3605488465237950923}
+    - targetCorrespondingSourceObject: {fileID: 4394618107515876301, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3605488465237950929}
+    - targetCorrespondingSourceObject: {fileID: 4394618107515876301, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3605488465237950928}
+    - targetCorrespondingSourceObject: {fileID: 4394618107515876301, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3605488465237950930}
   m_SourcePrefab: {fileID: 100100000, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
 --- !u!1 &9194556775779943867
 GameObject:
@@ -83251,6 +83564,4 @@ SceneRoots:
   - {fileID: 788274398}
   - {fileID: 1093371129}
   - {fileID: 1118422365}
-  - {fileID: 408223690}
   - {fileID: 595599799}
-  - {fileID: 133705744}
