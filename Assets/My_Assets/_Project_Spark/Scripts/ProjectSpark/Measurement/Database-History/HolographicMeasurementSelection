@@ -1,0 +1,49 @@
+using UnityEngine;
+
+namespace ProjectSpark.HolographicViewer
+{
+    /// <summary>
+    /// Handles the currently selected measurement.
+    /// </summary>
+    public sealed class HolographicMeasurementSelection
+    {
+        private HolographicMeasurementRecord selected;
+
+        public HolographicMeasurementRecord Current =>
+            selected;
+
+        public bool HasSelection =>
+            selected != null;
+
+        public void Select(
+            HolographicMeasurementRecord record)
+        {
+            if (selected == record)
+            {
+                return;
+            }
+
+            if (selected != null)
+            {
+                selected.SetSelected(false);
+            }
+
+            selected = record;
+
+            if (selected != null)
+            {
+                selected.SetSelected(true);
+            }
+        }
+
+        public void Clear()
+        {
+            if (selected != null)
+            {
+                selected.SetSelected(false);
+            }
+
+            selected = null;
+        }
+    }
+}

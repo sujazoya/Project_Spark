@@ -1,0 +1,87 @@
+using System;
+using System.Collections.Generic;
+
+namespace ProjectSpark.HolographicViewer
+{
+    /// <summary>
+    /// Owns the collection of measurement records.
+    ///
+    /// This class contains measurement data only.
+    /// Rendering and UI are handled elsewhere.
+    /// </summary>
+    public sealed class HolographicMeasurementDatabase
+    {
+        private readonly List<HolographicMeasurementRecord>
+            records =
+            new List<HolographicMeasurementRecord>();
+
+        public int Count =>
+            records.Count;
+
+        public IReadOnlyList<HolographicMeasurementRecord>
+            Records =>
+            records;
+
+        public void Add(
+            HolographicMeasurementRecord record)
+        {
+            if (record == null)
+            {
+                return;
+            }
+
+            records.Add(record);
+        }
+
+        public bool Remove(
+            HolographicMeasurementRecord record)
+        {
+            if (record == null)
+            {
+                return false;
+            }
+
+            return records.Remove(record);
+        }
+
+        public void Clear()
+        {
+            records.Clear();
+        }
+
+        public HolographicMeasurementRecord GetAt(
+            int index)
+        {
+            if (index < 0 ||
+                index >= records.Count)
+            {
+                return null;
+            }
+
+            return records[index];
+        }
+
+        public HolographicMeasurementRecord FindById(
+            string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
+
+            for (int i = 0; i < records.Count; i++)
+            {
+                HolographicMeasurementRecord record =
+                    records[i];
+
+                if (record != null &&
+                    record.Id == id)
+                {
+                    return record;
+                }
+            }
+
+            return null;
+        }
+    }
+}

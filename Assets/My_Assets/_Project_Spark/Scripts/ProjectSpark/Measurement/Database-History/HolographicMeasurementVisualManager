@@ -1,0 +1,159 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace ProjectSpark.HolographicViewer
+{
+    /// <summary>
+    /// Creates, tracks and removes visual representations
+    /// of measurement records.
+    /// </summary>
+    public sealed class HolographicMeasurementVisualManager
+        : MonoBehaviour
+    {
+        [SerializeField]
+        private HolographicDimensionVisual visualPrefab;
+
+        private readonly Dictionary<
+            string,
+            HolographicDimensionVisual>
+            visuals =
+            new Dictionary<
+                string,
+                HolographicDimensionVisual>();
+
+        public int Count =>
+            visuals.Count;
+
+        public HolographicDimensionVisual Create(
+            HolographicMeasurementRecord record)
+        {
+            if (record == null ||
+                visualPrefab == null)
+            {
+                return null;
+            }
+
+            HolographicDimensionVisual visual =
+                Instantiate(
+                    visualPrefab,
+                    transform);
+
+            if (visual == null)
+            {
+                return null;
+            }
+
+            visuals[record.Id] =
+                visual;
+
+            ApplyRecord(
+                visual,
+                record);
+
+            return visual;
+        }
+
+        public bool Remove(
+            string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return false;
+            }
+
+            if (!visuals.TryGetValue(
+                    id,
+                    out HolographicDimensionVisual visual))
+            {
+                return false;
+            }
+
+            if (visual != null)
+            {
+                Destroy(visual.gameObject);
+            }
+
+            visuals.Remove(id);
+
+            return true;
+        }
+
+        public void Clear()
+        {
+            foreach (
+                KeyValuePair<
+                    string,
+                    HolographicDimensionVisual> pair
+                in visuals)
+            {
+                if (pair.Value != null)
+                {
+                    Destroy(
+                        pair.Value.gameObject);
+                }
+            }
+
+            visuals.Clear();
+        }
+
+        public bool TryGetVisual(
+            string id,
+            out HolographicDimensionVisual visual)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                visual = null;
+                return false;
+            }
+
+            return visuals.TryGetValue(
+                id,
+                out visual);
+        }
+
+        private void ApplyRecord(
+            HolographicDimensionVisual visual,
+            HolographicMeasurementRecord record)
+        {
+            switch (record.Type)
+            {
+                case HolographicMeasurementType.Distance:
+
+                    visual.ShowDistance(
+                        record.PointA,
+                        record.PointB,
+                        record.Value);
+
+                    break;
+
+                case HolographicMeasurementType.Angle:
+
+                    visual.ShowAngle(
+                        record.PointA,
+                        record.PointB,
+                        record.PointC,
+                        record.Angle);
+
+                    break;
+
+                case HolographicMeasurementType.Radius:
+
+                    visual.ShowRadius(
+                        record.PointA,
+                        record.PointB,
+                        record.Radius);
+
+                    break;
+
+                case HolographicMeasurementType.Diameter:
+
+                    visual.ShowDiameter(
+                        record.PointA,
+                        record.PointB,
+                        record.Diameter);
+
+                    break;
+            }
+        }
+    }
+}
