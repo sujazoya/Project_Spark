@@ -2,6 +2,11 @@ using UnityEngine;
 
 namespace ProjectSpark.HolographicViewer
 {
+    /// <summary>
+    /// Controls per-renderer holographic component visual properties through
+    /// MaterialPropertyBlock without modifying shared materials.
+    /// </summary>
+    [DisallowMultipleComponent]
     public sealed class HolographicComponentVisual : MonoBehaviour
     {
         private static readonly int SelectedAmountID =
@@ -17,6 +22,8 @@ namespace ProjectSpark.HolographicViewer
             Shader.PropertyToID("_ComponentDimAmount");
 
         [Header("Renderers")]
+        [Tooltip("Renderers affected by the component visual state. " +
+                 "When empty, child renderers are automatically collected.")]
         [SerializeField] private Renderer[] renderers;
 
         private MaterialPropertyBlock propertyBlock;
@@ -28,96 +35,91 @@ namespace ProjectSpark.HolographicViewer
 
         private void Awake()
         {
-            propertyBlock =
-                new MaterialPropertyBlock();
+            EnsureInitialized();
+        }
 
-            if (renderers == null ||
-                renderers.Length == 0)
-            {
-                renderers =
-                    GetComponentsInChildren<
-                        Renderer>(true);
-            }
-
+        private void OnEnable()
+        {
+            EnsureInitialized();
             Apply();
         }
 
         public void SetHover(bool value)
         {
-            hoverAmount =
-                value ? 1f : 0f;
-
+            hoverAmount = value ? 1f : 0f;
             Apply();
         }
 
         public void SetSelected(bool value)
         {
-            selectedAmount =
-                value ? 1f : 0f;
-
+            selectedAmount = value ? 1f : 0f;
             Apply();
         }
 
-        public void SetIsolation(
-            bool enabled)
+        public void SetIsolation(bool enabled)
         {
-            isolationAmount =
-                enabled ? 1f : 0f;
-
+            isolationAmount = enabled ? 1f : 0f;
             Apply();
         }
 
-        public void SetDimAmount(
-            float value)
+        public void SetDimAmount(float value)
         {
-            dimAmount =
-                Mathf.Clamp01(value);
-
+            dimAmount = Mathf.Clamp01(value);
             Apply();
+        }
+
+        /// <summary>
+        /// Forces the current visual state to be applied immediately.
+        /// </summary>
+        public void Refresh()
+        {
+            Apply();
+        }
+
+        private void EnsureInitialized()
+        {
+            if (propertyBlock == null)
+                propertyBlock = new MaterialPropertyBlock();
+
+            if (renderers == null || renderers.Length == 0)
+            {
+                renderers = GetComponentsInChildren<Renderer>(true);
+            }
         }
 
         private void Apply()
         {
-            if (renderers == null)
+            EnsureInitialized();
+
+            if (renderers == null || renderers.Length == 0)
                 return;
 
-            for (int i = 0;
-                 i < renderers.Length;
-                 i++)
+            for (int i = 0; i < renderers.Length; i++)
             {
-                Renderer renderer =
-                    renderers[i];
+                Renderer renderer = renderers[i];
 
                 if (renderer == null)
                     continue;
 
-                renderer.GetPropertyBlock(
-                    propertyBlock
-                );
+                renderer.GetPropertyBlock(propertyBlock);
 
                 propertyBlock.SetFloat(
                     SelectedAmountID,
-                    selectedAmount
-                );
+                    selectedAmount);
 
                 propertyBlock.SetFloat(
                     ComponentHoverID,
-                    hoverAmount
-                );
+                    hoverAmount);
 
                 propertyBlock.SetFloat(
                     IsolationAmountID,
-                    isolationAmount
-                );
+                    isolationAmount);
 
                 propertyBlock.SetFloat(
                     ComponentDimAmountID,
-                    dimAmount
-                );
+                    dimAmount);
 
-                renderer.SetPropertyBlock(
-                    propertyBlock
-                );
+                renderer.SetPropertyBlock(propertyBlock);
             }
         }
     }

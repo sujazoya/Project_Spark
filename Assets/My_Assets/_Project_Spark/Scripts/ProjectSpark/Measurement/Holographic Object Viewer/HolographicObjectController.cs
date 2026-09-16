@@ -2,113 +2,134 @@ using UnityEngine;
 
 namespace ProjectSpark.HolographicViewer
 {
+    /// <summary>
+    /// Controls rotation of the holographic object from mouse/touch drag input.
+    /// </summary>
+    [DisallowMultipleComponent]
     public sealed class HolographicObjectController : MonoBehaviour
     {
+        [Header("Target")]
+        [SerializeField] private Transform rotationTarget;
+
         [Header("Rotation")]
-        [SerializeField] private float dragSensitivity = 0.25f;
-        [SerializeField] private float autoRotateSpeed = 12f;
-        [SerializeField] private float smoothTime = 0.08f;
+        [SerializeField] private float rotationSensitivity = 0.25f;
+        [SerializeField] private bool invertX = false;
+        [SerializeField] private bool invertY = true;
+        [SerializeField] private bool useWorldSpace = false;
 
         [Header("Limits")]
-        [SerializeField] private float pitchMin = -80f;
-        [SerializeField] private float pitchMax = 80f;
+        [SerializeField] private bool clampVerticalRotation = false;
+        [SerializeField] private float minVerticalAngle = -80f;
+        [SerializeField] private float maxVerticalAngle = 80f;
 
-        private Quaternion initialRotation;
+        private bool dragging;
 
-        private float targetYaw;
-        private float targetPitch;
-
-        private float yawVelocity;
-        private float pitchVelocity;
-
-        private bool isDragging;
-        private bool autoRotate;
-
-        public bool AutoRotate => autoRotate;
+        private float yaw;
+        private float pitch;
 
         private void Awake()
         {
-            initialRotation = transform.localRotation;
+            if (rotationTarget == null)
+                rotationTarget = transform;
 
-            Vector3 euler = transform.localEulerAngles;
-
-            targetYaw = NormalizeAngle(euler.y);
-            targetPitch = NormalizeAngle(euler.x);
+            ReadCurrentRotation();
         }
 
-        private void Update()
+        private void ReadCurrentRotation()
         {
-            if (autoRotate && !isDragging)
-            {
-                targetYaw += autoRotateSpeed * Time.deltaTime;
-            }
+            Vector3 euler = rotationTarget.localEulerAngles;
 
-            float yaw = Mathf.SmoothDampAngle(
-                transform.localEulerAngles.y,
-                targetYaw,
-                ref yawVelocity,
-                smoothTime
-            );
-
-            float pitch = Mathf.SmoothDampAngle(
-                transform.localEulerAngles.x,
-                targetPitch,
-                ref pitchVelocity,
-                smoothTime
-            );
-
-            transform.localRotation =
-                Quaternion.Euler(pitch, yaw, transform.localEulerAngles.z);
+            yaw = NormalizeAngle(euler.y);
+            pitch = NormalizeAngle(euler.x);
         }
 
         public void BeginDrag()
         {
-            isDragging = true;
-            autoRotate = false;
+            if (rotationTarget == null)
+                rotationTarget = transform;
+
+            ReadCurrentRotation();
+            dragging = true;
         }
 
         public void EndDrag()
         {
-            isDragging = false;
+            dragging = false;
         }
 
         public void RotateFromDrag(Vector2 delta)
         {
-            targetYaw += delta.x * dragSensitivity;
-            targetPitch -= delta.y * dragSensitivity;
+            if (rotationTarget == null)
+                rotationTarget = transform;
 
-            targetPitch = Mathf.Clamp(
-                targetPitch,
-                pitchMin,
-                pitchMax
-            );
+            float x = delta.x;
+            float y = delta.y;
+
+            if (invertX)
+                x = -x;
+
+            if (invertY)
+                y = -y;
+
+            yaw += x * rotationSensitivity;
+            pitch += y * rotationSensitivity;
+
+            if (clampVerticalRotation)
+            {
+                pitch = Mathf.Clamp(
+                    pitch,
+                    minVerticalAngle,
+                    maxVerticalAngle);
+            }
+
+            ApplyRotation();
         }
 
-        public void ToggleAutoRotate()
+        private void ApplyRotation()
         {
-            autoRotate = !autoRotate;
+            Quaternion rotation =
+                Quaternion.Euler(
+                    pitch,
+                    yaw,
+                    0f);
+
+            if (useWorldSpace)
+                rotationTarget.rotation = rotation;
+            else
+                rotationTarget.localRotation = rotation;
         }
 
-        public void SetAutoRotate(bool value)
+        public void SetRotation(Vector3 eulerAngles)
         {
-            autoRotate = value;
+            if (rotationTarget == null)
+                rotationTarget = transform;
+
+            yaw = NormalizeAngle(eulerAngles.y);
+            pitch = NormalizeAngle(eulerAngles.x);
+
+            if (clampVerticalRotation)
+            {
+                pitch = Mathf.Clamp(
+                    pitch,
+                    minVerticalAngle,
+                    maxVerticalAngle);
+            }
+
+            ApplyRotation();
         }
 
-        public void ResetView()
+        public void ResetRotation()
         {
-            autoRotate = false;
-            isDragging = false;
+            if (rotationTarget == null)
+                rotationTarget = transform;
 
-            transform.localRotation = initialRotation;
+            yaw = 0f;
+            pitch = 0f;
 
-            Vector3 euler = initialRotation.eulerAngles;
-
-            targetYaw = NormalizeAngle(euler.y);
-            targetPitch = NormalizeAngle(euler.x);
-
-            yawVelocity = 0f;
-            pitchVelocity = 0f;
+            ApplyRotation();
         }
+
+        public bool IsDragging => dragging;
 
         private static float NormalizeAngle(float angle)
         {
@@ -116,6 +137,9 @@ namespace ProjectSpark.HolographicViewer
 
             if (angle > 180f)
                 angle -= 360f;
+
+            if (angle < -180f)
+                angle += 360f;
 
             return angle;
         }

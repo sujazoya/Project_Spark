@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 namespace ProjectSpark.HolographicViewer
@@ -7,52 +6,57 @@ namespace ProjectSpark.HolographicViewer
     {
         [SerializeField] private HolographicViewerCamera viewerCamera;
         [SerializeField] private HolographicObjectController objectController;
-        [SerializeField]
-private HolographicObjectVisualState visualState;
-
-        public void Rotate()
-        {
-            objectController.ToggleAutoRotate();
-        }
+        [SerializeField] private HolographicObjectVisualState visualState;
 
         public void ZoomIn()
         {
-            viewerCamera.ZoomIn();
+            if (viewerCamera != null)
+                viewerCamera.ZoomIn();
         }
 
         public void ZoomOut()
         {
-            viewerCamera.ZoomOut();
+            if (viewerCamera != null)
+                viewerCamera.ZoomOut();
         }
 
         public void ResetView()
         {
-            objectController.ResetView();
-            viewerCamera.ResetView();
+            if (viewerCamera != null)
+                viewerCamera.ResetView();
+
+            if (objectController != null)
+                objectController.ResetRotation();
         }
+
         public void SetNormal()
-            {
+        {
+            if (visualState != null)
                 visualState.SetMode(0);
-            }
+        }
 
-            public void SetXRay()
-            {
+        public void SetXRay()
+        {
+            if (visualState != null)
                 visualState.SetMode(1);
-            }
+        }
 
-            public void SetInternal()
-            {
+        public void SetInternal()
+        {
+            if (visualState != null)
                 visualState.SetMode(2);
-            }
+        }
 
-            public void SetExploded()
-            {
+        public void SetExploded()
+        {
+            if (visualState != null)
                 visualState.SetMode(3);
-            }
+        }
 
-            public void SetWireframe()
-            {
+        public void SetWireframe()
+        {
+            if (visualState != null)
                 visualState.SetMode(4);
-       }
+        }
     }
 }

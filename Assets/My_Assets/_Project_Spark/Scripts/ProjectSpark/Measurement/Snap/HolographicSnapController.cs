@@ -22,7 +22,7 @@ namespace ProjectSpark.HolographicViewer
         private HolographicSnapSettings settings;
 
         [SerializeField]
-        private bool snapEnabled = true;
+        private bool snapEnabled = false;
 
         public bool IsSnapEnabled =>
             snapEnabled;
