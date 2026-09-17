@@ -7,106 +7,154 @@ using UnityEngine.InputSystem;
 
 namespace ProjectSpark.HolographicViewer
 {
+    /// <summary>
+    /// Handles component hover and selection for the Project Spark holographic
+    /// viewer.
+    ///
+    /// Responsibilities:
+    /// - Acquire the viewer camera.
+    /// - Raycast interactive component geometry.
+    /// - Manage hover state.
+    /// - Manage selection state.
+    /// - Drive inspection presentation.
+    ///
+    /// This class does not own object rotation, camera movement, measurement
+    /// solving, or electrical state.
+    /// </summary>
+    [DisallowMultipleComponent]
     public sealed class HolographicComponentInteraction : MonoBehaviour
     {
-        [SerializeField]
-        private HolographicComponentVisual[] components;
         [Header("References")]
         [SerializeField] private Camera viewerCamera;
         [SerializeField] private HolographicComponentHUD componentHUD;
+        [SerializeField] private HolographicMeasurementController measurement;
+        [SerializeField] private HolographicComponentCallout callout;
+        [SerializeField] private HolographicSectionController sectionController;
+
+        [Header("Components")]
+        [Tooltip(
+            "Interactive holographic components. " +
+            "When empty, children are automatically collected.")]
+        [SerializeField]
+        private HolographicComponentVisual[] components;
 
         [Header("Raycast")]
-        [SerializeField] private LayerMask componentLayer;
-        [SerializeField] private float rayDistance = 100f;
+        [Tooltip(
+            "Layer mask used for component interaction. " +
+            "For initial testing, use Everything.")]
+        [SerializeField]
+        private LayerMask componentLayer = ~0;
+
+        [SerializeField, Min(0.1f)]
+        private float rayDistance = 100f;
+
+        [SerializeField]
+        private QueryTriggerInteraction triggerInteraction =
+            QueryTriggerInteraction.Collide;
+
+        [Header("Selection")]
+        [SerializeField, Range(0f, 1f)]
+        private float nonSelectedDim = 0.18f;
+
+        [Header("Input")]
+        [Tooltip(
+            "Disable this during initial testing if a fullscreen UI is " +
+            "blocking world interaction.")]
+        [SerializeField]
+        private bool blockWorldInteractionOverUI = false;
 
         private HolographicComponentVisual hoveredVisual;
         private HolographicComponentVisual selectedVisual;
-
-        // FIX:
-        // This field was missing.
         private HolographicComponentData selectedData;
 
         public HolographicComponentData SelectedData =>
             selectedData;
 
-            [SerializeField]
-        private float nonSelectedDim = 0.18f;
-        [SerializeField]
-private HolographicMeasurementController measurement;
+        public HolographicComponentVisual HoveredVisual =>
+            hoveredVisual;
 
-        [SerializeField]
-private HolographicComponentCallout callout;
-
-[SerializeField]
-private HolographicSectionController sectionController;
-
+        public HolographicComponentVisual SelectedVisual =>
+            selectedVisual;
 
 #if ENABLE_INPUT_SYSTEM
 
+        private void Reset()
+        {
+            viewerCamera = Camera.main;
+
+            components =
+                GetComponentsInChildren<
+                    HolographicComponentVisual>(
+                    true);
+        }
+
         private void Awake()
         {
+            ResolveDependencies();
+
             if (components == null ||
                 components.Length == 0)
             {
                 components =
-                    FindComponents();
+                    GetComponentsInChildren<
+                        HolographicComponentVisual>(
+                        true);
             }
-        }
-        private HolographicComponentVisual[]
-    FindComponents()
-        {
-            return FindObjectsByType<
-                HolographicComponentVisual>(
-                    FindObjectsInactive.Include,
-                    FindObjectsSortMode.None
-                );
-        }
-        private void HandleSectionInput()
-        {
-            if (!Mouse.current.leftButton.isPressed)
-                return;
-        }
-        private void ApplyIsolation()
-        {
-            if (components == null)
-                return;
 
-            for (int i = 0;
-                i < components.Length;
-                i++)
+            if (componentLayer.value == 0)
             {
-                HolographicComponentVisual component =
-                    components[i];
+                Debug.LogWarning(
+                    $"{nameof(HolographicComponentInteraction)} on " +
+                    $"'{name}' has an empty component layer mask. " +
+                    "Temporarily using Everything.",
+                    this);
 
-                if (component == null)
-                    continue;
-
-                bool isSelected =
-                    component == selectedVisual;
-
-                component.SetIsolation(true);
-
-                component.SetDimAmount(
-                    isSelected
-                        ? 0f
-                        : nonSelectedDim
-                );
+                componentLayer = ~0;
             }
+
+            if (viewerCamera == null)
+            {
+                Debug.LogError(
+                    $"{nameof(HolographicComponentInteraction)} on " +
+                    $"'{name}' has no viewer camera.",
+                    this);
+            }
+
+            if (components == null ||
+                components.Length == 0)
+            {
+                Debug.LogWarning(
+                    $"{nameof(HolographicComponentInteraction)} on " +
+                    $"'{name}' found no " +
+                    $"{nameof(HolographicComponentVisual)} components.",
+                    this);
+            }
+        }
+
+        private void OnEnable()
+        {
+            ResolveDependencies();
         }
 
         private void Update()
         {
-                    if (measurement != null &&
-            measurement.IsActive)
-        {
-            SetHovered(null);
-            return;
-        }
             if (Mouse.current == null)
                 return;
 
             if (viewerCamera == null)
+            {
+                ResolveDependencies();
+
+                if (viewerCamera == null)
+                    return;
+            }
+
+            if (measurement != null &&
+                measurement.IsActive)
+            {
+                SetHovered(null);
                 return;
+            }
 
             UpdateHover();
             UpdateSelection();
@@ -114,7 +162,8 @@ private HolographicSectionController sectionController;
 
         private void UpdateHover()
         {
-            if (IsPointerOverUI())
+            if (blockWorldInteractionOverUI &&
+                IsPointerOverUI())
             {
                 SetHovered(null);
                 return;
@@ -137,16 +186,20 @@ private HolographicSectionController sectionController;
 
         private void UpdateSelection()
         {
-                        if (measurement != null &&
+            if (measurement != null &&
                 measurement.IsActive)
             {
                 return;
             }
+
             if (!Mouse.current.leftButton.wasPressedThisFrame)
                 return;
 
-            if (IsPointerOverUI())
+            if (blockWorldInteractionOverUI &&
+                IsPointerOverUI())
+            {
                 return;
+            }
 
             Vector2 mousePosition =
                 Mouse.current.position.ReadValue();
@@ -172,6 +225,9 @@ private HolographicSectionController sectionController;
             visual = null;
             data = null;
 
+            if (viewerCamera == null)
+                return false;
+
             Ray ray =
                 viewerCamera.ScreenPointToRay(mousePosition);
 
@@ -180,7 +236,7 @@ private HolographicSectionController sectionController;
                     out RaycastHit hit,
                     rayDistance,
                     componentLayer,
-                    QueryTriggerInteraction.Ignore))
+                    triggerInteraction))
             {
                 return false;
             }
@@ -189,12 +245,16 @@ private HolographicSectionController sectionController;
                 hit.collider.GetComponentInParent<
                     HolographicComponentVisual>();
 
+            if (visual == null)
+            {
+                return false;
+            }
+
             data =
-                hit.collider.GetComponentInParent<
+                visual.GetComponentInParent<
                     HolographicComponentData>();
 
-            return visual != null &&
-                   data != null;
+            return true;
         }
 
         private void SetHovered(
@@ -218,9 +278,9 @@ private HolographicSectionController sectionController;
             }
         }
 
-       private void Select(
-    HolographicComponentVisual visual,
-    HolographicComponentData data)
+        private void Select(
+            HolographicComponentVisual visual,
+            HolographicComponentData data)
         {
             if (selectedVisual != null)
             {
@@ -235,61 +295,109 @@ private HolographicSectionController sectionController;
             if (selectedVisual != null)
             {
                 selectedVisual.SetSelected(true);
-
                 selectedVisual.SetIsolation(true);
                 selectedVisual.SetDimAmount(0f);
             }
 
             if (componentHUD != null)
             {
-                componentHUD.Show(selectedData);
+                if (selectedData != null)
+                    componentHUD.Show(selectedData);
+                else
+                    componentHUD.Clear();
             }
+
             ApplyIsolation();
-            if (callout != null)
+
+            if (callout != null &&
+                selectedData != null)
             {
                 callout.Show(
                     selectedData,
-                    selectedData.CalloutAnchor
-                );
+                    selectedData.CalloutAnchor);
             }
         }
 
-        private void ClearSelection()
+        public void ClearSelection()
         {
             if (components != null)
             {
                 for (int i = 0;
-                    i < components.Length;
-                    i++)
+                     i < components.Length;
+                     i++)
                 {
-                    if (components[i] == null)
+                    HolographicComponentVisual component =
+                        components[i];
+
+                    if (component == null)
                         continue;
 
-                    components[i].SetIsolation(false);
-                    components[i].SetDimAmount(0f);
-                    components[i].SetSelected(false);
+                    component.SetIsolation(false);
+                    component.SetDimAmount(0f);
+                    component.SetSelected(false);
+                    component.SetHover(false);
                 }
             }
 
             selectedVisual = null;
             selectedData = null;
+            hoveredVisual = null;
 
             if (componentHUD != null)
-            {
                 componentHUD.Clear();
-            }
+
             if (callout != null)
-{
-            callout.Hide();
-}
+                callout.Hide();
         }
 
-        private bool IsPointerOverUI()
+        private void ApplyIsolation()
         {
-            if (EventSystem.current == null)
+            if (components == null)
+                return;
+
+            for (int i = 0;
+                 i < components.Length;
+                 i++)
+            {
+                HolographicComponentVisual component =
+                    components[i];
+
+                if (component == null)
+                    continue;
+
+                bool isSelected =
+                    component == selectedVisual;
+
+                component.SetIsolation(true);
+
+                component.SetDimAmount(
+                    isSelected
+                        ? 0f
+                        : nonSelectedDim);
+            }
+        }
+
+        private void ResolveDependencies()
+        {
+            if (viewerCamera == null)
+                viewerCamera = Camera.main;
+
+            if (viewerCamera == null)
+            {
+                viewerCamera =
+                    GetComponentInParent<Camera>();
+            }
+        }
+
+        private static bool IsPointerOverUI()
+        {
+            EventSystem eventSystem =
+                EventSystem.current;
+
+            if (eventSystem == null)
                 return false;
 
-            return EventSystem.current.IsPointerOverGameObject();
+            return eventSystem.IsPointerOverGameObject();
         }
 
 #endif
