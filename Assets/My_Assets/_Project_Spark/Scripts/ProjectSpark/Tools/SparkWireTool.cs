@@ -1,29 +1,24 @@
+using AAAUI.VFX;
 using ProjectSpark.Gameplay;
 using UnityEngine;
 
-namespace ProjectSpark.Wire
+namespace ProjectSpark.Tools
 {
+    [DisallowMultipleComponent]
     public sealed class SparkWireTool : SparkTool
     {
-        [Header("Wire System")]
+        [Header("References")]
         [SerializeField]
-        private SparkWireSystem wireSystem;
+        private SignalWireBuilder wireBuilder;
 
         [Header("Wire")]
         [SerializeField]
-        private bool clearSourceAfterFailedConnection = false;
+        private WirePolarity defaultPolarity =
+            WirePolarity.Positive;
 
-        private SparkTerminal sourceTerminal;
-
-        public SparkTerminal SourceTerminal
-        {
-            get { return sourceTerminal; }
-        }
-
-        public bool HasSourceTerminal
-        {
-            get { return sourceTerminal != null; }
-        }
+        [Header("Behaviour")]
+        [SerializeField]
+        private bool requireTerminalAtStart = true;
 
         protected override SparkToolType GetToolType()
         {
@@ -34,10 +29,20 @@ namespace ProjectSpark.Wire
         {
             base.Awake();
 
-            if (wireSystem == null)
+            if (wireBuilder == null)
             {
-                wireSystem =
-                    GetComponentInParent<SparkWireSystem>();
+                wireBuilder =
+                    GetComponentInParent<SignalWireBuilder>();
+            }
+
+            if (wireBuilder != null)
+            {
+                wireBuilder.enabled =
+                    true;
+            }
+            if (wireBuilder != null)
+            {
+                wireBuilder.SetExternalInputControl(true);
             }
         }
 
@@ -52,40 +57,46 @@ namespace ProjectSpark.Wire
                 return false;
             }
 
-            if (wireSystem == null)
+            if (wireBuilder == null)
             {
                 reason =
-                    "Wire system is not configured.";
+                    "SignalWireBuilder is not configured.";
 
                 return false;
             }
 
-            if (context.TargetHit.Target == null)
+            if (wireBuilder.IsDrawing)
             {
                 reason =
-                    "No target component.";
+                    "Wire construction is already active.";
+
+                return false;
+            }
+
+            if (!context.HasTarget)
+            {
+                reason =
+                    "No wire terminal was hit.";
 
                 return false;
             }
 
             SparkTerminal terminal =
-                context.TargetHit.Target
-                    .GetComponentInParent<SparkTerminal>();
+                GetTerminal(
+                    context.TargetHit.Collider);
 
             if (terminal == null)
             {
                 reason =
-                    "Target has no terminal.";
+                    "Hit object does not contain a SparkTerminal.";
 
                 return false;
             }
 
-            if (sourceTerminal != null &&
-                sourceTerminal == terminal)
+            if (!terminal.CanAccept(
+                    SparkConnectionKind.Wire,
+                    out reason))
             {
-                reason =
-                    "Source and target terminals are the same.";
-
                 return false;
             }
 
@@ -96,70 +107,197 @@ namespace ProjectSpark.Wire
         protected override SparkResult OnBegin(
             SparkToolContext context)
         {
-            if (context.TargetHit.Target == null)
+            if (wireBuilder == null)
             {
                 return SparkResult.Invalid(
-                    "No target component.");
+                    "SignalWireBuilder is not configured.");
             }
 
             SparkTerminal terminal =
-                context.TargetHit.Target
-                    .GetComponentInParent<SparkTerminal>();
+                GetTerminal(
+                    context.TargetHit.Collider);
 
             if (terminal == null)
             {
+                if (requireTerminalAtStart)
+                {
+                    return SparkResult.Invalid(
+                        "Wire must start from a SparkTerminal.");
+                }
+
                 return SparkResult.Invalid(
-                    "Target has no terminal.");
+                    "Wire start terminal is missing.");
             }
 
-            // --------------------------------------------------------
-            // FIRST TERMINAL
-            // --------------------------------------------------------
+            WirePolarity polarity =
+                DeterminePolarity(terminal);
 
-            if (sourceTerminal == null)
-            {
-                sourceTerminal =
-                    terminal;
-
-                return SparkResult.Success(
-                    "Wire source selected.");
-            }
-
-            // --------------------------------------------------------
-            // SECOND TERMINAL
-            // --------------------------------------------------------
-
-            SparkInteractionContext interactionContext =
-                context.Gameplay.CreateInteractionContext(
-                    context.TargetHit,
-                    SparkInteractionType.Connect);
-
-            SparkResult result =
-                wireSystem.TryConnect(
-                    sourceTerminal,
+            bool started =
+                wireBuilder.BeginWire(
                     terminal,
-                    interactionContext,
-                    out _);
+                    polarity);
 
-            if (result.Succeeded)
+            if (!started)
             {
-                sourceTerminal = null;
-            }
-            else if (clearSourceAfterFailedConnection)
-            {
-                sourceTerminal = null;
+                return SparkResult.Invalid(
+                    "SignalWireBuilder rejected the wire start.");
             }
 
-            return result;
+            return SparkResult.Success(
+                "Wire construction started.");
+        }
+
+       protected override SparkResult OnUpdate(
+    SparkToolContext context)
+{
+    if (wireBuilder == null)
+    {
+        return SparkResult.Invalid(
+            "SignalWireBuilder is not configured.");
+    }
+
+    if (!wireBuilder.IsDrawing)
+    {
+        return SparkResult.Unavailable(
+            "Wire construction is not active.");
+    }
+
+    wireBuilder.UpdateWireFromScreenPosition(
+        context.ScreenPosition);
+
+    return SparkResult.Success();
+}
+
+        protected override SparkResult OnEnd(
+            SparkToolContext context)
+        {
+            if (wireBuilder == null)
+            {
+                return SparkResult.Invalid(
+                    "SignalWireBuilder is not configured.");
+            }
+
+            if (!wireBuilder.IsDrawing)
+            {
+                return SparkResult.Unavailable(
+                    "Wire construction is not active.");
+            }
+
+            wireBuilder.EndWire(
+                context.ScreenPosition);
+
+            return SparkResult.Success(
+                "Wire construction completed.");
         }
 
         protected override SparkResult OnCancel(
             SparkToolContext context)
         {
-            sourceTerminal = null;
+            if (wireBuilder == null)
+            {
+                return SparkResult.Cancelled(
+                    "SignalWireBuilder is not configured.");
+            }
+
+            if (wireBuilder.IsDrawing)
+            {
+                wireBuilder.CancelWire();
+            }
 
             return SparkResult.Cancelled(
-                "Wire connection cancelled.");
+                "Wire construction cancelled.");
+        }
+
+        private SparkTerminal GetTerminal(
+            Collider collider)
+        {
+            if (collider == null)
+                return null;
+
+            return collider.GetComponentInParent<SparkTerminal>();
+        }
+
+        private WirePolarity DeterminePolarity(
+            SparkTerminal terminal)
+        {
+            if (terminal == null)
+                return defaultPolarity;
+
+            SparkElectricalComponent component =
+                terminal.GetComponentInParent<
+                    SparkElectricalComponent>();
+
+            if (component is SparkPowerSupply supply)
+            {
+                SparkTerminal[] terminals =
+                    component.GetComponentsInChildren<
+                        SparkTerminal>(
+                            true);
+
+                if (terminals.Length > 0 &&
+                    terminals[0] == terminal)
+                {
+                    return WirePolarity.Positive;
+                }
+
+                if (terminals.Length > 1 &&
+                    terminals[1] == terminal)
+                {
+                    return WirePolarity.Negative;
+                }
+            }
+
+            if (terminal.Polarity ==
+                SparkTerminalPolarity.Positive)
+            {
+                return WirePolarity.Positive;
+            }
+
+            if (terminal.Polarity ==
+                SparkTerminalPolarity.Negative)
+            {
+                return WirePolarity.Negative;
+            }
+
+            return defaultPolarity;
+        }
+
+        private Vector3 GetWireWorldPosition(
+            SparkToolContext context)
+        {
+            if (!context.HasCamera)
+            {
+                return wireBuilder.CurrentEnd;
+            }
+
+            if (wireBuilder.StartTerminal == null)
+            {
+                return wireBuilder.CurrentEnd;
+            }
+
+            Plane plane =
+                new Plane(
+                    context.Camera.transform.forward,
+                    wireBuilder.StartTerminal.transform.position);
+
+            if (plane.Raycast(
+                    context.PointerRay,
+                    out float distance))
+            {
+                return context.PointerRay.GetPoint(
+                    distance);
+            }
+
+            return wireBuilder.CurrentEnd;
+        }
+
+        private void OnDisable()
+        {
+            if (wireBuilder != null &&
+                wireBuilder.IsDrawing)
+            {
+                wireBuilder.CancelWire();
+            }
         }
     }
 }

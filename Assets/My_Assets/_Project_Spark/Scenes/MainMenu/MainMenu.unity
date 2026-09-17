@@ -6283,6 +6283,96 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerReconstructionTest_2
   controller: {fileID: 151389876}
   speed: 0.25
+--- !u!1 &154377519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 154377520}
+  - component: {fileID: 154377522}
+  - component: {fileID: 154377521}
+  m_Layer: 15
+  m_Name: hover (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &154377520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154377519}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0.7071068, w: 0}
+  m_LocalPosition: {x: 0.00458, y: 0, z: -0}
+  m_LocalScale: {x: 0.09988457, y: 0.025279993, z: 0.08827367}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6461748367603683296}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &154377521
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154377519}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &154377522
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154377519}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &156056489
 GameObject:
   m_ObjectHideFlags: 0
@@ -8533,6 +8623,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Tools.SparkMoveTool
   toolType: 2
+  selectionController: {fileID: 685009627}
+  manipulator: {fileID: 685009626}
 --- !u!1 &207659369
 GameObject:
   m_ObjectHideFlags: 0
@@ -9618,6 +9710,11 @@ RectTransform:
 --- !u!23 &234249675 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 809249454040505367, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
+  m_PrefabInstance: {fileID: 9069130272220788086}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &234249676 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9114873943038854000, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
   m_PrefabInstance: {fileID: 9069130272220788086}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &234494998
@@ -11400,6 +11497,96 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 277862633}
   m_CullTransparentMesh: 1
+--- !u!1 &281750559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 281750560}
+  - component: {fileID: 281750562}
+  - component: {fileID: 281750561}
+  m_Layer: 15
+  m_Name: hover
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &281750560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281750559}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.010122753, y: 0, z: 0, w: 0.9999488}
+  m_LocalPosition: {x: 0.0174, y: 2.5653, z: 0.0017}
+  m_LocalScale: {x: 1.9008137, y: 2.7466397, z: 1.2620931}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 234249676}
+  m_LocalEulerAnglesHint: {x: -1.16, y: 0, z: 0}
+--- !u!23 &281750561
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281750559}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &281750562
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281750559}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &283988776
 GameObject:
   m_ObjectHideFlags: 0
@@ -14985,6 +15172,96 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382803410}
   m_CullTransparentMesh: 1
+--- !u!1 &383708786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 383708789}
+  - component: {fileID: 383708788}
+  - component: {fileID: 383708787}
+  m_Layer: 15
+  m_Name: hover
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &383708787
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383708786}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &383708788
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383708786}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &383708789
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383708786}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.279, y: 0.132, z: -1.131}
+  m_LocalScale: {x: 4.9942293, y: 1.264, z: 2.3541896}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1910408496}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &384103626
 GameObject:
   m_ObjectHideFlags: 0
@@ -16421,14 +16698,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804a50f4d15c0654999707e401f0d320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.Scanner3DHoverTarget
-  interactionProgressID: _ProjectionProgress
-  overlayScale: {x: 0.55, y: 0.55, z: 0.55}
-  overlayRotation: {x: 0, y: 0, z: 0}
   sourceRenderers:
   - {fileID: 417025488}
-  hoverMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
+  hoverMaterial: {fileID: 2100000, guid: 16a417844dbad674dba6dce99040777c, type: 2}
   hoverInSpeed: 8
   hoverOutSpeed: 6
+  overlayScale: {x: 1.1, y: 1.1, z: 1.1}
+  overlayRotation: {x: 0, y: 0, z: 0}
+  overlayOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &417025491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22960,6 +23237,7 @@ GameObject:
   m_Component:
   - component: {fileID: 599787886}
   - component: {fileID: 599787887}
+  - component: {fileID: 599787888}
   m_Layer: 0
   m_Name: SparkScanTool
   m_TagString: Untagged
@@ -22995,7 +23273,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Tools.SparkScanTool
   toolType: 7
-  scanSystem: {fileID: 1226179102}
+  processController: {fileID: 599787888}
+  keepCompletedScan: 1
+--- !u!114 &599787888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599787885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65cdc6f1ef945124c86a51e0200335d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkScanProcessController
+  scanner: {fileID: 0}
+  scanDuration: 1.5
+  acquisitionDuration: 0.15
+  resetVisualsOnStart: 1
+  resetVisualsOnCancel: 1
+  keepCompletedScan: 1
+  useUnscaledTime: 1
 --- !u!1 &601780547
 GameObject:
   m_ObjectHideFlags: 0
@@ -26507,8 +26805,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 685009622}
-  - component: {fileID: 685009623}
   - component: {fileID: 685009624}
+  - component: {fileID: 685009625}
+  - component: {fileID: 685009626}
+  - component: {fileID: 685009627}
   m_Layer: 0
   m_Name: HolographicObjectController
   m_TagString: Untagged
@@ -26531,26 +26831,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2058580490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &685009623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 685009621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdf8b2a9f9273e246aca9323a4659616, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicObjectController
-  rotationTarget: {fileID: 1360671977}
-  rotationSensitivity: 0.25
-  invertX: 0
-  invertY: 1
-  useWorldSpace: 0
-  clampVerticalRotation: 0
-  minVerticalAngle: -80
-  maxVerticalAngle: 80
 --- !u!114 &685009624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26563,15 +26843,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1095da52deddf934c90d2653b7b3f56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicViewerMouseInput
-  objectController: {fileID: 685009623}
+  objectController: {fileID: 685009625}
   viewerCamera: {fileID: 1360671981}
+  controllScreenSpace: 0
   respectUI: 1
   rotateWithLeftMouse: 1
+  rotationDeadZone: 0.01
   panWithMiddleMouse: 1
-  enableWheelZoom: 1
   panSensitivity: 0.0025
+  enableWheelZoom: 1
   requireTargetForRotation: 1
-  controllScreenSpace: 0
+--- !u!114 &685009625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685009621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c8df06b157d9224c9fe488a7cee93af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicObjectController
+  rotationTarget: {fileID: 1360671977}
+  rotationSensitivity: 0.25
+  invertX: 0
+  invertY: 1
+  useWorldSpace: 0
+  clampVerticalRotation: 0
+  minVerticalAngle: -80
+  maxVerticalAngle: 80
+--- !u!114 &685009626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685009621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5a79db80c33d0b4da37f48b83435835, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentManipulator
+  viewerCamera: {fileID: 1360671976}
+  viewerMouseInput: {fileID: 685009624}
+  allowMove: 1
+  preserveGrabOffset: 1
+  allowRotate: 1
+  rotationAxis: {x: 0, y: 1, z: 0}
+  rotationSensitivity: 0.25
+  rotationSnap: 1
+--- !u!114 &685009627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685009621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2609518fde05f24db1dd3a882c5f9bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkSelectionController
+  selectionCamera: {fileID: 1360671976}
+  selectableLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  selectionDistance: 1000
 --- !u!1 &685950740
 GameObject:
   m_ObjectHideFlags: 0
@@ -28399,7 +28737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Tools.SparkSelectTool
   toolType: 0
-  selectOnBegin: 1
+  selectionController: {fileID: 685009627}
 --- !u!1 &732159289
 GameObject:
   m_ObjectHideFlags: 0
@@ -31818,6 +32156,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Tools.SparkRotateTool
   toolType: 3
+  selectionController: {fileID: 685009627}
+  manipulator: {fileID: 685009626}
 --- !u!1 &803876872
 GameObject:
   m_ObjectHideFlags: 0
@@ -35349,14 +35689,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdf8b2a9f9273e246aca9323a4659616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicObjectController
-  rotationTarget: {fileID: 0}
-  rotationSensitivity: 0.25
-  invertX: 0
-  invertY: 1
-  useWorldSpace: 0
-  clampVerticalRotation: 0
-  minVerticalAngle: -80
-  maxVerticalAngle: 80
 --- !u!114 &908954551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53902,14 +54234,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c12af8b5fe52864ca63161e76391efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicViewerCamera
-  target: {fileID: 0}
+  target: {fileID: 1728192461}
   defaultDistance: 4
   minDistance: 2.2
   maxDistance: 7
   wheelZoomSpeed: 0.05
   zoomSmoothTime: 0.12
   panLimit: 1.5
-  defaultOffset: {x: 0, y: 0.15, z: 0}
+  defaultOffset: {x: -1.6, y: 0.5, z: 0}
 --- !u!1 &1362007280
 GameObject:
   m_ObjectHideFlags: 0
@@ -64724,14 +65056,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804a50f4d15c0654999707e401f0d320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.Scanner3DHoverTarget
-  interactionProgressID: _ProjectionProgress
-  overlayScale: {x: 0.55, y: 0.55, z: 0.55}
-  overlayRotation: {x: 0, y: 0, z: 0}
   sourceRenderers:
   - {fileID: 1598658536}
-  hoverMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
+  hoverMaterial: {fileID: 2100000, guid: 16a417844dbad674dba6dce99040777c, type: 2}
   hoverInSpeed: 8
   hoverOutSpeed: 6
+  overlayScale: {x: 1.1, y: 1.1, z: 1.1}
+  overlayRotation: {x: 0, y: 0, z: 0}
+  overlayOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1598658540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64777,14 +65109,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804a50f4d15c0654999707e401f0d320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.Scanner3DHoverTarget
-  interactionProgressID: _ProjectionProgress
-  overlayScale: {x: 0.55, y: 0.55, z: 0.55}
-  overlayRotation: {x: 0, y: 0, z: 0}
   sourceRenderers:
   - {fileID: 1598658538}
-  hoverMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
+  hoverMaterial: {fileID: 2100000, guid: 16a417844dbad674dba6dce99040777c, type: 2}
   hoverInSpeed: 8
   hoverOutSpeed: 6
+  overlayScale: {x: 1.1, y: 1.1, z: 1.1}
+  overlayRotation: {x: 0, y: 0, z: 0}
+  overlayOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1598658543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67283,9 +67615,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f441d113c17f4943b17ef997b4273aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Tools.SparkMeasureTool
-  toolType: 0
+  toolType: 5
   measurementSystem: {fileID: 788849916}
   measurementType: 0
+  measureOnBegin: 0
+  measureContinuously: 0
+  continuousMeasurementInterval: 0.1
 --- !u!1 &1702055373
 GameObject:
   m_ObjectHideFlags: 0
@@ -68284,6 +68619,7 @@ MonoBehaviour:
   rejectCapacity: 1
   rejectDuplicateConnection: 1
   logWireOperations: 1
+  externalInputControl: 1
   level1Checker: {fileID: 823731174}
 --- !u!114 &1728712525
 MonoBehaviour:
@@ -70601,7 +70937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74dbc246d821d5c42bdf285c43f2c308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerComponentTarget
-  interactionMaterial: {fileID: 2100000, guid: c1b4ed26655273f458a7d2c8dd916e16, type: 2}
+  interactionMaterial: {fileID: 2100000, guid: 16a417844dbad674dba6dce99040777c, type: 2}
   interactionWindow: 0.05
   componentId: Bulb_01
   displayName: LED Bulb
@@ -70642,14 +70978,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804a50f4d15c0654999707e401f0d320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.Scanner3DHoverTarget
-  interactionProgressID: _ProjectionProgress
-  overlayScale: {x: 1, y: 1, z: 1}
-  overlayRotation: {x: 0, y: 0, z: 0}
   sourceRenderers:
   - {fileID: 404318757}
-  hoverMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
+  hoverMaterial: {fileID: 2100000, guid: 16a417844dbad674dba6dce99040777c, type: 2}
   hoverInSpeed: 8
   hoverOutSpeed: 6
+  overlayScale: {x: 1, y: 1, z: 1}
+  overlayRotation: {x: 0, y: 0, z: 0}
+  overlayOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1785396295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72607,14 +72943,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804a50f4d15c0654999707e401f0d320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.Scanner3DHoverTarget
-  interactionProgressID: _ProjectionProgress
-  overlayScale: {x: 0.55, y: 0.55, z: 0.55}
-  overlayRotation: {x: 0, y: 0, z: 0}
   sourceRenderers:
   - {fileID: 1823709206}
-  hoverMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
+  hoverMaterial: {fileID: 2100000, guid: 16a417844dbad674dba6dce99040777c, type: 2}
   hoverInSpeed: 8
   hoverOutSpeed: 6
+  overlayScale: {x: 1.1, y: 1.1, z: 1.1}
+  overlayRotation: {x: 0, y: 0, z: 0}
+  overlayOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1823709211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72678,14 +73014,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804a50f4d15c0654999707e401f0d320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.Scanner3DHoverTarget
-  interactionProgressID: _ProjectionProgress
-  overlayScale: {x: 0.55, y: 0.55, z: 0.55}
-  overlayRotation: {x: 0, y: 0, z: 0}
   sourceRenderers:
   - {fileID: 1823709208}
-  hoverMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
+  hoverMaterial: {fileID: 2100000, guid: 16a417844dbad674dba6dce99040777c, type: 2}
   hoverInSpeed: 8
   hoverOutSpeed: 6
+  overlayScale: {x: 1.1, y: 1.1, z: 1.1}
+  overlayRotation: {x: 0, y: 0, z: 0}
+  overlayOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1823709215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73335,14 +73671,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804a50f4d15c0654999707e401f0d320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.Scanner3DHoverTarget
-  interactionProgressID: _ProjectionProgress
-  overlayScale: {x: 0.55, y: 0.55, z: 0.55}
-  overlayRotation: {x: 0, y: 0, z: 0}
   sourceRenderers:
   - {fileID: 1847861877}
-  hoverMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
+  hoverMaterial: {fileID: 2100000, guid: 16a417844dbad674dba6dce99040777c, type: 2}
   hoverInSpeed: 8
   hoverOutSpeed: 6
+  overlayScale: {x: 1.1, y: 1.1, z: 1.1}
+  overlayRotation: {x: 0, y: 0, z: 0}
+  overlayOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1847861880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73361,11 +73697,6 @@ MonoBehaviour:
   acceptsInput: 1
   providesOutput: 1
   maxConnections: 1
---- !u!1 &1847960024 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2030969120822409121, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-  m_PrefabInstance: {fileID: 2058580489}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1847960025 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1382669277519466069, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
@@ -73376,29 +73707,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4553469857806533069, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
   m_PrefabInstance: {fileID: 2058580489}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1847960024}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17431587fd6a80844a7f296a8e99c471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkToolController
---- !u!114 &1847960028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1847960024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2609518fde05f24db1dd3a882c5f9bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkSelectionController
-  selectionCamera: {fileID: 1360671976}
-  selectableLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  selectionDistance: 1000
 --- !u!1 &1848598774
 GameObject:
   m_ObjectHideFlags: 0
@@ -74241,8 +74555,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Wire.SparkWireTool
   toolType: 4
-  wireSystem: {fileID: 2058580493}
-  clearSourceAfterFailedConnection: 0
+  wireBuilder: {fileID: 1728712522}
+  defaultPolarity: 1
+  requireTerminalAtStart: 0
 --- !u!1 &1871533988
 GameObject:
   m_ObjectHideFlags: 0
@@ -74479,14 +74794,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804a50f4d15c0654999707e401f0d320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.Scanner3DHoverTarget
-  interactionProgressID: _ProjectionProgress
-  overlayScale: {x: 0.55, y: 0.55, z: 0.55}
-  overlayRotation: {x: 0, y: 0, z: 0}
   sourceRenderers:
   - {fileID: 1875840470}
-  hoverMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
+  hoverMaterial: {fileID: 2100000, guid: 16a417844dbad674dba6dce99040777c, type: 2}
   hoverInSpeed: 8
   hoverOutSpeed: 6
+  overlayScale: {x: 1.1, y: 1.1, z: 1.1}
+  overlayRotation: {x: 0, y: 0, z: 0}
+  overlayOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1875840473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76129,6 +76444,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 995e4a0430ba45b40a8a62b495848b23, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1823709204}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 995e4a0430ba45b40a8a62b495848b23, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 383708789}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 995e4a0430ba45b40a8a62b495848b23, type: 3}
       insertIndex: -1
@@ -76383,14 +76701,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804a50f4d15c0654999707e401f0d320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.Scanner3DHoverTarget
-  interactionProgressID: _ProjectionProgress
-  overlayScale: {x: 0.1, y: 0.05, z: 0.15}
-  overlayRotation: {x: 0, y: 0, z: 0}
   sourceRenderers:
-  - {fileID: 549418778}
-  hoverMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
+  - {fileID: 383708787}
+  hoverMaterial: {fileID: 2100000, guid: 16a417844dbad674dba6dce99040777c, type: 2}
   hoverInSpeed: 8
   hoverOutSpeed: 6
+  overlayScale: {x: 1, y: 1, z: 1}
+  overlayRotation: {x: 0, y: 0, z: 0}
+  overlayOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1910572389
 GameObject:
   m_ObjectHideFlags: 0
@@ -81408,14 +81726,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804a50f4d15c0654999707e401f0d320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.Scanner3DHoverTarget
-  interactionProgressID: _ProjectionProgress
-  overlayScale: {x: 0.55, y: 0.55, z: 0.55}
-  overlayRotation: {x: 0, y: 0, z: 0}
   sourceRenderers:
   - {fileID: 2052175432}
-  hoverMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
+  hoverMaterial: {fileID: 2100000, guid: 16a417844dbad674dba6dce99040777c, type: 2}
   hoverInSpeed: 8
   hoverOutSpeed: 6
+  overlayScale: {x: 1.1, y: 1.1, z: 1.1}
+  overlayRotation: {x: 0, y: 0, z: 0}
+  overlayOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &2052175435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81897,10 +82215,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1382669277519466069, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1791917522}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2030969120822409121, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1847960028}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
 --- !u!4 &2058580490 stripped
 Transform:
@@ -81929,17 +82244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06bef1431eadcf34986dd7ec78e19606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Circuit.SparkCircuitSystem
---- !u!114 &2058580493 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8789345187969017812, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-  m_PrefabInstance: {fileID: 2058580489}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c39333e5e3430ec4f87ce6f19541e06d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Wire.SparkWireSystem
 --- !u!1 &2063577220
 GameObject:
   m_ObjectHideFlags: 0
@@ -84153,7 +84457,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &204279665578977883
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -85250,14 +85554,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804a50f4d15c0654999707e401f0d320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.Scanner3DHoverTarget
-  interactionProgressID: _InteractionProgress
-  overlayScale: {x: 1, y: 1, z: 1}
-  overlayRotation: {x: 0, y: 0, z: 0}
   sourceRenderers:
-  - {fileID: 234249675}
-  hoverMaterial: {fileID: 2100000, guid: c1b4ed26655273f458a7d2c8dd916e16, type: 2}
+  - {fileID: 281750561}
+  hoverMaterial: {fileID: 2100000, guid: 16a417844dbad674dba6dce99040777c, type: 2}
   hoverInSpeed: 8
   hoverOutSpeed: 6
+  overlayScale: {x: 1, y: 1, z: 1}
+  overlayRotation: {x: 0, y: 0, z: 0}
+  overlayOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &3605488465237950928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85379,6 +85683,22 @@ MonoBehaviour:
   triggerInteraction: 2
   nonSelectedDim: 0.18
   blockWorldInteractionOverUI: 0
+--- !u!114 &3605488465237950934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345420251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d89997b21d2b748b38c4ee26fcb828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkElectronicObject
+  objectId: cdfdeff7a083422b9f0675221f691413
+  displayName: BATTERY
+  interactionsEnabled: 1
+  operationalState: 0
 --- !u!1 &3621264157086299888
 GameObject:
   m_ObjectHideFlags: 0
@@ -86140,6 +86460,7 @@ Transform:
   - {fileID: 2876938601412226997}
   - {fileID: 4516728350786572668}
   - {fileID: 59481080}
+  - {fileID: 154377520}
   m_Father: {fileID: 641701642}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 180}
 --- !u!114 &6461748367603683297
@@ -86332,14 +86653,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804a50f4d15c0654999707e401f0d320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.Scanner3DHoverTarget
-  interactionProgressID: _ProjectionProgress
-  overlayScale: {x: 1, y: 1, z: 1}
-  overlayRotation: {x: 0, y: 0, z: 0}
   sourceRenderers:
-  - {fileID: 7967186316407988832}
-  hoverMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
+  - {fileID: 154377521}
+  hoverMaterial: {fileID: 2100000, guid: 16a417844dbad674dba6dce99040777c, type: 2}
   hoverInSpeed: 8
   hoverOutSpeed: 6
+  overlayScale: {x: 0.01, y: 0.01, z: 0.01}
+  overlayRotation: {x: 0, y: 0, z: 0}
+  overlayOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &6529633473367131462
 Transform:
   m_ObjectHideFlags: 0
@@ -87620,7 +87941,10 @@ PrefabInstance:
     - {fileID: 6293860645566173968, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
     - {fileID: 8414573579231267530, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 9114873943038854000, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 281750560}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4394618107515876301, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
       insertIndex: -1
@@ -87649,6 +87973,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4394618107515876301, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3605488465237950933}
+    - targetCorrespondingSourceObject: {fileID: 4394618107515876301, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3605488465237950934}
   m_SourcePrefab: {fileID: 100100000, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
 --- !u!1 &9194556775779943867
 GameObject:

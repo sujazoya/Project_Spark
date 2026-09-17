@@ -231,5 +231,38 @@ namespace ProjectSpark.Scanner
 
             target.SetInteractionVisible(visible);
         }
+        public void SetProgress(
+    ScannerComponentTarget target,
+    float globalProgress)
+{
+    if (target == null)
+        return;
+
+    globalProgress =
+        Mathf.Clamp01(globalProgress);
+
+    float localProgress =
+        target.EvaluateLocalProgress(
+            globalProgress);
+
+    target.SetScanProgress(
+        localProgress);
+
+    bool identified =
+        localProgress >= 1f;
+
+    target.SetIdentified(
+        identified);
+
+    float interaction =
+        target.EvaluateInteractionPulse(
+            globalProgress);
+
+    target.SetInteractionProgress(
+        interaction);
+
+    target.SetInteractionVisible(
+        interaction > 0.001f);
+}
     }
 }

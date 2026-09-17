@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SG_ScannerStateTransition
-  m_Shader: {fileID: -6465566751694194690, guid: 07e827cedef2a654cb2b1998cf833521, type: 3}
+  m_Name: Hover_Advanced
+  m_Shader: {fileID: -6465566751694194690, guid: 587d389fe6c0646468c34be080c3b4ff, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -22,7 +22,6 @@ Material:
     RenderType: Transparent
   disabledShaderPasses:
   - DepthOnly
-  - SHADOWCASTER
   - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
@@ -44,37 +43,34 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _AlphaToMask: 0
+    - _BaseAlpha: 0.61
     - _Blend: 2
-    - _CastShadows: 0
+    - _CastShadows: 1
     - _Cull: 0
+    - _Deam_Percent: 0.12
     - _DstBlend: 1
     - _DstBlendAlpha: 1
+    - _FresnelPower: 3
+    - _GlowStrength: 3
+    - _InteractionProgress: 0.5
+    - _NoiseScale: 8
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ScanSpeed: 0
+    - _ScanWidth: 0.08
     - _SrcBlend: 5
     - _SrcBlendAlpha: 1
     - _Surface: 1
-    - _TransitionActive: 1
-    - _TransitionDirection: 1
-    - _TransitionEdgeIntensity: 5
-    - _TransitionEdgeWidth: 0.025
-    - _TransitionIntensity: 2
-    - _TransitionNoiseScale: 10
-    - _TransitionNoiseStrength: 0.04
-    - _TransitionOpacity: 0.16
-    - _TransitionProgress: 0
-    - _TransitionScanlineCount: 32
-    - _TransitionScanlineIntensity: 0.25
-    - _TransitionScanlineWidth: 0.025
-    - _TransitionWidth: 0.12
-    - _ZTest: 8
+    - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
+    - _deam: 1
     m_Colors:
-    - _TransitionColor: {r: 0, g: 0.9587312, b: 1, a: 1}
+    - _GlowColor: {r: 0.2877358, g: 1, b: 0.9916204, a: 1}
+    - _HoverColor: {r: 0, g: 1, b: 0.9897845, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &6322398840887956334
+--- !u!114 &6903149503398594013
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

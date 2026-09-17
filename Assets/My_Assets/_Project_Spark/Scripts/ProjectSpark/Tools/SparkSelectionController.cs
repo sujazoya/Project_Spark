@@ -5,11 +5,12 @@ namespace ProjectSpark.Gameplay
 {
     /// <summary>
     /// Owns the currently selected Project Spark object.
-    /// Selection remains active while different tools operate on it.
+    /// This is the single source of truth for selection.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkSelectionController : MonoBehaviour
     {
+        [Header("Selection")]
         [SerializeField]
         private Camera selectionCamera;
 
@@ -43,7 +44,7 @@ namespace ProjectSpark.Gameplay
         }
 
         /// <summary>
-        /// Attempts to select the Spark object under the pointer.
+        /// Selects the object under the supplied screen position.
         /// </summary>
         public bool TrySelect(
             Vector2 screenPosition,
@@ -71,17 +72,24 @@ namespace ProjectSpark.Gameplay
                     QueryTriggerInteraction.Ignore))
             {
                 ClearSelection();
-                reason = "No selectable object.";
+
+                reason =
+                    "No selectable object.";
+
                 return false;
             }
 
             SparkSelectable selectable =
-                hit.collider.GetComponentInParent<SparkSelectable>();
+                hit.collider.GetComponentInParent<
+                    SparkSelectable>();
 
             if (selectable == null)
             {
                 ClearSelection();
-                reason = "Hit object is not selectable.";
+
+                reason =
+                    "Hit object is not selectable.";
+
                 return false;
             }
 
@@ -91,7 +99,7 @@ namespace ProjectSpark.Gameplay
         }
 
         /// <summary>
-        /// Selects a specific Spark object.
+        /// Makes the supplied object the active selection.
         /// </summary>
         public void Select(
             SparkSelectable selectable)

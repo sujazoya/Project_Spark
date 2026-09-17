@@ -10,12 +10,18 @@ namespace ProjectSpark.Gameplay
     public sealed class SparkGameplayController : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private Camera interactionCamera;
-        [SerializeField] private SparkToolController toolController;
-        [SerializeField] private EventSystem eventSystem;
+        [SerializeField]
+        private Camera interactionCamera;
+
+        [SerializeField]
+        private SparkToolController toolController;
+
+        [SerializeField]
+        private EventSystem eventSystem;
 
         [Header("Targeting")]
-        [SerializeField] private LayerMask interactionLayers = ~0;
+        [SerializeField]
+        private LayerMask interactionLayers = ~0;
 
         [SerializeField, Min(0.1f)]
         private float interactionDistance = 8f;
@@ -38,7 +44,11 @@ namespace ProjectSpark.Gameplay
         [SerializeField]
         private bool blockWorldInputOverUI = true;
 
-        public SparkTargetHit? CurrentTarget { get; private set; }
+        public SparkTargetHit? CurrentTarget
+        {
+            get;
+            private set;
+        }
 
         public SparkInteractionSession ActiveSession
         {
@@ -46,12 +56,44 @@ namespace ProjectSpark.Gameplay
             private set;
         }
 
-        public event Action<SparkTargetHit?> TargetChanged;
-        public event Action<SparkResult> ResultProduced;
+        public bool HasActiveInteraction
+        {
+            get
+            {
+                return ActiveSession != null &&
+                       ActiveSession.IsActive;
+            }
+        }
 
-        // ========================================================
-        // UNITY
-        // ========================================================
+        public Camera InteractionCamera
+        {
+            get
+            {
+                return interactionCamera;
+            }
+        }
+
+        public SparkToolController ToolController
+        {
+            get
+            {
+                return toolController;
+            }
+        }
+
+        public Vector2 PointerPosition
+        {
+            get
+            {
+                return ReadPointerPosition();
+            }
+        }
+        private bool pointerOverUI;
+        
+
+        public event Action<SparkTargetHit?> TargetChanged;
+
+        public event Action<SparkResult> ResultProduced;
 
         private void Reset()
         {
@@ -68,16 +110,22 @@ namespace ProjectSpark.Gameplay
         private void Awake()
         {
             if (toolController == null)
+            {
                 toolController =
                     GetComponent<SparkToolController>();
+            }
 
             if (interactionCamera == null)
+            {
                 interactionCamera =
                     Camera.main;
+            }
 
             if (eventSystem == null)
+            {
                 eventSystem =
                     EventSystem.current;
+            }
         }
 
         private void OnEnable()
@@ -102,7 +150,9 @@ namespace ProjectSpark.Gameplay
             }
 
             if (pointerAction != null)
+            {
                 pointerAction.action.Enable();
+            }
         }
 
         private void OnDisable()
@@ -127,127 +177,149 @@ namespace ProjectSpark.Gameplay
             }
 
             if (pointerAction != null)
+            {
                 pointerAction.action.Disable();
+            }
 
             CancelActiveInteraction();
 
             SetCurrentTarget(null);
         }
+private void Update()
+{
+    pointerOverUI = IsPointerOverUI();
 
-        private void Update()
-        {
-            RefreshTarget();
+    RefreshTarget();
 
-            if (ActiveSession == null)
-                return;
+    if (ActiveSession == null)
+    {
+        return;
+    }
 
-            if (toolController == null)
-                return;
+    if (toolController == null)
+    {
+        return;
+    }
 
-            if (toolController.ActiveTool == null)
-                return;
+    SparkTool activeTool =
+        toolController.ActiveTool;
 
-            if (CurrentTarget.HasValue)
-            {
-                ActiveSession.UpdateHit(
-                    CurrentTarget.Value);
-            }
+    if (activeTool == null)
+    {
+        return;
+    }
 
-            SparkTargetHit hit =
-                ActiveSession.LastHit;
+    if (CurrentTarget.HasValue)
+    {
+        ActiveSession.UpdateHit(
+            CurrentTarget.Value);
+    }
 
-            SparkToolContext context =
-                new SparkToolContext(
-                    this,
-                    toolController,
-                    ActiveSession,
-                    hit);
+    SparkTargetHit hit =
+        ActiveSession.LastHit;
 
-            SparkResult result =
-                toolController.ActiveTool.Tick(
-                    context);
+    Vector2 pointer =
+        ReadPointerPosition();
 
-            if (!result.Succeeded &&
-                result.Code != SparkResultCode.Unavailable)
-            {
-                Publish(result);
-            }
-        }
+    SparkInteractionContext interactionContext =
+        CreateInteractionContext(
+            in hit,
+            ActiveSession.InteractionType);
 
-        // ========================================================
-        // TARGETING
-        // ========================================================
+    SparkToolContext context =
+        new SparkToolContext(
+            this,
+            toolController,
+            ActiveSession,
+            in hit,
+            pointer,
+            interactionCamera,
+            interactionContext);
 
-        private void RefreshTarget()
-        {
-            if (interactionCamera == null)
-                return;
+    SparkResult result =
+        activeTool.Tick(context);
 
-            if (blockWorldInputOverUI &&
-                IsPointerOverUI())
-            {
-                SetCurrentTarget(null);
-                return;
-            }
+    if (!result.Succeeded &&
+        result.Code != SparkResultCode.Unavailable)
+    {
+        Publish(result);
+    }
+}
+       private void RefreshTarget()
+{
+    if (interactionCamera == null)
+    {
+        return;
+    }
 
-            Vector2 pointer =
-                ReadPointerPosition();
+    if (blockWorldInputOverUI &&
+        pointerOverUI)
+    {
+        SetCurrentTarget(null);
+        return;
+    }
 
-            Ray ray =
-                interactionCamera.ScreenPointToRay(
-                    pointer);
+    Vector2 pointer =
+        ReadPointerPosition();
 
-            if (!Physics.Raycast(
-                    ray,
-                    out RaycastHit hit,
-                    interactionDistance,
-                    interactionLayers,
-                    triggerInteraction))
-            {
-                SetCurrentTarget(null);
-                return;
-            }
+    Ray ray =
+        interactionCamera.ScreenPointToRay(
+            pointer);
 
-            SparkElectronicObject target =
-                hit.collider
-                    .GetComponentInParent<
-                        SparkElectronicObject>();
+    if (!Physics.Raycast(
+            ray,
+            out RaycastHit hit,
+            interactionDistance,
+            interactionLayers,
+            triggerInteraction))
+    {
+        SetCurrentTarget(null);
+        return;
+    }
 
-            if (target == null ||
-                !target.isActiveAndEnabled ||
-                !target.InteractionsEnabled)
-            {
-                SetCurrentTarget(null);
-                return;
-            }
+    SparkElectronicObject target =
+        hit.collider.GetComponentInParent<
+            SparkElectronicObject>();
 
-            SetCurrentTarget(
-                new SparkTargetHit(
-                    target,
-                    hit.collider,
-                    hit.point,
-                    hit.normal,
-                    hit.distance));
-        }
+    if (target == null ||
+        !target.isActiveAndEnabled ||
+        !target.InteractionsEnabled)
+    {
+        SetCurrentTarget(null);
+        return;
+    }
 
-        // ========================================================
-        // PRIMARY
-        // ========================================================
+    SetCurrentTarget(
+        new SparkTargetHit(
+            target,
+            hit.collider,
+            hit.point,
+            hit.normal,
+            hit.distance));
+}
 
         private void OnPrimaryStarted(
             InputAction.CallbackContext _)
         {
             if (blockWorldInputOverUI &&
-                IsPointerOverUI())
+                pointerOverUI)
             {
                 return;
             }
 
             if (ActiveSession != null)
+            {
                 return;
+            }
 
-            if (!CurrentTarget.HasValue)
+            if (toolController == null)
+            {
+                Publish(
+                    SparkResult.Unavailable(
+                        "SparkToolController is not configured."));
+
                 return;
+            }
 
             SparkTool tool =
                 toolController.ActiveTool;
@@ -257,6 +329,16 @@ namespace ProjectSpark.Gameplay
                 Publish(
                     SparkResult.Unavailable(
                         "No active tool."));
+
+                return;
+            }
+
+            if (!CurrentTarget.HasValue)
+            {
+                Publish(
+                    SparkResult.Rejected(
+                        "No interactive target under pointer."));
+
                 return;
             }
 
@@ -267,9 +349,18 @@ namespace ProjectSpark.Gameplay
                 MapInteraction(
                     tool.ToolType);
 
+            if (type == SparkInteractionType.None)
+            {
+                Publish(
+                    SparkResult.Rejected(
+                        "Active tool has no interaction type."));
+
+                return;
+            }
+
             SparkInteractionContext interactionContext =
                 CreateInteractionContext(
-                    hit,
+                    in hit,
                     type);
 
             if (!hit.Target.CanInteract(
@@ -278,6 +369,7 @@ namespace ProjectSpark.Gameplay
             {
                 Publish(
                     SparkResult.Rejected(reason));
+
                 return;
             }
 
@@ -286,14 +378,20 @@ namespace ProjectSpark.Gameplay
                     type,
                     tool.ToolType,
                     hit.Target,
-                    hit);
+                    in hit);
+
+            Vector2 pointer =
+                ReadPointerPosition();
 
             SparkToolContext toolContext =
                 new SparkToolContext(
                     this,
                     toolController,
                     session,
-                    hit);
+                    in hit,
+                    pointer,
+                    interactionCamera,
+                    interactionContext);
 
             SparkResult result =
                 tool.Begin(toolContext);
@@ -301,18 +399,24 @@ namespace ProjectSpark.Gameplay
             Publish(result);
 
             if (result.Succeeded)
+            {
                 ActiveSession = session;
+            }
         }
-
-        // ========================================================
-        // PRIMARY RELEASE
-        // ========================================================
 
         private void OnPrimaryCanceled(
             InputAction.CallbackContext _)
         {
             if (ActiveSession == null)
+            {
                 return;
+            }
+
+            if (toolController == null)
+            {
+                ActiveSession = null;
+                return;
+            }
 
             SparkTool tool =
                 toolController.ActiveTool;
@@ -326,22 +430,34 @@ namespace ProjectSpark.Gameplay
             SparkInteractionSession session =
                 ActiveSession;
 
+            SparkTargetHit hit =
+                session.LastHit;
+
+            Vector2 pointer =
+                ReadPointerPosition();
+
+            SparkInteractionContext interactionContext =
+                CreateInteractionContext(
+                    in hit,
+                    session.InteractionType);
+
             SparkToolContext context =
                 new SparkToolContext(
                     this,
                     toolController,
                     session,
-                    session.LastHit);
+                    in hit,
+                    pointer,
+                    interactionCamera,
+                    interactionContext);
 
-            Publish(
-                tool.End(context));
+            SparkResult result =
+                tool.End(context);
+
+            Publish(result);
 
             ActiveSession = null;
         }
-
-        // ========================================================
-        // CANCEL
-        // ========================================================
 
         private void OnCancelPerformed(
             InputAction.CallbackContext _)
@@ -352,7 +468,15 @@ namespace ProjectSpark.Gameplay
         private void CancelActiveInteraction()
         {
             if (ActiveSession == null)
+            {
                 return;
+            }
+
+            if (toolController == null)
+            {
+                ActiveSession = null;
+                return;
+            }
 
             SparkTool tool =
                 toolController.ActiveTool;
@@ -366,22 +490,34 @@ namespace ProjectSpark.Gameplay
             SparkInteractionSession session =
                 ActiveSession;
 
+            SparkTargetHit hit =
+                session.LastHit;
+
+            Vector2 pointer =
+                ReadPointerPosition();
+
+            SparkInteractionContext interactionContext =
+                CreateInteractionContext(
+                    in hit,
+                    session.InteractionType);
+
             SparkToolContext context =
                 new SparkToolContext(
                     this,
                     toolController,
                     session,
-                    session.LastHit);
+                    in hit,
+                    pointer,
+                    interactionCamera,
+                    interactionContext);
 
-            Publish(
-                tool.Cancel(context));
+            SparkResult result =
+                tool.Cancel(context);
+
+            Publish(result);
 
             ActiveSession = null;
         }
-
-        // ========================================================
-        // CONTEXT
-        // ========================================================
 
         public SparkInteractionContext
             CreateInteractionContext(
@@ -406,10 +542,6 @@ namespace ProjectSpark.Gameplay
                     : null);
         }
 
-        // ========================================================
-        // TARGET STATE
-        // ========================================================
-
         private void SetCurrentTarget(
             SparkTargetHit? next)
         {
@@ -424,25 +556,27 @@ namespace ProjectSpark.Gameplay
 
             if (CurrentTarget.HasValue)
             {
-                CurrentTarget.Value.Target
-                    .SetHovered(false);
+                if (CurrentTarget.Value.Target != null)
+                {
+                    CurrentTarget.Value.Target
+                        .SetHovered(false);
+                }
             }
 
             CurrentTarget = next;
 
             if (CurrentTarget.HasValue)
             {
-                CurrentTarget.Value.Target
-                    .SetHovered(true);
+                if (CurrentTarget.Value.Target != null)
+                {
+                    CurrentTarget.Value.Target
+                        .SetHovered(true);
+                }
             }
 
             TargetChanged?.Invoke(
                 CurrentTarget);
         }
-
-        // ========================================================
-        // POINTER
-        // ========================================================
 
         private Vector2 ReadPointerPosition()
         {
@@ -463,10 +597,6 @@ namespace ProjectSpark.Gameplay
                 Screen.height * 0.5f);
         }
 
-        // ========================================================
-        // UI
-        // ========================================================
-
         private bool IsPointerOverUI()
         {
             return eventSystem != null &&
@@ -479,12 +609,9 @@ namespace ProjectSpark.Gameplay
             ResultProduced?.Invoke(result);
         }
 
-        // ========================================================
-        // TOOL → INTERACTION
-        // ========================================================
-
         private static SparkInteractionType
-            MapInteraction(SparkToolType type)
+            MapInteraction(
+                SparkToolType type)
         {
             switch (type)
             {

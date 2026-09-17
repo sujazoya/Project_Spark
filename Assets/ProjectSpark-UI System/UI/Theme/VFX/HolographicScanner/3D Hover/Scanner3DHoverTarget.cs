@@ -3,13 +3,20 @@ using UnityEngine.Rendering;
 
 namespace ProjectSpark.Scanner
 {
+    /// <summary>
+    /// Provides production hover presentation for a scanner component.
+    ///
+    /// The target creates a dedicated overlay using the source mesh and applies
+    /// _InteractionProgress through a MaterialPropertyBlock.
+    ///
+    /// Interaction state is controlled externally through SetHovered().
+    /// Animation is advanced by TickHover().
+    /// </summary>
     [DisallowMultipleComponent]
     public sealed class Scanner3DHoverTarget : MonoBehaviour
     {
-        [SerializeField]string interactionProgressID=
-            "_InteractionProgress";
         private static readonly int InteractionProgressID =
-            Shader.PropertyToID("interactionProgressID");
+            Shader.PropertyToID("_InteractionProgress");
 
         private static readonly int ScanMinYID =
             Shader.PropertyToID("_ScanMinY");
@@ -32,20 +39,50 @@ namespace ProjectSpark.Scanner
         [SerializeField, Min(0.01f)]
         private float hoverOutSpeed = 6f;
 
+        [Header("Overlay Transform")]
+        [SerializeField]
+        private Vector3 overlayScale = Vector3.one;
+
+        [SerializeField]
+        private Vector3 overlayRotation = Vector3.zero;
+
+        [SerializeField]
+        private Vector3 overlayOffset = Vector3.zero;
+
         private Renderer[] overlayRenderers;
         private MaterialPropertyBlock[] propertyBlocks;
 
         private float interactionProgress;
         private bool hovered;
+        private bool initialized;
 
-        public bool IsHovered =>
-            hovered;
+        public bool IsHovered => hovered;
 
-        public float Progress =>
-            interactionProgress;
+        public float Progress => interactionProgress;
 
         private void Awake()
         {
+            Initialize();
+        }
+
+        private void OnEnable()
+        {
+            if (!initialized)
+                Initialize();
+
+            SetImmediate(
+                hovered
+                    ? 1f
+                    : 0f);
+        }
+
+        private void Initialize()
+        {
+            if (initialized)
+                return;
+
+            initialized = true;
+
             InitializeSources();
             CreateOverlays();
             SetImmediate(0f);
@@ -60,7 +97,8 @@ namespace ProjectSpark.Scanner
             }
 
             sourceRenderers =
-                GetComponentsInChildren<Renderer>(true);
+                GetComponentsInChildren<Renderer>(
+                    true);
         }
 
         private void CreateOverlays()
@@ -134,22 +172,25 @@ namespace ProjectSpark.Scanner
             Renderer source,
             int index)
         {
+            if (source == null)
+                return null;
+
             GameObject overlay =
                 new GameObject(
                     $"__HoverOverlay_{index}");
 
             overlay.transform.SetParent(
-                source.transform,
+                source.transform.parent,
                 false);
 
             overlay.layer =
                 source.gameObject.layer;
 
-            // ---------------------------------------------------------
-            // MeshRenderer
-            // ---------------------------------------------------------
+            ApplyOverlayTransform(
+                source.transform,
+                overlay.transform);
 
-            if (source is MeshRenderer)
+            if (source is MeshRenderer meshRenderer)
             {
                 MeshFilter sourceFilter =
                     source.GetComponent<MeshFilter>();
@@ -167,20 +208,18 @@ namespace ProjectSpark.Scanner
                 overlayFilter.sharedMesh =
                     sourceFilter.sharedMesh;
 
-                MeshRenderer renderer =
+                MeshRenderer overlayRenderer =
                     overlay.AddComponent<MeshRenderer>();
 
-                renderer.sharedMaterial =
+                overlayRenderer.sharedMaterial =
                     hoverMaterial;
 
-                ConfigureRenderer(renderer);
+                CopyRendererSettings(
+                    meshRenderer,
+                    overlayRenderer);
 
                 return overlay;
             }
-
-            // ---------------------------------------------------------
-            // SkinnedMeshRenderer
-            // ---------------------------------------------------------
 
             if (source is SkinnedMeshRenderer skinned)
             {
@@ -190,48 +229,73 @@ namespace ProjectSpark.Scanner
                     return null;
                 }
 
-                SkinnedMeshRenderer renderer =
+                SkinnedMeshRenderer overlayRenderer =
                     overlay.AddComponent<
                         SkinnedMeshRenderer>();
 
-                renderer.sharedMesh =
+                overlayRenderer.sharedMesh =
                     skinned.sharedMesh;
 
-                renderer.bones =
+                overlayRenderer.bones =
                     skinned.bones;
 
-                renderer.rootBone =
+                overlayRenderer.rootBone =
                     skinned.rootBone;
 
-                renderer.localBounds =
+                overlayRenderer.localBounds =
                     skinned.localBounds;
 
-                renderer.updateWhenOffscreen =
+                overlayRenderer.updateWhenOffscreen =
                     skinned.updateWhenOffscreen;
 
-                renderer.sharedMaterial =
+                overlayRenderer.quality =
+                    skinned.quality;
+
+                overlayRenderer.skinnedMotionVectors =
+                    skinned.skinnedMotionVectors;
+
+                overlayRenderer.allowOcclusionWhenDynamic =
+                    skinned.allowOcclusionWhenDynamic;
+
+                overlayRenderer.sharedMaterial =
                     hoverMaterial;
 
-                ConfigureRenderer(renderer);
+                CopyRendererSettings(
+                    skinned,
+                    overlayRenderer);
 
                 return overlay;
             }
 
             Destroy(overlay);
+
             return null;
         }
 
-        private static void ConfigureRenderer(
-            Renderer renderer)
+        private static void CopyRendererSettings(
+            Renderer source,
+            Renderer target)
         {
-            renderer.shadowCastingMode =
+            target.shadowCastingMode =
                 ShadowCastingMode.Off;
 
-            renderer.receiveShadows =
+            target.receiveShadows =
                 false;
 
-            renderer.motionVectorGenerationMode =
+            target.motionVectorGenerationMode =
                 MotionVectorGenerationMode.ForceNoMotion;
+
+            target.allowOcclusionWhenDynamic =
+                source.allowOcclusionWhenDynamic;
+
+            target.lightProbeUsage =
+                source.lightProbeUsage;
+
+            target.reflectionProbeUsage =
+                source.reflectionProbeUsage;
+
+            target.renderingLayerMask =
+                source.renderingLayerMask;
         }
 
         private void ConfigureBounds(
@@ -241,6 +305,15 @@ namespace ProjectSpark.Scanner
         {
             MaterialPropertyBlock block =
                 propertyBlocks[index];
+
+            if (block == null)
+            {
+                block =
+                    new MaterialPropertyBlock();
+
+                propertyBlocks[index] =
+                    block;
+            }
 
             Bounds bounds =
                 GetLocalBounds(source);
@@ -262,6 +335,25 @@ namespace ProjectSpark.Scanner
             overlay.SetPropertyBlock(block);
         }
 
+        private void ApplyOverlayTransform(
+            Transform source,
+            Transform overlay)
+        {
+            overlay.localPosition =
+                source.localPosition +
+                overlayOffset;
+
+            overlay.localRotation =
+                source.localRotation *
+                Quaternion.Euler(
+                    overlayRotation);
+
+            overlay.localScale =
+                Vector3.Scale(
+                    source.localScale,
+                    overlayScale);
+        }
+
         private static Bounds GetLocalBounds(
             Renderer source)
         {
@@ -280,10 +372,14 @@ namespace ProjectSpark.Scanner
             return source.localBounds;
         }
 
-        // =============================================================
+        // ============================================================
         // HOVER STATE
-        // =============================================================
+        // ============================================================
 
+        /// <summary>
+        /// Changes the logical hover state.
+        /// The visual animation is advanced by TickHover().
+        /// </summary>
         public void SetHovered(
             bool value)
         {
@@ -296,17 +392,27 @@ namespace ProjectSpark.Scanner
                 SetOverlayVisible(true);
         }
 
-        // =============================================================
-        // CENTRALIZED ANIMATION TICK
-        //
-        // Returns true while the target still needs updating.
-        // =============================================================
+        // ============================================================
+        // ANIMATION
+        // ============================================================
 
+        /// <summary>
+        /// Advances the hover animation.
+        ///
+        /// Returns true while the animation still requires updates.
+        /// </summary>
         public bool TickHover(
             float deltaTime)
         {
+            deltaTime =
+                Mathf.Max(
+                    0f,
+                    deltaTime);
+
             float targetProgress =
-                hovered ? 1f : 0f;
+                hovered
+                    ? 1f
+                    : 0f;
 
             float speed =
                 hovered
@@ -322,7 +428,6 @@ namespace ProjectSpark.Scanner
             ApplyProgress(
                 interactionProgress);
 
-            // Still animating or still hovered.
             if (hovered ||
                 interactionProgress > 0f)
             {
@@ -334,9 +439,9 @@ namespace ProjectSpark.Scanner
             return false;
         }
 
-        // =============================================================
+        // ============================================================
         // IMMEDIATE
-        // =============================================================
+        // ============================================================
 
         public void SetImmediate(
             float progress)
@@ -351,15 +456,18 @@ namespace ProjectSpark.Scanner
                 interactionProgress > 0f);
         }
 
-        // =============================================================
+        // ============================================================
         // APPLY
-        // =============================================================
+        // ============================================================
 
         private void ApplyProgress(
             float progress)
         {
-            if (overlayRenderers == null)
+            if (overlayRenderers == null ||
+                propertyBlocks == null)
+            {
                 return;
+            }
 
             progress =
                 Mathf.Clamp01(progress);
@@ -386,19 +494,21 @@ namespace ProjectSpark.Scanner
                         block;
                 }
 
-                renderer.GetPropertyBlock(block);
+                renderer.GetPropertyBlock(
+                    block);
 
                 block.SetFloat(
                     InteractionProgressID,
                     progress);
 
-                renderer.SetPropertyBlock(block);
+                renderer.SetPropertyBlock(
+                    block);
             }
         }
 
-        // =============================================================
+        // ============================================================
         // VISIBILITY
-        // =============================================================
+        // ============================================================
 
         private void SetOverlayVisible(
             bool visible)
@@ -421,16 +531,17 @@ namespace ProjectSpark.Scanner
             }
         }
 
-        // =============================================================
+        // ============================================================
         // RESET
-        // =============================================================
+        // ============================================================
 
         private void OnDisable()
         {
             hovered = false;
             interactionProgress = 0f;
 
-            SetImmediate(0f);
+            if (initialized)
+                SetImmediate(0f);
         }
     }
 }

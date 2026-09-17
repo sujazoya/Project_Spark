@@ -10,35 +10,60 @@ namespace ProjectSpark.HolographicViewer
     /// <summary>
     /// Desktop mouse input bridge for the Project Spark holographic viewer.
     ///
-    /// Responsibilities:
-    /// - Left-drag rotates the holographic object.
-    /// - Middle-drag pans the viewer.
-    /// - Mouse wheel zooms the viewer.
+    /// Viewer controls:
+    /// - Left mouse drag   -> viewer/object rotation
+    /// - Middle mouse drag -> viewer pan
+    /// - Mouse wheel       -> viewer zoom
     ///
-    /// This class does not implement camera or object transformation logic.
-    /// Those responsibilities remain in HolographicViewerCamera and
-    /// HolographicObjectController.
+    /// Screen rotation/pan can be locked while an engineering component is
+    /// being moved or rotated.
+    ///
+    /// This component does not implement transformation logic. It delegates
+    /// rotation to HolographicObjectController and pan/zoom to
+    /// HolographicViewerCamera.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class HolographicViewerMouseInput : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private HolographicObjectController objectController;
-        [SerializeField] private HolographicViewerCamera viewerCamera;
+        [SerializeField]
+        private HolographicObjectController objectController;
+
+        [SerializeField]
+        private HolographicViewerCamera viewerCamera;
+
+        [Header("Screen Control")]
+        [Tooltip(
+            "When enabled, screen rotation and pan are allowed. " +
+            "Disable this while manipulating an engineering object.")]
+        [SerializeField]
+        private bool controllScreenSpace = true;
 
         [Header("Input")]
-        [SerializeField] private bool respectUI = true;
-        [SerializeField] private bool rotateWithLeftMouse = true;
-        [SerializeField] private bool panWithMiddleMouse = true;
-        [SerializeField] private bool enableWheelZoom = true;
+        [SerializeField]
+        private bool respectUI = true;
 
-        [Header("Sensitivity")]
+        [Header("Rotation")]
+        [SerializeField]
+        private bool rotateWithLeftMouse = true;
+
+        [SerializeField, Min(0f)]
+        private float rotationDeadZone = 0.01f;
+
+        [Header("Pan")]
+        [SerializeField]
+        private bool panWithMiddleMouse = true;
+
         [SerializeField, Min(0.0001f)]
         private float panSensitivity = 0.0025f;
 
+        [Header("Zoom")]
+        [SerializeField]
+        private bool enableWheelZoom = true;
+
         [Header("Options")]
-        [SerializeField] private bool requireTargetForRotation = true;
-        public bool controllScreenSpace = false;
+        [SerializeField]
+        private bool requireTargetForRotation = true;
 
 #if ENABLE_INPUT_SYSTEM
 
@@ -46,6 +71,12 @@ namespace ProjectSpark.HolographicViewer
         private bool panning;
 
 #endif
+
+        /// <summary>
+        /// True when screen-level rotation and pan are allowed.
+        /// </summary>
+        public bool IsScreenSpaceControlEnabled =>
+            controllScreenSpace;
 
         private void Reset()
         {
@@ -58,17 +89,12 @@ namespace ProjectSpark.HolographicViewer
 
         private void Awake()
         {
-            if (objectController == null)
-            {
-                objectController =
-                    GetComponent<HolographicObjectController>();
-            }
+            ResolveReferences();
+        }
 
-            if (viewerCamera == null)
-            {
-                viewerCamera =
-                    GetComponent<HolographicViewerCamera>();
-            }
+        private void OnEnable()
+        {
+            ResolveReferences();
         }
 
 #if ENABLE_INPUT_SYSTEM
@@ -79,22 +105,26 @@ namespace ProjectSpark.HolographicViewer
 
             if (mouse == null)
                 return;
-                if(controllScreenSpace)
-                {
-                    if (objectController != null)
-                    {
-                        HandleZoom(mouse);
-                        HandleRotation(mouse);
-                        HandlePan(mouse);
-                    }
-                }
-                else
-                {
-                    
-                }
 
-            
+            HandleZoom(mouse);
+
+            if (!controllScreenSpace)
+            {
+                StopActiveScreenManipulation();
+                return;
+            }
+
+            HandleRotation(mouse);
+            HandlePan(mouse);
         }
+
+#endif
+
+        // ============================================================
+        // ZOOM
+        // ============================================================
+
+#if ENABLE_INPUT_SYSTEM
 
         private void HandleZoom(Mouse mouse)
         {
@@ -116,6 +146,14 @@ namespace ProjectSpark.HolographicViewer
             viewerCamera.Zoom(wheel);
         }
 
+#endif
+
+        // ============================================================
+        // SCREEN ROTATION
+        // ============================================================
+
+#if ENABLE_INPUT_SYSTEM
+
         private void HandleRotation(Mouse mouse)
         {
             if (!rotateWithLeftMouse)
@@ -136,6 +174,7 @@ namespace ProjectSpark.HolographicViewer
                 }
 
                 rotating = true;
+
                 objectController.BeginDrag();
             }
 
@@ -145,19 +184,42 @@ namespace ProjectSpark.HolographicViewer
                 Vector2 delta =
                     mouse.delta.ReadValue();
 
-                if (delta.sqrMagnitude > 0f)
+                if (delta.sqrMagnitude >
+                    rotationDeadZone *
+                    rotationDeadZone)
                 {
-                    objectController.RotateFromDrag(delta);
+                    objectController.RotateFromDrag(
+                        delta);
                 }
             }
 
             if (rotating &&
                 mouse.leftButton.wasReleasedThisFrame)
             {
-                rotating = false;
+                StopRotation();
+            }
+        }
+
+        private void StopRotation()
+        {
+            if (!rotating)
+                return;
+
+            rotating = false;
+
+            if (objectController != null)
+            {
                 objectController.EndDrag();
             }
         }
+
+#endif
+
+        // ============================================================
+        // SCREEN PAN
+        // ============================================================
+
+#if ENABLE_INPUT_SYSTEM
 
         private void HandlePan(Mouse mouse)
         {
@@ -181,10 +243,12 @@ namespace ProjectSpark.HolographicViewer
                 Vector2 delta =
                     mouse.delta.ReadValue();
 
-                if (delta.sqrMagnitude > 0f)
+                if (delta.sqrMagnitude >
+                    0f)
                 {
                     viewerCamera.Pan(
-                        -delta * panSensitivity);
+                        -delta *
+                        panSensitivity);
                 }
             }
 
@@ -195,12 +259,66 @@ namespace ProjectSpark.HolographicViewer
             }
         }
 
+#endif
+
+        // ============================================================
+        // CONTROL LOCK
+        // ============================================================
+
+        /// <summary>
+        /// Enables or disables screen rotation and pan.
+        ///
+        /// This should be set to false while an engineering component is being
+        /// moved or rotated, so the viewer cannot consume the same mouse input.
+        ///
+        /// Mouse-wheel zoom remains independently controlled by
+        /// enableWheelZoom.
+        /// </summary>
+        public void SetScreenSpaceControl(
+            bool enabled)
+        {
+            if (controllScreenSpace == enabled)
+                return;
+
+            controllScreenSpace = enabled;
+
+            if (!enabled)
+            {
+                StopActiveScreenManipulation();
+            }
+        }
+
+        /// <summary>
+        /// Toggles screen rotation/pan control.
+        /// </summary>
+        public void ToggleControlScreenSpace()
+        {
+            SetScreenSpaceControl(
+                !controllScreenSpace);
+        }
+
+        /// <summary>
+        /// Immediately stops any active screen rotation or pan interaction.
+        /// </summary>
+        public void StopActiveScreenManipulation()
+        {
+#if ENABLE_INPUT_SYSTEM
+
+            StopRotation();
+
+            panning = false;
+
+#endif
+        }
+
+        // ============================================================
+        // VALIDATION
+        // ============================================================
+
         private bool HasValidRotationTarget()
         {
-            if (objectController == null)
-                return false;
-
-            return objectController.gameObject != null;
+            return objectController != null &&
+                   objectController.gameObject != null;
         }
 
         private bool IsBlockedByUI()
@@ -217,27 +335,45 @@ namespace ProjectSpark.HolographicViewer
             return eventSystem.IsPointerOverGameObject();
         }
 
-#endif
+        // ============================================================
+        // REFERENCES
+        // ============================================================
+
+        private void ResolveReferences()
+        {
+            if (objectController == null)
+            {
+                objectController =
+                    GetComponent<
+                        HolographicObjectController>();
+            }
+
+            if (viewerCamera == null)
+            {
+                viewerCamera =
+                    GetComponent<
+                        HolographicViewerCamera>();
+            }
+
+            if (viewerCamera == null)
+            {
+                viewerCamera =
+                    FindFirstObjectByType<
+                        HolographicViewerCamera>();
+            }
+        }
+
+        // ============================================================
+        // CLEANUP
+        // ============================================================
 
         private void OnDisable()
         {
 #if ENABLE_INPUT_SYSTEM
 
-            if (rotating &&
-                objectController != null)
-            {
-                objectController.EndDrag();
-            }
-
-            rotating = false;
-            panning = false;
+            StopActiveScreenManipulation();
 
 #endif
         }
-        public void ToggleControlScreenSpace()
-        {
-            controllScreenSpace = !controllScreenSpace;
-        }
     }
-
 }

@@ -84,7 +84,15 @@ namespace AAAUI.VFX
         private bool logWireOperations = true;
         [Header("Electrical System")]
 
-
+[SerializeField]
+private bool externalInputControl;
+public bool ExternalInputControl
+{
+    get
+    {
+        return externalInputControl;
+    }
+}
 
 [Header("Level Validation")]
 [SerializeField]
@@ -134,6 +142,17 @@ private Level1CircuitChecker level1Checker;
         public SparkCircuitSystem Circuit =>
             circuit;
 
+            public void SetExternalInputControl(
+    bool enabled)
+{
+    externalInputControl = enabled;
+
+    if (enabled && drawing)
+    {
+        CancelWire();
+    }
+}
+
         // ============================================================
         // UNITY
         // ============================================================
@@ -155,30 +174,34 @@ private Level1CircuitChecker level1Checker;
                 CancelWire();
         }
 
+       
         private void Update()
-        {
-            if (targetCamera == null)
-                return;
+{
+    if (externalInputControl)
+        return;
 
-            if (!drawing)
-            {
-                if (Input.GetMouseButtonDown(0))
-                    TryBeginWire();
+    if (targetCamera == null)
+        return;
 
-                return;
-            }
+    if (!drawing)
+    {
+        if (Input.GetMouseButtonDown(0))
+            TryBeginWire();
 
-            UpdateDragging();
+        return;
+    }
 
-            if (Input.GetMouseButtonUp(0))
-                EndWire();
+    UpdateDragging();
 
-            if (Input.GetMouseButtonDown(1))
-                CancelWire();
+    if (Input.GetMouseButtonUp(0))
+        EndWire();
 
-            if (Input.GetKeyDown(KeyCode.Escape))
-                CancelWire();
-        }
+    if (Input.GetMouseButtonDown(1))
+        CancelWire();
+
+    if (Input.GetKeyDown(KeyCode.Escape))
+        CancelWire();
+}
 
         // ============================================================
         // VALIDATION
@@ -700,6 +723,122 @@ private Level1CircuitChecker level1Checker;
 
     return true;
 }
+
+public void EndWire(Vector2 screenPosition)
+{
+    if (!drawing)
+        return;
+
+    if (logWireOperations)
+    {
+        Debug.Log(
+            "[WIRE] RELEASE",
+            this);
+    }
+
+    SparkTerminal endTerminal =
+        FindTerminalAtScreenPosition(screenPosition);
+
+    if (endTerminal == null)
+    {
+        if (logWireOperations)
+        {
+            Debug.Log(
+                "[WIRE] END TERMINAL = NULL",
+                this);
+        }
+
+        if (requireTerminalAtEnd)
+        {
+            FinishVisualWireOnly();
+            return;
+        }
+    }
+    else
+    {
+        if (logWireOperations)
+        {
+            Debug.Log(
+                $"[WIRE] END = {endTerminal.name} | " +
+                $"Kind = {endTerminal.Kind}",
+                endTerminal);
+        }
+    }
+
+    if (startTerminal != null &&
+        endTerminal != null)
+    {
+        TryCommitElectricalConnection(
+            startTerminal,
+            endTerminal);
+    }
+
+    FinishVisualWireOnly();
+}
+private SparkTerminal FindTerminalAtScreenPosition(
+    Vector2 screenPosition)
+{
+    if (targetCamera == null)
+        return null;
+
+    Ray ray =
+        targetCamera.ScreenPointToRay(
+            screenPosition);
+
+    RaycastHit[] hits =
+        Physics.RaycastAll(
+            ray,
+            terminalHitDistance,
+            terminalLayer,
+            QueryTriggerInteraction.Collide);
+
+    if (hits == null ||
+        hits.Length == 0)
+    {
+        return null;
+    }
+
+    SparkTerminal closest = null;
+
+    float closestDistance =
+        float.MaxValue;
+
+    for (int i = 0;
+         i < hits.Length;
+         i++)
+    {
+        Collider collider =
+            hits[i].collider;
+
+        if (collider == null)
+            continue;
+
+        SparkTerminal terminal =
+            collider.GetComponentInParent<SparkTerminal>();
+
+        if (terminal == null)
+            continue;
+
+        if (hits[i].distance < closestDistance)
+        {
+            closestDistance =
+                hits[i].distance;
+
+            closest =
+                terminal;
+        }
+    }
+
+    if (closest != null &&
+        logWireOperations)
+    {
+        Debug.Log(
+            $"[WIRE] TERMINAL HIT = {closest.name}",
+            closest);
+    }
+
+    return closest;
+}
         // ============================================================
         // DUPLICATE CHECK
         // ============================================================
@@ -742,6 +881,46 @@ private Level1CircuitChecker level1Checker;
 
             return false;
         }
+
+        public void UpdateWireFromScreenPosition(
+    Vector2 screenPosition)
+{
+    if (!drawing)
+        return;
+
+    if (targetCamera == null)
+        return;
+
+    if (breadboard == null)
+        return;
+
+    if (breadboard.GridOrigin == null)
+        return;
+
+    Ray ray =
+        targetCamera.ScreenPointToRay(
+            screenPosition);
+
+    Transform gridTransform =
+        breadboard.GridOrigin;
+
+    Plane plane =
+        new Plane(
+            gridTransform.up,
+            gridTransform.position);
+
+    if (!plane.Raycast(
+            ray,
+            out float distance))
+    {
+        return;
+    }
+
+    Vector3 worldPosition =
+        ray.GetPoint(distance);
+
+    UpdateWire(worldPosition);
+}
 
         // ============================================================
         // FIND TERMINAL

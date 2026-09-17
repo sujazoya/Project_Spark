@@ -7,13 +7,28 @@ namespace ProjectSpark.Gameplay
         [SerializeField]
         private SparkToolType toolType;
 
-        public SparkToolType ToolType => toolType;
+        public SparkToolType ToolType
+        {
+            get
+            {
+                return toolType;
+            }
+        }
 
-        public SparkInteractionSession Session { get; private set; }
+        public SparkInteractionSession Session
+        {
+            get;
+            private set;
+        }
 
-        public bool IsBusy =>
-            Session != null &&
-            Session.IsActive;
+        public bool IsBusy
+        {
+            get
+            {
+                return Session != null &&
+                       Session.IsActive;
+            }
+        }
 
         protected virtual void Awake()
         {
@@ -39,7 +54,9 @@ namespace ProjectSpark.Gameplay
         public SparkResult Begin(
             SparkToolContext context)
         {
-            if (!CanBegin(context, out string reason))
+            if (!CanBegin(
+                    context,
+                    out string reason))
             {
                 return SparkResult.Rejected(reason);
             }
@@ -53,7 +70,8 @@ namespace ProjectSpark.Gameplay
             Session = context.Session;
             Session.Start();
 
-            SparkResult result = OnBegin(context);
+            SparkResult result =
+                OnBegin(context);
 
             if (!result.Succeeded)
             {
@@ -85,7 +103,8 @@ namespace ProjectSpark.Gameplay
                     "Tool has no active session.");
             }
 
-            SparkResult result = OnEnd(context);
+            SparkResult result =
+                OnEnd(context);
 
             Session.Stop();
             Session = null;
@@ -102,7 +121,8 @@ namespace ProjectSpark.Gameplay
                     "Tool has no active session.");
             }
 
-            SparkResult result = OnCancel(context);
+            SparkResult result =
+                OnCancel(context);
 
             Session.Stop();
             Session = null;
@@ -130,28 +150,93 @@ namespace ProjectSpark.Gameplay
         {
             return SparkResult.Cancelled();
         }
+        
     }
-
     public sealed class SparkToolContext
     {
-        public SparkGameplayController Gameplay { get; }
+        public SparkGameplayController Gameplay
+        {
+            get;
+        }
 
-        public SparkToolController Tools { get; }
+        public SparkToolController Tools
+        {
+            get;
+        }
 
-        public SparkInteractionSession Session { get; }
+        public SparkInteractionSession Session
+        {
+            get;
+        }
 
-        public SparkTargetHit TargetHit { get; }
+        public SparkTargetHit TargetHit
+        {
+            get;
+        }
+
+        public SparkInteractionContext InteractionContext
+        {
+            get;
+        }
+
+        public Vector2 ScreenPosition
+        {
+            get;
+        }
+
+        public Camera Camera
+        {
+            get;
+        }
+
+        public Ray PointerRay
+        {
+            get;
+        }
+
+        public bool HasCamera
+        {
+            get
+            {
+                return Camera != null;
+            }
+        }
+
+        public bool HasTarget
+        {
+            get
+            {
+                return TargetHit.Target != null;
+            }
+        }
 
         public SparkToolContext(
             SparkGameplayController gameplay,
             SparkToolController tools,
             SparkInteractionSession session,
-            in SparkTargetHit targetHit)
+            in SparkTargetHit targetHit,
+            Vector2 screenPosition,
+            Camera camera,
+            SparkInteractionContext interactionContext)
         {
             Gameplay = gameplay;
             Tools = tools;
             Session = session;
             TargetHit = targetHit;
+            ScreenPosition = screenPosition;
+            Camera = camera;
+            InteractionContext = interactionContext;
+
+            if (camera != null)
+            {
+                PointerRay =
+                    camera.ScreenPointToRay(
+                        screenPosition);
+            }
+            else
+            {
+                PointerRay = default;
+            }
         }
     }
 }

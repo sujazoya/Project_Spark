@@ -3,27 +3,51 @@ using UnityEngine;
 
 namespace ProjectSpark.Tools
 {
+    [DisallowMultipleComponent]
     public sealed class SparkSelectTool : SparkTool
     {
-        [Header("Selection")]
+        [Header("References")]
         [SerializeField]
-        private bool selectOnBegin = true;
+        private SparkSelectionController selectionController;
 
         protected override SparkToolType GetToolType()
         {
             return SparkToolType.Select;
         }
 
+        protected override void Awake()
+        {
+            base.Awake();
+
+            if (selectionController == null)
+            {
+                selectionController =
+                    GetComponentInParent<SparkSelectionController>();
+            }
+        }
+
         public override bool CanBegin(
             in SparkToolContext context,
             out string reason)
         {
-            if (!base.CanBegin(context, out reason))
-                return false;
-
-            if (context.TargetHit.Target == null)
+            if (!base.CanBegin(
+                    context,
+                    out reason))
             {
-                reason = "No component selected.";
+                return false;
+            }
+
+            if (selectionController == null)
+            {
+                reason =
+                    "SparkSelectionController is not configured.";
+
+                return false;
+            }
+
+            if (!context.HasTarget)
+            {
+                reason = "No selectable object was hit.";
                 return false;
             }
 
@@ -34,17 +58,54 @@ namespace ProjectSpark.Tools
         protected override SparkResult OnBegin(
             SparkToolContext context)
         {
-            if (context.TargetHit.Target == null)
+            if (selectionController == null)
+            {
                 return SparkResult.Invalid(
-                    "No component selected.");
+                    "SparkSelectionController is not configured.");
+            }
 
-            if (!selectOnBegin)
-                return SparkResult.Success();
+            if (!context.HasTarget)
+            {
+                selectionController.ClearSelection();
 
-            context.TargetHit.Target.SetSelected(true);
+                return SparkResult.Invalid(
+                    "No selectable object was hit.");
+            }
+
+            SparkSelectable selectable =
+                context.TargetHit.Collider
+                    .GetComponentInParent<SparkSelectable>();
+
+            if (selectable == null)
+            {
+                selectionController.ClearSelection();
+
+                return SparkResult.Invalid(
+                    "Hit object is not selectable.");
+            }
+
+            /*
+             * IMPORTANT:
+             *
+             * Select() automatically deselects the previous object
+             * and selects this object.
+             */
+            selectionController.Select(selectable);
 
             return SparkResult.Success(
-                "Component selected.");
+                "Object selected.");
+        }
+
+        protected override SparkResult OnEnd(
+            SparkToolContext context)
+        {
+            return SparkResult.Success();
+        }
+
+        protected override SparkResult OnCancel(
+            SparkToolContext context)
+        {
+            return SparkResult.Cancelled();
         }
     }
 }

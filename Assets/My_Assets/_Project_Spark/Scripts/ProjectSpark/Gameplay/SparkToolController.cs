@@ -81,7 +81,7 @@ namespace ProjectSpark.Gameplay
             BuildToolMap();
 
             TrySetTool(
-                ActiveToolType,
+                SparkToolType.Select,
                 out _);
         }
 
@@ -149,7 +149,7 @@ namespace ProjectSpark.Gameplay
 
 
         // ============================================================
-        // BUILD TOOL MAP
+        // TOOL MAP
         // ============================================================
 
         private void BuildToolMap()
@@ -158,10 +158,13 @@ namespace ProjectSpark.Gameplay
 
             for (int i = 0; i < tools.Count; i++)
             {
-                SparkTool tool = tools[i];
+                SparkTool tool =
+                    tools[i];
 
                 if (tool == null)
+                {
                     continue;
+                }
 
                 SparkToolType type =
                     tool.ToolType;
@@ -190,9 +193,7 @@ namespace ProjectSpark.Gameplay
             SparkToolType type,
             out string reason)
         {
-            // --------------------------------------------------------
-            // Current tool is busy
-            // --------------------------------------------------------
+            reason = null;
 
             if (ActiveTool != null &&
                 ActiveTool.IsBusy)
@@ -202,11 +203,6 @@ namespace ProjectSpark.Gameplay
 
                 return false;
             }
-
-
-            // --------------------------------------------------------
-            // Find requested tool
-            // --------------------------------------------------------
 
             if (!map.TryGetValue(
                     type,
@@ -219,21 +215,10 @@ namespace ProjectSpark.Gameplay
                 return false;
             }
 
-
-            // --------------------------------------------------------
-            // Already active
-            // --------------------------------------------------------
-
             if (ActiveTool == next)
             {
-                reason = null;
                 return true;
             }
-
-
-            // --------------------------------------------------------
-            // Change tool
-            // --------------------------------------------------------
 
             SparkTool previous =
                 ActiveTool;
@@ -244,24 +229,16 @@ namespace ProjectSpark.Gameplay
             ActiveToolType =
                 type;
 
-
-            // --------------------------------------------------------
-            // Notify listeners
-            // --------------------------------------------------------
-
             ActiveToolChanged?.Invoke(
                 previous,
-                ActiveTool);
-
-
-            reason = null;
+                next);
 
             return true;
         }
 
 
         // ============================================================
-        // INPUT REGISTRATION
+        // INPUT
         // ============================================================
 
         private void RegisterInput(
@@ -269,13 +246,17 @@ namespace ProjectSpark.Gameplay
             Action<InputAction.CallbackContext> callback)
         {
             if (actionReference == null)
+            {
                 return;
+            }
 
             InputAction action =
                 actionReference.action;
 
             if (action == null)
+            {
                 return;
+            }
 
             action.performed += callback;
             action.Enable();
@@ -286,13 +267,17 @@ namespace ProjectSpark.Gameplay
             Action<InputAction.CallbackContext> callback)
         {
             if (actionReference == null)
+            {
                 return;
+            }
 
             InputAction action =
                 actionReference.action;
 
             if (action == null)
+            {
                 return;
+            }
 
             action.performed -= callback;
             action.Disable();
@@ -300,7 +285,7 @@ namespace ProjectSpark.Gameplay
 
 
         // ============================================================
-        // INPUT → SELECT
+        // INPUT → TOOL
         // ============================================================
 
         private void OnSelectToolInput(
@@ -310,22 +295,12 @@ namespace ProjectSpark.Gameplay
                 SparkToolType.Select);
         }
 
-
-        // ============================================================
-        // INPUT → INSPECT
-        // ============================================================
-
         private void OnInspectToolInput(
             InputAction.CallbackContext context)
         {
             TryActivateTool(
                 SparkToolType.Inspect);
         }
-
-
-        // ============================================================
-        // INPUT → MOVE
-        // ============================================================
 
         private void OnMoveToolInput(
             InputAction.CallbackContext context)
@@ -334,22 +309,12 @@ namespace ProjectSpark.Gameplay
                 SparkToolType.Move);
         }
 
-
-        // ============================================================
-        // INPUT → ROTATE
-        // ============================================================
-
         private void OnRotateToolInput(
             InputAction.CallbackContext context)
         {
             TryActivateTool(
                 SparkToolType.Rotate);
         }
-
-
-        // ============================================================
-        // INPUT → WIRE
-        // ============================================================
 
         private void OnWireToolInput(
             InputAction.CallbackContext context)
@@ -358,11 +323,6 @@ namespace ProjectSpark.Gameplay
                 SparkToolType.Wire);
         }
 
-
-        // ============================================================
-        // INPUT → MEASURE
-        // ============================================================
-
         private void OnMeasureToolInput(
             InputAction.CallbackContext context)
         {
@@ -370,19 +330,16 @@ namespace ProjectSpark.Gameplay
                 SparkToolType.Measure);
         }
 
-
-        // ============================================================
-        // INPUT → SCAN
-        // ============================================================
-
         private void OnScanToolInput(
             InputAction.CallbackContext context)
         {
             TryActivateTool(
                 SparkToolType.Scan);
         }
+
+
         // ============================================================
-        // UI BUTTON → SELECT
+        // UI → TOOL
         // ============================================================
 
         public void OnSelectButton()
@@ -391,21 +348,11 @@ namespace ProjectSpark.Gameplay
                 SparkToolType.Select);
         }
 
-
-        // ============================================================
-        // UI BUTTON → INSPECT
-        // ============================================================
-
         public void OnInspectButton()
         {
             TryActivateTool(
                 SparkToolType.Inspect);
         }
-
-
-        // ============================================================
-        // UI BUTTON → MOVE
-        // ============================================================
 
         public void OnMoveButton()
         {
@@ -413,21 +360,11 @@ namespace ProjectSpark.Gameplay
                 SparkToolType.Move);
         }
 
-
-        // ============================================================
-        // UI BUTTON → ROTATE
-        // ============================================================
-
         public void OnRotateButton()
         {
             TryActivateTool(
                 SparkToolType.Rotate);
         }
-
-
-        // ============================================================
-        // UI BUTTON → WIRE
-        // ============================================================
 
         public void OnWireButton()
         {
@@ -435,21 +372,11 @@ namespace ProjectSpark.Gameplay
                 SparkToolType.Wire);
         }
 
-
-        // ============================================================
-        // UI BUTTON → MEASURE
-        // ============================================================
-
         public void OnMeasureButton()
         {
             TryActivateTool(
                 SparkToolType.Measure);
         }
-
-
-        // ============================================================
-        // UI BUTTON → SCAN
-        // ============================================================
 
         public void OnScanButton()
         {
@@ -459,7 +386,7 @@ namespace ProjectSpark.Gameplay
 
 
         // ============================================================
-        // ACTIVATE TOOL
+        // ACTIVATE
         // ============================================================
 
         private void TryActivateTool(
