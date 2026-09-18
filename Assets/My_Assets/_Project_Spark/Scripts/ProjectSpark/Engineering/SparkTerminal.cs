@@ -3,9 +3,32 @@ using UnityEngine;
 
 namespace ProjectSpark.Gameplay
 {
-    // =========================================================
-    // TERMINAL TYPES
-    // =========================================================
+public readonly struct SparkTerminalElectricalState
+{
+    public float Voltage { get; }
+
+    public float Current { get; }
+
+    public float Power =>
+        Voltage * Current;
+
+    public bool IsPowered =>
+        Mathf.Abs(Voltage) > 0.001f;
+
+    public bool HasCurrent =>
+        Mathf.Abs(Current) > 0.001f;
+
+    public bool HasPower =>
+        Mathf.Abs(Power) > 0.000001f;
+
+    public SparkTerminalElectricalState(
+        float voltage,
+        float current)
+    {
+        Voltage = voltage;
+        Current = current;
+    }
+}
 
     public enum SparkTerminalKind
     {
@@ -17,12 +40,14 @@ namespace ProjectSpark.Gameplay
         Data
     }
 
+
     public enum SparkTerminalPolarity
     {
         None,
         Positive,
         Negative
     }
+
 
     public enum SparkConnectionKind
     {
@@ -31,6 +56,7 @@ namespace ProjectSpark.Gameplay
         Connector
     }
 
+
     public enum SparkConnectionDirection
     {
         Bidirectional,
@@ -38,10 +64,6 @@ namespace ProjectSpark.Gameplay
         InputToOutput
     }
 
-
-    // =========================================================
-    // TERMINAL
-    // =========================================================
 
     [DisallowMultipleComponent]
     public sealed class SparkTerminal : MonoBehaviour
@@ -84,6 +106,10 @@ namespace ProjectSpark.Gameplay
         private int connectionCount;
 
 
+        private SparkTerminalElectricalState
+            electricalState;
+
+
         // =========================================================
         // PUBLIC STATE
         // =========================================================
@@ -109,7 +135,6 @@ namespace ProjectSpark.Gameplay
         public int ConnectionCount =>
             connectionCount;
 
-        // Compatibility alias.
         public int ActiveConnectionCount =>
             connectionCount;
 
@@ -117,8 +142,71 @@ namespace ProjectSpark.Gameplay
             connectionCount >= maxConnections;
 
 
+        // =========================================================
+        // ELECTRICAL STATE
+        // =========================================================
+
+        public SparkTerminalElectricalState ElectricalState =>
+            electricalState;
+
+
+        public float Voltage =>
+            electricalState.Voltage;
+
+
+        public float Current =>
+            electricalState.Current;
+
+
+        public bool IsPowered =>
+            electricalState.IsPowered;
+
+
+        public bool HasCurrent =>
+            electricalState.HasCurrent;
+
+
+        // =========================================================
+        // OWNER STATE
+        // =========================================================
+
+        public bool IsOwnerActive =>
+            owner != null &&
+            owner.isActiveAndEnabled;
+
+
+        public bool IsElectricalEnabled
+        {
+            get
+            {
+                if (owner == null)
+                {
+                    return false;
+                }
+
+                SparkElectricalComponent electrical =
+                    owner as SparkElectricalComponent;
+
+                if (electrical == null)
+                {
+                    return true;
+                }
+
+                return electrical.ElectricalEnabled;
+            }
+        }
+
+
+        // =========================================================
+        // EVENTS
+        // =========================================================
+
         public event Action<SparkTerminal>
             ConnectionStateChanged;
+
+
+        public event Action<SparkTerminal>
+            ElectricalStateChanged;
 
 
         // =========================================================
@@ -127,27 +215,87 @@ namespace ProjectSpark.Gameplay
 
         private void Awake()
         {
-            if (owner == null)
-            {
-                owner =
-                    GetComponentInParent<SparkElectronicObject>();
-            }
+            ResolveOwner();
 
             maxConnections =
-                Mathf.Max(1, maxConnections);
+                Mathf.Max(
+                    1,
+                    maxConnections);
+
+            electricalState =
+                new SparkTerminalElectricalState(
+                    0f,
+                    0f);
         }
 
 
         private void OnValidate()
+        {
+            ResolveOwner();
+
+            maxConnections =
+                Mathf.Max(
+                    1,
+                    maxConnections);
+        }
+
+
+        // =========================================================
+        // ELECTRICAL STATE
+        // =========================================================
+
+        public void ApplyElectricalState(
+            in SparkTerminalElectricalState state)
+        {
+            if (float.IsNaN(state.Voltage) ||
+                float.IsInfinity(state.Voltage) ||
+                float.IsNaN(state.Current) ||
+                float.IsInfinity(state.Current))
+            {
+                return;
+            }
+
+            bool changed =
+                Mathf.Abs(
+                    electricalState.Voltage -
+                    state.Voltage) >
+                0.000001f ||
+                Mathf.Abs(
+                    electricalState.Current -
+                    state.Current) >
+                0.000001f;
+
+            electricalState =
+                state;
+
+            if (changed)
+            {
+                ElectricalStateChanged?.Invoke(
+                    this);
+            }
+        }
+
+
+        public void ClearElectricalState()
+        {
+            ApplyElectricalState(
+                new SparkTerminalElectricalState(
+                    0f,
+                    0f));
+        }
+
+
+        // =========================================================
+        // OWNER
+        // =========================================================
+
+        private void ResolveOwner()
         {
             if (owner == null)
             {
                 owner =
                     GetComponentInParent<SparkElectronicObject>();
             }
-
-            maxConnections =
-                Mathf.Max(1, maxConnections);
         }
 
 
@@ -196,13 +344,10 @@ namespace ProjectSpark.Gameplay
             }
 
             reason = null;
+
             return true;
         }
 
-
-        // =========================================================
-        // CONNECT TO TERMINAL
-        // =========================================================
 
         public bool CanConnectTo(
             SparkTerminal other,
@@ -261,29 +406,11 @@ namespace ProjectSpark.Gameplay
                 return false;
             }
 
-            /*
-             * IMPORTANT:
-             *
-             * Polarity is intentionally NOT validated here.
-             *
-             * A player must be allowed to make an incorrect
-             * connection such as:
-             *
-             *       + → -
-             *
-             * so the level/circuit logic can detect it.
-             *
-             * The START terminal determines the wire polarity.
-             */
-
             reason = null;
+
             return true;
         }
 
-
-        // =========================================================
-        // DIRECTION
-        // =========================================================
 
         private bool ValidateDirection(
             SparkTerminal other,
@@ -292,26 +419,33 @@ namespace ProjectSpark.Gameplay
             switch (direction)
             {
                 case SparkConnectionDirection.Bidirectional:
+
                     return true;
 
+
                 case SparkConnectionDirection.OutputToInput:
+
                     return
                         providesOutput &&
                         other.acceptsInput;
 
+
                 case SparkConnectionDirection.InputToOutput:
+
                     return
                         acceptsInput &&
                         other.providesOutput;
 
+
                 default:
+
                     return false;
             }
         }
 
 
         // =========================================================
-        // REGISTER
+        // CONNECTION REGISTRATION
         // =========================================================
 
         public bool RegisterConnection(
@@ -327,7 +461,8 @@ namespace ProjectSpark.Gameplay
 
             connectionCount++;
 
-            ConnectionStateChanged?.Invoke(this);
+            ConnectionStateChanged?.Invoke(
+                this);
 
             reason = null;
 
@@ -335,18 +470,17 @@ namespace ProjectSpark.Gameplay
         }
 
 
-        // =========================================================
-        // UNREGISTER
-        // =========================================================
-
         public bool UnregisterConnection()
         {
             if (connectionCount <= 0)
+            {
                 return false;
+            }
 
             connectionCount--;
 
-            ConnectionStateChanged?.Invoke(this);
+            ConnectionStateChanged?.Invoke(
+                this);
 
             return true;
         }

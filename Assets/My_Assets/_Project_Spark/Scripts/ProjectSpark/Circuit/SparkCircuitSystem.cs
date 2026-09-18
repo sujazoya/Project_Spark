@@ -1,55 +1,83 @@
 using System;
 using System.Collections.Generic;
-using ProjectSpark.Gameplay;
 using UnityEngine;
+using ProjectSpark.Gameplay;
 
 namespace ProjectSpark.Circuit
 {
     [DisallowMultipleComponent]
     public sealed class SparkCircuitSystem : MonoBehaviour
     {
-        private readonly Dictionary<
-            ulong,
-            SparkCircuitConnection> connections =
-            new Dictionary<
-                ulong,
-                SparkCircuitConnection>();
+        // =========================================================
+        // CONFIGURATION
+        // =========================================================
 
+        [Header("Connection Policy")]
+        [SerializeField]
+        private bool allowParallelConnections;
 
-        private readonly Dictionary<
-            SparkTerminal,
-            List<ulong>> terminalConnections =
-            new Dictionary<
-                SparkTerminal,
-                List<ulong>>();
+        [SerializeField]
+        private bool automaticallyRebuildTopology = true;
 
+        [Header("Diagnostics")]
+        [SerializeField]
+        private bool logConnectionChanges;
 
-        private ulong nextId = 1;
+        [SerializeField]
+        private bool logRejectedConnections;
 
-        private bool topologyDirty;
+        // =========================================================
+        // CONNECTION STORAGE
+        // =========================================================
+
+        private readonly Dictionary<ulong, SparkCircuitConnection>
+            connections =
+                new Dictionary<ulong, SparkCircuitConnection>(256);
+
+        // Terminal -> connection IDs.
+        private readonly Dictionary<SparkTerminal, List<ulong>>
+            terminalConnections =
+                new Dictionary<SparkTerminal, List<ulong>>(256);
+
+        // Reusable query buffer.
+        private readonly List<ulong>
+            connectionIdBuffer =
+                new List<ulong>(64);
+
+        private readonly List<SparkCircuitConnection>
+            connectionBuffer =
+                new List<SparkCircuitConnection>(64);
+
+        // =========================================================
+        // RUNTIME STATE
+        // =========================================================
+
+        private ulong nextConnectionId = 1UL;
 
         private int topologyVersion;
 
+        private bool topologyDirty;
+
+        private bool rebuilding;
 
         // =========================================================
         // PUBLIC STATE
         // =========================================================
 
-        public int TopologyVersion =>
-            topologyVersion;
-
         public int ConnectionCount =>
             connections.Count;
+
+        public int TopologyVersion =>
+            topologyVersion;
 
         public bool IsTopologyDirty =>
             topologyDirty;
 
+        public bool IsEmpty =>
+            connections.Count == 0;
 
-        // =========================================================
-        // EVENTS
-        // =========================================================
-
-        public event Action TopologyChanged;
+        public event Action
+            TopologyChanged;
 
         public event Action<SparkCircuitConnection>
             ConnectionCreated;
@@ -57,12 +85,28 @@ namespace ProjectSpark.Circuit
         public event Action<SparkCircuitConnection>
             ConnectionRemoved;
 
+        // =========================================================
+        // UNITY
+        // =========================================================
+
+        private void Awake()
+        {
+            if (automaticallyRebuildTopology)
+            {
+                RebuildTopology();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            ClearConnections(false);
+        }
 
         // =========================================================
-        // CREATE
+        // CREATE CONNECTION
         // =========================================================
 
-        public SparkResult TryCreateConnection(
+        public bool TryCreateConnection(
             SparkTerminal a,
             SparkTerminal b,
             SparkConnectionKind kind,
@@ -71,84 +115,92 @@ namespace ProjectSpark.Circuit
         {
             connection = default;
 
-
-            if (a == null ||
-                b == null)
-            {
-                return SparkResult.Invalid(
-                    "Missing terminal.");
-            }
-
-
-            if (!a.CanConnectTo(
+            if (!ValidateConnectionRequest(
+                    a,
                     b,
                     kind,
                     direction,
                     out string reason))
             {
-                return SparkResult.Rejected(reason);
-            }
-
-
-            if (HasConnection(
+                LogRejected(
                     a,
                     b,
-                    kind))
-            {
-                return SparkResult.Rejected(
-                    "Connection already exists.");
+                    reason);
+
+                return false;
             }
 
-
-            // -----------------------------------------------------
-            // REGISTER A
-            // -----------------------------------------------------
-
-            if (!RegisterTerminal(
+            if (!allowParallelConnections &&
+                HasConnectionBetween(
                     a,
-                    out reason))
+                    b))
             {
-                return SparkResult.Rejected(reason);
+                LogRejected(
+                    a,
+                    b,
+                    "A connection already exists between these terminals.");
+
+                return false;
             }
 
-
-            // -----------------------------------------------------
-            // REGISTER B
-            // -----------------------------------------------------
-
-            if (!RegisterTerminal(
+            if (!a.CanConnectTo(
                     b,
+                    kind,
+                    direction,
                     out reason))
+            {
+                LogRejected(
+                    a,
+                    b,
+                    reason);
+
+                return false;
+            }
+
+            if (!b.CanAccept(
+                    kind,
+                    out reason))
+            {
+                LogRejected(
+                    a,
+                    b,
+                    reason);
+
+                return false;
+            }
+
+            ulong id =
+                AllocateConnectionId();
+
+            bool registeredA =
+                a.RegisterConnection(
+                    out string registerReason);
+
+            if (!registeredA)
+            {
+                LogRejected(
+                    a,
+                    b,
+                    registerReason);
+
+                return false;
+            }
+
+            bool registeredB =
+                b.RegisterConnection(
+                    out registerReason);
+
+            if (!registeredB)
             {
                 a.UnregisterConnection();
 
-                if (terminalConnections.TryGetValue(
-                        a,
-                        out List<ulong> rollbackList) &&
-                    rollbackList.Count == 0)
-                {
-                    terminalConnections.Remove(a);
-                }
+                LogRejected(
+                    a,
+                    b,
+                    registerReason);
 
-                return SparkResult.Rejected(reason);
+                return false;
             }
-
-
-            // -----------------------------------------------------
-            // ID
-            // -----------------------------------------------------
-
-            ulong id = nextId++;
-
-            if (id == 0)
-            {
-                id = nextId++;
-            }
-
-
-            // -----------------------------------------------------
-            // CONNECTION
-            // -----------------------------------------------------
 
             connection =
                 new SparkCircuitConnection(
@@ -158,38 +210,39 @@ namespace ProjectSpark.Circuit
                     kind,
                     direction);
 
-
             connections.Add(
                 id,
                 connection);
 
+            AddTerminalConnection(
+                a,
+                id);
 
-            terminalConnections[a].Add(id);
+            AddTerminalConnection(
+                b,
+                id);
 
-            terminalConnections[b].Add(id);
-
-
-            // -----------------------------------------------------
-            // TOPOLOGY
-            // -----------------------------------------------------
-
-            MarkTopologyDirty();
-
+            MarkTopologyChanged();
 
             ConnectionCreated?.Invoke(
                 connection);
 
+            if (logConnectionChanges)
+            {
+                Debug.Log(
+                    $"[SPARK CIRCUIT] Connection created: " +
+                    $"{connection}",
+                    this);
+            }
 
-            return SparkResult.Success(
-                "Circuit connection created.");
+            return true;
         }
 
-
         // =========================================================
-        // REMOVE
+        // REMOVE CONNECTION
         // =========================================================
 
-        public SparkResult TryRemoveConnection(
+        public bool TryRemoveConnection(
             ulong id,
             out SparkCircuitConnection connection)
         {
@@ -197,85 +250,108 @@ namespace ProjectSpark.Circuit
                     id,
                     out connection))
             {
-                return SparkResult.Invalid(
-                    "Connection not found.");
+                return false;
             }
-
 
             connections.Remove(id);
 
-
             UnregisterTerminal(
-                id,
                 connection.A);
 
             UnregisterTerminal(
-                id,
                 connection.B);
 
+            RemoveTerminalConnection(
+                connection.A,
+                id);
 
-            connection.A.UnregisterConnection();
+            RemoveTerminalConnection(
+                connection.B,
+                id);
 
-            connection.B.UnregisterConnection();
-
-
-            MarkTopologyDirty();
-
+            MarkTopologyChanged();
 
             ConnectionRemoved?.Invoke(
                 connection);
 
+            if (logConnectionChanges)
+            {
+                Debug.Log(
+                    $"[SPARK CIRCUIT] Connection removed: " +
+                    $"{connection}",
+                    this);
+            }
 
-            return SparkResult.Success(
-                "Circuit connection removed.");
+            return true;
         }
 
-
         // =========================================================
-        // HAS CONNECTION
+        // REMOVE ALL
         // =========================================================
 
-        public bool HasConnection(
-            SparkTerminal a,
-            SparkTerminal b,
-            SparkConnectionKind? kind = null)
+        public int ClearConnections()
         {
+            return ClearConnections(true);
+        }
+
+        private int ClearConnections(
+            bool notify)
+        {
+            if (connections.Count == 0)
+            {
+                return 0;
+            }
+
+            connectionBuffer.Clear();
+
             foreach (
-                KeyValuePair<
-                    ulong,
-                    SparkCircuitConnection> pair
-                in connections)
+                SparkCircuitConnection connection
+                in connections.Values)
+            {
+                connectionBuffer.Add(
+                    connection);
+            }
+
+            int removedCount =
+                connectionBuffer.Count;
+
+            for (int i = 0;
+                 i < connectionBuffer.Count;
+                 i++)
             {
                 SparkCircuitConnection connection =
-                    pair.Value;
+                    connectionBuffer[i];
 
+                UnregisterTerminal(
+                    connection.A);
 
-                if (kind.HasValue &&
-                    connection.Kind != kind.Value)
+                UnregisterTerminal(
+                    connection.B);
+
+                if (notify)
                 {
-                    continue;
-                }
-
-
-                if (
-                    (connection.A == a &&
-                     connection.B == b) ||
-
-                    (connection.A == b &&
-                     connection.B == a)
-                   )
-                {
-                    return true;
+                    ConnectionRemoved?.Invoke(
+                        connection);
                 }
             }
 
-            return false;
+            connections.Clear();
+            terminalConnections.Clear();
+
+            MarkTopologyChanged();
+
+            return removedCount;
         }
 
+        // =========================================================
+        // LOOKUP
+        // =========================================================
 
-        // =========================================================
-        // GET CONNECTION
-        // =========================================================
+        public bool HasConnection(
+            ulong id)
+        {
+            return connections.ContainsKey(id);
+        }
 
         public bool TryGetConnection(
             ulong id,
@@ -286,21 +362,84 @@ namespace ProjectSpark.Circuit
                 out connection);
         }
 
+        public bool HasConnectionBetween(
+            SparkTerminal a,
+            SparkTerminal b)
+        {
+            if (a == null ||
+                b == null)
+            {
+                return false;
+            }
+
+            if (!terminalConnections.TryGetValue(
+                    a,
+                    out List<ulong> ids))
+            {
+                return false;
+            }
+
+            for (int i = 0;
+                 i < ids.Count;
+                 i++)
+            {
+                ulong id =
+                    ids[i];
+
+                if (!connections.TryGetValue(
+                        id,
+                        out SparkCircuitConnection connection))
+                {
+                    continue;
+                }
+
+                if (connection.Connects(a, b))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         // =========================================================
-        // GET TERMINAL CONNECTIONS
+        // TERMINAL CONNECTION QUERY
         // =========================================================
+
+        public int GetConnectionCount(
+            SparkTerminal terminal)
+        {
+            if (terminal == null)
+            {
+                return 0;
+            }
+
+            if (!terminalConnections.TryGetValue(
+                    terminal,
+                    out List<ulong> ids))
+            {
+                return 0;
+            }
+
+            return ids.Count;
+        }
 
         public void GetConnections(
             SparkTerminal terminal,
-            List<SparkCircuitConnection> buffer)
+            List<SparkCircuitConnection> results)
         {
-            buffer.Clear();
+            if (results == null)
+            {
+                throw new ArgumentNullException(
+                    nameof(results));
+            }
 
+            results.Clear();
 
             if (terminal == null)
+            {
                 return;
-
+            }
 
             if (!terminalConnections.TryGetValue(
                     terminal,
@@ -309,98 +448,430 @@ namespace ProjectSpark.Circuit
                 return;
             }
 
-
             for (int i = 0;
                  i < ids.Count;
                  i++)
             {
-                if (connections.TryGetValue(
-                        ids[i],
+                ulong id =
+                    ids[i];
+
+                if (!connections.TryGetValue(
+                        id,
                         out SparkCircuitConnection connection))
                 {
-                    buffer.Add(connection);
+                    continue;
                 }
+
+                if (!connection.IsValid)
+                {
+                    continue;
+                }
+
+                results.Add(
+                    connection);
             }
         }
 
+        public int CopyConnections(
+            List<SparkCircuitConnection> results)
+        {
+            if (results == null)
+            {
+                throw new ArgumentNullException(
+                    nameof(results));
+            }
+
+            results.Clear();
+
+            foreach (
+                SparkCircuitConnection connection
+                in connections.Values)
+            {
+                if (!connection.IsValid)
+                {
+                    continue;
+                }
+
+                results.Add(
+                    connection);
+            }
+
+            return results.Count;
+        }
 
         // =========================================================
-        // REBUILD
+        // TOPOLOGY
         // =========================================================
 
         public void RebuildTopology()
+{
+    if (rebuilding)
+        return;
+
+    if (!topologyDirty)
+        return;
+
+    rebuilding = true;
+
+    try
+    {
+        terminalConnections.Clear();
+
+        foreach (
+            SparkCircuitConnection connection
+            in connections.Values)
         {
-            topologyDirty = false;
+            if (!connection.IsValid)
+                continue;
+
+            AddTerminalConnection(
+                connection.A,
+                connection.Id);
+
+            AddTerminalConnection(
+                connection.B,
+                connection.Id);
         }
 
+        topologyDirty = false;
+    }
+    finally
+    {
+        rebuilding = false;
+    }
+}
+
+        public void MarkTopologyDirty()
+        {
+            topologyDirty = true;
+
+            TopologyChanged?.Invoke();
+        }
 
         // =========================================================
-        // REGISTER TERMINAL
+        // VALIDATION
         // =========================================================
 
-        private bool RegisterTerminal(
-            SparkTerminal terminal,
+        private bool ValidateConnectionRequest(
+            SparkTerminal a,
+            SparkTerminal b,
+            SparkConnectionKind kind,
+            SparkConnectionDirection direction,
             out string reason)
         {
-            if (!terminal.RegisterConnection(
-                    out reason))
+            reason = null;
+
+            if (a == null)
             {
+                reason =
+                    "Connection terminal A is missing.";
+
                 return false;
             }
 
-
-            if (!terminalConnections.ContainsKey(
-                    terminal))
+            if (b == null)
             {
-                terminalConnections.Add(
-                    terminal,
-                    new List<ulong>(2));
+                reason =
+                    "Connection terminal B is missing.";
+
+                return false;
             }
 
+            if (a == b)
+            {
+                reason =
+                    "A terminal cannot connect to itself.";
+
+                return false;
+            }
+
+            SparkElectronicObject ownerA =
+                a.Owner;
+
+            SparkElectronicObject ownerB =
+                b.Owner;
+
+            if (ownerA == null)
+            {
+                reason =
+                    $"Terminal '{a.name}' has no owner.";
+
+                return false;
+            }
+
+            if (ownerB == null)
+            {
+                reason =
+                    $"Terminal '{b.name}' has no owner.";
+
+                return false;
+            }
+
+            if (!a.isActiveAndEnabled)
+            {
+                reason =
+                    $"Terminal '{a.name}' is disabled.";
+
+                return false;
+            }
+
+            if (!b.isActiveAndEnabled)
+            {
+                reason =
+                    $"Terminal '{b.name}' is disabled.";
+
+                return false;
+            }
+
+            if (!ownerA.isActiveAndEnabled)
+            {
+                reason =
+                    $"Owner '{ownerA.name}' is disabled.";
+
+                return false;
+            }
+
+            if (!ownerB.isActiveAndEnabled)
+            {
+                reason =
+                    $"Owner '{ownerB.name}' is disabled.";
+
+                return false;
+            }
+
+            if (ownerA.OperationalState ==
+                SparkOperationalState.Disabled)
+            {
+                reason =
+                    $"Owner '{ownerA.name}' is operationally disabled.";
+
+                return false;
+            }
+
+            if (ownerB.OperationalState ==
+                SparkOperationalState.Disabled)
+            {
+                reason =
+                    $"Owner '{ownerB.name}' is operationally disabled.";
+
+                return false;
+            }
 
             return true;
         }
 
-
         // =========================================================
-        // UNREGISTER TERMINAL
+        // TERMINAL REGISTRATION
         // =========================================================
 
-        private void UnregisterTerminal(
-            ulong id,
-            SparkTerminal terminal)
+        private void AddTerminalConnection(
+            SparkTerminal terminal,
+            ulong connectionId)
         {
-            if (!terminalConnections.TryGetValue(
-                    terminal,
-                    out List<ulong> list))
+            if (terminal == null)
             {
                 return;
             }
 
+            if (!terminalConnections.TryGetValue(
+                    terminal,
+                    out List<ulong> ids))
+            {
+                ids =
+                    new List<ulong>(4);
 
-            list.Remove(id);
+                terminalConnections.Add(
+                    terminal,
+                    ids);
+            }
 
+            if (!ids.Contains(connectionId))
+            {
+                ids.Add(
+                    connectionId);
+            }
+        }
 
-            if (list.Count == 0)
+        private void RemoveTerminalConnection(
+            SparkTerminal terminal,
+            ulong connectionId)
+        {
+            if (terminal == null)
+            {
+                return;
+            }
+
+            if (!terminalConnections.TryGetValue(
+                    terminal,
+                    out List<ulong> ids))
+            {
+                return;
+            }
+
+            ids.Remove(
+                connectionId);
+
+            if (ids.Count == 0)
             {
                 terminalConnections.Remove(
                     terminal);
             }
         }
 
+        private static void UnregisterTerminal(
+            SparkTerminal terminal)
+        {
+            if (terminal == null)
+            {
+                return;
+            }
+
+            terminal.UnregisterConnection();
+        }
 
         // =========================================================
-        // TOPOLOGY DIRTY
+        // ID GENERATION
         // =========================================================
 
-        private void MarkTopologyDirty()
+        private ulong AllocateConnectionId()
+        {
+            if (nextConnectionId == 0UL)
+            {
+                nextConnectionId = 1UL;
+            }
+
+            ulong id =
+                nextConnectionId++;
+
+            while (id == 0UL ||
+                   connections.ContainsKey(id))
+            {
+                if (nextConnectionId == 0UL)
+                {
+                    nextConnectionId = 1UL;
+                }
+
+                id =
+                    nextConnectionId++;
+            }
+
+            return id;
+        }
+
+        // =========================================================
+        // TOPOLOGY CHANGE
+        // =========================================================
+
+        private void MarkTopologyChanged()
         {
             topologyDirty = true;
 
             topologyVersion++;
+        }
 
+        // =========================================================
+        // INVALID CONNECTION CLEANUP
+        // =========================================================
 
-            TopologyChanged?.Invoke();
+        public int RemoveInvalidConnections()
+        {
+            connectionIdBuffer.Clear();
+
+            foreach (
+                KeyValuePair<
+                    ulong,
+                    SparkCircuitConnection> pair
+                in connections)
+            {
+                SparkCircuitConnection connection =
+                    pair.Value;
+
+                if (!connection.IsValid)
+                {
+                    connectionIdBuffer.Add(
+                        pair.Key);
+
+                    continue;
+                }
+
+                if (!IsOwnerValid(
+                        connection.A) ||
+                    !IsOwnerValid(
+                        connection.B))
+                {
+                    connectionIdBuffer.Add(
+                        pair.Key);
+                }
+            }
+
+            int removed = 0;
+
+            for (int i = 0;
+                 i < connectionIdBuffer.Count;
+                 i++)
+            {
+                if (TryRemoveConnection(
+                        connectionIdBuffer[i],
+                        out _))
+                {
+                    removed++;
+                }
+            }
+
+            return removed;
+        }
+
+        private static bool IsOwnerValid(
+            SparkTerminal terminal)
+        {
+            if (terminal == null)
+            {
+                return false;
+            }
+
+            SparkElectronicObject owner =
+                terminal.Owner;
+
+            if (owner == null)
+            {
+                return false;
+            }
+
+            return owner.isActiveAndEnabled;
+        }
+
+        // =========================================================
+        // DIAGNOSTICS
+        // =========================================================
+
+        private void LogRejected(
+            SparkTerminal a,
+            SparkTerminal b,
+            string reason)
+        {
+            if (!logRejectedConnections)
+            {
+                return;
+            }
+
+            Debug.LogWarning(
+                $"[SPARK CIRCUIT] Connection rejected.\n" +
+                $"A: {a?.name ?? "null"}\n" +
+                $"B: {b?.name ?? "null"}\n" +
+                $"Reason: {reason}",
+                this);
+        }
+
+        // =========================================================
+        // EDITOR VALIDATION
+        // =========================================================
+
+        private void OnValidate()
+        {
+            if (nextConnectionId == 0UL)
+            {
+                nextConnectionId = 1UL;
+            }
         }
     }
 }

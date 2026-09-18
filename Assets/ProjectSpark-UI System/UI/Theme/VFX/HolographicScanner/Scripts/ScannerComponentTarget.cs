@@ -43,6 +43,18 @@ namespace ProjectSpark.Scanner
 [SerializeField]
 private Material interactionMaterial;
 
+[Header("Diagnostic Panel Offset")]
+[SerializeField]
+private Vector3 diagnosticPanelOffset = Vector3.zero;
+
+public Vector3 DiagnosticPanelOffset
+{
+    get
+    {
+        return diagnosticPanelOffset;
+    }
+}
+
 private Renderer[] interactionOverlays;
 private MaterialPropertyBlock[] interactionPropertyBlocks;
 
@@ -296,10 +308,11 @@ private MaterialPropertyBlock[] interactionPropertyBlocks;
                 string childName = child.name;
 
                 if (childName.StartsWith("__ScannerOverlay_") ||
-                    childName.StartsWith("__ScannerProjection_"))
-                {
-                    Destroy(child.gameObject);
-                }
+                        childName.StartsWith("__ScannerProjection_") ||
+                        childName.StartsWith("__ScannerInteraction_"))
+                    {
+                        Destroy(child.gameObject);
+                    }
             }
         }
 
@@ -831,6 +844,67 @@ private MaterialPropertyBlock[] interactionPropertyBlocks;
 
         overlayRenderer.enabled = false;
     }
+}
+public ScannerDiagnosticData CreateDiagnosticData()
+{
+    ScannerDiagnosticData data =
+        new ScannerDiagnosticData();
+
+    data.componentId =
+        componentId;
+
+    data.componentName =
+        displayName;
+
+    data.componentType =
+        GetComponentTypeName();
+
+    data.primaryValueLabel =
+        "IDENTIFICATION";
+
+    data.primaryValue =
+        "CONFIRMED";
+
+    data.secondaryValueLabel =
+        "COMPONENT";
+
+    data.secondaryValue =
+        string.IsNullOrEmpty(displayName)
+            ? "UNKNOWN"
+            : displayName;
+
+    data.tertiaryValueLabel =
+        "SCAN";
+
+    data.tertiaryValue =
+        "COMPLETE";
+
+    data.quaternaryValueLabel =
+        "STATUS";
+
+    data.quaternaryValue =
+        "READY";
+
+    data.status =
+        "COMPONENT IDENTIFIED";
+
+    data.fault =
+        false;
+
+    data.severity =
+        0f;
+
+    return data;
+}
+
+private string GetComponentTypeName()
+{
+    if (!string.IsNullOrEmpty(displayName))
+    {
+        return displayName;
+    }
+
+    return "ELECTRONIC COMPONENT";
 }
     }
 }

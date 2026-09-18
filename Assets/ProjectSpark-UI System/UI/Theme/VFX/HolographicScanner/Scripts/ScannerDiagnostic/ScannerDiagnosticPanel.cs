@@ -61,15 +61,35 @@ namespace ProjectSpark.Scanner
         [Header("Placement")]
         [SerializeField]
         private Transform target;
+        private Vector3 currentObjectOffset;
 
         [SerializeField]
         private Vector3 worldOffset =
-            new Vector3(0.18f, 0.12f, 0f);
+            new Vector3(0.0f, 0.12f, 0f);
+            public Vector3 WorldOffset
+{
+    get
+    {
+        return worldOffset;
+    }
+}
 
         [SerializeField, Min(0f)]
         private float followSpeed = 12f;
 
         private Camera targetCamera;
+
+        [Header("Diagnostic Panel Offset")]
+[SerializeField]
+private Vector3 diagnosticPanelOffset = Vector3.zero;
+
+public Vector3 DiagnosticPanelOffset
+{
+    get
+    {
+        return diagnosticPanelOffset;
+    }
+}
 
         public bool IsVisible =>
             canvasGroup != null &&
@@ -88,23 +108,30 @@ namespace ProjectSpark.Scanner
             UpdatePlacement();
         }
 
-        public void Show(
-            ScannerDiagnosticData data,
-            Transform targetTransform)
-        {
-            target = targetTransform;
+       public void Show(
+    ScannerDiagnosticData data,
+    Transform targetTransform,
+    Vector3 objectOffset)
+{
+    target =
+        targetTransform;
 
-            ApplyData(data);
+    currentObjectOffset =
+        objectOffset;
 
-            if (canvasGroup == null)
-                return;
+    ApplyData(data);
 
-            canvasGroup.alpha = 1f;
+    if (canvasGroup == null)
+        return;
 
-            if (panelRoot != null)
-                panelRoot.localScale =
-                    Vector3.one;
-        }
+    canvasGroup.alpha = 1f;
+
+    if (panelRoot != null)
+    {
+        panelRoot.localScale =
+            Vector3.one;
+    }
+}
 
         public void Hide()
         {
@@ -203,9 +230,11 @@ namespace ProjectSpark.Scanner
     // ---------------------------------------------------------
     // Position
     // ---------------------------------------------------------
-
-    Vector3 desiredPosition =
-        target.TransformPoint(worldOffset);
+    
+Vector3 desiredPosition =
+    target.TransformPoint(
+        worldOffset +
+        currentObjectOffset);
 
     if (followSpeed <= 0f)
     {
@@ -226,6 +255,7 @@ namespace ProjectSpark.Scanner
                 desiredPosition,
                 blend);
     }
+    
 
     // ---------------------------------------------------------
     // Rotation

@@ -153,18 +153,16 @@ namespace ProjectSpark.Scanner
         // RESULT
         // ==============================================================
 
-        public void EnterResult()
-        {
-            currentState =
-                ScannerState.Result;
+       public void EnterResult()
+{
+    currentState =
+        ScannerState.Result;
 
-            HideScanSystems();
+    EnableResultSystems();
 
-            EnableResultSystems();
-
-            PlayStateTransition(
-                ScannerState.Result);
-        }
+    PlayStateTransition(
+        ScannerState.Result);
+}
 
         // ==============================================================
         // SCAN SYSTEMS
@@ -180,8 +178,8 @@ namespace ProjectSpark.Scanner
              * and become active from component identification.
              */
 
-            if (processController != null)
-                processController.BeginScan();
+           /* if (processController != null)
+                processController.BeginScan();*/
 
             if (topologyController != null)
                 topologyController.RefreshRuntimePaths();
@@ -244,15 +242,10 @@ namespace ProjectSpark.Scanner
         // RESULT SYSTEMS
         // ==============================================================
 
-        private void EnableResultSystems()
+    private void EnableResultSystems()
         {
-            /*
-             * Fault localization, fault energy and diagnostic
-             * information are controlled by the real diagnostic
-             * result.
-             *
-             * Do not fabricate a fault here.
-             */
+            // The diagnostic panel is opened by
+            // ScannerDiagnosticPanelController.ShowComponent().
         }
 
         private void HideResultSystems()

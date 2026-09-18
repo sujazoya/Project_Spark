@@ -1,20 +1,30 @@
+using System;
 using UnityEngine;
 
 namespace ProjectSpark.Scanner
 {
     /// <summary>
-    /// Coordinates the holographic scanner process.
+    /// Coordinates the complete holographic scanner process.
     ///
-    /// This class does not perform simulation.
-    /// It only coordinates existing scanner visual systems.
+    /// Process:
     ///
-    /// Simulation/gameplay code remains responsible for:
-    /// - component identification
-    /// - voltage
-    /// - signal flow
-    /// - topology
-    /// - fault detection
-    /// - diagnostic data
+    /// Acquire
+    ///     ->
+    /// Scan
+    ///     ->
+    /// Analyze
+    ///     ->
+    /// Result
+    ///
+    /// This controller owns PROCESS STATE and SCAN TIMING.
+    ///
+    /// It does not generate simulation data.
+    /// It does not determine faults.
+    /// It does not determine voltage.
+    /// It does not determine topology.
+    ///
+    /// Those values must come from the real simulation and
+    /// diagnostic systems.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class ScannerProcessController
@@ -75,15 +85,95 @@ namespace ProjectSpark.Scanner
         private ScannerState initialState =
             ScannerState.Acquire;
 
+        [Header("Scan Process")]
+        [SerializeField, Min(0.01f)]
+        private float scanDuration = 1.5f;
+
+        [SerializeField]
+        private bool useUnscaledTime = true;
+
+        [Header("Process Behaviour")]
+        [SerializeField]
+        private bool resetOnStart = true;
+
+        [SerializeField]
+        private bool resetOnCancel = true;
+
         private ScannerState currentState;
 
         private bool running;
 
-        public ScannerState CurrentState =>
-            currentState;
+        private bool scanActive;
 
-        public bool IsRunning =>
-            running;
+        private bool scanCompleted;
+
+        private float scanStartTime;
+
+        private float scanProgress;
+
+        public event Action<ScannerState> StateChanged;
+
+        public event Action<float> ScanProgressChanged;
+
+        public event Action ScanCompleted;
+
+        public event Action<bool> AnalysisCompleted;
+
+        public ScannerState CurrentState
+        {
+            get
+            {
+                return currentState;
+            }
+        }
+
+        public bool IsRunning
+        {
+            get
+            {
+                return running;
+            }
+        }
+
+        public bool IsScanActive
+        {
+            get
+            {
+                return scanActive;
+            }
+        }
+
+        public bool IsScanCompleted
+        {
+            get
+            {
+                return scanCompleted;
+            }
+        }
+
+        public float ScanProgress
+        {
+            get
+            {
+                return scanProgress;
+            }
+        }
+
+        public float ScanRemainingTime
+        {
+            get
+            {
+                if (!scanActive)
+                {
+                    return 0f;
+                }
+
+                return Mathf.Max(
+                    0f,
+                    scanDuration *
+                    (1f - scanProgress));
+            }
+        }
 
         // ==============================================================
         // UNITY
@@ -94,6 +184,14 @@ namespace ProjectSpark.Scanner
             currentState =
                 initialState;
 
+            running = false;
+
+            scanActive = false;
+
+            scanCompleted = false;
+
+            scanProgress = 0f;
+
             ResetVisualSystems();
 
             if (stateController != null)
@@ -103,18 +201,81 @@ namespace ProjectSpark.Scanner
             }
         }
 
+        private void Update()
+        {
+            if (!scanActive)
+            {
+                return;
+            }
+
+            UpdateScanProcess();
+        }
+
+        private void OnDisable()
+        {
+            if (scanActive)
+            {
+                CancelScanProcess();
+            }
+        }
+
         // ==============================================================
-        // START
+        // COMPLETE PROCESS
         // ==============================================================
 
         public void StartScanProcess()
         {
+            if (resetOnStart)
+            {
+                ResetVisualSystems();
+            }
+
             running = true;
 
-            ResetVisualSystems();
+            scanActive = false;
+
+            scanCompleted = false;
+
+            scanProgress = 0f;
 
             EnterState(
                 ScannerState.Acquire);
+        }
+
+        public void CancelScanProcess()
+        {
+            if (!running &&
+                !scanActive)
+            {
+                return;
+            }
+
+            scanActive = false;
+
+            scanCompleted = false;
+
+            scanProgress = 0f;
+
+            if (resetOnCancel)
+            {
+                ResetVisualSystems();
+            }
+
+            running = false;
+
+            EnterState(
+                ScannerState.Acquire);
+        }
+
+        public void EndProcess()
+        {
+            scanActive = false;
+
+            running = false;
+
+            scanCompleted = false;
+
+            scanProgress = 0f;
         }
 
         // ==============================================================
@@ -125,6 +286,12 @@ namespace ProjectSpark.Scanner
         {
             running = true;
 
+            scanActive = false;
+
+            scanCompleted = false;
+
+            scanProgress = 0f;
+
             EnterState(
                 ScannerState.Acquire);
         }
@@ -132,10 +299,11 @@ namespace ProjectSpark.Scanner
         public void CompleteAcquire()
         {
             if (!running)
-                return;
+            {
+                running = true;
+            }
 
-            EnterState(
-                ScannerState.Scan);
+            BeginScan();
         }
 
         // ==============================================================
@@ -145,59 +313,142 @@ namespace ProjectSpark.Scanner
         public void BeginScan()
         {
             if (!running)
+            {
                 running = true;
+            }
+
+            scanActive = true;
+
+            scanCompleted = false;
+
+            scanProgress = 0f;
+
+            scanStartTime =
+                GetCurrentTime();
 
             EnterState(
                 ScannerState.Scan);
 
-            if (circuitTraceController != null)
-                circuitTraceController.StartTrace();
+            StartScanVisuals();
 
-            if (componentScanController != null)
-                componentScanController.ResetScan();
+            ApplyScanProgress(
+                0f);
+        }
 
-            if (topologyController != null)
-                topologyController.ResetTopology();
+        private void UpdateScanProcess()
+        {
+            if (!scanActive)
+            {
+                return;
+            }
+
+            float elapsed =
+                GetCurrentTime() -
+                scanStartTime;
+
+            if (scanDuration <= 0f)
+            {
+                CompleteScan();
+                return;
+            }
+
+            float progress =
+                Mathf.Clamp01(
+                    elapsed /
+                    scanDuration);
+
+            SetScanProgress(
+                progress);
+
+            if (progress >= 1f)
+            {
+                CompleteScan();
+            }
         }
 
         public void SetScanProgress(
             float progress)
         {
-            if (!running)
+            if (!running ||
+                !scanActive)
+            {
                 return;
+            }
+
+            progress =
+                Mathf.Clamp01(
+                    progress);
+
+            ApplyScanProgress(
+                progress);
+        }
+
+        private void ApplyScanProgress(
+            float progress)
+        {
+            scanProgress =
+                Mathf.Clamp01(
+                    progress);
 
             if (circuitTraceController != null)
             {
                 circuitTraceController.SetProgress(
-                    progress);
+                    scanProgress);
             }
 
             if (componentScanController != null)
             {
                 componentScanController.SetProgress(
-                    progress);
+                    scanProgress);
             }
 
             if (topologyController != null)
             {
                 topologyController.SetProgress(
-                    progress);
+                    scanProgress);
             }
+
+            ScanProgressChanged?.Invoke(
+                scanProgress);
         }
 
         public void CompleteScan()
         {
             if (!running)
+            {
                 return;
+            }
+
+            if (scanCompleted)
+            {
+                return;
+            }
+
+            scanActive = false;
+
+            scanCompleted = true;
+
+            scanProgress = 1f;
 
             if (circuitTraceController != null)
+            {
                 circuitTraceController.CompleteTrace();
+            }
 
             if (componentScanController != null)
+            {
                 componentScanController.CompleteScan();
+            }
 
             if (topologyController != null)
+            {
                 topologyController.CompleteTopology();
+            }
+
+            ScanProgressChanged?.Invoke(
+                1f);
+
+            ScanCompleted?.Invoke();
 
             EnterState(
                 ScannerState.Analyze);
@@ -210,37 +461,39 @@ namespace ProjectSpark.Scanner
         public void BeginAnalyze()
         {
             if (!running)
+            {
                 running = true;
+            }
+
+            scanActive = false;
 
             EnterState(
                 ScannerState.Analyze);
 
-            /*
-             * IMPORTANT:
-             *
-             * Effects 11, 12, 13 are driven by real simulation
-             * data. We do not automatically invent values here.
-             *
-             * Their controllers are already available to gameplay
-             * and simulation code.
-             *
-             * Effect 10 topology reconstruction has already been
-             * completed by CompleteScan().
-             */
+            EnterAnalyzeVisuals();
         }
 
         /// <summary>
-        /// Call this when the REAL simulation/diagnostic system
-        /// has finished analysis.
+        /// Called by the REAL simulation/diagnostic system
+        /// after analysis has finished.
+        ///
+        /// No fault is generated here.
         /// </summary>
         public void CompleteAnalysis(
             bool faultDetected)
         {
             if (!running)
+            {
                 return;
+            }
+
+            scanActive = false;
 
             EnterState(
                 ScannerState.Result);
+
+            AnalysisCompleted?.Invoke(
+                faultDetected);
 
             if (!faultDetected)
             {
@@ -255,15 +508,14 @@ namespace ProjectSpark.Scanner
         public void ShowResult()
         {
             if (!running)
+            {
                 running = true;
+            }
+
+            scanActive = false;
 
             EnterState(
                 ScannerState.Result);
-        }
-
-        public void EndProcess()
-        {
-            running = false;
         }
 
         // ==============================================================
@@ -279,8 +531,11 @@ namespace ProjectSpark.Scanner
                 return;
             }
 
-            ScannerState previous =
+            ScannerState previousState =
                 currentState;
+
+            OnStateExited(
+                previousState);
 
             currentState =
                 newState;
@@ -291,8 +546,11 @@ namespace ProjectSpark.Scanner
                     newState);
             }
 
-            OnStateExited(previous);
-            OnStateEntered(newState);
+            OnStateEntered(
+                newState);
+
+            StateChanged?.Invoke(
+                newState);
         }
 
         private void OnStateEntered(
@@ -347,12 +605,6 @@ namespace ProjectSpark.Scanner
 
         private void EnterAcquireVisuals()
         {
-            /*
-             * Target-lock/acquisition visuals are deliberately left
-             * to the existing acquisition system.
-             *
-             * Effect 17 provides the transition itself.
-             */
         }
 
         private void ExitAcquireVisuals()
@@ -363,22 +615,40 @@ namespace ProjectSpark.Scanner
         // SCAN VISUALS
         // ==============================================================
 
-        private void EnterScanVisuals()
+        private void StartScanVisuals()
         {
             if (circuitTraceController != null)
+            {
                 circuitTraceController.StartTrace();
+            }
 
             if (componentScanController != null)
+            {
                 componentScanController.ResetScan();
+            }
 
             if (topologyController != null)
+            {
                 topologyController.ResetTopology();
+            }
+
+            if (topologyController != null)
+            {
+                topologyController.RefreshRuntimePaths();
+            }
+        }
+
+        private void EnterScanVisuals()
+        {
+            StartScanVisuals();
         }
 
         private void ExitScanVisuals()
         {
             if (circuitTraceController != null)
+            {
                 circuitTraceController.StopTrace();
+            }
         }
 
         // ==============================================================
@@ -388,17 +658,33 @@ namespace ProjectSpark.Scanner
         private void EnterAnalyzeVisuals()
         {
             /*
-             * Simulation-driven systems remain active here.
-             *
-             * Example:
-             *
-             * flowController.SetFlow(...)
-             * pulseController.SendPulse(...)
-             * voltageController.SetVoltage(...)
-             *
-             * These are called by the actual simulation, not
-             * fabricated by this controller.
+             * Analysis effects are driven by real simulation data.
              */
+
+            if (topologyController != null)
+            {
+                topologyController.RefreshRuntimePaths();
+            }
+
+            if (flowController != null)
+            {
+                flowController.RefreshRuntimePaths();
+            }
+
+            if (pulseController != null)
+            {
+                pulseController.RefreshRuntimePaths();
+            }
+
+            if (voltageController != null)
+            {
+                voltageController.RefreshRuntimePaths();
+            }
+
+            if (faultController != null)
+            {
+                faultController.RefreshPaths();
+            }
         }
 
         private void ExitAnalyzeVisuals()
@@ -412,11 +698,8 @@ namespace ProjectSpark.Scanner
         private void EnterResultVisuals()
         {
             /*
-             * Fault localization, fault energy and the diagnostic
-             * panel are driven by the actual analysis result.
-             *
-             * This controller intentionally does not fabricate
-             * a fault or diagnostic result.
+             * Result systems must be populated by actual
+             * diagnostic/simulation data.
              */
         }
 
@@ -430,6 +713,12 @@ namespace ProjectSpark.Scanner
 
         public void ResetVisualSystems()
         {
+            scanActive = false;
+
+            scanCompleted = false;
+
+            scanProgress = 0f;
+
             if (circuitTraceController != null)
             {
                 circuitTraceController.StopTrace();
@@ -476,7 +765,23 @@ namespace ProjectSpark.Scanner
         private void HideDiagnosticPanel()
         {
             if (diagnosticPanelController != null)
+            {
                 diagnosticPanelController.Hide();
+            }
+        }
+
+        // ==============================================================
+        // TIME
+        // ==============================================================
+
+        private float GetCurrentTime()
+        {
+            if (useUnscaledTime)
+            {
+                return Time.unscaledTime;
+            }
+
+            return Time.time;
         }
     }
 }

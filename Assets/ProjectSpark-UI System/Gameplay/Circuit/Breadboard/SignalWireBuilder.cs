@@ -556,7 +556,8 @@ private Level1CircuitChecker level1Checker;
                 Debug.Log("[WIRE] RELEASE", this);
 
             SparkTerminal endTerminal =
-                FindTerminalUnderMouse();
+    FindTerminalAtScreenPosition(
+        Input.mousePosition);
 
             if (endTerminal == null)
             {
@@ -604,8 +605,36 @@ private Level1CircuitChecker level1Checker;
     SparkTerminal start,
     SparkTerminal end)
 {
-    if (start == null || end == null)
+    // =========================================================
+    // BASIC VALIDATION
+    // =========================================================
+
+    if (start == null)
+    {
+        Debug.LogWarning(
+            "[WIRE] CONNECTION FAILED: Start terminal is NULL.",
+            this);
+
         return false;
+    }
+
+    if (end == null)
+    {
+        Debug.LogWarning(
+            "[WIRE] CONNECTION FAILED: End terminal is NULL.",
+            this);
+
+        return false;
+    }
+
+    if (circuit == null)
+    {
+        Debug.LogError(
+            "[WIRE] CONNECTION FAILED: SparkCircuitSystem is NULL.",
+            this);
+
+        return false;
+    }
 
 
     // =========================================================
@@ -616,7 +645,7 @@ private Level1CircuitChecker level1Checker;
         start == end)
     {
         Debug.LogWarning(
-            "[WIRE] REJECTED: Same terminal.",
+            "[WIRE] CONNECTION REJECTED: Same terminal.",
             this);
 
         return false;
@@ -650,7 +679,8 @@ private Level1CircuitChecker level1Checker;
         if (start.AtCapacity)
         {
             Debug.LogWarning(
-                $"[WIRE] START AT CAPACITY: {start.name}",
+                $"[WIRE] CONNECTION REJECTED: " +
+                $"START AT CAPACITY: {start.name}",
                 start);
 
             return false;
@@ -659,7 +689,8 @@ private Level1CircuitChecker level1Checker;
         if (end.AtCapacity)
         {
             Debug.LogWarning(
-                $"[WIRE] END AT CAPACITY: {end.name}",
+                $"[WIRE] CONNECTION REJECTED: " +
+                $"END AT CAPACITY: {end.name}",
                 end);
 
             return false;
@@ -675,7 +706,9 @@ private Level1CircuitChecker level1Checker;
         HasExistingConnection(start, end))
     {
         Debug.LogWarning(
-            "[WIRE] DUPLICATE CONNECTION REJECTED.",
+            $"[WIRE] CONNECTION REJECTED: " +
+            $"Duplicate connection: " +
+            $"{start.name} ↔ {end.name}",
             this);
 
         return false;
@@ -683,31 +716,41 @@ private Level1CircuitChecker level1Checker;
 
 
     // =========================================================
-    // LEVEL 1 VALIDATION
+    // CREATE REAL ELECTRICAL CONNECTION
     // =========================================================
 
-    if (level1Checker != null)
-    {
-        level1Checker.RegisterConnection(
-            start,
-            end
-        );
+    Debug.Log(
+        $"[WIRE] REGISTERING ELECTRICAL CONNECTION:\n" +
+        $"A = {start.name}\n" +
+        $"B = {end.name}\n" +
+        $"Kind = {connectionKind}\n" +
+        $"Direction = {connectionDirection}",
+        this);
 
-        if (logWireOperations)
-        {
-            Debug.Log(
-                $"[WIRE] LEVEL REGISTERED = " +
-                $"{start.name} → {end.name}",
-                this
-            );
-        }
-    }
-    else
+
+    SparkCircuitConnection connection;
+
+    bool created =
+        circuit.TryCreateConnection(
+            start,
+            end,
+            connectionKind,
+            connectionDirection,
+            out connection);
+
+
+    // =========================================================
+    // CREATE FAILED
+    // =========================================================
+
+    if (!created)
     {
-        Debug.LogWarning(
-            "[WIRE] Level1CircuitChecker is not assigned.",
-            this
-        );
+        Debug.LogError(
+            $"[WIRE] ELECTRICAL CONNECTION FAILED:\n" +
+            $"{start.name} → {end.name}",
+            this);
+
+        return false;
     }
 
 
@@ -716,10 +759,27 @@ private Level1CircuitChecker level1Checker;
     // =========================================================
 
     Debug.Log(
-        $"[WIRE] CONNECTION ACCEPTED = " +
-        $"{start.name} → {end.name}",
-        this
-    );
+        $"[WIRE] ELECTRICAL CONNECTION CREATED!\n" +
+        $"ID = {connection.Id}\n" +
+        $"A = {connection.A.name}\n" +
+        $"B = {connection.B.name}\n" +
+        $"Kind = {connection.Kind}\n" +
+        $"Direction = {connection.Direction}\n" +
+        $"Circuit Connections = {circuit.ConnectionCount}",
+        this);
+
+
+    // =========================================================
+    // LEVEL 1 DEBUG
+    // =========================================================
+
+    if (level1Checker != null)
+    {
+        Debug.Log(
+            $"[WIRE] LEVEL 1 CONNECTION REGISTERED:\n" +
+            $"{start.name} → {end.name}",
+            this);
+    }
 
     return true;
 }

@@ -198,6 +198,18 @@ namespace ProjectSpark.Electrical
                 if (component is SparkDiode || component is SparkLED) diodeStates[component] = false;
                 if (component is SparkPowerSupply supply) supply.SetCurrentLimited(false);
             }
+            for (int i = 0; i < terminals.Count; i++)
+                {
+                    if (terminals[i] == null)
+                    {
+                        continue;
+                    }
+
+                    terminals[i].ApplyElectricalState(
+                        new SparkTerminalElectricalState(
+                            0f,
+                            0f));
+                }
         }
 
         private NetworkGraph BuildGraph()
@@ -435,12 +447,63 @@ namespace ProjectSpark.Electrical
                     : SparkConductionState.NonConducting;
                 var state = new SparkElectricalState(voltage, current, power, conduction);
                 component.ApplyElectricalState(state);
+
+ApplyTerminalElectricalStates(
+    voltages,
+    ta,
+    tb,
+    na,
+    nb,
+    current);
+
+
+
                 maxDelta = Mathf.Max(maxDelta, Mathf.Abs(previous.Voltage - state.Voltage));
                 maxDelta = Mathf.Max(maxDelta, Mathf.Abs(previous.Current - state.Current));
             }
 
             return maxDelta;
         }
+
+        private static void ApplyTerminalElectricalStates(
+    float[] voltages,
+    SparkTerminal terminalA,
+    SparkTerminal terminalB,
+    int nodeA,
+    int nodeB,
+    float current)
+{
+    if (voltages == null ||
+        terminalA == null ||
+        terminalB == null)
+    {
+        return;
+    }
+
+    if (nodeA < 0 ||
+        nodeA >= voltages.Length ||
+        nodeB < 0 ||
+        nodeB >= voltages.Length)
+    {
+        return;
+    }
+
+    float voltageA =
+        voltages[nodeA];
+
+    float voltageB =
+        voltages[nodeB];
+
+    terminalA.ApplyElectricalState(
+        new SparkTerminalElectricalState(
+            voltageA,
+            current));
+
+    terminalB.ApplyElectricalState(
+        new SparkTerminalElectricalState(
+            voltageB,
+            -current));
+}
 
         private void CommitTransientState(NetworkGraph graph, float[] voltages)
         {
@@ -462,13 +525,51 @@ namespace ProjectSpark.Electrical
             return -1;
         }
 
-        private static bool TryGetTwoTerminals(Component component, out SparkTerminal a, out SparkTerminal b)
-        {
-            var childTerminals = component.GetComponentsInChildren<SparkTerminal>(true);
-            a = childTerminals.Length > 0 ? childTerminals[0] : null;
-            b = childTerminals.Length > 1 ? childTerminals[1] : null;
-            return a != null && b != null;
-        }
+        private static bool TryGetTwoTerminals(
+    Component component,
+    out SparkTerminal a,
+    out SparkTerminal b)
+{
+    a = null;
+    b = null;
+
+    if (component == null)
+    {
+        return false;
+    }
+
+    if (component is SparkSwitch sparkSwitch)
+    {
+        a = sparkSwitch.InputTerminal;
+        b = sparkSwitch.OutputTerminal;
+
+        return a != null &&
+               b != null;
+    }
+
+    if (component is SparkLED sparkLED)
+    {
+        a = sparkLED.AnodeTerminal;
+        b = sparkLED.CathodeTerminal;
+
+        return a != null &&
+               b != null;
+    }
+
+    var childTerminals =
+        component.GetComponentsInChildren<SparkTerminal>(true);
+
+    if (childTerminals.Length < 2)
+    {
+        return false;
+    }
+
+    a = childTerminals[0];
+    b = childTerminals[1];
+
+    return a != null &&
+           b != null;
+}
 
         private static int MapNode(int node, int reference) => node == reference ? -1 : (node < reference ? node : node - 1);
 

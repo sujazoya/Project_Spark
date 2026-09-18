@@ -14,13 +14,41 @@ namespace ProjectSpark.Circuit
         [SerializeField] private SparkTerminal terminal;
         public SparkTerminal Terminal => terminal;
         private void Awake() { if (terminal == null) terminal = GetComponent<SparkTerminal>(); }
-        public SparkResult ReceiveConnection(CircuitTerminal other)
-        {
-            if (other == null || other.terminal == null) return SparkResult.Invalid("Target terminal missing.");
-            var system = FindFirstObjectByType<SparkCircuitSystem>();
-            if (system == null) return SparkResult.Unavailable("No SparkCircuitSystem exists.");
-            return system.TryCreateConnection(terminal, other.terminal, SparkConnectionKind.Wire,
-                SparkConnectionDirection.Bidirectional, out _);
-        }
+        public SparkResult ReceiveConnection(SparkTerminal other)
+{
+    if (other == null)
+    {
+        return SparkResult.Invalid(
+            "Target terminal missing.");
+    }
+
+    SparkCircuitSystem system =
+        FindFirstObjectByType<SparkCircuitSystem>();
+
+    if (system == null)
+    {
+        return SparkResult.Unavailable(
+            "No SparkCircuitSystem exists.");
+    }
+
+    SparkCircuitConnection connection;
+
+    bool created =
+        system.TryCreateConnection(
+            terminal,
+            other,
+            SparkConnectionKind.Wire,
+            SparkConnectionDirection.Bidirectional,
+            out connection);
+
+    if (!created)
+    {
+        return SparkResult.Rejected(
+            $"Unable to connect '{terminal.name}' " +
+            $"to '{other.name}'.");
+    }
+
+    return SparkResult.Success();
+}
     }
 }

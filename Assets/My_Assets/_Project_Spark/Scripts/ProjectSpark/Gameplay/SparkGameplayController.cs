@@ -359,10 +359,12 @@ private void Update()
             }
 
             SparkInteractionContext interactionContext =
-                CreateInteractionContext(
-                    in hit,
-                    type);
+    CreateInteractionContext(
+        in hit,
+        type);
 
+        if (tool.ToolType != SparkToolType.Scan)
+        {
             if (!hit.Target.CanInteract(
                     interactionContext,
                     out string reason))
@@ -372,6 +374,7 @@ private void Update()
 
                 return;
             }
+        }
 
             SparkInteractionSession session =
                 new SparkInteractionSession(

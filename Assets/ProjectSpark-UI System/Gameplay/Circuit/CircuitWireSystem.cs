@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using AAAUI.VFX;
 using ProjectSpark.Circuit;
 using ProjectSpark.Gameplay;
@@ -54,9 +55,8 @@ namespace AAAUI
 
         private WirePolarity currentPolarity;
 
-        private readonly System.Collections.Generic.List<GameObject>
-            wires =
-            new System.Collections.Generic.List<GameObject>();
+        private readonly List<GameObject> wires =
+            new List<GameObject>();
 
 
         // =========================================================
@@ -104,7 +104,6 @@ namespace AAAUI
                 return false;
             }
 
-
             if (wirePrefab == null)
             {
                 Debug.LogError(
@@ -113,7 +112,6 @@ namespace AAAUI
 
                 return false;
             }
-
 
             if (wireRoot == null)
             {
@@ -133,7 +131,7 @@ namespace AAAUI
 
 
             // -----------------------------------------------------
-            // TERMINAL OWNS POLARITY
+            // STORE TERMINAL
             // -----------------------------------------------------
 
             currentStartTerminal =
@@ -156,7 +154,7 @@ namespace AAAUI
 
 
             wire.transform.position =
-                Vector3.zero;
+                startPosition;
 
 
             // -----------------------------------------------------
@@ -270,20 +268,31 @@ namespace AAAUI
             }
 
 
-            SparkResult result =
+            // -----------------------------------------------------
+            // CREATE ELECTRICAL CONNECTION
+            // -----------------------------------------------------
+
+            SparkCircuitConnection connection;
+
+            bool created =
                 circuitSystem.TryCreateConnection(
                     currentStartTerminal,
                     endTerminal,
                     SparkConnectionKind.Wire,
                     connectionDirection,
-                    out SparkCircuitConnection connection);
+                    out connection);
 
 
-            if (!result.Succeeded)
+            // -----------------------------------------------------
+            // CONNECTION FAILED
+            // -----------------------------------------------------
+
+            if (!created)
             {
                 Debug.LogWarning(
-                    $"[WIRE] Connection rejected: " +
-                    $"{result.Message}",
+                    $"[WIRE] CONNECTION REJECTED = " +
+                    $"{currentStartTerminal.name} → " +
+                    $"{endTerminal.name}",
                     this);
 
                 return false;
@@ -309,9 +318,8 @@ namespace AAAUI
 
             if (level1Checker != null)
             {
-                level1Checker.RegisterConnection(
-                    connection.A,
-                    connection.B);
+                NotifyLevelChecker(
+                    connection);
             }
 
 
@@ -433,6 +441,25 @@ namespace AAAUI
                 default:
                     return neutralWireMaterial;
             }
+        }
+
+
+        // =========================================================
+        // LEVEL CHECKER
+        // =========================================================
+
+        private void NotifyLevelChecker(
+            SparkCircuitConnection connection)
+        {
+            if (level1Checker == null)
+            {
+                return;
+            }
+
+            level1Checker.SendMessage(
+                "OnCircuitConnectionCreated",
+                connection,
+                SendMessageOptions.DontRequireReceiver);
         }
     }
 }
