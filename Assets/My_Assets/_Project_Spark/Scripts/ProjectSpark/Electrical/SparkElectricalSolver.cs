@@ -39,16 +39,27 @@ namespace ProjectSpark.Electrical
         private readonly HashSet<SparkElectricalComponent> subscribedComponents = new();
         private bool dirty = true;
 
+        private int lastSolvedTopologyVersion = -1;
+
         public event Action SolveCompleted;
         public event Action SolveFailed;
         public bool IsDirty => dirty;
 
         private void Awake()
-        {
-            if (circuit == null) circuit = GetComponent<SparkCircuitSystem>();
-            RefreshComponentCache();
-            if (circuit != null) circuit.TopologyChanged += MarkDirty;
-        }
+{
+    if (circuit == null)
+        circuit = GetComponent<SparkCircuitSystem>();
+
+    RefreshComponentCache();
+
+    if (circuit != null)
+    {
+        lastSolvedTopologyVersion =
+            circuit.TopologyVersion;
+
+        circuit.TopologyChanged += MarkDirty;
+    }
+}
 
         private void OnEnable()
         {
@@ -71,13 +82,46 @@ namespace ProjectSpark.Electrical
             subscribedComponents.Clear();
         }
 
-        private void Update()
-        {
-            if (!solveOnDirty && !HasDynamicCapacitor()) return;
-            if (dirty || (simulateCapacitors && HasDynamicCapacitor())) Solve();
-        }
+       private void Update()
+{
+    if (circuit != null)
+    {
+        int currentTopologyVersion =
+            circuit.TopologyVersion;
 
-        public void MarkDirty() => dirty = true;
+        if (currentTopologyVersion !=
+            lastSolvedTopologyVersion)
+        {
+            dirty = true;
+        }
+    }
+
+    if (!solveOnDirty &&
+        !HasDynamicCapacitor() &&
+        !dirty)
+    {
+        return;
+    }
+
+    if (dirty ||
+        (simulateCapacitors &&
+         HasDynamicCapacitor()))
+    {
+        Solve();
+    }
+}
+
+        public void MarkDirty()
+{
+    dirty = true;
+
+    Debug.Log(
+        $"[SPARK SOLVER] TOPOLOGY DIRTY RECEIVED | " +
+        $"Circuit={circuit?.name ?? "NULL"} | " +
+        $"Version={circuit?.TopologyVersion ?? -1}",
+        this);
+}
+private readonly List<SparkCircuitConnection> connectionBuffer = new();
 
         public void SolveNow()
         {
@@ -88,6 +132,16 @@ namespace ProjectSpark.Electrical
         public void Solve()
         {
             dirty = false;
+            if (circuit != null)
+    {
+        lastSolvedTopologyVersion =
+            circuit.TopologyVersion;
+    }
+    Debug.Log(
+        $"[SPARK SOLVER] SOLVE START | " +
+        $"Circuit={circuit?.name ?? "NULL"} | " +
+        $"TopologyVersion={circuit?.TopologyVersion ?? -1}",
+        this);
             RefreshComponentCache();
 
             if (circuit == null)
@@ -99,6 +153,7 @@ namespace ProjectSpark.Electrical
             circuit.RebuildTopology();
 
             var graph = BuildGraph();
+
             if (graph.NodeCount == 0)
             {
                 ZeroStates();
@@ -204,11 +259,12 @@ namespace ProjectSpark.Electrical
                     {
                         continue;
                     }
+                terminals[i].ApplyElectricalState(
+                    new SparkTerminalElectricalState(
+                        0f,
+                        0f));
 
-                    terminals[i].ApplyElectricalState(
-                        new SparkTerminalElectricalState(
-                            0f,
-                            0f));
+                terminals[i].ClearRuntimePolarity();
                 }
         }
 
@@ -275,6 +331,61 @@ namespace ProjectSpark.Electrical
             }
 
             graph.NodeCount = graph.RootToNode.Count;
+
+// ============================================================
+// DEBUG — GRAPH CONNECTIVITY
+// ============================================================
+
+Debug.Log(
+    $"[SPARK GRAPH DETAIL] " +
+    $"Nodes={graph.NodeCount} | " +
+    $"Terminals={terminals.Count}",
+    this);
+
+for (int i = 0; i < terminals.Count; i++)
+{
+    SparkTerminal terminal = terminals[i];
+
+    if (terminal == null)
+        continue;
+
+    connectionBuffer.Clear();
+
+    circuit.GetConnections(
+        terminal,
+        connectionBuffer);
+
+    Debug.Log(
+        $"[SPARK GRAPH TERMINAL] " +
+        $"{terminal.name} | " +
+        $"Owner={terminal.Owner?.name ?? "NULL"} | " +
+        $"Connections={connectionBuffer.Count} | " +
+        $"Voltage={terminal.ElectricalState.Voltage:F3} | " +
+        $"Polarity={terminal.EffectivePolarity}",
+        terminal);
+
+    for (int c = 0; c < connectionBuffer.Count; c++)
+    {
+        SparkCircuitConnection connection =
+            connectionBuffer[c];
+
+        SparkTerminal other =
+    connection.A == terminal
+        ? connection.B
+        : connection.A;
+
+        Debug.Log(
+            $"[SPARK GRAPH CONNECTION] " +
+            $"{terminal.name} -> " +
+            $"{other?.name ?? "NULL"} | " +
+            $"Kind={connection.Kind} | " +
+            $"Valid={connection.IsValid}",
+            terminal);
+    }
+}
+
+
+
             return graph;
         }
 
@@ -316,10 +427,23 @@ namespace ProjectSpark.Electrical
                 {
                     AddConductance(A, b, ai, bi, 1.0 / Math.Max(resistor.ResistanceOhms, minimumResistance));
                 }
-                else if (component is SparkSwitch sw)
+               else if (component is SparkSwitch sw)
                 {
                     if (sw.IsConducting)
-                        AddConductance(A, b, ai, bi, 1.0 / Math.Max(minimumResistance, 0.001));
+                    {
+                        double resistance = Math.Max(
+                            minimumResistance,
+                            sw.ClosedResistance);
+
+                        double conductance = 1.0 / resistance;
+
+                        AddConductance(
+                            A,
+                            b,
+                            ai,
+                            bi,
+                            conductance);
+                    }
                 }
                 else if (component is SparkDiode diode)
                 {
@@ -389,80 +513,280 @@ namespace ProjectSpark.Electrical
             return on;
         }
 
-        private float ApplyDeviceStates(NetworkGraph graph, float[] voltages)
+        private float ApplyDeviceStates(NetworkGraph graph, float[] voltages)        
+{
+    float maxDelta = 0f;
+
+    for (int i = 0;
+         i < electricalComponents.Length;
+         i++)
+    {
+        SparkElectricalComponent component =
+            electricalComponents[i];
+
+        if (component == null)
+            continue;
+
+        if (!TryGetTwoTerminals(
+                component,
+                out SparkTerminal ta,
+                out SparkTerminal tb))
         {
-            float maxDelta = 0f;
+            continue;
+        }
 
-            for (int i = 0; i < electricalComponents.Length; i++)
+        if (!graph.TerminalNode.TryGetValue(
+                ta,
+                out int na))
+        {
+            continue;
+        }
+
+        if (!graph.TerminalNode.TryGetValue(
+                tb,
+                out int nb))
+        {
+            continue;
+        }
+
+        float voltage =
+            voltages[na] -
+            voltages[nb];
+
+        float current = 0f;
+
+        // ------------------------------------------------------------
+        // COMPONENT CURRENT
+        // ------------------------------------------------------------
+
+        if (component is SparkResistor resistor)
+        {
+            current =
+                voltage /
+                Mathf.Max(
+                    resistor.ResistanceOhms,
+                    minimumResistance);
+        }
+        else if (component is SparkSwitch sw)
+        {
+            if (sw.IsConducting)
             {
-                var component = electricalComponents[i];
-                if (component == null) continue;
-                if (!TryGetTwoTerminals(component, out var ta, out var tb)) continue;
-                if (!graph.TerminalNode.TryGetValue(ta, out int na) || !graph.TerminalNode.TryGetValue(tb, out int nb)) continue;
+                float resistance =
+                    Mathf.Max(
+                        minimumResistance,
+                        sw.ClosedResistance);
 
-                float voltage = voltages[na] - voltages[nb];
-                float current = 0f;
+                current =
+                    voltage /
+                    resistance;
+            }
+            else
+            {
+                current = 0f;
+            }
+        }
+        else if (component is SparkDiode diode)
+        {
+            bool wasOn =
+                diodeStates.TryGetValue(
+                    diode,
+                    out bool diodeState) &&
+                diodeState;
 
-                if (component is SparkResistor resistor)
-                {
-                    current = voltage / Mathf.Max(resistor.ResistanceOhms, minimumResistance);
-                }
-                else if (component is SparkSwitch sw)
-                {
-                    current = sw.IsConducting ? voltage / Mathf.Max(minimumResistance, 0.001f) : 0f;
-                }
-                else if (component is SparkDiode diode)
-                {
-                    bool wasOn = diodeStates.TryGetValue(diode, out var diodeState ) && diodeState ;
-                    bool on = wasOn ? voltage >= diode.ForwardVoltage - 0.005f : voltage >= diode.ForwardVoltage;
-                    if (on) current = Mathf.Max(0f, (voltage - diode.ForwardVoltage) / diode.OnResistance);
-                    diodeStates[diode] = on && current > 0f;
-                }
-                else if (component is SparkLED led)
-                {
-                    bool wasOn = diodeStates.TryGetValue(led, out var ledState ) && ledState ;
-                    bool on = wasOn ? voltage >= led.ForwardVoltage - 0.005f : voltage >= led.ForwardVoltage;
-                    if (on) current = Mathf.Max(0f, (voltage - led.ForwardVoltage) / led.OnResistance);
-                    diodeStates[led] = on && current > 0f;
-                }
-                else if (component is SparkCapacitor capacitor && simulateCapacitors)
-                {
-                    capacitorPreviousVoltage.TryGetValue(capacitor, out float previousVoltage);
-                    current = capacitor.CapacitanceFarads * (voltage - previousVoltage) /
-                              Mathf.Max(0.000001f, Application.isPlaying ? Time.deltaTime : editorTimeStep);
-                }
-                else if (component is SparkPowerSupply supply && supply.IsOutputActive)
-                {
-                    float seriesResistance = Mathf.Max(minimumResistance, supply.OutputVoltage / Mathf.Max(0.0001f, supply.CurrentLimit));
-                    current = Mathf.Max(0f, (supply.OutputVoltage - voltage) / seriesResistance);
-                    supply.SetCurrentLimited(current >= supply.CurrentLimit * 0.999f);
-                }
+            bool on =
+                wasOn
+                    ? voltage >=
+                      diode.ForwardVoltage - 0.005f
+                    : voltage >=
+                      diode.ForwardVoltage;
 
-                float power = voltage * current;
-                if (component is SparkPowerSupply) power = -Mathf.Abs(power);
-
-                var previous = component.ElectricalState;
-                var conduction = Mathf.Abs(current) > 0.000001f
-                    ? SparkConductionState.Conducting
-                    : SparkConductionState.NonConducting;
-                var state = new SparkElectricalState(voltage, current, power, conduction);
-                component.ApplyElectricalState(state);
-
-ApplyTerminalElectricalStates(
-    voltages,
-    ta,
-    tb,
-    na,
-    nb,
-    current);
-
-
-
-                maxDelta = Mathf.Max(maxDelta, Mathf.Abs(previous.Voltage - state.Voltage));
-                maxDelta = Mathf.Max(maxDelta, Mathf.Abs(previous.Current - state.Current));
+            if (on)
+            {
+                current =
+                    Mathf.Max(
+                        0f,
+                        (voltage -
+                         diode.ForwardVoltage) /
+                        diode.OnResistance);
             }
 
-            return maxDelta;
+            diodeStates[diode] =
+                on && current > 0f;
+        }
+        else if (component is SparkLED led)
+        {
+            bool wasOn =
+                diodeStates.TryGetValue(
+                    led,
+                    out bool ledState) &&
+                ledState;
+
+            bool on =
+                wasOn
+                    ? voltage >=
+                      led.ForwardVoltage - 0.005f
+                    : voltage >=
+                      led.ForwardVoltage;
+
+            if (on)
+            {
+                current =
+                    Mathf.Max(
+                        0f,
+                        (voltage -
+                         led.ForwardVoltage) /
+                        led.OnResistance);
+            }
+
+            diodeStates[led] =
+                on && current > 0f;
+        }
+        else if (component is SparkCapacitor capacitor &&
+                 simulateCapacitors)
+        {
+            capacitorPreviousVoltage.TryGetValue(
+                capacitor,
+                out float previousVoltage);
+
+            current =
+                capacitor.CapacitanceFarads *
+                (voltage - previousVoltage) /
+                Mathf.Max(
+                    0.000001f,
+                    Application.isPlaying
+                        ? Time.deltaTime
+                        : editorTimeStep);
+        }
+        else if (component is SparkPowerSupply supply &&
+                 supply.IsOutputActive)
+        {
+            float seriesResistance =
+                Mathf.Max(
+                    minimumResistance,
+                    supply.OutputVoltage /
+                    Mathf.Max(
+                        0.0001f,
+                        supply.CurrentLimit));
+
+            current =
+                Mathf.Max(
+                    0f,
+                    (supply.OutputVoltage - voltage) /
+                    seriesResistance);
+
+            supply.SetCurrentLimited(
+                current >=
+                supply.CurrentLimit * 0.999f);
+        }
+
+        float power =
+            voltage * current;
+
+        if (component is SparkPowerSupply)
+            power = -Mathf.Abs(power);
+
+        // ------------------------------------------------------------
+        // PREVIOUS COMPONENT STATE
+        // ------------------------------------------------------------
+
+        SparkElectricalState previous =
+            component.ElectricalState;
+
+        // ------------------------------------------------------------
+        // COMPONENT STATE
+        // ------------------------------------------------------------
+
+        SparkConductionState conduction =
+            Mathf.Abs(current) > 0.000001f
+                ? SparkConductionState.Conducting
+                : SparkConductionState.NonConducting;
+
+        SparkElectricalState state =
+            new SparkElectricalState(
+                voltage,
+                current,
+                power,
+                conduction);
+
+        // ------------------------------------------------------------
+        // TERMINAL STATES FIRST
+        // ------------------------------------------------------------
+
+        float voltageA =
+            voltages[na];
+
+        float voltageB =
+            voltages[nb];
+
+        SparkTerminalElectricalState previousA =
+            ta.ElectricalState;
+
+        SparkTerminalElectricalState previousB =
+            tb.ElectricalState;
+
+        ApplyTerminalElectricalStates(
+            voltages,
+            ta,
+            tb,
+            na,
+            nb,
+            current);
+
+        // ------------------------------------------------------------
+        // COMPONENT STATE SECOND
+        // ------------------------------------------------------------
+
+        component.ApplyElectricalState(
+            state);
+
+        // ------------------------------------------------------------
+        // SWITCH POLARITY THIRD
+        // ------------------------------------------------------------
+
+        if (component is SparkSwitch sparkSwitch)
+        {
+            sparkSwitch.RefreshRuntimePolarity();
+        }
+
+        // ------------------------------------------------------------
+        // COMPONENT CONVERGENCE
+        // ------------------------------------------------------------
+
+        maxDelta =
+            Mathf.Max(
+                maxDelta,
+                Mathf.Abs(
+                    previous.Voltage -
+                    state.Voltage));
+
+        maxDelta =
+            Mathf.Max(
+                maxDelta,
+                Mathf.Abs(
+                    previous.Current -
+                    state.Current));
+
+        // ------------------------------------------------------------
+        // TERMINAL CONVERGENCE
+        // ------------------------------------------------------------
+
+        maxDelta =
+            Mathf.Max(
+                maxDelta,
+                Mathf.Abs(
+                    previousA.Voltage -
+                    voltageA));
+
+        maxDelta =
+            Mathf.Max(
+                maxDelta,
+                Mathf.Abs(
+                    previousB.Voltage -
+                    voltageB));
+    }
+
+    return maxDelta;
+
         }
 
         private static void ApplyTerminalElectricalStates(

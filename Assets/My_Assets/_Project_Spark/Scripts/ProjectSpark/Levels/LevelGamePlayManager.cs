@@ -1128,60 +1128,168 @@ namespace ProjectSpark.Gameplay
         }
 
         private void TraverseWireNetwork(
-            SparkTerminal start,
-            HashSet<SparkTerminal> visited)
+    SparkTerminal start,
+    HashSet<SparkTerminal> visited)
+{
+    if (start == null || visited == null)
+        return;
+
+    traversalQueue.Clear();
+    visitedTerminals.Clear();
+
+    traversalQueue.Enqueue(start);
+    visited.Add(start);
+    visitedTerminals.Add(start);
+
+    while (traversalQueue.Count > 0)
+    {
+        SparkTerminal current =
+            traversalQueue.Dequeue();
+
+        if (current == null)
+            continue;
+
+        // ============================================================
+        // 1. REAL ELECTRICAL WIRES
+        // ============================================================
+
+        connectionBuffer.Clear();
+
+        circuitSystem.GetConnections(
+            current,
+            connectionBuffer);
+
+        for (int i = 0;
+             i < connectionBuffer.Count;
+             i++)
         {
-            if (start == null || visited == null)
-                return;
+            SparkCircuitConnection connection =
+                connectionBuffer[i];
 
-            traversalQueue.Clear();
-            visitedTerminals.Clear();
+            if (!IsUsableTopologyConnection(connection))
+                continue;
 
-            traversalQueue.Enqueue(start);
-            visited.Add(start);
-            visitedTerminals.Add(start);
+            SparkTerminal next =
+                GetOtherTerminal(
+                    connection,
+                    current);
 
-            while (traversalQueue.Count > 0)
+            if (next == null ||
+                visitedTerminals.Contains(next))
             {
-                SparkTerminal current =
-                    traversalQueue.Dequeue();
-
-                if (current == null)
-                    continue;
-
-                connectionBuffer.Clear();
-
-                circuitSystem.GetConnections(
-                    current,
-                    connectionBuffer);
-
-                for (int i = 0;
-                     i < connectionBuffer.Count;
-                     i++)
-                {
-                    SparkCircuitConnection connection =
-                        connectionBuffer[i];
-
-                    if (!IsUsableTopologyConnection(connection))
-                        continue;
-
-                    SparkTerminal next =
-                        GetOtherTerminal(
-                            connection,
-                            current);
-
-                    if (next == null ||
-                        visitedTerminals.Contains(next))
-                    {
-                        continue;
-                    }
-
-                    visited.Add(next);
-                    visitedTerminals.Add(next);
-                    traversalQueue.Enqueue(next);
-                }
+                continue;
             }
+
+            visited.Add(next);
+            visitedTerminals.Add(next);
+            traversalQueue.Enqueue(next);
         }
+
+        // ============================================================
+        // 2. CLOSED CONDUCTIVE COMPONENTS
+        // ============================================================
+        //
+        // A closed switch is electrically continuous between its
+        // InputTerminal and OutputTerminal.
+        //
+        // We do NOT create a fake SparkCircuitConnection.
+        // The solver remains the electrical authority.
+        //
+
+        TryTraverseConductiveDevice(
+            current,
+            visited);
+    }
+}
+        private bool TryTraverseConductiveDevice(
+    SparkTerminal current,
+    HashSet<SparkTerminal> visited)
+{
+    if (current == null || visited == null)
+        return false;
+
+    SparkSwitch sparkSwitch =
+        ResolveSwitchFromTerminal(current);
+
+    if (sparkSwitch == null)
+        return false;
+
+    if (!sparkSwitch.ElectricalEnabled)
+        return false;
+
+    if (!sparkSwitch.IsConducting)
+        return false;
+
+    SparkTerminal input =
+        sparkSwitch.InputTerminal;
+
+    SparkTerminal output =
+        sparkSwitch.OutputTerminal;
+
+    if (input == null || output == null)
+        return false;
+
+    SparkTerminal next = null;
+
+    if (current == input)
+    {
+        next = output;
+    }
+    else if (current == output)
+    {
+        next = input;
+    }
+    else
+    {
+        return false;
+    }
+
+    if (next == null)
+        return false;
+
+    if (visited.Contains(next))
+        return true;
+
+    visited.Add(next);
+    traversalQueue.Enqueue(next);
+
+    return true;
+}
+private SparkSwitch ResolveSwitchFromTerminal(
+    SparkTerminal terminal)
+{
+    if (terminal == null)
+        return null;
+
+    SparkSwitch direct =
+        terminal.GetComponent<SparkSwitch>();
+
+    if (direct != null)
+        return direct;
+
+    SparkSwitch parent =
+        terminal.GetComponentInParent<SparkSwitch>();
+
+    if (parent != null)
+        return parent;
+
+    if (terminal.Owner != null)
+    {
+        SparkSwitch owner =
+            terminal.Owner.GetComponent<SparkSwitch>();
+
+        if (owner != null)
+            return owner;
+
+        owner =
+            terminal.Owner.GetComponentInParent<SparkSwitch>();
+
+        if (owner != null)
+            return owner;
+    }
+
+    return null;
+}
 
         private bool HasSourceTopologyShort(
             SparkLevelDefinition level)

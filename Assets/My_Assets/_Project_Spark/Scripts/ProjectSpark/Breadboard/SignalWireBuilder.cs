@@ -547,67 +547,145 @@ private Level1CircuitChecker level1Checker;
         // FINISH
         // ============================================================
 
-        public void EndWire()
-        {
-            if (!drawing)
-                return;
+        public void EndWire(){
+        if (!drawing)
+        return;
 
-            if (logWireOperations)
-                Debug.Log("[WIRE] RELEASE", this);
+    if (logWireOperations)
+    {
+        Debug.Log(
+            "[WIRE] RELEASE",
+            this);
+    }
 
-            SparkTerminal endTerminal =
-    FindTerminalAtScreenPosition(
-        Input.mousePosition);
+    SparkTerminal endTerminal =
+        FindTerminalAtScreenPosition(
+            Input.mousePosition);
 
-            if (endTerminal == null)
-            {
-                if (logWireOperations)
-                {
-                    Debug.Log(
-                        "[WIRE] END TERMINAL = NULL",
-                        this);
-                }
+    if (endTerminal == null)
+    {
+        Debug.LogWarning(
+            "[WIRE] END TERMINAL = NULL\n" +
+            "No SparkTerminal was detected under the mouse.",
+            this);
 
-                if (requireTerminalAtEnd)
-                {
-                    FinishVisualWireOnly();
+        FinishVisualWireOnly();
+        return;
+    }
 
-                    return;
-                }
-            }
-            else
-            {
-                if (logWireOperations)
-                {
-                    Debug.Log(
-                        $"[WIRE] END = {endTerminal.name} | " +
-                        $"Kind = {endTerminal.Kind}",
-                        endTerminal);
-                }
-            }
+    if (logWireOperations)
+    {
+        Debug.Log(
+            $"[WIRE] END = {endTerminal.name} | " +
+            $"Kind = {endTerminal.Kind}",
+            endTerminal);
+    }
 
-            if (startTerminal != null &&
-                endTerminal != null)
-            {
-                TryCommitElectricalConnection(
-                    startTerminal,
-                    endTerminal);
-            }
+    if (startTerminal == null)
+    {
+        Debug.LogWarning(
+            "[WIRE] CONNECTION NOT CREATED: " +
+            "Start terminal is NULL.",
+            this);
 
-            FinishVisualWireOnly();
-        }
+        FinishVisualWireOnly();
+        return;
+    }
 
-        // ============================================================
-        // ELECTRICAL CONNECTION
-        // ============================================================
+    bool connected =
+        TryCommitElectricalConnection(
+            startTerminal,
+            endTerminal);
 
-       private bool TryCommitElectricalConnection(
+    if (connected)
+    {
+        Debug.Log(
+            $"[WIRE] TOPOLOGY SUCCESS: " +
+            $"{startTerminal.name} ↔ {endTerminal.name}",
+            this);
+    }
+    else
+    {
+        Debug.LogWarning(
+            $"[WIRE] TOPOLOGY FAILED: " +
+            $"{startTerminal.name} ↔ {endTerminal.name}",
+            this);
+    }
+
+    FinishVisualWireOnly();
+}
+
+
+public void EndWire(Vector2 screenPosition)
+{
+    if (!drawing)
+        return;
+
+    //if (logWireOperations)
+    //{
+        Debug.Log(
+            $"[WIRE] RELEASE | Screen={screenPosition}",
+            this);
+   // }
+
+    SparkTerminal endTerminal =
+        FindTerminalAtScreenPosition(screenPosition);
+
+    if (endTerminal == null)
+    {
+        Debug.LogWarning(
+            "[WIRE] END TERMINAL = NULL\n" +
+            $"Screen Position = {screenPosition}",
+            this);
+
+        FinishVisualWireOnly();
+        return;
+    }
+
+    Debug.Log(
+        $"[WIRE] END = {endTerminal.name} | " +
+        $"Kind = {endTerminal.Kind}",
+        endTerminal);
+
+    if (startTerminal == null)
+    {
+        Debug.LogWarning(
+            "[WIRE] CONNECTION FAILED: Start terminal is NULL.",
+            this);
+
+        FinishVisualWireOnly();
+        return;
+    }
+
+    bool connected =
+        TryCommitElectricalConnection(
+            startTerminal,
+            endTerminal);
+
+    if (connected)
+    {
+        Debug.Log(
+            $"[WIRE] TOPOLOGY SUCCESS: " +
+            $"{startTerminal.name} ↔ {endTerminal.name}",
+            this);
+    }
+    else
+    {
+        Debug.LogWarning(
+            $"[WIRE] TOPOLOGY FAILED: " +
+            $"{startTerminal.name} ↔ {endTerminal.name}",
+            this);
+    }
+
+    FinishVisualWireOnly();
+}
+private bool TryCommitElectricalConnection(
     SparkTerminal start,
     SparkTerminal end)
 {
-    // =========================================================
+    // ============================================================
     // BASIC VALIDATION
-    // =========================================================
+    // ============================================================
 
     if (start == null)
     {
@@ -630,31 +708,31 @@ private Level1CircuitChecker level1Checker;
     if (circuit == null)
     {
         Debug.LogError(
-            "[WIRE] CONNECTION FAILED: SparkCircuitSystem is NULL.",
+            "[WIRE] CONNECTION FAILED: " +
+            "SparkCircuitSystem is NULL.",
             this);
 
         return false;
     }
 
-
-    // =========================================================
+    // ============================================================
     // SAME TERMINAL
-    // =========================================================
+    // ============================================================
 
     if (rejectSameTerminal &&
         start == end)
     {
         Debug.LogWarning(
-            "[WIRE] CONNECTION REJECTED: Same terminal.",
+            $"[WIRE] CONNECTION REJECTED: " +
+            $"Same terminal: {start.name}",
             this);
 
         return false;
     }
 
-
-    // =========================================================
+    // ============================================================
     // TERMINAL COMPATIBILITY
-    // =========================================================
+    // ============================================================
 
     if (!start.CanConnectTo(
             end,
@@ -663,23 +741,24 @@ private Level1CircuitChecker level1Checker;
             out string reason))
     {
         Debug.LogWarning(
-            $"[WIRE] CONNECTION REJECTED: {reason}",
+            $"[WIRE] CONNECTION REJECTED:\n" +
+            $"{start.name} -> {end.name}\n" +
+            $"Reason: {reason}",
             this);
 
         return false;
     }
 
-
-    // =========================================================
+    // ============================================================
     // CAPACITY
-    // =========================================================
+    // ============================================================
 
     if (rejectCapacity)
     {
         if (start.AtCapacity)
         {
             Debug.LogWarning(
-                $"[WIRE] CONNECTION REJECTED: " +
+                $"[WIRE] CONNECTION REJECTED:\n" +
                 $"START AT CAPACITY: {start.name}",
                 start);
 
@@ -689,7 +768,7 @@ private Level1CircuitChecker level1Checker;
         if (end.AtCapacity)
         {
             Debug.LogWarning(
-                $"[WIRE] CONNECTION REJECTED: " +
+                $"[WIRE] CONNECTION REJECTED:\n" +
                 $"END AT CAPACITY: {end.name}",
                 end);
 
@@ -697,27 +776,24 @@ private Level1CircuitChecker level1Checker;
         }
     }
 
-
-    // =========================================================
+    // ============================================================
     // DUPLICATE
-    // =========================================================
+    // ============================================================
 
     if (rejectDuplicateConnection &&
         HasExistingConnection(start, end))
     {
         Debug.LogWarning(
-            $"[WIRE] CONNECTION REJECTED: " +
-            $"Duplicate connection: " +
-            $"{start.name} ↔ {end.name}",
+            $"[WIRE] CONNECTION REJECTED:\n" +
+            $"DUPLICATE: {start.name} ↔ {end.name}",
             this);
 
         return false;
     }
 
-
-    // =========================================================
-    // CREATE REAL ELECTRICAL CONNECTION
-    // =========================================================
+    // ============================================================
+    // REGISTER REAL ELECTRICAL CONNECTION
+    // ============================================================
 
     Debug.Log(
         $"[WIRE] REGISTERING ELECTRICAL CONNECTION:\n" +
@@ -726,7 +802,6 @@ private Level1CircuitChecker level1Checker;
         $"Kind = {connectionKind}\n" +
         $"Direction = {connectionDirection}",
         this);
-
 
     SparkCircuitConnection connection;
 
@@ -738,28 +813,26 @@ private Level1CircuitChecker level1Checker;
             connectionDirection,
             out connection);
 
-
-    // =========================================================
-    // CREATE FAILED
-    // =========================================================
+    // ============================================================
+    // CREATION FAILED
+    // ============================================================
 
     if (!created)
     {
         Debug.LogError(
             $"[WIRE] ELECTRICAL CONNECTION FAILED:\n" +
-            $"{start.name} → {end.name}",
+            $"{start.name} ↔ {end.name}",
             this);
 
         return false;
     }
 
-
-    // =========================================================
+    // ============================================================
     // SUCCESS
-    // =========================================================
+    // ============================================================
 
     Debug.Log(
-        $"[WIRE] ELECTRICAL CONNECTION CREATED!\n" +
+        $"[WIRE] ELECTRICAL CONNECTION CREATED:\n" +
         $"ID = {connection.Id}\n" +
         $"A = {connection.A.name}\n" +
         $"B = {connection.B.name}\n" +
@@ -768,72 +841,31 @@ private Level1CircuitChecker level1Checker;
         $"Circuit Connections = {circuit.ConnectionCount}",
         this);
 
+    // ============================================================
+    // BIND VISUAL PATH TO ELECTRICAL CONNECTION
+    // ============================================================
 
-    // =========================================================
-    // LEVEL 1 DEBUG
-    // =========================================================
+    if (pathManager != null &&
+        currentPath != null)
+    {
+        pathManager.BindElectricalConnection(
+            currentPath,
+            connection);
+    }
+
+    // ============================================================
+    // LEVEL 1
+    // ============================================================
 
     if (level1Checker != null)
     {
         Debug.Log(
             $"[WIRE] LEVEL 1 CONNECTION REGISTERED:\n" +
-            $"{start.name} → {end.name}",
+            $"{start.name} ↔ {end.name}",
             this);
     }
 
     return true;
-}
-
-public void EndWire(Vector2 screenPosition)
-{
-    if (!drawing)
-        return;
-
-    if (logWireOperations)
-    {
-        Debug.Log(
-            "[WIRE] RELEASE",
-            this);
-    }
-
-    SparkTerminal endTerminal =
-        FindTerminalAtScreenPosition(screenPosition);
-
-    if (endTerminal == null)
-    {
-        if (logWireOperations)
-        {
-            Debug.Log(
-                "[WIRE] END TERMINAL = NULL",
-                this);
-        }
-
-        if (requireTerminalAtEnd)
-        {
-            FinishVisualWireOnly();
-            return;
-        }
-    }
-    else
-    {
-        if (logWireOperations)
-        {
-            Debug.Log(
-                $"[WIRE] END = {endTerminal.name} | " +
-                $"Kind = {endTerminal.Kind}",
-                endTerminal);
-        }
-    }
-
-    if (startTerminal != null &&
-        endTerminal != null)
-    {
-        TryCommitElectricalConnection(
-            startTerminal,
-            endTerminal);
-    }
-
-    FinishVisualWireOnly();
 }
 private SparkTerminal FindTerminalAtScreenPosition(
     Vector2 screenPosition)

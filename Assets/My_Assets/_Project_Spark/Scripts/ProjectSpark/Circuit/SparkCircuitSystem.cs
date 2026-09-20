@@ -542,11 +542,9 @@ namespace ProjectSpark.Circuit
 }
 
         public void MarkTopologyDirty()
-        {
-            topologyDirty = true;
-
-            TopologyChanged?.Invoke();
-        }
+{
+    MarkTopologyChanged();
+}
 
         // =========================================================
         // VALIDATION
@@ -761,13 +759,21 @@ namespace ProjectSpark.Circuit
         // =========================================================
         // TOPOLOGY CHANGE
         // =========================================================
+// =========================================================
+// TOPOLOGY CHANGE
+// =========================================================
 
-        private void MarkTopologyChanged()
-        {
-            topologyDirty = true;
+private void MarkTopologyChanged()
+{
+    topologyDirty = true;
 
-            topologyVersion++;
-        }
+    topologyVersion++;
+
+    TopologyChanged?.Invoke();
+    Debug.Log(
+    $"[SPARK CIRCUIT] TOPOLOGY CHANGED → Version={topologyVersion}",
+    this);
+}
 
         // =========================================================
         // INVALID CONNECTION CLEANUP

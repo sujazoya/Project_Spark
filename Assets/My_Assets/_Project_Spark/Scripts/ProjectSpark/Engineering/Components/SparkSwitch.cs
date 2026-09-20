@@ -13,6 +13,8 @@ namespace ProjectSpark.Gameplay
         SparkElectricalComponent,
         ISparkConductiveDevice
     {
+        #region Inspector
+
         [Header("Switch")]
         [SerializeField]
         private SparkSwitchState state =
@@ -38,6 +40,19 @@ namespace ProjectSpark.Gameplay
         [SerializeField, Min(0f)]
         private float currentThreshold = 0.001f;
 
+        [Header("Runtime Polarity")]
+        [SerializeField, Min(0.000001f)]
+        private float runtimePolarityThreshold = 0.001f;
+        public void RefreshRuntimePolarity()
+{
+    UpdateRuntimeTerminalPolarity();
+}
+
+        #endregion
+
+
+        #region Basic Switch State
+
         public SparkSwitchState State =>
             state;
 
@@ -46,7 +61,6 @@ namespace ProjectSpark.Gameplay
 
         public bool IsOpen =>
             state == SparkSwitchState.Open;
-            
 
         public bool IsConducting =>
             IsClosed &&
@@ -64,6 +78,11 @@ namespace ProjectSpark.Gameplay
             IsConfiguredToConduct &&
             IsSolverConducting;
 
+        #endregion
+
+
+        #region Resistance
+
         public float Resistance =>
             IsClosed
                 ? closedResistance
@@ -75,51 +94,154 @@ namespace ProjectSpark.Gameplay
         public float OpenResistance =>
             openResistance;
 
+        #endregion
+
+
+        #region Terminals
+
         public SparkTerminal InputTerminal =>
             inputTerminal;
 
         public SparkTerminal OutputTerminal =>
             outputTerminal;
 
+        #endregion
 
 
-            public float InputVoltage =>
-    inputTerminal != null
-        ? inputTerminal.ElectricalState.Voltage
-        : 0f;
+        #region Input Electrical State
 
-public float InputCurrent =>
-    inputTerminal != null
-        ? inputTerminal.ElectricalState.Current
-        : 0f;
+        public float InputVoltage =>
+            inputTerminal != null
+                ? inputTerminal.ElectricalState.Voltage
+                : 0f;
 
-public float InputPower =>
-    inputTerminal != null
-        ? inputTerminal.ElectricalState.Power
-        : 0f;
+        public float InputCurrent =>
+            inputTerminal != null
+                ? inputTerminal.ElectricalState.Current
+                : 0f;
 
-public bool InputHasPower =>
-    inputTerminal != null &&
-    inputTerminal.ElectricalState.IsPowered;
+        public float InputPower =>
+            inputTerminal != null
+                ? inputTerminal.ElectricalState.Power
+                : 0f;
 
-public float OutputVoltage =>
-    outputTerminal != null
-        ? outputTerminal.ElectricalState.Voltage
-        : 0f;
+        public bool InputHasPower =>
+            inputTerminal != null &&
+            Mathf.Abs(InputVoltage) >=
+            voltageThreshold;
 
-public float OutputCurrent =>
-    outputTerminal != null
-        ? outputTerminal.ElectricalState.Current
-        : 0f;
+        #endregion
 
-public float OutputPower =>
-    outputTerminal != null
-        ? outputTerminal.ElectricalState.Power
-        : 0f;
 
-public bool OutputHasPower =>
-    outputTerminal != null &&
-    outputTerminal.ElectricalState.IsPowered;
+        #region Output Electrical State
+
+        public float OutputVoltage =>
+            outputTerminal != null
+                ? outputTerminal.ElectricalState.Voltage
+                : 0f;
+
+        public float OutputCurrent =>
+            outputTerminal != null
+                ? outputTerminal.ElectricalState.Current
+                : 0f;
+
+        public float OutputPower =>
+            outputTerminal != null
+                ? outputTerminal.ElectricalState.Power
+                : 0f;
+
+        public bool OutputHasPower =>
+            outputTerminal != null &&
+            Mathf.Abs(OutputVoltage) >=
+            voltageThreshold;
+
+        #endregion
+
+
+        #region Runtime Polarity
+
+        public SparkTerminalPolarity InputPolarity =>
+            GetRuntimePolarity(InputVoltage);
+
+        public SparkTerminalPolarity OutputPolarity =>
+            GetRuntimePolarity(OutputVoltage);
+
+        public SparkTerminalPolarity RuntimePolarity
+        {
+            get
+            {
+                if (!IsClosed ||
+                    !ElectricalEnabled)
+                {
+                    return SparkTerminalPolarity.None;
+                }
+
+                SparkTerminalPolarity input =
+                    InputPolarity;
+
+                if (input !=
+                    SparkTerminalPolarity.None)
+                {
+                    return input;
+                }
+
+                return OutputPolarity;
+            }
+        }
+
+        private SparkTerminalPolarity GetRuntimePolarity(
+            float voltage)
+        {
+            if (voltage >
+                runtimePolarityThreshold)
+            {
+                return SparkTerminalPolarity.Positive;
+            }
+
+            if (voltage <
+                -runtimePolarityThreshold)
+            {
+                return SparkTerminalPolarity.Negative;
+            }
+
+            return SparkTerminalPolarity.None;
+        }
+
+       private void UpdateRuntimeTerminalPolarity()
+        {
+            
+            if (InputTerminal == null ||
+        OutputTerminal == null)
+    {
+        return;
+    }
+
+    // Open or disabled switch cannot propagate
+    // runtime polarity to the output.
+    if (!IsClosed || !ElectricalEnabled)
+    {
+        OutputTerminal.ClearRuntimePolarity();
+        return;
+    }
+
+    SparkTerminalPolarity inputPolarity =
+        InputTerminal.SolvedPolarity;
+
+    if (inputPolarity == SparkTerminalPolarity.None)
+    {
+        OutputTerminal.ClearRuntimePolarity();
+        return;
+    }
+
+    // Propagate BOTH polarities.
+    OutputTerminal.SetRuntimePolarity(
+        inputPolarity);
+        }
+
+        #endregion
+
+
+        #region Connection State
 
         public bool HasInputConnection =>
             inputTerminal != null &&
@@ -142,6 +264,11 @@ public bool OutputHasPower =>
             outputTerminal != null
                 ? outputTerminal.ConnectionCount
                 : 0;
+
+        #endregion
+
+
+        #region Component Electrical State
 
         public float Voltage =>
             ElectricalState.Voltage;
@@ -195,7 +322,11 @@ public bool OutputHasPower =>
         public bool HasReadyOutput =>
             HasOutputConnection &&
             IsReadyForOutput;
-            
+
+        #endregion
+
+
+        #region Conduction
 
         public bool CanConductBetween(
             SparkTerminal from,
@@ -222,9 +353,38 @@ public bool OutputHasPower =>
             return
                 (from == inputTerminal &&
                  to == outputTerminal) ||
+
                 (from == outputTerminal &&
                  to == inputTerminal);
         }
+
+        #endregion
+
+
+        #region Electrical Solver Integration
+
+        /// <summary>
+        /// Applies the electrical state calculated
+        /// by the solver.
+        ///
+        /// The base class stores the authoritative
+        /// electrical state.
+        ///
+        /// Runtime polarity is then synchronized
+        /// from the solved terminal voltages.
+        /// </summary>
+        public override void ApplyElectricalState(
+    in SparkElectricalState state)
+{
+    base.ApplyElectricalState(state);
+}
+
+
+
+        #endregion
+
+
+        #region Switch Control
 
         public void ToggleState()
         {
@@ -236,17 +396,23 @@ public bool OutputHasPower =>
         }
 
         public void SetState(
-            SparkSwitchState newState)
-        {
-            if (state == newState)
-            {
-                return;
-            }
+    SparkSwitchState newState)
+{
+    if (state == newState)
+        return;
 
-            state = newState;
+    state = newState;
 
-            NotifyElectricalConfigurationChanged();
-        }
+    /*
+     * Immediately update visual/runtime polarity.
+     */
+    UpdateRuntimeTerminalPolarity();
+
+    /*
+     * Tell the electrical system to solve again.
+     */
+    NotifyElectricalConfigurationChanged();
+}
 
         public void ToggleFromButton()
         {
@@ -289,6 +455,11 @@ public bool OutputHasPower =>
             return base.BeginInteraction(context);
         }
 
+        #endregion
+
+
+        #region Validation
+
         private void OnValidate()
         {
             closedResistance =
@@ -310,6 +481,13 @@ public bool OutputHasPower =>
                 Mathf.Max(
                     0f,
                     currentThreshold);
+
+            runtimePolarityThreshold =
+                Mathf.Max(
+                    0.000001f,
+                    runtimePolarityThreshold);
         }
+
+        #endregion
     }
 }

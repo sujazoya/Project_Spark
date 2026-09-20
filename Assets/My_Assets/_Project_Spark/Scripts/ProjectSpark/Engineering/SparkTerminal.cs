@@ -87,6 +87,101 @@ public readonly struct SparkTerminalElectricalState
         private SparkTerminalPolarity polarity =
             SparkTerminalPolarity.None;
 
+          #region Runtime Electrical Polarity
+
+[SerializeField, Min(0f)]
+private float runtimePolarityThreshold = 0.05f;
+
+[SerializeField]
+private SparkTerminalPolarity runtimePolarity =
+    SparkTerminalPolarity.None;
+
+/// <summary>
+/// Explicit runtime polarity assigned by a conductive component
+/// such as a switch.
+///
+/// This is NOT the serialized/authored polarity.
+/// </summary>
+public SparkTerminalPolarity RuntimePolarity =>
+    runtimePolarity;
+
+/// <summary>
+/// Polarity derived directly from the current solved voltage.
+/// </summary>
+public SparkTerminalPolarity SolvedPolarity
+{
+    get
+    {
+        if (electricalState.Voltage >
+            runtimePolarityThreshold)
+        {
+            return SparkTerminalPolarity.Positive;
+        }
+
+        if (electricalState.Voltage <
+            -runtimePolarityThreshold)
+        {
+            return SparkTerminalPolarity.Negative;
+        }
+
+        return SparkTerminalPolarity.None;
+    }
+}
+
+/// <summary>
+/// Sets the runtime polarity propagated by a component.
+/// </summary>
+public void SetRuntimePolarity(
+    SparkTerminalPolarity newPolarity)
+{
+    if (runtimePolarity == newPolarity)
+        return;
+
+    runtimePolarity = newPolarity;
+
+    ElectricalStateChanged?.Invoke(this);
+}
+
+/// <summary>
+/// Clears explicitly propagated runtime polarity.
+/// </summary>
+public void ClearRuntimePolarity()
+{
+    SetRuntimePolarity(
+        SparkTerminalPolarity.None);
+}
+/// <summary>
+/// Final polarity used by runtime systems such as
+/// wire visuals.
+///
+/// Priority:
+/// Runtime → Solved → Authored
+/// </summary>
+public SparkTerminalPolarity EffectivePolarity
+{
+    get
+    {
+        if (runtimePolarity !=
+            SparkTerminalPolarity.None)
+        {
+            return runtimePolarity;
+        }
+
+        SparkTerminalPolarity solved =
+            SolvedPolarity;
+
+        if (solved !=
+            SparkTerminalPolarity.None)
+        {
+            return solved;
+        }
+
+        return polarity;
+    }
+}
+
+#endregion
+
 
         [Header("Direction")]
 
@@ -244,36 +339,34 @@ public readonly struct SparkTerminalElectricalState
         // ELECTRICAL STATE
         // =========================================================
 
-        public void ApplyElectricalState(
-            in SparkTerminalElectricalState state)
-        {
-            if (float.IsNaN(state.Voltage) ||
-                float.IsInfinity(state.Voltage) ||
-                float.IsNaN(state.Current) ||
-                float.IsInfinity(state.Current))
-            {
-                return;
-            }
+       public void ApplyElectricalState(
+    in SparkTerminalElectricalState state)
+{
+    if (float.IsNaN(state.Voltage) ||
+        float.IsInfinity(state.Voltage) ||
+        float.IsNaN(state.Current) ||
+        float.IsInfinity(state.Current))
+    {
+        return;
+    }
 
-            bool changed =
-                Mathf.Abs(
-                    electricalState.Voltage -
-                    state.Voltage) >
-                0.000001f ||
-                Mathf.Abs(
-                    electricalState.Current -
-                    state.Current) >
-                0.000001f;
+    bool changed =
+        Mathf.Abs(
+            electricalState.Voltage -
+            state.Voltage) >
+        0.000001f ||
+        Mathf.Abs(
+            electricalState.Current -
+            state.Current) >
+        0.000001f;
 
-            electricalState =
-                state;
+    electricalState = state;
 
-            if (changed)
-            {
-                ElectricalStateChanged?.Invoke(
-                    this);
-            }
-        }
+    if (changed)
+    {
+        ElectricalStateChanged?.Invoke(this);
+    }
+}
 
 
         public void ClearElectricalState()

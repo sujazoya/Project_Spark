@@ -5962,7 +5962,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 284.27075, y: -241.188}
+  m_AnchoredPosition: {x: 284.27075, y: -241.18802}
   m_SizeDelta: {x: 568.54156, y: 34.45543}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &157748972
@@ -9752,6 +9752,8 @@ MonoBehaviour:
   owner: {fileID: 1910408501}
   kind: 1
   polarity: 0
+  runtimePolarityThreshold: 0.001
+  runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
   maxConnections: 2
@@ -11326,7 +11328,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 284.27078, y: -205.99997}
+  m_AnchoredPosition: {x: 284.27078, y: -205.99998}
   m_SizeDelta: {x: 568.54156, y: 48.9355}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &286407840
@@ -13321,6 +13323,8 @@ MonoBehaviour:
   owner: {fileID: 6529633473367131463}
   kind: 0
   polarity: 0
+  runtimePolarityThreshold: 0.001
+  runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
   maxConnections: 1
@@ -16578,6 +16582,8 @@ MonoBehaviour:
   owner: {fileID: 466822560}
   kind: 1
   polarity: 1
+  runtimePolarityThreshold: 0.001
+  runtimePolarity: 1
   acceptsInput: 1
   providesOutput: 1
   maxConnections: 2
@@ -17414,6 +17420,165 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 447162461}
+  m_CullTransparentMesh: 1
+--- !u!1 &447988939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 447988940}
+  - component: {fileID: 447988945}
+  - component: {fileID: 447988944}
+  - component: {fileID: 447988943}
+  - component: {fileID: 447988942}
+  - component: {fileID: 447988941}
+  m_Layer: 16
+  m_Name: ResetScene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &447988940
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447988939}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 705685374}
+  m_Father: {fileID: 1341313254}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &447988941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447988939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e294933d8ddc4194e98faa1f012f32da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkSceneReset
+--- !u!225 &447988942
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447988939}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &447988943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447988939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 447988944}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 447988941}
+        m_TargetAssemblyTypeName: ProjectSpark.Gameplay.SparkSceneReset, Assembly-CSharp
+        m_MethodName: ResetScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &447988944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447988939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 2100000, guid: 70968c861ab61214e9ea95ffc57b1531, type: 2}
+  m_Color: {r: 0.033018887, g: 0.9804577, b: 1, a: 0.15686275}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &447988945
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447988939}
   m_CullTransparentMesh: 1
 --- !u!1 &451063654
 GameObject:
@@ -24656,6 +24821,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 645878785}
+  - component: {fileID: 645878786}
   m_Layer: 0
   m_Name: Wire
   m_TagString: Untagged
@@ -24678,6 +24844,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &645878786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645878784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e273e9ab162ff34a98e7cd909cf611a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelEvaluator
+  circuitSystem: {fileID: 2058580492}
+  electricalSolver: {fileID: 2058580493}
+  debugLogging: 0
+  verboseLogging: 0
 --- !u!1 &646530678
 GameObject:
   m_ObjectHideFlags: 0
@@ -25053,7 +25235,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 5}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 233.5346, y: -208.50201}
+  m_AnchoredPosition: {x: 233.5346, y: -208.50203}
   m_SizeDelta: {x: 467.06918, y: 59.572002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &651178668
@@ -27291,6 +27473,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704587093}
   m_CullTransparentMesh: 1
+--- !u!1 &705685373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 705685374}
+  - component: {fileID: 705685376}
+  - component: {fileID: 705685375}
+  m_Layer: 16
+  m_Name: ICON
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &705685374
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705685373}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.2}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 447988940}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 3.7, y: 0.40000153}
+  m_SizeDelta: {x: -20.7, y: -30.6}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &705685375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705685373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.28773582, g: 1, b: 0.9497097, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 4a1751f043915644ebf3e91fc31f2ced, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &705685376
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705685373}
+  m_CullTransparentMesh: 1
 --- !u!1 &705743039
 GameObject:
   m_ObjectHideFlags: 0
@@ -28884,7 +29141,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 17.95
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -31925,8 +32182,6 @@ MonoBehaviour:
       inverted: 0
     failureMode: 1
     successOutputs:
-    - {fileID: 2010917050}
-    - {fileID: 1884573100}
     - {fileID: 1728654211}
     failureOutputs: []
     unlockedByDefault: 1
@@ -40338,7 +40593,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 17.95
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -44441,6 +44696,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5dfe09e00bac8904f8112af4baa4ff5e, type: 3}
       propertyPath: m_Layer
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5dfe09e00bac8904f8112af4baa4ff5e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7566931579403043949, guid: 5dfe09e00bac8904f8112af4baa4ff5e, type: 3}
       propertyPath: m_Layer
@@ -53284,12 +53543,13 @@ RectTransform:
   - {fileID: 951531052}
   - {fileID: 164517599}
   - {fileID: 1169850869}
+  - {fileID: 447988940}
   m_Father: {fileID: 1502691302}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -14.199997}
-  m_SizeDelta: {x: 0, y: -30.4}
+  m_AnchoredPosition: {x: 50.600006, y: -14.199997}
+  m_SizeDelta: {x: 101.1, y: -30.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1341313255
 MonoBehaviour:
@@ -59817,6 +60077,8 @@ MonoBehaviour:
   owner: {fileID: 6529633473367131463}
   kind: 0
   polarity: 0
+  runtimePolarityThreshold: 0.001
+  runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
   maxConnections: 1
@@ -64491,7 +64753,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 17.95
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -65224,8 +65486,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
   owner: {fileID: 6461748367603683303}
-  kind: 1
-  polarity: 1
+  kind: 0
+  polarity: 0
+  runtimePolarityThreshold: 0.001
+  runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
   maxConnections: 2
@@ -65242,8 +65506,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
   owner: {fileID: 6461748367603683303}
-  kind: 1
-  polarity: 1
+  kind: 0
+  polarity: 0
+  runtimePolarityThreshold: 0.001
+  runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
   maxConnections: 2
@@ -68201,7 +68467,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 17.95
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -69060,6 +69326,7 @@ MonoBehaviour:
   meshPrefab: {fileID: 8340936598753419305, guid: e9a93785f3ddff448b04cee58552e0e7, type: 3}
   positiveMaterial: {fileID: 2100000, guid: cf6ac813ad15cbc44940831bc4ba936b, type: 2}
   negativeMaterial: {fileID: 2100000, guid: 855a3536c4f5f754387a7399449ee056, type: 2}
+  neutralMaterial: {fileID: 2100000, guid: 35b9aa3fbe6c40d4392d6bd8680baf46, type: 2}
   paths: []
 --- !u!1 &1729267462
 GameObject:
@@ -72427,7 +72694,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 284.27078, y: -184.0004}
+  m_AnchoredPosition: {x: 284.27078, y: -184.00041}
   m_SizeDelta: {x: 568.54156, y: 48.9355}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1808894675
@@ -73350,6 +73617,8 @@ MonoBehaviour:
   owner: {fileID: 1910408501}
   kind: 1
   polarity: 0
+  runtimePolarityThreshold: 0.001
+  runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
   maxConnections: 2
@@ -74045,6 +74314,8 @@ MonoBehaviour:
   owner: {fileID: 1785396297}
   kind: 1
   polarity: 1
+  runtimePolarityThreshold: 0.001
+  runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
   maxConnections: 1
@@ -75115,6 +75386,8 @@ MonoBehaviour:
   owner: {fileID: 466822560}
   kind: 2
   polarity: 2
+  runtimePolarityThreshold: 0.001
+  runtimePolarity: 2
   acceptsInput: 1
   providesOutput: 1
   maxConnections: 2
@@ -76898,7 +77171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 995e4a0430ba45b40a8a62b495848b23, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5837523472550796488, guid: 995e4a0430ba45b40a8a62b495848b23, type: 3}
       propertyPath: m_Layer
@@ -78866,12 +79139,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelMonitor
   manager: {fileID: 810545245}
   autoFindManager: 1
-  theme: {fileID: 0}
+  theme: {fileID: 1958522948}
   levelIdText: {fileID: 1128760500}
   levelNameText: {fileID: 1163264114}
   levelDescriptionText: {fileID: 1985856012}
   statusText: {fileID: 1604816924}
-  statusMessageText: {fileID: 0}
+  statusMessageText: {fileID: 1142285074}
   sourceText: {fileID: 1712067429}
   voltageText: {fileID: 758321353}
   currentText: {fileID: 1025640420}
@@ -78880,7 +79153,7 @@ MonoBehaviour:
   affectedTerminalText: {fileID: 410622731}
   affectedTargetText: {fileID: 1725768313}
   progressText: {fileID: 807283430}
-  progressBar: {fileID: 0}
+  progressBar: {fileID: 338698533}
   faultPanel: {fileID: 1246400794}
   faultText: {fileID: 178129610}
 --- !u!114 &1958522948
@@ -78895,11 +79168,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34b90bf68d0162b448071c37777ae4a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelMonitorTheme
-  statusIndicator: {fileID: 0}
-  statusText: {fileID: 0}
-  faultPanel: {fileID: 0}
-  faultText: {fileID: 0}
-  progressFill: {fileID: 0}
+  statusIndicator: {fileID: 996497024}
+  statusText: {fileID: 1604816924}
+  faultPanel: {fileID: 1246400794}
+  faultText: {fileID: 178129610}
+  progressFill: {fileID: 916265806}
   accentLine: {fileID: 0}
   runningColor: {r: 0.35, g: 0.85, b: 1, a: 1}
   completedColor: {r: 0.35, g: 1, b: 0.55, a: 1}
@@ -82466,6 +82739,8 @@ MonoBehaviour:
   owner: {fileID: 1785396297}
   kind: 0
   polarity: 2
+  runtimePolarityThreshold: 0.001
+  runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
   maxConnections: 1
@@ -86694,13 +86969,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1345420251}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90d89997b21d2b748b38c4ee26fcb828, type: 3}
+  m_Script: {fileID: 11500000, guid: 72f2428e53391414c8d5856d37e6cfca, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkElectronicObject
-  objectId: cdfdeff7a083422b9f0675221f691413
-  displayName: BATTERY
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkBattery
+  objectId: Battery
+  displayName: Battery
   interactionsEnabled: 1
-  operationalState: 0
+  operationalState: 1
+  componentFamily: Generic
+  electricalModelId: generic
+  electricalEnabled: 1
+  positiveTerminal: {fileID: 417025491}
+  negativeTerminal: {fileID: 1875840473}
+  nominalVoltage: 5
+  internalResistance: 0.1
+  outputEnabled: 1
 --- !u!1 &3621264157086299888
 GameObject:
   m_ObjectHideFlags: 0
@@ -87574,7 +87857,7 @@ MonoBehaviour:
   objectId: e5cc19ab6a184177908efc47a90aa663
   displayName: Switch
   interactionsEnabled: 1
-  operationalState: 1
+  operationalState: 0
   componentFamily: Generic
   electricalModelId: generic
   electricalEnabled: 1
@@ -87585,6 +87868,7 @@ MonoBehaviour:
   openResistance: 1e+9
   voltageThreshold: 0.001
   currentThreshold: 0.001
+  runtimePolarityThreshold: 0.001
 --- !u!114 &6461748367603683304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88024,6 +88308,8 @@ MonoBehaviour:
   owner: {fileID: 1124700767}
   kind: 0
   polarity: 0
+  runtimePolarityThreshold: 0.001
+  runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
   maxConnections: 1
@@ -88445,6 +88731,8 @@ MonoBehaviour:
   owner: {fileID: 1124700767}
   kind: 0
   polarity: 0
+  runtimePolarityThreshold: 0.001
+  runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
   maxConnections: 1
@@ -88803,6 +89091,10 @@ PrefabInstance:
     - target: {fileID: 4394618107515876301, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
       propertyPath: m_Layer
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4394618107515876301, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4555367706285326280, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
       propertyPath: m_Layer

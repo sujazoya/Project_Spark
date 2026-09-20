@@ -168,27 +168,27 @@ namespace ProjectSpark.Tools
     return SparkResult.Success();
 }
 
-        protected override SparkResult OnEnd(
-            SparkToolContext context)
-        {
-            if (wireBuilder == null)
-            {
-                return SparkResult.Invalid(
-                    "SignalWireBuilder is not configured.");
-            }
+       protected override SparkResult OnEnd(
+    SparkToolContext context)
+{
+    if (wireBuilder == null)
+    {
+        return SparkResult.Invalid(
+            "SignalWireBuilder is not configured.");
+    }
 
-            if (!wireBuilder.IsDrawing)
-            {
-                return SparkResult.Unavailable(
-                    "Wire construction is not active.");
-            }
+    if (!wireBuilder.IsDrawing)
+    {
+        return SparkResult.Unavailable(
+            "Wire construction is not active.");
+    }
 
-            wireBuilder.EndWire(
-                context.ScreenPosition);
+    wireBuilder.EndWire(
+        context.ScreenPosition);
 
-            return SparkResult.Success(
-                "Wire construction completed.");
-        }
+    return SparkResult.Success(
+        "Wire construction completed.");
+}
 
         protected override SparkResult OnCancel(
             SparkToolContext context)
