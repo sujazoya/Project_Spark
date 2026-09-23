@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Level_01
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
   levelId: LEVEL_01
-  displayName: Level 01
-  description: 
+  displayName: LIGHT THE BULB
+  description: ALL CONNECTIONS SHOULD BE CONNENTED AND LIGHT SHOULD BE ON
   completionMode: 0
   requiredTargetCount: 1
   requireClosedReturn: 1
@@ -23,11 +23,35 @@ MonoBehaviour:
   allowIntermediateConnections: 1
   requireMinimumVoltage: 1
   minimumVoltage: 0.01
-  allowAnyConfiguredSource: 1
-  powerSources: []
-  targets: []
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: Power_Supply
+    positiveTerminalId: Power_Supply_Posetive
+    negativeTerminalId: Power_Supply_Negative
+    nominalVoltage: 5
+  targets:
+  - targetId: Bulb
+    displayName: Bulb
+    description: 'LED BULB
+
+'
+    targetType: 3
+    targetTerminalId: Bulb_Anode
+    requiredPositiveTerminalId: Bulb_Anode
+    requiredNegativeTerminalId: Bulb_Cathode
+    targetComponentId: LED_Bulb
+    minimumVoltage: 1
+    minimumCurrent: 0.01
+    minimumPower: 0.001
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
   failureMode: 1
-  successOutputs: []
-  failureOutputs: []
+  successOutputIds:
+  - LED_Helix
+  failureOutputIds:
+  - Levels
+  unlockNextLevelOnCompletion: 1
   unlockedByDefault: 1
   autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

@@ -4,85 +4,185 @@ using UnityEngine;
 namespace ProjectSpark.Gameplay
 {
     /// <summary>
-    /// Serializable definition of one playable Project Spark level.
-    /// Scene references are intentionally stored here so levels can directly
-    /// reference terminals/components in the current scene.
+    /// Persistent configuration asset for a Project Spark level.
+    ///
+    /// IMPORTANT:
+    /// This ScriptableObject must remain scene-independent.
+    /// Scene objects are referenced through IDs and resolved at runtime by
+    /// SparkLevelSceneBindings.
     /// </summary>
-  
-     
     [CreateAssetMenu(
-    fileName = "SparkLevelDefinition",
-    menuName = "Project Spark/Level Definition",
-    order = 10)]
-public sealed class SparkLevelDefinition : ScriptableObject
+        fileName = "SparkLevelDefinition",
+        menuName = "Project Spark/Level Definition",
+        order = 10)]
+    public sealed class SparkLevelDefinition : ScriptableObject
     {
+        // ================================================================
+        // ENUMS
+        // ================================================================
+
         public enum CompletionMode
         {
-            AllTargets,
-            AnyTarget,
-            RequiredTargetCount
+            AllTargets = 0,
+            AnyTarget = 1,
+            RequiredTargetCount = 2
         }
 
         public enum LevelFailureMode
         {
-            None,
-            ShortCircuit,
-            Overload,
-            InvalidConnection
+            None = 0,
+            ShortCircuit = 1,
+            Overload = 2,
+            InvalidConnection = 3
         }
 
+        // ================================================================
+        // IDENTITY
+        // ================================================================
+
         [Header("Identity")]
-        [SerializeField] private string levelId = "LEVEL_01";
-        [SerializeField] private string displayName = "Level 01";
+
+        [SerializeField]
+        private string levelId = "Level_01";
+
+        [SerializeField]
+        private string displayName = "Level 01";
 
         [TextArea(2, 5)]
-        [SerializeField] private string description;
+        [SerializeField]
+        private string description;
+
+        // ================================================================
+        // LEVEL RULES
+        // ================================================================
 
         [Header("Level Rules")]
-        [SerializeField] private CompletionMode completionMode =
+
+        [SerializeField]
+        private CompletionMode completionMode =
             CompletionMode.AllTargets;
 
         [Min(1)]
-        [SerializeField] private int requiredTargetCount = 1;
+        [SerializeField]
+        private int requiredTargetCount = 1;
 
-        [SerializeField] private bool requireClosedReturn = true;
-        [SerializeField] private bool rejectShortCircuit = true;
-        [SerializeField] private bool rejectTargetShort = true;
-        [SerializeField] private bool allowIntermediateConnections = true;
+        [SerializeField]
+        private bool requireClosedReturn = true;
+
+        [SerializeField]
+        private bool rejectShortCircuit = true;
+
+        [SerializeField]
+        private bool rejectTargetShort = true;
+
+        [SerializeField]
+        private bool allowIntermediateConnections = true;
+
+        // ================================================================
+        // POWER
+        // ================================================================
 
         [Header("Power")]
-        [Tooltip(
-            "When enabled, the evaluated target voltage must meet Minimum Voltage."
-        )]
-        [SerializeField] private bool requireMinimumVoltage = true;
+
+        [SerializeField]
+        private bool requireMinimumVoltage = true;
 
         [Min(0f)]
-        [SerializeField] private float minimumVoltage = 0.01f;
+        [SerializeField]
+        private float minimumVoltage = 1f;
 
-        [SerializeField] private bool allowAnyConfiguredSource = true;
+        [SerializeField]
+        private bool allowAnyConfiguredPowerSource = true;
+
+        // ================================================================
+        // POWER SOURCES
+        // ================================================================
 
         [Header("Power Sources")]
-        [SerializeField] private PowerSourceDefinition[] powerSources;
+
+        [SerializeField]
+        private PowerSourceDefinition[] powerSources =
+            Array.Empty<PowerSourceDefinition>();
+
+        // ================================================================
+        // OBJECTIVES
+        // ================================================================
 
         [Header("Objectives")]
-        [SerializeField] private SparkLevelTarget[] targets;
+
+        [SerializeField]
+        private SparkLevelTarget[] targets =
+            Array.Empty<SparkLevelTarget>();
+
+        // ================================================================
+        // FAILURE
+        // ================================================================
 
         [Header("Failure")]
-        [SerializeField] private LevelFailureMode failureMode =
-            LevelFailureMode.ShortCircuit;
+
+        [SerializeField]
+        private LevelFailureMode failureMode =
+            LevelFailureMode.None;
+
+        // ================================================================
+        // VISUAL OUTPUT IDs
+        // ================================================================
 
         [Header("Visual Outputs")]
-        [SerializeField] private GameObject[] successOutputs;
-        [SerializeField] private GameObject[] failureOutputs;
+
+        [Tooltip(
+            "Scene binding IDs used when the level completes successfully.")]
+        [SerializeField]
+        private string[] successOutputIds =
+            Array.Empty<string>();
+
+        [Tooltip(
+            "Scene binding IDs used when the level fails.")]
+        [SerializeField]
+        private string[] failureOutputIds =
+            Array.Empty<string>();
+
+        // ================================================================
+        // PROGRESSION
+        // ================================================================
 
         [Header("Progression")]
-        [SerializeField] private bool unlockedByDefault = true;
 
-        [SerializeField] private bool autoUnlockNextLevel = true;
+        [SerializeField]
+        private bool unlockNextLevelOnCompletion = true;      
 
-        // ------------------------------------------------------------
-        // Identity
-        // ------------------------------------------------------------
+
+
+        // ================================================================
+// PROGRESSION
+// ================================================================
+
+[Header("Progression")]
+
+[Tooltip(
+    "If enabled, this level starts unlocked when progression initializes.")]
+[SerializeField]
+private bool unlockedByDefault;
+
+[Tooltip(
+    "If enabled, completing this level automatically unlocks the next level.")]
+[SerializeField]
+private bool autoUnlockNextLevel = true;
+
+[Tooltip(
+    "If enabled, the gameplay manager automatically starts the next level " +
+    "after this level is completed.")]
+[SerializeField]
+private bool autoAdvanceOnCompletion;
+
+
+
+
+        
+
+        // ================================================================
+        // PUBLIC PROPERTIES
+        // ================================================================
 
         public string LevelId => levelId;
 
@@ -90,44 +190,36 @@ public sealed class SparkLevelDefinition : ScriptableObject
 
         public string Description => description;
 
-        // ------------------------------------------------------------
-        // Rules
-        // ------------------------------------------------------------
+        public CompletionMode CompletionRule => completionMode;
 
-        public CompletionMode CompletionRule =>
-            completionMode;
+        public CompletionMode CompletionModeValue => completionMode;
 
         public int RequiredTargetCount =>
             Mathf.Max(1, requiredTargetCount);
 
-        public bool RequireClosedReturn =>
-            requireClosedReturn;
+        public bool RequireClosedReturn => requireClosedReturn;
 
-        public bool RejectShortCircuit =>
-            rejectShortCircuit;
+        public bool RejectShortCircuit => rejectShortCircuit;
 
-        public bool RejectTargetShort =>
-            rejectTargetShort;
+        public bool RejectTargetShort => rejectTargetShort;
 
         public bool AllowIntermediateConnections =>
             allowIntermediateConnections;
 
-        // ------------------------------------------------------------
-        // Power
-        // ------------------------------------------------------------
-
         public bool RequireMinimumVoltage =>
             requireMinimumVoltage;
 
-        public float MinimumVoltage =>
+            public float MinimumVoltage =>
             Mathf.Max(0f, minimumVoltage);
 
-        public bool AllowAnyConfiguredSource =>
-            allowAnyConfiguredSource;
+            public bool UnlockedByDefault =>
+            unlockedByDefault;
 
-        // ------------------------------------------------------------
-        // Sources / Targets
-        // ------------------------------------------------------------
+        public bool AutoUnlockNextLevel =>
+            autoUnlockNextLevel;
+
+        public bool AllowAnyConfiguredPowerSource =>
+            allowAnyConfiguredPowerSource;
 
         public PowerSourceDefinition[] PowerSources =>
             powerSources;
@@ -138,121 +230,263 @@ public sealed class SparkLevelDefinition : ScriptableObject
         public LevelFailureMode FailureMode =>
             failureMode;
 
-        // ------------------------------------------------------------
-        // Outputs
-        // ------------------------------------------------------------
+        public string[] SuccessOutputIds =>
+            successOutputIds;
 
-        public GameObject[] SuccessOutputs =>
-            successOutputs;
+        public string[] FailureOutputIds =>
+            failureOutputIds;
 
-        public GameObject[] FailureOutputs =>
-            failureOutputs;
+        public bool UnlockNextLevelOnCompletion =>
+            unlockNextLevelOnCompletion;
 
-        // ------------------------------------------------------------
-        // Progression
-        // ------------------------------------------------------------
+        public bool AutoAdvanceOnCompletion =>
+            autoAdvanceOnCompletion;
 
-        public bool UnlockedByDefault =>
-            unlockedByDefault;
+        // ================================================================
+        // CONFIGURATION HELPERS
+        // ================================================================
 
-        public bool AutoUnlockNextLevel =>
-            autoUnlockNextLevel;
-
-        // ------------------------------------------------------------
-        // Counts
-        // ------------------------------------------------------------
-
-        public int TargetCount =>
-            targets != null
-                ? targets.Length
-                : 0;
-
-        public int SourceCount =>
-            powerSources != null
-                ? powerSources.Length
-                : 0;
-
-        // ------------------------------------------------------------
-        // Runtime Outputs
-        // ------------------------------------------------------------
-
-        public void SetRuntimeOutputs(
-            bool success,
-            bool failure)
+        public int TargetCount
         {
-            SetObjects(
-                successOutputs,
-                success);
-
-            SetObjects(
-                failureOutputs,
-                failure);
-        }
-
-        private static void SetObjects(
-            GameObject[] objects,
-            bool state)
-        {
-            if (objects == null)
-                return;
-
-            for (int i = 0; i < objects.Length; i++)
+            get
             {
-                if (objects[i] != null)
-                    objects[i].SetActive(state);
+                return targets != null
+                    ? targets.Length
+                    : 0;
             }
         }
 
-        // ------------------------------------------------------------
-        // Completion
-        // ------------------------------------------------------------
-
-        public bool IsCompletionSatisfied(
-            int satisfiedTargets)
+        public int SourceCount =>
+        powerSources != null ? powerSources.Length : 0;
+        public int PowerSourceCount
         {
-            int total = TargetCount;
+            get
+            {
+                return powerSources != null
+                    ? powerSources.Length
+                    : 0;
+            }
+        }
 
-            if (total <= 0)
+        public bool HasTargets =>
+            targets != null &&
+            targets.Length > 0;
+
+        public bool HasPowerSources =>
+            powerSources != null &&
+            powerSources.Length > 0;
+
+        // ================================================================
+        // COMPLETION LOGIC
+        // ================================================================
+
+        /// <summary>
+        /// Determines whether the supplied number of satisfied targets
+        /// fulfills this level's configured completion rule.
+        /// </summary>
+        public bool IsCompletionSatisfied(int satisfiedTargetCount)
+        {
+            int targetCount = TargetCount;
+
+            if (targetCount <= 0)
                 return false;
+
+            satisfiedTargetCount =
+                Mathf.Clamp(
+                    satisfiedTargetCount,
+                    0,
+                    targetCount);
 
             switch (completionMode)
             {
+                case CompletionMode.AllTargets:
+                    return satisfiedTargetCount >= targetCount;
+
                 case CompletionMode.AnyTarget:
-                    return satisfiedTargets > 0;
+                    return satisfiedTargetCount >= 1;
 
                 case CompletionMode.RequiredTargetCount:
-                    return satisfiedTargets >=
-                           Mathf.Min(
-                               RequiredTargetCount,
-                               total);
+                    return satisfiedTargetCount >=
+                           Mathf.Clamp(
+                               requiredTargetCount,
+                               1,
+                               targetCount);
 
-                case CompletionMode.AllTargets:
                 default:
-                    return satisfiedTargets >= total;
+                    return false;
             }
         }
 
-        // ------------------------------------------------------------
-        // Normalization
-        // ------------------------------------------------------------
+        // ================================================================
+        // VALIDATION
+        // ================================================================
 
-        public void Normalize()
+        /// <summary>
+        /// Validates the persistent asset configuration.
+        ///
+        /// This method does not resolve scene references.
+        /// Scene references are validated later through
+        /// SparkLevelSceneBindings.
+        /// </summary>
+        public bool Validate(out string error)
         {
-            requiredTargetCount =
-                Mathf.Max(
-                    1,
-                    requiredTargetCount);
-
-            minimumVoltage =
-                Mathf.Max(
-                    0f,
-                    minimumVoltage);
+            error = string.Empty;
 
             if (string.IsNullOrWhiteSpace(levelId))
-                levelId = "LEVEL";
+            {
+                error = "Level ID is empty.";
+                return false;
+            }
 
             if (string.IsNullOrWhiteSpace(displayName))
-                displayName = levelId;
+            {
+                error = $"Level '{levelId}' has an empty display name.";
+                return false;
+            }
+
+            if (powerSources == null ||
+                powerSources.Length == 0)
+            {
+                error =
+                    $"Level '{levelId}' has no configured power sources.";
+
+                return false;
+            }
+
+            for (int i = 0; i < powerSources.Length; i++)
+            {
+                PowerSourceDefinition source = powerSources[i];
+
+                if (source == null)
+                {
+                    error =
+                        $"Level '{levelId}' has a null power source " +
+                        $"at index {i}.";
+
+                    return false;
+                }
+
+                if (!source.IsConfigured)
+                {
+                    error =
+                        $"Level '{levelId}' has an invalid power source " +
+                        $"at index {i}.";
+
+                    return false;
+                }
+            }
+
+            if (targets == null ||
+                targets.Length == 0)
+            {
+                error =
+                    $"Level '{levelId}' has no configured targets.";
+
+                return false;
+            }
+
+            for (int i = 0; i < targets.Length; i++)
+            {
+                SparkLevelTarget target = targets[i];
+
+                if (target == null)
+                {
+                    error =
+                        $"Level '{levelId}' has a null target " +
+                        $"at index {i}.";
+
+                    return false;
+                }
+
+                if (!target.IsConfigured())
+                {
+                    error =
+                        $"Level '{levelId}' has an invalid target " +
+                        $"at index {i}.";
+
+                    return false;
+                }
+
+                if (!target.IsPolarityConfigurationValid())
+                {
+                    error =
+                        $"Level '{levelId}' has an invalid polarity " +
+                        $"configuration for target at index {i}.";
+
+                    return false;
+                }
+            }
+
+            if (completionMode ==
+                CompletionMode.RequiredTargetCount)
+            {
+                if (requiredTargetCount < 1)
+                {
+                    error =
+                        $"Level '{levelId}' requires at least " +
+                        $"one required target.";
+
+                    return false;
+                }
+
+                if (requiredTargetCount > targets.Length)
+                {
+                    error =
+                        $"Level '{levelId}' requires " +
+                        $"{requiredTargetCount} targets, but only " +
+                        $"{targets.Length} are configured.";
+
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        // ================================================================
+        // EDITOR NORMALIZATION
+        // ================================================================
+
+#if UNITY_EDITOR
+
+        private void OnValidate()
+        {
+            SanitizeEditorData();
+        }
+
+        /// <summary>
+        /// Keeps serialized asset values sane while editing.
+        ///
+        /// Runtime evaluation should not modify the ScriptableObject.
+        /// </summary>
+        private void SanitizeEditorData()
+        {
+            requiredTargetCount =
+                Mathf.Max(1, requiredTargetCount);
+
+            minimumVoltage =
+                Mathf.Max(0f, minimumVoltage);
+
+            if (powerSources == null)
+                powerSources = Array.Empty<PowerSourceDefinition>();
+
+            if (targets == null)
+                targets = Array.Empty<SparkLevelTarget>();
+
+            if (successOutputIds == null)
+                successOutputIds = Array.Empty<string>();
+
+            if (failureOutputIds == null)
+                failureOutputIds = Array.Empty<string>();
+
+            if (powerSources != null)
+            {
+                for (int i = 0; i < powerSources.Length; i++)
+                {
+                    if (powerSources[i] != null)
+                        powerSources[i].Normalize();
+                }
+            }
 
             if (targets != null)
             {
@@ -264,9 +498,11 @@ public sealed class SparkLevelDefinition : ScriptableObject
             }
         }
 
-        // ------------------------------------------------------------
-        // Power Source Definition
-        // ------------------------------------------------------------
+#endif
+
+        // ================================================================
+        // POWER SOURCE DEFINITION
+        // ================================================================
 
         [Serializable]
         public sealed class PowerSourceDefinition
@@ -274,33 +510,65 @@ public sealed class SparkLevelDefinition : ScriptableObject
             [SerializeField]
             private string sourceName = "Power Source";
 
+            [Tooltip(
+                "ID of the positive SparkTerminal in " +
+                "SparkLevelSceneBindings.")]
             [SerializeField]
-            private SparkTerminal positiveTerminal;
+            private string positiveTerminalId;
 
+            [Tooltip(
+                "ID of the negative SparkTerminal in " +
+                "SparkLevelSceneBindings.")]
             [SerializeField]
-            private SparkTerminal negativeTerminal;
+            private string negativeTerminalId;
 
             [Min(0f)]
             [SerializeField]
             private float nominalVoltage = 5f;
 
-            public string SourceName =>
-                sourceName;
+            // ------------------------------------------------------------
+            // PROPERTIES
+            // ------------------------------------------------------------
 
-            public SparkTerminal PositiveTerminal =>
-                positiveTerminal;
+            public string SourceName => sourceName;
 
-            public SparkTerminal NegativeTerminal =>
-                negativeTerminal;
+            public string PositiveTerminalId =>
+                positiveTerminalId;
+
+            public string NegativeTerminalId =>
+                negativeTerminalId;
 
             public float NominalVoltage =>
-                Mathf.Max(
-                    0f,
-                    nominalVoltage);
+                Mathf.Max(0f, nominalVoltage);
 
-            public bool IsConfigured =>
-                positiveTerminal != null &&
-                negativeTerminal != null;
+            /// <summary>
+            /// Checks whether the source contains the IDs required to
+            /// resolve its two electrical terminals.
+            /// </summary>
+            public bool IsConfigured
+            {
+                get
+                {
+                    return
+                        !string.IsNullOrWhiteSpace(
+                            positiveTerminalId) &&
+                        !string.IsNullOrWhiteSpace(
+                            negativeTerminalId);
+                }
+            }
+
+            // ------------------------------------------------------------
+            // EDITOR NORMALIZATION
+            // ------------------------------------------------------------
+
+            public void Normalize()
+            {
+                if (string.IsNullOrWhiteSpace(sourceName))
+                    sourceName = "Power Source";
+
+                nominalVoltage =
+                    Mathf.Max(0f, nominalVoltage);
+            }
         }
     }
 }

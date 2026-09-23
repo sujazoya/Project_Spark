@@ -1,21 +1,17 @@
-
 using System;
 using UnityEngine;
-using ProjectSpark.Circuit;
 
 namespace ProjectSpark.Gameplay
 {
     /// <summary>
-    /// Defines one objective that a level evaluator can validate.
+    /// Configuration for one level objective.
     ///
-    /// A target may use:
-    ///     - a single terminal
-    ///     - a positive/negative terminal pair
-    ///     - an electrical component
+    /// IMPORTANT:
+    /// This class is serialized inside SparkLevelDefinition.
+    /// It must therefore remain scene-independent.
     ///
-    /// RequiredPositiveTerminal / RequiredNegativeTerminal are the
-    /// authoritative polarity terminals for targets that require a
-    /// correctly wired circuit.
+    /// Actual scene objects are resolved by SparkLevelSceneBindings
+    /// using the IDs stored here.
     /// </summary>
     [Serializable]
     public sealed class SparkLevelTarget
@@ -26,13 +22,12 @@ namespace ProjectSpark.Gameplay
 
         public enum TargetType
         {
-            TerminalPowered,
-            VoltagePresent,
-            ComponentPowered,
-            LEDOn,
-            ComponentConducting
+            TerminalPowered = 0,
+            VoltagePresent = 1,
+            ComponentPowered = 2,
+            LEDOn = 3,
+            ComponentConducting = 4
         }
-
 
         // ================================================================
         // IDENTITY
@@ -41,64 +36,54 @@ namespace ProjectSpark.Gameplay
         [Header("Identity")]
 
         [SerializeField]
-        private string targetId = "TARGET_01";
+        private string targetId = "Target_01";
 
         [SerializeField]
-        private string displayName = "Power Target";
+        private string displayName = "Target";
 
-        [TextArea(1, 4)]
+        [TextArea(2, 4)]
         [SerializeField]
         private string description;
-
 
         // ================================================================
         // TARGET TYPE
         // ================================================================
 
-        [Header("Target Type")]
+        [Header("Target")]
 
         [SerializeField]
         private TargetType targetType =
             TargetType.TerminalPowered;
 
-
         // ================================================================
-        // TARGET CONNECTION
-        // ================================================================
-
-        [Header("Target Connection")]
-
-        [Tooltip(
-            "Optional single terminal used by TerminalPowered and " +
-            "VoltagePresent target types.")]
-        [SerializeField]
-        private SparkTerminal targetTerminal;
-
-        [Tooltip(
-            "Terminal that must receive the SOURCE POSITIVE (+) side " +
-            "of the circuit. For an LED this is normally the anode.")]
-        [SerializeField]
-        private SparkTerminal requiredPositiveTerminal;
-
-        [Tooltip(
-            "Terminal that must receive the SOURCE NEGATIVE (-) side " +
-            "of the circuit. For an LED this is normally the cathode.")]
-        [SerializeField]
-        private SparkTerminal requiredNegativeTerminal;
-
-
-        // ================================================================
-        // COMPONENT TARGET
+        // SCENE BINDING IDs
         // ================================================================
 
-        [Header("Component Target")]
+        [Header("Scene Binding IDs")]
 
         [Tooltip(
-            "Electrical component evaluated when the target type " +
-            "uses component-based validation.")]
+            "ID of the primary target SparkTerminal in " +
+            "SparkLevelSceneBindings.")]
         [SerializeField]
-        private SparkElectricalComponent targetComponent;
+        private string targetTerminalId;
 
+        [Tooltip(
+            "ID of the required positive SparkTerminal in " +
+            "SparkLevelSceneBindings.")]
+        [SerializeField]
+        private string requiredPositiveTerminalId;
+
+        [Tooltip(
+            "ID of the required negative SparkTerminal in " +
+            "SparkLevelSceneBindings.")]
+        [SerializeField]
+        private string requiredNegativeTerminalId;
+
+        [Tooltip(
+            "ID of the target SparkElectricalComponent in " +
+            "SparkLevelSceneBindings.")]
+        [SerializeField]
+        private string targetComponentId;
 
         // ================================================================
         // ELECTRICAL REQUIREMENTS
@@ -106,49 +91,35 @@ namespace ProjectSpark.Gameplay
 
         [Header("Electrical Requirements")]
 
-        [Tooltip(
-            "Minimum voltage required for this target.")]
         [Min(0f)]
         [SerializeField]
-        private float minimumVoltage = 0.01f;
+        private float minimumVoltage;
 
-        [Tooltip(
-            "Minimum current required for this target.")]
         [Min(0f)]
         [SerializeField]
-        private float minimumCurrent = 0f;
+        private float minimumCurrent;
 
-        [Tooltip(
-            "Minimum power required for this target.")]
         [Min(0f)]
         [SerializeField]
-        private float minimumPower = 0f;
-
+        private float minimumPower;
 
         // ================================================================
-        // BEHAVIOR
+        // BEHAVIOUR
         // ================================================================
 
-        [Header("Behavior")]
+        [Header("Behaviour")]
 
-        [Tooltip(
-            "When enabled, the terminal/component must be electrically enabled.")]
         [SerializeField]
         private bool requireElectricalEnabled = true;
 
-        [Tooltip(
-            "When enabled, a component target must be conducting.")]
         [SerializeField]
         private bool requireConduction;
 
-        [Tooltip(
-            "Inverts the final target result.")]
         [SerializeField]
         private bool inverted;
 
-
         // ================================================================
-        // PUBLIC IDENTITY
+        // PUBLIC PROPERTIES
         // ================================================================
 
         public string TargetId =>
@@ -160,80 +131,31 @@ namespace ProjectSpark.Gameplay
         public string Description =>
             description;
 
-
-        // ================================================================
-        // PUBLIC TARGET CONFIGURATION
-        // ================================================================
-
         public TargetType Type =>
             targetType;
 
+        public TargetType TargetTypeValue =>
+            targetType;
 
-        // ================================================================
-        // SINGLE TERMINAL
-        // ================================================================
+        // ---------------------------------------------------------------
+        // SCENE IDs
+        // ---------------------------------------------------------------
 
-        /// <summary>
-        /// Single-terminal target reference.
-        /// Used by TerminalPowered and VoltagePresent.
-        /// </summary>
-        public SparkTerminal TargetTerminal =>
-            targetTerminal;
+        public string TargetTerminalId =>
+            targetTerminalId;
 
+        public string RequiredPositiveTerminalId =>
+            requiredPositiveTerminalId;
 
-        // ================================================================
-        // POLARITY TERMINALS
-        // ================================================================
+        public string RequiredNegativeTerminalId =>
+            requiredNegativeTerminalId;
 
-        /// <summary>
-        /// Terminal that must be connected to the source positive side.
-        /// </summary>
-        public SparkTerminal RequiredPositiveTerminal =>
-            requiredPositiveTerminal;
+        public string TargetComponentId =>
+            targetComponentId;
 
-
-        /// <summary>
-        /// Terminal that must be connected to the source negative side.
-        /// </summary>
-        public SparkTerminal RequiredNegativeTerminal =>
-            requiredNegativeTerminal;
-
-
-        /// <summary>
-        /// True when both polarity terminals have been configured.
-        /// </summary>
-        public bool HasRequiredConnectionPair =>
-            requiredPositiveTerminal != null &&
-            requiredNegativeTerminal != null;
-
-
-        /// <summary>
-        /// True when neither polarity terminal is configured.
-        /// </summary>
-        public bool HasNoRequiredConnectionPair =>
-            requiredPositiveTerminal == null &&
-            requiredNegativeTerminal == null;
-
-
-        /// <summary>
-        /// True when only one polarity terminal has been configured.
-        /// </summary>
-        public bool HasPartialRequiredConnectionPair =>
-            (requiredPositiveTerminal != null) !=
-            (requiredNegativeTerminal != null);
-
-
-        // ================================================================
-        // COMPONENT
-        // ================================================================
-
-        public SparkElectricalComponent TargetComponent =>
-            targetComponent;
-
-
-        // ================================================================
+        // ---------------------------------------------------------------
         // ELECTRICAL REQUIREMENTS
-        // ================================================================
+        // ---------------------------------------------------------------
 
         public float MinimumVoltage =>
             Mathf.Max(0f, minimumVoltage);
@@ -244,10 +166,9 @@ namespace ProjectSpark.Gameplay
         public float MinimumPower =>
             Mathf.Max(0f, minimumPower);
 
-
-        // ================================================================
-        // BEHAVIOR
-        // ================================================================
+        // ---------------------------------------------------------------
+        // BEHAVIOUR
+        // ---------------------------------------------------------------
 
         public bool RequireElectricalEnabled =>
             requireElectricalEnabled;
@@ -258,226 +179,125 @@ namespace ProjectSpark.Gameplay
         public bool Inverted =>
             inverted;
 
-
         // ================================================================
-        // VALIDATION
+        // POLARITY CONFIGURATION
         // ================================================================
 
         /// <summary>
-        /// Evaluates the configured target against its current electrical state.
+        /// Returns true when both required polarity terminals are configured.
         /// </summary>
-        public bool Evaluate()
+        public bool HasRequiredConnectionPair
         {
-            bool result;
-
-            switch (targetType)
+            get
             {
-                case TargetType.TerminalPowered:
-                    result = EvaluateTerminalPowered();
-                    break;
-
-                case TargetType.VoltagePresent:
-                    result = EvaluateVoltage();
-                    break;
-
-                case TargetType.ComponentPowered:
-                    result = EvaluateComponentPowered();
-                    break;
-
-                case TargetType.LEDOn:
-                    result = EvaluateLED();
-                    break;
-
-                case TargetType.ComponentConducting:
-                    result = EvaluateComponentConducting();
-                    break;
-
-                default:
-                    result = false;
-                    break;
+                return
+                    !string.IsNullOrWhiteSpace(
+                        requiredPositiveTerminalId) &&
+                    !string.IsNullOrWhiteSpace(
+                        requiredNegativeTerminalId);
             }
-
-            return inverted ? !result : result;
         }
 
-
-        // ================================================================
-        // TERMINAL POWERED
-        // ================================================================
-
-        private bool EvaluateTerminalPowered()
+        /// <summary>
+        /// Returns true when neither required polarity terminal is configured.
+        /// </summary>
+        public bool HasNoRequiredConnectionPair
         {
-            if (targetTerminal == null)
-                return false;
-
-            SparkTerminalElectricalState state =
-                targetTerminal.ElectricalState;
-
-            if (requireElectricalEnabled &&
-                !targetTerminal.IsElectricalEnabled)
+            get
             {
-                return false;
+                return
+                    string.IsNullOrWhiteSpace(
+                        requiredPositiveTerminalId) &&
+                    string.IsNullOrWhiteSpace(
+                        requiredNegativeTerminalId);
             }
-
-            return state.IsPowered &&
-                   state.Voltage >= MinimumVoltage &&
-                   state.Current >= MinimumCurrent &&
-                   state.Power >= MinimumPower;
         }
 
-
-        // ================================================================
-        // VOLTAGE PRESENT
-        // ================================================================
-
-        private bool EvaluateVoltage()
+        /// <summary>
+        /// Returns true when only one side of the required polarity pair
+        /// has been configured.
+        /// </summary>
+        public bool HasPartialRequiredConnectionPair
         {
-            if (targetTerminal == null)
-                return false;
-
-            SparkTerminalElectricalState state =
-                targetTerminal.ElectricalState;
-
-            if (requireElectricalEnabled &&
-                !targetTerminal.IsElectricalEnabled)
+            get
             {
-                return false;
-            }
+                bool positiveConfigured =
+                    !string.IsNullOrWhiteSpace(
+                        requiredPositiveTerminalId);
 
-            return Mathf.Abs(state.Voltage) >= MinimumVoltage;
+                bool negativeConfigured =
+                    !string.IsNullOrWhiteSpace(
+                        requiredNegativeTerminalId);
+
+                return positiveConfigured != negativeConfigured;
+            }
         }
 
-
         // ================================================================
-        // COMPONENT POWERED
-        // ================================================================
-
-        private bool EvaluateComponentPowered()
-        {
-            if (targetComponent == null)
-                return false;
-
-            if (requireElectricalEnabled &&
-                !targetComponent.ElectricalEnabled)
-            {
-                return false;
-            }
-
-            SparkElectricalState state =
-                targetComponent.ElectricalState;
-
-            if (state.Voltage < MinimumVoltage)
-                return false;
-
-            if (state.Current < MinimumCurrent)
-                return false;
-
-            if (state.Power < MinimumPower)
-                return false;
-
-            if (requireConduction &&
-                state.Conduction != SparkConductionState.Conducting)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-
-        // ================================================================
-        // COMPONENT CONDUCTING
-        // ================================================================
-
-        private bool EvaluateComponentConducting()
-        {
-            if (targetComponent == null)
-                return false;
-
-            if (requireElectricalEnabled &&
-                !targetComponent.ElectricalEnabled)
-            {
-                return false;
-            }
-
-            return targetComponent.ElectricalState.Conduction ==
-                   SparkConductionState.Conducting;
-        }
-
-
-        // ================================================================
-        // LED
-        // ================================================================
-
-        private bool EvaluateLED()
-        {
-            if (targetComponent == null)
-                return false;
-
-            SparkLED led =
-                targetComponent.GetComponent<SparkLED>();
-
-            if (led == null)
-            {
-                led =
-                    targetComponent.GetComponentInChildren<SparkLED>();
-            }
-
-            if (led == null)
-                return false;
-
-            if (requireElectricalEnabled &&
-                !targetComponent.ElectricalEnabled)
-            {
-                return false;
-            }
-
-            return led.IsOn;
-        }
-
-
-        // ================================================================
-        // CONFIGURATION HELPERS
+        // CONFIGURATION VALIDATION
         // ================================================================
 
         /// <summary>
-        /// Returns true when the target has enough information for
-        /// its selected target type.
+        /// Checks whether this target has enough configuration to be
+        /// evaluated.
+        ///
+        /// Scene references themselves are NOT resolved here.
         /// </summary>
         public bool IsConfigured()
         {
+            bool hasTerminal =
+                !string.IsNullOrWhiteSpace(
+                    targetTerminalId);
+
+            bool hasComponent =
+                !string.IsNullOrWhiteSpace(
+                    targetComponentId);
+
             switch (targetType)
             {
                 case TargetType.TerminalPowered:
                 case TargetType.VoltagePresent:
-                    return targetTerminal != null;
+                    return hasTerminal;
 
                 case TargetType.ComponentPowered:
                 case TargetType.LEDOn:
                 case TargetType.ComponentConducting:
-                    return targetComponent != null;
+                    return hasComponent;
 
                 default:
-                    return false;
+                    return hasTerminal || hasComponent;
             }
         }
 
-
         /// <summary>
-        /// Returns true when the target has a complete polarity pair.
+        /// Validates the polarity configuration.
+        ///
+        /// A polarity pair must either be completely configured or
+        /// completely absent. A single positive or negative ID is invalid.
         /// </summary>
         public bool IsPolarityConfigurationValid()
         {
-            return HasRequiredConnectionPair;
+            return !HasPartialRequiredConnectionPair;
         }
-
 
         // ================================================================
         // NORMALIZATION
         // ================================================================
 
+        /// <summary>
+        /// Sanitizes serialized configuration values.
+        ///
+        /// This method intentionally does NOT resolve or modify scene
+        /// references because this object belongs to a ScriptableObject asset.
+        /// </summary>
         public void Normalize()
         {
+            if (string.IsNullOrWhiteSpace(targetId))
+                targetId = "Target";
+
+            if (string.IsNullOrWhiteSpace(displayName))
+                displayName = targetId;
+
             minimumVoltage =
                 Mathf.Max(0f, minimumVoltage);
 
@@ -487,15 +307,42 @@ namespace ProjectSpark.Gameplay
             minimumPower =
                 Mathf.Max(0f, minimumPower);
 
-            if (string.IsNullOrWhiteSpace(targetId))
-            {
-                targetId = "TARGET";
-            }
+            targetTerminalId =
+                NormalizeId(targetTerminalId);
 
-            if (string.IsNullOrWhiteSpace(displayName))
-            {
-                displayName = targetId;
-            }
+            requiredPositiveTerminalId =
+                NormalizeId(requiredPositiveTerminalId);
+
+            requiredNegativeTerminalId =
+                NormalizeId(requiredNegativeTerminalId);
+
+            targetComponentId =
+                NormalizeId(targetComponentId);
         }
+
+        // ================================================================
+        // ID NORMALIZATION
+        // ================================================================
+
+        private static string NormalizeId(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return string.Empty;
+
+            return value.Trim();
+        }
+
+#if UNITY_EDITOR
+
+        // ================================================================
+        // EDITOR VALIDATION
+        // ================================================================
+
+        private void OnValidate()
+        {
+            Normalize();
+        }
+
+#endif
     }
 }

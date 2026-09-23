@@ -9058,6 +9058,9 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 3964154580880524583, guid: e2c739a9edb4e2544bd5e28784f8e3ee, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 309360105234735788, guid: e2c739a9edb4e2544bd5e28784f8e3ee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 440692317}
     - targetCorrespondingSourceObject: {fileID: 3482362295202884302, guid: e2c739a9edb4e2544bd5e28784f8e3ee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1728192461}
@@ -11899,6 +11902,109 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 297535386}
   m_CullTransparentMesh: 1
+--- !u!1 &300563495
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 300563496}
+  - component: {fileID: 300563498}
+  - component: {fileID: 300563497}
+  - component: {fileID: 300563499}
+  m_Layer: 16
+  m_Name: battery
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &300563496
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300563495}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1565662869}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -91, y: -35}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &300563497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300563495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 2100000, guid: a9630ed194e2df1468eb7e7c2293312e, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &300563498
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300563495}
+  m_CullTransparentMesh: 1
+--- !u!114 &300563499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300563495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd0fda1c9698a1946a27b4a32cd92770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkBatteryDisplay
+  displayImage: {fileID: 0}
+  percentageText: {fileID: 0}
+  voltageText: {fileID: 0}
+  currentText: {fileID: 0}
+  statusText: {fileID: 0}
+  chargePercent: 0.846
+  voltage: 12.48
+  current: 0.82
+  state: 2
+  normalColor: {r: 0.05, g: 0.85, b: 1, a: 1}
+  fullColor: {r: 0.15, g: 1, b: 0.55, a: 1}
+  faultColor: {r: 1, g: 0.15, b: 0.08, a: 1}
+  chargeSpeed: 1.5
+  pulseIntensity: 2
+  glowIntensity: 1.5
 --- !u!1 &302912685
 GameObject:
   m_ObjectHideFlags: 0
@@ -15799,7 +15905,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -694, y: -92}
+  m_AnchoredPosition: {x: -694, y: -91.999985}
   m_SizeDelta: {x: -1351.459, y: -758.401}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &392563719
@@ -17431,6 +17537,37 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3000885456463677495, guid: 1539fd503e22fe74ebb2bc994554e9b1, type: 3}
   m_PrefabInstance: {fileID: 9069130272220788086}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &440692316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 440692317}
+  m_Layer: 15
+  m_Name: Levels
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &440692317
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440692316}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1306271456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &443101192
 GameObject:
   m_ObjectHideFlags: 0
@@ -32008,7 +32145,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 284, y: -298}
+  m_AnchoredPosition: {x: 283.99997, y: -298}
   m_SizeDelta: {x: 452.334, y: 470.13196}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &800773873
@@ -32596,9 +32733,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 810545242}
-  - component: {fileID: 810545245}
   - component: {fileID: 810545244}
   - component: {fileID: 810545246}
+  - component: {fileID: 810545247}
   m_Layer: 0
   m_Name: LevelGamePlayManager
   m_TagString: Untagged
@@ -32633,25 +32770,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e84e18f2a91fbbf4ebf813d6f8981d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelProgression
-  levelManager: {fileID: 810545245}
+  levelManager: {fileID: 810545246}
   initializeOnAwake: 1
   autoUnlockNextLevel: 1
   saveProgress: 1
   saveKey: ProjectSpark.LevelProgress
   debugLogging: 0
-  progress: []
---- !u!114 &810545245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 810545241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bad26a5b5fc26a5449015495b174bac9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.LevelGamePlayManager
+  progress:
+  - unlocked: 0
+    completed: 0
+    completionCount: 0
 --- !u!114 &810545246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32666,45 +32794,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.LevelGamePlayManager
   circuitSystem: {fileID: 2058580492}
   electricalSolver: {fileID: 2058580493}
+  sceneBindings: {fileID: 0}
   levels:
-  - levelId: LEVEL_01
-    displayName: LIGHT THE BULB
-    description: EVERY CONNECTION SHOULD BE CONNECTED AND LIGHT ON
-    completionMode: 0
-    requiredTargetCount: 1
-    requireClosedReturn: 1
-    rejectShortCircuit: 1
-    rejectTargetShort: 1
-    allowIntermediateConnections: 1
-    requireMinimumVoltage: 0
-    minimumVoltage: 0.01
-    allowAnyConfiguredSource: 0
-    powerSources:
-    - sourceName: Main Supply
-      positiveTerminal: {fileID: 417025491}
-      negativeTerminal: {fileID: 1875840473}
-      nominalVoltage: 5
-    targets:
-    - targetId: TARGET
-      displayName: Target
-      description: ligh on
-      targetType: 3
-      targetTerminal: {fileID: 1847861880}
-      requiredPositiveTerminal: {fileID: 1847861880}
-      requiredNegativeTerminal: {fileID: 2052175435}
-      targetComponent: {fileID: 1785396297}
-      minimumVoltage: 0.01
-      minimumCurrent: 0.0001
-      minimumPower: 0.0001
-      requireElectricalEnabled: 1
-      requireConduction: 0
-      inverted: 0
-    failureMode: 1
-    successOutputs:
-    - {fileID: 1728654211}
-    failureOutputs: []
-    unlockedByDefault: 1
-    autoUnlockNextLevel: 1
+  - {fileID: 11400000, guid: 64a97c3041cca0b4eb8e078632d99a80, type: 2}
   activeLevelIndex: 0
   runtimeState: 0
   autoStartFirstLevel: 1
@@ -32714,6 +32806,45 @@ MonoBehaviour:
   debugLogging: 1
   verboseLogging: 1
   showRuntimeState: 1
+--- !u!114 &810545247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810545241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c2f1eac5072564e8675d06932fab72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelSceneBindings
+  terminals:
+  - id: Power_Supply_Posetive
+    terminal: {fileID: 417025491}
+  - id: Power_Supply_Negative
+    terminal: {fileID: 1875840473}
+  - id: Bulb_Anode
+    terminal: {fileID: 1847861880}
+  - id: Bulb_Cathode
+    terminal: {fileID: 2052175435}
+  - id: Switch_Output
+    terminal: {fileID: 1598658546}
+  - id: Switch_Input
+    terminal: {fileID: 1598658545}
+  components:
+  - id: LED_Bulb
+    component: {fileID: 1785396297}
+  - id: Power_Switch
+    component: {fileID: 6461748367603683303}
+  - id: Power_Supply
+    component: {fileID: 466822560}
+  - id: Register
+    component: {fileID: 1910408501}
+  outputs:
+  - id: LED_Helix
+    target: {fileID: 1728654211}
+  - id: Levels
+    target: {fileID: 440692316}
 --- !u!1 &813325466
 GameObject:
   m_ObjectHideFlags: 0
@@ -64526,6 +64657,7 @@ RectTransform:
   - {fileID: 992464482}
   - {fileID: 81832068}
   - {fileID: 729699625}
+  - {fileID: 300563496}
   m_Father: {fileID: 2058580491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -80599,8 +80731,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8286f86a406399c4ca9bb2e89a522d38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelMonitor
-  manager: {fileID: 810545245}
-  autoFindManager: 1
+  manager: {fileID: 810545246}
+  autoFindManager: 0
   theme: {fileID: 1958522948}
   levelIdText: {fileID: 1163264114}
   levelNameText: {fileID: 1128760500}
@@ -81714,7 +81846,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -30}
+  m_AnchoredPosition: {x: 0, y: -29.999985}
   m_SizeDelta: {x: -1439.5278, y: -545.35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1980748169

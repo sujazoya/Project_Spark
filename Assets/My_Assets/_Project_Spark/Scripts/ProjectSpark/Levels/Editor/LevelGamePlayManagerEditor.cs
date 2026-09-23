@@ -487,85 +487,148 @@ namespace ProjectSpark.Gameplay.Editor
         // IDENTITY
         // ============================================================
 
-        private void DrawLevelIdentity(
-            SerializedProperty level)
-        {
-            EditorGUILayout.LabelField(
-                "IDENTITY",
-                EditorStyles.boldLabel);
+private void DrawLevelIdentity(
+    SerializedProperty level)
+{
+    EditorGUILayout.LabelField(
+        "IDENTITY",
+        EditorStyles.boldLabel);
 
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative("levelId"),
-                new GUIContent("Level ID"));
+    if (level == null)
+    {
+        EditorGUILayout.HelpBox(
+            "Level reference is missing.",
+            MessageType.Warning);
 
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative("displayName"),
-                new GUIContent("Display Name"));
+        return;
+    }
 
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative("description"),
-                new GUIContent("Description"));
-        }
+    SparkLevelDefinition levelDefinition =
+        level.objectReferenceValue as SparkLevelDefinition;
+
+    if (levelDefinition == null)
+    {
+        EditorGUILayout.HelpBox(
+            "Assign a SparkLevelDefinition asset.",
+            MessageType.Warning);
+
+        EditorGUILayout.PropertyField(
+            level,
+            new GUIContent("Level Definition"));
+
+        return;
+    }
+
+    // The LevelGamePlayManager stores a reference to the
+    // ScriptableObject. Its internal fields are serialized
+    // by the SparkLevelDefinition asset itself.
+
+    EditorGUILayout.PropertyField(
+        level,
+        new GUIContent("Level Definition"));
+
+    EditorGUILayout.Space(4);
+
+    using (new EditorGUI.DisabledScope(true))
+    {
+        EditorGUILayout.TextField(
+            "Level ID",
+            levelDefinition.LevelId);
+
+        EditorGUILayout.TextField(
+            "Display Name",
+            levelDefinition.DisplayName);
+
+        EditorGUILayout.TextField(
+            "Description",
+            levelDefinition.Description);
+    }
+}
+
+
 
         // ============================================================
         // RULES
         // ============================================================
 
-        private void DrawLevelRules(
-            SerializedProperty level)
-        {
-            EditorGUILayout.LabelField(
-                "COMPLETION RULES",
-                EditorStyles.boldLabel);
+private void DrawLevelRules(
+    SerializedProperty level)
+{
+    EditorGUILayout.LabelField(
+        "COMPLETION RULES",
+        EditorStyles.boldLabel);
 
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative(
-                    "completionMode"),
-                new GUIContent(
-                    "Completion Mode"));
+    if (level == null)
+    {
+        EditorGUILayout.HelpBox(
+            "Level reference is missing.",
+            MessageType.Warning);
 
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative(
-                    "requiredTargetCount"),
-                new GUIContent(
-                    "Required Target Count"));
+        return;
+    }
 
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative(
-                    "minimumVoltage"),
-                new GUIContent(
-                    "Minimum Voltage"));
+    SparkLevelDefinition levelDefinition =
+        level.objectReferenceValue as SparkLevelDefinition;
 
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative(
-                    "requireClosedReturn"),
-                new GUIContent(
-                    "Require Closed Return"));
+    if (levelDefinition == null)
+    {
+        EditorGUILayout.HelpBox(
+            "Assign a SparkLevelDefinition asset before editing level rules.",
+            MessageType.Warning);
 
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative(
-                    "rejectShortCircuit"),
-                new GUIContent(
-                    "Reject Short Circuit"));
+        return;
+    }
 
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative(
-                    "rejectTargetShort"),
-                new GUIContent(
-                    "Reject Target Short"));
+    /*
+     * SparkLevelDefinition is a ScriptableObject.
+     *
+     * The LevelGamePlayManager stores only the asset reference.
+     * Therefore FindPropertyRelative() cannot be used here.
+     *
+     * The actual level-rule fields are edited on the
+     * SparkLevelDefinition asset itself.
+     */
 
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative(
-                    "allowIntermediateConnections"),
-                new GUIContent(
-                    "Allow Intermediate Connections"));
+    EditorGUILayout.HelpBox(
+        "Level rules are configured in the assigned SparkLevelDefinition asset.",
+        MessageType.Info);
 
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative(
-                    "allowAnyConfiguredSource"),
-                new GUIContent(
-                    "Allow Any Configured Source"));
-        }
+    using (new EditorGUI.DisabledScope(true))
+    {
+        EditorGUILayout.EnumPopup(
+            new GUIContent("Completion Mode"),
+            levelDefinition.CompletionModeValue);
+
+        EditorGUILayout.IntField(
+            new GUIContent("Required Target Count"),
+            levelDefinition.RequiredTargetCount);
+
+        EditorGUILayout.FloatField(
+            new GUIContent("Minimum Voltage"),
+            levelDefinition.MinimumVoltage);
+
+        EditorGUILayout.Toggle(
+            new GUIContent("Require Closed Return"),
+            levelDefinition.RequireClosedReturn);
+
+        EditorGUILayout.Toggle(
+            new GUIContent("Reject Short Circuit"),
+            levelDefinition.RejectShortCircuit);
+
+        EditorGUILayout.Toggle(
+            new GUIContent("Reject Target Short"),
+            levelDefinition.RejectTargetShort);
+
+        EditorGUILayout.Toggle(
+            new GUIContent("Allow Intermediate Connections"),
+            levelDefinition.AllowIntermediateConnections);
+
+        EditorGUILayout.Toggle(
+            new GUIContent("Allow Any Configured Source"),
+            levelDefinition.AllowAnyConfiguredPowerSource);
+    }
+}
+
 
         // ============================================================
         // POWER
@@ -1128,69 +1191,171 @@ namespace ProjectSpark.Gameplay.Editor
         // FAILURE
         // ============================================================
 
-        private void DrawFailureConfiguration(
-            SerializedProperty level)
-        {
-            EditorGUILayout.LabelField(
-                "FAILURE",
-                EditorStyles.boldLabel);
+    
+private void DrawFailureConfiguration(
+    SerializedProperty level)
+{
+    EditorGUILayout.LabelField(
+        "FAILURE",
+        EditorStyles.boldLabel);
 
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative(
-                    "failureMode"),
-                new GUIContent(
-                    "Failure Mode"));
-        }
+    if (level == null)
+    {
+        EditorGUILayout.HelpBox(
+            "Level reference is missing.",
+            MessageType.Warning);
+
+        return;
+    }
+
+    SparkLevelDefinition levelDefinition =
+        level.objectReferenceValue as SparkLevelDefinition;
+
+    if (levelDefinition == null)
+    {
+        EditorGUILayout.HelpBox(
+            "Assign a SparkLevelDefinition asset before configuring failure rules.",
+            MessageType.Warning);
+
+        return;
+    }
+
+    using (new EditorGUI.DisabledScope(true))
+    {
+        EditorGUILayout.EnumPopup(
+            new GUIContent("Failure Mode"),
+            levelDefinition.FailureMode);
+    }
+}
+
+
 
         // ============================================================
         // OUTPUTS
         // ============================================================
 
-        private void DrawOutputs(
-            SerializedProperty level)
+      
+private void DrawOutputs(
+    SerializedProperty level)
+{
+    EditorGUILayout.LabelField(
+        "VISUAL OUTPUTS",
+        EditorStyles.boldLabel);
+
+    if (level == null)
+    {
+        EditorGUILayout.HelpBox(
+            "Level reference is missing.",
+            MessageType.Warning);
+
+        return;
+    }
+
+    SparkLevelDefinition levelDefinition =
+        level.objectReferenceValue as SparkLevelDefinition;
+
+    if (levelDefinition == null)
+    {
+        EditorGUILayout.HelpBox(
+            "Assign a SparkLevelDefinition asset before configuring visual outputs.",
+            MessageType.Warning);
+
+        return;
+    }
+
+    using (new EditorGUI.DisabledScope(true))
+    {
+        EditorGUILayout.IntField(
+            new GUIContent("Success Outputs"),
+            levelDefinition.SuccessOutputIds != null
+                ? levelDefinition.SuccessOutputIds.Length
+                : 0);
+
+        if (levelDefinition.SuccessOutputIds != null &&
+            levelDefinition.SuccessOutputIds.Length > 0)
         {
-            EditorGUILayout.LabelField(
-                "VISUAL OUTPUTS",
-                EditorStyles.boldLabel);
-
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative(
-                    "successOutputs"),
-                new GUIContent(
-                    "Success Outputs"),
-                true);
-
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative(
-                    "failureOutputs"),
-                new GUIContent(
-                    "Failure Outputs"),
-                true);
+            for (int i = 0;
+                 i < levelDefinition.SuccessOutputIds.Length;
+                 i++)
+            {
+                EditorGUILayout.TextField(
+                    $"  Success [{i}]",
+                    levelDefinition.SuccessOutputIds[i]);
+            }
         }
+
+        EditorGUILayout.Space(3);
+
+        EditorGUILayout.IntField(
+            new GUIContent("Failure Outputs"),
+            levelDefinition.FailureOutputIds != null
+                ? levelDefinition.FailureOutputIds.Length
+                : 0);
+
+        if (levelDefinition.FailureOutputIds != null &&
+            levelDefinition.FailureOutputIds.Length > 0)
+        {
+            for (int i = 0;
+                 i < levelDefinition.FailureOutputIds.Length;
+                 i++)
+            {
+                EditorGUILayout.TextField(
+                    $"  Failure [{i}]",
+                    levelDefinition.FailureOutputIds[i]);
+            }
+        }
+    }
+}
+
 
         // ============================================================
         // PROGRESSION
         // ============================================================
 
-        private void DrawProgression(
-            SerializedProperty level)
-        {
-            EditorGUILayout.LabelField(
-                "PROGRESSION",
-                EditorStyles.boldLabel);
+private void DrawProgression(
+    SerializedProperty level)
+{
+    EditorGUILayout.LabelField(
+        "PROGRESSION",
+        EditorStyles.boldLabel);
 
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative(
-                    "unlockedByDefault"),
-                new GUIContent(
-                    "Unlocked By Default"));
+    if (level == null)
+    {
+        EditorGUILayout.HelpBox(
+            "Level reference is missing.",
+            MessageType.Warning);
 
-            EditorGUILayout.PropertyField(
-                level.FindPropertyRelative(
-                    "autoUnlockNextLevel"),
-                new GUIContent(
-                    "Auto Unlock Next Level"));
-        }
+        return;
+    }
+
+    SparkLevelDefinition levelDefinition =
+        level.objectReferenceValue as SparkLevelDefinition;
+
+    if (levelDefinition == null)
+    {
+        EditorGUILayout.HelpBox(
+            "Assign a SparkLevelDefinition asset before configuring progression.",
+            MessageType.Warning);
+
+        return;
+    }
+
+    using (new EditorGUI.DisabledScope(true))
+    {
+        EditorGUILayout.Toggle(
+            new GUIContent("Unlocked By Default"),
+            levelDefinition.UnlockedByDefault);
+
+        EditorGUILayout.Toggle(
+            new GUIContent("Auto Unlock Next Level"),
+            levelDefinition.AutoUnlockNextLevel);
+
+        EditorGUILayout.Toggle(
+            new GUIContent("Auto Advance On Completion"),
+            levelDefinition.AutoAdvanceOnCompletion);
+    }
+}
+
 
         // ============================================================
         // LEVEL VALIDATION

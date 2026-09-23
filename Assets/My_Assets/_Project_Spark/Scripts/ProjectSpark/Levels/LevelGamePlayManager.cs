@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,6 +55,17 @@ namespace ProjectSpark.Gameplay
 
         [SerializeField]
         private SparkElectricalSolver electricalSolver;
+
+        // ============================================================
+        // SCENE BINDINGS
+        // ============================================================
+
+        [Header("Scene Bindings")]
+        [Tooltip(
+            "Scene-side bindings that resolve the IDs stored in " +
+            "SparkLevelDefinition assets to actual scene objects.")]
+        [SerializeField]
+        private SparkLevelSceneBindings sceneBindings;
 
         // ============================================================
         // LEVELS
@@ -159,6 +171,9 @@ namespace ProjectSpark.Gameplay
 
         public SparkElectricalSolver ElectricalSolver =>
             electricalSolver;
+
+        public SparkLevelSceneBindings SceneBindings =>
+            sceneBindings;
 
         public SparkLevelDefinition[] Levels =>
             levels;
@@ -325,9 +340,32 @@ namespace ProjectSpark.Gameplay
 
             EnsureEvaluator();
 
+            if (evaluator == null)
+            {
+                Log(
+                    $"Cannot start level {index}: " +
+                    "level evaluator is unavailable.");
+
+                return false;
+            }
+
+            if (sceneBindings == null)
+            {
+                Log(
+                    $"Cannot start level {index}: " +
+                    "SparkLevelSceneBindings is missing.");
+
+                return false;
+            }
+
             activeLevelIndex = index;
 
-            level.Normalize();
+            // IMPORTANT:
+            // SparkLevelDefinition is now a ScriptableObject asset.
+            // Never mutate/normalize the asset at runtime.
+            //
+            // Validation and runtime object resolution are handled
+            // by SparkLevelEvaluator + SparkLevelSceneBindings.
 
             currentLevelCompleted = false;
             currentLevelFailed = false;
@@ -368,7 +406,9 @@ namespace ProjectSpark.Gameplay
             runtimeState =
                 LevelRuntimeState.Playing;
 
-            level.SetRuntimeOutputs(
+            // Scene outputs belong to the scene binding component,
+            // not to the ScriptableObject asset.
+            SetLevelOutputs(
                 false,
                 false);
 
@@ -445,7 +485,7 @@ namespace ProjectSpark.Gameplay
             runtimeState =
                 LevelRuntimeState.Completed;
 
-            level.SetRuntimeOutputs(
+            SetLevelOutputs(
                 true,
                 false);
 
@@ -515,7 +555,7 @@ namespace ProjectSpark.Gameplay
             runtimeState =
                 LevelRuntimeState.Failed;
 
-            level.SetRuntimeOutputs(
+            SetLevelOutputs(
                 false,
                 true);
 
@@ -562,7 +602,7 @@ namespace ProjectSpark.Gameplay
             runtimeState =
                 LevelRuntimeState.Failed;
 
-            level.SetRuntimeOutputs(
+            SetLevelOutputs(
                 false,
                 true);
 
@@ -626,7 +666,7 @@ namespace ProjectSpark.Gameplay
             runtimeState =
                 LevelRuntimeState.Playing;
 
-            level.SetRuntimeOutputs(
+            SetLevelOutputs(
                 false,
                 false);
 
@@ -643,6 +683,75 @@ namespace ProjectSpark.Gameplay
                 $"{level.DisplayName}");
         }
 
+        // ============================================================
+        // SCENE OUTPUT CONTROL
+        // ============================================================
+
+       private void SetLevelOutputs(
+    bool success,
+    bool failure)
+{
+    if (sceneBindings == null)
+        return;
+
+    SparkLevelDefinition level =
+        ActiveLevel;
+
+    if (level == null)
+        return;
+
+    SetOutputs(
+        level.SuccessOutputIds,
+        success);
+
+    SetOutputs(
+        level.FailureOutputIds,
+        failure);
+}
+
+
+private void SetOutputs(
+    string[] outputIds,
+    bool active)
+{
+    if (outputIds == null ||
+        outputIds.Length == 0)
+    {
+        return;
+    }
+
+    for (int i = 0;
+         i < outputIds.Length;
+         i++)
+    {
+        SetOutput(
+            outputIds[i],
+            active);
+    }
+}
+private void SetOutput(
+    string outputId,
+    bool active)
+{
+    if (string.IsNullOrWhiteSpace(outputId))
+        return;
+
+    if (!sceneBindings.TryGetObject(
+            outputId,
+            out GameObject target))
+    {
+        LogVerbose(
+            $"Scene output binding not found: " +
+            $"'{outputId}'.");
+
+        return;
+    }
+
+    if (target == null)
+        return;
+
+    target.SetActive(active);
+}
         // ============================================================
         // EVALUATION CONTROL
         // ============================================================
@@ -691,6 +800,21 @@ namespace ProjectSpark.Gameplay
                 SetValidationResult(
                     SparkLevelValidationState.InvalidConfiguration,
                     "No active level.");
+
+                return;
+            }
+
+            if (sceneBindings == null)
+            {
+                currentLevelCompleted = false;
+                currentLevelFailed = true;
+
+                runtimeState =
+                    LevelRuntimeState.Failed;
+
+                SetValidationResult(
+                    SparkLevelValidationState.InvalidConfiguration,
+                    "SparkLevelSceneBindings is missing.");
 
                 return;
             }
@@ -1167,6 +1291,19 @@ namespace ProjectSpark.Gameplay
                     FindFirstObjectByType<
                         SparkElectricalSolver>();
             }
+
+            if (sceneBindings == null)
+            {
+                sceneBindings =
+                    GetComponent<SparkLevelSceneBindings>();
+
+                if (sceneBindings == null)
+                {
+                    sceneBindings =
+                        GetComponentInParent<
+                            SparkLevelSceneBindings>();
+                }
+            }
         }
 
         private void EnsureEvaluator()
@@ -1177,9 +1314,13 @@ namespace ProjectSpark.Gameplay
             if (circuitSystem == null)
                 return;
 
+            if (sceneBindings == null)
+                return;
+
             evaluator =
                 new SparkLevelEvaluator(
-                    circuitSystem);
+                    circuitSystem,
+                    sceneBindings);
         }
 
         // ============================================================
@@ -1251,15 +1392,15 @@ namespace ProjectSpark.Gameplay
                     0,
                     levels.Length - 1);
 
-            for (int i = 0;
-                 i < levels.Length;
-                 i++)
-            {
-                if (levels[i] != null)
-                {
-                    levels[i].Normalize();
-                }
-            }
+            // IMPORTANT:
+            // Do not call level.Normalize() here.
+            //
+            // SparkLevelDefinition is a reusable ScriptableObject
+            // asset. Its data must remain asset-owned and scene-
+            // independent.
+            //
+            // Asset validation belongs to SparkLevelDefinition's
+            // own OnValidate().
         }
     }
 }
