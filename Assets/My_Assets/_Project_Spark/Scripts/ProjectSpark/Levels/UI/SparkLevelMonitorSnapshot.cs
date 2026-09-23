@@ -5,8 +5,11 @@ namespace ProjectSpark.Gameplay
 {
     /// <summary>
     /// Lightweight presentation snapshot for Project Spark's in-world
-    /// diagnostic monitor. It contains no UI references and performs no
-    /// simulation work.
+    /// diagnostic monitor.
+    ///
+    /// Contains no UI references and performs no simulation work.
+    /// All electrical values and validation state originate from
+    /// LevelGamePlayManager.
     /// </summary>
     [Serializable]
     public struct SparkLevelMonitorSnapshot
@@ -36,6 +39,10 @@ namespace ProjectSpark.Gameplay
         public string affectedTerminalName;
         public string affectedTargetName;
 
+        // ============================================================
+        // CREATE SNAPSHOT
+        // ============================================================
+
         public static SparkLevelMonitorSnapshot FromManager(
             LevelGamePlayManager manager)
         {
@@ -46,59 +53,120 @@ namespace ProjectSpark.Gameplay
             {
                 snapshot.state =
                     SparkLevelValidationState.InvalidConfiguration;
-                snapshot.stateText = "NO MANAGER";
-                snapshot.message = "Level gameplay manager is not assigned.";
+
+                snapshot.stateText =
+                    "NO MANAGER";
+
+                snapshot.message =
+                    "Level gameplay manager is not assigned.";
+
                 snapshot.faultActive = true;
-                snapshot.faultText = snapshot.message;
+
+                snapshot.faultText =
+                    snapshot.message;
+
                 return snapshot;
             }
 
-            SparkLevelDefinition level = manager.ActiveLevel;
+            SparkLevelDefinition level =
+                manager.ActiveLevel;
+
             SparkLevelValidationResult result =
                 manager.ValidationResult;
 
+            // --------------------------------------------------------
+            // LEVEL
+            // --------------------------------------------------------
+
             snapshot.levelId =
-                level != null ? level.LevelId : string.Empty;
+                level != null
+                    ? level.LevelId
+                    : string.Empty;
 
             snapshot.levelName =
-                level != null ? level.DisplayName : "NO LEVEL";
+                level != null
+                    ? level.DisplayName
+                    : "NO LEVEL";
 
             snapshot.levelDescription =
-                level != null ? level.Description : string.Empty;
+                level != null
+                    ? level.Description
+                    : string.Empty;
 
-            snapshot.state = result.state;
-            snapshot.stateText = GetStateText(result.state);
-            snapshot.message = string.IsNullOrWhiteSpace(result.message)
-                ? "System ready."
-                : result.message;
+            // --------------------------------------------------------
+            // VALIDATION
+            // --------------------------------------------------------
+
+            snapshot.state =
+                result.state;
+
+            snapshot.stateText =
+                GetStateText(
+                    result.state);
+
+            snapshot.message =
+                string.IsNullOrWhiteSpace(
+                    result.message)
+                    ? "System ready."
+                    : result.message;
+
+            // --------------------------------------------------------
+            // TARGET PROGRESS
+            // --------------------------------------------------------
 
             snapshot.satisfiedTargets =
-                result.satisfiedTargets;
+                Mathf.Max(
+                    0,
+                    result.satisfiedTargets);
 
             snapshot.totalTargets =
-                result.totalTargets;
+                Mathf.Max(
+                    0,
+                    result.totalTargets);
 
             snapshot.progress01 =
-                result.totalTargets > 0
+                snapshot.totalTargets > 0
                     ? Mathf.Clamp01(
-                        (float)result.satisfiedTargets /
-                        result.totalTargets)
+                        (float)snapshot.satisfiedTargets /
+                        snapshot.totalTargets)
                     : 0f;
 
+            // --------------------------------------------------------
+            // ELECTRICAL DATA
+            //
+            // IMPORTANT:
+            // No recalculation occurs here.
+            // The evaluator remains authoritative.
+            // --------------------------------------------------------
+
             snapshot.sourceName =
-                string.IsNullOrWhiteSpace(result.activeSourceName)
+                string.IsNullOrWhiteSpace(
+                    result.activeSourceName)
                     ? "NONE"
                     : result.activeSourceName;
 
-            snapshot.voltage = result.targetVoltage;
-            snapshot.current = result.targetCurrent;
-            snapshot.power = result.targetPower;
+            snapshot.voltage =
+                result.targetVoltage;
+
+            snapshot.current =
+                result.targetCurrent;
+
+            snapshot.power =
+                result.targetPower;
+
+            // --------------------------------------------------------
+            // CONNECTION STATE
+            // --------------------------------------------------------
 
             snapshot.sourceAvailable =
                 manager.HasValidPowerSource;
 
             snapshot.returnClosed =
                 manager.ClosedReturn;
+
+            // --------------------------------------------------------
+            // FAULT
+            // --------------------------------------------------------
 
             snapshot.faultActive =
                 result.IsFault;
@@ -107,6 +175,10 @@ namespace ProjectSpark.Gameplay
                 result.IsFault
                     ? snapshot.message
                     : "NONE";
+
+            // --------------------------------------------------------
+            // AFFECTED OBJECTS
+            // --------------------------------------------------------
 
             snapshot.affectedTerminalName =
                 result.affectedTerminal != null
@@ -121,22 +193,29 @@ namespace ProjectSpark.Gameplay
             return snapshot;
         }
 
+        // ============================================================
+        // STATE TEXT
+        // ============================================================
+
         public static string GetStateText(
             SparkLevelValidationState state)
         {
             switch (state)
             {
+                case SparkLevelValidationState.Playing:
+                    return "RUNNING";
+
                 case SparkLevelValidationState.Completed:
                     return "COMPLETE";
+
+                case SparkLevelValidationState.WrongConnection:
+                    return "WRONG CONNECTION";
 
                 case SparkLevelValidationState.ShortCircuit:
                     return "SHORT CIRCUIT";
 
                 case SparkLevelValidationState.TargetShort:
                     return "TARGET SHORT";
-
-                case SparkLevelValidationState.WrongConnection:
-                    return "WRONG CONNECTION";
 
                 case SparkLevelValidationState.Overload:
                     return "OVERLOAD";
@@ -148,9 +227,13 @@ namespace ProjectSpark.Gameplay
                     return "CONFIGURATION FAULT";
 
                 default:
-                    return "RUNNING";
+                    return "UNKNOWN";
             }
         }
+
+        // ============================================================
+        // DISPLAY HELPERS
+        // ============================================================
 
         public string GetProgressText()
         {

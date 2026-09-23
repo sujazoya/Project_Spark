@@ -248,9 +248,9 @@ public ThemeColor GetGlobalThemeColor()
         /// 
         public void RefreshAllUI()
         {
-            Debug.Log(
+            /*Debug.Log(
                 "ThemeManager.RefreshAllUI() CALLED",
-                this);
+                this);*/
 
             MonoBehaviour[] components =
                 FindObjectsByType<MonoBehaviour>(
@@ -284,11 +284,11 @@ public ThemeColor GetGlobalThemeColor()
                 refreshedCount++;
             }
 
-            Debug.Log(
+/*            Debug.Log(
                 "ThemeManager: Refreshed " +
                 refreshedCount +
                 " IThemeObject components.",
-                this);
+                this);*/
         }
 
         #endregion

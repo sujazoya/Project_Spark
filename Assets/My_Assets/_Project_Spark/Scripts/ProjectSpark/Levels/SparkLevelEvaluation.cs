@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using ProjectSpark.Circuit;
 
 namespace ProjectSpark.Gameplay
 {
@@ -23,7 +24,8 @@ namespace ProjectSpark.Gameplay
         TargetShortCircuit,
         SourceShortCircuit,
         Overload,
-        InvalidTarget
+        InvalidTarget,
+        InvalidConnection
     }
 
     [Serializable]
@@ -37,6 +39,12 @@ namespace ProjectSpark.Gameplay
 
         [SerializeField]
         private bool targetsSatisfied;
+
+        [SerializeField]
+        private int satisfiedTargetCount;
+
+        [SerializeField]
+        private int totalTargetCount;
 
         [SerializeField]
         private bool closedReturn;
@@ -65,6 +73,17 @@ namespace ProjectSpark.Gameplay
         [SerializeField]
         private string message;
 
+        [NonSerialized]
+        private SparkTerminal affectedTerminal;
+
+        [NonSerialized]
+        private SparkLevelTarget affectedTarget;
+
+
+        // ------------------------------------------------------------
+        // CORE RESULT
+        // ------------------------------------------------------------
+
         public SparkLevelEvaluationStatus Status =>
             status;
 
@@ -73,6 +92,12 @@ namespace ProjectSpark.Gameplay
 
         public bool TargetsSatisfied =>
             targetsSatisfied;
+
+        public int SatisfiedTargetCount =>
+            satisfiedTargetCount;
+
+        public int TotalTargetCount =>
+            totalTargetCount;
 
         public bool ClosedReturn =>
             closedReturn;
@@ -86,6 +111,11 @@ namespace ProjectSpark.Gameplay
         public bool Overloaded =>
             overloaded;
 
+
+        // ------------------------------------------------------------
+        // ELECTRICAL DATA
+        // ------------------------------------------------------------
+
         public float TargetVoltage =>
             targetVoltage;
 
@@ -98,8 +128,35 @@ namespace ProjectSpark.Gameplay
         public string ActiveSource =>
             activeSource;
 
+
+        // ------------------------------------------------------------
+        // MESSAGE
+        // ------------------------------------------------------------
+
         public string Message =>
             message;
+
+
+        // ------------------------------------------------------------
+        // AFFECTED OBJECTS
+        // ------------------------------------------------------------
+
+        public SparkTerminal AffectedTerminal =>
+            affectedTerminal;
+
+        public SparkLevelTarget AffectedTarget =>
+            affectedTarget;
+
+        public bool HasAffectedTerminal =>
+            affectedTerminal != null;
+
+        public bool HasAffectedTarget =>
+            affectedTarget != null;
+
+
+        // ------------------------------------------------------------
+        // STATE HELPERS
+        // ------------------------------------------------------------
 
         public bool IsCompleted =>
             status == SparkLevelEvaluationStatus.Completed;
@@ -110,6 +167,14 @@ namespace ProjectSpark.Gameplay
         public bool IsIncomplete =>
             status == SparkLevelEvaluationStatus.Incomplete;
 
+        public bool HasFailureReason =>
+            failureReason != SparkLevelFailureReason.None;
+
+
+        // ------------------------------------------------------------
+        // FACTORY
+        // ------------------------------------------------------------
+
         public static SparkLevelEvaluation Create(
             SparkLevelEvaluationStatus status,
             SparkLevelFailureReason failureReason,
@@ -119,38 +184,103 @@ namespace ProjectSpark.Gameplay
             {
                 status = status,
                 failureReason = failureReason,
-                message = message
+                message = message ?? string.Empty,
+
+                targetsSatisfied = false,
+                satisfiedTargetCount = 0,
+                totalTargetCount = 0,
+
+                closedReturn = false,
+                targetShorted = false,
+                sourceShorted = false,
+                overloaded = false,
+
+                targetVoltage = 0f,
+                targetCurrent = 0f,
+                targetPower = 0f,
+
+                activeSource = string.Empty,
+
+                affectedTerminal = null,
+                affectedTarget = null
             };
         }
 
+
+        // ------------------------------------------------------------
+        // ELECTRICAL STATE
+        // ------------------------------------------------------------
+
         public SparkLevelEvaluation WithElectricalState(
-    bool isClosedReturn,
-    bool isTargetShorted,
-    bool isSourceShorted,
-    bool isOverloaded,
-    float voltage,
-    float current,
-    float power,
-    string source)
-{
-    closedReturn = isClosedReturn;
-    targetShorted = isTargetShorted;
-    sourceShorted = isSourceShorted;
-    overloaded = isOverloaded;
+            bool isClosedReturn,
+            bool isTargetShorted,
+            bool isSourceShorted,
+            bool isOverloaded,
+            float voltage,
+            float current,
+            float power,
+            string source)
+        {
+            closedReturn = isClosedReturn;
+            targetShorted = isTargetShorted;
+            sourceShorted = isSourceShorted;
+            overloaded = isOverloaded;
 
-    targetVoltage = voltage;
-    targetCurrent = current;
-    targetPower = power;
+            targetVoltage = voltage;
+            targetCurrent = current;
+            targetPower = power;
 
-    activeSource = source;
+            activeSource = source ?? string.Empty;
 
-    return this;
-}
+            return this;
+        }
+
+
+        // ------------------------------------------------------------
+        // TARGET STATE
+        // ------------------------------------------------------------
 
         public SparkLevelEvaluation WithTargets(
-            bool satisfied)
+            bool satisfied,
+            int satisfiedCount,
+            int totalCount)
         {
             targetsSatisfied = satisfied;
+
+            satisfiedTargetCount =
+                Mathf.Max(0, satisfiedCount);
+
+            totalTargetCount =
+                Mathf.Max(0, totalCount);
+
+            return this;
+        }
+
+
+        // ------------------------------------------------------------
+        // AFFECTED OBJECTS
+        // ------------------------------------------------------------
+
+        public SparkLevelEvaluation WithAffectedTerminal(
+            SparkTerminal terminal)
+        {
+            affectedTerminal = terminal;
+            return this;
+        }
+
+        public SparkLevelEvaluation WithAffectedTarget(
+            SparkLevelTarget target)
+        {
+            affectedTarget = target;
+            return this;
+        }
+
+        public SparkLevelEvaluation WithAffectedObjects(
+            SparkLevelTarget target,
+            SparkTerminal terminal)
+        {
+            affectedTarget = target;
+            affectedTerminal = terminal;
             return this;
         }
     }

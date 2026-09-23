@@ -46,6 +46,14 @@ namespace ProjectSpark.Gameplay
         [SerializeField] private GameObject faultPanel;
         [SerializeField] private TMP_Text faultText;
 
+
+        [Header("Completion")]
+        [SerializeField] private GameObject completionSection;
+        [SerializeField] private TMP_Text completionTitleText;
+        [SerializeField] private TMP_Text completionMessageText;
+
+        
+
         private bool subscribed;
 
         private void Awake()
@@ -200,9 +208,34 @@ namespace ProjectSpark.Gameplay
                     ? snapshot.faultText
                     : "NONE";
 
+                    bool completed =
+    snapshot.state ==
+    SparkLevelValidationState.Completed;
+
+if (completionSection != null)
+    completionSection.SetActive(completed);
+
+if (completionTitleText != null)
+{
+    completionTitleText.text =
+        completed
+            ? "LEVEL COMPLETE"
+            : string.Empty;
+}
+
+if (completionMessageText != null)
+{
+    completionMessageText.text =
+        completed
+            ? "All required electrical targets satisfied."
+            : string.Empty;
+}
+
             // Keep visual state synchronized with the exact same snapshot.
             if (theme != null)
                 theme.Apply(snapshot);
+
+                
         }
 
         public LevelGamePlayManager Manager

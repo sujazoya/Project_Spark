@@ -8,8 +8,13 @@ namespace ProjectSpark.Gameplay
     /// Scene references are intentionally stored here so levels can directly
     /// reference terminals/components in the current scene.
     /// </summary>
-    [Serializable]
-    public sealed class SparkLevelDefinition
+  
+     
+    [CreateAssetMenu(
+    fileName = "SparkLevelDefinition",
+    menuName = "Project Spark/Level Definition",
+    order = 10)]
+public sealed class SparkLevelDefinition : ScriptableObject
     {
         public enum CompletionMode
         {
@@ -29,6 +34,7 @@ namespace ProjectSpark.Gameplay
         [Header("Identity")]
         [SerializeField] private string levelId = "LEVEL_01";
         [SerializeField] private string displayName = "Level 01";
+
         [TextArea(2, 5)]
         [SerializeField] private string description;
 
@@ -45,6 +51,11 @@ namespace ProjectSpark.Gameplay
         [SerializeField] private bool allowIntermediateConnections = true;
 
         [Header("Power")]
+        [Tooltip(
+            "When enabled, the evaluated target voltage must meet Minimum Voltage."
+        )]
+        [SerializeField] private bool requireMinimumVoltage = true;
+
         [Min(0f)]
         [SerializeField] private float minimumVoltage = 0.01f;
 
@@ -69,23 +80,54 @@ namespace ProjectSpark.Gameplay
 
         [SerializeField] private bool autoUnlockNextLevel = true;
 
+        // ------------------------------------------------------------
+        // Identity
+        // ------------------------------------------------------------
+
         public string LevelId => levelId;
+
         public string DisplayName => displayName;
+
         public string Description => description;
 
-        public CompletionMode CompletionRule => completionMode;
+        // ------------------------------------------------------------
+        // Rules
+        // ------------------------------------------------------------
+
+        public CompletionMode CompletionRule =>
+            completionMode;
 
         public int RequiredTargetCount =>
             Mathf.Max(1, requiredTargetCount);
 
-        public bool RequireClosedReturn => requireClosedReturn;
-        public bool RejectShortCircuit => rejectShortCircuit;
-        public bool RejectTargetShort => rejectTargetShort;
-        public bool AllowIntermediateConnections => allowIntermediateConnections;
+        public bool RequireClosedReturn =>
+            requireClosedReturn;
 
-        public float MinimumVoltage => Mathf.Max(0f, minimumVoltage);
+        public bool RejectShortCircuit =>
+            rejectShortCircuit;
 
-        public bool AllowAnyConfiguredSource => allowAnyConfiguredSource;
+        public bool RejectTargetShort =>
+            rejectTargetShort;
+
+        public bool AllowIntermediateConnections =>
+            allowIntermediateConnections;
+
+        // ------------------------------------------------------------
+        // Power
+        // ------------------------------------------------------------
+
+        public bool RequireMinimumVoltage =>
+            requireMinimumVoltage;
+
+        public float MinimumVoltage =>
+            Mathf.Max(0f, minimumVoltage);
+
+        public bool AllowAnyConfiguredSource =>
+            allowAnyConfiguredSource;
+
+        // ------------------------------------------------------------
+        // Sources / Targets
+        // ------------------------------------------------------------
 
         public PowerSourceDefinition[] PowerSources =>
             powerSources;
@@ -96,11 +138,19 @@ namespace ProjectSpark.Gameplay
         public LevelFailureMode FailureMode =>
             failureMode;
 
+        // ------------------------------------------------------------
+        // Outputs
+        // ------------------------------------------------------------
+
         public GameObject[] SuccessOutputs =>
             successOutputs;
 
         public GameObject[] FailureOutputs =>
             failureOutputs;
+
+        // ------------------------------------------------------------
+        // Progression
+        // ------------------------------------------------------------
 
         public bool UnlockedByDefault =>
             unlockedByDefault;
@@ -108,43 +158,35 @@ namespace ProjectSpark.Gameplay
         public bool AutoUnlockNextLevel =>
             autoUnlockNextLevel;
 
-        [Serializable]
-        public sealed class PowerSourceDefinition
-        {
-            [SerializeField] private string sourceName = "Power Source";
-
-            [SerializeField] private SparkTerminal positiveTerminal;
-            [SerializeField] private SparkTerminal negativeTerminal;
-
-            [Min(0f)]
-            [SerializeField] private float nominalVoltage = 5f;
-
-            public string SourceName => sourceName;
-
-            public SparkTerminal PositiveTerminal =>
-                positiveTerminal;
-
-            public SparkTerminal NegativeTerminal =>
-                negativeTerminal;
-
-            public float NominalVoltage =>
-                Mathf.Max(0f, nominalVoltage);
-
-            public bool IsConfigured =>
-                positiveTerminal != null &&
-                negativeTerminal != null;
-        }
+        // ------------------------------------------------------------
+        // Counts
+        // ------------------------------------------------------------
 
         public int TargetCount =>
-            targets != null ? targets.Length : 0;
+            targets != null
+                ? targets.Length
+                : 0;
 
         public int SourceCount =>
-            powerSources != null ? powerSources.Length : 0;
+            powerSources != null
+                ? powerSources.Length
+                : 0;
 
-        public void SetRuntimeOutputs(bool success, bool failure)
+        // ------------------------------------------------------------
+        // Runtime Outputs
+        // ------------------------------------------------------------
+
+        public void SetRuntimeOutputs(
+            bool success,
+            bool failure)
         {
-            SetObjects(successOutputs, success);
-            SetObjects(failureOutputs, failure);
+            SetObjects(
+                successOutputs,
+                success);
+
+            SetObjects(
+                failureOutputs,
+                failure);
         }
 
         private static void SetObjects(
@@ -161,6 +203,10 @@ namespace ProjectSpark.Gameplay
             }
         }
 
+        // ------------------------------------------------------------
+        // Completion
+        // ------------------------------------------------------------
+
         public bool IsCompletionSatisfied(
             int satisfiedTargets)
         {
@@ -176,7 +222,9 @@ namespace ProjectSpark.Gameplay
 
                 case CompletionMode.RequiredTargetCount:
                     return satisfiedTargets >=
-                           Mathf.Min(RequiredTargetCount, total);
+                           Mathf.Min(
+                               RequiredTargetCount,
+                               total);
 
                 case CompletionMode.AllTargets:
                 default:
@@ -184,19 +232,75 @@ namespace ProjectSpark.Gameplay
             }
         }
 
+        // ------------------------------------------------------------
+        // Normalization
+        // ------------------------------------------------------------
+
         public void Normalize()
         {
             requiredTargetCount =
-                Mathf.Max(1, requiredTargetCount);
+                Mathf.Max(
+                    1,
+                    requiredTargetCount);
 
             minimumVoltage =
-                Mathf.Max(0f, minimumVoltage);
+                Mathf.Max(
+                    0f,
+                    minimumVoltage);
 
             if (string.IsNullOrWhiteSpace(levelId))
                 levelId = "LEVEL";
 
             if (string.IsNullOrWhiteSpace(displayName))
                 displayName = levelId;
+
+            if (targets != null)
+            {
+                for (int i = 0; i < targets.Length; i++)
+                {
+                    if (targets[i] != null)
+                        targets[i].Normalize();
+                }
+            }
+        }
+
+        // ------------------------------------------------------------
+        // Power Source Definition
+        // ------------------------------------------------------------
+
+        [Serializable]
+        public sealed class PowerSourceDefinition
+        {
+            [SerializeField]
+            private string sourceName = "Power Source";
+
+            [SerializeField]
+            private SparkTerminal positiveTerminal;
+
+            [SerializeField]
+            private SparkTerminal negativeTerminal;
+
+            [Min(0f)]
+            [SerializeField]
+            private float nominalVoltage = 5f;
+
+            public string SourceName =>
+                sourceName;
+
+            public SparkTerminal PositiveTerminal =>
+                positiveTerminal;
+
+            public SparkTerminal NegativeTerminal =>
+                negativeTerminal;
+
+            public float NominalVoltage =>
+                Mathf.Max(
+                    0f,
+                    nominalVoltage);
+
+            public bool IsConfigured =>
+                positiveTerminal != null &&
+                negativeTerminal != null;
         }
     }
 }

@@ -94,9 +94,11 @@ public bool ExternalInputControl
     }
 }
 
+
+
 [Header("Level Validation")]
 [SerializeField]
-private Level1CircuitChecker level1Checker;
+//private Level1CircuitChecker level1Checker;
 
         // ============================================================
         // STATE
@@ -857,13 +859,13 @@ private bool TryCommitElectricalConnection(
     // LEVEL 1
     // ============================================================
 
-    if (level1Checker != null)
+    /*if (level1Checker != null)
     {
         Debug.Log(
             $"[WIRE] LEVEL 1 CONNECTION REGISTERED:\n" +
             $"{start.name} ↔ {end.name}",
             this);
-    }
+    }*/
 
     return true;
 }

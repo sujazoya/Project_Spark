@@ -39,12 +39,12 @@ namespace ProjectSpark.Circuit
         [Header("Level Integration")]
 
         [SerializeField]
-        private Level1CircuitChecker level1Checker;
+        //private Level1CircuitChecker level1Checker;
 
 
         [Header("Connection")]
 
-        [SerializeField]
+        
         private SparkConnectionDirection connectionDirection =
             SparkConnectionDirection.Bidirectional;
 
@@ -316,11 +316,11 @@ namespace ProjectSpark.Circuit
             // OPTIONAL LEVEL CALLBACK
             // -----------------------------------------------------
 
-            if (level1Checker != null)
+           /* if (level1Checker != null)
             {
                 NotifyLevelChecker(
                     connection);
-            }
+            }*/
 
 
             // -----------------------------------------------------
@@ -448,18 +448,6 @@ namespace ProjectSpark.Circuit
         // LEVEL CHECKER
         // =========================================================
 
-        private void NotifyLevelChecker(
-            SparkCircuitConnection connection)
-        {
-            if (level1Checker == null)
-            {
-                return;
-            }
-
-            level1Checker.SendMessage(
-                "OnCircuitConnectionCreated",
-                connection,
-                SendMessageOptions.DontRequireReceiver);
-        }
+       
     }
 }

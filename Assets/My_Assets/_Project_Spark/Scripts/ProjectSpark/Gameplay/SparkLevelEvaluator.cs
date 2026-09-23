@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using ProjectSpark.Circuit;
@@ -6,32 +5,12 @@ using ProjectSpark.Electrical;
 
 namespace ProjectSpark.Gameplay
 {
-    /// <summary>
-    /// Evaluates a SparkLevelDefinition against the current
-    /// circuit topology and solved electrical state.
-    ///
-    /// This class contains reusable level rules.
-    /// It does not control level progression or UI.
-    /// </summary>
-    [DisallowMultipleComponent]
-    public sealed class SparkLevelEvaluator : MonoBehaviour
+    public sealed class SparkLevelEvaluator
     {
-        [Header("Core Systems")]
-        [SerializeField] private SparkCircuitSystem circuitSystem;
-        [SerializeField] private SparkElectricalSolver electricalSolver;
-
-        [Header("Diagnostics")]
-        [SerializeField] private bool debugLogging;
-        [SerializeField] private bool verboseLogging;
-
-        private readonly List<PowerSourceRuntime> validSources =
-            new List<PowerSourceRuntime>(8);
+        private readonly SparkCircuitSystem circuitSystem;
 
         private readonly List<SparkCircuitConnection> connectionBuffer =
             new List<SparkCircuitConnection>(32);
-
-        private readonly List<TargetRuntimeResult> targetResults =
-            new List<TargetRuntimeResult>(16);
 
         private readonly Queue<SparkTerminal> traversalQueue =
             new Queue<SparkTerminal>(32);
@@ -45,909 +24,1246 @@ namespace ProjectSpark.Gameplay
         private readonly HashSet<SparkTerminal> negativeReachable =
             new HashSet<SparkTerminal>();
 
-        private int satisfiedTargetCount;
+        private readonly List<SparkLevelDefinition.PowerSourceDefinition> validSources =
+            new List<SparkLevelDefinition.PowerSourceDefinition>(8);
 
-        private bool hasValidPowerSource;
-        private bool closedReturn;
-        private bool sourceShorted;
-        private bool targetShorted;
-        private bool wrongConnection;
-        private bool overloaded;
-        private bool solverEvaluationFailed;
 
-        private float targetVoltage;
-        private float targetCurrent;
-        private float targetPower;
-
-        private string activeSourceName = string.Empty;
-
-        public SparkCircuitSystem CircuitSystem =>
-            circuitSystem;
-
-        public SparkElectricalSolver ElectricalSolver =>
-            electricalSolver;
-
-        public int SatisfiedTargetCount =>
-            satisfiedTargetCount;
-
-        public int TargetCount =>
-            targetResults.Count;
-
-        public bool HasValidPowerSource =>
-            hasValidPowerSource;
-
-        public bool ClosedReturn =>
-            closedReturn;
-
-        public bool SourceShorted =>
-            sourceShorted;
-
-        public bool TargetShorted =>
-            targetShorted;
-
-        public bool WrongConnection =>
-            wrongConnection;
-
-        public bool IsOverloaded =>
-            overloaded;
-
-        public float TargetVoltage =>
-            targetVoltage;
-
-        public float TargetCurrent =>
-            targetCurrent;
-
-        public float TargetPower =>
-            targetPower;
-
-        public string ActiveSourceName =>
-            activeSourceName;
-
-        public IReadOnlyList<TargetRuntimeResult> TargetResults =>
-            targetResults;
-
-        /// <summary>
-        /// Evaluates the supplied level using the current solved state.
-        ///
-        /// The evaluator does not call CompleteCurrentLevel() or
-        /// FailCurrentLevel(). The caller decides what to do with
-        /// the returned result.
-        /// </summary>
-        public SparkLevelValidationResult Evaluate(
-            SparkLevelDefinition level,
-            bool solverFailed = false)
+        public SparkLevelEvaluator(
+            SparkCircuitSystem circuitSystem)
         {
-            ResetEvaluation();
+            this.circuitSystem = circuitSystem;
+        }
 
-            solverEvaluationFailed = solverFailed;
 
+        // ============================================================
+        // PUBLIC ENTRY
+        // ============================================================
+
+        public SparkLevelEvaluation Evaluate(
+            SparkLevelDefinition level)
+        {
             if (level == null)
             {
-                return CreateResult(
-                    SparkLevelValidationState.InvalidConfiguration,
-                    "No level definition is assigned.",
-                    null,
-                    null);
+                return SparkLevelEvaluation.Create(
+                    SparkLevelEvaluationStatus.Failed,
+                    SparkLevelFailureReason.NoLevel,
+                    "No level definition is configured.");
             }
 
             level.Normalize();
 
+            if (!ValidateConfiguration(
+                    level,
+                    out string configurationError))
+            {
+                return SparkLevelEvaluation.Create(
+                    SparkLevelEvaluationStatus.Failed,
+                    SparkLevelFailureReason.InvalidConfiguration,
+                    configurationError);
+            }
+
             if (circuitSystem == null)
             {
-                return CreateResult(
-                    SparkLevelValidationState.InvalidConfiguration,
-                    "Circuit system is not assigned.",
-                    null,
-                    null);
+                return SparkLevelEvaluation.Create(
+                    SparkLevelEvaluationStatus.Failed,
+                    SparkLevelFailureReason.InvalidConfiguration,
+                    "Circuit system is not configured.");
             }
 
-            EvaluatePowerSources(level);
-            EvaluateTargets(level);
-            EvaluateTopologyState(level);
-            EvaluateFailureConditions(level);
 
-            if (HasFailure(level))
-            {
-                SparkLevelValidationState failureState =
-                    DetermineFailureValidationState();
+            // --------------------------------------------------------
+            // ACTIVE POWER SOURCE
+            // --------------------------------------------------------
 
-                string failureMessage =
-                    BuildFailureMessage(failureState);
-
-                return CreateResult(
-                    failureState,
-                    failureMessage,
-                    GetAffectedTerminal(failureState, level),
-                    GetAffectedTarget(failureState, level));
-            }
-
-            if (EvaluateCompletion(level))
-            {
-                return CreateResult(
-                    SparkLevelValidationState.Completed,
-                    BuildCompletedMessage(level),
-                    null,
-                    null);
-            }
-
-            SparkLevelValidationState playingState =
-                DeterminePlayingValidationState();
-
-            string message =
-                BuildEvaluationMessage(level);
-
-            return CreateResult(
-                playingState,
-                message,
-                GetAffectedTerminal(playingState, level),
-                GetAffectedTarget(playingState, level));
-        }
-
-        // ============================================================
-        // RESET
-        // ============================================================
-
-        private void ResetEvaluation()
-        {
             validSources.Clear();
-            targetResults.Clear();
 
-            positiveReachable.Clear();
-            negativeReachable.Clear();
+            FindValidPowerSources(
+                level,
+                validSources);
 
-            traversalQueue.Clear();
-            visitedTerminals.Clear();
+           if (validSources.Count == 0)
+{
+    return SparkLevelEvaluation.Create(
+        SparkLevelEvaluationStatus.Incomplete,
+        SparkLevelFailureReason.NoValidPowerSource,
+        "No valid power source is active.");
+}
 
-            satisfiedTargetCount = 0;
+            SparkLevelDefinition.PowerSourceDefinition activeSource =
+                validSources[0];
 
-            hasValidPowerSource = false;
-            closedReturn = false;
-            sourceShorted = false;
-            targetShorted = false;
-            wrongConnection = false;
-            overloaded = false;
-            solverEvaluationFailed = false;
 
-            targetVoltage = 0f;
-            targetCurrent = 0f;
-            targetPower = 0f;
+            // --------------------------------------------------------
+            // TOPOLOGY
+            // --------------------------------------------------------
 
-            activeSourceName = string.Empty;
+            BuildReachability(
+                level,
+                activeSource,
+                out bool closedReturn);
+
+
+            // --------------------------------------------------------
+            // CONNECTION VALIDATION
+            // --------------------------------------------------------
+
+            bool invalidConnection =
+    DetectInvalidConnection(
+        level,
+        activeSource,
+        out SparkTerminal affectedTerminal,
+        out SparkLevelTarget affectedTarget);
+            // --------------------------------------------------------
+            // ELECTRICAL FAULTS
+            // --------------------------------------------------------
+
+            bool sourceShorted =
+                DetectSourceShort(activeSource);
+
+            bool overloaded =
+                DetectOverload(activeSource);
+
+
+            // --------------------------------------------------------
+            // TARGETS
+            // --------------------------------------------------------
+
+            int totalTargets =
+                GetTargetCount(level);
+
+            int satisfiedTargets =
+                EvaluateTargets(level);
+
+            bool targetsSatisfied =
+                level.IsCompletionSatisfied(
+                    satisfiedTargets);
+
+
+            // --------------------------------------------------------
+            // TARGET ELECTRICAL STATE
+            // --------------------------------------------------------
+
+            GetTargetElectricalState(
+                level,
+                out float targetVoltage,
+                out float targetCurrent,
+                out float targetPower);
+
+
+            // --------------------------------------------------------
+            // TARGET SHORT
+            // --------------------------------------------------------
+
+            bool targetShorted =
+                DetectTargetShort(level);
+
+
+            // --------------------------------------------------------
+            // FINAL RESULT
+            // --------------------------------------------------------
+
+            SparkLevelEvaluation evaluation;
+
+
+            // --------------------------------------------------------
+            // 1. SOURCE SHORT
+            // --------------------------------------------------------
+
+            if (sourceShorted)
+            {
+                evaluation =
+                    SparkLevelEvaluation.Create(
+                        SparkLevelEvaluationStatus.Failed,
+                        SparkLevelFailureReason.SourceShortCircuit,
+                        "Power source short circuit detected.");
+
+                evaluation =
+                    evaluation.WithAffectedTerminal(
+                        activeSource.PositiveTerminal);
+
+                return ApplyFinalState(
+                    evaluation,
+                    closedReturn,
+                    targetShorted,
+                    sourceShorted,
+                    overloaded,
+                    targetVoltage,
+                    targetCurrent,
+                    targetPower,
+                    activeSource,
+                    satisfiedTargets,
+                    totalTargets);
+            }
+
+
+            // --------------------------------------------------------
+            // 2. TARGET SHORT
+            // --------------------------------------------------------
+
+            if (targetShorted)
+            {
+                evaluation =
+                    SparkLevelEvaluation.Create(
+                        SparkLevelEvaluationStatus.Failed,
+                        SparkLevelFailureReason.TargetShortCircuit,
+                        "Target short circuit detected.");
+
+                evaluation =
+                    evaluation.WithAffectedTarget(
+                        GetPrimaryTarget(level));
+
+                return ApplyFinalState(
+                    evaluation,
+                    closedReturn,
+                    targetShorted,
+                    sourceShorted,
+                    overloaded,
+                    targetVoltage,
+                    targetCurrent,
+                    targetPower,
+                    activeSource,
+                    satisfiedTargets,
+                    totalTargets);
+            }
+
+
+            // --------------------------------------------------------
+            // 3. OVERLOAD
+            // --------------------------------------------------------
+
+            if (overloaded)
+            {
+                evaluation =
+                    SparkLevelEvaluation.Create(
+                        SparkLevelEvaluationStatus.Failed,
+                        SparkLevelFailureReason.Overload,
+                        "Power source overload detected.");
+
+                return ApplyFinalState(
+                    evaluation,
+                    closedReturn,
+                    targetShorted,
+                    sourceShorted,
+                    overloaded,
+                    targetVoltage,
+                    targetCurrent,
+                    targetPower,
+                    activeSource,
+                    satisfiedTargets,
+                    totalTargets);
+            }
+
+
+            // --------------------------------------------------------
+            // 4. WRONG CONNECTION
+            // --------------------------------------------------------
+
+            if (invalidConnection)
+            {
+                evaluation =
+                    SparkLevelEvaluation.Create(
+                        SparkLevelEvaluationStatus.Failed,
+                        SparkLevelFailureReason.InvalidConnection,
+                        "Incorrect polarity connection detected.");
+
+                evaluation =
+                    evaluation.WithAffectedObjects(
+                        affectedTarget,
+                        affectedTerminal);
+
+                return ApplyFinalState(
+                    evaluation,
+                    closedReturn,
+                    targetShorted,
+                    sourceShorted,
+                    overloaded,
+                    targetVoltage,
+                    targetCurrent,
+                    targetPower,
+                    activeSource,
+                    satisfiedTargets,
+                    totalTargets);
+            }
+
+
+            // --------------------------------------------------------
+            // 5. OPEN CIRCUIT
+            // --------------------------------------------------------
+
+            if (level.RequireClosedReturn &&
+                !closedReturn)
+            {
+                evaluation =
+                    SparkLevelEvaluation.Create(
+                        SparkLevelEvaluationStatus.Incomplete,
+                        SparkLevelFailureReason.OpenCircuit,
+                        "The circuit does not have a valid closed return path.");
+
+                return ApplyFinalState(
+                    evaluation,
+                    closedReturn,
+                    targetShorted,
+                    sourceShorted,
+                    overloaded,
+                    targetVoltage,
+                    targetCurrent,
+                    targetPower,
+                    activeSource,
+                    satisfiedTargets,
+                    totalTargets);
+            }
+
+
+            // --------------------------------------------------------
+            // 6. INSUFFICIENT VOLTAGE
+            // --------------------------------------------------------
+
+            if (level.RequireMinimumVoltage &&
+                targetVoltage < level.MinimumVoltage)
+            {
+                evaluation =
+                    SparkLevelEvaluation.Create(
+                        SparkLevelEvaluationStatus.Incomplete,
+                        SparkLevelFailureReason.InsufficientVoltage,
+                        "Target voltage is below the required minimum.");
+
+                return ApplyFinalState(
+                    evaluation,
+                    closedReturn,
+                    targetShorted,
+                    sourceShorted,
+                    overloaded,
+                    targetVoltage,
+                    targetCurrent,
+                    targetPower,
+                    activeSource,
+                    satisfiedTargets,
+                    totalTargets);
+            }
+
+
+            // --------------------------------------------------------
+            // 7. TARGETS NOT SATISFIED
+            // --------------------------------------------------------
+
+            if (!targetsSatisfied)
+            {
+                evaluation =
+                    SparkLevelEvaluation.Create(
+                        SparkLevelEvaluationStatus.Incomplete,
+                        SparkLevelFailureReason.InvalidTarget,
+                        "One or more level targets are not satisfied.");
+
+                return ApplyFinalState(
+                    evaluation,
+                    closedReturn,
+                    targetShorted,
+                    sourceShorted,
+                    overloaded,
+                    targetVoltage,
+                    targetCurrent,
+                    targetPower,
+                    activeSource,
+                    satisfiedTargets,
+                    totalTargets);
+            }
+
+
+            // --------------------------------------------------------
+            // 8. COMPLETED
+            // --------------------------------------------------------
+
+            evaluation =
+                SparkLevelEvaluation.Create(
+                    SparkLevelEvaluationStatus.Completed,
+                    SparkLevelFailureReason.None,
+                    "Level requirements satisfied.");
+
+            return ApplyFinalState(
+                evaluation,
+                closedReturn,
+                targetShorted,
+                sourceShorted,
+                overloaded,
+                targetVoltage,
+                targetCurrent,
+                targetPower,
+                activeSource,
+                satisfiedTargets,
+                totalTargets);
         }
 
+
         // ============================================================
-        // TARGETS
+        // FINAL RESULT ASSEMBLY
         // ============================================================
 
-        private void EvaluateTargets(
-            SparkLevelDefinition level)
+        private SparkLevelEvaluation ApplyFinalState(
+            SparkLevelEvaluation evaluation,
+            bool closedReturn,
+            bool targetShorted,
+            bool sourceShorted,
+            bool overloaded,
+            float targetVoltage,
+            float targetCurrent,
+            float targetPower,
+            SparkLevelDefinition.PowerSourceDefinition activeSource,
+            int satisfiedTargets,
+            int totalTargets)
         {
-            SparkLevelTarget[] targets =
-                level.Targets;
+            evaluation =
+                evaluation.WithElectricalState(
+                    closedReturn,
+                    targetShorted,
+                    sourceShorted,
+                    overloaded,
+                    targetVoltage,
+                    targetCurrent,
+                    targetPower,
+                    activeSource != null
+                        ? activeSource.SourceName
+                        : string.Empty);
 
-            if (targets == null)
-                return;
+            evaluation =
+                evaluation.WithTargets(
+                    evaluation.IsCompleted,
+                    satisfiedTargets,
+                    totalTargets);
+
+            return evaluation;
+        }
+
+
+        // ============================================================
+        // CONFIGURATION
+        // ============================================================
+
+        private bool ValidateConfiguration(
+            SparkLevelDefinition level,
+            out string error)
+        {
+            error = string.Empty;
+
+            if (level.TargetCount <= 0)
+            {
+                error = "Level has no targets configured.";
+                return false;
+            }
+
+            if (level.PowerSources == null ||
+                level.PowerSources.Length == 0)
+            {
+                error = "Level has no power sources configured.";
+                return false;
+            }
 
             for (int i = 0;
-                 i < targets.Length;
+                 i < level.PowerSources.Length;
                  i++)
             {
+                SparkLevelDefinition.PowerSourceDefinition source =
+                    level.PowerSources[i];
+
+                if (source == null)
+                {
+                    error =
+                        $"Power source entry {i} is null.";
+
+                    return false;
+                }
+
+                if (!source.IsConfigured)
+                {
+                    error =
+                        $"Power source '{source.SourceName}' is not configured.";
+
+                    return false;
+                }
+            }
+
+            if (level.Targets == null ||
+                level.Targets.Length == 0)
+            {
+                error = "Level has no targets configured.";
+                return false;
+            }
+
+            for (int i = 0;
+                i < level.Targets.Length;
+                i++)
+            {
                 SparkLevelTarget target =
-                    targets[i];
+                    level.Targets[i];
 
                 if (target == null)
-                    continue;
+                {
+                    error =
+                        $"Target entry {i} is null.";
+
+                    return false;
+                }
 
                 target.Normalize();
 
-                bool satisfied =
-                    target.Evaluate();
+                // ------------------------------------------------------------
+                // POLARITY TARGET VALIDATION
+                // ------------------------------------------------------------
+                // If one polarity terminal is configured, both must be
+                // configured. This prevents an incomplete + / - target
+                // configuration from being evaluated as valid.
+                // ------------------------------------------------------------
 
-                if (satisfied)
-                    satisfiedTargetCount++;
+                if (target.HasPartialRequiredConnectionPair)
+                {
+                    error =
+                        $"Target '{target.DisplayName}' has an incomplete " +
+                        "positive/negative terminal configuration. " +
+                        "Both Required Positive Terminal and " +
+                        "Required Negative Terminal must be assigned.";
 
-                targetResults.Add(
-                    new TargetRuntimeResult(
-                        target.TargetId,
-                        target.DisplayName,
-                        satisfied));
+                    return false;
+                }
 
-                ReadTargetElectricalState(target);
 
-                LogVerbose(
-                    $"Target {target.DisplayName}: " +
-                    $"{(satisfied ? "PASS" : "WAIT")}");
+                target.Normalize();
             }
+
+            return true;
         }
 
-        private void ReadTargetElectricalState(
-            SparkLevelTarget target)
-        {
-            if (target == null)
-                return;
-
-            if (target.TargetTerminal != null)
-            {
-                SparkTerminalElectricalState state =
-                    target.TargetTerminal.ElectricalState;
-
-                targetVoltage = state.Voltage;
-                targetCurrent = state.Current;
-                targetPower = state.Power;
-
-                return;
-            }
-
-            if (target.TargetComponent != null)
-            {
-                SparkElectricalState state =
-                    target.TargetComponent.ElectricalState;
-
-                targetVoltage = state.Voltage;
-                targetCurrent = state.Current;
-                targetPower = state.Power;
-            }
-        }
 
         // ============================================================
         // POWER SOURCES
         // ============================================================
 
-        private void EvaluatePowerSources(
-            SparkLevelDefinition level)
+        private void FindValidPowerSources(
+            SparkLevelDefinition level,
+            List<SparkLevelDefinition.PowerSourceDefinition> results)
         {
-            SparkLevelDefinition.PowerSourceDefinition[] sources =
-                level.PowerSources;
-
-            if (sources == null ||
-                sources.Length == 0)
+            if (level == null ||
+                results == null ||
+                level.PowerSources == null)
             {
                 return;
             }
 
             for (int i = 0;
-                 i < sources.Length;
+                 i < level.PowerSources.Length;
                  i++)
             {
                 SparkLevelDefinition.PowerSourceDefinition source =
-                    sources[i];
+                    level.PowerSources[i];
 
-                if (source == null)
-                    continue;
-
-                if (!ValidatePowerSource(
-                        source,
-                        out PowerSourceRuntime runtime))
+                if (source == null ||
+                    !source.IsConfigured)
                 {
-                    LogVerbose(
-                        $"Invalid source: {source.SourceName}");
-
                     continue;
                 }
 
-                validSources.Add(runtime);
+                SparkPowerSupply supply =
+                    ResolvePowerSupply(source);
 
-                LogVerbose(
-                    $"Valid source: {source.SourceName}");
+                if (supply == null)
+                    continue;
 
-                if (!level.AllowAnyConfiguredSource)
-                    break;
+                if (!supply.ElectricalEnabled)
+                    continue;
+
+                if (!supply.IsOutputActive)
+                    continue;
+
+                results.Add(source);
             }
-
-            hasValidPowerSource =
-                validSources.Count > 0;
-
-            if (validSources.Count > 0)
-            {
-                activeSourceName =
-                    validSources[0]
-                        .Definition
-                        .SourceName;
-            }
-
-            LogVerbose(
-                $"Configured valid sources: " +
-                $"{validSources.Count}");
         }
 
-        private bool ValidatePowerSource(
-            SparkLevelDefinition.PowerSourceDefinition source,
-            out PowerSourceRuntime runtime)
-        {
-            runtime = default;
 
-            if (source == null ||
-                source.PositiveTerminal == null ||
+        private SparkPowerSupply ResolvePowerSupply(
+            SparkLevelDefinition.PowerSourceDefinition source)
+        {
+            if (source == null)
+                return null;
+
+            if (source.PositiveTerminal != null)
+            {
+                SparkPowerSupply supply =
+                    source.PositiveTerminal
+                        .GetComponentInParent<SparkPowerSupply>();
+
+                if (supply != null)
+                    return supply;
+
+                supply =
+                    source.PositiveTerminal.Owner
+                        as SparkPowerSupply;
+
+                if (supply != null)
+                    return supply;
+            }
+
+            if (source.NegativeTerminal != null)
+            {
+                SparkPowerSupply supply =
+                    source.NegativeTerminal
+                        .GetComponentInParent<SparkPowerSupply>();
+
+                if (supply != null)
+                    return supply;
+
+                supply =
+                    source.NegativeTerminal.Owner
+                        as SparkPowerSupply;
+
+                if (supply != null)
+                    return supply;
+            }
+
+            return null;
+        }
+
+
+        // ============================================================
+        // REACHABILITY
+        // ============================================================
+
+       private void BuildReachability(
+    SparkLevelDefinition level,
+    SparkLevelDefinition.PowerSourceDefinition source,
+    out bool closedReturn)
+{
+    positiveReachable.Clear();
+    negativeReachable.Clear();
+
+    closedReturn = false;
+
+    if (level == null || source == null)
+        return;
+
+    SparkTerminal sourcePositive =
+        source.PositiveTerminal;
+
+    SparkTerminal sourceNegative =
+        source.NegativeTerminal;
+
+    if (sourcePositive == null ||
+        sourceNegative == null)
+    {
+        return;
+    }
+
+    // ------------------------------------------------------------
+    // SOURCE +
+    // ------------------------------------------------------------
+
+    TraverseWireNetwork(
+        sourcePositive,
+        positiveReachable);
+
+    // ------------------------------------------------------------
+    // SOURCE -
+    // ------------------------------------------------------------
+
+    TraverseWireNetwork(
+        sourceNegative,
+        negativeReachable);
+
+    // ------------------------------------------------------------
+    // TARGET
+    // ------------------------------------------------------------
+
+    SparkLevelTarget target =
+        GetPrimaryTarget(level);
+
+    if (target == null)
+        return;
+
+    // ------------------------------------------------------------
+    // TARGET MUST HAVE TWO TERMINALS
+    // ------------------------------------------------------------
+
+    if (!TryGetTargetTerminalPair(
+            target,
+            out SparkTerminal targetPositive,
+            out SparkTerminal targetNegative))
+    {
+        return;
+    }
+
+    // ------------------------------------------------------------
+    // POLARITY
+    // ------------------------------------------------------------
+
+    bool positiveCorrect =
+        positiveReachable.Contains(targetPositive);
+
+    bool negativeCorrect =
+        negativeReachable.Contains(targetNegative);
+
+    // ------------------------------------------------------------
+    // CLOSED RETURN
+    //
+    // BOTH target terminals must be connected with
+    // the correct source polarity.
+    // ------------------------------------------------------------
+
+    closedReturn =
+        positiveCorrect &&
+        negativeCorrect;
+}
+
+
+        private void TraverseWireNetwork(
+    SparkTerminal start,
+    HashSet<SparkTerminal> reachable)
+{
+    reachable.Clear();
+
+    if (start == null)
+        return;
+
+    traversalQueue.Clear();
+    visitedTerminals.Clear();
+
+    traversalQueue.Enqueue(start);
+    visitedTerminals.Add(start);
+
+    while (traversalQueue.Count > 0)
+    {
+        SparkTerminal current =
+            traversalQueue.Dequeue();
+
+        reachable.Add(current);
+
+        // --------------------------------------------------------
+        // DIRECT CIRCUIT CONNECTIONS
+        // --------------------------------------------------------
+
+        connectionBuffer.Clear();
+
+        circuitSystem.GetConnections(
+            current,
+            connectionBuffer);
+
+        for (int i = 0;
+             i < connectionBuffer.Count;
+             i++)
+        {
+            SparkCircuitConnection connection =
+                connectionBuffer[i];
+
+            if (!connection.IsValid)
+                continue;
+
+            SparkTerminal other =
+                connection.GetOther(current);
+
+            if (other == null)
+                continue;
+
+            if (visitedTerminals.Contains(other))
+                continue;
+
+            visitedTerminals.Add(other);
+            traversalQueue.Enqueue(other);
+        }
+
+
+        // --------------------------------------------------------
+        // CLOSED SWITCH
+        // --------------------------------------------------------
+
+        SparkSwitch sparkSwitch =
+            ResolveSwitch(current);
+
+        if (sparkSwitch == null)
+            continue;
+
+        if (!sparkSwitch.IsConducting)
+            continue;
+
+
+        SparkTerminal opposite = null;
+
+
+        if (current == sparkSwitch.InputTerminal)
+        {
+            opposite =
+                sparkSwitch.OutputTerminal;
+        }
+        else if (current == sparkSwitch.OutputTerminal)
+        {
+            opposite =
+                sparkSwitch.InputTerminal;
+        }
+
+
+        if (opposite == null)
+            continue;
+
+        if (visitedTerminals.Contains(opposite))
+            continue;
+
+        visitedTerminals.Add(opposite);
+        traversalQueue.Enqueue(opposite);
+    }
+}
+
+        // ============================================================
+        // INVALID CONNECTION
+        // ============================================================
+private bool DetectInvalidConnection(
+    SparkLevelDefinition level,
+    SparkLevelDefinition.PowerSourceDefinition source,
+    out SparkTerminal affectedTerminal,
+    out SparkLevelTarget affectedTarget)
+{
+    affectedTerminal = null;
+    affectedTarget = null;
+
+    if (level == null || source == null)
+        return false;
+
+    // ------------------------------------------------------------
+    // TARGET
+    // ------------------------------------------------------------
+
+    SparkLevelTarget target =
+        GetPrimaryTarget(level);
+
+    if (target == null)
+        return false;
+
+    // ------------------------------------------------------------
+    // TARGET POLARITY PAIR
+    // ------------------------------------------------------------
+
+    if (!TryGetTargetTerminalPair(
+            target,
+            out SparkTerminal targetPositive,
+            out SparkTerminal targetNegative))
+    {
+        return false;
+    }
+
+    // ------------------------------------------------------------
+    // SOURCE POLARITY PAIR
+    // ------------------------------------------------------------
+
+    SparkTerminal sourcePositive =
+        source.PositiveTerminal;
+
+    SparkTerminal sourceNegative =
+        source.NegativeTerminal;
+
+    if (sourcePositive == null ||
+        sourceNegative == null)
+    {
+        return false;
+    }
+
+    // ------------------------------------------------------------
+    // TRACE SOURCE POSITIVE
+    // ------------------------------------------------------------
+
+    HashSet<SparkTerminal> fromPositive =
+        new HashSet<SparkTerminal>();
+
+    TraverseWireNetwork(
+        sourcePositive,
+        fromPositive);
+
+    // ------------------------------------------------------------
+    // TRACE SOURCE NEGATIVE
+    // ------------------------------------------------------------
+
+    HashSet<SparkTerminal> fromNegative =
+        new HashSet<SparkTerminal>();
+
+    TraverseWireNetwork(
+        sourceNegative,
+        fromNegative);
+
+    // ------------------------------------------------------------
+    // CONNECTION MAP
+    // ------------------------------------------------------------
+
+    bool sourcePlusToTargetPlus =
+        fromPositive.Contains(targetPositive);
+
+    bool sourcePlusToTargetMinus =
+        fromPositive.Contains(targetNegative);
+
+    bool sourceMinusToTargetPlus =
+        fromNegative.Contains(targetPositive);
+
+    bool sourceMinusToTargetMinus =
+        fromNegative.Contains(targetNegative);
+
+    // ------------------------------------------------------------
+    // CORRECT POLARITY
+    //
+    // SOURCE + → TARGET +
+    // SOURCE - → TARGET -
+    // ------------------------------------------------------------
+
+    if (sourcePlusToTargetPlus &&
+        sourceMinusToTargetMinus &&
+        !sourcePlusToTargetMinus &&
+        !sourceMinusToTargetPlus)
+    {
+        return false;
+    }
+
+    // ------------------------------------------------------------
+    // CROSS-CONNECTED
+    //
+    // SOURCE + → TARGET -
+    // SOURCE - → TARGET +
+    // ------------------------------------------------------------
+
+    if (sourcePlusToTargetMinus &&
+        sourceMinusToTargetPlus)
+    {
+        affectedTerminal =
+            targetNegative;
+
+        affectedTarget =
+            target;
+
+        return true;
+    }
+
+    // ------------------------------------------------------------
+    // SOURCE + → TARGET -
+    // ------------------------------------------------------------
+
+    if (sourcePlusToTargetMinus)
+    {
+        affectedTerminal =
+            targetNegative;
+
+        affectedTarget =
+            target;
+
+        return true;
+    }
+
+    // ------------------------------------------------------------
+    // SOURCE - → TARGET +
+    // ------------------------------------------------------------
+
+    if (sourceMinusToTargetPlus)
+    {
+        affectedTerminal =
+            targetPositive;
+
+        affectedTarget =
+            target;
+
+        return true;
+    }
+
+    // ------------------------------------------------------------
+    // INCOMPLETE CONNECTION
+    //
+    // Not enough topology exists yet to call this
+    // an incorrect polarity connection.
+    // ------------------------------------------------------------
+
+    return false;
+}
+    // ------------------------------------------------------------
+    // INCOMPLETE CONNECTION
+    //
+    // Do not classify incomplete wiring as wrong polarity.
+    // ------------------------------------------------------------
+
+
+        // ============================================================
+        // SOURCE SHORT
+        // ============================================================
+
+        private bool DetectSourceShort(
+            SparkLevelDefinition.PowerSourceDefinition source)
+        {
+            if (source == null)
+                return false;
+
+            SparkPowerSupply supply =
+                ResolvePowerSupply(source);
+
+            if (supply != null &&
+                supply.IsShortCircuit)
+            {
+                return true;
+            }
+
+            if (source.PositiveTerminal == null ||
                 source.NegativeTerminal == null)
             {
                 return false;
             }
 
-            SparkPowerSupply positiveSupply =
-                ResolvePowerSupply(
-                    source.PositiveTerminal);
+            HashSet<SparkTerminal> reachable =
+                new HashSet<SparkTerminal>();
 
-            SparkPowerSupply negativeSupply =
-                ResolvePowerSupply(
-                    source.NegativeTerminal);
+            TraverseWireNetwork(
+                source.PositiveTerminal,
+                reachable);
 
-            if (positiveSupply == null ||
-                negativeSupply == null)
-            {
-                return false;
-            }
-
-            if (positiveSupply != negativeSupply)
-                return false;
-
-            if (!positiveSupply.isActiveAndEnabled)
-                return false;
-
-            if (!positiveSupply.ElectricalEnabled)
-                return false;
-
-            if (!positiveSupply.IsOutputActive)
-                return false;
-
-            runtime =
-                new PowerSourceRuntime(
-                    source,
-                    positiveSupply);
-
-            return true;
+            return reachable.Contains(
+                source.NegativeTerminal);
         }
 
-        private SparkPowerSupply ResolvePowerSupply(
-            SparkTerminal terminal)
-        {
-            if (terminal == null)
-                return null;
-
-            SparkPowerSupply direct =
-                terminal.GetComponent<SparkPowerSupply>();
-
-            if (direct != null)
-                return direct;
-
-            SparkPowerSupply parent =
-                terminal.GetComponentInParent<SparkPowerSupply>();
-
-            if (parent != null)
-                return parent;
-
-            if (terminal.Owner != null)
-            {
-                SparkPowerSupply owner =
-                    terminal.Owner
-                        .GetComponent<SparkPowerSupply>();
-
-                if (owner != null)
-                    return owner;
-
-                owner =
-                    terminal.Owner
-                        .GetComponentInParent<SparkPowerSupply>();
-
-                if (owner != null)
-                    return owner;
-            }
-
-            Transform root =
-                terminal.transform.root;
-
-            if (root != null)
-            {
-                SparkPowerSupply[] supplies =
-                    root.GetComponentsInChildren<SparkPowerSupply>(true);
-
-                for (int i = 0;
-                     i < supplies.Length;
-                     i++)
-                {
-                    SparkPowerSupply supply =
-                        supplies[i];
-
-                    if (supply == null)
-                        continue;
-
-                    SparkTerminal[] terminals =
-                        supply.GetComponentsInChildren<SparkTerminal>(true);
-
-                    for (int j = 0;
-                         j < terminals.Length;
-                         j++)
-                    {
-                        if (terminals[j] == terminal)
-                            return supply;
-                    }
-                }
-            }
-
-            return null;
-        }
 
         // ============================================================
-        // TOPOLOGY
+        // OVERLOAD
         // ============================================================
 
-        private void EvaluateTopologyState(
-            SparkLevelDefinition level)
+        private bool DetectOverload(
+            SparkLevelDefinition.PowerSourceDefinition source)
         {
-            if (validSources.Count == 0)
-                return;
+            SparkPowerSupply supply =
+                ResolvePowerSupply(source);
 
-            SparkLevelTarget primaryTarget =
-                GetPrimaryTarget(level);
+            if (supply == null)
+                return false;
 
-            BuildSourceReachability();
-
-            sourceShorted =
-                HasSourceTopologyShort(level);
-
-            SparkTerminal targetPositive;
-            SparkTerminal targetNegative;
-
-            bool hasTargetPair =
-                TryGetTargetTerminalPair(
-                    primaryTarget,
-                    out targetPositive,
-                    out targetNegative);
-
-            if (hasTargetPair)
-            {
-                targetShorted =
-                    positiveReachable.Contains(targetNegative) ||
-                    negativeReachable.Contains(targetPositive);
-
-                bool positivePath =
-                    positiveReachable.Contains(targetPositive);
-
-                bool negativePath =
-                    negativeReachable.Contains(targetNegative);
-
-                bool reversedPositive =
-                    positiveReachable.Contains(targetNegative);
-
-                bool reversedNegative =
-                    negativeReachable.Contains(targetPositive);
-
-                wrongConnection =
-                    (reversedPositive ||
-                     reversedNegative) &&
-                    !targetShorted;
-
-                closedReturn =
-                    positivePath &&
-                    negativePath &&
-                    IsTargetElectricallyConducting(
-                        primaryTarget);
-
-                if (targetShorted)
-                    closedReturn = false;
-            }
-            else
-            {
-                closedReturn =
-                    IsTargetElectricallyConducting(
-                        primaryTarget);
-
-                targetShorted =
-                    IsTargetShorted(primaryTarget);
-
-                wrongConnection = false;
-            }
-
-            overloaded =
-                HasOverload();
-
-            LogVerbose(
-                $"Topology: " +
-                $"ClosedReturn={closedReturn}, " +
-                $"SourceShort={sourceShorted}, " +
-                $"TargetShort={targetShorted}, " +
-                $"WrongConnection={wrongConnection}");
+            return supply.IsOverloaded;
         }
 
-        private void BuildSourceReachability()
-        {
-            positiveReachable.Clear();
-            negativeReachable.Clear();
-
-            for (int i = 0;
-                 i < validSources.Count;
-                 i++)
-            {
-                PowerSourceRuntime source =
-                    validSources[i];
-
-                if (source.Definition == null)
-                    continue;
-
-                TraverseWireNetwork(
-                    source.Definition.PositiveTerminal,
-                    positiveReachable);
-
-                TraverseWireNetwork(
-                    source.Definition.NegativeTerminal,
-                    negativeReachable);
-
-                if (!allowAnyConfiguredSource)
-                    break;
-            }
-        }
-
-        private bool allowAnyConfiguredSource;
-
-        private void TraverseWireNetwork(
-            SparkTerminal start,
-            HashSet<SparkTerminal> visited)
-        {
-            if (start == null ||
-                visited == null)
-            {
-                return;
-            }
-
-            traversalQueue.Clear();
-            visitedTerminals.Clear();
-
-            traversalQueue.Enqueue(start);
-
-            visited.Add(start);
-            visitedTerminals.Add(start);
-
-            while (traversalQueue.Count > 0)
-            {
-                SparkTerminal current =
-                    traversalQueue.Dequeue();
-
-                if (current == null)
-                    continue;
-
-                connectionBuffer.Clear();
-
-                circuitSystem.GetConnections(
-                    current,
-                    connectionBuffer);
-
-                for (int i = 0;
-                     i < connectionBuffer.Count;
-                     i++)
-                {
-                    SparkCircuitConnection connection =
-                        connectionBuffer[i];
-
-                    if (!IsUsableTopologyConnection(
-                            connection))
-                    {
-                        continue;
-                    }
-
-                    SparkTerminal next =
-                        GetOtherTerminal(
-                            connection,
-                            current);
-
-                    if (next == null ||
-                        visitedTerminals.Contains(next))
-                    {
-                        continue;
-                    }
-
-                    visited.Add(next);
-                    visitedTerminals.Add(next);
-                    traversalQueue.Enqueue(next);
-                }
-
-                TryTraverseConductiveDevice(
-                    current,
-                    visited);
-            }
-        }
-
-        private bool TryTraverseConductiveDevice(
-            SparkTerminal current,
-            HashSet<SparkTerminal> visited)
-        {
-            if (current == null ||
-                visited == null)
-            {
-                return false;
-            }
-
-            SparkSwitch sparkSwitch =
-                ResolveSwitchFromTerminal(current);
-
-            if (sparkSwitch == null)
-                return false;
-
-            if (!sparkSwitch.ElectricalEnabled)
-                return false;
-
-            if (!sparkSwitch.IsConducting)
-                return false;
-
-            SparkTerminal input =
-                sparkSwitch.InputTerminal;
-
-            SparkTerminal output =
-                sparkSwitch.OutputTerminal;
-
-            if (input == null ||
-                output == null)
-            {
-                return false;
-            }
-
-            SparkTerminal next = null;
-
-            if (current == input)
-                next = output;
-            else if (current == output)
-                next = input;
-            else
-                return false;
-
-            if (next == null)
-                return false;
-
-            if (visited.Contains(next))
-                return true;
-
-            visited.Add(next);
-            traversalQueue.Enqueue(next);
-
-            return true;
-        }
-
-        private SparkSwitch ResolveSwitchFromTerminal(
-            SparkTerminal terminal)
-        {
-            if (terminal == null)
-                return null;
-
-            SparkSwitch direct =
-                terminal.GetComponent<SparkSwitch>();
-
-            if (direct != null)
-                return direct;
-
-            SparkSwitch parent =
-                terminal.GetComponentInParent<SparkSwitch>();
-
-            if (parent != null)
-                return parent;
-
-            if (terminal.Owner != null)
-            {
-                SparkSwitch owner =
-                    terminal.Owner
-                        .GetComponent<SparkSwitch>();
-
-                if (owner != null)
-                    return owner;
-
-                owner =
-                    terminal.Owner
-                        .GetComponentInParent<SparkSwitch>();
-
-                if (owner != null)
-                    return owner;
-            }
-
-            return null;
-        }
 
         // ============================================================
-        // FAULTS
+        // TARGET COUNT
         // ============================================================
 
-        private bool HasSourceTopologyShort(
-            SparkLevelDefinition level)
-        {
-            if (!level.RejectShortCircuit)
-                return false;
-
-            for (int i = 0;
-                 i < validSources.Count;
-                 i++)
-            {
-                PowerSourceRuntime source =
-                    validSources[i];
-
-                if (source.Definition == null)
-                    continue;
-
-                SparkTerminal positive =
-                    source.Definition.PositiveTerminal;
-
-                SparkTerminal negative =
-                    source.Definition.NegativeTerminal;
-
-                if (positive == null ||
-                    negative == null)
-                {
-                    continue;
-                }
-
-                if (positiveReachable.Contains(negative) ||
-                    negativeReachable.Contains(positive))
-                {
-                    return true;
-                }
-
-                if (source.Supply != null &&
-                    source.Supply.IsShortCircuit)
-                {
-                    return true;
-                }
-
-                if (!level.AllowAnyConfiguredSource)
-                    break;
-            }
-
-            return false;
-        }
-
-        private bool IsTargetShorted(
-            SparkLevelTarget target)
-        {
-            if (target == null ||
-                target.TargetComponent == null)
-            {
-                return false;
-            }
-
-            SparkElectricalState state =
-                target.TargetComponent.ElectricalState;
-
-            if (Mathf.Abs(state.Current) <=
-                0.000001f)
-            {
-                return false;
-            }
-
-            return Mathf.Abs(state.Voltage) < 0.001f &&
-                   Mathf.Abs(state.Current) > 1f;
-        }
-
-        private bool HasOverload()
-        {
-            for (int i = 0;
-                 i < validSources.Count;
-                 i++)
-            {
-                SparkPowerSupply supply =
-                    validSources[i].Supply;
-
-                if (supply == null)
-                    continue;
-
-                if (supply.IsOverloaded)
-                    return true;
-            }
-
-            return false;
-        }
-
-        private void EvaluateFailureConditions(
-            SparkLevelDefinition level)
-        {
-            // Failure priority is intentionally preserved.
-
-            if (sourceShorted &&
-                level.RejectShortCircuit)
-            {
-                return;
-            }
-
-            if (targetShorted &&
-                level.RejectTargetShort)
-            {
-                return;
-            }
-
-            if (wrongConnection &&
-                level.FailureMode ==
-                SparkLevelDefinition.LevelFailureMode.InvalidConnection)
-            {
-                return;
-            }
-
-            if (overloaded &&
-                level.FailureMode ==
-                SparkLevelDefinition.LevelFailureMode.Overload)
-            {
-                return;
-            }
-
-            if (level.FailureMode ==
-                SparkLevelDefinition.LevelFailureMode.InvalidConnection)
-            {
-                if (HasInvalidConfiguredTargetConnection(level))
-                    return;
-            }
-        }
-
-        private bool HasFailure(
-            SparkLevelDefinition level)
-        {
-            if (solverEvaluationFailed)
-                return true;
-
-            if (sourceShorted &&
-                level.RejectShortCircuit)
-            {
-                return true;
-            }
-
-            if (targetShorted &&
-                level.RejectTargetShort)
-            {
-                return true;
-            }
-
-            if (wrongConnection &&
-                level.FailureMode ==
-                SparkLevelDefinition.LevelFailureMode.InvalidConnection)
-            {
-                return true;
-            }
-
-            if (overloaded &&
-                level.FailureMode ==
-                SparkLevelDefinition.LevelFailureMode.Overload)
-            {
-                return true;
-            }
-
-            if (level.FailureMode ==
-                SparkLevelDefinition.LevelFailureMode.InvalidConnection &&
-                HasInvalidConfiguredTargetConnection(level))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool HasInvalidConfiguredTargetConnection(
+        private int GetTargetCount(
             SparkLevelDefinition level)
         {
             if (level == null ||
-                validSources.Count == 0)
+                level.Targets == null)
             {
-                return false;
+                return 0;
             }
 
-            SparkLevelTarget target =
-                GetPrimaryTarget(level);
+            int count = 0;
 
-            SparkTerminal targetPositive;
-            SparkTerminal targetNegative;
-
-            if (!TryGetTargetTerminalPair(
-                    target,
-                    out targetPositive,
-                    out targetNegative))
+            for (int i = 0;
+                 i < level.Targets.Length;
+                 i++)
             {
-                return false;
+                if (level.Targets[i] != null)
+                    count++;
             }
 
-            bool reversedPositive =
-                positiveReachable.Contains(
-                    targetNegative);
-
-            bool reversedNegative =
-                negativeReachable.Contains(
-                    targetPositive);
-
-            return reversedPositive ||
-                   reversedNegative;
+            return count;
         }
 
+
         // ============================================================
-        // TARGET / TOPOLOGY HELPERS
+        // TARGET EVALUATION
+        // ============================================================
+
+        private int EvaluateTargets(
+            SparkLevelDefinition level)
+        {
+            if (level == null ||
+                level.Targets == null)
+            {
+                return 0;
+            }
+
+            int satisfied = 0;
+
+            for (int i = 0;
+                 i < level.Targets.Length;
+                 i++)
+            {
+                SparkLevelTarget target =
+                    level.Targets[i];
+
+                if (target == null)
+                    continue;
+
+                if (target.Evaluate())
+                    satisfied++;
+            }
+
+            return satisfied;
+        }
+
+
+        // ============================================================
+        // TARGET ELECTRICAL STATE
+        // ============================================================
+private void GetTargetElectricalState(
+    SparkLevelDefinition level,
+    out float voltage,
+    out float current,
+    out float power)
+{
+    voltage = 0f;
+    current = 0f;
+    power = 0f;
+
+    SparkLevelTarget target =
+        GetPrimaryTarget(level);
+
+    if (target == null)
+        return;
+
+    // ------------------------------------------------------------
+    // TWO-TERMINAL TARGET
+    // ------------------------------------------------------------
+
+    if (target.TargetComponent != null)
+{
+    SparkElectricalState componentState =
+        target.TargetComponent.ElectricalState;
+
+    if (TryGetTargetTerminalPair(
+            target,
+            out SparkTerminal positive,
+            out SparkTerminal negative))
+    {
+        SparkTerminalElectricalState positiveState =
+            positive.ElectricalState;
+
+        SparkTerminalElectricalState negativeState =
+            negative.ElectricalState;
+
+        voltage =
+            Mathf.Abs(
+                positiveState.Voltage -
+                negativeState.Voltage);
+
+        current =
+            Mathf.Abs(
+                componentState.Current);
+
+        power =
+            voltage * current;
+
+        return;
+    }
+
+    voltage =
+        Mathf.Abs(
+            componentState.Voltage);
+
+    current =
+        Mathf.Abs(
+            componentState.Current);
+
+    power =
+        Mathf.Abs(
+            componentState.Power);
+
+    return;
+}
+
+    // ------------------------------------------------------------
+    // SINGLE TERMINAL TARGET
+    // ------------------------------------------------------------
+
+    if (target.TargetTerminal != null)
+    {
+        SparkTerminalElectricalState state =
+            target.TargetTerminal.ElectricalState;
+
+        voltage =
+            Mathf.Abs(state.Voltage);
+
+        current =
+            Mathf.Abs(state.Current);
+
+        power =
+            Mathf.Abs(state.Power);
+
+        return;
+    }
+
+    // ------------------------------------------------------------
+    // COMPONENT TARGET
+    // ------------------------------------------------------------
+
+    if (target.TargetComponent != null)
+    {
+        SparkElectricalState state =
+            target.TargetComponent.ElectricalState;
+
+        voltage =
+            Mathf.Abs(state.Voltage);
+
+        current =
+            Mathf.Abs(state.Current);
+
+        power =
+            Mathf.Abs(state.Power);
+    }
+}
+
+        // ============================================================
+        // TARGET SHORT
+        // ============================================================
+
+        private bool DetectTargetShort(
+    SparkLevelDefinition level)
+{
+    SparkLevelTarget target =
+        GetPrimaryTarget(level);
+
+    if (target == null)
+        return false;
+
+    if (!target.HasRequiredConnectionPair)
+        return false;
+
+    SparkTerminal positive =
+        target.RequiredPositiveTerminal;
+
+    SparkTerminal negative =
+        target.RequiredNegativeTerminal;
+
+    if (positive == null ||
+        negative == null)
+    {
+        return false;
+    }
+
+    // ------------------------------------------------------------
+    // DIRECT TOPOLOGICAL SHORT
+    // ------------------------------------------------------------
+
+    HashSet<SparkTerminal> reachable =
+        new HashSet<SparkTerminal>();
+
+    TraverseWireNetwork(
+        positive,
+        reachable);
+
+    if (reachable.Contains(negative))
+    {
+        return true;
+    }
+
+    // ------------------------------------------------------------
+    // ELECTRICAL FALLBACK
+    // ------------------------------------------------------------
+
+    GetTargetElectricalState(
+        level,
+        out float voltage,
+        out float current,
+        out float power);
+
+    const float voltageThreshold = 0.005f;
+    const float currentThreshold = 0.01f;
+
+    return Mathf.Abs(voltage) <= voltageThreshold &&
+           Mathf.Abs(current) > currentThreshold;
+}
+        // ============================================================
+        // PRIMARY TARGET
         // ============================================================
 
         private SparkLevelTarget GetPrimaryTarget(
@@ -963,12 +1279,20 @@ namespace ProjectSpark.Gameplay
                  i < level.Targets.Length;
                  i++)
             {
-                if (level.Targets[i] != null)
-                    return level.Targets[i];
+                SparkLevelTarget target =
+                    level.Targets[i];
+
+                if (target != null)
+                    return target;
             }
 
             return null;
         }
+
+
+        // ============================================================
+        // TARGET TERMINAL PAIR
+        // ============================================================
 
         private bool TryGetTargetTerminalPair(
             SparkLevelTarget target,
@@ -981,56 +1305,55 @@ namespace ProjectSpark.Gameplay
             if (target == null)
                 return false;
 
-            if (target.TargetTerminal != null)
-            {
-                positive =
-                    target.TargetTerminal;
-
-                return false;
-            }
-
-            if (target.TargetComponent == null)
+            if (!target.HasRequiredConnectionPair)
                 return false;
 
-            SparkTerminal[] terminals =
-                target.TargetComponent
-                    .GetComponentsInChildren<SparkTerminal>(
-                        true);
+            positive =
+                target.RequiredPositiveTerminal;
 
-            if (terminals == null ||
-                terminals.Length < 2)
-            {
-                return false;
-            }
-
-            positive = terminals[0];
-            negative = terminals[1];
+            negative =
+                target.RequiredNegativeTerminal;
 
             return positive != null &&
-                   negative != null &&
-                   positive != negative;
+                   negative != null;
         }
 
-        private bool IsUsableTopologyConnection(
-            SparkCircuitConnection connection)
+
+        // ============================================================
+        // SWITCH
+        // ============================================================
+
+        private SparkSwitch ResolveSwitch(
+            SparkTerminal terminal)
         {
-            if (connection == null ||
-                !connection.IsValid)
-            {
-                return false;
-            }
+            if (terminal == null)
+                return null;
 
-            return !string.Equals(
-                connection.Kind.ToString(),
-                "Probe",
-                StringComparison.OrdinalIgnoreCase);
+            SparkSwitch sparkSwitch =
+                terminal.GetComponentInParent<SparkSwitch>();
+
+            if (sparkSwitch != null)
+                return sparkSwitch;
+
+            sparkSwitch =
+                terminal.Owner as SparkSwitch;
+
+            if (sparkSwitch != null)
+                return sparkSwitch;
+
+            return null;
         }
+
+
+        // ============================================================
+        // CONNECTION
+        // ============================================================
 
         private SparkTerminal GetOtherTerminal(
             SparkCircuitConnection connection,
             SparkTerminal current)
         {
-            if (connection == null ||
+            if (!connection.IsValid ||
                 current == null)
             {
                 return null;
@@ -1045,362 +1368,20 @@ namespace ProjectSpark.Gameplay
             return null;
         }
 
-        private bool IsTargetElectricallyConducting(
+
+        // ============================================================
+        // DEBUG
+        // ============================================================
+
+        private void DebugTargetConnections(
             SparkLevelTarget target)
         {
             if (target == null)
-                return false;
-
-            if (target.TargetComponent != null)
-            {
-                SparkElectricalState state =
-                    target.TargetComponent.ElectricalState;
-
-                if (state.Conduction ==
-                    SparkConductionState.Conducting)
-                {
-                    return true;
-                }
-
-                return Mathf.Abs(state.Current) >
-                       0.000001f;
-            }
-
-            if (target.TargetTerminal != null)
-            {
-                SparkTerminalElectricalState state =
-                    target.TargetTerminal.ElectricalState;
-
-                return Mathf.Abs(state.Current) >
-                       0.000001f;
-            }
-
-            return false;
-        }
-
-        // ============================================================
-        // COMPLETION
-        // ============================================================
-
-        private bool EvaluateCompletion(
-            SparkLevelDefinition level)
-        {
-            if (validSources.Count == 0)
-                return false;
-
-            if (level.RequireClosedReturn &&
-                !closedReturn)
-            {
-                return false;
-            }
-
-            if (level.MinimumVoltage > 0f &&
-                targetVoltage < level.MinimumVoltage)
-            {
-                return false;
-            }
-
-            return level.IsCompletionSatisfied(
-                satisfiedTargetCount);
-        }
-
-        // ============================================================
-        // RESULT
-        // ============================================================
-
-        private SparkLevelValidationState
-            DetermineFailureValidationState()
-        {
-            if (sourceShorted)
-                return SparkLevelValidationState.ShortCircuit;
-
-            if (targetShorted)
-                return SparkLevelValidationState.TargetShort;
-
-            if (wrongConnection)
-                return SparkLevelValidationState.WrongConnection;
-
-            if (overloaded)
-                return SparkLevelValidationState.Overload;
-
-            if (solverEvaluationFailed)
-                return SparkLevelValidationState.SolverFault;
-
-            return SparkLevelValidationState.InvalidConfiguration;
-        }
-
-        private SparkLevelValidationState
-            DeterminePlayingValidationState()
-        {
-            if (sourceShorted)
-                return SparkLevelValidationState.ShortCircuit;
-
-            if (targetShorted)
-                return SparkLevelValidationState.TargetShort;
-
-            if (wrongConnection)
-                return SparkLevelValidationState.WrongConnection;
-
-            if (overloaded)
-                return SparkLevelValidationState.Overload;
-
-            if (solverEvaluationFailed)
-                return SparkLevelValidationState.SolverFault;
-
-            return SparkLevelValidationState.Playing;
-        }
-
-        private SparkLevelValidationResult CreateResult(
-            SparkLevelValidationState state,
-            string message,
-            SparkTerminal affectedTerminal,
-            SparkLevelTarget affectedTarget)
-        {
-            return new SparkLevelValidationResult(
-                state,
-                string.IsNullOrWhiteSpace(message)
-                    ? string.Empty
-                    : message,
-                satisfiedTargetCount,
-                GetCurrentTargetCount(),
-                targetVoltage,
-                targetCurrent,
-                targetPower,
-                activeSourceName,
-                affectedTerminal,
-                affectedTarget);
-        }
-
-        private int GetCurrentTargetCount()
-        {
-            return targetResults.Count;
-        }
-
-        private SparkTerminal GetAffectedTerminal(
-            SparkLevelValidationState state,
-            SparkLevelDefinition level)
-        {
-            if (state == SparkLevelValidationState.WrongConnection)
-            {
-                SparkLevelTarget target =
-                    GetPrimaryTarget(level);
-
-                SparkTerminal positive;
-                SparkTerminal negative;
-
-                if (TryGetTargetTerminalPair(
-                        target,
-                        out positive,
-                        out negative))
-                {
-                    if (positive != null &&
-                        negativeReachable.Contains(positive))
-                    {
-                        return positive;
-                    }
-
-                    if (negative != null &&
-                        positiveReachable.Contains(negative))
-                    {
-                        return negative;
-                    }
-                }
-            }
-
-            if (state ==
-                SparkLevelValidationState.ShortCircuit)
-            {
-                if (level != null &&
-                    level.PowerSources != null)
-                {
-                    for (int i = 0;
-                         i < level.PowerSources.Length;
-                         i++)
-                    {
-                        SparkLevelDefinition.PowerSourceDefinition source =
-                            level.PowerSources[i];
-
-                        if (source == null)
-                            continue;
-
-                        if (source.PositiveTerminal != null &&
-                            negativeReachable.Contains(
-                                source.PositiveTerminal))
-                        {
-                            return source.PositiveTerminal;
-                        }
-
-                        if (source.NegativeTerminal != null &&
-                            positiveReachable.Contains(
-                                source.NegativeTerminal))
-                        {
-                            return source.NegativeTerminal;
-                        }
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        private SparkLevelTarget GetAffectedTarget(
-            SparkLevelValidationState state,
-            SparkLevelDefinition level)
-        {
-            if (state ==
-                    SparkLevelValidationState.WrongConnection ||
-                state ==
-                    SparkLevelValidationState.TargetShort)
-            {
-                return GetPrimaryTarget(level);
-            }
-
-            return null;
-        }
-
-        // ============================================================
-        // MESSAGES
-        // ============================================================
-
-        private string BuildEvaluationMessage(
-            SparkLevelDefinition level)
-        {
-            string message =
-                $"{satisfiedTargetCount}/" +
-                $"{level.TargetCount} " +
-                "targets satisfied.";
-
-            if (level.RequireClosedReturn &&
-                !closedReturn)
-            {
-                message +=
-                    " Required circuit return is open.";
-            }
-
-            if (hasValidPowerSource)
-            {
-                message +=
-                    $" Source: {activeSourceName}.";
-
-                if (targetVoltage > 0f)
-                {
-                    message +=
-                        $" Target {targetVoltage:0.###} V, " +
-                        $"{targetCurrent:0.###} A.";
-                }
-            }
-            else
-            {
-                message +=
-                    " No valid configured power source.";
-            }
-
-            return message;
-        }
-
-        private string BuildCompletedMessage(
-            SparkLevelDefinition level)
-        {
-            return
-                $"{satisfiedTargetCount}/" +
-                $"{level.TargetCount} " +
-                "targets satisfied. Level completed.";
-        }
-
-        private string BuildFailureMessage(
-            SparkLevelValidationState state)
-        {
-            switch (state)
-            {
-                case SparkLevelValidationState.ShortCircuit:
-                    return
-                        "Short circuit detected between " +
-                        "the configured power-source terminals.";
-
-                case SparkLevelValidationState.TargetShort:
-                    return
-                        "Target terminals are electrically shorted.";
-
-                case SparkLevelValidationState.WrongConnection:
-                    return
-                        "Invalid connection: target polarity " +
-                        "is connected incorrectly.";
-
-                case SparkLevelValidationState.Overload:
-                    return
-                        "Electrical overload detected.";
-
-                case SparkLevelValidationState.SolverFault:
-                    return
-                        "Electrical solver failed to converge.";
-
-                default:
-                    return
-                        "Invalid level configuration.";
-            }
-        }
-
-        // ============================================================
-        // DIAGNOSTICS
-        // ============================================================
-
-        private void Log(string message)
-        {
-            if (!debugLogging)
                 return;
 
             Debug.Log(
-                $"[SPARK LEVEL EVALUATOR] {message}",
-                this);
-        }
-
-        private void LogVerbose(string message)
-        {
-            if (!debugLogging ||
-                !verboseLogging)
-            {
-                return;
-            }
-
-            Debug.Log(
-                $"[SPARK LEVEL EVALUATOR] {message}",
-                this);
-        }
-
-        // ============================================================
-        // RUNTIME DATA
-        // ============================================================
-
-        [Serializable]
-        public struct TargetRuntimeResult
-        {
-            public string targetId;
-            public string displayName;
-            public bool satisfied;
-
-            public TargetRuntimeResult(
-                string targetId,
-                string displayName,
-                bool satisfied)
-            {
-                this.targetId = targetId;
-                this.displayName = displayName;
-                this.satisfied = satisfied;
-            }
-        }
-
-        private readonly struct PowerSourceRuntime
-        {
-            public readonly SparkLevelDefinition.PowerSourceDefinition Definition;
-            public readonly SparkPowerSupply Supply;
-
-            public PowerSourceRuntime(
-                SparkLevelDefinition.PowerSourceDefinition definition,
-                SparkPowerSupply supply)
-            {
-                Definition = definition;
-                Supply = supply;
-            }
+                $"[LEVEL EVALUATOR] Incorrect target polarity: {target.DisplayName}",
+                target.TargetComponent);
         }
     }
 }

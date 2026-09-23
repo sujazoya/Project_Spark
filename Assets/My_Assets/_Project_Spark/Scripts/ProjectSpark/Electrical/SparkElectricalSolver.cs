@@ -137,11 +137,11 @@ private readonly List<SparkCircuitConnection> connectionBuffer = new();
         lastSolvedTopologyVersion =
             circuit.TopologyVersion;
     }
-    Debug.Log(
+/*    Debug.Log(
         $"[SPARK SOLVER] SOLVE START | " +
         $"Circuit={circuit?.name ?? "NULL"} | " +
         $"TopologyVersion={circuit?.TopologyVersion ?? -1}",
-        this);
+        this);*/
             RefreshComponentCache();
 
             if (circuit == null)
@@ -336,11 +336,11 @@ private readonly List<SparkCircuitConnection> connectionBuffer = new();
 // DEBUG — GRAPH CONNECTIVITY
 // ============================================================
 
-Debug.Log(
+/*Debug.Log(
     $"[SPARK GRAPH DETAIL] " +
     $"Nodes={graph.NodeCount} | " +
     $"Terminals={terminals.Count}",
-    this);
+    this);*/
 
 for (int i = 0; i < terminals.Count; i++)
 {
@@ -355,14 +355,14 @@ for (int i = 0; i < terminals.Count; i++)
         terminal,
         connectionBuffer);
 
-    Debug.Log(
+    /*Debug.Log(
         $"[SPARK GRAPH TERMINAL] " +
         $"{terminal.name} | " +
         $"Owner={terminal.Owner?.name ?? "NULL"} | " +
         $"Connections={connectionBuffer.Count} | " +
         $"Voltage={terminal.ElectricalState.Voltage:F3} | " +
         $"Polarity={terminal.EffectivePolarity}",
-        terminal);
+        terminal);*/
 
     for (int c = 0; c < connectionBuffer.Count; c++)
     {
@@ -374,13 +374,13 @@ for (int i = 0; i < terminals.Count; i++)
         ? connection.B
         : connection.A;
 
-        Debug.Log(
+       /* Debug.Log(
             $"[SPARK GRAPH CONNECTION] " +
             $"{terminal.name} -> " +
             $"{other?.name ?? "NULL"} | " +
             $"Kind={connection.Kind} | " +
             $"Valid={connection.IsValid}",
-            terminal);
+            terminal);*/
     }
 }
 
@@ -451,12 +451,70 @@ for (int i = 0; i < terminals.Count; i++)
                     if (on)
                         StampForwardDrop(A, b, ai, bi, diode.ForwardVoltage, diode.OnResistance);
                 }
-                else if (component is SparkLED led)
-                {
-                    bool on = GetDiodeState(led, ta, tb, graph, voltages);
-                    if (on)
-                        StampForwardDrop(A, b, ai, bi, led.ForwardVoltage, led.OnResistance);
-                }
+               else if (component is SparkLED led)
+{
+    bool on =
+        GetDiodeState(
+            led,
+            ta,
+            tb,
+            graph,
+            voltages);
+
+    if (on)
+    {
+        // --------------------------------------------------------
+        // LED CURRENT LIMIT MODEL
+        // --------------------------------------------------------
+        //
+        // The LED has a physical maximum forward current.
+        // The old solver used only OnResistance:
+        //
+        //     I = (V - Vf) / R
+        //
+        // With Vf = 2 V and R = 1 ohm:
+        //
+        //     I = (5 - 2) / 1 = 3 A
+        //
+        // which ignores MaximumForwardCurrent completely.
+        //
+        // Build an effective resistance that respects the
+        // configured maximum forward current at the highest
+        // active supply voltage.
+        // --------------------------------------------------------
+
+        float referenceVoltage =
+            GetMaximumActiveSupplyVoltage();
+
+        float currentLimit =
+            Mathf.Max(
+                0.000001f,
+                led.MaximumForwardCurrent);
+
+        float voltageAboveForward =
+            Mathf.Max(
+                0f,
+                referenceVoltage -
+                led.ForwardVoltage);
+
+        float currentLimitResistance =
+            voltageAboveForward /
+            currentLimit;
+
+        float effectiveResistance =
+            Mathf.Max(
+                led.OnResistance,
+                currentLimitResistance);
+
+        StampForwardDrop(
+            A,
+            b,
+            ai,
+            bi,
+            led.ForwardVoltage,
+            effectiveResistance);
+    }
+}
                 else if (component is SparkCapacitor capacitor && simulateCapacitors)
                 {
                     double g = Math.Max(1.0e-12, capacitor.CapacitanceFarads / Math.Max(timeStep, 1.0e-6f));
@@ -467,19 +525,78 @@ for (int i = 0; i < terminals.Count; i++)
                 }
             }
 
-            // Current-limited supply: Thevenin equivalent. Below the limit it behaves
-            // close to an ideal source; at a short it cannot exceed CurrentLimit.
-            for (int i = 0; i < powerSupplies.Length; i++)
-            {
-                var supply = powerSupplies[i];
-                if (supply == null || !supply.IsOutputActive || !supply.ElectricalEnabled) continue;
-                if (!TryGetTwoTerminals(supply, out var positive, out var negative)) continue;
-                if (!graph.TerminalNode.TryGetValue(positive, out int pNode) || !graph.TerminalNode.TryGetValue(negative, out int nNode)) continue;
+           // ============================================================
+// POWER SUPPLIES
+// ============================================================
+//
+// Normal mode:
+//     The supply behaves approximately as an ideal voltage source.
+//
+// Current-limited mode:
+//     The supply uses a Thevenin resistance of V / I_limit.
+//
+// The important distinction is that the V/I_limit resistance is
+// NOT present during normal operation. Otherwise every normal load
+// would unnecessarily cause voltage droop.
+//
+// ============================================================
 
-                float seriesResistance = Mathf.Max(minimumResistance, supply.OutputVoltage / Mathf.Max(0.0001f, supply.CurrentLimit));
-                AddConductance(A, b, MapNode(pNode, reference), MapNode(nNode, reference),
-                    1.0 / seriesResistance, supply.OutputVoltage);
-            }
+for (int i = 0; i < powerSupplies.Length; i++)
+{
+    SparkPowerSupply supply = powerSupplies[i];
+
+    if (supply == null ||
+        !supply.IsOutputActive ||
+        !supply.ElectricalEnabled)
+    {
+        continue;
+    }
+
+    if (!TryGetTwoTerminals(
+            supply,
+            out SparkTerminal positive,
+            out SparkTerminal negative))
+    {
+        continue;
+    }
+
+    if (!graph.TerminalNode.TryGetValue(
+            positive,
+            out int pNode) ||
+        !graph.TerminalNode.TryGetValue(
+            negative,
+            out int nNode))
+    {
+        continue;
+    }
+
+    float seriesResistance;
+
+    if (supply.IsCurrentLimited)
+    {
+        seriesResistance =
+            Mathf.Max(
+                minimumResistance,
+                supply.OutputVoltage /
+                Mathf.Max(
+                    0.0001f,
+                    supply.CurrentLimit));
+    }
+    else
+    {
+        // Approximately ideal voltage source during normal operation.
+        seriesResistance =
+            minimumResistance;
+    }
+
+    AddConductance(
+        A,
+        b,
+        MapNode(pNode, reference),
+        MapNode(nNode, reference),
+        1.0 / seriesResistance,
+        supply.OutputVoltage);
+}
 
             var x = GaussianSolve(A, b);
             if (x == null) return false;
@@ -512,6 +629,69 @@ for (int i = 0; i < terminals.Count; i++)
             diodeStates[component] = on;
             return on;
         }
+
+        private float GetMaximumActiveSupplyVoltage()
+{
+    float maximumVoltage = 0f;
+
+    for (int i = 0;
+         i < powerSupplies.Length;
+         i++)
+    {
+        SparkPowerSupply supply =
+            powerSupplies[i];
+
+        if (supply == null ||
+            !supply.IsOutputActive ||
+            !supply.ElectricalEnabled)
+        {
+            continue;
+        }
+
+        maximumVoltage =
+            Mathf.Max(
+                maximumVoltage,
+                Mathf.Abs(
+                    supply.OutputVoltage));
+    }
+
+    return maximumVoltage;
+}
+
+
+
+private float GetLEDEffectiveResistance(
+    SparkLED led)
+{
+    if (led == null)
+        return minimumResistance;
+
+    float referenceVoltage =
+        GetMaximumActiveSupplyVoltage();
+
+    float currentLimit =
+        Mathf.Max(
+            0.000001f,
+            led.MaximumForwardCurrent);
+
+    float voltageAboveForward =
+        Mathf.Max(
+            0f,
+            referenceVoltage -
+            led.ForwardVoltage);
+
+    float currentLimitResistance =
+        voltageAboveForward /
+        currentLimit;
+
+    return Mathf.Max(
+        minimumResistance,
+        led.OnResistance,
+        currentLimitResistance);
+}
+
+
+
 
         private float ApplyDeviceStates(NetworkGraph graph, float[] voltages)        
 {
@@ -613,34 +793,45 @@ for (int i = 0; i < terminals.Count; i++)
             diodeStates[diode] =
                 on && current > 0f;
         }
-        else if (component is SparkLED led)
-        {
-            bool wasOn =
-                diodeStates.TryGetValue(
-                    led,
-                    out bool ledState) &&
-                ledState;
+       else if (component is SparkLED led)
+{
+    bool wasOn =
+        diodeStates.TryGetValue(
+            led,
+            out bool ledState) &&
+        ledState;
 
-            bool on =
-                wasOn
-                    ? voltage >=
-                      led.ForwardVoltage - 0.005f
-                    : voltage >=
-                      led.ForwardVoltage;
+    bool on =
+        wasOn
+            ? voltage >=
+              led.ForwardVoltage -
+              led.ConductionHysteresis
+            : voltage >=
+              led.ForwardVoltage;
 
-            if (on)
-            {
-                current =
-                    Mathf.Max(
-                        0f,
-                        (voltage -
-                         led.ForwardVoltage) /
-                        led.OnResistance);
-            }
+    if (on)
+    {
+        float effectiveResistance =
+            GetLEDEffectiveResistance(led);
 
-            diodeStates[led] =
-                on && current > 0f;
-        }
+        current =
+            Mathf.Max(
+                0f,
+                (voltage -
+                 led.ForwardVoltage) /
+                effectiveResistance);
+
+        // Final physical safety limit.
+        current =
+            Mathf.Min(
+                current,
+                led.MaximumForwardCurrent);
+    }
+
+    diodeStates[led] =
+        on &&
+        current > 0.000001f;
+}
         else if (component is SparkCapacitor capacitor &&
                  simulateCapacitors)
         {
@@ -657,27 +848,19 @@ for (int i = 0; i < terminals.Count; i++)
                         ? Time.deltaTime
                         : editorTimeStep);
         }
-        else if (component is SparkPowerSupply supply &&
-                 supply.IsOutputActive)
-        {
-            float seriesResistance =
-                Mathf.Max(
-                    minimumResistance,
-                    supply.OutputVoltage /
-                    Mathf.Max(
-                        0.0001f,
-                        supply.CurrentLimit));
-
-            current =
-                Mathf.Max(
-                    0f,
-                    (supply.OutputVoltage - voltage) /
-                    seriesResistance);
-
-            supply.SetCurrentLimited(
-                current >=
-                supply.CurrentLimit * 0.999f);
-        }
+       else if (component is SparkPowerSupply supply &&
+         supply.IsOutputActive)
+{
+    // The actual supply current is determined after the network
+    // has been solved. Do NOT derive it from the tiny normal-mode
+    // source resistance because that produces artificial multi-amp
+    // currents when the supply is behaving as an ideal voltage source.
+    //
+    // The real current is measured from the electrical network below.
+    current = CalculateSupplyOutputCurrent(
+        supply,
+        graph);
+}
 
         float power =
             voltage * current;
@@ -785,9 +968,101 @@ for (int i = 0; i < terminals.Count; i++)
                     voltageB));
     }
 
+
+    // ============================================================
+// SUPPLY CURRENT-LIMIT STATE
+// ============================================================
+
+for (int i = 0;
+     i < powerSupplies.Length;
+     i++)
+{
+    SparkPowerSupply supply =
+        powerSupplies[i];
+
+    if (supply == null ||
+        !supply.IsOutputActive)
+    {
+        continue;
+    }
+
+    float outputCurrent =
+        CalculateSupplyOutputCurrent(
+            supply,
+            graph);
+
+    bool limited =
+        outputCurrent >=
+        supply.CurrentLimit * 0.999f;
+
+    supply.SetCurrentLimited(
+        limited);
+}
+
     return maxDelta;
 
         }
+
+
+
+        private float CalculateSupplyOutputCurrent(
+    SparkPowerSupply supply,
+    NetworkGraph graph)
+{
+    if (supply == null ||
+        graph == null ||
+        !TryGetTwoTerminals(
+            supply,
+            out SparkTerminal positive,
+            out SparkTerminal negative))
+    {
+        return 0f;
+    }
+
+    float totalCurrent = 0f;
+
+    for (int i = 0;
+         i < electricalComponents.Length;
+         i++)
+    {
+        SparkElectricalComponent component =
+            electricalComponents[i];
+
+        if (component == null ||
+            component == supply ||
+            !component.ElectricalEnabled)
+        {
+            continue;
+        }
+
+        if (!TryGetTwoTerminals(
+                component,
+                out SparkTerminal terminalA,
+                out SparkTerminal terminalB))
+        {
+            continue;
+        }
+
+        SparkElectricalState state =
+            component.ElectricalState;
+
+        float componentCurrent =
+            state.Current;
+
+        if (terminalA == positive)
+        {
+            totalCurrent += componentCurrent;
+        }
+        else if (terminalB == positive)
+        {
+            totalCurrent -= componentCurrent;
+        }
+    }
+
+    return Mathf.Max(
+        0f,
+        totalCurrent);
+}
 
         private static void ApplyTerminalElectricalStates(
     float[] voltages,

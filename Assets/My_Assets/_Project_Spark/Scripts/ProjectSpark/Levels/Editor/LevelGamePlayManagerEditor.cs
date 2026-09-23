@@ -1016,25 +1016,51 @@ namespace ProjectSpark.Gameplay.Editor
         }
 
         private void DrawLEDTarget(
-            SerializedProperty target)
-        {
-            EditorGUILayout.PropertyField(
-                target.FindPropertyRelative(
-                    "targetComponent"),
-                new GUIContent(
-                    "LED Component"));
+    SerializedProperty target)
+{
+    EditorGUILayout.PropertyField(
+        target.FindPropertyRelative(
+            "targetComponent"),
+        new GUIContent(
+            "LED Component"));
 
-            EditorGUILayout.HelpBox(
-                "Target succeeds when the referenced " +
-                "SparkLED reports IsOn.",
-                MessageType.Info);
+    EditorGUILayout.HelpBox(
+        "Target succeeds when the referenced " +
+        "SparkLED reports IsOn.",
+        MessageType.Info);
 
-            EditorGUILayout.PropertyField(
-                target.FindPropertyRelative(
-                    "inverted"),
-                new GUIContent(
-                    "Invert Result"));
-        }
+    EditorGUILayout.Space(4);
+
+    EditorGUILayout.LabelField(
+        "REQUIRED CONNECTION",
+        EditorStyles.boldLabel);
+
+    EditorGUILayout.PropertyField(
+        target.FindPropertyRelative(
+            "requiredPositiveTerminal"),
+        new GUIContent(
+            "Required Positive Terminal"));
+
+    EditorGUILayout.PropertyField(
+        target.FindPropertyRelative(
+            "requiredNegativeTerminal"),
+        new GUIContent(
+            "Required Negative Terminal"));
+
+    EditorGUILayout.HelpBox(
+        "These terminals define the required polarity. " +
+        "Source + must reach the positive terminal and " +
+        "Source - must reach the negative terminal.",
+        MessageType.None);
+
+    EditorGUILayout.Space(3);
+
+    EditorGUILayout.PropertyField(
+        target.FindPropertyRelative(
+            "inverted"),
+        new GUIContent(
+            "Invert Result"));
+}
 
         private void DrawConductingTarget(
             SerializedProperty target)
@@ -1397,9 +1423,9 @@ namespace ProjectSpark.Gameplay.Editor
                         "Target Short",
                         manager.TargetShorted ? "YES" : "NO");
 
-                    EditorGUILayout.LabelField(
+                   /* EditorGUILayout.LabelField(
                         "Overload",
-                        manager.IsOverloaded ? "YES" : "NO");
+                        manager.IsOverloaded ? "YES" : "NO");*/
 
                     EditorGUILayout.LabelField(
                         "Target Voltage",

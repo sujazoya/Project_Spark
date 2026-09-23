@@ -62,6 +62,10 @@ namespace ProjectSpark.Gameplay
             ElectricalState.Voltage <
             -reverseVoltageLimit;
 
+
+            public float ConductionHysteresis =>
+    conductionHysteresis;
+
         public bool CanConductBetween(
             SparkTerminal from,
             SparkTerminal to)
