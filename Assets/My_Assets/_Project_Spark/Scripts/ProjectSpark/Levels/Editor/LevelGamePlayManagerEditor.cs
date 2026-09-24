@@ -235,24 +235,27 @@ namespace ProjectSpark.Gameplay.Editor
         // LEVELS
         // ============================================================
 
+     
         private void DrawLevels(
-            LevelGamePlayManager manager)
-        {
-            showLevels = DrawSectionHeader(
-                "LEVELS",
-                showLevels);
+    LevelGamePlayManager manager)
+{
+    showLevels = DrawSectionHeader(
+        "LEVELS",
+        showLevels);
 
-            if (showLevels)
-            {
-                DrawLevelControls(manager);
+    if (showLevels)
+    {
+        DrawLevelControls(manager);
 
-                EditorGUILayout.Space(5);
+        EditorGUILayout.Space(5);
 
-                DrawLevelArray(manager);
-            }
+        DrawLevelArray(manager);
+    }
 
-            EndSection();
-        }
+    EndSection();
+}
+
+
 
         // ============================================================
         // LEVEL CONTROLS
@@ -401,87 +404,96 @@ namespace ProjectSpark.Gameplay.Editor
         // SINGLE LEVEL
         // ============================================================
 
-        private void DrawSingleLevel(
-            LevelGamePlayManager manager,
-            int index,
-            SerializedProperty level)
+      
+private void DrawSingleLevel(
+    LevelGamePlayManager manager,
+    int index,
+    SerializedProperty level)
+{
+    if (level == null)
+        return;
+
+    SparkLevelDefinition levelDefinition =
+        level.objectReferenceValue as SparkLevelDefinition;
+
+    string title =
+        $"LEVEL {index + 1}";
+
+    if (levelDefinition != null)
+    {
+        if (!string.IsNullOrWhiteSpace(
+                levelDefinition.LevelId))
         {
-            SerializedProperty id =
-                level.FindPropertyRelative("levelId");
-
-            SerializedProperty displayName =
-                level.FindPropertyRelative("displayName");
-
-            string title =
-                $"LEVEL {index + 1}";
-
-            if (id != null &&
-                !string.IsNullOrWhiteSpace(id.stringValue))
-            {
-                title += $"  [{id.stringValue}]";
-            }
-
-            if (displayName != null &&
-                !string.IsNullOrWhiteSpace(
-                    displayName.stringValue))
-            {
-                title += $"  {displayName.stringValue}";
-            }
-
-            bool active =
-                index == manager.ActiveLevelIndex;
-
-            if (active)
-                title += "  ★ ACTIVE";
-
-            EditorGUILayout.BeginVertical(
-                EditorStyles.helpBox);
-
-            levelFoldouts[index] =
-                EditorGUILayout.Foldout(
-                    levelFoldouts[index],
-                    title,
-                    true);
-
-            if (levelFoldouts[index])
-            {
-                EditorGUILayout.Space(3);
-
-                DrawLevelIdentity(level);
-
-                EditorGUILayout.Space(4);
-
-                DrawLevelRules(level);
-
-                EditorGUILayout.Space(4);
-
-                DrawPowerConfiguration(level);
-
-                EditorGUILayout.Space(4);
-
-                DrawTargets(level);
-
-                EditorGUILayout.Space(4);
-
-                DrawFailureConfiguration(level);
-
-                EditorGUILayout.Space(4);
-
-                DrawOutputs(level);
-
-                EditorGUILayout.Space(4);
-
-                DrawProgression(level);
-
-                EditorGUILayout.Space(4);
-
-                DrawLevelValidation(level);
-            }
-
-            EditorGUILayout.EndVertical();
-
-            EditorGUILayout.Space(3);
+            title +=
+                $"  [{levelDefinition.LevelId}]";
         }
+
+        if (!string.IsNullOrWhiteSpace(
+                levelDefinition.DisplayName))
+        {
+            title +=
+                $"  {levelDefinition.DisplayName}";
+        }
+    }
+    else
+    {
+        title += "  [MISSING LEVEL]";
+    }
+
+    bool active =
+        index == manager.ActiveLevelIndex;
+
+    if (active)
+        title += "  ★ ACTIVE";
+
+    EditorGUILayout.BeginVertical(
+        EditorStyles.helpBox);
+
+    levelFoldouts[index] =
+        EditorGUILayout.Foldout(
+            levelFoldouts[index],
+            title,
+            true);
+
+    if (levelFoldouts[index])
+    {
+        EditorGUILayout.Space(3);
+
+        DrawLevelIdentity(level);
+
+        EditorGUILayout.Space(4);
+
+        DrawLevelRules(level);
+
+        EditorGUILayout.Space(4);
+
+        DrawPowerConfiguration(level);
+
+        EditorGUILayout.Space(4);
+
+        DrawTargets(level);
+
+        EditorGUILayout.Space(4);
+
+        DrawFailureConfiguration(level);
+
+        EditorGUILayout.Space(4);
+
+        DrawOutputs(level);
+
+        EditorGUILayout.Space(4);
+
+        DrawProgression(level);
+
+        EditorGUILayout.Space(4);
+
+        DrawLevelValidation(level);
+    }
+
+    EditorGUILayout.EndVertical();
+
+    EditorGUILayout.Space(3);
+}
 
         // ============================================================
         // IDENTITY
@@ -1755,44 +1767,54 @@ private void DrawProgression(
         // ARRAY OPERATIONS
         // ============================================================
 
+       
+    
         private void AddLevel()
         {
+            if (levels == null)
+                return;
+
+            LevelGamePlayManager manager =
+                target as LevelGamePlayManager;
+
+            if (manager == null)
+                return;
+
             Undo.RecordObject(
-                target,
-                "Add Spark Level");
+                manager,
+                "Add Level Slot");
 
             int index =
                 levels.arraySize;
 
-            levels.InsertArrayElementAtIndex(
-                index);
+            levels.InsertArrayElementAtIndex(index);
 
             SerializedProperty level =
                 levels.GetArrayElementAtIndex(index);
 
-            ClearLevel(level);
+            // New slot starts empty.
+            level.objectReferenceValue = null;
 
-            level.FindPropertyRelative(
-                "levelId").stringValue =
-                $"LEVEL_{index + 1:00}";
-
-            level.FindPropertyRelative(
-                "displayName").stringValue =
-                $"Level {index + 1}";
-
-            level.FindPropertyRelative(
-                "description").stringValue =
-                "New Project Spark level.";
-
-            activeLevelIndex.intValue =
-                index;
-
-            SyncFoldouts();
+            // Make the newly-added slot active.
+            activeLevelIndex.intValue = index;
 
             serializedObject.ApplyModifiedProperties();
 
-            EditorUtility.SetDirty(target);
+            EditorUtility.SetDirty(manager);
+
+            SyncFoldouts();
+
+            // Open the newly-added slot.
+            if (levelFoldouts != null &&
+                index >= 0 &&
+                index < levelFoldouts.Length)
+            {
+                levelFoldouts[index] = true;
+            }
+
+            Repaint();
         }
+
 
         private void DuplicateActiveLevel(
             LevelGamePlayManager manager)
@@ -1922,140 +1944,19 @@ private void DrawProgression(
 
             Repaint();
         }
-
+      
         private void ClearLevel(
             SerializedProperty level)
         {
-            SerializedProperty id =
-                level.FindPropertyRelative(
-                    "levelId");
+            if (level == null)
+                return;
 
-            SerializedProperty name =
-                level.FindPropertyRelative(
-                    "displayName");
-
-            SerializedProperty description =
-                level.FindPropertyRelative(
-                    "description");
-
-            SerializedProperty completionMode =
-                level.FindPropertyRelative(
-                    "completionMode");
-
-            SerializedProperty targetCount =
-                level.FindPropertyRelative(
-                    "requiredTargetCount");
-
-            SerializedProperty minVoltage =
-                level.FindPropertyRelative(
-                    "minimumVoltage");
-
-            SerializedProperty closedReturn =
-                level.FindPropertyRelative(
-                    "requireClosedReturn");
-
-            SerializedProperty rejectShort =
-                level.FindPropertyRelative(
-                    "rejectShortCircuit");
-
-            SerializedProperty rejectTargetShort =
-                level.FindPropertyRelative(
-                    "rejectTargetShort");
-
-            SerializedProperty allowIntermediate =
-                level.FindPropertyRelative(
-                    "allowIntermediateConnections");
-
-            SerializedProperty allowAnySource =
-                level.FindPropertyRelative(
-                    "allowAnyConfiguredSource");
-
-            SerializedProperty sources =
-                level.FindPropertyRelative(
-                    "powerSources");
-
-            SerializedProperty targets =
-                level.FindPropertyRelative(
-                    "targets");
-
-            SerializedProperty failureMode =
-                level.FindPropertyRelative(
-                    "failureMode");
-
-            SerializedProperty successOutputs =
-                level.FindPropertyRelative(
-                    "successOutputs");
-
-            SerializedProperty failureOutputs =
-                level.FindPropertyRelative(
-                    "failureOutputs");
-
-            SerializedProperty unlocked =
-                level.FindPropertyRelative(
-                    "unlockedByDefault");
-
-            SerializedProperty autoUnlock =
-                level.FindPropertyRelative(
-                    "autoUnlockNextLevel");
-
-            if (id != null)
-                id.stringValue = "LEVEL";
-
-            if (name != null)
-                name.stringValue = "New Level";
-
-            if (description != null)
-                description.stringValue = string.Empty;
-
-            if (completionMode != null)
-                completionMode.enumValueIndex =
-                    (int)SparkLevelDefinition.CompletionMode
-                        .AllTargets;
-
-            if (targetCount != null)
-                targetCount.intValue = 1;
-
-            if (minVoltage != null)
-                minVoltage.floatValue = 0.01f;
-
-            if (closedReturn != null)
-                closedReturn.boolValue = true;
-
-            if (rejectShort != null)
-                rejectShort.boolValue = true;
-
-            if (rejectTargetShort != null)
-                rejectTargetShort.boolValue = true;
-
-            if (allowIntermediate != null)
-                allowIntermediate.boolValue = true;
-
-            if (allowAnySource != null)
-                allowAnySource.boolValue = false;
-
-            if (sources != null)
-                sources.arraySize = 0;
-
-            if (targets != null)
-                targets.arraySize = 0;
-
-            if (failureMode != null)
-                failureMode.enumValueIndex =
-                    (int)SparkLevelDefinition.LevelFailureMode
-                        .ShortCircuit;
-
-            if (successOutputs != null)
-                successOutputs.arraySize = 0;
-
-            if (failureOutputs != null)
-                failureOutputs.arraySize = 0;
-
-            if (unlocked != null)
-                unlocked.boolValue = true;
-
-            if (autoUnlock != null)
-                autoUnlock.boolValue = true;
+            // The manager stores SparkLevelDefinition assets as
+            // object references. There are no embedded level fields
+            // to clear here.
+            level.objectReferenceValue = null;
         }
+
 
         // ============================================================
         // FOLDOUT MANAGEMENT

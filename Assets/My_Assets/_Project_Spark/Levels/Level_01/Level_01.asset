@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_01
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: LEVEL_01
+  displayName: LIGHT THE BULB
+  description: POWER SSUPPLY POSETIVE TO LED ANODE. AND POWER SUPPLY NEGATIVE TO
+    LED CATHHODE. LIGHT SHOULD BE ON
+  completionMode: 0
+  requiredTargetCount: 1
+  requireClosedReturn: 1
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 1
+  minimumVoltage: 0.01
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: Power_Supply
+    positiveTerminalId: Power_Supply_Posetive
+    negativeTerminalId: Power_Supply_Negative
+    nominalVoltage: 5
+  targets:
+  - targetId: Bulb
+    displayName: Bulb
+    description: 'LED BULB
+
+'
+    targetType: 3
+    targetTerminalId: Bulb_Anode
+    requiredPositiveTerminalId: Bulb_Anode
+    requiredNegativeTerminalId: Bulb_Cathode
+    targetComponentId: LED_Bulb
+    minimumVoltage: 1
+    minimumCurrent: 0.01
+    minimumPower: 0.001
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+  failureMode: 1
+  successOutputIds:
+  - LED_Helix
+  failureOutputIds:
+  - Levels
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 1
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0
