@@ -30,17 +30,10 @@ namespace ProjectSpark.Display
 
         public SparkDisplayData CurrentData => currentData?.Clone();
 
-        public void SetData(SparkDisplayData data)
-        {
-            if (data == null)
-                return;
-
-            currentData = data.Clone();
-
-            ApplyConfiguration();
-            ApplyData();
-        }
-
+       public void SetData(SparkDisplayData data)
+{
+    SetData(data, false);
+}
         public void Clear()
         {
             currentData = SparkDisplayData.CreateDefault();
@@ -57,8 +50,19 @@ namespace ProjectSpark.Display
             if (unitText != null)
                 unitText.text = string.Empty;
 
-            if (minMaxText != null)
-                minMaxText.text = string.Empty;
+            if (minMaxText != null &&
+    profile != null &&
+    profile.showMinMaxAverage &&
+    currentData.hasMinMaxAverage &&
+    currentData.primary.valid)
+{
+    minMaxText.text =
+        SparkDisplayFormatter.FormatMinMaxAverage(
+            currentData.primary,
+            currentData.minimum,
+            currentData.maximum,
+            currentData.average);
+}
 
             if (notificationText != null)
                 notificationText.text = string.Empty;
@@ -87,13 +91,36 @@ namespace ProjectSpark.Display
 
             if (primaryValue != null)
             {
-                primaryValue.Configure(
-                    animationProfile.valueTransition,
-                    animationProfile.valueSpeed,
-                    animationProfile.instrumentDeadband,
-                    animationProfile.instrumentNoise);
+               primaryValue.Configure(
+    animationProfile.valueTransition,
+    animationProfile.valueSpeed,
+    animationProfile.instrumentDeadband,
+    animationProfile.instrumentNoise,
+    animationProfile.rollingDuration);
             }
         }
+        public void SetData(
+    SparkDisplayData data,
+    bool force = false,
+    double valueTolerance = 0.000001d)
+{
+    if (data == null)
+        return;
+
+    if (!force &&
+        currentData != null &&
+        currentData.IsEquivalentTo(
+            data,
+            valueTolerance))
+    {
+        return;
+    }
+
+    currentData = data.Clone();
+
+    ApplyConfiguration();
+    ApplyData();
+}
 
         private void ApplyData()
         {

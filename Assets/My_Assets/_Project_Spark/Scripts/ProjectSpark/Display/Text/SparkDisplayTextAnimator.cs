@@ -9,17 +9,45 @@ namespace ProjectSpark.Display
         [SerializeField] private TMP_Text target;
 
         private Coroutine routine;
+        private string currentValue = string.Empty;
+private SparkDisplayTextAnimation currentMode;
+private float currentSpeed;
 
-        public void SetText(string value, SparkDisplayTextAnimation mode, float speed)
-        {
-            if (routine != null)
-                StopCoroutine(routine);
+       public void SetText(
+    string value,
+    SparkDisplayTextAnimation mode,
+    float speed)
+{
+    value ??= string.Empty;
 
-            if (target == null)
-                return;
+    if (currentValue == value &&
+        currentMode == mode &&
+        Mathf.Approximately(
+            currentSpeed,
+            speed))
+    {
+        return;
+    }
 
-            routine = StartCoroutine(Animate(value ?? string.Empty, mode, Mathf.Max(1f, speed)));
-        }
+    currentValue = value;
+    currentMode = mode;
+    currentSpeed = speed;
+
+    if (routine != null)
+    {
+        StopCoroutine(routine);
+        routine = null;
+    }
+
+    if (target == null)
+        return;
+
+    routine = StartCoroutine(
+        Animate(
+            value,
+            mode,
+            Mathf.Max(1f, speed)));
+}
 
         public void SetImmediate(string value)
         {
