@@ -4,105 +4,288 @@ using UnityEngine;
 
 namespace ProjectSpark.Display
 {
+    [DisallowMultipleComponent]
     public sealed class SparkDisplayTextAnimator : MonoBehaviour
     {
-        [SerializeField] private TMP_Text target;
+        [SerializeField]
+        private TMP_Text target;
 
         private Coroutine routine;
-        private string currentValue = string.Empty;
-private SparkDisplayTextAnimation currentMode;
-private float currentSpeed;
 
-       public void SetText(
-    string value,
-    SparkDisplayTextAnimation mode,
-    float speed)
-{
-    value ??= string.Empty;
+        private string currentValue =
+            string.Empty;
 
-    if (currentValue == value &&
-        currentMode == mode &&
-        Mathf.Approximately(
-            currentSpeed,
-            speed))
-    {
-        return;
-    }
+        private SparkDisplayTextAnimation currentMode =
+            SparkDisplayTextAnimation.Instant;
 
-    currentValue = value;
-    currentMode = mode;
-    currentSpeed = speed;
+        private float currentSpeed;
 
-    if (routine != null)
-    {
-        StopCoroutine(routine);
-        routine = null;
-    }
-
-    if (target == null)
-        return;
-
-    routine = StartCoroutine(
-        Animate(
-            value,
-            mode,
-            Mathf.Max(1f, speed)));
-}
-
-        public void SetImmediate(string value)
+        public void SetText(
+            string value,
+            SparkDisplayTextAnimation mode,
+            float speed)
         {
-            if (routine != null)
-                StopCoroutine(routine);
+            value ??= string.Empty;
 
-            if (target != null)
-                target.text = value ?? string.Empty;
+            float clampedSpeed =
+                Mathf.Max(
+                    1f,
+                    speed);
+
+            if (currentValue == value &&
+                currentMode == mode &&
+                Mathf.Approximately(
+                    currentSpeed,
+                    clampedSpeed))
+            {
+                return;
+            }
+
+            currentValue =
+                value;
+
+            currentMode =
+                mode;
+
+            currentSpeed =
+                clampedSpeed;
+
+            StopCurrentRoutine();
+
+            if (target == null)
+                return;
+
+            target.enabled = true;
+
+            routine =
+                StartCoroutine(
+                    Animate(
+                        value,
+                        mode,
+                        clampedSpeed));
         }
 
-        private IEnumerator Animate(string value, SparkDisplayTextAnimation mode, float speed)
+        public void SetImmediate(
+            string value)
         {
+            value ??= string.Empty;
+
+            StopCurrentRoutine();
+
+            currentValue =
+                value;
+
+            currentMode =
+                SparkDisplayTextAnimation.Instant;
+
+            currentSpeed =
+                0f;
+
+            if (target == null)
+                return;
+
+            target.enabled = true;
+            target.text = value;
+        }
+
+        private IEnumerator Animate(
+            string value,
+            SparkDisplayTextAnimation mode,
+            float speed)
+        {
+            if (target == null)
+                yield break;
+
+            target.enabled = true;
+
             switch (mode)
             {
                 case SparkDisplayTextAnimation.Instant:
-                    target.text = value;
-                    yield break;
+
+                    target.text =
+                        value;
+
+                    break;
 
                 case SparkDisplayTextAnimation.Reveal:
                 case SparkDisplayTextAnimation.Typewriter:
                 case SparkDisplayTextAnimation.Scan:
-                    for (int i = 1; i <= value.Length; i++)
-                    {
-                        target.text = value.Substring(0, i);
-                        yield return new WaitForSecondsRealtime(1f / speed);
-                    }
+
+                    yield return AnimateReveal(
+                        value,
+                        speed);
+
                     break;
 
                 case SparkDisplayTextAnimation.Scramble:
-                    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%@";
-                    for (int i = 0; i < 6; i++)
-                    {
-                        char[] buffer = new char[value.Length];
-                        for (int c = 0; c < value.Length; c++)
-                            buffer[c] = chars[Random.Range(0, chars.Length)];
 
-                        target.text = new string(buffer);
-                        yield return new WaitForSecondsRealtime(1f / speed);
-                    }
-                    target.text = value;
+                    yield return AnimateScramble(
+                        value,
+                        speed);
+
                     break;
 
                 case SparkDisplayTextAnimation.Flicker:
-                    target.text = value;
-                    for (int i = 0; i < 4; i++)
-                    {
-                        target.enabled = false;
-                        yield return new WaitForSecondsRealtime(0.025f);
-                        target.enabled = true;
-                        yield return new WaitForSecondsRealtime(0.04f);
-                    }
+
+                    yield return AnimateFlicker(
+                        value);
+
                     break;
             }
 
-            target.enabled = true;
+            if (target != null)
+            {
+                target.enabled = true;
+                target.text = value;
+            }
+
+            routine = null;
+        }
+
+        private IEnumerator AnimateReveal(
+            string value,
+            float speed)
+        {
+            if (target == null)
+                yield break;
+
+            if (value.Length == 0)
+            {
+                target.text =
+                    string.Empty;
+
+                yield break;
+            }
+
+            float delay =
+                1f / speed;
+
+            for (int i = 1;
+                 i <= value.Length;
+                 i++)
+            {
+                if (target == null)
+                    yield break;
+
+                target.text =
+                    value.Substring(
+                        0,
+                        i);
+
+                yield return
+                    new WaitForSecondsRealtime(
+                        delay);
+            }
+        }
+
+        private IEnumerator AnimateScramble(
+            string value,
+            float speed)
+        {
+            if (target == null)
+                yield break;
+
+            const string characters =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%@";
+
+            float delay =
+                1f / speed;
+
+            for (int iteration = 0;
+                 iteration < 6;
+                 iteration++)
+            {
+                if (target == null)
+                    yield break;
+
+                char[] buffer =
+                    new char[value.Length];
+
+                for (int i = 0;
+                     i < buffer.Length;
+                     i++)
+                {
+                    buffer[i] =
+                        characters[
+                            Random.Range(
+                                0,
+                                characters.Length)];
+                }
+
+                target.text =
+                    new string(buffer);
+
+                yield return
+                    new WaitForSecondsRealtime(
+                        delay);
+            }
+
+            if (target != null)
+                target.text =
+                    value;
+        }
+
+        private IEnumerator AnimateFlicker(
+            string value)
+        {
+            if (target == null)
+                yield break;
+
+            bool originalEnabled =
+                target.enabled;
+
+            target.text =
+                value;
+
+            for (int i = 0;
+                 i < 4;
+                 i++)
+            {
+                if (target == null)
+                    yield break;
+
+                target.enabled =
+                    false;
+
+                yield return
+                    new WaitForSecondsRealtime(
+                        0.025f);
+
+                if (target == null)
+                    yield break;
+
+                target.enabled =
+                    true;
+
+                yield return
+                    new WaitForSecondsRealtime(
+                        0.04f);
+            }
+
+            if (target != null)
+            {
+                target.enabled =
+                    originalEnabled;
+            }
+        }
+
+        private void StopCurrentRoutine()
+        {
+            if (routine == null)
+                return;
+
+            StopCoroutine(
+                routine);
+
+            routine = null;
+
+            if (target != null)
+                target.enabled = true;
+        }
+
+        private void OnDisable()
+        {
+            StopCurrentRoutine();
         }
     }
 }

@@ -1,3 +1,4 @@
+
 using System;
 using System.Globalization;
 
@@ -17,19 +18,25 @@ namespace ProjectSpark.Display
                 return "----";
             }
 
-            EngineeringScale scale = GetEngineeringScale(
-                data.value,
-                data.useEngineeringPrefixes);
+            EngineeringScale scale =
+                GetEngineeringScale(
+                    data.value,
+                    data.useEngineeringPrefixes);
 
-            string number = scale.ScaledValue.ToString(
-                "F" + Math.Max(0, data.precision),
-                CultureInfo.InvariantCulture);
+            string number =
+                scale.ScaledValue.ToString(
+                    "F" +
+                    Math.Max(
+                        0,
+                        data.precision),
+                    CultureInfo.InvariantCulture);
 
             return number +
                    " " +
                    scale.Prefix +
                    UnitText(data.unit) +
-                   (data.customSuffix ?? string.Empty);
+                   (data.customSuffix ??
+                    string.Empty);
         }
 
         public static string FormatNumber(
@@ -43,7 +50,10 @@ namespace ProjectSpark.Display
             }
 
             return value.ToString(
-                "F" + Math.Max(0, precision),
+                "F" +
+                Math.Max(
+                    0,
+                    precision),
                 CultureInfo.InvariantCulture);
         }
 
@@ -56,18 +66,31 @@ namespace ProjectSpark.Display
             if (!reference.valid)
                 return string.Empty;
 
-            SparkDisplayValueData minimumData = reference;
-            SparkDisplayValueData maximumData = reference;
-            SparkDisplayValueData averageData = reference;
+            SparkDisplayValueData minimumData =
+                reference;
 
-            minimumData.value = minimum;
-            maximumData.value = maximum;
-            averageData.value = average;
+            SparkDisplayValueData maximumData =
+                reference;
+
+            SparkDisplayValueData averageData =
+                reference;
+
+            minimumData.value =
+                minimum;
+
+            maximumData.value =
+                maximum;
+
+            averageData.value =
+                average;
 
             return
-                "MIN " + FormatValue(minimumData) +
-                "   MAX " + FormatValue(maximumData) +
-                "   AVG " + FormatValue(averageData);
+                "MIN " +
+                FormatValue(minimumData) +
+                "   MAX " +
+                FormatValue(maximumData) +
+                "   AVG " +
+                FormatValue(averageData);
         }
 
         public static string UnitText(
@@ -76,27 +99,21 @@ namespace ProjectSpark.Display
             switch (unit)
             {
                 case SparkDisplayUnit.V:
-                case SparkDisplayUnit.Volts:
                     return "V";
 
                 case SparkDisplayUnit.A:
-                case SparkDisplayUnit.Amps:
                     return "A";
 
                 case SparkDisplayUnit.Ohm:
-                case SparkDisplayUnit.Ohms:
                     return "Ω";
 
                 case SparkDisplayUnit.W:
-                case SparkDisplayUnit.Watts:
                     return "W";
 
                 case SparkDisplayUnit.Hz:
-                case SparkDisplayUnit.Hertz:
                     return "Hz";
 
                 case SparkDisplayUnit.F:
-                case SparkDisplayUnit.Farads:
                     return "F";
 
                 case SparkDisplayUnit.C:
@@ -148,30 +165,61 @@ namespace ProjectSpark.Display
                     string.Empty);
             }
 
-            double absolute = Math.Abs(value);
+            double absolute =
+                Math.Abs(value);
 
             if (absolute >= 1e9)
-                return new EngineeringScale(value / 1e9, "G");
+            {
+                return new EngineeringScale(
+                    value / 1e9,
+                    "G");
+            }
 
             if (absolute >= 1e6)
-                return new EngineeringScale(value / 1e6, "M");
+            {
+                return new EngineeringScale(
+                    value / 1e6,
+                    "M");
+            }
 
             if (absolute >= 1e3)
-                return new EngineeringScale(value / 1e3, "k");
+            {
+                return new EngineeringScale(
+                    value / 1e3,
+                    "k");
+            }
 
             if (absolute >= 1d)
-                return new EngineeringScale(value, string.Empty);
+            {
+                return new EngineeringScale(
+                    value,
+                    string.Empty);
+            }
 
             if (absolute >= 1e-3)
-                return new EngineeringScale(value * 1e3, "m");
+            {
+                return new EngineeringScale(
+                    value * 1e3,
+                    "m");
+            }
 
             if (absolute >= 1e-6)
-                return new EngineeringScale(value * 1e6, "µ");
+            {
+                return new EngineeringScale(
+                    value * 1e6,
+                    "µ");
+            }
 
             if (absolute >= 1e-9)
-                return new EngineeringScale(value * 1e9, "n");
+            {
+                return new EngineeringScale(
+                    value * 1e9,
+                    "n");
+            }
 
-            return new EngineeringScale(value * 1e12, "p");
+            return new EngineeringScale(
+                value * 1e12,
+                "p");
         }
 
         private readonly struct EngineeringScale

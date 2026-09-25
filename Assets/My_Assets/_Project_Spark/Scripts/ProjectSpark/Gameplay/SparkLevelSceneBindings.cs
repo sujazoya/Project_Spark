@@ -6,124 +6,106 @@ using ProjectSpark.Electrical;
 
 namespace ProjectSpark.Gameplay
 {
-    /// <summary>
-    /// Scene-side bindings for a SparkLevelDefinition.
-    ///
-    /// SparkLevelDefinition is a ScriptableObject and therefore must remain
-    /// independent from scene objects.
-    ///
-    /// This component stores the actual scene references and exposes them
-    /// through stable string IDs used by the level definition.
-    ///
-    /// Architecture:
-    ///
-    ///     SparkLevelDefinition
-    ///             |
-    ///             | IDs
-    ///             v
-    ///     SparkLevelSceneBindings
-    ///             |
-    ///             | actual scene references
-    ///             v
-    ///     SparkTerminal / SparkElectricalComponent / GameObject
-    ///
-    /// This class does NOT evaluate circuits and does NOT own gameplay logic.
-    /// It is only the scene binding layer.
-    /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkLevelSceneBindings : MonoBehaviour
     {
-        // ================================================================
+        // ============================================================
         // TERMINAL BINDING
-        // ================================================================
+        // ============================================================
 
         [Serializable]
         private sealed class TerminalBinding
         {
-            [SerializeField]
-            private string id;
-
-            [SerializeField]
-            private SparkTerminal terminal;
+            [SerializeField] private string id;
+            [SerializeField] private SparkTerminal terminal;
 
             public string Id => id;
-
             public SparkTerminal Terminal => terminal;
         }
 
-        // ================================================================
+        // ============================================================
         // ELECTRICAL COMPONENT BINDING
-        // ================================================================
+        // Existing system - PRESERVED
+        // ============================================================
 
         [Serializable]
         private sealed class ComponentBinding
         {
-            [SerializeField]
-            private string id;
-
-            [SerializeField]
-            private SparkElectricalComponent component;
+            [SerializeField] private string id;
+            [SerializeField] private SparkElectricalComponent component;
 
             public string Id => id;
-
             public SparkElectricalComponent Component => component;
         }
 
-        // ================================================================
+        // ============================================================
+        // ELECTRONIC OBJECT BINDING
+        // New path for instruments such as SparkMultimeter
+        // ============================================================
+
+        [Serializable]
+        private sealed class ElectronicObjectBinding
+        {
+            [SerializeField] private string id;
+            [SerializeField] private SparkElectronicObject electronicObject;
+
+            public string Id => id;
+            public SparkElectronicObject ElectronicObject => electronicObject;
+        }
+
+        // ============================================================
         // GAMEOBJECT OUTPUT BINDING
-        // ================================================================
+        // ============================================================
 
         [Serializable]
         private sealed class GameObjectBinding
         {
-            [SerializeField]
-            private string id;
-
-            [SerializeField]
-            private GameObject target;
+            [SerializeField] private string id;
+            [SerializeField] private GameObject target;
 
             public string Id => id;
-
             public GameObject Target => target;
         }
 
-        // ================================================================
+        // ============================================================
         // INSPECTOR DATA
-        // ================================================================
+        // ============================================================
 
         [Header("Terminal Bindings")]
-        [Tooltip(
-            "Maps stable level terminal IDs to actual SparkTerminal components in this scene.")]
         [SerializeField]
         private TerminalBinding[] terminals = Array.Empty<TerminalBinding>();
 
         [Header("Electrical Component Bindings")]
-        [Tooltip(
-            "Maps stable level component IDs to actual SparkElectricalComponent components in this scene.")]
         [SerializeField]
         private ComponentBinding[] components = Array.Empty<ComponentBinding>();
 
+        [Header("Electronic Object Bindings")]
+        [SerializeField]
+        private ElectronicObjectBinding[] electronicObjects =
+            Array.Empty<ElectronicObjectBinding>();
+
         [Header("GameObject Output Bindings")]
-        [Tooltip(
-            "Maps stable output IDs to GameObjects used for level success/failure presentation.")]
         [SerializeField]
         private GameObjectBinding[] outputs = Array.Empty<GameObjectBinding>();
 
-        // ================================================================
-        // RUNTIME LOOKUP CACHE
-        // ================================================================
+        // ============================================================
+        // LOOKUP CACHE
+        // ============================================================
 
         private Dictionary<string, SparkTerminal> terminalLookup;
 
         private Dictionary<string, SparkElectricalComponent> componentLookup;
 
+        private Dictionary<string, SparkElectronicObject>
+            electronicObjectLookup;
+
         private Dictionary<string, GameObject> outputLookup;
 
         private bool lookupCacheBuilt;
 
-        // ================================================================
-        // UNITY LIFECYCLE
-        // ================================================================
+        // ============================================================
+        // UNITY
+        // ============================================================
 
         private void Awake()
         {
@@ -136,44 +118,39 @@ namespace ProjectSpark.Gameplay
         }
 
 #if UNITY_EDITOR
-private void OnValidate()
-{
-    Validate(out _);
+        private void OnValidate()
+        {
+            Validate(out _);
 
-    /*
-     * Do not depend on the runtime dictionaries while editing.
-     * They will be rebuilt when the object becomes active.
-     */
-    lookupCacheBuilt = false;
-}
+            lookupCacheBuilt = false;
+        }
 #endif
 
-        // ================================================================
-        // CACHE BUILD
-        // ================================================================
+        // ============================================================
+        // CACHE
+        // ============================================================
 
-        /// <summary>
-        /// Builds the runtime lookup tables.
-        ///
-        /// IDs are case-sensitive and must be unique within their own
-        /// binding category.
-        /// </summary>
         private void BuildLookupCache()
         {
-            terminalLookup = new Dictionary<string, SparkTerminal>(
-                StringComparer.Ordinal);
+            terminalLookup =
+                new Dictionary<string, SparkTerminal>(
+                    StringComparer.Ordinal);
 
-            componentLookup = new Dictionary<string, SparkElectricalComponent>(
-                StringComparer.Ordinal);
+            componentLookup =
+                new Dictionary<string, SparkElectricalComponent>(
+                    StringComparer.Ordinal);
 
-            outputLookup = new Dictionary<string, GameObject>(
-                StringComparer.Ordinal);
+            electronicObjectLookup =
+                new Dictionary<string, SparkElectronicObject>(
+                    StringComparer.Ordinal);
 
-            lookupCacheBuilt = true;
+            outputLookup =
+                new Dictionary<string, GameObject>(
+                    StringComparer.Ordinal);
 
-            // ------------------------------------------------------------
+            // --------------------------------------------------------
             // TERMINALS
-            // ------------------------------------------------------------
+            // --------------------------------------------------------
 
             if (terminals != null)
             {
@@ -189,26 +166,30 @@ private void OnValidate()
                     if (string.IsNullOrWhiteSpace(id))
                         continue;
 
-                    if (binding.Terminal == null)
+                    SparkTerminal terminal = binding.Terminal;
+
+                    if (terminal == null)
                         continue;
 
                     if (terminalLookup.ContainsKey(id))
                     {
-                        Debug.LogError(
-                            $"[LEVEL BINDINGS] Duplicate terminal ID '{id}' " +
-                            $"found on '{name}'. The first valid binding is retained.",
+                        Debug.LogWarning(
+                            $"[{nameof(SparkLevelSceneBindings)}] " +
+                            $"Duplicate terminal binding ID '{id}'. " +
+                            $"The first binding is kept.",
                             this);
 
                         continue;
                     }
 
-                    terminalLookup.Add(id, binding.Terminal);
+                    terminalLookup.Add(id, terminal);
                 }
             }
 
-            // ------------------------------------------------------------
-            // COMPONENTS
-            // ------------------------------------------------------------
+            // --------------------------------------------------------
+            // ELECTRICAL COMPONENTS
+            // Existing behavior preserved
+            // --------------------------------------------------------
 
             if (components != null)
             {
@@ -224,26 +205,73 @@ private void OnValidate()
                     if (string.IsNullOrWhiteSpace(id))
                         continue;
 
-                    if (binding.Component == null)
+                    SparkElectricalComponent component =
+                        binding.Component;
+
+                    if (component == null)
                         continue;
 
                     if (componentLookup.ContainsKey(id))
                     {
-                        Debug.LogError(
-                            $"[LEVEL BINDINGS] Duplicate component ID '{id}' " +
-                            $"found on '{name}'. The first valid binding is retained.",
+                        Debug.LogWarning(
+                            $"[{nameof(SparkLevelSceneBindings)}] " +
+                            $"Duplicate electrical component binding ID '{id}'. " +
+                            $"The first binding is kept.",
                             this);
 
                         continue;
                     }
 
-                    componentLookup.Add(id, binding.Component);
+                    componentLookup.Add(id, component);
                 }
             }
 
-            // ------------------------------------------------------------
-            // OUTPUTS
-            // ------------------------------------------------------------
+            // --------------------------------------------------------
+            // ELECTRONIC OBJECTS
+            // Multimeter and other SparkElectronicObject types
+            // --------------------------------------------------------
+
+            if (electronicObjects != null)
+            {
+                for (int i = 0; i < electronicObjects.Length; i++)
+                {
+                    ElectronicObjectBinding binding =
+                        electronicObjects[i];
+
+                    if (binding == null)
+                        continue;
+
+                    string id = binding.Id;
+
+                    if (string.IsNullOrWhiteSpace(id))
+                        continue;
+
+                    SparkElectronicObject electronicObject =
+                        binding.ElectronicObject;
+
+                    if (electronicObject == null)
+                        continue;
+
+                    if (electronicObjectLookup.ContainsKey(id))
+                    {
+                        Debug.LogWarning(
+                            $"[{nameof(SparkLevelSceneBindings)}] " +
+                            $"Duplicate electronic object binding ID '{id}'. " +
+                            $"The first binding is kept.",
+                            this);
+
+                        continue;
+                    }
+
+                    electronicObjectLookup.Add(
+                        id,
+                        electronicObject);
+                }
+            }
+
+            // --------------------------------------------------------
+            // GAMEOBJECT OUTPUTS
+            // --------------------------------------------------------
 
             if (outputs != null)
             {
@@ -259,46 +287,49 @@ private void OnValidate()
                     if (string.IsNullOrWhiteSpace(id))
                         continue;
 
-                    if (binding.Target == null)
+                    GameObject target = binding.Target;
+
+                    if (target == null)
                         continue;
 
                     if (outputLookup.ContainsKey(id))
                     {
-                        Debug.LogError(
-                            $"[LEVEL BINDINGS] Duplicate output ID '{id}' " +
-                            $"found on '{name}'. The first valid binding is retained.",
+                        Debug.LogWarning(
+                            $"[{nameof(SparkLevelSceneBindings)}] " +
+                            $"Duplicate output binding ID '{id}'. " +
+                            $"The first binding is kept.",
                             this);
 
                         continue;
                     }
 
-                    outputLookup.Add(id, binding.Target);
+                    outputLookup.Add(id, target);
                 }
             }
+
+            lookupCacheBuilt = true;
         }
 
-        // ================================================================
-        // CACHE SAFETY
-        // ================================================================
+        // ============================================================
+        // CACHE VALIDATION
+        // ============================================================
 
         private void EnsureLookupCache()
         {
             if (!lookupCacheBuilt ||
                 terminalLookup == null ||
                 componentLookup == null ||
+                electronicObjectLookup == null ||
                 outputLookup == null)
             {
                 BuildLookupCache();
             }
         }
 
-        // ================================================================
-        // TERMINAL LOOKUP
-        // ================================================================
+        // ============================================================
+        // TERMINAL API
+        // ============================================================
 
-        /// <summary>
-        /// Resolves a terminal ID to its actual scene SparkTerminal.
-        /// </summary>
         public bool TryGetTerminal(
             string id,
             out SparkTerminal terminal)
@@ -310,26 +341,23 @@ private void OnValidate()
             if (string.IsNullOrWhiteSpace(id))
                 return false;
 
-            return terminalLookup.TryGetValue(id, out terminal) &&
-                   terminal != null;
+            return terminalLookup.TryGetValue(
+                id,
+                out terminal);
         }
 
-        /// <summary>
-        /// Returns true when a valid terminal binding exists for the ID.
-        /// </summary>
         public bool HasTerminal(string id)
         {
-            return TryGetTerminal(id, out _);
+            return TryGetTerminal(
+                id,
+                out _);
         }
 
-        // ================================================================
-        // COMPONENT LOOKUP
-        // ================================================================
+        // ============================================================
+        // ELECTRICAL COMPONENT API
+        // Existing API preserved
+        // ============================================================
 
-        /// <summary>
-        /// Resolves a component ID to its actual scene
-        /// SparkElectricalComponent.
-        /// </summary>
         public bool TryGetComponent(
             string id,
             out SparkElectricalComponent component)
@@ -341,25 +369,50 @@ private void OnValidate()
             if (string.IsNullOrWhiteSpace(id))
                 return false;
 
-            return componentLookup.TryGetValue(id, out component) &&
-                   component != null;
+            return componentLookup.TryGetValue(
+                id,
+                out component);
         }
 
-        /// <summary>
-        /// Returns true when a valid electrical component binding exists.
-        /// </summary>
         public bool HasComponent(string id)
         {
-            return TryGetComponent(id, out _);
+            return TryGetComponent(
+                id,
+                out _);
         }
 
-        // ================================================================
-        // GAMEOBJECT OUTPUT LOOKUP
-        // ================================================================
+        // ============================================================
+        // ELECTRONIC OBJECT API
+        // New API
+        // ============================================================
 
-        /// <summary>
-        /// Resolves an output ID to its actual scene GameObject.
-        /// </summary>
+        public bool TryGetElectronicObject(
+            string id,
+            out SparkElectronicObject electronicObject)
+        {
+            EnsureLookupCache();
+
+            electronicObject = null;
+
+            if (string.IsNullOrWhiteSpace(id))
+                return false;
+
+            return electronicObjectLookup.TryGetValue(
+                id,
+                out electronicObject);
+        }
+
+        public bool HasElectronicObject(string id)
+        {
+            return TryGetElectronicObject(
+                id,
+                out _);
+        }
+
+        // ============================================================
+        // GAMEOBJECT API
+        // ============================================================
+
         public bool TryGetObject(
             string id,
             out GameObject target)
@@ -371,50 +424,34 @@ private void OnValidate()
             if (string.IsNullOrWhiteSpace(id))
                 return false;
 
-            return outputLookup.TryGetValue(id, out target) &&
-                   target != null;
+            return outputLookup.TryGetValue(
+                id,
+                out target);
         }
 
-        /// <summary>
-        /// Returns true when a valid GameObject output binding exists.
-        /// </summary>
         public bool HasObject(string id)
         {
-            return TryGetObject(id, out _);
+            return TryGetObject(
+                id,
+                out _);
         }
 
-        // ================================================================
+        // ============================================================
         // VALIDATION
-        // ================================================================
+        // ============================================================
 
-        /// <summary>
-        /// Validates all scene bindings.
-        ///
-        /// This does not validate whether the bindings are appropriate for
-        /// a particular level asset. It only validates the binding table
-        /// itself.
-        /// </summary>
         public bool Validate(out string error)
         {
             error = string.Empty;
 
-            // ------------------------------------------------------------
-            // TERMINALS
-            // ------------------------------------------------------------
-
             if (!ValidateTerminalBindings(out error))
                 return false;
-
-            // ------------------------------------------------------------
-            // COMPONENTS
-            // ------------------------------------------------------------
 
             if (!ValidateComponentBindings(out error))
                 return false;
 
-            // ------------------------------------------------------------
-            // OUTPUTS
-            // ------------------------------------------------------------
+            if (!ValidateElectronicObjectBindings(out error))
+                return false;
 
             if (!ValidateOutputBindings(out error))
                 return false;
@@ -422,19 +459,21 @@ private void OnValidate()
             return true;
         }
 
-        // ================================================================
+        // ============================================================
         // TERMINAL VALIDATION
-        // ================================================================
+        // ============================================================
 
-        private bool ValidateTerminalBindings(out string error)
+        private bool ValidateTerminalBindings(
+            out string error)
         {
             error = string.Empty;
 
             if (terminals == null)
                 return true;
 
-            HashSet<string> ids = new HashSet<string>(
-                StringComparer.Ordinal);
+            HashSet<string> ids =
+                new HashSet<string>(
+                    StringComparer.Ordinal);
 
             for (int i = 0; i < terminals.Length; i++)
             {
@@ -448,15 +487,25 @@ private void OnValidate()
                     return false;
                 }
 
-                if (string.IsNullOrWhiteSpace(binding.Id))
+                string id = binding.Id;
+
+                if (string.IsNullOrWhiteSpace(id))
                 {
                     error =
-                        $"Terminal binding at index {i} has an empty ID.";
+                        $"Terminal binding at index {i} " +
+                        $"has an empty ID.";
 
                     return false;
                 }
 
-                string id = binding.Id.Trim();
+                if (binding.Terminal == null)
+                {
+                    error =
+                        $"Terminal binding '{id}' " +
+                        $"has no SparkTerminal assigned.";
+
+                    return false;
+                }
 
                 if (!ids.Add(id))
                 {
@@ -465,59 +514,49 @@ private void OnValidate()
 
                     return false;
                 }
-
-                if (binding.Terminal == null)
-                {
-                    error =
-                        $"Terminal binding '{id}' has no SparkTerminal assigned.";
-
-                    return false;
-                }
             }
 
             return true;
         }
 
-        // ================================================================
-        // COMPONENT VALIDATION
-        // ================================================================
+        // ============================================================
+        // ELECTRICAL COMPONENT VALIDATION
+        // Existing validation preserved
+        // ============================================================
 
-        private bool ValidateComponentBindings(out string error)
+        private bool ValidateComponentBindings(
+            out string error)
         {
             error = string.Empty;
 
             if (components == null)
                 return true;
 
-            HashSet<string> ids = new HashSet<string>(
-                StringComparer.Ordinal);
+            HashSet<string> ids =
+                new HashSet<string>(
+                    StringComparer.Ordinal);
 
             for (int i = 0; i < components.Length; i++)
             {
-                ComponentBinding binding = components[i];
+                ComponentBinding binding =
+                    components[i];
 
                 if (binding == null)
                 {
                     error =
-                        $"Component binding at index {i} is null.";
+                        $"Electrical component binding " +
+                        $"at index {i} is null.";
 
                     return false;
                 }
 
-                if (string.IsNullOrWhiteSpace(binding.Id))
+                string id = binding.Id;
+
+                if (string.IsNullOrWhiteSpace(id))
                 {
                     error =
-                        $"Component binding at index {i} has an empty ID.";
-
-                    return false;
-                }
-
-                string id = binding.Id.Trim();
-
-                if (!ids.Add(id))
-                {
-                    error =
-                        $"Duplicate component binding ID '{id}'.";
+                        $"Electrical component binding " +
+                        $"at index {i} has an empty ID.";
 
                     return false;
                 }
@@ -525,8 +564,17 @@ private void OnValidate()
                 if (binding.Component == null)
                 {
                     error =
-                        $"Component binding '{id}' has no " +
-                        $"SparkElectricalComponent assigned.";
+                        $"Electrical component binding '{id}' " +
+                        $"has no SparkElectricalComponent assigned.";
+
+                    return false;
+                }
+
+                if (!ids.Add(id))
+                {
+                    error =
+                        $"Duplicate electrical component " +
+                        $"binding ID '{id}'.";
 
                     return false;
                 }
@@ -535,46 +583,108 @@ private void OnValidate()
             return true;
         }
 
-        // ================================================================
-        // OUTPUT VALIDATION
-        // ================================================================
+        // ============================================================
+        // ELECTRONIC OBJECT VALIDATION
+        // ============================================================
 
-        private bool ValidateOutputBindings(out string error)
+        private bool ValidateElectronicObjectBindings(
+            out string error)
+        {
+            error = string.Empty;
+
+            if (electronicObjects == null)
+                return true;
+
+            HashSet<string> ids =
+                new HashSet<string>(
+                    StringComparer.Ordinal);
+
+            for (int i = 0;
+                 i < electronicObjects.Length;
+                 i++)
+            {
+                ElectronicObjectBinding binding =
+                    electronicObjects[i];
+
+                if (binding == null)
+                {
+                    error =
+                        $"Electronic object binding " +
+                        $"at index {i} is null.";
+
+                    return false;
+                }
+
+                string id = binding.Id;
+
+                if (string.IsNullOrWhiteSpace(id))
+                {
+                    error =
+                        $"Electronic object binding " +
+                        $"at index {i} has an empty ID.";
+
+                    return false;
+                }
+
+                if (binding.ElectronicObject == null)
+                {
+                    error =
+                        $"Electronic object binding '{id}' " +
+                        $"has no SparkElectronicObject assigned.";
+
+                    return false;
+                }
+
+                if (!ids.Add(id))
+                {
+                    error =
+                        $"Duplicate electronic object " +
+                        $"binding ID '{id}'.";
+
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        // ============================================================
+        // OUTPUT VALIDATION
+        // ============================================================
+
+        private bool ValidateOutputBindings(
+            out string error)
         {
             error = string.Empty;
 
             if (outputs == null)
                 return true;
 
-            HashSet<string> ids = new HashSet<string>(
-                StringComparer.Ordinal);
+            HashSet<string> ids =
+                new HashSet<string>(
+                    StringComparer.Ordinal);
 
             for (int i = 0; i < outputs.Length; i++)
             {
-                GameObjectBinding binding = outputs[i];
+                GameObjectBinding binding =
+                    outputs[i];
 
                 if (binding == null)
                 {
                     error =
-                        $"Output binding at index {i} is null.";
+                        $"GameObject output binding " +
+                        $"at index {i} is null.";
 
                     return false;
                 }
 
-                if (string.IsNullOrWhiteSpace(binding.Id))
+                string id = binding.Id;
+
+                if (string.IsNullOrWhiteSpace(id))
                 {
                     error =
-                        $"Output binding at index {i} has an empty ID.";
-
-                    return false;
-                }
-
-                string id = binding.Id.Trim();
-
-                if (!ids.Add(id))
-                {
-                    error =
-                        $"Duplicate output binding ID '{id}'.";
+                        $"GameObject output binding " +
+                        $"at index {i} has an empty ID.";
 
                     return false;
                 }
@@ -582,7 +692,17 @@ private void OnValidate()
                 if (binding.Target == null)
                 {
                     error =
-                        $"Output binding '{id}' has no GameObject assigned.";
+                        $"GameObject output binding '{id}' " +
+                        $"has no GameObject assigned.";
+
+                    return false;
+                }
+
+                if (!ids.Add(id))
+                {
+                    error =
+                        $"Duplicate GameObject output " +
+                        $"binding ID '{id}'.";
 
                     return false;
                 }
@@ -591,9 +711,9 @@ private void OnValidate()
             return true;
         }
 
-        // ================================================================
-        // DEBUG VALIDATION
-        // ================================================================
+        // ============================================================
+        // EDITOR VALIDATION
+        // ============================================================
 
         [ContextMenu("Validate Scene Bindings")]
         private void ValidateSceneBindings()
@@ -601,24 +721,23 @@ private void OnValidate()
             if (Validate(out string error))
             {
                 Debug.Log(
-                    $"[LEVEL BINDINGS] Validation successful on '{name}'.",
+                    $"[{nameof(SparkLevelSceneBindings)}] " +
+                    $"Scene bindings are valid.",
                     this);
 
                 return;
             }
 
             Debug.LogError(
-                $"[LEVEL BINDINGS] Validation failed on '{name}': {error}",
+                $"[{nameof(SparkLevelSceneBindings)}] " +
+                $"Scene binding validation failed: {error}",
                 this);
         }
 
-        // ================================================================
-        // DEBUG INFORMATION
-        // ================================================================
+        // ============================================================
+        // COUNTS
+        // ============================================================
 
-        /// <summary>
-        /// Number of terminal bindings currently configured.
-        /// </summary>
         public int TerminalBindingCount
         {
             get
@@ -629,9 +748,6 @@ private void OnValidate()
             }
         }
 
-        /// <summary>
-        /// Number of electrical component bindings currently configured.
-        /// </summary>
         public int ComponentBindingCount
         {
             get
@@ -642,9 +758,16 @@ private void OnValidate()
             }
         }
 
-        /// <summary>
-        /// Number of GameObject output bindings currently configured.
-        /// </summary>
+        public int ElectronicObjectBindingCount
+        {
+            get
+            {
+                return electronicObjects != null
+                    ? electronicObjects.Length
+                    : 0;
+            }
+        }
+
         public int OutputBindingCount
         {
             get

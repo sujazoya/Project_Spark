@@ -1,0 +1,2489 @@
+# Project Spark
+
+## Display System — Complete Technical Documentation
+
+**System:** `ProjectSpark.Display`
+**Engine:** Unity 6
+**Rendering:** Unity UI / TextMeshPro / URP-compatible
+**Architecture Status:** Complete
+**System Role:** Professional electronic-instrument display and presentation layer
+
+---
+
+# 1. System Purpose
+
+The Project Spark Display System provides the presentation layer for electrical measurements, instrument states, ranges, alarms, signal quality, graphs, and measurement statistics.
+
+The Display System is **not the source of electrical truth**.
+
+The source of truth remains the simulation/measurement system.
+
+The Display System receives already-determined values and converts them into a professional instrument-style visual presentation.
+
+```text
+Electrical Simulation
+        │
+        ▼
+Measurement / Device State
+        │
+        ▼
+SparkDisplayData
+        │
+        ▼
+SparkAdvancedDisplay
+        │
+        ├── Primary Value
+        ├── Secondary Value
+        ├── Tertiary Value
+        ├── Unit
+        ├── Mode
+        ├── Status
+        ├── Bar
+        ├── Range
+        ├── Alarm
+        ├── Signal Quality
+        ├── Graph
+        └── Statistics
+```
+
+---
+
+# 2. Design Principles
+
+The system follows these principles:
+
+## 2.1 Simulation Is the Source of Truth
+
+Display animation must never modify electrical simulation values.
+
+For example:
+
+```text
+Simulation:
+12.48 V
+
+Display:
+12.47 V
+12.48 V
+12.49 V
+```
+
+may happen because of visual interpolation or instrument presentation noise.
+
+The simulation value remains:
+
+```text
+12.48 V
+```
+
+The visual value is presentation only.
+
+---
+
+# 3. Responsibilities
+
+Each class has one clearly defined responsibility.
+
+| Class                           | Responsibility                     |
+| ------------------------------- | ---------------------------------- |
+| `SparkDisplayData`              | Current complete display state     |
+| `SparkDisplayValueData`         | One numerical display value        |
+| `SparkDisplayStatistics`        | Statistics result                  |
+| `SparkDisplayHistory`           | Rolling measurement history        |
+| `SparkDisplayPeakHold`          | Peak since statistics reset        |
+| `SparkDisplayStatisticsTracker` | Statistics collection              |
+| `SparkDisplayFormatter`         | Number/unit engineering formatting |
+| `SparkDisplayProfile`           | Visibility configuration           |
+| `SparkDisplayAnimationProfile`  | Animation configuration            |
+| `SparkDisplayValueRenderer`     | Primary value animation            |
+| `SparkDisplayTextAnimator`      | Text animation                     |
+| `SparkDisplayStatusRenderer`    | Status presentation                |
+| `SparkDisplayBar`               | Normalized bar animation           |
+| `SparkDisplaySignalQuality`     | Signal-quality presentation        |
+| `SparkDisplayRange`             | Measurement range presentation     |
+| `SparkDisplayAlarm`             | Alarm presentation                 |
+| `SparkDisplayGraph`             | Graph sample storage/rendering     |
+| `SparkAdvancedDisplay`          | System orchestration               |
+| `SparkDisplaySource`            | Source-to-display update bridge    |
+| `SparkDisplayDemoSource`        | Development/test source            |
+
+---
+
+# 4. Core Architecture
+
+The system is divided into four layers.
+
+```text
+┌──────────────────────────────────────────┐
+│              SOURCE LAYER                │
+│                                          │
+│ Simulation / Measurement / Demo Source   │
+└────────────────────┬─────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────┐
+│              DATA LAYER                  │
+│                                          │
+│ SparkDisplayData                         │
+│ SparkDisplayValueData                    │
+│ SparkDisplayStatistics                  │
+└────────────────────┬─────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────┐
+│          ORCHESTRATION LAYER             │
+│                                          │
+│ SparkAdvancedDisplay                    │
+└────────────────────┬─────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────┐
+│           PRESENTATION LAYER             │
+│                                          │
+│ Value / Status / Graph / Alarm / Bar     │
+│ Range / Quality / Text / Statistics      │
+└──────────────────────────────────────────┘
+```
+
+---
+
+# 5. SparkDisplayValueData
+
+`SparkDisplayValueData` represents one numerical measurement intended for presentation.
+
+It contains:
+
+```text
+valid
+value
+unit
+precision
+useEngineeringPrefixes
+customSuffix
+```
+
+Example:
+
+```csharp
+new SparkDisplayValueData
+{
+    valid = true,
+    value = 0.01248,
+    unit = SparkDisplayUnit.A,
+    precision = 2,
+    useEngineeringPrefixes = true
+};
+```
+
+This can display as:
+
+```text
+12.48 mA
+```
+
+The numerical value remains:
+
+```text
+0.01248
+```
+
+---
+
+# 6. Supported Units
+
+The canonical unit enumeration is:
+
+```text
+None
+V
+A
+Ohm
+W
+Hz
+F
+C
+Percent
+RPM
+Seconds
+```
+
+These are the canonical values.
+
+Do not introduce duplicate aliases such as:
+
+```text
+Volts
+Amps
+Ohms
+Watts
+Hertz
+Farads
+```
+
+The formatter is the single location responsible for converting these units to display text.
+
+---
+
+# 7. Display Modes
+
+Supported modes:
+
+```text
+None
+DC
+AC
+Auto
+Resistance
+Continuity
+Diode
+Frequency
+Temperature
+Power
+Charge
+```
+
+The mode describes the operating measurement mode, not the electrical simulation itself.
+
+---
+
+# 8. Display States
+
+Supported states:
+
+```text
+Off
+Standby
+Initializing
+Ready
+Measuring
+Charging
+Full
+Warning
+Fault
+Disconnected
+OverRange
+NoSignal
+```
+
+These states drive presentation behavior such as status text and warning animation.
+
+---
+
+# 9. Display Quality
+
+Supported quality states:
+
+```text
+Unknown
+Stable
+Fluctuating
+NoSignal
+OverRange
+Invalid
+```
+
+Quality is supplied by the source.
+
+The renderer does not determine whether a signal is electrically stable.
+
+---
+
+# 10. Transition Types
+
+Primary numeric transitions:
+
+```text
+Instant
+Smooth
+Instrument
+Rolling
+```
+
+### Instant
+
+The display immediately changes to the target value.
+
+### Smooth
+
+The display approaches the target using exponential smoothing.
+
+### Instrument
+
+The display uses smoothing plus optional visual instrument noise.
+
+### Rolling
+
+The display moves from the previous visual value toward the new value over a configured duration.
+
+---
+
+# 11. Text Animation
+
+Supported text animation modes:
+
+```text
+Instant
+Reveal
+Typewriter
+Scramble
+Scan
+Flicker
+```
+
+Currently:
+
+```text
+Reveal
+Typewriter
+Scan
+```
+
+share the character-reveal implementation.
+
+This is intentional.
+
+They should only be separated if their actual visual behavior becomes different.
+
+---
+
+# 12. Status Animation
+
+Supported modes:
+
+```text
+Instant
+Fade
+Pulse
+Flicker
+```
+
+Warning-related states:
+
+```text
+Warning
+Fault
+OverRange
+NoSignal
+```
+
+can activate pulse/flicker presentation.
+
+---
+
+# 13. SparkDisplayData
+
+`SparkDisplayData` represents the complete current presentation state.
+
+It contains:
+
+```text
+primary
+secondary
+tertiary
+
+mode
+state
+quality
+
+normalizedBar
+hasBar
+
+hasRange
+rangeMaximum
+
+primaryLabel
+secondaryLabel
+
+statusText
+
+notificationText
+hasNotification
+criticalNotification
+
+signalQuality
+
+graphValue
+hasGraphValue
+```
+
+The object is cloneable so the display owns its own snapshot.
+
+---
+
+# 14. Why DisplayData Is Cloned
+
+When:
+
+```csharp
+display.SetData(data);
+```
+
+is called, the display creates a copy.
+
+Therefore:
+
+```text
+External source data
+        │
+        │ Clone
+        ▼
+Display-owned state
+```
+
+The display cannot accidentally modify the caller's object.
+
+This also allows safe equivalence comparisons.
+
+---
+
+# 15. Data Equivalence
+
+`SparkDisplayData.IsEquivalentTo()` determines whether the visual state has meaningfully changed.
+
+It compares:
+
+* primary
+* secondary
+* tertiary
+* mode
+* state
+* quality
+* bar
+* range
+* labels
+* status
+* notification
+* signal quality
+* graph state
+
+Numerical comparisons use tolerance where appropriate.
+
+---
+
+# 16. Data Tolerance
+
+`SparkAdvancedDisplay.dataTolerance` is a **rendering optimization**.
+
+Example:
+
+```text
+12.000000
+12.000001
+12.000002
+```
+
+may be visually equivalent.
+
+The renderer does not need to restart animations for every tiny change.
+
+However:
+
+**Measurement statistics still receive every valid sample.**
+
+This distinction is critical.
+
+---
+
+# 17. Measurement Statistics
+
+Statistics are handled by:
+
+```text
+SparkDisplayStatisticsTracker
+```
+
+It contains:
+
+```text
+SparkDisplayHistory
+SparkDisplayPeakHold
+```
+
+The tracker calculates:
+
+```text
+Sample Count
+Minimum
+Maximum
+Average
+Peak
+Latest
+```
+
+---
+
+# 18. Rolling History
+
+`SparkDisplayHistory` stores the most recent samples.
+
+Default capacity:
+
+```text
+256
+```
+
+The history uses a circular array.
+
+This provides efficient sample insertion without repeatedly shifting the entire collection.
+
+---
+
+# 19. History Statistics
+
+Rolling history provides:
+
+```text
+Minimum
+Maximum
+Average
+Latest
+```
+
+These statistics are based on the current rolling history.
+
+If capacity is 256, then the statistics represent the latest 256 samples.
+
+---
+
+# 20. Peak Hold
+
+`SparkDisplayPeakHold` is different from rolling maximum.
+
+Example:
+
+```text
+Samples:
+
+10
+20
+30
+40
+20
+10
+```
+
+Rolling maximum may become:
+
+```text
+20
+```
+
+after the old `40` leaves the rolling history.
+
+Peak hold remains:
+
+```text
+40
+```
+
+until:
+
+```text
+ResetStatistics()
+```
+
+is called.
+
+---
+
+# 21. Statistics Reset
+
+Calling:
+
+```csharp
+ResetStatistics();
+```
+
+clears:
+
+```text
+Rolling History
+Peak Hold
+```
+
+It does not clear:
+
+```text
+Current Display Data
+Graph
+Simulation
+```
+
+---
+
+# 22. Clear Behavior
+
+Calling:
+
+```csharp
+Clear();
+```
+
+clears the presentation.
+
+It clears:
+
+```text
+Primary value
+Mode
+Status
+Secondary
+Tertiary
+Unit
+Min/Max/Average text
+Notification
+Bar
+Range
+Alarm
+Signal Quality
+Graph
+```
+
+It does **not** clear measurement statistics.
+
+This distinction is intentional.
+
+---
+
+# 23. Statistics Data Flow
+
+Every valid primary sample follows:
+
+```text
+SparkDisplayData.primary.value
+             │
+             ▼
+SparkDisplayStatisticsTracker.Add()
+             │
+       ┌─────┴─────┐
+       ▼           ▼
+    History     Peak Hold
+       │           │
+       └─────┬─────┘
+             ▼
+       SparkDisplayStatistics
+```
+
+---
+
+# 24. Graph Data Flow
+
+Graph samples are independent of primary statistics.
+
+```text
+SparkDisplayData.graphValue
+             │
+             ▼
+SparkDisplayGraph.AddSample()
+             │
+             ▼
+Circular Sample Buffer
+             │
+             ▼
+UI Mesh
+```
+
+The graph can therefore represent a signal independently from the primary formatted value.
+
+---
+
+# 25. Graph Capacity
+
+Default:
+
+```text
+128 samples
+```
+
+The graph uses a circular buffer.
+
+When full:
+
+```text
+oldest sample
+     ↓
+replaced by
+     ↓
+newest sample
+```
+
+This avoids:
+
+```text
+RemoveAt(0)
+```
+
+and the associated array shifting.
+
+---
+
+# 26. Graph Auto Range
+
+When:
+
+```text
+autoRange = true
+```
+
+the graph calculates the visible range from its current samples.
+
+Padding is applied using:
+
+```text
+autoRangePadding
+```
+
+Example:
+
+```text
+Minimum sample = 10
+Maximum sample = 20
+
+Range = 10
+
+Padding = 10 × 0.05
+        = 0.5
+
+Display range:
+9.5 → 20.5
+```
+
+---
+
+# 27. Manual Graph Range
+
+When:
+
+```text
+autoRange = false
+```
+
+the graph uses:
+
+```text
+minimum
+maximum
+```
+
+If:
+
+```text
+clampInput = true
+```
+
+samples are clamped to this range.
+
+When auto-range is enabled, actual samples are retained so the graph can correctly determine its range.
+
+---
+
+# 28. Zero Line
+
+If:
+
+```text
+showZeroLine = true
+```
+
+and:
+
+```text
+currentMinimum < 0
+currentMaximum > 0
+```
+
+the graph renders a zero reference line.
+
+This is particularly useful for:
+
+* AC signals
+* current direction
+* signed voltage
+* differential signals
+* error signals
+
+---
+
+# 29. Graph Rendering
+
+The graph inherits from:
+
+```csharp
+UnityEngine.UI.Graphic
+```
+
+The graph creates its own mesh through:
+
+```text
+OnPopulateMesh()
+```
+
+Each line segment is rendered as a small quad.
+
+This avoids requiring a separate LineRenderer.
+
+---
+
+# 30. SparkDisplayFormatter
+
+The formatter owns:
+
+```text
+Number formatting
+Engineering prefixes
+Unit formatting
+Min/Max/Average formatting
+```
+
+Engineering prefixes:
+
+```text
+G
+M
+k
+none
+m
+µ
+n
+p
+```
+
+Examples:
+
+```text
+1000 V → 1.00 kV
+0.001 A → 1.00 mA
+0.000001 A → 1.00 µA
+0.000000001 A → 1.00 nA
+```
+
+---
+
+# 31. Formatter Is the Single Source of Formatting Rules
+
+Do not duplicate engineering-prefix logic in:
+
+```text
+Graph
+Range
+Alarm
+AdvancedDisplay
+Source
+```
+
+They should call:
+
+```csharp
+SparkDisplayFormatter
+```
+
+whenever a numerical display string is required.
+
+---
+
+# 32. Primary Value Renderer
+
+`SparkDisplayValueRenderer` owns only the animated primary value.
+
+Pipeline:
+
+```text
+SparkDisplayValueData
+        │
+        ▼
+Target Value
+        │
+        ▼
+Transition
+        │
+        ▼
+Visual Value
+        │
+        ▼
+Formatter
+        │
+        ▼
+TMP Text
+```
+
+---
+
+# 33. Instrument Noise
+
+Instrument noise is purely visual.
+
+Example:
+
+```text
+Simulation:
+5.000 V
+
+Visual:
+4.998 V
+5.002 V
+5.001 V
+4.999 V
+```
+
+The underlying measurement remains:
+
+```text
+5.000 V
+```
+
+The noise never enters:
+
+```text
+Statistics
+Graph
+Simulation
+Electrical state
+```
+
+---
+
+# 34. Deadband
+
+Primary renderer deadband is different from display data tolerance.
+
+```text
+dataTolerance
+    → controls state/application updates
+
+deadband
+    → controls visual convergence
+```
+
+This prevents unnecessary micro-movement in the visual display.
+
+---
+
+# 35. Text Animator
+
+`SparkDisplayTextAnimator` owns text animation only.
+
+It supports:
+
+```text
+Instant
+Reveal
+Typewriter
+Scan
+Scramble
+Flicker
+```
+
+Animations use:
+
+```csharp
+WaitForSecondsRealtime
+```
+
+so UI animation is independent of `Time.timeScale`.
+
+---
+
+# 36. Status Renderer
+
+`SparkDisplayStatusRenderer` converts:
+
+```text
+SparkDisplayState
+```
+
+into display text.
+
+Examples:
+
+```text
+Ready → READY
+Measuring → MEASURING
+Warning → WARNING
+Fault → FAULT
+OverRange → OVER RANGE
+NoSignal → NO SIGNAL
+```
+
+Custom status text can override the default.
+
+---
+
+# 37. Status Warning Animation
+
+Warning states are:
+
+```text
+Warning
+Fault
+OverRange
+NoSignal
+```
+
+With pulse:
+
+```text
+alpha oscillates
+```
+
+With flicker:
+
+```text
+alpha rapidly switches
+```
+
+Normal states remain visually stable.
+
+---
+
+# 38. Display Bar
+
+`SparkDisplayBar` receives only a normalized value:
+
+```text
+0.0 → empty
+0.5 → half
+1.0 → full
+```
+
+The value is clamped to:
+
+```text
+0..1
+```
+
+The bar animates toward the target using `MoveTowards`.
+
+Visibility is controlled by the parent by sending:
+
+```text
+0
+```
+
+when the bar should not be displayed.
+
+---
+
+# 39. Signal Quality
+
+Signal quality is represented as:
+
+```text
+0..1
+```
+
+The component owns two independent concepts:
+
+```text
+targetQuality
+visible
+```
+
+This is intentional.
+
+A quality value of zero does not necessarily mean the UI must be visible.
+
+The component can:
+
+```text
+animate fill
+fade indicator
+```
+
+independently.
+
+---
+
+# 40. Range Renderer
+
+The range renderer presents:
+
+```text
+RANGE
+maximum value + unit
+```
+
+Example:
+
+```text
+RANGE
+20.00 V
+```
+
+It accepts the maximum range from `SparkDisplayData`.
+
+It does not calculate the actual electrical range.
+
+---
+
+# 41. Alarm Renderer
+
+The alarm renderer presents notification/alarm information.
+
+Inputs:
+
+```text
+enabled
+critical
+message
+```
+
+Normal alarm:
+
+```text
+subtle pulse
+```
+
+Critical alarm:
+
+```text
+stronger pulse
+```
+
+Inactive:
+
+```text
+fade out
+```
+
+The alarm renderer does not decide whether a condition is electrically dangerous or faulty.
+
+That decision belongs upstream.
+
+---
+
+# 42. CanvasGroup Usage
+
+The alarm uses its `CanvasGroup` as the single alpha authority.
+
+This avoids conflicts between:
+
+```text
+CanvasGroup alpha
+```
+
+and:
+
+```text
+Graphic canvasRenderer alpha
+```
+
+The recommended hierarchy is:
+
+```text
+Alarm
+└── CanvasGroup
+    ├── AlarmText
+    └── AlarmGraphic
+```
+
+---
+
+# 43. Display Profile
+
+`SparkDisplayProfile` controls which presentation channels are visible.
+
+Available settings:
+
+```text
+showPrimary
+showSecondary
+showTertiary
+showUnit
+showMode
+showStatus
+showMinMaxAverage
+showRange
+showBar
+showGraph
+showNotification
+```
+
+This is presentation configuration.
+
+It does not contain measurement logic.
+
+---
+
+# 44. Animation Profile
+
+`SparkDisplayAnimationProfile` contains:
+
+```text
+Primary transition
+Primary speed
+Instrument deadband
+Instrument noise
+Rolling duration
+
+Text animation
+Text speed
+Flicker frequency
+
+Status animation
+Status speed
+Status pulse speed
+
+Indicator pulse configuration
+
+Shader presentation configuration
+```
+
+These are visual configuration values.
+
+---
+
+# 45. SparkAdvancedDisplay
+
+`SparkAdvancedDisplay` is the orchestration layer.
+
+It does not calculate electrical behavior.
+
+Its job is:
+
+```text
+Receive data
+     ↓
+Record samples
+     ↓
+Check equivalence
+     ↓
+Apply display state
+     ↓
+Forward values to renderers
+```
+
+---
+
+# 46. SetData Pipeline
+
+Calling:
+
+```csharp
+display.SetData(data);
+```
+
+performs:
+
+```text
+1. Validate input
+2. Clone data
+3. Record measurement sample
+4. Record graph sample
+5. Compare visual state
+6. If equivalent → update statistics display only
+7. Otherwise → store current data
+8. Apply animation configuration
+9. Apply visual data
+```
+
+This ordering is deliberate.
+
+---
+
+# 47. Why Sampling Happens Before Equivalence
+
+Suppose:
+
+```text
+dataTolerance = 0.001
+```
+
+and the simulation produces:
+
+```text
+1.000
+1.0004
+1.0007
+1.0010
+```
+
+The visual state may not need to update for every sample.
+
+However, those are still real measurement samples.
+
+Therefore:
+
+```text
+RecordMeasurementSample()
+```
+
+runs before:
+
+```text
+IsEquivalentTo()
+```
+
+This is one of the most important rules in the system.
+
+---
+
+# 48. Powered State
+
+`SetPowered(false)`:
+
+```text
+displayGroup.alpha = 0
+status = OFF
+```
+
+It does not destroy:
+
+```text
+currentData
+statistics
+graph history
+```
+
+When powered again:
+
+```text
+currentData
+    ↓
+ApplyData()
+```
+
+restores the presentation.
+
+---
+
+# 49. Demo Source
+
+`SparkDisplayDemoSource` exists for development/testing.
+
+It generates:
+
+```text
+12.48 V
+```
+
+with a small sinusoidal variation.
+
+It demonstrates:
+
+```text
+SparkDisplaySource
+        ↓
+SparkDisplayData
+        ↓
+SparkAdvancedDisplay
+```
+
+It should not be used as the production electrical source.
+
+---
+
+# 50. SparkDisplaySource
+
+The base source provides:
+
+```text
+Update interval
+Continuous update option
+Value tolerance
+Display reference
+```
+
+Derived sources only implement:
+
+```csharp
+BuildDisplayData(SparkDisplayData data)
+```
+
+This allows real measurement systems to provide display data without coupling the renderer to the simulator.
+
+---
+
+# 51. Recommended Production Source
+
+A production measurement source should conceptually do:
+
+```text
+Measurement System
+       │
+       ▼
+Build SparkDisplayData
+       │
+       ▼
+SparkAdvancedDisplay.SetData()
+```
+
+It should not directly manipulate:
+
+```text
+TMP_Text
+Image
+CanvasGroup
+Graph mesh
+```
+
+---
+
+# 52. Inspector Setup
+
+A typical display hierarchy:
+
+```text
+ElectronicDisplay
+│
+├── Value
+│   ├── Number
+│   ├── Prefix
+│   └── Unit
+│
+├── Mode
+├── Status
+├── Secondary
+├── Tertiary
+├── Bar
+├── Range
+├── Alarm
+├── SignalQuality
+├── Graph
+├── MinMax
+└── Notification
+```
+
+---
+
+# 53. SparkAdvancedDisplay Inspector
+
+Assign:
+
+```text
+Profile
+Animation Profile
+
+Primary Value
+Mode Text
+Status Renderer
+Bar
+Unit Text
+MinMax Text
+Secondary Text
+Tertiary Text
+Notification Text
+Display Group
+
+Range Renderer
+Alarm Renderer
+Signal Quality Renderer
+Graph Renderer
+```
+
+Configure:
+
+```text
+Data Tolerance
+History Capacity
+Collect Statistics
+```
+
+---
+
+# 54. Primary Value Inspector
+
+Assign:
+
+```text
+Value Text
+Prefix Text
+Unit Text
+```
+
+Configure:
+
+```text
+Transition
+Speed
+Deadband
+Instrument Noise
+Rolling Duration
+```
+
+When using an animation profile, the profile overrides the runtime configuration through `SparkAdvancedDisplay`.
+
+---
+
+# 55. Graph Inspector
+
+Assign the graph as a UI Graphic.
+
+Configure:
+
+```text
+Capacity
+Line Thickness
+Clamp Input
+Minimum
+Maximum
+Auto Range
+Auto Range Padding
+Show Zero Line
+Zero Line Thickness
+```
+
+For electrical waveforms, consider:
+
+```text
+Auto Range = true
+Show Zero Line = true
+```
+
+when signed signals are required.
+
+---
+
+# 56. Range Inspector
+
+Assign:
+
+```text
+Range Text
+Range Value Text
+Canvas Group
+```
+
+Example:
+
+```text
+RANGE
+20.00 V
+```
+
+---
+
+# 57. Alarm Inspector
+
+Assign:
+
+```text
+Alarm Text
+Canvas Group
+```
+
+Recommended hierarchy:
+
+```text
+Alarm
+└── CanvasGroup
+    ├── AlarmText
+    └── AlarmGraphic
+```
+
+---
+
+# 58. Signal Quality Inspector
+
+Assign:
+
+```text
+Fill Image
+Canvas Group
+```
+
+Configure:
+
+```text
+Response Speed
+Minimum Visible Quality
+```
+
+---
+
+# 59. Bar Inspector
+
+Assign:
+
+```text
+Fill Image
+```
+
+The Image should normally use:
+
+```text
+Image Type = Filled
+```
+
+with the appropriate fill direction.
+
+---
+
+# 60. Display Update Example
+
+A real measurement source could produce:
+
+```text
+primary:
+    valid = true
+    value = 12.48
+    unit = V
+    precision = 2
+
+mode:
+    DC
+
+state:
+    Measuring
+
+quality:
+    Stable
+
+normalizedBar:
+    0.624
+
+hasBar:
+    true
+
+hasRange:
+    true
+
+rangeMaximum:
+    20
+
+signalQuality:
+    0.97
+
+graphValue:
+    12.48
+
+hasGraphValue:
+    true
+```
+
+The display then presents:
+
+```text
+12.48 V
+
+DC
+
+MEASURING
+
+████████████░░░░░░
+
+RANGE
+20.00 V
+
+Signal Quality
+97%
+
+Graph:
+12.48
+```
+
+---
+
+# 61. Performance Characteristics
+
+The system is designed to avoid unnecessary work.
+
+### Display equivalence
+
+Equivalent visual states do not restart all visual renderers.
+
+### Statistics
+
+History insertion is constant-time.
+
+### Graph
+
+Graph samples use a circular buffer.
+
+### Graph mesh
+
+The mesh is marked dirty only when graph data/configuration changes.
+
+### UI animation
+
+Animations update using lightweight interpolation.
+
+### No global managers
+
+There is no singleton display manager.
+
+---
+
+# 62. Threading
+
+The Display System is designed for normal Unity main-thread use.
+
+Unity UI objects such as:
+
+```text
+TMP_Text
+Image
+CanvasGroup
+Graphic
+```
+
+must remain on the Unity main thread.
+
+The underlying simulation may use its own execution model, but display application should occur on the Unity thread.
+
+---
+
+# 63. Error Handling
+
+Invalid numerical values are rejected:
+
+```text
+NaN
+Infinity
+```
+
+Invalid primary display values result in:
+
+```text
+----
+```
+
+Invalid graph samples are ignored.
+
+Invalid statistics samples are ignored.
+
+The system therefore avoids propagating invalid numerical state into UI calculations.
+
+---
+
+# 64. Current Data vs Statistics
+
+These are deliberately different.
+
+```text
+CurrentData
+    = latest display state
+
+Statistics
+    = measurement history
+```
+
+Therefore:
+
+```text
+CurrentData.primary.value
+```
+
+does not necessarily equal:
+
+```text
+Statistics.average
+```
+
+and that is expected.
+
+---
+
+# 65. Current Data vs Graph
+
+Likewise:
+
+```text
+CurrentData.primary
+```
+
+and:
+
+```text
+Graph samples
+```
+
+are independent.
+
+The graph can represent a dedicated signal:
+
+```text
+graphValue
+```
+
+while the primary display represents:
+
+```text
+primary.value
+```
+
+---
+
+# 66. Reset Rules
+
+| Operation              | Display           | Graph    | Statistics | Peak     |
+| ---------------------- | ----------------- | -------- | ---------- | -------- |
+| `SetData()`            | Update            | Add      | Add        | Add      |
+| Equivalent `SetData()` | Usually unchanged | Add      | Add        | Add      |
+| `Clear()`              | Clear             | Clear    | Preserve   | Preserve |
+| `ResetStatistics()`    | Preserve          | Preserve | Clear      | Clear    |
+| `SetPowered(false)`    | Hide              | Preserve | Preserve   | Preserve |
+| `SetPowered(true)`     | Restore           | Preserve | Preserve   | Preserve |
+
+This is the intended lifecycle.
+
+---
+
+# 67. Testing Checklist
+
+## Primary Value
+
+Test:
+
+```text
+0 V
+12.48 V
+1000 V
+0.001 V
+negative values
+NaN
+Infinity
+```
+
+Verify:
+
+```text
+formatting
+prefix
+unit
+precision
+invalid state
+```
+
+---
+
+# 68. Statistics Testing
+
+Feed:
+
+```text
+1
+2
+3
+4
+5
+```
+
+Expected:
+
+```text
+Count = 5
+Minimum = 1
+Maximum = 5
+Average = 3
+Latest = 5
+Peak = 5
+```
+
+Then:
+
+```text
+ResetStatistics()
+```
+
+Expected:
+
+```text
+Statistics invalid
+Peak cleared
+```
+
+---
+
+# 69. Rolling History Testing
+
+Capacity:
+
+```text
+3
+```
+
+Samples:
+
+```text
+10
+20
+30
+40
+```
+
+Expected retained history:
+
+```text
+20
+30
+40
+```
+
+Expected:
+
+```text
+Minimum = 20
+Maximum = 40
+Average = 30
+Latest = 40
+```
+
+Peak hold remains:
+
+```text
+40
+```
+
+until reset.
+
+---
+
+# 70. Graph Testing
+
+Capacity:
+
+```text
+4
+```
+
+Samples:
+
+```text
+1
+2
+3
+4
+5
+```
+
+Expected graph history:
+
+```text
+2
+3
+4
+5
+```
+
+Verify the oldest sample is replaced without visual ordering problems.
+
+---
+
+# 71. Auto-Range Testing
+
+Samples:
+
+```text
+10
+20
+15
+```
+
+With:
+
+```text
+autoRange = true
+padding = 0.05
+```
+
+verify that the visible range expands beyond the actual minimum and maximum.
+
+---
+
+# 72. Manual Range Testing
+
+Set:
+
+```text
+minimum = 0
+maximum = 10
+autoRange = false
+clampInput = true
+```
+
+Add:
+
+```text
+-5
+5
+20
+```
+
+Expected graph samples after clamping:
+
+```text
+0
+5
+10
+```
+
+---
+
+# 73. Animation Testing
+
+Test every primary transition:
+
+```text
+Instant
+Smooth
+Instrument
+Rolling
+```
+
+Test:
+
+```text
+large increase
+large decrease
+small increase
+small decrease
+zero crossing
+negative values
+```
+
+---
+
+# 74. Text Testing
+
+Test:
+
+```text
+Instant
+Reveal
+Typewriter
+Scan
+Scramble
+Flicker
+```
+
+Also test changing text while an animation is already running.
+
+The current animation must be stopped cleanly.
+
+---
+
+# 75. Power Testing
+
+Test:
+
+```text
+SetPowered(false)
+```
+
+Verify:
+
+```text
+display hidden
+status OFF
+data preserved
+statistics preserved
+graph preserved
+```
+
+Then:
+
+```text
+SetPowered(true)
+```
+
+Verify:
+
+```text
+current presentation restored
+```
+
+---
+
+# 76. Clear Testing
+
+After accumulating:
+
+```text
+display data
+graph samples
+statistics
+peak
+```
+
+call:
+
+```text
+Clear()
+```
+
+Expected:
+
+```text
+display cleared
+graph cleared
+statistics preserved
+peak preserved
+```
+
+Then call:
+
+```text
+ResetStatistics()
+```
+
+Expected:
+
+```text
+statistics cleared
+peak cleared
+```
+
+---
+
+# 77. Integration Testing
+
+The final production test should connect:
+
+```text
+Electrical Simulation
+        ↓
+Measurement System
+        ↓
+SparkDisplayData
+        ↓
+SparkAdvancedDisplay
+```
+
+Verify that no display component directly reads or modifies the electrical simulation.
+
+---
+
+# 78. What the Display System Does Not Own
+
+The Display System does not own:
+
+```text
+Circuit topology
+Connectivity
+Electrical solving
+Voltage calculation
+Current calculation
+Component simulation
+Wire simulation
+Measurement acquisition
+Fault solving
+Device behavior
+Gameplay interaction
+```
+
+Those remain separate Project Spark systems.
+
+---
+
+# 79. Architectural Boundary
+
+The correct dependency direction is:
+
+```text
+Simulation
+    ↓
+Measurement
+    ↓
+Display Data
+    ↓
+Display
+    ↓
+UI
+```
+
+Not:
+
+```text
+UI
+    ↓
+Simulation
+```
+
+The UI is therefore a consumer of state.
+
+---
+
+# 80. Why There Is No Display Manager
+
+A global manager is unnecessary.
+
+Each physical display can own:
+
+```text
+SparkAdvancedDisplay
+```
+
+and receive its own data.
+
+This allows:
+
+```text
+Multimeter
+Oscilloscope
+Power Supply
+Battery Display
+PLC Display
+Motor Controller
+Temperature Display
+Frequency Counter
+```
+
+to use the same foundation without global coordination.
+
+---
+
+# 81. Multiple Displays
+
+Multiple instruments can independently receive different data.
+
+Example:
+
+```text
+Voltage Display
+    → 12.4 V
+
+Current Display
+    → 0.52 A
+
+Power Display
+    → 6.45 W
+
+Frequency Display
+    → 60.0 Hz
+```
+
+Each instance maintains its own:
+
+```text
+history
+statistics
+peak
+graph
+animation
+```
+
+---
+
+# 82. Determinism
+
+The measurement data itself remains deterministic if supplied by a deterministic source.
+
+Visual animation is intentionally time-dependent.
+
+Therefore:
+
+```text
+Simulation state
+    = deterministic source of truth
+
+Display animation
+    = presentation layer
+```
+
+Instrument noise is explicitly presentation-only.
+
+---
+
+# 83. Extending the System
+
+When adding a new display feature, first determine whether it is:
+
+```text
+Data
+Formatting
+Statistics
+Animation
+Rendering
+Orchestration
+```
+
+Add functionality to the existing appropriate class when possible.
+
+Do not create a new class merely to wrap one field or method.
+
+---
+
+# 84. Adding a New Measurement Unit
+
+To add a new canonical unit:
+
+1. Add it to `SparkDisplayUnit`.
+2. Add its text mapping to `SparkDisplayFormatter.UnitText()`.
+3. Verify formatter behavior.
+4. Add tests.
+5. Do not create duplicate unit enums.
+
+---
+
+# 85. Adding a New Display State
+
+To add a new state:
+
+1. Add the enum value.
+2. Add its default status text.
+3. Decide whether it is a warning-animation state.
+4. Update the status renderer.
+5. Update tests.
+
+The simulation/measurement source remains responsible for deciding when that state occurs.
+
+---
+
+# 86. Adding a New Transition
+
+A new transition belongs in:
+
+```text
+SparkDisplayValueTransition
+SparkDisplayValueRenderer
+```
+
+It should remain a visual behavior.
+
+It must never alter the measurement value.
+
+---
+
+# 87. Adding a New Graph Feature
+
+Graph-specific functionality belongs in:
+
+```text
+SparkDisplayGraph
+```
+
+Do not move graph sample storage into `SparkAdvancedDisplay`.
+
+The orchestrator only forwards data.
+
+---
+
+# 88. Adding a New Statistic
+
+If a statistic depends on measurement history:
+
+```text
+SparkDisplayStatisticsTracker
+```
+
+should own its calculation.
+
+If it requires a fundamentally different history model, introduce that only when an actual requirement exists.
+
+---
+
+# 89. Production Rules
+
+The following rules should remain locked:
+
+```text
+1. Simulation state is authoritative.
+
+2. Display animation is presentation only.
+
+3. Statistics receive every valid measurement sample.
+
+4. Graph receives every accepted graph sample.
+
+5. Rendering tolerance must not discard measurement history.
+
+6. Clear() does not reset statistics.
+
+7. ResetStatistics() resets statistics and peak hold.
+
+8. Formatting belongs to SparkDisplayFormatter.
+
+9. Graph owns graph samples.
+
+10. Renderers do not calculate electrical behavior.
+
+11. AdvancedDisplay orchestrates; it does not simulate.
+
+12. No global DisplayManager is required.
+
+13. No Event Bus is required.
+
+14. No Singleton is required.
+
+15. No reflection is required.
+
+16. No service locator is required.
+
+17. No unnecessary abstraction layer should be added.
+```
+
+---
+
+# 90. Final Architecture
+
+The completed Display System is:
+
+```text
+ProjectSpark.Display
+│
+├── Data
+│   ├── SparkDisplayData
+│   ├── SparkDisplayValueData
+│   └── SparkDisplayStatistics
+│
+├── Statistics
+│   ├── SparkDisplayHistory
+│   ├── SparkDisplayPeakHold
+│   └── SparkDisplayStatisticsTracker
+│
+├── Formatting
+│   └── SparkDisplayFormatter
+│
+├── Configuration
+│   ├── SparkDisplayProfile
+│   └── SparkDisplayAnimationProfile
+│
+├── Rendering
+│   ├── SparkDisplayValueRenderer
+│   ├── SparkDisplayTextAnimator
+│   ├── SparkDisplayStatusRenderer
+│   ├── SparkDisplayBar
+│   ├── SparkDisplaySignalQuality
+│   ├── SparkDisplayRange
+│   ├── SparkDisplayAlarm
+│   └── SparkDisplayGraph
+│
+├── Orchestration
+│   └── SparkAdvancedDisplay
+│
+└── Sources
+    ├── SparkDisplaySource
+    └── SparkDisplayDemoSource
+```
+
+---
+
+# 91. Final System State
+
+The Display System is **code-complete as a presentation subsystem**.
+
+Its responsibilities are complete:
+
+```text
+✓ Numerical presentation
+✓ Engineering prefixes
+✓ Units
+✓ Precision
+✓ Primary animation
+✓ Text animation
+✓ Status
+✓ Warning presentation
+✓ Alarm presentation
+✓ Range
+✓ Bar
+✓ Signal quality
+✓ Graph
+✓ Rolling history
+✓ Min / Max / Average
+✓ Peak hold
+✓ Latest sample
+✓ Power state
+✓ Clear state
+✓ Statistics reset
+✓ Display profiles
+✓ Animation profiles
+✓ Demo source
+✓ Source integration boundary
+✓ Invalid-value handling
+✓ Circular graph/history storage
+✓ Rendering tolerance
+```
+
+The remaining work is **scene/prefab configuration and integration testing with the real Project Spark measurement/simulation systems**, not expansion of the Display architecture.
+
+The Display System should now be treated as a stable subsystem and integrated into the actual instruments/devices rather than continuously adding more abstraction.

@@ -19,9 +19,11 @@ namespace ProjectSpark.Display
             base.Update();
         }
 
-        protected override void BuildDisplayData(SparkDisplayData data)
+       protected override void BuildDisplayData(SparkDisplayData data)
         {
-            double liveValue = baseValue + System.Math.Sin(elapsed * 2.0) * 0.025;
+            double liveValue =
+                baseValue +
+                System.Math.Sin(elapsed * 2.0) * 0.025;
 
             data.primary = new SparkDisplayValueData
             {
@@ -37,10 +39,6 @@ namespace ProjectSpark.Display
             data.quality = SparkDisplayQuality.Stable;
             data.normalizedBar = bar;
             data.hasBar = true;
-            data.hasMinMaxAverage = true;
-            data.minimum = baseValue - 0.07;
-            data.maximum = baseValue + 0.05;
-            data.average = baseValue;
             data.statusText = "MEASURING";
         }
     }

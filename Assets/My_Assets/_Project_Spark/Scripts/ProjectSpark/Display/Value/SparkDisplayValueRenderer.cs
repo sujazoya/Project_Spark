@@ -1,11 +1,21 @@
+using System;
 using TMPro;
 using UnityEngine;
 
 namespace ProjectSpark.Display
 {
+    [DisallowMultipleComponent]
     public sealed class SparkDisplayValueRenderer : MonoBehaviour
     {
-        [SerializeField] private TMP_Text valueText;
+        [SerializeField]
+        private TMP_Text valueText;
+
+        [Header("Engineering Prefix")]
+        [SerializeField]
+        private TMP_Text prefixText;
+
+        [SerializeField]
+        private TMP_Text unitText;
 
         [Header("Transition")]
         [SerializeField]
@@ -16,17 +26,13 @@ namespace ProjectSpark.Display
         private float speed = 10f;
 
         [SerializeField, Min(0f)]
-        private float deadband = 0.001f;
+        private double deadband = 0.001d;
 
         [SerializeField, Min(0f)]
         private float instrumentNoise = 0.01f;
 
-        [Header("Engineering")]
-        [SerializeField]
-        private TMP_Text prefixText;
-
-        [SerializeField]
-        private TMP_Text unitText;
+        [SerializeField, Min(0.01f)]
+        private float rollingDuration = 0.12f;
 
         private double targetValue;
         private double visualValue;
@@ -38,25 +44,38 @@ namespace ProjectSpark.Display
         private bool useEngineeringPrefixes;
         private string customSuffix = string.Empty;
 
+        private double rollingStartValue;
+        private double rollingTargetValue;
         private float rollingTimer;
-        private float rollingDuration = 0.12f;
-
-        private double lastNoise;
 
         public void Configure(
             SparkDisplayValueTransition mode,
             float transitionSpeed,
-            float deadbandValue,
+            double deadbandValue,
             float noise,
-            float rollingDurationValue = 0.12f)
+            float rollingDurationValue)
         {
             transition = mode;
-            speed = Mathf.Max(0.01f, transitionSpeed);
-           deadband = Mathf.Max(0f, (float)deadbandValue);
-            instrumentNoise = Mathf.Max(0f, noise);
-            rollingDuration = Mathf.Max(
-                0.01f,
-                rollingDurationValue);
+
+            speed =
+                Mathf.Max(
+                    0.01f,
+                    transitionSpeed);
+
+            deadband =
+                Math.Max(
+                    0d,
+                    deadbandValue);
+
+            instrumentNoise =
+                Mathf.Max(
+                    0f,
+                    noise);
+
+            rollingDuration =
+                Mathf.Max(
+                    0.01f,
+                    rollingDurationValue);
         }
 
         public void SetValue(
@@ -67,46 +86,88 @@ namespace ProjectSpark.Display
                 double.IsInfinity(data.value))
             {
                 initialized = false;
-
-                if (valueText != null)
-                    valueText.text = "----";
-
-                if (prefixText != null)
-                    prefixText.text = string.Empty;
-
-                if (unitText != null)
-                    unitText.text = string.Empty;
+                ClearVisual();
 
                 return;
             }
 
-            targetValue = data.value;
-            precision = Mathf.Clamp(data.precision, 0, 8);
-            unit = data.unit;
+            bool valueChanged =
+                !initialized ||
+                !ApproximatelyEqual(
+                    targetValue,
+                    data.value);
+
+            targetValue =
+                data.value;
+
+            precision =
+                Mathf.Clamp(
+                    data.precision,
+                    0,
+                    8);
+
+            unit =
+                data.unit;
+
             useEngineeringPrefixes =
                 data.useEngineeringPrefixes;
+
             customSuffix =
-                data.customSuffix ?? string.Empty;
+                data.customSuffix ??
+                string.Empty;
 
             if (!initialized)
             {
-                visualValue = targetValue;
                 initialized = true;
-                rollingTimer = 0f;
+
+                visualValue =
+                    targetValue;
+
+                rollingStartValue =
+                    targetValue;
+
+                rollingTargetValue =
+                    targetValue;
+
+                rollingTimer =
+                    rollingDuration;
+
                 Refresh();
+
                 return;
+            }
+
+            if (!valueChanged)
+            {
+                Refresh();
+
+                return;
+            }
+
+            switch (transition)
+            {
+                case SparkDisplayValueTransition.Instant:
+                    visualValue =
+                        targetValue;
+
+                    break;
+
+                case SparkDisplayValueTransition.Rolling:
+                    rollingStartValue =
+                        visualValue;
+
+                    rollingTargetValue =
+                        targetValue;
+
+                    rollingTimer = 0f;
+
+                    break;
             }
 
             if (transition ==
                 SparkDisplayValueTransition.Instant)
             {
-                visualValue = targetValue;
                 Refresh();
-            }
-            else if (transition ==
-                     SparkDisplayValueTransition.Rolling)
-            {
-                rollingTimer = 0f;
             }
         }
 
@@ -115,80 +176,115 @@ namespace ProjectSpark.Display
             if (!initialized)
                 return;
 
-            double difference =
-                targetValue - visualValue;
-
-            if (System.Math.Abs(difference) <= deadband)
-            {
-                visualValue = targetValue;
-                Refresh();
-                return;
-            }
-
-            float deltaTime = Time.unscaledDeltaTime;
+            float deltaTime =
+                Time.unscaledDeltaTime;
 
             switch (transition)
             {
                 case SparkDisplayValueTransition.Instant:
-                    visualValue = targetValue;
+                    visualValue =
+                        targetValue;
+
                     break;
 
                 case SparkDisplayValueTransition.Smooth:
-                    visualValue = SmoothValue(
-                        visualValue,
-                        targetValue,
-                        speed,
-                        deltaTime);
+                    visualValue =
+                        SmoothValue(
+                            visualValue,
+                            targetValue,
+                            speed,
+                            deltaTime);
+
                     break;
 
                 case SparkDisplayValueTransition.Instrument:
-                    visualValue = SmoothValue(
-                        visualValue,
-                        targetValue,
-                        speed,
-                        deltaTime);
+                    visualValue =
+                        SmoothValue(
+                            visualValue,
+                            targetValue,
+                            speed,
+                            deltaTime);
 
                     if (instrumentNoise > 0f)
-                        visualValue += CalculateNoise();
+                    {
+                        visualValue +=
+                            CalculateInstrumentNoise();
+                    }
+
                     break;
 
                 case SparkDisplayValueTransition.Rolling:
-                    rollingTimer += deltaTime;
-
-                    float duration01 =
-                        Mathf.Clamp01(
-                            rollingTimer / rollingDuration);
-
-                    float eased =
-                        1f -
-                        Mathf.Pow(1f - duration01, 3f);
-
-                    visualValue =
-                        targetValue -
-                        (targetValue - visualValue) *
-                        (1d - eased);
+                    UpdateRolling(
+                        deltaTime);
 
                     break;
+            }
+
+            if (Math.Abs(
+                    targetValue -
+                    visualValue) <=
+                deadband)
+            {
+                visualValue =
+                    targetValue;
             }
 
             Refresh();
         }
 
-        private double CalculateNoise()
+        private void UpdateRolling(
+            float deltaTime)
+        {
+            rollingTimer +=
+                deltaTime;
+
+            float normalized =
+                Mathf.Clamp01(
+                    rollingTimer /
+                    rollingDuration);
+
+            float eased =
+                1f -
+                Mathf.Pow(
+                    1f - normalized,
+                    3f);
+
+            visualValue =
+                rollingStartValue +
+                (
+                    rollingTargetValue -
+                    rollingStartValue
+                ) *
+                eased;
+
+            if (normalized >= 1f)
+            {
+                visualValue =
+                    rollingTargetValue;
+            }
+        }
+
+        private double CalculateInstrumentNoise()
         {
             double time =
-                Time.unscaledTime * 17.371;
+                Time.unscaledTime;
 
             double noise =
-                System.Math.Sin(time) *
-                0.65 +
-                System.Math.Sin(time * 2.713) *
-                0.35;
+                Math.Sin(
+                    time * 17.371d) *
+                0.55d +
 
-            lastNoise =
-                noise * instrumentNoise;
+                Math.Sin(
+                    time * 7.173d) *
+                0.30d +
 
-            return lastNoise;
+                Math.Sin(
+                    time * 31.217d) *
+                0.15d;
+
+            return
+                noise *
+                instrumentNoise;
         }
 
         private static double SmoothValue(
@@ -199,11 +295,14 @@ namespace ProjectSpark.Display
         {
             double blend =
                 1d -
-                System.Math.Exp(
-                    -smoothing * deltaTime);
+                Math.Exp(
+                    -smoothing *
+                    deltaTime);
 
-            return current +
-                   (target - current) * blend;
+            return
+                current +
+                (target - current) *
+                blend;
         }
 
         private void Refresh()
@@ -211,14 +310,14 @@ namespace ProjectSpark.Display
             if (valueText == null)
                 return;
 
-            double scaled =
+            double scaledValue =
                 SparkDisplayFormatter.ScaleValue(
                     visualValue,
                     useEngineeringPrefixes);
 
             string number =
                 SparkDisplayFormatter.FormatNumber(
-                    scaled,
+                    scaledValue,
                     precision);
 
             string prefix =
@@ -226,21 +325,88 @@ namespace ProjectSpark.Display
                     visualValue,
                     useEngineeringPrefixes);
 
-            string unitTextValue =
-                SparkDisplayFormatter.UnitText(unit);
+            string unitString =
+                SparkDisplayFormatter.UnitText(
+                    unit);
 
-            valueText.text = number;
+            valueText.text =
+                number;
 
             if (prefixText != null)
-                prefixText.text = prefix;
+            {
+                prefixText.text =
+                    prefix;
+            }
+
+            if (unitText != null)
+            {
+                if (prefixText != null)
+                {
+                    unitText.text =
+                        unitString +
+                        customSuffix;
+                }
+                else
+                {
+                    unitText.text =
+                        prefix +
+                        unitString +
+                        customSuffix;
+                }
+            }
+        }
+
+        private void ClearVisual()
+        {
+            if (valueText != null)
+                valueText.text = "----";
+
+            if (prefixText != null)
+            {
+                prefixText.text =
+                    string.Empty;
+            }
 
             if (unitText != null)
             {
                 unitText.text =
-                    prefixText == null
-                        ? prefix + unitTextValue + customSuffix
-                        : unitTextValue + customSuffix;
+                    string.Empty;
             }
+        }
+
+        private bool ApproximatelyEqual(
+            double a,
+            double b)
+        {
+            if (double.IsNaN(a) ||
+                double.IsNaN(b))
+            {
+                return false;
+            }
+
+            if (double.IsInfinity(a) ||
+                double.IsInfinity(b))
+            {
+                return a.Equals(b);
+            }
+
+            double difference =
+                Math.Abs(a - b);
+
+            if (difference <= deadband)
+                return true;
+
+            double magnitude =
+                Math.Max(
+                    Math.Abs(a),
+                    Math.Abs(b));
+
+            if (magnitude <= deadband)
+                return difference <= deadband;
+
+            return
+                difference / magnitude <=
+                deadband;
         }
     }
 }
