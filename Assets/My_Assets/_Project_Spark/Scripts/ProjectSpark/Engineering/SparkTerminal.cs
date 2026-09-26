@@ -194,9 +194,14 @@ public SparkTerminalPolarity EffectivePolarity
 
         [Header("Connections")]
 
+        [Header("Connections")]
+
+        [SerializeField]
+        private SparkConnectionKind connectionKind =
+            SparkConnectionKind.Wire;
+
         [SerializeField, Min(1)]
         private int maxConnections = 1;
-
 
         private int connectionCount;
 
@@ -214,6 +219,10 @@ public SparkTerminalPolarity EffectivePolarity
 
         public SparkTerminalKind Kind =>
             kind;
+
+            public SparkConnectionKind ConnectionKind =>
+    connectionKind;
+
 
         public SparkTerminalPolarity Polarity =>
             polarity;

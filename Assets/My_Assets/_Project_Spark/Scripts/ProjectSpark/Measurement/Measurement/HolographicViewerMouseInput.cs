@@ -8,83 +8,68 @@ using UnityEngine.InputSystem;
 namespace ProjectSpark.HolographicViewer
 {
     /// <summary>
-    /// Desktop mouse input bridge for the Project Spark holographic viewer.
+    /// Handles mouse input for the holographic viewer.
     ///
-    /// Viewer controls:
-    /// - Left mouse drag   -> viewer/object rotation
-    /// - Middle mouse drag -> viewer pan
-    /// - Mouse wheel       -> viewer zoom
-    ///
-    /// Screen rotation/pan can be locked while an engineering component is
-    /// being moved or rotated.
-    ///
-    /// This component does not implement transformation logic. It delegates
-    /// rotation to HolographicObjectController and pan/zoom to
-    /// HolographicViewerCamera.
+    /// Gizmo rotation has priority over normal viewer rotation.
+    /// The viewer is locked only while an actual gizmo rotation
+    /// session is active.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class HolographicViewerMouseInput : MonoBehaviour
     {
-        [Header("References")]
+        [Header("Viewer References")]
         [SerializeField]
         private HolographicObjectController objectController;
 
         [SerializeField]
         private HolographicViewerCamera viewerCamera;
 
-        [Header("Screen Control")]
-        [Tooltip(
-            "When enabled, screen rotation and pan are allowed. " +
-            "Disable this while manipulating an engineering object.")]
+        [Header("Rotation Gizmo")]
+        [SerializeField]
+        private SparkRotationGizmo rotationGizmo;
+
+        [SerializeField]
+        private HolographicComponentManipulator manipulator;
+
+        [Header("Screen Rotation")]
         [SerializeField]
         private bool controllScreenSpace = true;
 
-        [Header("Input")]
-        [SerializeField]
-        private bool respectUI = true;
-
-        [Header("Rotation")]
         [SerializeField]
         private bool rotateWithLeftMouse = true;
 
-        [SerializeField, Min(0f)]
-        private float rotationDeadZone = 0.01f;
+        [SerializeField]
+        private float rotationDeadZone = 2f;
 
         [Header("Pan")]
         [SerializeField]
         private bool panWithMiddleMouse = true;
 
-        [SerializeField, Min(0.0001f)]
-        private float panSensitivity = 0.0025f;
+        [SerializeField]
+        private float panSensitivity = 1f;
 
         [Header("Zoom")]
         [SerializeField]
         private bool enableWheelZoom = true;
 
-        [Header("Options")]
+        [Header("UI")]
         [SerializeField]
-        private bool requireTargetForRotation = true;
-
-#if ENABLE_INPUT_SYSTEM
+        private bool respectUI = true;
 
         private bool rotating;
         private bool panning;
+        private bool componentRotating;
 
-#endif
+        private Vector2 rotationStartPosition;
 
-        /// <summary>
-        /// True when screen-level rotation and pan are allowed.
-        /// </summary>
-        public bool IsScreenSpaceControlEnabled =>
-            controllScreenSpace;
-
-        private void Reset()
+        public bool IsComponentRotating
         {
-            objectController =
-                GetComponent<HolographicObjectController>();
+            get { return componentRotating; }
+        }
 
-            viewerCamera =
-                GetComponent<HolographicViewerCamera>();
+        public bool IsScreenSpaceControlEnabled
+        {
+            get { return controllScreenSpace; }
         }
 
         private void Awake()
@@ -92,120 +77,322 @@ namespace ProjectSpark.HolographicViewer
             ResolveReferences();
         }
 
-        private void OnEnable()
-        {
-            ResolveReferences();
-        }
-
-#if ENABLE_INPUT_SYSTEM
-
         private void Update()
         {
-            Mouse mouse = Mouse.current;
+            ResolveReferences();
 
-            if (mouse == null)
+            HandleZoom();
+
+            /*
+             * Component/gizmo rotation always owns the mouse
+             * while an actual manipulation is active.
+             */
+            if (componentRotating)
+            {
+                HandleComponentRotation();
                 return;
+            }
 
-            HandleZoom(mouse);
-
+            /*
+             * Viewer controls are disabled only while the
+             * manipulator has locked them.
+             */
             if (!controllScreenSpace)
             {
-                StopActiveScreenManipulation();
+                StopScreenManipulation();
+                UpdateGizmoHover();
                 return;
             }
 
-            HandleRotation(mouse);
-            HandlePan(mouse);
+            HandleRotation();
+            HandlePan();
+            UpdateGizmoHover();
         }
 
-#endif
+        // ============================================================
+        // ROTATION
+        // ============================================================
 
-        // ============================================================
-        // ZOOM
-        // ============================================================
+        private void HandleRotation()
+{
+    if (!rotateWithLeftMouse)
+    {
+        return;
+    }
 
 #if ENABLE_INPUT_SYSTEM
 
-        private void HandleZoom(Mouse mouse)
+    if (Mouse.current == null)
+    {
+        return;
+    }
+
+    Vector2 pointer =
+        Mouse.current.position.ReadValue();
+
+    // ------------------------------------------------------------
+    // MOUSE DOWN
+    // ------------------------------------------------------------
+
+    if (Mouse.current.leftButton.wasPressedThisFrame)
+    {
+        if (respectUI && IsPointerOverUI())
         {
-            if (!enableWheelZoom)
-                return;
-
-            if (viewerCamera == null)
-                return;
-
-            if (IsBlockedByUI())
-                return;
-
-            float wheel =
-                mouse.scroll.ReadValue().y;
-
-            if (Mathf.Abs(wheel) <= Mathf.Epsilon)
-                return;
-
-            viewerCamera.Zoom(wheel);
+            return;
         }
 
+        /*
+         * IMPORTANT:
+         * The rotation gizmo gets first ownership of the mouse.
+         *
+         * If this succeeds, camera rotation NEVER starts.
+         */
+        if (TryBeginComponentRotation(pointer))
+        {
+            return;
+        }
+
+        /*
+         * Gizmo did not claim the mouse.
+         * Normal viewer/camera rotation is allowed.
+         */
+        BeginViewerRotation(pointer);
+    }
+
+    // ------------------------------------------------------------
+    // MOUSE HELD
+    // ------------------------------------------------------------
+
+    if (rotating &&
+        Mouse.current.leftButton.isPressed)
+    {
+        UpdateViewerRotation(pointer);
+    }
+
+    // ------------------------------------------------------------
+    // MOUSE RELEASE
+    // ------------------------------------------------------------
+
+    if (rotating &&
+        Mouse.current.leftButton.wasReleasedThisFrame)
+    {
+        StopRotation();
+    }
+
 #endif
+}
+
+private bool TryBeginComponentRotation(Vector2 pointer)
+{
+    if (rotationGizmo == null)
+        return false;
+
+    if (manipulator == null)
+        return false;
+
+    if (!rotationGizmo.IsVisible)
+        return false;
+
+    Transform target = rotationGizmo.Target;
+
+    if (target == null)
+        return false;
+
+    if (!rotationGizmo.TryGetAxis(
+            pointer,
+            out SparkRotationGizmo.GizmoAxis axis))
+    {
+        return false;
+    }
+
+    if (axis == SparkRotationGizmo.GizmoAxis.None)
+        return false;
+
+    if (!rotationGizmo.TryGetWorldAxis(
+            axis,
+            out Vector3 worldAxis))
+    {
+        return false;
+    }
+
+    if (!rotationGizmo.TryPress(pointer))
+        return false;
+
+    if (!manipulator.BeginRotate(
+            target,
+            worldAxis,
+            pointer,
+            out string reason))
+    {
+        rotationGizmo.Cancel();
+        return false;
+    }
+
+    componentRotating = true;
+
+    rotating = false;
+    panning = false;
+
+    controllScreenSpace = false;
+
+    return true;
+}
 
         // ============================================================
-        // SCREEN ROTATION
+        // COMPONENT ROTATION
         // ============================================================
 
+        private void HandleComponentRotation()
+        {
 #if ENABLE_INPUT_SYSTEM
 
-        private void HandleRotation(Mouse mouse)
-        {
-            if (!rotateWithLeftMouse)
+            if (Mouse.current == null)
+            {
+                StopComponentRotation(true);
                 return;
+            }
 
+            /*
+             * If the gizmo/tool was hidden while the drag was active,
+             * terminate the manipulation safely.
+             */
+            if (rotationGizmo == null ||
+                !rotationGizmo.IsVisible)
+            {
+                StopComponentRotation(true);
+                return;
+            }
+
+            Vector2 pointer =
+                Mouse.current.position.ReadValue();
+
+            if (Mouse.current.leftButton.isPressed)
+            {
+                if (manipulator != null &&
+                    manipulator.IsManipulating)
+                {
+                    manipulator.UpdateManipulation(pointer);
+                }
+
+                return;
+            }
+
+            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            {
+                StopComponentRotation(false);
+            }
+
+#endif
+        }
+
+        // ============================================================
+        // EXTERNAL STOP
+        // ============================================================
+
+        /// <summary>
+        /// Used by SparkRotateTool when the Rotate tool is disabled.
+        /// </summary>
+        public void CancelComponentRotation()
+        {
+            StopComponentRotation(true);
+        }
+
+        // ============================================================
+        // STOP COMPONENT ROTATION
+        // ============================================================
+
+        private void StopComponentRotation(
+            bool cancel)
+        {
+            if (!componentRotating)
+            {
+                return;
+            }
+
+            componentRotating =
+                false;
+
+            if (manipulator != null &&
+                manipulator.IsManipulating)
+            {
+                if (cancel)
+                {
+                    manipulator.Cancel();
+                }
+                else
+                {
+                    manipulator.Commit();
+                }
+            }
+
+            if (rotationGizmo != null)
+            {
+                rotationGizmo.Release();
+            }
+
+            controllScreenSpace =
+                true;
+        }
+
+        // ============================================================
+        // VIEWER ROTATION
+        // ============================================================
+
+        private void BeginViewerRotation(
+            Vector2 pointer)
+        {
             if (objectController == null)
+            {
                 return;
-
-            if (mouse.leftButton.wasPressedThisFrame)
-            {
-                if (IsBlockedByUI())
-                    return;
-
-                if (requireTargetForRotation &&
-                    !HasValidRotationTarget())
-                {
-                    return;
-                }
-
-                rotating = true;
-
-                objectController.BeginDrag();
             }
 
-            if (rotating &&
-                mouse.leftButton.isPressed)
-            {
-                Vector2 delta =
-                    mouse.delta.ReadValue();
+            rotating =
+                false;
 
-                if (delta.sqrMagnitude >
-                    rotationDeadZone *
-                    rotationDeadZone)
-                {
-                    objectController.RotateFromDrag(
-                        delta);
-                }
-            }
+            rotationStartPosition =
+                pointer;
 
-            if (rotating &&
-                mouse.leftButton.wasReleasedThisFrame)
-            {
-                StopRotation();
-            }
+            objectController.BeginDrag();
+
+            rotating =
+                true;
         }
 
-        private void StopRotation()
+        private void UpdateViewerRotation(
+            Vector2 pointer)
         {
             if (!rotating)
+            {
                 return;
+            }
 
-            rotating = false;
+            Vector2 delta =
+                pointer -
+                rotationStartPosition;
+
+            if (delta.sqrMagnitude <
+                rotationDeadZone *
+                rotationDeadZone)
+            {
+                return;
+            }
+
+            rotationStartPosition =
+                pointer;
+
+            objectController.RotateFromDrag(
+                delta);
+        }
+
+        public void StopRotation()
+        {
+            if (!rotating)
+            {
+                return;
+            }
+
+            rotating =
+                false;
 
             if (objectController != null)
             {
@@ -213,126 +400,171 @@ namespace ProjectSpark.HolographicViewer
             }
         }
 
-#endif
+        // ============================================================
+        // PAN
+        // ============================================================
 
-        // ============================================================
-        // SCREEN PAN
-        // ============================================================
+        private void HandlePan()
+        {
+            if (!panWithMiddleMouse)
+            {
+                return;
+            }
 
 #if ENABLE_INPUT_SYSTEM
 
-        private void HandlePan(Mouse mouse)
-        {
-            if (!panWithMiddleMouse)
-                return;
-
-            if (viewerCamera == null)
-                return;
-
-            if (mouse.middleButton.wasPressedThisFrame)
+            if (Mouse.current == null)
             {
-                if (IsBlockedByUI())
-                    return;
+                return;
+            }
 
-                panning = true;
+            if (Mouse.current.middleButton.wasPressedThisFrame)
+            {
+                if (IsPointerOverUI())
+                {
+                    return;
+                }
+
+                panning =
+                    true;
             }
 
             if (panning &&
-                mouse.middleButton.isPressed)
+                Mouse.current.middleButton.isPressed)
             {
                 Vector2 delta =
-                    mouse.delta.ReadValue();
+                    Mouse.current.delta.ReadValue();
 
-                if (delta.sqrMagnitude >
-                    0f)
+                if (viewerCamera != null)
                 {
                     viewerCamera.Pan(
-                        -delta *
+                        delta *
                         panSensitivity);
                 }
             }
 
             if (panning &&
-                mouse.middleButton.wasReleasedThisFrame)
+                Mouse.current.middleButton.wasReleasedThisFrame)
             {
-                panning = false;
+                panning =
+                    false;
             }
-        }
 
 #endif
+        }
 
         // ============================================================
-        // CONTROL LOCK
+        // ZOOM
         // ============================================================
 
-        /// <summary>
-        /// Enables or disables screen rotation and pan.
-        ///
-        /// This should be set to false while an engineering component is being
-        /// moved or rotated, so the viewer cannot consume the same mouse input.
-        ///
-        /// Mouse-wheel zoom remains independently controlled by
-        /// enableWheelZoom.
-        /// </summary>
+        private void HandleZoom()
+        {
+            if (!enableWheelZoom)
+            {
+                return;
+            }
+
+#if ENABLE_INPUT_SYSTEM
+
+            if (Mouse.current == null)
+            {
+                return;
+            }
+
+            Vector2 scroll =
+                Mouse.current.scroll.ReadValue();
+
+            if (Mathf.Approximately(
+                    scroll.y,
+                    0f))
+            {
+                return;
+            }
+
+            if (viewerCamera != null)
+            {
+                viewerCamera.Zoom(
+                    scroll.y);
+            }
+
+#endif
+        }
+
+        // ============================================================
+        // GIZMO HOVER
+        // ============================================================
+
+        private void UpdateGizmoHover()
+        {
+            if (componentRotating)
+            {
+                return;
+            }
+
+            if (rotationGizmo == null ||
+                !rotationGizmo.IsVisible)
+            {
+                return;
+            }
+
+#if ENABLE_INPUT_SYSTEM
+
+            if (Mouse.current == null)
+            {
+                return;
+            }
+
+            Vector2 pointer =
+                Mouse.current.position.ReadValue();
+
+            rotationGizmo.UpdateHover(
+                pointer);
+
+#endif
+        }
+
+        // ============================================================
+        // SCREEN CONTROL
+        // ============================================================
+
         public void SetScreenSpaceControl(
             bool enabled)
         {
-            if (controllScreenSpace == enabled)
-                return;
-
-            controllScreenSpace = enabled;
+            controllScreenSpace =
+                enabled;
 
             if (!enabled)
             {
-                StopActiveScreenManipulation();
+                StopScreenManipulation();
             }
         }
 
-        /// <summary>
-        /// Toggles screen rotation/pan control.
-        /// </summary>
-        public void ToggleControlScreenSpace()
+        private void StopScreenManipulation()
         {
-            SetScreenSpaceControl(
-                !controllScreenSpace);
-        }
-
-        /// <summary>
-        /// Immediately stops any active screen rotation or pan interaction.
-        /// </summary>
-        public void StopActiveScreenManipulation()
-        {
-#if ENABLE_INPUT_SYSTEM
-
             StopRotation();
 
-            panning = false;
-
-#endif
+            panning =
+                false;
         }
 
-        // ============================================================
-        // VALIDATION
-        // ============================================================
-
-        private bool HasValidRotationTarget()
+        public void StopActiveScreenManipulation()
         {
-            return objectController != null &&
-                   objectController.gameObject != null;
+            StopScreenManipulation();
         }
 
-        private bool IsBlockedByUI()
+        // ============================================================
+        // UI
+        // ============================================================
+
+        private bool IsPointerOverUI()
         {
             if (!respectUI)
+            {
                 return false;
+            }
 
-            EventSystem eventSystem =
-                EventSystem.current;
-
-            if (eventSystem == null)
-                return false;
-
-            return eventSystem.IsPointerOverGameObject();
+            return EventSystem.current != null &&
+                   EventSystem.current.IsPointerOverGameObject();
         }
 
         // ============================================================
@@ -344,36 +576,40 @@ namespace ProjectSpark.HolographicViewer
             if (objectController == null)
             {
                 objectController =
-                    GetComponent<
+                    GetComponentInParent<
                         HolographicObjectController>();
             }
 
             if (viewerCamera == null)
             {
                 viewerCamera =
-                    GetComponent<
+                    GetComponentInParent<
                         HolographicViewerCamera>();
             }
 
-            if (viewerCamera == null)
+            if (rotationGizmo == null)
             {
-                viewerCamera =
-                    FindFirstObjectByType<
-                        HolographicViewerCamera>();
+                rotationGizmo =
+                    GetComponentInParent<
+                        SparkRotationGizmo>();
+            }
+
+            if (manipulator == null)
+            {
+                manipulator =
+                    GetComponentInParent<
+                        HolographicComponentManipulator>();
             }
         }
 
         // ============================================================
-        // CLEANUP
+        // DISABLE
         // ============================================================
 
         private void OnDisable()
         {
-#if ENABLE_INPUT_SYSTEM
-
-            StopActiveScreenManipulation();
-
-#endif
+            StopComponentRotation(true);
+            StopScreenManipulation();
         }
     }
 }

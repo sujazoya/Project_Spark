@@ -3,28 +3,66 @@ using UnityEngine;
 
 namespace ProjectSpark.Tools
 {
+    /// <summary>
+    /// Project Spark selection tool.
+    ///
+    /// The selection controller owns the actual selection logic.
+    /// This tool only connects the active SparkTool interaction
+    /// with SparkSelectionController.
+    /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkSelectTool : SparkTool
     {
+        // ============================================================
+        // REFERENCES
+        // ============================================================
+
         [Header("References")]
+
         [SerializeField]
         private SparkSelectionController selectionController;
+
+
+        // ============================================================
+        // TOOL TYPE
+        // ============================================================
 
         protected override SparkToolType GetToolType()
         {
             return SparkToolType.Select;
         }
 
+
+        // ============================================================
+        // UNITY
+        // ============================================================
+
         protected override void Awake()
         {
             base.Awake();
 
+            ResolveReferences();
+        }
+
+
+        // ============================================================
+        // REFERENCES
+        // ============================================================
+
+        private void ResolveReferences()
+        {
             if (selectionController == null)
             {
                 selectionController =
-                    GetComponentInParent<SparkSelectionController>();
+                    GetComponentInParent<
+                        SparkSelectionController>();
             }
         }
+
+
+        // ============================================================
+        // VALIDATION
+        // ============================================================
 
         public override bool CanBegin(
             in SparkToolContext context,
@@ -37,6 +75,8 @@ namespace ProjectSpark.Tools
                 return false;
             }
 
+            ResolveReferences();
+
             if (selectionController == null)
             {
                 reason =
@@ -45,62 +85,67 @@ namespace ProjectSpark.Tools
                 return false;
             }
 
-            if (!context.HasTarget)
+            if (!context.HasCamera)
             {
-                reason = "No selectable object was hit.";
+                reason =
+                    "Tool context does not contain a camera.";
+
                 return false;
             }
 
             reason = null;
+
             return true;
         }
+
+
+        // ============================================================
+        // BEGIN
+        // ============================================================
 
         protected override SparkResult OnBegin(
             SparkToolContext context)
         {
+            ResolveReferences();
+
             if (selectionController == null)
             {
                 return SparkResult.Invalid(
                     "SparkSelectionController is not configured.");
             }
 
-            if (!context.HasTarget)
+            bool selected =
+                selectionController.TrySelect(
+                    context.ScreenPosition,
+                    out string reason);
+
+            if (!selected)
             {
-                selectionController.ClearSelection();
-
                 return SparkResult.Invalid(
-                    "No selectable object was hit.");
+                    string.IsNullOrEmpty(reason)
+                        ? "Unable to select an object."
+                        : reason);
             }
-
-            SparkSelectable selectable =
-                context.TargetHit.Collider
-                    .GetComponentInParent<SparkSelectable>();
-
-            if (selectable == null)
-            {
-                selectionController.ClearSelection();
-
-                return SparkResult.Invalid(
-                    "Hit object is not selectable.");
-            }
-
-            /*
-             * IMPORTANT:
-             *
-             * Select() automatically deselects the previous object
-             * and selects this object.
-             */
-            selectionController.Select(selectable);
 
             return SparkResult.Success(
                 "Object selected.");
         }
+
+
+        // ============================================================
+        // END
+        // ============================================================
 
         protected override SparkResult OnEnd(
             SparkToolContext context)
         {
             return SparkResult.Success();
         }
+
+
+        // ============================================================
+        // CANCEL
+        // ============================================================
 
         protected override SparkResult OnCancel(
             SparkToolContext context)

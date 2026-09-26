@@ -76,12 +76,16 @@ namespace ProjectSpark.Measurement
             Negative = negative;
             OverRange = overRange;
             Continuity = continuity;
+
             Value = value;
             DisplayValue = displayValue;
+
             Mode = mode;
             Range = range;
+
             Unit = unit;
             Text = text;
+
             State = state;
         }
 
@@ -104,17 +108,39 @@ namespace ProjectSpark.Measurement
     [DisallowMultipleComponent]
     public sealed class SparkMultimeter : SparkElectronicObject
     {
+        // ============================================================
+        // MEASUREMENT
+        // ============================================================
+
         [Header("Measurement")]
+
         [SerializeField]
         private SparkMeasurementSystem measurementSystem;
 
+        /*
+         * These are the terminals that the measurement system reads from.
+         *
+         * They remain SparkTerminal references so the existing electrical
+         * topology and probe measurement system are preserved.
+         */
         [SerializeField]
         private SparkTerminal redProbeTerminal;
 
         [SerializeField]
         private SparkTerminal blackProbeTerminal;
 
+
+        // ============================================================
+        // DISPLAY
+        // ============================================================
+       
+
+        // ============================================================
+        // OPERATION
+        // ============================================================
+
         [Header("Operation")]
+
         [SerializeField]
         private bool poweredOn;
 
@@ -126,7 +152,13 @@ namespace ProjectSpark.Measurement
         private SparkMultimeterRange range =
             SparkMultimeterRange.Auto;
 
-        [Header("Update")]
+
+        // ============================================================
+        // UPDATE
+        // ============================================================
+
+        [Header("Measurement Update")]
+
         [SerializeField, Min(0.01f)]
         private float measurementInterval = 0.05f;
 
@@ -136,7 +168,13 @@ namespace ProjectSpark.Measurement
         [SerializeField, Min(1)]
         private int stabilitySamplesRequired = 5;
 
+
+        // ============================================================
+        // RANGES
+        // ============================================================
+
         [Header("Ranges")]
+
         [SerializeField, Min(0.001f)]
         private float voltageRange = 1000f;
 
@@ -149,7 +187,13 @@ namespace ProjectSpark.Measurement
         [SerializeField, Min(0f)]
         private float continuityThreshold = 10f;
 
-        [Header("Display")]
+
+        // ============================================================
+        // FORMATTING
+        // ============================================================
+
+        [Header("Formatting")]
+
         [SerializeField, Min(0)]
         private int displayDecimals = 3;
 
@@ -158,6 +202,11 @@ namespace ProjectSpark.Measurement
 
         [SerializeField, Min(0.0000001f)]
         private float zeroThreshold = 0.000001f;
+
+
+        // ============================================================
+        // RUNTIME
+        // ============================================================
 
         private float measurementTimer;
         private float previousValue;
@@ -168,10 +217,23 @@ namespace ProjectSpark.Measurement
         private SparkMultimeterReading currentReading =
             SparkMultimeterReading.Invalid;
 
+
+        // ============================================================
+        // EVENTS
+        // ============================================================
+
         public event Action<SparkMultimeterReading> ReadingChanged;
+
         public event Action<SparkMultimeterMode> ModeChanged;
+
         public event Action<bool> PowerChanged;
+
         public event Action<SparkMultimeterRange> RangeChanged;
+
+
+        // ============================================================
+        // PUBLIC STATE
+        // ============================================================
 
         public bool IsPowered => poweredOn;
 
@@ -186,14 +248,22 @@ namespace ProjectSpark.Measurement
             redProbeTerminal;
 
         public SparkTerminal BlackProbeTerminal =>
-            blackProbeTerminal;
+            blackProbeTerminal;       
+
+
+        // ============================================================
+        // UNITY
+        // ============================================================
 
         protected override void Awake()
         {
             base.Awake();
 
             ResolveReferences();
+
             ResetReading();
+
+            SynchronizeOperationalState();
         }
 
         protected override void OnValidate()
@@ -222,12 +292,21 @@ namespace ProjectSpark.Measurement
                 Mathf.Max(0f, continuityThreshold);
 
             displayDecimals =
-                Mathf.Max(0, displayDecimals);
+                Mathf.Clamp(displayDecimals, 0, 9);
 
             zeroThreshold =
                 Mathf.Max(0.0000001f, zeroThreshold);
 
             ResolveReferences();
+
+            /*
+             * Make sure a manually selected range still matches
+             * the selected measurement mode.
+             */
+            if (!IsRangeCompatible(range))
+            {
+                range = SparkMultimeterRange.Auto;
+            }
         }
 
         private void Update()
@@ -237,19 +316,22 @@ namespace ProjectSpark.Measurement
                 return;
             }
 
-            measurementTimer -=
-                Time.unscaledDeltaTime;
+            measurementTimer -= Time.unscaledDeltaTime;
 
             if (measurementTimer > 0f)
             {
                 return;
             }
 
-            measurementTimer =
-                measurementInterval;
+            measurementTimer = measurementInterval;
 
             PerformMeasurement();
         }
+
+
+        // ============================================================
+        // REFERENCE RESOLUTION
+        // ============================================================
 
         private void ResolveReferences()
         {
@@ -260,6 +342,39 @@ namespace ProjectSpark.Measurement
             }
         }
 
+
+        // ============================================================
+        // PROJECT SPARK INTERACTION
+        // ============================================================
+
+        public override bool CanInteract(
+            in SparkInteractionContext context,
+            out string reason)
+        {
+            if (!base.CanInteract(context, out reason))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public override SparkResult Inspect(
+            in SparkInteractionContext context)
+        {
+            if (!CanInteract(context, out string reason))
+            {
+                return SparkResult.Rejected(reason);
+            }
+
+            return SparkResult.Success();
+        }
+
+
+        // ============================================================
+        // POWER
+        // ============================================================
+
         public void SetPower(bool enabled)
         {
             if (poweredOn == enabled)
@@ -269,13 +384,18 @@ namespace ProjectSpark.Measurement
 
             poweredOn = enabled;
 
+            SynchronizeOperationalState();
+
             if (!poweredOn)
             {
                 ResetReading();
             }
             else
             {
+                measurementTimer = 0f;
+
                 ResetStability();
+
                 CreateReadyReading();
             }
 
@@ -286,6 +406,19 @@ namespace ProjectSpark.Measurement
         {
             SetPower(!poweredOn);
         }
+
+        private void SynchronizeOperationalState()
+        {
+            SetOperationalState(
+                poweredOn
+                    ? SparkOperationalState.Active
+                    : SparkOperationalState.Standby);
+        }
+
+
+        // ============================================================
+        // MODE
+        // ============================================================
 
         public bool SetMode(
             SparkMultimeterMode value,
@@ -307,7 +440,20 @@ namespace ProjectSpark.Measurement
 
             mode = value;
 
+            /*
+             * A mode change invalidates the stability history.
+             */
             ResetStability();
+
+            /*
+             * Auto range is always safe after changing modes.
+             */
+            if (!IsRangeCompatible(range))
+            {
+                range = SparkMultimeterRange.Auto;
+
+                RangeChanged?.Invoke(range);
+            }
 
             if (poweredOn)
             {
@@ -317,6 +463,7 @@ namespace ProjectSpark.Measurement
             ModeChanged?.Invoke(mode);
 
             reason = null;
+
             return true;
         }
 
@@ -325,6 +472,11 @@ namespace ProjectSpark.Measurement
         {
             SetMode(value, out _);
         }
+
+
+        // ============================================================
+        // RANGE
+        // ============================================================
 
         public bool SetRange(
             SparkMultimeterRange value,
@@ -350,6 +502,7 @@ namespace ProjectSpark.Measurement
             }
 
             reason = null;
+
             return true;
         }
 
@@ -358,6 +511,11 @@ namespace ProjectSpark.Measurement
         {
             SetRange(value, out _);
         }
+
+
+        // ============================================================
+        // PROBES
+        // ============================================================
 
         public void SetProbeTerminals(
             SparkTerminal red,
@@ -408,6 +566,15 @@ namespace ProjectSpark.Measurement
             ResetReading();
         }
 
+        public bool HasBothProbes =>
+            redProbeTerminal != null &&
+            blackProbeTerminal != null;
+
+
+        // ============================================================
+        // MEASURE NOW
+        // ============================================================
+
         public SparkResult MeasureNow()
         {
             if (!poweredOn)
@@ -426,6 +593,11 @@ namespace ProjectSpark.Measurement
 
             return SparkResult.Success();
         }
+
+
+        // ============================================================
+        // MEASUREMENT DISPATCH
+        // ============================================================
 
         private void PerformMeasurement()
         {
@@ -470,6 +642,11 @@ namespace ProjectSpark.Measurement
             }
         }
 
+
+        // ============================================================
+        // VOLTAGE
+        // ============================================================
+
         private void MeasureVoltage()
         {
             if (measurementSystem == null)
@@ -513,6 +690,11 @@ namespace ProjectSpark.Measurement
                 return;
             }
 
+            /*
+             * True differential measurement:
+             *
+             * V = Vred - Vblack
+             */
             float value =
                 redReading.Value -
                 blackReading.Value;
@@ -522,6 +704,11 @@ namespace ProjectSpark.Measurement
                 SparkMultimeterMode.VoltageDC,
                 SparkMultimeterDisplayState.Measuring);
         }
+
+
+        // ============================================================
+        // CURRENT
+        // ============================================================
 
         private void MeasureCurrent()
         {
@@ -556,6 +743,11 @@ namespace ProjectSpark.Measurement
                 SparkMultimeterDisplayState.Measuring);
         }
 
+
+        // ============================================================
+        // RESISTANCE
+        // ============================================================
+
         private void MeasureResistance()
         {
             if (measurementSystem == null)
@@ -588,6 +780,11 @@ namespace ProjectSpark.Measurement
                 SparkMultimeterMode.Resistance,
                 SparkMultimeterDisplayState.Measuring);
         }
+
+
+        // ============================================================
+        // CONTINUITY
+        // ============================================================
 
         private void MeasureContinuity()
         {
@@ -632,6 +829,11 @@ namespace ProjectSpark.Measurement
                     : SparkMultimeterDisplayState.Open,
                 continuous);
         }
+
+
+        // ============================================================
+        // READING PUBLICATION
+        // ============================================================
 
         private void PublishNumericReading(
             float value,
@@ -688,15 +890,13 @@ namespace ProjectSpark.Measurement
                         "OL",
                         SparkMultimeterDisplayState.OverRange);
 
-                ReadingChanged?.Invoke(
-                    currentReading);
+                ReadingChanged?.Invoke(currentReading);
 
                 return;
             }
 
             string unit =
-                GetUnit(
-                    measurementMode);
+                GetUnit(measurementMode);
 
             string text =
                 FormatValue(
@@ -737,9 +937,13 @@ namespace ProjectSpark.Measurement
                     text,
                     state);
 
-            ReadingChanged?.Invoke(
-                currentReading);
+            ReadingChanged?.Invoke(currentReading);
         }
+
+
+        // ============================================================
+        // AUTO RANGE
+        // ============================================================
 
         private SparkMultimeterRange ResolveRange(
             float absoluteValue,
@@ -753,16 +957,25 @@ namespace ProjectSpark.Measurement
             switch (measurementMode)
             {
                 case SparkMultimeterMode.VoltageDC:
-                    return absoluteValue < 0.1f
-                        ? SparkMultimeterRange.Millivolts
-                        : SparkMultimeterRange.Volts;
+
+                    if (absoluteValue < 0.1f)
+                    {
+                        return SparkMultimeterRange.Millivolts;
+                    }
+
+                    return SparkMultimeterRange.Volts;
 
                 case SparkMultimeterMode.CurrentDC:
-                    return absoluteValue < 1f
-                        ? SparkMultimeterRange.Milliamps
-                        : SparkMultimeterRange.Amps;
+
+                    if (absoluteValue < 1f)
+                    {
+                        return SparkMultimeterRange.Milliamps;
+                    }
+
+                    return SparkMultimeterRange.Amps;
 
                 case SparkMultimeterMode.Resistance:
+
                     if (absoluteValue < 1000f)
                     {
                         return SparkMultimeterRange.Ohms;
@@ -782,6 +995,11 @@ namespace ProjectSpark.Measurement
                     return SparkMultimeterRange.Auto;
             }
         }
+
+
+        // ============================================================
+        // RANGE LIMIT
+        // ============================================================
 
         private float GetRangeLimit(
             SparkMultimeterRange selectedRange)
@@ -814,6 +1032,11 @@ namespace ProjectSpark.Measurement
             }
         }
 
+
+        // ============================================================
+        // DISPLAY VALUE
+        // ============================================================
+
         private float ConvertToDisplayValue(
             float value,
             SparkMultimeterRange selectedRange)
@@ -836,6 +1059,11 @@ namespace ProjectSpark.Measurement
                     return value;
             }
         }
+
+
+        // ============================================================
+        // FORMATTING
+        // ============================================================
 
         private string FormatValue(
             float value,
@@ -882,6 +1110,11 @@ namespace ProjectSpark.Measurement
             }
         }
 
+
+        // ============================================================
+        // RANGE VALIDATION
+        // ============================================================
+
         private bool IsRangeCompatible(
             SparkMultimeterRange value)
         {
@@ -893,12 +1126,14 @@ namespace ProjectSpark.Measurement
             switch (mode)
             {
                 case SparkMultimeterMode.VoltageDC:
+
                     return value ==
                            SparkMultimeterRange.Millivolts ||
                            value ==
                            SparkMultimeterRange.Volts;
 
                 case SparkMultimeterMode.CurrentDC:
+
                     return value ==
                            SparkMultimeterRange.Milliamps ||
                            value ==
@@ -906,6 +1141,7 @@ namespace ProjectSpark.Measurement
 
                 case SparkMultimeterMode.Resistance:
                 case SparkMultimeterMode.Continuity:
+
                     return value ==
                            SparkMultimeterRange.Ohms ||
                            value ==
@@ -917,6 +1153,11 @@ namespace ProjectSpark.Measurement
                     return false;
             }
         }
+
+
+        // ============================================================
+        // STABILITY
+        // ============================================================
 
         private void UpdateStability(
             float value)
@@ -952,6 +1193,11 @@ namespace ProjectSpark.Measurement
             hasPreviousValue = false;
         }
 
+
+        // ============================================================
+        // READY / RESET
+        // ============================================================
+
         private void CreateReadyReading()
         {
             currentReading =
@@ -984,20 +1230,14 @@ namespace ProjectSpark.Measurement
                 currentReading);
         }
 
-        private void SetInvalid(
-            SparkMultimeterDisplayState state,
-            string text)
-        {
-            SetInvalid(
-                state,
-                text,
-                text);
-        }
+
+        // ============================================================
+        // INVALID / ERROR
+        // ============================================================
 
         private void SetInvalid(
             SparkMultimeterDisplayState state,
-            string text,
-            string displayText)
+            string text)
         {
             currentReading =
                 new SparkMultimeterReading(
@@ -1012,7 +1252,7 @@ namespace ProjectSpark.Measurement
                     mode,
                     range,
                     GetUnit(mode),
-                    displayText,
+                    text,
                     state);
 
             ReadingChanged?.Invoke(

@@ -3,14 +3,20 @@ using UnityEngine;
 namespace ProjectSpark.HolographicViewer
 {
     /// <summary>
-    /// Handles physical manipulation of one selected component.
+    /// Performs physical manipulation of a single Transform supplied
+    /// by the caller.
     ///
-    /// This class does not own selection.
-    /// It only manipulates the Transform supplied by the caller.
+    /// This component does not own:
+    /// - selection
+    /// - tool activation
+    /// - gizmo visuals
+    /// - mouse input
+    ///
+    /// Rotation is driven by the actual angular movement of the
+    /// mouse around the selected gizmo axis.
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class HolographicComponentManipulator
-        : MonoBehaviour
+    public sealed class HolographicComponentManipulator : MonoBehaviour
     {
         public enum ManipulationMode
         {
@@ -49,14 +55,14 @@ namespace ProjectSpark.HolographicViewer
         [SerializeField]
         private bool allowRotate = true;
 
-        [SerializeField]
-        private Vector3 rotationAxis = Vector3.up;
-
         [SerializeField, Min(0.001f)]
-        private float rotationSensitivity = 0.25f;
+        private float rotationSensitivity = 1f;
 
         [SerializeField, Min(0f)]
         private float rotationSnap = 0f;
+
+        [SerializeField, Min(0.0001f)]
+        private float minimumRotationRadius = 0.001f;
 
         // ============================================================
         // RUNTIME
@@ -75,13 +81,25 @@ namespace ProjectSpark.HolographicViewer
 
         private Plane manipulationPlane;
 
-        private Vector3 worldRotationAxis;
+       private Vector3 worldRotationAxis;
 
-        private float accumulatedRotation;
+private float accumulatedRotation;
 
-        private Vector2 rotationStartScreenPosition;
+private float rawAccumulatedRotation;
 
-        private bool sessionActive;
+private float previousPointerAngle;
+
+private bool hasPreviousPointerAngle;
+
+private Vector3 previousRotationVector;
+private bool hasPreviousRotationVector;
+
+private Vector2 rotationStartScreenPosition;
+
+private bool sessionActive;
+
+
+     
 
         // ============================================================
         // PUBLIC STATE
@@ -102,6 +120,16 @@ namespace ProjectSpark.HolographicViewer
             get { return activeTarget; }
         }
 
+        public Vector3 ActiveRotationAxis
+        {
+            get { return worldRotationAxis; }
+        }
+
+        public float AccumulatedRotation
+        {
+            get { return accumulatedRotation; }
+        }
+
         // ============================================================
         // INITIALIZATION
         // ============================================================
@@ -116,6 +144,12 @@ namespace ProjectSpark.HolographicViewer
             if (viewerCamera == null)
             {
                 viewerCamera = Camera.main;
+            }
+
+            if (viewerMouseInput == null)
+            {
+                viewerMouseInput =
+                    GetComponentInParent<HolographicViewerMouseInput>();
             }
         }
 
@@ -154,9 +188,8 @@ namespace ProjectSpark.HolographicViewer
                 return false;
             }
 
-            return InitializeSession(
+            return InitializeMoveSession(
                 target,
-                ManipulationMode.Move,
                 screenPosition,
                 out reason);
         }
@@ -167,6 +200,7 @@ namespace ProjectSpark.HolographicViewer
 
         public bool BeginRotate(
             Transform target,
+            Vector3 worldAxis,
             Vector2 screenPosition,
             out string reason)
         {
@@ -196,8 +230,7 @@ namespace ProjectSpark.HolographicViewer
                 return false;
             }
 
-            if (rotationAxis.sqrMagnitude <
-                0.000001f)
+            if (worldAxis.sqrMagnitude < 0.000001f)
             {
                 reason =
                     "Rotation axis is invalid.";
@@ -205,9 +238,9 @@ namespace ProjectSpark.HolographicViewer
                 return false;
             }
 
-            return InitializeSession(
+            return InitializeRotateSession(
                 target,
-                ManipulationMode.Rotate,
+                worldAxis,
                 screenPosition,
                 out reason);
         }
@@ -229,15 +262,13 @@ namespace ProjectSpark.HolographicViewer
             {
                 case ManipulationMode.Move:
 
-                    UpdateMove(
-                        screenPosition);
+                    UpdateMove(screenPosition);
 
                     break;
 
                 case ManipulationMode.Rotate:
 
-                    UpdateRotate(
-                        screenPosition);
+                    UpdateRotate(screenPosition);
 
                     break;
             }
@@ -281,12 +312,11 @@ namespace ProjectSpark.HolographicViewer
         }
 
         // ============================================================
-        // INITIALIZE
+        // INITIALIZE MOVE
         // ============================================================
 
-        private bool InitializeSession(
+        private bool InitializeMoveSession(
             Transform target,
-            ManipulationMode requestedMode,
             Vector2 screenPosition,
             out string reason)
         {
@@ -302,7 +332,8 @@ namespace ProjectSpark.HolographicViewer
                 return false;
             }
 
-            activeTarget = target;
+            activeTarget =
+                target;
 
             originalPosition =
                 target.position;
@@ -310,69 +341,153 @@ namespace ProjectSpark.HolographicViewer
             originalRotation =
                 target.rotation;
 
-            accumulatedRotation = 0f;
+            accumulatedRotation =
+                0f;
 
-            // --------------------------------------------------------
-            // MOVE
-            // --------------------------------------------------------
+            rawAccumulatedRotation =
+                0f;
 
-            if (requestedMode ==
-                ManipulationMode.Move)
+            worldRotationAxis =
+                Vector3.zero;
+
+            previousRotationVector =
+                Vector3.zero;
+
+            hasPreviousRotationVector =
+                false;
+
+            manipulationPlane =
+                new Plane(
+                    viewerCamera.transform.forward,
+                    target.position);
+
+            if (preserveGrabOffset)
             {
-                manipulationPlane =
-                    new Plane(
-                        viewerCamera.transform.forward,
-                        target.position);
-
-                if (preserveGrabOffset)
+                if (!TryProjectPointer(
+                        screenPosition,
+                        out Vector3 point))
                 {
-                    if (!TryProjectPointer(
-                            screenPosition,
-                            out Vector3 point))
-                    {
-                        ResetRuntimeState();
+                    ResetRuntimeState();
 
-                        reason =
-                            "Unable to establish manipulation point.";
+                    reason =
+                        "Unable to establish manipulation point.";
 
-                        return false;
-                    }
-
-                    grabOffset =
-                        target.position - point;
+                    return false;
                 }
-                else
-                {
-                    grabOffset =
-                        Vector3.zero;
-                }
+
+                grabOffset =
+                    target.position - point;
+            }
+            else
+            {
+                grabOffset =
+                    Vector3.zero;
             }
 
-            // --------------------------------------------------------
-            // ROTATE
-            // --------------------------------------------------------
-
-            if (requestedMode ==
-                ManipulationMode.Rotate)
-            {
-                rotationStartScreenPosition =
-                    screenPosition;
-
-                worldRotationAxis =
-                    target.TransformDirection(
-                        rotationAxis.normalized);
-            }
+            rotationStartScreenPosition =
+                screenPosition;
 
             mode =
-                requestedMode;
+                ManipulationMode.Move;
 
-            sessionActive = true;
+            sessionActive =
+                true;
 
             LockViewerControls(true);
 
             return true;
         }
 
+        // ============================================================
+        // INITIALIZE ROTATE
+        // ============================================================
+
+       private bool InitializeRotateSession(
+    Transform target,
+    Vector3 requestedWorldAxis,
+    Vector2 screenPosition,
+    out string reason)
+{
+    reason = null;
+
+    ResolveReferences();
+
+    if (viewerCamera == null)
+    {
+        reason =
+            "Viewer camera is unavailable.";
+
+        return false;
+    }
+
+    if (target == null)
+    {
+        reason =
+            "Rotation target is missing.";
+
+        return false;
+    }
+
+    Vector3 normalizedAxis =
+        requestedWorldAxis.normalized;
+
+    if (normalizedAxis.sqrMagnitude < 0.999f)
+    {
+        reason =
+            "Rotation axis is invalid.";
+
+        return false;
+    }
+
+    activeTarget =
+        target;
+
+    originalPosition =
+        target.position;
+
+    originalRotation =
+        target.rotation;
+
+    worldRotationAxis =
+        normalizedAxis;
+
+    accumulatedRotation =
+        0f;
+
+    rawAccumulatedRotation =
+        0f;
+
+    rotationStartScreenPosition =
+        screenPosition;
+
+    hasPreviousPointerAngle =
+        TryGetPointerAngle(
+            screenPosition,
+            out previousPointerAngle);
+
+    if (!hasPreviousPointerAngle)
+    {
+        ResetRuntimeState();
+
+        reason =
+            "Unable to establish rotation pointer.";
+
+        return false;
+    }
+
+    grabOffset =
+        Vector3.zero;
+
+    mode =
+        ManipulationMode.Rotate;
+
+    sessionActive =
+        true;
+
+    LockViewerControls(true);
+
+    return true;
+}
         // ============================================================
         // MOVE
         // ============================================================
@@ -409,48 +524,191 @@ namespace ProjectSpark.HolographicViewer
         // ROTATE
         // ============================================================
 
-        private void UpdateRotate(
-            Vector2 screenPosition)
+       private void UpdateRotate(
+    Vector2 screenPosition)
+{
+    if (!sessionActive ||
+        activeTarget == null)
+    {
+        return;
+    }
+
+    if (!hasPreviousPointerAngle)
+    {
+        return;
+    }
+
+    if (!TryGetPointerAngle(
+            screenPosition,
+            out float currentAngle))
+    {
+        return;
+    }
+
+    float delta =
+        Mathf.DeltaAngle(
+            previousPointerAngle,
+            currentAngle);
+
+    /*
+     * This is the actual amount the mouse moved around
+     * the gizmo pivot on screen.
+     */
+    delta *=
+        rotationSensitivity;
+
+    rawAccumulatedRotation +=
+        delta;
+
+    previousPointerAngle =
+        currentAngle;
+
+    float finalAngle =
+        rawAccumulatedRotation;
+
+    if (rotationSnap > 0f)
+    {
+        finalAngle =
+            Mathf.Round(
+                finalAngle /
+                rotationSnap) *
+            rotationSnap;
+    }
+
+    accumulatedRotation =
+        finalAngle;
+
+    /*
+     * IMPORTANT:
+     *
+     * Position is NEVER changed here.
+     *
+     * Only rotation is changed.
+     */
+    activeTarget.rotation =
+        originalRotation *
+        Quaternion.AngleAxis(
+            accumulatedRotation,
+            worldRotationAxis);
+}
+
+
+private bool TryGetPointerAngle(
+    Vector2 screenPosition,
+    out float angle)
+{
+    angle = 0f;
+
+    if (viewerCamera == null)
+    {
+        return false;
+    }
+
+    if (activeTarget == null)
+    {
+        return false;
+    }
+
+    Vector3 pivotScreen3D =
+        viewerCamera.WorldToScreenPoint(
+            activeTarget.position);
+
+    if (pivotScreen3D.z <= 0f)
+    {
+        return false;
+    }
+
+    Vector2 pivotScreen =
+        new Vector2(
+            pivotScreen3D.x,
+            pivotScreen3D.y);
+
+    Vector2 direction =
+        screenPosition -
+        pivotScreen;
+
+    if (direction.sqrMagnitude <
+        0.0001f)
+    {
+        return false;
+    }
+
+    angle =
+        Mathf.Atan2(
+            direction.y,
+            direction.x) *
+        Mathf.Rad2Deg;
+
+    return true;
+}
+
+        // ============================================================
+        // ROTATION POINTER → WORLD VECTOR
+        // ============================================================
+
+        private bool TryGetRotationVector(
+            Vector2 screenPosition,
+            out Vector3 rotationVector)
         {
-            Vector2 delta =
-                screenPosition -
-                rotationStartScreenPosition;
+            rotationVector =
+                Vector3.zero;
 
-            float projectedDelta;
-
-            if (Mathf.Abs(delta.x) >=
-                Mathf.Abs(delta.y))
+            if (viewerCamera == null)
             {
-                projectedDelta =
-                    delta.x;
-            }
-            else
-            {
-                projectedDelta =
-                    -delta.y;
+                return false;
             }
 
-            float angle =
-                projectedDelta *
-                rotationSensitivity;
-
-            if (rotationSnap > 0f)
+            if (activeTarget == null)
             {
-                angle =
-                    Mathf.Round(
-                        angle /
-                        rotationSnap) *
-                    rotationSnap;
+                return false;
             }
 
-            accumulatedRotation =
-                angle;
+            Ray ray =
+                viewerCamera.ScreenPointToRay(
+                    screenPosition);
 
-            activeTarget.rotation =
-                originalRotation *
-                Quaternion.AngleAxis(
-                    accumulatedRotation,
+            if (!manipulationPlane.Raycast(
+                    ray,
+                    out float enter))
+            {
+                return false;
+            }
+
+            if (enter < 0f)
+            {
+                return false;
+            }
+
+            Vector3 hitPoint =
+                ray.GetPoint(enter);
+
+            Vector3 radial =
+                hitPoint -
+                activeTarget.position;
+
+            /*
+             * Remove any tiny component along the rotation axis.
+             * This makes the vector mathematically planar.
+             */
+            radial -=
+                worldRotationAxis *
+                Vector3.Dot(
+                    radial,
                     worldRotationAxis);
+
+            float magnitude =
+                radial.magnitude;
+
+            if (magnitude <
+                minimumRotationRadius)
+            {
+                return false;
+            }
+
+            rotationVector =
+                radial / magnitude;
+
+            return true;
         }
 
         // ============================================================
@@ -494,43 +752,71 @@ namespace ProjectSpark.HolographicViewer
         // END
         // ============================================================
 
-        private void EndSession()
-        {
-            sessionActive = false;
+       private void EndSession()
+{
+    sessionActive =
+        false;
 
-            activeTarget = null;
+    activeTarget =
+        null;
 
-            mode =
-                ManipulationMode.None;
+    mode =
+        ManipulationMode.None;
 
-            accumulatedRotation = 0f;
+    accumulatedRotation =
+        0f;
 
-            grabOffset = Vector3.zero;
+    rawAccumulatedRotation =
+        0f;
 
-            worldRotationAxis = Vector3.zero;
+    grabOffset =
+        Vector3.zero;
 
-            LockViewerControls(false);
-        }
+    worldRotationAxis =
+        Vector3.zero;
+
+    previousPointerAngle =
+        0f;
+
+    hasPreviousPointerAngle =
+        false;
+
+    LockViewerControls(false);
+}
 
         // ============================================================
         // RESET
         // ============================================================
 
-        private void ResetRuntimeState()
-        {
-            sessionActive = false;
+       private void ResetRuntimeState()
+{
+    sessionActive =
+        false;
 
-            activeTarget = null;
+    activeTarget =
+        null;
 
-            mode =
-                ManipulationMode.None;
+    mode =
+        ManipulationMode.None;
 
-            accumulatedRotation = 0f;
+    accumulatedRotation =
+        0f;
 
-            grabOffset = Vector3.zero;
+    rawAccumulatedRotation =
+        0f;
 
-            worldRotationAxis = Vector3.zero;
-        }
+    grabOffset =
+        Vector3.zero;
+
+    worldRotationAxis =
+        Vector3.zero;
+
+    previousPointerAngle =
+        0f;
+
+    hasPreviousPointerAngle =
+        false;
+}
 
         // ============================================================
         // VIEWER CONTROL

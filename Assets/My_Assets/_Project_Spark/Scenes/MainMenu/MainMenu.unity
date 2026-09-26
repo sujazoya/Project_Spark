@@ -510,7 +510,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1192298396}
-  m_Father: {fileID: 2058580491}
+  m_Father: {fileID: 2073729351082236227}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4535,7 +4535,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1847960027}
+      - m_Target: {fileID: 4553469856845050820}
         m_TargetAssemblyTypeName: ProjectSpark.Gameplay.SparkToolController, Assembly-CSharp
         m_MethodName: OnInspectButton
         m_Mode: 1
@@ -6684,6 +6684,7 @@ MonoBehaviour:
   runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 1
 --- !u!4 &158067525
 Transform:
@@ -7083,7 +7084,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1847960027}
+      - m_Target: {fileID: 4553469856845050820}
         m_TargetAssemblyTypeName: ProjectSpark.Gameplay.SparkToolController, Assembly-CSharp
         m_MethodName: OnScanButton
         m_Mode: 1
@@ -9223,6 +9224,7 @@ MonoBehaviour:
   runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 1
 --- !u!1 &207659369
 GameObject:
@@ -10545,6 +10547,7 @@ MonoBehaviour:
   runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 1
 --- !u!4 &236976278
 Transform:
@@ -10982,6 +10985,96 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 243319084}
   m_CullTransparentMesh: 1
+--- !u!1 &248048438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 248048439}
+  - component: {fileID: 248048441}
+  - component: {fileID: 248048440}
+  m_Layer: 15
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &248048439
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248048438}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.00000002235174, y: 1, z: -0, w: -0.00000007078051}
+  m_LocalPosition: {x: 0.008400015, y: 0.0017999795, z: -0.3381999}
+  m_LocalScale: {x: 1.5000001, y: 1.5, z: 1.4999998}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2130851336082935432}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!23 &248048440
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248048438}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &248048441
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248048438}
+  m_Mesh: {fileID: -7375960818186813708, guid: 5b63e97ddcac69148a91c7d2b2f8fd15, type: 3}
 --- !u!1 &252769991
 GameObject:
   m_ObjectHideFlags: 0
@@ -11113,6 +11206,7 @@ MonoBehaviour:
   runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!114 &256401732
 MonoBehaviour:
@@ -12553,6 +12647,7 @@ MonoBehaviour:
   runtimePolarity: 2
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!1 &281750559
 GameObject:
@@ -15353,6 +15448,7 @@ MonoBehaviour:
   runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 1
 --- !u!114 &341522547
 MonoBehaviour:
@@ -15792,6 +15888,7 @@ MonoBehaviour:
   runtimePolarity: 2
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!1 &352747639
 GameObject:
@@ -18623,6 +18720,7 @@ MonoBehaviour:
   runtimePolarity: 1
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!1 &417621433
 GameObject:
@@ -29239,17 +29337,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 684767160}
   m_CullTransparentMesh: 1
---- !u!114 &685009624 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7622450500059899551, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-  m_PrefabInstance: {fileID: 2058580489}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1095da52deddf934c90d2653b7b3f56a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicViewerMouseInput
 --- !u!1 &685950740
 GameObject:
   m_ObjectHideFlags: 0
@@ -31016,6 +31103,7 @@ MonoBehaviour:
   runtimePolarity: 1
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!4 &720955222
 Transform:
@@ -33858,17 +33946,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1149205028}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &788849916 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4604471977401048639, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-  m_PrefabInstance: {fileID: 2058580489}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ca15227f3a7824eb4bce6e69f4dc31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Measurement.SparkMeasurementSystem
 --- !u!1 &789680712
 GameObject:
   m_ObjectHideFlags: 0
@@ -35271,7 +35348,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2058580490}
+  m_Father: {fileID: 937297734082975716}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &810545244
 MonoBehaviour:
@@ -35307,8 +35384,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a7dc184cecd6524f96f9895ad1dd0d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.LevelGamePlayManager
-  circuitSystem: {fileID: 2058580492}
-  electricalSolver: {fileID: 2058580493}
+  circuitSystem: {fileID: 7599571614260267257}
+  electricalSolver: {fileID: 2656436584622009373}
   sceneBindings: {fileID: 0}
   levels:
   - {fileID: 11400000, guid: 64a97c3041cca0b4eb8e078632d99a80, type: 2}
@@ -35368,6 +35445,10 @@ MonoBehaviour:
     terminal: {fileID: 1840657403}
   - id: Power_Bnk_Negative
     terminal: {fileID: 953818875}
+  - id: Multi_Meter_Red_Probe
+    terminal: {fileID: 2081683187}
+  - id: Multi_Meter_Black_Probe
+    terminal: {fileID: 1016190038}
   components:
   - id: LED_Bulb
     component: {fileID: 1785396297}
@@ -37500,6 +37581,7 @@ MonoBehaviour:
   runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 1
 --- !u!1 &865239485
 GameObject:
@@ -41307,6 +41389,7 @@ MonoBehaviour:
   runtimePolarity: 2
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!1 &955007282
 GameObject:
@@ -42394,6 +42477,7 @@ MonoBehaviour:
   runtimePolarity: 2
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!1 &971996421
 GameObject:
@@ -43840,6 +43924,7 @@ MonoBehaviour:
   runtimePolarity: 2
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!1 &1007034448
 GameObject:
@@ -43937,7 +44022,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1847960027}
+      - m_Target: {fileID: 4553469856845050820}
         m_TargetAssemblyTypeName: ProjectSpark.Gameplay.SparkToolController, Assembly-CSharp
         m_MethodName: OnMoveButton
         m_Mode: 1
@@ -44374,7 +44459,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1847960027}
+      - m_Target: {fileID: 4553469856845050820}
         m_TargetAssemblyTypeName: ProjectSpark.Gameplay.SparkToolController, Assembly-CSharp
         m_MethodName: OnSelectButton
         m_Mode: 1
@@ -44659,6 +44744,247 @@ MonoBehaviour:
   includeInactiveChildren: 0
   applyThemeColor: 1
   applyThemeFont: 1
+--- !u!1 &1016190036
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1016190037}
+  - component: {fileID: 1016190047}
+  - component: {fileID: 1016190046}
+  - component: {fileID: 1016190045}
+  - component: {fileID: 1016190044}
+  - component: {fileID: 1016190043}
+  - component: {fileID: 1016190042}
+  - component: {fileID: 1016190041}
+  - component: {fileID: 1016190040}
+  - component: {fileID: 1016190039}
+  - component: {fileID: 1016190038}
+  m_Layer: 15
+  m_Name: MultiMeter_Black_Probe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1016190037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016190036}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.00000011920929, y: -0.00000008195639, z: 0.30941385, w: 0.95092756}
+  m_LocalPosition: {x: 0.119902655, y: 0.24267536, z: -0.0810589}
+  m_LocalScale: {x: 0.13645484, y: 3.2294147, z: 1.2841713}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 84979033618921628}
+  m_Father: {fileID: 8908024086659097785}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 181.2}
+--- !u!114 &1016190038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016190036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
+  owner: {fileID: 9120541368492925944}
+  kind: 4
+  polarity: 0
+  runtimePolarityThreshold: 0.05
+  runtimePolarity: 0
+  acceptsInput: 1
+  providesOutput: 1
+  connectionKind: 1
+  maxConnections: 1
+--- !u!114 &1016190039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016190036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e506c49dd3af1d6429a36354d372e84b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTemporaryObject
+  objectId: Multi_Meter_Black_Probe
+  displayName: Multi Meter Black Probe
+  interactionsEnabled: 1
+  operationalState: 0
+  componentFamily: Generic
+  electricalModelId: generic
+  electricalEnabled: 1
+  objectName: Multi Meter Black Probe
+--- !u!114 &1016190040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016190036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 804a50f4d15c0654999707e401f0d320, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.Scanner3DHoverTarget
+  sourceRenderers:
+  - {fileID: 4531969000922453106}
+  hoverMaterial: {fileID: 2100000, guid: 16a417844dbad674dba6dce99040777c, type: 2}
+  hoverInSpeed: 8
+  hoverOutSpeed: 6
+  overlayScale: {x: 0.01, y: 0.01, z: 0.01}
+  overlayRotation: {x: 0, y: 0, z: 0}
+  overlayOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &1016190041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016190036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c5748c0c32df94cafd75ea8f47c2d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentInteraction
+  viewerCamera: {fileID: 1360671976}
+  componentHUD: {fileID: 392563719}
+  measurement: {fileID: 800773873}
+  callout: {fileID: 798520690}
+  sectionController: {fileID: 1994137951}
+  components:
+  - {fileID: 1016190044}
+  componentLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  rayDistance: 100
+  triggerInteraction: 2
+  nonSelectedDim: 0.18
+  blockWorldInteractionOverUI: 0
+--- !u!114 &1016190042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016190036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 281a8a8d3fbbe9d469e655fb55d7eab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicObjectVisualState
+  renderers:
+  - {fileID: 4531969000922453106}
+  internalParts: {fileID: 926615362}
+  wireframeOverlay: {fileID: 0}
+  inspectionHUD: {fileID: 1565662871}
+  sectionController: {fileID: 1994137951}
+  explodedView: {fileID: 908954552}
+  isolationAmount: 0.18
+  componentDimAmount: 0
+--- !u!114 &1016190043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016190036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0202fb59a3705944a88dc703cdaf732a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkSelectable
+  visualState: {fileID: 1016190042}
+--- !u!114 &1016190044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016190036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983e71ade8659f84680075aff6bee52f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentVisual
+  renderers:
+  - {fileID: 4531969000922453106}
+--- !u!114 &1016190045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016190036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 970b69793b650cb43bede2f3a93c4488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentData
+  componentName: Multi Meter Black Probe
+  partNumber: PR-325
+  componentType: Probe
+  description: No description available.
+  specification01: 5W
+  specification02: FAD
+  specification03: DA
+  calloutAnchor: {fileID: 1313628509}
+--- !u!65 &1016190046
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016190036}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6288182, y: 0.07966801, z: 0.1}
+  m_Center: {x: 0.07156852, y: -0.008277772, z: 0.0000000031374738}
+--- !u!114 &1016190047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016190036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74dbc246d821d5c42bdf285c43f2c308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerComponentTarget
+  interactionMaterial: {fileID: 2100000, guid: c1b4ed26655273f458a7d2c8dd916e16, type: 2}
+  diagnosticPanelOffset: {x: 0, y: -0.75, z: 0}
+  interactionWindow: 0.05
+  componentId: MultiMeter_Black_Probe
+  displayName: Multi Meter Black Probe
+  sourceRenderers:
+  - {fileID: 4531969000922453106}
+  scannerMaterial: {fileID: 2100000, guid: f6f8e98454fb95a4abe5cdd03d753a90, type: 2}
+  projectionMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
+  scanStart: 0
+  scanEnd: 1
 --- !u!1 &1020898693
 GameObject:
   m_ObjectHideFlags: 0
@@ -47473,7 +47799,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1847960027}
+      - m_Target: {fileID: 4553469856845050820}
         m_TargetAssemblyTypeName: ProjectSpark.Gameplay.SparkToolController, Assembly-CSharp
         m_MethodName: OnWireButton
         m_Mode: 1
@@ -48587,6 +48913,7 @@ MonoBehaviour:
   runtimePolarity: 1
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!1 &1093371128
 GameObject:
@@ -52130,7 +52457,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 685009624}
+      - m_Target: {fileID: 7622450500975383702}
         m_TargetAssemblyTypeName: ProjectSpark.HolographicViewer.HolographicViewerMouseInput,
           Assembly-CSharp
         m_MethodName: ToggleControlScreenSpace
@@ -52398,7 +52725,7 @@ MonoBehaviour:
   ejectOnAutomaticRelease: 0
   positiveTerminal: {fileID: 1180420775}
   negativeTerminal: {fileID: 352382053}
-  circuitSystem: {fileID: 2058580492}
+  circuitSystem: {fileID: 7599571614260267257}
   automaticCatch: 1
   searchInterval: 0.1
   chooseClosestPlug: 1
@@ -52514,6 +52841,7 @@ MonoBehaviour:
   runtimePolarity: 1
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!1 &1181752073
 GameObject:
@@ -54472,6 +54800,118 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1231783239}
   m_CullTransparentMesh: 1
+--- !u!1 &1233305273
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1233305274}
+  - component: {fileID: 1233305277}
+  - component: {fileID: 1233305276}
+  - component: {fileID: 1233305275}
+  m_Layer: 15
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1233305274
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233305273}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.005, y: 0.002, z: 0.005}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 84979033618921628}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1233305275
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233305273}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0000011, y: 1.0000006, z: 1.0000007}
+  m_Center: {x: 0.0000076293945, y: -0.0000011920929, z: 0}
+--- !u!23 &1233305276
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233305273}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1233305277
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233305273}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1234889643
 GameObject:
   m_ObjectHideFlags: 0
@@ -54603,7 +55043,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1236172862}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -58265,6 +58705,7 @@ MonoBehaviour:
   runtimePolarity: 1
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!1 &1312583435
 GameObject:
@@ -58835,6 +59276,7 @@ MonoBehaviour:
   runtimePolarity: 1
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!1 &1322451923
 GameObject:
@@ -59772,7 +60214,7 @@ MonoBehaviour:
   ejectOnAutomaticRelease: 0
   positiveTerminal: {fileID: 1354611147}
   negativeTerminal: {fileID: 1004922599}
-  circuitSystem: {fileID: 2058580492}
+  circuitSystem: {fileID: 7599571614260267257}
   automaticCatch: 1
   searchInterval: 0.1
   chooseClosestPlug: 1
@@ -59888,6 +60330,7 @@ MonoBehaviour:
   runtimePolarity: 1
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!1 &1355948516
 GameObject:
@@ -66423,7 +66866,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1501588489}
   - component: {fileID: 1501588491}
-  - component: {fileID: 1501588490}
   m_Layer: 15
   m_Name: RedSocket
   m_TagString: Untagged
@@ -66440,24 +66882,12 @@ Transform:
   m_GameObject: {fileID: 1501588488}
   serializedVersion: 2
   m_LocalRotation: {x: 0.009748384, y: -0.7070396, z: -0.70703965, w: 0.009748429}
-  m_LocalPosition: {x: -0.0013017434, y: 0.00031365157, z: -0.037847433}
+  m_LocalPosition: {x: 0.009, y: -0.0037, z: -0.2952}
   m_LocalScale: {x: 0.4986152, y: 0.49861544, z: 0.4986153}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2130851336082935432}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1501588490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1501588488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eb6ffc4d2276b44faba0771d1a37e10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AAAUI.CircuitTerminal
 --- !u!114 &1501588491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66477,6 +66907,7 @@ MonoBehaviour:
   runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 1
 --- !u!1 &1502691301
 GameObject:
@@ -66623,7 +67054,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1847960027}
+      - m_Target: {fileID: 4553469856845050820}
         m_TargetAssemblyTypeName: ProjectSpark.Gameplay.SparkToolController, Assembly-CSharp
         m_MethodName: OnRotateButton
         m_Mode: 1
@@ -69686,8 +70117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicObjectVisualState
   renderers:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 4687627976887364825}
   internalParts: {fileID: 926615362}
   wireframeOverlay: {fileID: 0}
   inspectionHUD: {fileID: 1565662871}
@@ -69734,9 +70164,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 970b69793b650cb43bede2f3a93c4488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentData
-  componentName: Switch
-  partNumber: F25fa
-  componentType: LED
+  componentName: Chargern CableOutput
+  partNumber: I-256-3
+  componentType: JACK
   description: No description available.
   specification01: 5W
   specification02: FAD
@@ -69776,7 +70206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerFaultComponentTarget
   sourceRenderers:
-  - {fileID: 0}
+  - {fileID: 4687627976887364825}
   faultMaterial: {fileID: 2100000, guid: 277eb5cb3f04069408e896e05361d722, type: 2}
 --- !u!114 &1559108190
 MonoBehaviour:
@@ -69793,8 +70223,8 @@ MonoBehaviour:
   interactionMaterial: {fileID: 2100000, guid: c1b4ed26655273f458a7d2c8dd916e16, type: 2}
   diagnosticPanelOffset: {x: 0, y: -0.75, z: 0}
   interactionWindow: 0.05
-  componentId: Sich_01
-  displayName: New Swich
+  componentId: ChargerCable_Output
+  displayName: Charger Cable Output
   sourceRenderers:
   - {fileID: 4687627976887364825}
   scannerMaterial: {fileID: 2100000, guid: f6f8e98454fb95a4abe5cdd03d753a90, type: 2}
@@ -69813,7 +70243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e506c49dd3af1d6429a36354d372e84b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTemporaryObject
-  objectId: f1cfbd6836394a829c8d3cd5c5737174
+  objectId: ChargerCable_Output
   displayName: ChargerCable_Output
   interactionsEnabled: 1
   operationalState: 0
@@ -69845,7 +70275,7 @@ MonoBehaviour:
   positiveTerminal: {fileID: 1319605433}
   negativeTerminal: {fileID: 971662670}
   linkedPlug: {fileID: 1655945921}
-  circuitSystem: {fileID: 2058580492}
+  circuitSystem: {fileID: 7599571614260267257}
   internalLinkEnabled: 1
   connectorTip: {fileID: 7981798412030711427}
   plugBody: {fileID: 1559108180}
@@ -70492,7 +70922,7 @@ RectTransform:
   - {fileID: 81832068}
   - {fileID: 729699625}
   - {fileID: 300563496}
-  m_Father: {fileID: 2058580491}
+  m_Father: {fileID: 2073729351082236227}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -72244,6 +72674,7 @@ MonoBehaviour:
   runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!114 &1598658546
 MonoBehaviour:
@@ -72264,6 +72695,7 @@ MonoBehaviour:
   runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!1 &1603777516
 GameObject:
@@ -73891,7 +74323,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655945910}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 804a50f4d15c0654999707e401f0d320, type: 3}
   m_Name: 
@@ -73911,7 +74343,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655945910}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03c5748c0c32df94cafd75ea8f47c2d6, type: 3}
   m_Name: 
@@ -73937,14 +74369,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655945910}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 281a8a8d3fbbe9d469e655fb55d7eab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicObjectVisualState
   renderers:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 6467636616308258241}
   internalParts: {fileID: 926615362}
   wireframeOverlay: {fileID: 0}
   inspectionHUD: {fileID: 1565662871}
@@ -73959,7 +74390,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655945910}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0202fb59a3705944a88dc703cdaf732a, type: 3}
   m_Name: 
@@ -73972,13 +74403,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655945910}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 983e71ade8659f84680075aff6bee52f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentVisual
   renderers:
-  - {fileID: 0}
+  - {fileID: 6467636616308258241}
 --- !u!114 &1655945917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73986,7 +74417,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655945910}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 970b69793b650cb43bede2f3a93c4488, type: 3}
   m_Name: 
@@ -74027,7 +74458,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655945910}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74dbc246d821d5c42bdf285c43f2c308, type: 3}
   m_Name: 
@@ -74035,10 +74466,10 @@ MonoBehaviour:
   interactionMaterial: {fileID: 2100000, guid: c1b4ed26655273f458a7d2c8dd916e16, type: 2}
   diagnosticPanelOffset: {x: 0, y: -0.75, z: 0}
   interactionWindow: 0.05
-  componentId: Sich_01
-  displayName: New Swich
+  componentId: ChargerCable_Output
+  displayName: Charger Cable Output
   sourceRenderers:
-  - {fileID: 0}
+  - {fileID: 6467636616308258241}
   scannerMaterial: {fileID: 2100000, guid: f6f8e98454fb95a4abe5cdd03d753a90, type: 2}
   projectionMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
   scanStart: 0
@@ -74055,7 +74486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e506c49dd3af1d6429a36354d372e84b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTemporaryObject
-  objectId: 6bf68ac90f75422f80377dea46ddf82f
+  objectId: ChargerCable_Input
   displayName: ChargerCable_Input
   interactionsEnabled: 1
   operationalState: 0
@@ -74087,7 +74518,7 @@ MonoBehaviour:
   positiveTerminal: {fileID: 1092580444}
   negativeTerminal: {fileID: 278324389}
   linkedPlug: {fileID: 1559108193}
-  circuitSystem: {fileID: 2058580492}
+  circuitSystem: {fileID: 7599571614260267257}
   internalLinkEnabled: 1
   connectorTip: {fileID: 4712993335106492607}
   plugBody: {fileID: 1655945911}
@@ -77021,7 +77452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AAAUI.VFX.SignalWireBuilder
   breadboard: {fileID: 1728192471}
   pathManager: {fileID: 1728712525}
-  circuit: {fileID: 2058580492}
+  circuit: {fileID: 7599571614260267257}
   targetCamera: {fileID: 1360671976}
   breadboardLayer:
     serializedVersion: 2
@@ -80277,7 +80708,7 @@ RectTransform:
   - {fileID: 1058916462}
   - {fileID: 438348532}
   - {fileID: 1388264930}
-  m_Father: {fileID: 2058580491}
+  m_Father: {fileID: 2073729351082236227}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -81633,6 +82064,7 @@ MonoBehaviour:
   runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!114 &1823709210
 MonoBehaviour:
@@ -82315,6 +82747,7 @@ MonoBehaviour:
   runtimePolarity: 1
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!1 &1846115725
 GameObject:
@@ -82492,18 +82925,8 @@ MonoBehaviour:
   runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 1
---- !u!114 &1847960027 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4553469857806533069, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-  m_PrefabInstance: {fileID: 2058580489}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17431587fd6a80844a7f296a8e99c471, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkToolController
 --- !u!1 &1848598774
 GameObject:
   m_ObjectHideFlags: 0
@@ -83564,6 +83987,7 @@ MonoBehaviour:
   runtimePolarity: 2
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 2
 --- !u!1 &1876601994
 GameObject:
@@ -87478,7 +87902,7 @@ RectTransform:
   - {fileID: 874803690}
   - {fileID: 1965874763}
   - {fileID: 519856514}
-  m_Father: {fileID: 2058580491}
+  m_Father: {fileID: 2073729351082236227}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -88713,7 +89137,7 @@ GameObject:
   - component: {fileID: 1978417466}
   - component: {fileID: 1978417468}
   m_Layer: 16
-  m_Name: Panel
+  m_Name: 'HUD-Panel '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90591,6 +91015,65 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2018893512}
   m_CullTransparentMesh: 1
+--- !u!1 &2021302032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2021302033}
+  - component: {fileID: 2021302034}
+  m_Layer: 0
+  m_Name: SparkRotationGizmo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2021302033
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2021302032}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 937297734082975716}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2021302034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2021302032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b205f853544884bb36b6d00586b371, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.SparkRotationGizmo
+  viewerCamera: {fileID: 1360671976}
+  screenRadius: 90
+  hitTolerancePixels: 14
+  minimumPointerRadius: 20
+  ringSegments: 64
+  lineWidth: 0.005
+  hoverLineWidth: 0.018
+  activeLineWidth: 0.024
+  xMaterial: {fileID: -876546973899608171, guid: 2f6b742b280f3f7489d8632121826b43, type: 3}
+  yMaterial: {fileID: 2100000, guid: 503e5a47ab9420546b92806d507f834f, type: 2}
+  zMaterial: {fileID: 2100000, guid: b42f6fe8696524841873a2367190fe7f, type: 2}
+  viewMaterial: {fileID: 3874082420512243977, guid: 6880b12373445064b9d235632a963da9, type: 3}
+  hoverMaterial: {fileID: 6948402135835100061, guid: 6880b12373445064b9d235632a963da9, type: 3}
+  activeMaterial: {fileID: -1970380641078066753, guid: 6880b12373445064b9d235632a963da9, type: 3}
+  hideViewRing: 0
 --- !u!1 &2024377327
 GameObject:
   m_ObjectHideFlags: 0
@@ -91662,6 +92145,7 @@ MonoBehaviour:
   runtimePolarity: 0
   acceptsInput: 1
   providesOutput: 1
+  connectionKind: 0
   maxConnections: 1
 --- !u!1 &2053965376
 GameObject:
@@ -91963,293 +92447,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056784149}
   m_CullTransparentMesh: 1
---- !u!1001 &2058580489
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 70566661977080442, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: m_Layer
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 454966468529773467, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: pathManager
-      value: 
-      objectReference: {fileID: 1728712525}
-    - target: {fileID: 792432597572693290, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: pathManager
-      value: 
-      objectReference: {fileID: 1728712525}
-    - target: {fileID: 937297734245295597, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.09634
-      objectReference: {fileID: 0}
-    - target: {fileID: 937297734245295597, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 937297734245295597, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.3017
-      objectReference: {fileID: 0}
-    - target: {fileID: 937297734245295597, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 937297734245295597, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 937297734245295597, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 937297734245295597, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 937297734245295597, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 937297734245295597, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 937297734245295597, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1534807035392816188, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: diagnosticPanelController
-      value: 
-      objectReference: {fileID: 8947567}
-    - target: {fileID: 1825217717108488353, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: stateController
-      value: 
-      objectReference: {fileID: 1977305967}
-    - target: {fileID: 1825217717108488353, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: diagnosticPanelController
-      value: 
-      objectReference: {fileID: 8947567}
-    - target: {fileID: 1982028457998318057, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: pathManager
-      value: 
-      objectReference: {fileID: 1728712525}
-    - target: {fileID: 2287274923246883366, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 1394103155}
-    - target: {fileID: 2361880671213822484, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: rotationTarget
-      value: 
-      objectReference: {fileID: 1360671977}
-    - target: {fileID: 3174491034911398348, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: pathManager
-      value: 
-      objectReference: {fileID: 1728712525}
-    - target: {fileID: 3248088493151568290, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: pathManager
-      value: 
-      objectReference: {fileID: 1728712525}
-    - target: {fileID: 3610774478457562545, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: stateController
-      value: 
-      objectReference: {fileID: 1977305967}
-    - target: {fileID: 3610774478457562545, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: diagnosticPanelController
-      value: 
-      objectReference: {fileID: 8947567}
-    - target: {fileID: 4234134214847940062, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: pathManager
-      value: 
-      objectReference: {fileID: 1728712525}
-    - target: {fileID: 4288245584018694317, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: pathManager
-      value: 
-      objectReference: {fileID: 1728712525}
-    - target: {fileID: 4406269301399345658, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: pathManager
-      value: 
-      objectReference: {fileID: 1728712525}
-    - target: {fileID: 4418706827277380679, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: transition
-      value: 
-      objectReference: {fileID: 1977305966}
-    - target: {fileID: 4426256930842884576, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 683573572495363779}
-    - target: {fileID: 4575378835452359822, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: pathManager
-      value: 
-      objectReference: {fileID: 1728712525}
-    - target: {fileID: 4863825884935726193, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: viewerCamera
-      value: 
-      objectReference: {fileID: 1360671976}
-    - target: {fileID: 5255713814159581939, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: eventSystem
-      value: 
-      objectReference: {fileID: 1078139805}
-    - target: {fileID: 5255713814159581939, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: interactionCamera
-      value: 
-      objectReference: {fileID: 1360671976}
-    - target: {fileID: 5569959829893611481, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: pathManager
-      value: 
-      objectReference: {fileID: 1728712525}
-    - target: {fileID: 6070175582238920712, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: wireBuilder
-      value: 
-      objectReference: {fileID: 1728712522}
-    - target: {fileID: 6188549737976156537, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: pathManager
-      value: 
-      objectReference: {fileID: 1728712525}
-    - target: {fileID: 6931351917565198539, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: targetRoot
-      value: 
-      objectReference: {fileID: 1306271456}
-    - target: {fileID: 6984560584442049805, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: targetRoot
-      value: 
-      objectReference: {fileID: 774635196}
-    - target: {fileID: 6984560584442049805, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: 'targetRenderers.Array.data[0]'
-      value: 
-      objectReference: {fileID: 324766117}
-    - target: {fileID: 6984560584442049805, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: 'targetRenderers.Array.data[1]'
-      value: 
-      objectReference: {fileID: 900366661}
-    - target: {fileID: 6984560584442049805, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: 'targetRenderers.Array.data[2]'
-      value: 
-      objectReference: {fileID: 2140875166}
-    - target: {fileID: 6984560584442049805, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: 'targetRenderers.Array.data[3]'
-      value: 
-      objectReference: {fileID: 1257531109}
-    - target: {fileID: 6984560584442049805, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: 'targetRenderers.Array.data[4]'
-      value: 
-      objectReference: {fileID: 1195747281}
-    - target: {fileID: 6984560584442049805, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: 'targetRenderers.Array.data[5]'
-      value: 
-      objectReference: {fileID: 1234889644}
-    - target: {fileID: 6984560584442049805, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: 'targetRenderers.Array.data[6]'
-      value: 
-      objectReference: {fileID: 2105267361}
-    - target: {fileID: 7517681799007620958, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: targetRoot
-      value: 
-      objectReference: {fileID: 1306271456}
-    - target: {fileID: 7622450500059899551, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: viewerCamera
-      value: 
-      objectReference: {fileID: 1360671981}
-    - target: {fileID: 7721820348017770639, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: 'targets.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1910408499}
-    - target: {fileID: 7721820348017770639, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: 'targets.Array.data[1]'
-      value: 
-      objectReference: {fileID: 6461748367603683297}
-    - target: {fileID: 7721820348017770639, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: 'targets.Array.data[2]'
-      value: 
-      objectReference: {fileID: 3605488465237950913}
-    - target: {fileID: 7721820348017770639, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: 'targets.Array.data[3]'
-      value: 
-      objectReference: {fileID: 1785396282}
-    - target: {fileID: 7721820348017770639, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: 'targets.Array.data[4]'
-      value: 
-      objectReference: {fileID: 683573572495363779}
-    - target: {fileID: 7770884626676400237, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: targetCamera
-      value: 
-      objectReference: {fileID: 1360671976}
-    - target: {fileID: 7910962974615999022, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: pathManager
-      value: 
-      objectReference: {fileID: 1728712525}
-    - target: {fileID: 7917041470860676364, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: pathManager
-      value: 
-      objectReference: {fileID: 1728712525}
-    - target: {fileID: 8106888548995229480, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: selectionCamera
-      value: 
-      objectReference: {fileID: 1360671976}
-    - target: {fileID: 9007125043785948396, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      propertyPath: m_Name
-      value: _SYSTEMS
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 937297734245295597, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 810545242}
-    - targetCorrespondingSourceObject: {fileID: 2073729352519756618, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8947566}
-    - targetCorrespondingSourceObject: {fileID: 2073729352519756618, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2113153757}
-    - targetCorrespondingSourceObject: {fileID: 2073729352519756618, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1565662869}
-    - targetCorrespondingSourceObject: {fileID: 2073729352519756618, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1958522944}
-    - targetCorrespondingSourceObject: {fileID: 2073729352519756618, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1794726304}
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
---- !u!4 &2058580490 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 937297734245295597, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-  m_PrefabInstance: {fileID: 2058580489}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2058580491 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2073729352519756618, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-  m_PrefabInstance: {fileID: 2058580489}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2058580492 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7599571612556557040, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-  m_PrefabInstance: {fileID: 2058580489}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06bef1431eadcf34986dd7ec78e19606, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Circuit.SparkCircuitSystem
---- !u!114 &2058580493 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2656436583905648148, guid: 735c520b877e4e9448d71b1be75b79af, type: 3}
-  m_PrefabInstance: {fileID: 2058580489}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99828b01ee6518545a8983584be3d03f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Electrical.SparkElectricalSolver
 --- !u!1 &2063577220
 GameObject:
   m_ObjectHideFlags: 0
@@ -92644,6 +92841,247 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2078223805}
   m_CullTransparentMesh: 1
+--- !u!1 &2081683185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2081683186}
+  - component: {fileID: 2081683196}
+  - component: {fileID: 2081683195}
+  - component: {fileID: 2081683194}
+  - component: {fileID: 2081683193}
+  - component: {fileID: 2081683192}
+  - component: {fileID: 2081683191}
+  - component: {fileID: 2081683190}
+  - component: {fileID: 2081683189}
+  - component: {fileID: 2081683188}
+  - component: {fileID: 2081683187}
+  m_Layer: 15
+  m_Name: MultiMeter_RedProbe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2081683186
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081683185}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.1452, y: 0.1489, z: -0.0894}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8295350476132676865}
+  m_Father: {fileID: 2130851336082935432}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2081683187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081683185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
+  owner: {fileID: 9120541368492925944}
+  kind: 4
+  polarity: 0
+  runtimePolarityThreshold: 0.05
+  runtimePolarity: 0
+  acceptsInput: 1
+  providesOutput: 1
+  connectionKind: 1
+  maxConnections: 1
+--- !u!114 &2081683188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081683185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e506c49dd3af1d6429a36354d372e84b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTemporaryObject
+  objectId: Multi_Meter_Red_Probe
+  displayName: Multi Meter Red Probe
+  interactionsEnabled: 1
+  operationalState: 0
+  componentFamily: Generic
+  electricalModelId: generic
+  electricalEnabled: 1
+  objectName: Multi Meter Red Probe
+--- !u!114 &2081683189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081683185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 804a50f4d15c0654999707e401f0d320, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.Scanner3DHoverTarget
+  sourceRenderers:
+  - {fileID: 3535993517800554070}
+  hoverMaterial: {fileID: 2100000, guid: 16a417844dbad674dba6dce99040777c, type: 2}
+  hoverInSpeed: 8
+  hoverOutSpeed: 6
+  overlayScale: {x: 0.01, y: 0.01, z: 0.01}
+  overlayRotation: {x: 0, y: 0, z: 0}
+  overlayOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &2081683190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081683185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c5748c0c32df94cafd75ea8f47c2d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentInteraction
+  viewerCamera: {fileID: 1360671976}
+  componentHUD: {fileID: 392563719}
+  measurement: {fileID: 800773873}
+  callout: {fileID: 798520690}
+  sectionController: {fileID: 1994137951}
+  components:
+  - {fileID: 2081683193}
+  componentLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  rayDistance: 100
+  triggerInteraction: 2
+  nonSelectedDim: 0.18
+  blockWorldInteractionOverUI: 0
+--- !u!114 &2081683191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081683185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 281a8a8d3fbbe9d469e655fb55d7eab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicObjectVisualState
+  renderers:
+  - {fileID: 3535993517800554070}
+  internalParts: {fileID: 926615362}
+  wireframeOverlay: {fileID: 0}
+  inspectionHUD: {fileID: 1565662871}
+  sectionController: {fileID: 1994137951}
+  explodedView: {fileID: 908954552}
+  isolationAmount: 0.18
+  componentDimAmount: 0
+--- !u!114 &2081683192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081683185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0202fb59a3705944a88dc703cdaf732a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkSelectable
+  visualState: {fileID: 2081683191}
+--- !u!114 &2081683193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081683185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983e71ade8659f84680075aff6bee52f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentVisual
+  renderers:
+  - {fileID: 3535993517800554070}
+--- !u!114 &2081683194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081683185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 970b69793b650cb43bede2f3a93c4488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentData
+  componentName: MultiMeter_RedProbe
+  partNumber: PR-325
+  componentType: Probe
+  description: No description available.
+  specification01: 5W
+  specification02: FAD
+  specification03: DA
+  calloutAnchor: {fileID: 1313628509}
+--- !u!65 &2081683195
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081683185}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.05016326, y: 0.052095182, z: 0.11485681}
+  m_Center: {x: -0.15404737, y: -0.1439485, z: 0.53242576}
+--- !u!114 &2081683196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081683185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74dbc246d821d5c42bdf285c43f2c308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerComponentTarget
+  interactionMaterial: {fileID: 2100000, guid: c1b4ed26655273f458a7d2c8dd916e16, type: 2}
+  diagnosticPanelOffset: {x: 0, y: -0.75, z: 0}
+  interactionWindow: 0.05
+  componentId: MultiMeter_RedProbe
+  displayName: Multi Meter RedProbe
+  sourceRenderers:
+  - {fileID: 0}
+  scannerMaterial: {fileID: 2100000, guid: f6f8e98454fb95a4abe5cdd03d753a90, type: 2}
+  projectionMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
+  scanStart: 0
+  scanEnd: 1
 --- !u!1 &2081869559
 GameObject:
   m_ObjectHideFlags: 0
@@ -93722,7 +94160,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1675702536}
-  m_Father: {fileID: 2058580491}
+  m_Father: {fileID: 2073729351082236227}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -94768,6 +95206,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb57c19904ff8e348984920ef53e6297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.Flashlight.ScrewController
+--- !u!23 &21396498384282262
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9059228700063230164}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e7e7819721065154c9f0cf376e07580c, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &70566661346979955
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2073729351082236227}
+  m_Layer: 16
+  m_Name: ProjectSparkUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!23 &72324989361597218
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -94825,13 +95328,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8047503623128231085}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000059604645, y: -0, z: -0.9541155, w: 0.299439}
-  m_LocalPosition: {x: 0.11990278, y: 0.24267523, z: -0.081058875}
-  m_LocalScale: {x: 4.5221376, y: 64.61465, z: 4.2805715}
+  m_LocalRotation: {x: -0.0000000824763, y: -0.00000013712675, z: -0.9999452, w: -0.010471758}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 32.81397, y: 20.016571, z: 3.3333335}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1143262945}
-  m_Father: {fileID: 8908024086659097785}
+  - {fileID: 1233305274}
+  m_Father: {fileID: 1016190037}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &116902902774681648
 GameObject:
@@ -94899,6 +95403,55 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!23 &166841210226729481
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020661910526709568}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 76e129b881e2e5c4385940999b520e8b, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!82 &175182836676510955
 AudioSource:
   m_ObjectHideFlags: 0
@@ -95125,6 +95678,80 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841079069598946890}
   m_Mesh: {fileID: -1859380050590252399, guid: 2d412869b3960b7439828450e5cab8cb, type: 3}
+--- !u!23 &256084468452381540
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3557664537321744011}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e8e7351cab0e2aa44b72028014eea5a3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &263563746562905780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4729336513357075769}
+  - component: {fileID: 5645858010107376001}
+  m_Layer: 0
+  m_Name: SparkSelectTool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!33 &301932921535893828
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9059228700063230164}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &322363049860164496
 GameObject:
   m_ObjectHideFlags: 0
@@ -95166,6 +95793,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 908214644362338235}
   m_Mesh: {fileID: -4144662113359878708, guid: 2d412869b3960b7439828450e5cab8cb, type: 3}
+--- !u!1 &384555915954572859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6759691369887324077}
+  - component: {fileID: 4829387610460669318}
+  - component: {fileID: 1300919065126521110}
+  m_Layer: 0
+  m_Name: ScannerScanBounds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &394688526101488864
 GameObject:
   m_ObjectHideFlags: 0
@@ -95248,6 +95893,56 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!2083052967 &434470022871284761
+VisualEffect:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3923850011661471624}
+  m_Enabled: 1
+  m_Asset: {fileID: 8926484042661614526, guid: 406bed6a799412b4baec3cd8f75c3dc0, type: 3}
+  m_InitialEventName: OnPlay
+  m_InitialEventNameOverriden: 0
+  m_StartSeed: 0
+  m_ResetSeedOnPlay: 1
+  m_AllowInstancing: 0
+  m_ResourceVersion: 1
+  m_PropertySheet:
+    m_Float:
+      m_Array:
+      - m_Value: 0.086
+        m_Name: Reveal Height
+        m_Overridden: 1
+    m_Vector2f:
+      m_Array: []
+    m_Vector3f:
+      m_Array:
+      - m_Value: {x: 1.5813899, y: 0.91517, z: -2.9689}
+        m_Name: _SpawnCenter
+        m_Overridden: 1
+    m_Vector4f:
+      m_Array: []
+    m_Uint:
+      m_Array: []
+    m_Int:
+      m_Array: []
+    m_Matrix4x4f:
+      m_Array: []
+    m_AnimationCurve:
+      m_Array: []
+    m_Gradient:
+      m_Array: []
+    m_NamedObject:
+      m_Array: []
+    m_Bool:
+      m_Array:
+      - m_Value: 1
+        m_Name: Is Reconstructing
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: _IsReconstructing
+        m_Overridden: 1
 --- !u!4 &442372830204399020
 Transform:
   m_ObjectHideFlags: 0
@@ -95284,6 +95979,21 @@ Transform:
   - {fileID: 1341094276}
   m_Father: {fileID: 972504626}
   m_LocalEulerAnglesHint: {x: 0.218, y: -90.349, z: 1.877}
+--- !u!114 &454966468973242770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9059228700063230164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34cc3a3728c045948bc7dd80888aae7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerCircuitVoltageController
+  pathManager: {fileID: 1728712525}
+  voltageMaterial: {fileID: 2100000, guid: e7e7819721065154c9f0cf376e07580c, type: 2}
+  maximumVoltage: 24
 --- !u!23 &475184075799515189
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -95421,6 +96131,29 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &528852084273140053
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4818729383681973149}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &530399405554553649
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6365616085344058709}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.04737, y: -2.8494306, z: -0.82299995}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7996286762320911705}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &543450653575454670
 Transform:
   m_ObjectHideFlags: 0
@@ -95662,6 +96395,21 @@ MonoBehaviour:
   projectionMaterial: {fileID: 2100000, guid: 81cd54320970cfd428be7f25a1ead2ec, type: 2}
   scanStart: 0
   scanEnd: 1
+--- !u!4 &722423491258946036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843417503513282911}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 937297734082975716}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &727656699357895238
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -95688,6 +96436,55 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 7700969718919470520, guid: f715a67799143be41bf49b32cc239989, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!23 &778747300342245890
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6365616085344058709}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 972e416dea14d914cb03a1a032a1aa94, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95760,6 +96557,27 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &792432597668060963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3136501641306613675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c34c272eef85e84abd387fd1ebad03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerReconstructionController_2
+  pathManager: {fileID: 1728712525}
+  reconstructionMaterial: {fileID: 2100000, guid: b41aafb9fabe66a42b69c303694a4dfa, type: 2}
+  scanBounds: {fileID: 6759691369887324077}
+  localMin: {x: -1, y: 0, z: -1}
+  localMax: {x: 1, y: 1, z: 1}
+  progressProperty: _ReconstructionProgress
+  startProperty: _ScanStart
+  endProperty: _ScanEnd
+  reconstructionDirection: {x: 0, y: 1, z: 0}
 --- !u!1 &799925678609742976
 GameObject:
   m_ObjectHideFlags: 0
@@ -95778,6 +96596,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &808840024398083446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7412987923161943163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 085878ecef04e2c4c8b455b3a012c047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerTopologyTest
+  controller: {fileID: 3248088495207887787}
+  speed: 0.35
+  stepAmount: 0.1
 --- !u!1 &832149484311857729
 GameObject:
   m_ObjectHideFlags: 0
@@ -95796,6 +96629,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &889005314492589965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2349700528330217873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd85ea7708367d54e94971ba8c7285f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerStateTransitionTest
+  controller: {fileID: 4418706827651669582}
 --- !u!1 &908214644362338235
 GameObject:
   m_ObjectHideFlags: 0
@@ -95902,6 +96748,30 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1031943486193961876}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &937297734082975716
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9007125042283261669}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.09634, y: -0, z: -2.3017}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4046404821637808868}
+  - {fileID: 4396177795611698016}
+  - {fileID: 1382669276621028444}
+  - {fileID: 2073729351082236227}
+  - {fileID: 722423491258946036}
+  - {fileID: 8533784517580951747}
+  - {fileID: 7996286762320911705}
+  - {fileID: 810545242}
+  - {fileID: 2021302033}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &938999873764271294
 GameObject:
@@ -96121,6 +96991,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2981616350722393565}
   m_Mesh: {fileID: -6244475420879031931, guid: 2d412869b3960b7439828450e5cab8cb, type: 3}
+--- !u!114 &1094530672176281767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020661910526709568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ba863cdda04ff43a7332d68f54cb95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerScanPlaneController
+  targetRenderer: {fileID: 166841210226729481}
+  scanPlane: {fileID: 3373482558619114735}
+  scanPositionProperty: _ScanPosition
+  scanIntensityProperty: _ScanIntensity
+  scanAlphaProperty: _ScanAlpha
+  scanSpeed: 0.2
+  inactiveIntensity: 0
+  activeIntensity: 5
+  inactiveAlpha: 0
+  activeAlpha: 0.35
 --- !u!1 &1099677531425989644
 GameObject:
   m_ObjectHideFlags: 0
@@ -96139,6 +97031,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &1134586251981788773
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3153097668198243296}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8647013224996052474}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1147440629671755072
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2622055850220366567}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8647013224996052474}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1225486612849691473
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -96222,6 +97144,14 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938999873764271294}
   m_Mesh: {fileID: -3532991680945996908, guid: 2d412869b3960b7439828450e5cab8cb, type: 3}
+--- !u!33 &1300919065126521110
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384555915954572859}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1305037034024147711
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -96304,6 +97234,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450653575454670}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1382669276621028444
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030969121803027880}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8647013224996052474}
+  m_Father: {fileID: 937297734082975716}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1393238124744836838
 GameObject:
   m_ObjectHideFlags: 0
@@ -96316,7 +97262,7 @@ GameObject:
   - component: {fileID: 7778283798225982440}
   - component: {fileID: 2142442009032533295}
   - component: {fileID: 7778283798225982441}
-  - component: {fileID: 7778283798225982442}
+  - component: {fileID: 7778283798225982443}
   m_Layer: 15
   m_Name: cable rojo
   m_TagString: Untagged
@@ -96399,6 +97345,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3018983739470505866}
   m_Mesh: {fileID: -4162253513501663206, guid: 2d412869b3960b7439828450e5cab8cb, type: 3}
+--- !u!1 &1443963675108001729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5948494467952870447}
+  - component: {fileID: 2287274924684435503}
+  - component: {fileID: 3395212982839258802}
+  m_Layer: 0
+  m_Name: beam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &1444640598035293680
 Transform:
   m_ObjectHideFlags: 0
@@ -96516,6 +97480,24 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1534807033892079157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3153097668198243296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e63c8b2892baf6e448d7460d50dca3d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Tools.SparkScanTool
+  toolType: 7
+  processController: {fileID: 3610774477009393592}
+  componentScanController: {fileID: 7721820347569861254}
+  retainCompletedScan: 1
+  cancelWhenTargetChanges: 1
+  diagnosticPanelController: {fileID: 8947567}
 --- !u!33 &1549319884919225859
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -96630,6 +97612,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8629638650387351201}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1797974592092581423
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3136501641306613675}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: b41aafb9fabe66a42b69c303694a4dfa, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1819572433104873923
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -96638,6 +97669,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8979191715145963431}
   m_Mesh: {fileID: -9010193167645078742, guid: 2d412869b3960b7439828450e5cab8cb, type: 3}
+--- !u!114 &1825217715878709928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2349700528330217873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7840ea4b8eab61241ac8dd64761fd631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerIntegratedController
+  settings: {fileID: 11400000, guid: 442208252056266489c6fbb4c0727f6e, type: 2}
+  processController: {fileID: 3610774477009393592}
+  stateController: {fileID: 1977305967}
+  topologyController: {fileID: 3248088495207887787}
+  flowController: {fileID: 4288245582048334500}
+  pulseController: {fileID: 4234134216568584151}
+  voltageController: {fileID: 454966468973242770}
+  faultController: {fileID: 7910962974258520103}
+  faultEnergyController: {fileID: 3174491033396128709}
+  diagnosticPanelController: {fileID: 8947567}
 --- !u!1 &1841079069598946890
 GameObject:
   m_ObjectHideFlags: 0
@@ -96656,6 +97709,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1843417503513282911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 722423491258946036}
+  - component: {fileID: 4604471978043747382}
+  m_Layer: 0
+  m_Name: SparkMeasurementSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!33 &1853755812849854104
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -96664,6 +97734,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2692543648675165063}
   m_Mesh: {fileID: -8644807934424879617, guid: 24e85c64938346e44b758cd890e2de89, type: 3}
+--- !u!114 &1859835069104866642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2622055850220366567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f441d113c17f4943b17ef997b4273aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Tools.SparkMeasureTool
+  toolType: 5
+  measurementSystem: {fileID: 4604471978043747382}
+  measurementType: 0
+  measureOnBegin: 0
+  measureContinuously: 0
+  continuousMeasurementInterval: 0.1
 --- !u!23 &1869475635572477628
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -96732,6 +97820,60 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1982028459228466144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3852364473238434887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bd22185d62b6cf4a9de910dad679df6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerCircuitFlowTest
+  pathManager: {fileID: 1728712525}
+  controller: {fileID: 4288245582048334500}
+  intensity: 1.5
+  direction: 1
+--- !u!1 &1986116617550439848
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8533784517580951747}
+  - component: {fileID: 7622450500975383702}
+  - component: {fileID: 2361880669765554205}
+  - component: {fileID: 4863825883481429624}
+  - component: {fileID: 8106888547815494945}
+  m_Layer: 0
+  m_Name: HolographicObjectController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &2030969121803027880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1382669276621028444}
+  - component: {fileID: 4553469856845050820}
+  - component: {fileID: 5255713814538293498}
+  m_Layer: 0
+  m_Name: ProjectSparkGameplay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!23 &2062732090443611106
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -96781,6 +97923,26 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!4 &2073729351082236227
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70566661346979955}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8947566}
+  - {fileID: 2113153757}
+  - {fileID: 1565662869}
+  - {fileID: 1958522944}
+  - {fileID: 1794726304}
+  m_Father: {fileID: 937297734082975716}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2096068851554615724
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -96848,11 +98010,12 @@ Transform:
   m_GameObject: {fileID: 1393238124744836838}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7038926, y: -0.02723071, z: -0.10528734, w: 0.70193183}
-  m_LocalPosition: {x: 0.157, y: 0.123, z: 0.608}
+  m_LocalPosition: {x: 0.218, y: 0.76, z: 0.502}
   m_LocalScale: {x: 2.005554, y: 2.0055535, z: 2.0055532}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8295350476132676865}
+  - {fileID: 248048439}
+  - {fileID: 2081683186}
   - {fileID: 1501588489}
   m_Father: {fileID: 1124700766}
   m_LocalEulerAnglesHint: {x: -83.67, y: 86.054, z: -96.824}
@@ -97031,6 +98194,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!33 &2287274924684435503
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443963675108001729}
+  m_Mesh: {fileID: 1394103155}
 --- !u!4 &2307508147451373690
 Transform:
   m_ObjectHideFlags: 0
@@ -97061,6 +98232,49 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8629638650387351201}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2349700528330217873
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7996286762320911705}
+  - component: {fileID: 3610774477009393592}
+  - component: {fileID: 4788364191227144420}
+  - component: {fileID: 1825217715878709928}
+  - component: {fileID: 4418706827651669582}
+  - component: {fileID: 889005314492589965}
+  - component: {fileID: 4701511646225331603}
+  - component: {fileID: 8775787625476638808}
+  m_Layer: 0
+  m_Name: ScannerSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2361880669765554205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986116617550439848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c8df06b157d9224c9fe488a7cee93af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicObjectController
+  rotationTarget: {fileID: 1360671977}
+  rotationSensitivity: 0.25
+  invertX: 0
+  invertY: 1
+  useWorldSpace: 0
+  clampVerticalRotation: 0
+  minVerticalAngle: -80
+  maxVerticalAngle: 80
 --- !u!4 &2367571222184519148
 Transform:
   m_ObjectHideFlags: 0
@@ -97106,6 +98320,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8986990020013888444}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &2456482140788178415
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7412987923161943163}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -1.241, y: -2.7190006, z: -2.206}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7996286762320911705}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2498905584931216982
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -97113,7 +98342,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9194556775779943867}
-  m_Mesh: {fileID: 8691780276856062721, guid: 3f8b0667747d2c14e97a8bddfa937a3e, type: 3}
+  m_Mesh: {fileID: -8573807889240850971, guid: 5b63e97ddcac69148a91c7d2b2f8fd15, type: 3}
+--- !u!114 &2507224784837923468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5527760294488810555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70a4855ad101978448700365b641df80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Tools.SparkInspectTool
+  toolType: 1
 --- !u!23 &2508838339538353445
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -97193,6 +98435,7 @@ GameObject:
   - component: {fileID: 7550389213561696885}
   - component: {fileID: 204279665578977883}
   - component: {fileID: 8908024086659097786}
+  - component: {fileID: 8908024086659097787}
   m_Layer: 15
   m_Name: cable-negro
   m_TagString: Untagged
@@ -97208,6 +98451,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2901013105494210634}
   m_Mesh: {fileID: 4242650767543294251, guid: 6880b12373445064b9d235632a963da9, type: 3}
+--- !u!1 &2622055850220366567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1147440629671755072}
+  - component: {fileID: 1859835069104866642}
+  m_Layer: 0
+  m_Name: SparkMeasureTool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &2627110412466677486
 Transform:
   m_ObjectHideFlags: 0
@@ -97223,6 +98483,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450653575454670}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2633942234915063510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6074137719800769106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee6f03f47e3d704f948f6b5667ff3be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerComponentScanTest
+  controller: {fileID: 7721820347569861254}
+  speed: 0.25
+--- !u!1 &2644453375441821636
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3449084965855031908}
+  - component: {fileID: 6070175580990120449}
+  m_Layer: 0
+  m_Name: SparkWireTool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2656436584622009373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4891633323684188594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99828b01ee6518545a8983584be3d03f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Electrical.SparkElectricalSolver
+  circuit: {fileID: 7599571614260267257}
+  powerSupplies: []
+  electricalComponents: []
+  maxIterations: 12
+  convergenceTolerance: 0.000001
+  minimumResistance: 0.000001
+  floatingNodeLeakResistance: 1e+9
+  solveOnDirty: 1
+  simulateCapacitors: 1
+  editorTimeStep: 0.016666668
 --- !u!33 &2673009527387826441
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -97484,6 +98797,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6461748367603683296}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2891454963284815366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4411322433654888449}
+  - component: {fileID: 4692190139802271379}
+  - component: {fileID: 7180152050167388000}
+  m_Layer: 0
+  m_Name: ScannerHead
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!1 &2901013105494210634
 GameObject:
   m_ObjectHideFlags: 0
@@ -97823,6 +99154,27 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &3136501641306613675
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4192283119771254886}
+  - component: {fileID: 5642638368381767444}
+  - component: {fileID: 1797974592092581423}
+  - component: {fileID: 5580052767406822338}
+  - component: {fileID: 792432597668060963}
+  - component: {fileID: 8169060936409974131}
+  m_Layer: 0
+  m_Name: ScannerReconstruction_wire
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &3139182487357275990
 GameObject:
   m_ObjectHideFlags: 0
@@ -97859,6 +99211,37 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &3153097668198243296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1134586251981788773}
+  - component: {fileID: 1534807033892079157}
+  m_Layer: 0
+  m_Name: SparkScanTool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &3174491033396128709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6365616085344058709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dbe978206031214ca83f32a79ef04f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerFaultEnergyController
+  pathManager: {fileID: 1728712525}
+  energyMaterial: {fileID: 2100000, guid: 972e416dea14d914cb03a1a032a1aa94, type: 2}
 --- !u!23 &3189911119093999686
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -97908,6 +99291,36 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &3204383517459363626
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3852364473238434887}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!64 &3205952382224197456
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3557664537321744011}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &3209031341734977591
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -97933,6 +99346,36 @@ Transform:
   - {fileID: 3311470376799631744}
   m_Father: {fileID: 1031943486193961876}
   m_LocalEulerAnglesHint: {x: 0, y: -151.75, z: 90}
+--- !u!114 &3248088495207887787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7412987923161943163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02af5fccb73a222439bc6ae8e4752bb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerTopologyController
+  pathManager: {fileID: 1728712525}
+  topologyMaterial: {fileID: 2100000, guid: 2e5ac52098b2dd743b9b34105507fc79, type: 2}
+--- !u!114 &3273997397900525645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7615675948734217797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ec7c15b339b55469b94fd0dfc11c24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Tools.SparkRotateTool
+  objectController: {fileID: 2361880669765554205}
+  rotationGizmo: {fileID: 2021302034}
+  selectionController: {fileID: 8106888547815494945}
+  viewerMouseInput: {fileID: 7622450500975383702}
 --- !u!4 &3311470376799631744
 Transform:
   m_ObjectHideFlags: 0
@@ -97963,6 +99406,85 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1031943486193961876}
   m_LocalEulerAnglesHint: {x: 0, y: -4, z: 17.211}
+--- !u!4 &3364273072190318083
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3923850011661471624}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7996286762320911705}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!4 &3373482558619114735
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020661910526709568}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.059, y: 0.076999426, z: 2.1749997}
+  m_LocalScale: {x: 2, y: 5, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4411322433654888449}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!23 &3395212982839258802
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443963675108001729}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 7a1a2d98d2659c947a91904d64019f54, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &3435898995500723242
 GameObject:
   m_ObjectHideFlags: 0
@@ -97981,6 +99503,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &3449084965855031908
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2644453375441821636}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8647013224996052474}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &3450255686550281165
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -98030,6 +99567,21 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!4 &3466623323122949450
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5527760294488810555}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8647013224996052474}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &3476471574301306257
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -98153,6 +99705,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 521347269818069515, guid: 6880b12373445064b9d235632a963da9, type: 3}
   - {fileID: 2100000, guid: 4c9a855f5765cb8438dd192dad35fc4c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -98192,6 +99745,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 442372830204399020}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3557664537321744011
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5483098511004254296}
+  - component: {fileID: 4156301470260658640}
+  - component: {fileID: 256084468452381540}
+  - component: {fileID: 3205952382224197456}
+  - component: {fileID: 4234134216568584151}
+  - component: {fileID: 5569959829200670160}
+  m_Layer: 0
+  m_Name: SG_ScannerSignalPulse
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &3576125120553903191
 GameObject:
   m_ObjectHideFlags: 0
@@ -98435,6 +100009,33 @@ MonoBehaviour:
   nominalVoltage: 5
   internalResistance: 0.1
   outputEnabled: 1
+--- !u!114 &3610774477009393592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2349700528330217873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68380e31b8369334cab8ca9da3008f54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerProcessController
+  stateController: {fileID: 1977305967}
+  circuitTraceController: {fileID: 4406269303103335411}
+  componentScanController: {fileID: 7721820347569861254}
+  topologyController: {fileID: 3248088495207887787}
+  flowController: {fileID: 4288245582048334500}
+  pulseController: {fileID: 4234134216568584151}
+  voltageController: {fileID: 454966468973242770}
+  faultController: {fileID: 7910962974258520103}
+  faultEnergyController: {fileID: 3174491033396128709}
+  diagnosticPanelController: {fileID: 8947567}
+  initialState: 0
+  scanDuration: 1.5
+  useUnscaledTime: 1
+  resetOnStart: 1
+  resetOnCancel: 1
 --- !u!1 &3615809224137634471
 GameObject:
   m_ObjectHideFlags: 0
@@ -98794,6 +100395,63 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &3852364473238434887
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6442076089210784119}
+  - component: {fileID: 3204383517459363626}
+  - component: {fileID: 8584611189142132540}
+  - component: {fileID: 4288245582048334500}
+  - component: {fileID: 1982028459228466144}
+  m_Layer: 0
+  m_Name: ScannerCircuitFlowController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &3891671941337872374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3923850011661471624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10447e84f59334e48997d2231ad5e53e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerReconstructionVFXTest
+  controller: {fileID: 6931351916580516546}
+  testSpeed: 0.4
+  holdVToScan: 1
+--- !u!64 &3905364719946263247
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020661910526709568}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &3914507599509746148
 GameObject:
   m_ObjectHideFlags: 0
@@ -98807,6 +100465,27 @@ GameObject:
   - component: {fileID: 727656699357895238}
   m_Layer: 0
   m_Name: Drawer.L4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &3923850011661471624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3364273072190318083}
+  - component: {fileID: 434470022871284761}
+  - component: {fileID: 9152770475843911917}
+  - component: {fileID: 6931351916580516546}
+  - component: {fileID: 3891671941337872374}
+  - component: {fileID: 7517681800797732183}
+  m_Layer: 0
+  m_Name: VFX_ScannerReconstruction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98884,6 +100563,42 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3141101259993656728}
   m_Mesh: {fileID: 4882115322962003972, guid: 6880b12373445064b9d235632a963da9, type: 3}
+--- !u!1 &4020661910526709568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3373482558619114735}
+  - component: {fileID: 6145326241914298932}
+  - component: {fileID: 166841210226729481}
+  - component: {fileID: 3905364719946263247}
+  - component: {fileID: 1094530672176281767}
+  - component: {fileID: 4598389810033546806}
+  m_Layer: 0
+  m_Name: ScannerScanPlane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4046404821637808868
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8484762956410762580}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.09634, y: 0, z: 2.3017}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 937297734082975716}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &4061563899814106518
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -98910,6 +100625,55 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -6837550888175529956, guid: 0f933c9cdc6b10c4f8d35e4cc229e643, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!23 &4077946659264724898
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4818729383681973149}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 277eb5cb3f04069408e896e05361d722, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98963,6 +100727,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1031943486193961876}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!33 &4156301470260658640
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3557664537321744011}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &4177027888779723293
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -99012,6 +100784,21 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!4 &4192283119771254886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3136501641306613675}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.16657, y: -2.1203704, z: -1.591}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7996286762320911705}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4227896103852241407
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -99020,6 +100807,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8880428750546020175}
   m_Mesh: {fileID: -8580782055329082400, guid: f715a67799143be41bf49b32cc239989, type: 3}
+--- !u!114 &4234134216568584151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3557664537321744011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f21c755403e905943875ae235773b7e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerSignalPulseController
+  pathManager: {fileID: 1728712525}
+  pulseMaterial: {fileID: 2100000, guid: e8e7351cab0e2aa44b72028014eea5a3, type: 2}
+  pulseIntensity: 4
 --- !u!4 &4235592069586483597
 Transform:
   m_ObjectHideFlags: 0
@@ -99061,6 +100863,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549641020067748407}
   m_Mesh: {fileID: -4788212979978551306, guid: 3816c181899049d4f94a818a11ca071e, type: 3}
+--- !u!114 &4276661305148831853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181722950769232418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63fbd1b5a6ee87747b6672b5ab7160fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerCircuitTraceTest
+  controller: {fileID: 4406269303103335411}
+  speed: 0.4
 --- !u!4 &4284821223493948639
 Transform:
   m_ObjectHideFlags: 0
@@ -99076,6 +100892,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1444640598035293680}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4288245582048334500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3852364473238434887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0577bc82c46ee645ade564929f29206, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerCircuitFlowController
+  pathManager: {fileID: 1728712525}
+  flowMaterial: {fileID: 2100000, guid: 99007a339eda83e4abb8e85caf364664, type: 2}
+  defaultIntensity: 1.5
 --- !u!23 &4355168971119875228
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -99239,6 +101070,70 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!4 &4396177795611698016
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4891633323684188594}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 937297734082975716}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &4397479283254292267
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7412987923161943163}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 2e5ac52098b2dd743b9b34105507fc79, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &4405922882799464829
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -99247,6 +101142,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3706413366734588014}
   m_Mesh: {fileID: -5467945903636337218, guid: f715a67799143be41bf49b32cc239989, type: 3}
+--- !u!114 &4406269303103335411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181722950769232418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda45bbfea527c04b993dcfeca29bd31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerCircuitTraceController
+  pathManager: {fileID: 1728712525}
+  scannerMaterial: {fileID: 2100000, guid: 6d79dd8736e34bc4f82ff5dc99ed69f3, type: 2}
+  progressProperty: _ScanProgress
+--- !u!4 &4411322433654888449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2891454963284815366}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.707, z: -2.998}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5948494467952870447}
+  - {fileID: 3373482558619114735}
+  m_Father: {fileID: 7996286762320911705}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4413166452557739081
 GameObject:
   m_ObjectHideFlags: 0
@@ -99265,6 +101192,56 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &4414582736788681634
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4818729383681973149}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &4418706827651669582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2349700528330217873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ebf3a5069e2a824184f3b93fcf3d711, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerStateTransitionController
+  transition: {fileID: 1977305966}
+  currentState: 1
+--- !u!114 &4426256931475377129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6074137719800769106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf5a35b3da5538f4eada143ff737f498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerComponentProjectionTest
+  target: {fileID: 683573572495363779}
+  projectionSpeed: 0.5
 --- !u!33 &4436536270689973580
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -99450,6 +101427,50 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4553469856845050820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030969121803027880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17431587fd6a80844a7f296a8e99c471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkToolController
+  tools:
+  - {fileID: 5645858010107376001}
+  - {fileID: 2507224784837923468}
+  - {fileID: 7713491027844633192}
+  - {fileID: 0}
+  - {fileID: 6070175580990120449}
+  - {fileID: 1859835069104866642}
+  - {fileID: 1534807033892079157}
+  selectToolAction: {fileID: -516493222748511326, guid: 158c581db7f507249a400fb31938c475, type: 3}
+  inspectToolAction: {fileID: 8870158459668536410, guid: 158c581db7f507249a400fb31938c475, type: 3}
+  moveToolAction: {fileID: -6501127871377469912, guid: 158c581db7f507249a400fb31938c475, type: 3}
+  rotateToolAction: {fileID: 128650958468623379, guid: 158c581db7f507249a400fb31938c475, type: 3}
+  wireToolAction: {fileID: 2502300031956416446, guid: 158c581db7f507249a400fb31938c475, type: 3}
+  measureToolAction: {fileID: -6403648036158513628, guid: 158c581db7f507249a400fb31938c475, type: 3}
+  scanToolAction: {fileID: 7589493639158638066, guid: 158c581db7f507249a400fb31938c475, type: 3}
+--- !u!114 &4575378835809830535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6365616085344058709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1188a4edf96d7094f916d5a44abf87fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerFaultEnergyTest
+  pathManager: {fileID: 1728712525}
+  controller: {fileID: 3174491033396128709}
+  faultPosition: 0.5
+  severity: 1
+  energy: 1
 --- !u!4 &4590392544646528150
 Transform:
   m_ObjectHideFlags: 0
@@ -99514,6 +101535,34 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4598389810033546806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020661910526709568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d8cbd7c5b268242b2c36cefc486487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerScanPlaneTest
+  controller: {fileID: 1094530672176281767}
+--- !u!114 &4604471978043747382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843417503513282911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ca15227f3a7824eb4bce6e69f4dc31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Measurement.SparkMeasurementSystem
+  circuit: {fileID: 7599571614260267257}
+  solver: {fileID: 2656436584622009373}
+  continuityResistanceThreshold: 10
 --- !u!33 &4655399380722781372
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -99602,6 +101651,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8986990020013888444}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4692190139802271379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2891454963284815366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572115109c206a6478e6d7aa71177aea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerBeamController
+  beamTransform: {fileID: 5948494467952870447}
+  beamRenderer: {fileID: 3395212982839258802}
+  intensityProperty: _BeamIntensity
+  alphaProperty: _BeamAlpha
+  idleIntensity: 0
+  activeIntensity: 2.5
+  idleAlpha: 0
+  activeAlpha: 0.16
 --- !u!33 &4692395915609696644
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -99610,6 +101679,34 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8224663808910122827}
   m_Mesh: {fileID: 8861180440997155986, guid: 6880b12373445064b9d235632a963da9, type: 3}
+--- !u!4 &4694377703506368747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4818729383681973149}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.04737, y: -2.8494306, z: -0.82299995}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7996286762320911705}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4701511646225331603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2349700528330217873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eada52a57fff9e84897d420c6faf3b63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerComponentScanController
+  targets: []
 --- !u!33 &4707550233933501733
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -99651,6 +101748,105 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4729336513357075769
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263563746562905780}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8647013224996052474}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4788364191227144420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2349700528330217873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91e07bc5f6e56cc46b4eaa3b3a874b95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerProcessTest
+  controller: {fileID: 3610774477009393592}
+  scanSpeed: 0.35
+--- !u!1 &4818729383681973149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4694377703506368747}
+  - component: {fileID: 528852084273140053}
+  - component: {fileID: 4077946659264724898}
+  - component: {fileID: 4414582736788681634}
+  - component: {fileID: 7910962974258520103}
+  - component: {fileID: 7917041468804218629}
+  m_Layer: 0
+  m_Name: ScannerFaultLocalization
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &4829387610460669318
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384555915954572859}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: c0ed60fc51df4b449a8ab6776d3cd25a, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!4 &4851755069157028949
 Transform:
   m_ObjectHideFlags: 0
@@ -99666,6 +101862,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1444640598035293680}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4863825883481429624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986116617550439848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5a79db80c33d0b4da37f48b83435835, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicComponentManipulator
+  viewerCamera: {fileID: 1360671976}
+  viewerMouseInput: {fileID: 7622450500975383702}
+  allowMove: 1
+  preserveGrabOffset: 1
+  allowRotate: 1
+  rotationSensitivity: 0.25
+  rotationSnap: 1
+  minimumRotationRadius: 0.001
 --- !u!1 &4872142937456340418
 GameObject:
   m_ObjectHideFlags: 0
@@ -99684,6 +101900,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4873042638832046598
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7334769371215857317}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8647013224996052474}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4876933053570917906
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -99692,6 +101923,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2193423313196655967}
   m_Mesh: {fileID: -462981019419857548, guid: 6880b12373445064b9d235632a963da9, type: 3}
+--- !u!4 &4882871432456410656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5491364892675952221}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7996286762320911705}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4891633323684188594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4396177795611698016}
+  - component: {fileID: 7599571614260267257}
+  - component: {fileID: 2656436584622009373}
+  - component: {fileID: 8789345186533463517}
+  m_Layer: 0
+  m_Name: SparkElectronicSystems
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!33 &4901310912720201892
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -100110,6 +102375,30 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5255713814538293498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030969121803027880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed37913a49ac6484c920f1c15f028fb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkGameplayController
+  interactionCamera: {fileID: 1360671976}
+  toolController: {fileID: 4553469856845050820}
+  eventSystem: {fileID: 1078139805}
+  interactionLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  interactionDistance: 8
+  triggerInteraction: 2
+  primaryAction: {fileID: 705958972529420901, guid: 158c581db7f507249a400fb31938c475, type: 3}
+  cancelAction: {fileID: -5531788956630331011, guid: 158c581db7f507249a400fb31938c475, type: 3}
+  pointerAction: {fileID: 4308883759067194425, guid: 158c581db7f507249a400fb31938c475, type: 3}
+  blockWorldInputOverUI: 1
 --- !u!33 &5276210281680114509
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -100302,6 +102591,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8629638650387351201}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &5483098511004254296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3557664537321744011}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7996286762320911705}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5491364892675952221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4882871432456410656}
+  - component: {fileID: 6984560586414589700}
+  - component: {fileID: 6614180527731534544}
+  m_Layer: 0
+  m_Name: ScannerReconstruction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &5527760294488810555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3466623323122949450}
+  - component: {fileID: 2507224784837923468}
+  m_Layer: 0
+  m_Name: SparkInspectTool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &5551259252498265456
 Transform:
   m_ObjectHideFlags: 0
@@ -100317,6 +102656,43 @@ Transform:
   m_Children: []
   m_Father: {fileID: 442372830204399020}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5569959829200670160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3557664537321744011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86d99ed1a9e391488dee96e43c77eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerSignalPulseTest
+  pathManager: {fileID: 1728712525}
+  controller: {fileID: 4234134216568584151}
+  speed: 0.35
+  direction: 1
+--- !u!135 &5580052767406822338
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3136501641306613675}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &5580555590280468678
 Transform:
   m_ObjectHideFlags: 0
@@ -100358,6 +102734,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!33 &5642638368381767444
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3136501641306613675}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &5645858010107376001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263563746562905780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 026e6c7e67be7ff4f9796585a9583306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Tools.SparkSelectTool
+  toolType: 0
+  selectionController: {fileID: 8106888547815494945}
 --- !u!4 &5650338408793394711
 Transform:
   m_ObjectHideFlags: 0
@@ -100446,6 +102844,21 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!4 &5754758272833877587
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7615675948734217797}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8647013224996052474}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5817760567187198126
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -100562,6 +102975,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8583529958641421810}
   m_Mesh: {fileID: 6751428012843480485, guid: 6880b12373445064b9d235632a963da9, type: 3}
+--- !u!4 &5948494467952870447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443963675108001729}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 1.34}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4411322433654888449}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5973863599960626522
 GameObject:
   m_ObjectHideFlags: 0
@@ -100713,6 +103141,49 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6070175580990120449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2644453375441821636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab1b449f8cc98ae4b94dad9cfc626d6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Wire.SparkWireTool
+  toolType: 4
+  wireBuilder: {fileID: 1728712522}
+  defaultPolarity: 1
+  requireTerminalAtStart: 0
+--- !u!1 &6074137719800769106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8580379767641473991}
+  - component: {fileID: 7721820347569861254}
+  - component: {fileID: 2633942234915063510}
+  - component: {fileID: 4426256931475377129}
+  m_Layer: 0
+  m_Name: ScannerComponentScanController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!33 &6145326241914298932
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020661910526709568}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &6152353846813549179
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -100790,6 +103261,39 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6181722950769232418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9023270938030139375}
+  - component: {fileID: 4406269303103335411}
+  - component: {fileID: 4276661305148831853}
+  m_Layer: 0
+  m_Name: ScannerCircuitTraceController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &6188549737798738800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9059228700063230164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9100a481d1288454586636b90fed4eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerCircuitVoltageTest
+  pathManager: {fileID: 1728712525}
+  controller: {fileID: 454966468973242770}
+  testVoltage: 12
 --- !u!23 &6246012508403013650
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -100971,6 +103475,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1031943486193961876}
   m_LocalEulerAnglesHint: {x: -89.98, y: -90, z: 0}
+--- !u!1 &6365616085344058709
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 530399405554553649}
+  - component: {fileID: 7394119176356338142}
+  - component: {fileID: 778747300342245890}
+  - component: {fileID: 6598132121067851467}
+  - component: {fileID: 3174491033396128709}
+  - component: {fileID: 4575378835809830535}
+  m_Layer: 0
+  m_Name: ScannerFaultEnergy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &6437093617744987117
 GameObject:
   m_ObjectHideFlags: 0
@@ -100989,6 +103514,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &6442076089210784119
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3852364473238434887}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7996286762320911705}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6442177198039267062
 GameObject:
   m_ObjectHideFlags: 0
@@ -101393,6 +103933,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6598132121067851467
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6365616085344058709}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &6601351316522900224
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -101451,6 +104013,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5188659119898648457}
   m_Mesh: {fileID: -8080688944747741034, guid: 6880b12373445064b9d235632a963da9, type: 3}
+--- !u!114 &6614180527731534544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5491364892675952221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f42c8ce50b5247468fd390566f85157, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerReconstructionTest
+  controller: {fileID: 6984560586414589700}
 --- !u!4 &6634711922576199166
 Transform:
   m_ObjectHideFlags: 0
@@ -101564,6 +104139,21 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8629638650387351201}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &6759691369887324077
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384555915954572859}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0365, y: -2.5945, z: -0.8384}
+  m_LocalScale: {x: 5.041269, y: 1.8586087, z: 0.1084382}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7996286762320911705}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6783821483512504898
 GameObject:
@@ -101903,6 +104493,31 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6931351916580516546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3923850011661471624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d282e0b7ba2bcab41ae70fd4414b5fb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerReconstructionVFXController
+  targetRoot: {fileID: 1306271456}
+  visualEffect: {fileID: 434470022871284761}
+  pointGenerator: {fileID: 7517681800797732183}
+  pointCount: 30000
+  buildOnStart: 0
+  particleRate: 12000
+  positionsProperty: _ReconstructionPositions
+  pointCountProperty: _PointCount
+  reconstructingProperty: _IsReconstructing
+  particleRateProperty: _ParticleRate
+  revealHeightProperty: _RevealHeight
+  boundsMinProperty: _BoundsMin
+  boundsMaxProperty: _BoundsMax
 --- !u!1 &6972403430254057501
 GameObject:
   m_ObjectHideFlags: 0
@@ -101921,6 +104536,32 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6984560586414589700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5491364892675952221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0e42f7bcc0195742b3b454e7b0713f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerReconstructionController
+  targetRoot: {fileID: 774635196}
+  targetRenderers:
+  - {fileID: 324766117}
+  - {fileID: 900366661}
+  - {fileID: 2140875166}
+  - {fileID: 1257531109}
+  - {fileID: 1195747281}
+  - {fileID: 1234889644}
+  - {fileID: 2105267361}
+  revealHeightProperty: _RevealHeight
+  boundsMinYProperty: _BoundsMinY
+  boundsMaxYProperty: _BoundsMaxY
+  reconstructionSpeed: 0.6
+  loop: 0
 --- !u!1 &6998468919054721696
 GameObject:
   m_ObjectHideFlags: 0
@@ -102034,6 +104675,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8986990020013888444}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7180152050167388000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2891454963284815366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be78b9a36726d8444ac26450eb3deb26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerBeamTest
+  beam: {fileID: 4692190139802271379}
 --- !u!23 &7216915587458583887
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -102234,6 +104888,23 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7334769371215857317
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4873042638832046598}
+  - component: {fileID: 7713491027844633192}
+  m_Layer: 0
+  m_Name: SparkMoveTool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!23 &7376239090984361490
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -102340,6 +105011,50 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7388324441901612418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8647013224996052474}
+  m_Layer: 0
+  m_Name: Tools
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!33 &7394119176356338142
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6365616085344058709}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &7412987923161943163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2456482140788178415}
+  - component: {fileID: 7762137047343702886}
+  - component: {fileID: 4397479283254292267}
+  - component: {fileID: 3248088495207887787}
+  - component: {fileID: 808840024398083446}
+  m_Layer: 0
+  m_Name: ScannerTopologyController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &7436067125727556135
 Transform:
   m_ObjectHideFlags: 0
@@ -102363,6 +105078,26 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9135582896269770557}
   m_Mesh: {fileID: -1354780390156576944, guid: f715a67799143be41bf49b32cc239989, type: 3}
+--- !u!114 &7517681800797732183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3923850011661471624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e48b1c59a033154598a95ec218885cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerReconstructionPointGenerator
+  targetRoot: {fileID: 1306271456}
+  pointCount: 30000
+  randomSeed: 12345
+  surfaceOffset: 0.0015
+  includeInactiveObjects: 0
+  includeSkinnedMeshRenderers: 0
+  includeDisabledRenderers: 0
+  outputSpace: {fileID: 0}
 --- !u!4 &7521954595417808486
 Transform:
   m_ObjectHideFlags: 0
@@ -102435,6 +105170,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2560664303636923099}
   m_Mesh: {fileID: 240652194524545741, guid: 3f8b0667747d2c14e97a8bddfa937a3e, type: 3}
+--- !u!114 &7599571614260267257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4891633323684188594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06bef1431eadcf34986dd7ec78e19606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Circuit.SparkCircuitSystem
+  allowParallelConnections: 0
+  automaticallyRebuildTopology: 1
+  logConnectionChanges: 0
+  logRejectedConnections: 0
 --- !u!23 &7614249089931720690
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -102484,6 +105235,46 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7615675948734217797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5754758272833877587}
+  - component: {fileID: 3273997397900525645}
+  m_Layer: 0
+  m_Name: SparkRotateTool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &7622450500975383702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986116617550439848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1095da52deddf934c90d2653b7b3f56a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.HolographicViewer.HolographicViewerMouseInput
+  objectController: {fileID: 2361880669765554205}
+  viewerCamera: {fileID: 1360671981}
+  rotationGizmo: {fileID: 2021302034}
+  manipulator: {fileID: 4863825883481429624}
+  controllScreenSpace: 1
+  rotateWithLeftMouse: 1
+  rotationDeadZone: 0.01
+  panWithMiddleMouse: 1
+  panSensitivity: 0.0025
+  enableWheelZoom: 1
+  respectUI: 1
 --- !u!33 &7627009626925576916
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -102566,6 +105357,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 322363049860164496}
   m_Mesh: {fileID: 6915565578704231487, guid: 2d412869b3960b7439828450e5cab8cb, type: 3}
+--- !u!4 &7664213345230419906
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9059228700063230164}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7996286762320911705}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &7684319053669946102
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -102615,6 +105421,39 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7713491027844633192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7334769371215857317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 457b03201661fd140b82729cd8660ee4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Tools.SparkMoveTool
+  toolType: 2
+  selectionController: {fileID: 8106888547815494945}
+  manipulator: {fileID: 4863825883481429624}
+--- !u!114 &7721820347569861254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6074137719800769106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eada52a57fff9e84897d420c6faf3b63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerComponentScanController
+  targets:
+  - {fileID: 1910408499}
+  - {fileID: 6461748367603683297}
+  - {fileID: 3605488465237950913}
+  - {fileID: 1785396282}
+  - {fileID: 683573572495363779}
 --- !u!1 &7727709649614970255
 GameObject:
   m_ObjectHideFlags: 0
@@ -102633,6 +105472,33 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!33 &7762137047343702886
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7412987923161943163}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &7770884625427346020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8484762956410762580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f362b0fa95c33b47b744363f2497fff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.Scanner3DHoverController
+  targetCamera: {fileID: 1360671976}
+  hoverMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  maxDistance: 100
+  triggerInteraction: 2
+  allowHover: 1
 --- !u!33 &7778283798225982440
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -102640,7 +105506,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1393238124744836838}
-  m_Mesh: {fileID: 6209164307731938744, guid: 3f8b0667747d2c14e97a8bddfa937a3e, type: 3}
+  m_Mesh: {fileID: 8077376627999728891, guid: 5b63e97ddcac69148a91c7d2b2f8fd15, type: 3}
 --- !u!114 &7778283798225982441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102653,34 +105519,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7065c999a1f80a7428b6e4f0590f712f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MultimeterCableMesh
-  startPoint: {fileID: 8295350476132676865}
-  endPoint: {fileID: 84979033618921628}
+  startPoint: {fileID: 1501588489}
+  endPoint: {fileID: 2081683186}
+  quality: 3
   curveSegments: 32
   radialSegments: 10
   cableRadius: 0.012
-  sagAmount: 0.15
+  startRadiusMultiplier: 1
+  endRadiusMultiplier: 1
   curveSmoothness: 0.5
-  updateEveryFrame: 1
---- !u!114 &7778283798225982442
-MonoBehaviour:
+  sagAmount: 0.15
+  sagDirection: {x: 0, y: -1, z: 0}
+  sagPower: 1.5
+  startDirectionMode: 1
+  endDirectionMode: 1
+  customStartDirection: {x: 0, y: 0, z: 1}
+  customEndDirection: {x: 0, y: 0, z: -1}
+  endpointDirectionInfluence: 0.35
+  twistDegrees: 0
+  generateStartCap: 1
+  generateEndCap: 1
+  uvTiling: 1
+  uvRotation: 0
+  updateMode: 1
+  generateOnEnable: 1
+  castShadows: 1
+  receiveShadows: 1
+  cableMaterial: {fileID: 0}
+  drawDebugPath: 0
+  logGenerationWarnings: 0
+--- !u!64 &7778283798225982443
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1393238124744836838}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
-  owner: {fileID: 9120541368492925944}
-  kind: 0
-  polarity: 0
-  runtimePolarityThreshold: 0.001
-  runtimePolarity: 0
-  acceptsInput: 1
-  providesOutput: 1
-  maxConnections: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6209164307731938744, guid: 3f8b0667747d2c14e97a8bddfa937a3e, type: 3}
 --- !u!4 &7842173743754968480
 Transform:
   m_ObjectHideFlags: 0
@@ -102696,6 +105585,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450653575454670}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7910962974258520103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4818729383681973149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c937f32b4f2b04faa127411d75c479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerFaultLocalizationController
+  pathManager: {fileID: 1728712525}
+  faultMaterial: {fileID: 2100000, guid: 277eb5cb3f04069408e896e05361d722, type: 2}
+--- !u!114 &7917041468804218629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4818729383681973149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fb2193fb10d4bf4388ed09d4a2f93a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerFaultLocalizationTest
+  pathManager: {fileID: 1728712525}
+  controller: {fileID: 7910962974258520103}
+  testPosition: 0.5
+  testSeverity: 1
 --- !u!1 &7948988448340434188
 GameObject:
   m_ObjectHideFlags: 0
@@ -102780,6 +105699,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1559108180}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &7996286762320911705
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2349700528330217873}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.09634, y: 0, z: 2.3017}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4192283119771254886}
+  - {fileID: 9023270938030139375}
+  - {fileID: 4411322433654888449}
+  - {fileID: 4882871432456410656}
+  - {fileID: 3364273072190318083}
+  - {fileID: 6759691369887324077}
+  - {fileID: 8580379767641473991}
+  - {fileID: 2456482140788178415}
+  - {fileID: 6442076089210784119}
+  - {fileID: 5483098511004254296}
+  - {fileID: 7664213345230419906}
+  - {fileID: 4694377703506368747}
+  - {fileID: 530399405554553649}
+  m_Father: {fileID: 937297734082975716}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &8022602954050006136
 GameObject:
   m_ObjectHideFlags: 0
@@ -102809,9 +105756,6 @@ GameObject:
   - component: {fileID: 84979033618921628}
   - component: {fileID: 1688638627179617000}
   - component: {fileID: 4531969000922453106}
-  - component: {fileID: 8047503623128231087}
-  - component: {fileID: 8047503623128231086}
-  - component: {fileID: 8047503623128231088}
   m_Layer: 15
   m_Name: black-head
   m_TagString: Untagged
@@ -102819,67 +105763,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8047503623128231086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8047503623128231085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
-  owner: {fileID: 8047503623128231088}
-  kind: 2
-  polarity: 2
-  runtimePolarityThreshold: 0.05
-  runtimePolarity: 2
-  acceptsInput: 1
-  providesOutput: 1
-  maxConnections: 1
---- !u!65 &8047503623128231087
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8047503623128231085}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.005, y: 0.002, z: 0.005}
-  m_Center: {x: -0.000000029803605, y: 0.00004301101, z: 8.2038765e-11}
---- !u!114 &8047503623128231088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8047503623128231085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e506c49dd3af1d6429a36354d372e84b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTemporaryObject
-  objectId: Multi_Meter_Black_Probe
-  displayName: Multi Meter Black Probe
-  interactionsEnabled: 1
-  operationalState: 0
-  componentFamily: Generic
-  electricalModelId: generic
-  electricalEnabled: 1
-  objectName: Multi Meter Black Probe
 --- !u!33 &8057150960323453076
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -102896,6 +105779,25 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5987745079102508696}
   m_Mesh: {fileID: -1748942926858864660, guid: 0e253f79766bb134c9e305125ab7571f, type: 3}
+--- !u!114 &8106888547815494945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986116617550439848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2609518fde05f24db1dd3a882c5f9bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkSelectionController
+  selectionCamera: {fileID: 1360671976}
+  selectableLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  selectionDistance: 1000
+  clearSelectionOnEmptyClick: 1
+  keepCurrentSelectionOnRepeatClick: 1
 --- !u!4 &8155043593874747699
 Transform:
   m_ObjectHideFlags: 0
@@ -102941,6 +105843,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450653575454670}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8169060936409974131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3136501641306613675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d72e5300632e71840b0ce0c46c5e7902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scanner.ScannerReconstructionTest_2
+  controller: {fileID: 792432597668060963}
+  speed: 0.25
 --- !u!1 &8181901598760996453
 GameObject:
   m_ObjectHideFlags: 0
@@ -103045,14 +105961,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9194556775779943867}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00000009173526, y: -0.0000001490116, z: -0.9999298, w: 0.011848132}
-  m_LocalPosition: {x: 0.14090118, y: 0.19940571, z: -0.09167308}
-  m_LocalScale: {x: 4.5221386, y: 64.61466, z: 4.280572}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.1508, y: -0.1483, z: 0.5305}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1236172863}
-  m_Father: {fileID: 2130851336082935432}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 2081683186}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &8339813417708866141
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -103161,6 +106077,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ef53367ec484547be4f3725cb81505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VFX.SparkSimpleGlow
+--- !u!1 &8484762956410762580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4046404821637808868}
+  - component: {fileID: 7770884625427346020}
+  m_Layer: 0
+  m_Name: Scanner3DHoverController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &8491955606921869647
 GameObject:
   m_ObjectHideFlags: 0
@@ -103191,6 +106124,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &8533784517580951747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986116617550439848}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 937297734082975716}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &8576541524427959152
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -103240,6 +106188,21 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!4 &8580379767641473991
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6074137719800769106}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7996286762320911705}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8583529958641421810
 GameObject:
   m_ObjectHideFlags: 0
@@ -103274,12 +106237,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MultimeterCableMesh
   startPoint: {fileID: 1655945911}
   endPoint: {fileID: 1559108180}
+  quality: 3
   curveSegments: 50
   radialSegments: 15
   cableRadius: 0.012
-  sagAmount: 0.3
+  startRadiusMultiplier: 1
+  endRadiusMultiplier: 1
   curveSmoothness: 0.777
-  updateEveryFrame: 1
+  sagAmount: 0.3
+  sagDirection: {x: 0, y: -1, z: 0}
+  sagPower: 1.5
+  startDirectionMode: 1
+  endDirectionMode: 1
+  customStartDirection: {x: 0, y: 0, z: 1}
+  customEndDirection: {x: 0, y: 0, z: -1}
+  endpointDirectionInfluence: 0.35
+  twistDegrees: 0
+  generateStartCap: 1
+  generateEndCap: 1
+  uvTiling: 1
+  uvRotation: 0
+  updateMode: 1
+  generateOnEnable: 1
+  castShadows: 1
+  receiveShadows: 1
+  cableMaterial: {fileID: 0}
+  drawDebugPath: 0
+  logGenerationWarnings: 0
 --- !u!64 &8583529958641421812
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -103302,6 +106286,55 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6751428012843480485, guid: 6880b12373445064b9d235632a963da9, type: 3}
+--- !u!23 &8584611189142132540
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3852364473238434887}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 99007a339eda83e4abb8e85caf364664, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &8590568392760125701
 GameObject:
   m_ObjectHideFlags: 0
@@ -103377,6 +106410,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &8647013224996052474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7388324441901612418}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4729336513357075769}
+  - {fileID: 3466623323122949450}
+  - {fileID: 4873042638832046598}
+  - {fileID: 5754758272833877587}
+  - {fileID: 3449084965855031908}
+  - {fileID: 1147440629671755072}
+  - {fileID: 1134586251981788773}
+  m_Father: {fileID: 1382669276621028444}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &8651385196982007652
 Transform:
   m_ObjectHideFlags: 0
@@ -103482,6 +106537,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1031943486193961876}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8775787625476638808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2349700528330217873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4f56cfd42119f14582a5b612f560f66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Scan.SparkScanSystem
+--- !u!114 &8789345186533463517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4891633323684188594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c39333e5e3430ec4f87ce6f19541e06d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Wire.SparkWireSystem
+  circuit: {fileID: 7599571614260267257}
 --- !u!1 &8827001030855646415
 GameObject:
   m_ObjectHideFlags: 0
@@ -103575,12 +106655,12 @@ Transform:
   m_GameObject: {fileID: 2560664303636923099}
   serializedVersion: 2
   m_LocalRotation: {x: -0.70522046, y: -0.029383063, z: -0.06640279, w: 0.70525986}
-  m_LocalPosition: {x: -0.157, y: 0.128, z: 0.624}
+  m_LocalPosition: {x: -3.671, y: 0.472, z: 0.151}
   m_LocalScale: {x: 2.0055532, y: 2.0055532, z: 2.005554}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 341522545}
-  - {fileID: 84979033618921628}
+  - {fileID: 1016190037}
   m_Father: {fileID: 1124700766}
   m_LocalEulerAnglesHint: {x: -87, y: 86.054, z: -93.824}
 --- !u!114 &8908024086659097786
@@ -103596,13 +106676,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MultimeterCableMesh
   startPoint: {fileID: 341522545}
-  endPoint: {fileID: 1143262945}
+  endPoint: {fileID: 1016190037}
+  quality: 3
   curveSegments: 32
   radialSegments: 10
   cableRadius: 0.012
-  sagAmount: 0.15
+  startRadiusMultiplier: 1
+  endRadiusMultiplier: 1
   curveSmoothness: 0.5
-  updateEveryFrame: 1
+  sagAmount: 0.15
+  sagDirection: {x: 0, y: -1, z: 0}
+  sagPower: 1.5
+  startDirectionMode: 1
+  endDirectionMode: 1
+  customStartDirection: {x: 0, y: 0, z: 1}
+  customEndDirection: {x: 0, y: 0, z: -1}
+  endpointDirectionInfluence: 0.35
+  twistDegrees: 0
+  generateStartCap: 1
+  generateEndCap: 1
+  uvTiling: 1
+  uvRotation: 0
+  updateMode: 1
+  generateOnEnable: 1
+  castShadows: 1
+  receiveShadows: 1
+  cableMaterial: {fileID: 0}
+  drawDebugPath: 0
+  logGenerationWarnings: 0
+--- !u!64 &8908024086659097787
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2560664303636923099}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 240652194524545741, guid: 3f8b0667747d2c14e97a8bddfa937a3e, type: 3}
 --- !u!1001 &8947931744239602862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -103877,6 +107000,22 @@ Transform:
   - {fileID: 7642849668937818969}
   m_Father: {fileID: 1031943486193961876}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9007125042283261669
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 937297734082975716}
+  m_Layer: 0
+  m_Name: _SYSTEMS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!33 &9013990222183647337
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -103885,6 +107024,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2274043253306089986}
   m_Mesh: {fileID: 5141245709451455588, guid: 0f933c9cdc6b10c4f8d35e4cc229e643, type: 3}
+--- !u!4 &9023270938030139375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181722950769232418}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.16657, y: -2.1203704, z: -1.591}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7996286762320911705}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &9051381760689743423
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -103893,6 +107047,26 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4717798754183541536}
   m_Mesh: {fileID: -5495902117074765545, guid: e65be2836094e1648a0fda875da93543, type: 3}
+--- !u!1 &9059228700063230164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7664213345230419906}
+  - component: {fileID: 301932921535893828}
+  - component: {fileID: 21396498384282262}
+  - component: {fileID: 454966468973242770}
+  - component: {fileID: 6188549737798738800}
+  m_Layer: 0
+  m_Name: ScannerVoltage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1001 &9069130272220788086
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -104121,10 +107295,10 @@ MonoBehaviour:
   displayName: Mutli Meter
   interactionsEnabled: 1
   operationalState: 1
-  measurementSystem: {fileID: 788849916}
-  redProbeTerminal: {fileID: 7778283798225982442}
-  blackProbeTerminal: {fileID: 8047503623128231086}
-  poweredOn: 0
+  measurementSystem: {fileID: 4604471978043747382}
+  redProbeTerminal: {fileID: 2081683187}
+  blackProbeTerminal: {fileID: 0}
+  poweredOn: 1
   mode: 1
   range: 0
   measurementInterval: 0.05
@@ -104135,7 +107309,7 @@ MonoBehaviour:
   resistanceRange: 100000000
   continuityThreshold: 10
   displayDecimals: 3
-  useScientificNotationForVerySmallValues: 1
+  useScientificNotationForVerySmallValues: 0
   zeroThreshold: 0.000001
 --- !u!65 &9120541368492925945
 BoxCollider:
@@ -104345,6 +107519,53 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!73398921 &9152770475843911917
+VFXRenderer:
+  serializedVersion: 1
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3923850011661471624}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
 --- !u!4 &9191326659353080556
 Transform:
   m_ObjectHideFlags: 0
@@ -104371,9 +107592,6 @@ GameObject:
   - component: {fileID: 8295350476132676865}
   - component: {fileID: 2498905584931216982}
   - component: {fileID: 3535993517800554070}
-  - component: {fileID: 9194556775779943868}
-  - component: {fileID: 9194556775779943869}
-  - component: {fileID: 9194556775779943870}
   m_Layer: 15
   m_Name: red-head
   m_TagString: Untagged
@@ -104381,67 +107599,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &9194556775779943868
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9194556775779943867}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.005, y: 0.002, z: 0.005}
-  m_Center: {x: -0.000000029803605, y: 0.00004301101, z: 8.2038765e-11}
---- !u!114 &9194556775779943869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9194556775779943867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
-  owner: {fileID: 9194556775779943870}
-  kind: 4
-  polarity: 1
-  runtimePolarityThreshold: 0.05
-  runtimePolarity: 1
-  acceptsInput: 1
-  providesOutput: 1
-  maxConnections: 1
---- !u!114 &9194556775779943870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9194556775779943867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e506c49dd3af1d6429a36354d372e84b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTemporaryObject
-  objectId: MultiMeter_Red_Probe
-  displayName: Multi Meter Red Probe
-  interactionsEnabled: 1
-  operationalState: 0
-  componentFamily: Generic
-  electricalModelId: generic
-  electricalEnabled: 1
-  objectName: MultiMeter_Red_Probe
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -104450,6 +107607,6 @@ SceneRoots:
   - {fileID: 774635196}
   - {fileID: 320621852}
   - {fileID: 230188836}
-  - {fileID: 2058580489}
+  - {fileID: 937297734082975716}
   - {fileID: 920815656}
   - {fileID: 645878785}
