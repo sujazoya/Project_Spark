@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ProjectSpark.Circuit;
 using ProjectSpark.Gameplay;
 using UnityEngine;
+using ProjectSpark.Measurement;
 
 namespace ProjectSpark.Electrical
 {
@@ -184,6 +185,7 @@ private readonly List<SparkCircuitConnection> connectionBuffer = new();
 
             if (!converged)
             {
+                
                 // The final state is still useful for UI/diagnostics, but report
                 // failure so callers can distinguish an unconverged network.
                 SolveFailed?.Invoke();
@@ -191,7 +193,7 @@ private readonly List<SparkCircuitConnection> connectionBuffer = new();
             }
 
             CommitTransientState(graph, voltages);
-            SolveCompleted?.Invoke();
+           // SolveCompleted?.Invoke();
         }
 
         private void RefreshComponentCache()
@@ -389,223 +391,363 @@ for (int i = 0; i < terminals.Count; i++)
             return graph;
         }
 
-        private bool SolveResistiveNetwork(NetworkGraph graph, float[] voltages, float timeStep)
-        {
-            int n = graph.NodeCount;
-            if (n == 0) return true;
-            int reference = FindGroundNode(graph);
-            if (reference < 0) reference = 0;
-            int m = n - 1;
-            if (m <= 0)
-            {
-                voltages[0] = 0f;
-                return true;
-            }
-
-            var A = new double[m, m];
-            var b = new double[m];
-
-            // Tiny leakage gives otherwise-floating nodes a stable numerical reference
-            // without materially affecting normal circuit values.
-            double leakG = floatingNodeLeakResistance > 0f
-                ? 1.0 / Math.Max(minimumResistance, floatingNodeLeakResistance)
-                : 0.0;
-            if (leakG > 0.0)
-                for (int i = 0; i < m; i++) A[i, i] += leakG;
-
-            for (int i = 0; i < electricalComponents.Length; i++)
-            {
-                var component = electricalComponents[i];
-                if (component == null || !component.ElectricalEnabled) continue;
-                if (!TryGetTwoTerminals(component, out var ta, out var tb)) continue;
-                if (!graph.TerminalNode.TryGetValue(ta, out int na) || !graph.TerminalNode.TryGetValue(tb, out int nb)) continue;
-
-                int ai = MapNode(na, reference);
-                int bi = MapNode(nb, reference);
-
-                if (component is SparkResistor resistor)
-                {
-                    AddConductance(A, b, ai, bi, 1.0 / Math.Max(resistor.ResistanceOhms, minimumResistance));
-                }
-               else if (component is SparkSwitch sw)
-                {
-                    if (sw.IsConducting)
-                    {
-                        double resistance = Math.Max(
-                            minimumResistance,
-                            sw.ClosedResistance);
-
-                        double conductance = 1.0 / resistance;
-
-                        AddConductance(
-                            A,
-                            b,
-                            ai,
-                            bi,
-                            conductance);
-                    }
-                }
-                else if (component is SparkDiode diode)
-                {
-                    bool on = GetDiodeState(diode, ta, tb, graph, voltages);
-                    if (on)
-                        StampForwardDrop(A, b, ai, bi, diode.ForwardVoltage, diode.OnResistance);
-                }
-               else if (component is SparkLED led)
+        private bool SolveResistiveNetwork(
+    NetworkGraph graph,
+    float[] voltages,
+    float timeStep)
 {
-    bool on =
-        GetDiodeState(
-            led,
-            ta,
-            tb,
-            graph,
-            voltages);
+    int n = graph.NodeCount;
 
-    if (on)
+    if (n == 0)
+        return true;
+
+    int reference = FindGroundNode(graph);
+
+    if (reference < 0)
+        reference = 0;
+
+    int m = n - 1;
+
+    if (m <= 0)
     {
+        voltages[0] = 0f;
+        return true;
+    }
+
+    var A = new double[m, m];
+    var b = new double[m];
+
+    // ============================================================
+    // FLOATING NODE LEAK
+    // ============================================================
+
+    double leakG =
+        floatingNodeLeakResistance > 0f
+            ? 1.0 / Math.Max(
+                minimumResistance,
+                floatingNodeLeakResistance)
+            : 0.0;
+
+    if (leakG > 0.0)
+    {
+        for (int i = 0; i < m; i++)
+            A[i, i] += leakG;
+    }
+
+    // ============================================================
+    // ELECTRICAL COMPONENTS
+    // ============================================================
+
+    for (int i = 0; i < electricalComponents.Length; i++)
+    {
+        var component = electricalComponents[i];
+
+        if (component == null ||
+            !component.ElectricalEnabled)
+        {
+            continue;
+        }
+
+        if (!TryGetTwoTerminals(
+                component,
+                out SparkTerminal ta,
+                out SparkTerminal tb))
+        {
+            continue;
+        }
+
+        if (!graph.TerminalNode.TryGetValue(
+                ta,
+                out int na) ||
+            !graph.TerminalNode.TryGetValue(
+                tb,
+                out int nb))
+        {
+            continue;
+        }
+
+        int ai = MapNode(na, reference);
+        int bi = MapNode(nb, reference);
+
+        // ========================================================
+        // MULTIMETER INTERNAL CURRENT SHUNT
+        // ========================================================
+
+        if (component is SparkMultimeterElectricalComponent multimeter)
+        {
+            double resistance =
+                Math.Max(
+                    minimumResistance,
+                    multimeter.ShuntResistanceOhms);
+
+            double conductance =
+                1.0 / resistance;
+
+            AddConductance(
+                A,
+                b,
+                ai,
+                bi,
+                conductance);
+        }
+
+        // ========================================================
+        // RESISTOR
+        // ========================================================
+
+        else if (component is SparkResistor resistor)
+        {
+            double resistance =
+                Math.Max(
+                    resistor.ResistanceOhms,
+                    minimumResistance);
+
+            AddConductance(
+                A,
+                b,
+                ai,
+                bi,
+                1.0 / resistance);
+        }
+
+        // ========================================================
+        // SWITCH
+        // ========================================================
+
+        else if (component is SparkSwitch sw)
+        {
+            if (sw.IsConducting)
+            {
+                double resistance =
+                    Math.Max(
+                        minimumResistance,
+                        sw.ClosedResistance);
+
+                double conductance =
+                    1.0 / resistance;
+
+                AddConductance(
+                    A,
+                    b,
+                    ai,
+                    bi,
+                    conductance);
+            }
+        }
+
+        // ========================================================
+        // DIODE
+        // ========================================================
+
+        else if (component is SparkDiode diode)
+        {
+            bool on =
+                GetDiodeState(
+                    diode,
+                    ta,
+                    tb,
+                    graph,
+                    voltages);
+
+            if (on)
+            {
+                StampForwardDrop(
+                    A,
+                    b,
+                    ai,
+                    bi,
+                    diode.ForwardVoltage,
+                    diode.OnResistance);
+            }
+        }
+
+        // ========================================================
+        // LED
+        // ========================================================
+
+        else if (component is SparkLED led)
+        {
+            bool on =
+                GetDiodeState(
+                    led,
+                    ta,
+                    tb,
+                    graph,
+                    voltages);
+
+            if (on)
+            {
+                // ------------------------------------------------
+                // LED CURRENT LIMIT MODEL
+                // ------------------------------------------------
+
+                float referenceVoltage =
+                    GetMaximumActiveSupplyVoltage();
+
+                float currentLimit =
+                    Mathf.Max(
+                        0.000001f,
+                        led.MaximumForwardCurrent);
+
+                float voltageAboveForward =
+                    Mathf.Max(
+                        0f,
+                        referenceVoltage -
+                        led.ForwardVoltage);
+
+                float currentLimitResistance =
+                    voltageAboveForward /
+                    currentLimit;
+
+                float effectiveResistance =
+                    Mathf.Max(
+                        led.OnResistance,
+                        currentLimitResistance);
+
+                StampForwardDrop(
+                    A,
+                    b,
+                    ai,
+                    bi,
+                    led.ForwardVoltage,
+                    effectiveResistance);
+            }
+        }
+
+        // ========================================================
+        // CAPACITOR
+        // ========================================================
+
+        else if (component is SparkCapacitor capacitor &&
+                 simulateCapacitors)
+        {
+            double g =
+                Math.Max(
+                    1.0e-12,
+                    capacitor.CapacitanceFarads /
+                    Math.Max(
+                        timeStep,
+                        1.0e-6f));
+
+            capacitorPreviousVoltage.TryGetValue(
+                capacitor,
+                out float previousVoltage);
+
+            AddConductance(
+                A,
+                b,
+                ai,
+                bi,
+                g);
+
+            // Backward-Euler companion model:
+            //
+            //     i = G * V - G * Vprevious
+            //
+            AddCurrentSource(
+                A,
+                b,
+                ai,
+                bi,
+                -g * previousVoltage);
+        }
+    }
+
+    // ============================================================
+    // POWER SUPPLIES
+    // ============================================================
+
+    for (int i = 0; i < powerSupplies.Length; i++)
+    {
+        SparkPowerSupply supply =
+            powerSupplies[i];
+
+        if (supply == null ||
+            !supply.IsOutputActive ||
+            !supply.ElectricalEnabled)
+        {
+            continue;
+        }
+
+        if (!TryGetTwoTerminals(
+                supply,
+                out SparkTerminal positive,
+                out SparkTerminal negative))
+        {
+            continue;
+        }
+
+        if (!graph.TerminalNode.TryGetValue(
+                positive,
+                out int pNode) ||
+            !graph.TerminalNode.TryGetValue(
+                negative,
+                out int nNode))
+        {
+            continue;
+        }
+
+        float seriesResistance;
+
         // --------------------------------------------------------
-        // LED CURRENT LIMIT MODEL
-        // --------------------------------------------------------
-        //
-        // The LED has a physical maximum forward current.
-        // The old solver used only OnResistance:
-        //
-        //     I = (V - Vf) / R
-        //
-        // With Vf = 2 V and R = 1 ohm:
-        //
-        //     I = (5 - 2) / 1 = 3 A
-        //
-        // which ignores MaximumForwardCurrent completely.
-        //
-        // Build an effective resistance that respects the
-        // configured maximum forward current at the highest
-        // active supply voltage.
+        // CURRENT-LIMITED SUPPLY
         // --------------------------------------------------------
 
-        float referenceVoltage =
-            GetMaximumActiveSupplyVoltage();
+        if (supply.IsCurrentLimited)
+        {
+            seriesResistance =
+                Mathf.Max(
+                    minimumResistance,
+                    supply.OutputVoltage /
+                    Mathf.Max(
+                        0.0001f,
+                        supply.CurrentLimit));
+        }
 
-        float currentLimit =
-            Mathf.Max(
-                0.000001f,
-                led.MaximumForwardCurrent);
+        // --------------------------------------------------------
+        // NORMAL SUPPLY
+        // --------------------------------------------------------
 
-        float voltageAboveForward =
-            Mathf.Max(
-                0f,
-                referenceVoltage -
-                led.ForwardVoltage);
+        else
+        {
+            // Approximately ideal voltage source during
+            // normal operation.
+            seriesResistance =
+                minimumResistance;
+        }
 
-        float currentLimitResistance =
-            voltageAboveForward /
-            currentLimit;
-
-        float effectiveResistance =
-            Mathf.Max(
-                led.OnResistance,
-                currentLimitResistance);
-
-        StampForwardDrop(
+        AddConductance(
             A,
             b,
-            ai,
-            bi,
-            led.ForwardVoltage,
-            effectiveResistance);
+            MapNode(pNode, reference),
+            MapNode(nNode, reference),
+            1.0 / seriesResistance,
+            supply.OutputVoltage);
     }
+
+    // ============================================================
+    // SOLVE MATRIX
+    // ============================================================
+
+    var x = GaussianSolve(A, b);
+
+    if (x == null)
+        return false;
+
+    // ============================================================
+    // COPY NODE VOLTAGES
+    // ============================================================
+
+    for (int node = 0, k = 0; node < n; node++)
+    {
+        voltages[node] =
+            node == reference
+                ? 0f
+                : (float)x[k++];
+    }
+
+    return true;
 }
-                else if (component is SparkCapacitor capacitor && simulateCapacitors)
-                {
-                    double g = Math.Max(1.0e-12, capacitor.CapacitanceFarads / Math.Max(timeStep, 1.0e-6f));
-                    capacitorPreviousVoltage.TryGetValue(capacitor, out float previousVoltage);
-                    AddConductance(A, b, ai, bi, g);
-                    // Backward-Euler companion model: i = G*V - G*Vprevious.
-                    AddCurrentSource(A, b, ai, bi, -g * previousVoltage);
-                }
-            }
-
-           // ============================================================
-// POWER SUPPLIES
-// ============================================================
-//
-// Normal mode:
-//     The supply behaves approximately as an ideal voltage source.
-//
-// Current-limited mode:
-//     The supply uses a Thevenin resistance of V / I_limit.
-//
-// The important distinction is that the V/I_limit resistance is
-// NOT present during normal operation. Otherwise every normal load
-// would unnecessarily cause voltage droop.
-//
-// ============================================================
-
-for (int i = 0; i < powerSupplies.Length; i++)
-{
-    SparkPowerSupply supply = powerSupplies[i];
-
-    if (supply == null ||
-        !supply.IsOutputActive ||
-        !supply.ElectricalEnabled)
-    {
-        continue;
-    }
-
-    if (!TryGetTwoTerminals(
-            supply,
-            out SparkTerminal positive,
-            out SparkTerminal negative))
-    {
-        continue;
-    }
-
-    if (!graph.TerminalNode.TryGetValue(
-            positive,
-            out int pNode) ||
-        !graph.TerminalNode.TryGetValue(
-            negative,
-            out int nNode))
-    {
-        continue;
-    }
-
-    float seriesResistance;
-
-    if (supply.IsCurrentLimited)
-    {
-        seriesResistance =
-            Mathf.Max(
-                minimumResistance,
-                supply.OutputVoltage /
-                Mathf.Max(
-                    0.0001f,
-                    supply.CurrentLimit));
-    }
-    else
-    {
-        // Approximately ideal voltage source during normal operation.
-        seriesResistance =
-            minimumResistance;
-    }
-
-    AddConductance(
-        A,
-        b,
-        MapNode(pNode, reference),
-        MapNode(nNode, reference),
-        1.0 / seriesResistance,
-        supply.OutputVoltage);
-}
-
-            var x = GaussianSolve(A, b);
-            if (x == null) return false;
-
-            for (int node = 0, k = 0; node < n; node++)
-                voltages[node] = node == reference ? 0f : (float)x[k++];
-
-            return true;
-        }
 
         private bool GetDiodeState(SparkElectricalComponent component, SparkTerminal anode, SparkTerminal cathode,
             NetworkGraph graph, float[] currentVoltages)
@@ -973,6 +1115,27 @@ private float GetLEDEffectiveResistance(
 // SUPPLY CURRENT-LIMIT STATE
 // ============================================================
 
+// ============================================================
+// SUPPLY CURRENT-LIMIT STATE
+// ============================================================
+//
+// Do not change IsCurrentLimited while the solver is iterating.
+// Changing the supply model here can cause:
+//
+//     Ideal source
+//          ↓
+//     Current limited
+//          ↓
+//     Ideal source
+//          ↓
+//     Current limited
+//
+// which prevents convergence.
+//
+// The supply limit state is evaluated after the network has
+// converged instead.
+//
+
 for (int i = 0;
      i < powerSupplies.Length;
      i++)
@@ -981,7 +1144,8 @@ for (int i = 0;
         powerSupplies[i];
 
     if (supply == null ||
-        !supply.IsOutputActive)
+        !supply.IsOutputActive ||
+        !supply.ElectricalEnabled)
     {
         continue;
     }
@@ -993,15 +1157,53 @@ for (int i = 0;
 
     bool limited =
         outputCurrent >=
-        supply.CurrentLimit * 0.999f;
+        supply.CurrentLimit;
 
+    // Only update the state after the electrical state has
+    // been calculated. This does not affect the current
+    // solver iteration.
     supply.SetCurrentLimited(
         limited);
-}
 
-    return maxDelta;
+        
+        }
+        return maxDelta;
+
 
         }
+        private void UpdateSupplyCurrentLimitStates(
+    NetworkGraph graph)
+{
+    if (graph == null)
+        return;
+
+    for (int i = 0;
+         i < powerSupplies.Length;
+         i++)
+    {
+        SparkPowerSupply supply =
+            powerSupplies[i];
+
+        if (supply == null ||
+            !supply.IsOutputActive ||
+            !supply.ElectricalEnabled)
+        {
+            continue;
+        }
+
+        float outputCurrent =
+            CalculateSupplyOutputCurrent(
+                supply,
+                graph);
+
+        bool limited =
+            outputCurrent >=
+            supply.CurrentLimit;
+
+        supply.SetCurrentLimited(
+            limited);
+    }
+}
 
 
 
@@ -1124,7 +1326,7 @@ for (int i = 0;
             return -1;
         }
 
-        private static bool TryGetTwoTerminals(
+       private static bool TryGetTwoTerminals(
     Component component,
     out SparkTerminal a,
     out SparkTerminal b)
@@ -1133,8 +1335,13 @@ for (int i = 0;
     b = null;
 
     if (component == null)
-    {
         return false;
+
+    if (component is SparkMultimeterElectricalComponent multimeter)
+    {
+        return multimeter.TryGetTerminals(
+            out a,
+            out b);
     }
 
     if (component is SparkSwitch sparkSwitch)
@@ -1159,9 +1366,7 @@ for (int i = 0;
         component.GetComponentsInChildren<SparkTerminal>(true);
 
     if (childTerminals.Length < 2)
-    {
         return false;
-    }
 
     a = childTerminals[0];
     b = childTerminals[1];

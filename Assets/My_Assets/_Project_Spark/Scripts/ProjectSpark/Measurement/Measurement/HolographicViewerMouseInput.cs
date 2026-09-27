@@ -567,6 +567,13 @@ private bool TryBeginComponentRotation(Vector2 pointer)
                    EventSystem.current.IsPointerOverGameObject();
         }
 
+        public void ToggleControlScreenSpace()
+{
+    SetScreenSpaceControl(
+        !controllScreenSpace);
+}
+
+
         // ============================================================
         // REFERENCES
         // ============================================================

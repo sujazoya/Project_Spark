@@ -434,16 +434,14 @@ public SparkTerminalPolarity EffectivePolarity
                 return false;
             }
 
-            if (connectionKind ==
-                SparkConnectionKind.Probe &&
-                kind != SparkTerminalKind.Measurement &&
-                kind != SparkTerminalKind.Signal)
-            {
-                reason =
-                    "Terminal does not accept a measurement probe.";
-
-                return false;
-            }
+           if (connectionKind == SparkConnectionKind.Probe)
+{
+    // Measurement probes may contact normal electrical terminals.
+    // Probe connections are measurement relationships and are not
+    // treated as electrical shorts by the solver.
+    reason = null;
+    return true;
+}
 
             reason = null;
 

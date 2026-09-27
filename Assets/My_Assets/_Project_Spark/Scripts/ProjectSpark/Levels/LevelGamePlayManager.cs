@@ -849,28 +849,19 @@ private void SetOutput(
                 // ----------------------------------------------------
 
                 if (electricalSolver != null)
-                {
-                    electricalSolver.SolveNow();
+{
+    electricalSolver.SolveNow();
 
-                    if (solverEvaluationFailed)
-                    {
-                        SparkLevelEvaluation solverFailure =
-                            SparkLevelEvaluation.Create(
-                                SparkLevelEvaluationStatus.Failed,
-                                SparkLevelFailureReason.InvalidConfiguration,
-                                "Electrical solver failed.");
-
-                        ApplyEvaluation(
-                            solverFailure,
-                            level);
-
-                        FailCurrentLevel(
-                            solverFailure.Message,
-                            solverFailure);
-
-                        return;
-                    }
-                }
+    if (solverEvaluationFailed)
+    {
+        // A non-converged/incomplete electrical network is not
+        // automatically a gameplay failure.
+        //
+        // The level evaluator will determine whether the current
+        // circuit is incomplete, invalid, or actually completed.
+        solverEvaluationFailed = false;
+    }
+}
 
                 // ----------------------------------------------------
                 // AUTHORITATIVE LEVEL EVALUATION

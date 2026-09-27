@@ -16,6 +16,9 @@ namespace ProjectSpark.Measurement
         private TMP_Text valueText;
 
         [SerializeField]
+        private TMP_Text modeText;
+
+        [SerializeField]
         private CanvasGroup displayCanvas;
 
         [Header("Display Animation")]
@@ -39,10 +42,12 @@ namespace ProjectSpark.Measurement
 
         private Vector3 displayOriginalScale;
         private Vector3 valueOriginalScale;
+        private Vector3 modeOriginalScale;
 
         private Coroutine valueAnimation;
         private Coroutine powerAnimation;
         private Coroutine modeAnimation;
+
 
         private void Awake()
         {
@@ -57,7 +62,18 @@ namespace ProjectSpark.Measurement
                 valueOriginalScale =
                     valueText.transform.localScale;
             }
+
+            if (modeText != null)
+            {
+                modeOriginalScale =
+                    modeText.transform.localScale;
+            }
         }
+
+
+        // ============================================================
+        // READING ANIMATION
+        // ============================================================
 
         public void PlayReading(
             SparkMultimeterReading reading)
@@ -83,6 +99,11 @@ namespace ProjectSpark.Measurement
                     AnimateValue());
         }
 
+
+        // ============================================================
+        // POWER ON
+        // ============================================================
+
         public void PlayPowerOn()
         {
             if (powerAnimation != null)
@@ -96,13 +117,19 @@ namespace ProjectSpark.Measurement
                     AnimatePowerOn());
         }
 
+
+        // ============================================================
+        // POWER OFF
+        // ============================================================
+
         public void PlayPowerOff()
         {
             StopAllAnimations();
 
             if (displayCanvas != null)
             {
-                displayCanvas.alpha = 0.35f;
+                displayCanvas.alpha =
+                    0.35f;
             }
 
             if (displayTransform != null)
@@ -116,10 +143,26 @@ namespace ProjectSpark.Measurement
                 valueText.transform.localScale =
                     valueOriginalScale;
             }
+
+            if (modeText != null)
+            {
+                modeText.transform.localScale =
+                    modeOriginalScale;
+            }
         }
+
+
+        // ============================================================
+        // MODE CHANGE
+        // ============================================================
 
         public void PlayModeChange()
         {
+            if (modeText == null)
+            {
+                return;
+            }
+
             if (modeAnimation != null)
             {
                 StopCoroutine(
@@ -130,6 +173,11 @@ namespace ProjectSpark.Measurement
                 StartCoroutine(
                     AnimateMode());
         }
+
+
+        // ============================================================
+        // VALUE ANIMATION
+        // ============================================================
 
         private IEnumerator AnimateValue()
         {
@@ -176,11 +224,17 @@ namespace ProjectSpark.Measurement
             valueAnimation = null;
         }
 
+
+        // ============================================================
+        // POWER ON ANIMATION
+        // ============================================================
+
         private IEnumerator AnimatePowerOn()
         {
             if (displayCanvas != null)
             {
-                displayCanvas.alpha = 0f;
+                displayCanvas.alpha =
+                    0f;
             }
 
             if (displayTransform != null)
@@ -233,7 +287,8 @@ namespace ProjectSpark.Measurement
 
             if (displayCanvas != null)
             {
-                displayCanvas.alpha = 1f;
+                displayCanvas.alpha =
+                    1f;
             }
 
             if (displayTransform != null)
@@ -245,18 +300,23 @@ namespace ProjectSpark.Measurement
             powerAnimation = null;
         }
 
+
+        // ============================================================
+        // MODE ANIMATION
+        // ============================================================
+
         private IEnumerator AnimateMode()
         {
-            if (valueText == null)
+            if (modeText == null)
             {
                 yield break;
             }
 
             Transform target =
-                valueText.transform;
+                modeText.transform;
 
             Vector3 baseScale =
-                valueOriginalScale;
+                modeOriginalScale;
 
             Vector3 peakScale =
                 baseScale *
@@ -295,6 +355,11 @@ namespace ProjectSpark.Measurement
             modeAnimation = null;
         }
 
+
+        // ============================================================
+        // STOP ANIMATIONS
+        // ============================================================
+
         private void StopAllAnimations()
         {
             if (valueAnimation != null)
@@ -321,6 +386,11 @@ namespace ProjectSpark.Measurement
                 modeAnimation = null;
             }
         }
+
+
+        // ============================================================
+        // DISABLE
+        // ============================================================
 
         private void OnDisable()
         {

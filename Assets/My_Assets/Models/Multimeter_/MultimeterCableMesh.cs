@@ -274,11 +274,9 @@ namespace ProjectSpark.Gameplay
         private MeshRenderer meshRenderer;
         private Mesh cableMesh;
 
-        private Vector3 lastStartPosition;
-        private Quaternion lastStartRotation;
+        private Vector3 lastStartPosition;      
 
-        private Vector3 lastEndPosition;
-        private Quaternion lastEndRotation;
+        private Vector3 lastEndPosition;        
 
         private Vector3 lastLossyScale;
 
@@ -1498,75 +1496,69 @@ namespace ProjectSpark.Gameplay
         // CHANGE DETECTION
         // ============================================================
 
-        private bool HasConnectionChanged()
-        {
-            if (startPoint == null ||
-                endPoint == null)
-            {
-                return false;
-            }
+       private bool HasConnectionChanged()
+{
+    if (startPoint == null ||
+        endPoint == null)
+    {
+        return false;
+    }
 
-            if (rebuildRequested)
-            {
-                return true;
-            }
+    if (rebuildRequested)
+    {
+        return true;
+    }
 
-            if (startPoint.position !=
-                lastStartPosition)
-            {
-                return true;
-            }
+    // ------------------------------------------------------------
+    // POSITION CHANGES
+    // ------------------------------------------------------------
 
-            if (startPoint.rotation !=
-                lastStartRotation)
-            {
-                return true;
-            }
+    // Endpoint movement changes the actual cable path.
+    if (startPoint.position != lastStartPosition)
+    {
+        return true;
+    }
 
-            if (endPoint.position !=
-                lastEndPosition)
-            {
-                return true;
-            }
+    if (endPoint.position != lastEndPosition)
+    {
+        return true;
+    }
 
-            if (endPoint.rotation !=
-                lastEndRotation)
-            {
-                return true;
-            }
+    // ------------------------------------------------------------
+    // IMPORTANT:
+    // DO NOT rebuild the cable when endpoint rotation changes.
+    //
+    // The endpoint may be a child/grandchild cable head.
+    // Rotating that head should rotate only the head itself,
+    // not regenerate the complete cable body.
+    // ------------------------------------------------------------
 
-            if (transform.lossyScale !=
-                lastLossyScale)
-            {
-                return true;
-            }
+    // Cable object's own scale still affects the generated mesh.
+    if (transform.lossyScale != lastLossyScale)
+    {
+        return true;
+    }
 
-            return false;
-        }
+    return false;
+}
 
-        private void SaveTransformState()
-        {
-            if (startPoint != null)
-            {
-                lastStartPosition =
-                    startPoint.position;
+      private void SaveTransformState()
+{
+    if (startPoint != null)
+    {
+        lastStartPosition =
+            startPoint.position;
+    }
 
-                lastStartRotation =
-                    startPoint.rotation;
-            }
+    if (endPoint != null)
+    {
+        lastEndPosition =
+            endPoint.position;
+    }
 
-            if (endPoint != null)
-            {
-                lastEndPosition =
-                    endPoint.position;
-
-                lastEndRotation =
-                    endPoint.rotation;
-            }
-
-            lastLossyScale =
-                transform.lossyScale;
-        }
+    lastLossyScale =
+        transform.lossyScale;
+}
 
         // ============================================================
         // VALIDATION

@@ -38,6 +38,7 @@ namespace ProjectSpark.Measurement
         [SerializeField]
         private SparkMultimeterAnimation animation;
 
+
         private void Awake()
         {
             if (multimeter == null)
@@ -46,6 +47,7 @@ namespace ProjectSpark.Measurement
                     GetComponent<SparkMultimeter>();
             }
         }
+
 
         private void OnEnable()
         {
@@ -63,12 +65,22 @@ namespace ProjectSpark.Measurement
             multimeter.ModeChanged +=
                 HandleModeChanged;
 
+            multimeter.RangeChanged +=
+                HandleRangeChanged;
+
             ApplyPower(
                 multimeter.IsPowered);
 
             HandleReadingChanged(
                 multimeter.CurrentReading);
+
+            HandleModeChanged(
+                multimeter.Mode);
+
+            HandleRangeChanged(
+                multimeter.Range);
         }
+
 
         private void OnDisable()
         {
@@ -85,7 +97,15 @@ namespace ProjectSpark.Measurement
 
             multimeter.ModeChanged -=
                 HandleModeChanged;
+
+            multimeter.RangeChanged -=
+                HandleRangeChanged;
         }
+
+
+        // ============================================================
+        // READING
+        // ============================================================
 
         private void HandleReadingChanged(
             SparkMultimeterReading reading)
@@ -118,13 +138,25 @@ namespace ProjectSpark.Measurement
 
             if (continuityIndicator != null)
             {
+                bool showContinuity =
+                    reading.Continuity &&
+                    reading.Valid &&
+                    !reading.OverRange &&
+                    !float.IsNaN(reading.Value) &&
+                    !float.IsInfinity(reading.Value);
+
                 continuityIndicator.enabled =
-                    reading.Continuity;
+                    showContinuity;
             }
 
             animation?.PlayReading(
                 reading);
         }
+
+
+        // ============================================================
+        // POWER
+        // ============================================================
 
         private void HandlePowerChanged(
             bool powered)
@@ -141,17 +173,6 @@ namespace ProjectSpark.Measurement
             }
         }
 
-        private void HandleModeChanged(
-            SparkMultimeterMode value)
-        {
-            if (modeText != null)
-            {
-                modeText.text =
-                    FormatMode(value);
-            }
-
-            animation?.PlayModeChange();
-        }
 
         private void ApplyPower(
             bool powered)
@@ -173,6 +194,15 @@ namespace ProjectSpark.Measurement
                         : "OFF";
             }
 
+            if (rangeText != null)
+            {
+                rangeText.text =
+                    powered
+                        ? FormatRange(
+                            multimeter.Range)
+                        : string.Empty;
+            }
+
             if (!powered)
             {
                 if (valueText != null)
@@ -192,8 +222,51 @@ namespace ProjectSpark.Measurement
                     statusText.text =
                         "POWER OFF";
                 }
+
+                if (continuityIndicator != null)
+                {
+                    continuityIndicator.enabled =
+                        false;
+                }
             }
         }
+
+
+        // ============================================================
+        // MODE
+        // ============================================================
+
+        private void HandleModeChanged(
+            SparkMultimeterMode value)
+        {
+            if (modeText != null)
+            {
+                modeText.text =
+                    FormatMode(value);
+            }
+
+            animation?.PlayModeChange();
+        }
+
+
+        // ============================================================
+        // RANGE
+        // ============================================================
+
+        private void HandleRangeChanged(
+            SparkMultimeterRange value)
+        {
+            if (rangeText != null)
+            {
+                rangeText.text =
+                    FormatRange(value);
+            }
+        }
+
+
+        // ============================================================
+        // FORMAT MODE
+        // ============================================================
 
         private static string FormatMode(
             SparkMultimeterMode value)
@@ -216,6 +289,11 @@ namespace ProjectSpark.Measurement
                     return "OFF";
             }
         }
+
+
+        // ============================================================
+        // FORMAT RANGE
+        // ============================================================
 
         private static string FormatRange(
             SparkMultimeterRange value)
@@ -250,6 +328,11 @@ namespace ProjectSpark.Measurement
                     return string.Empty;
             }
         }
+
+
+        // ============================================================
+        // FORMAT STATUS
+        // ============================================================
 
         private static string FormatStatus(
             SparkMultimeterReading reading)
