@@ -33,40 +33,41 @@ namespace ProjectSpark.Measurement
         private SparkCircuitSystem circuit;
 
         private SparkTerminal connectedTerminal;
+
+        // Normal measurement-only Probe connection.
         private ulong connectionId;
 
-        public SparkTerminal ProbeTerminal => probeTerminal;
-        public SparkTerminal ConnectedTerminal => connectedTerminal;
+        public SparkTerminal ProbeTerminal =>
+            probeTerminal;
 
-        public SparkMultimeterProbe OtherProbe => otherProbe;
+        public SparkTerminal ConnectedTerminal =>
+            connectedTerminal;
+
+        public SparkMultimeterProbe OtherProbe =>
+            otherProbe;
+
+        public SparkMultimeterProbeColor ProbeColor =>
+            probeColor;
 
         private void Awake()
         {
-           
-    if (probeTerminal == null)
-    {
-        probeTerminal =
-            GetComponent<SparkTerminal>();
-    }
+            if (probeTerminal == null)
+            {
+                probeTerminal =
+                    GetComponent<SparkTerminal>();
+            }
 
-    if (multimeter == null)
-    {
-        multimeter =
-            GetComponentInParent<SparkMultimeter>();
-    }
+            if (multimeter == null)
+            {
+                multimeter =
+                    GetComponentInParent<SparkMultimeter>();
+            }
 
-    if (circuit == null)
-    {
-        circuit =
-            FindFirstObjectByType<SparkCircuitSystem>();
-    }
-
-    Debug.Log(
-        $"[MULTIMETER PROBE] SETUP → " +
-        $"ProbeTerminal={probeTerminal?.name ?? "NULL"} | " +
-        $"Multimeter={multimeter?.name ?? "NULL"} | " +
-        $"Circuit={circuit?.name ?? "NULL"}",
-        this);
+            if (circuit == null)
+            {
+                circuit =
+                    FindFirstObjectByType<SparkCircuitSystem>();
+            }
         }
 
         private void OnTriggerEnter(Collider other)
@@ -88,162 +89,267 @@ namespace ProjectSpark.Measurement
         {
             TryDisconnect(collision.collider);
         }
-private void TryConnect(Collider other)
+
+        // ============================================================
+        // CONNECT
+        // ============================================================
+
+        private void TryConnect(Collider other)
+        {
+            if (probeTerminal == null)
+                return;
+
+            // ========================================================
+            // PHYSICAL RED ↔ BLACK PROBE CONTACT
+            // ========================================================
+
+            if (otherProbe != null &&
+                otherProbe != this &&
+                otherProbe.multimeter == multimeter &&
+                otherProbe.probeColor != probeColor)
+            {
+                Transform hitTransform = other.transform;
+
+                bool belongsToOtherProbe =
+                    hitTransform == otherProbe.transform ||
+                    hitTransform.IsChildOf(otherProbe.transform);
+
+                if (belongsToOtherProbe)
+                {
+                    multimeter?.SetProbeTipContact(true);
+                    return;
+                }
+            }
+
+            // ========================================================
+            // FIND CIRCUIT TERMINAL
+            // ========================================================
+
+            if (circuit == null)
+                return;
+
+            SparkTerminal target =
+                other.GetComponentInParent<SparkTerminal>();
+
+            if (target == null)
+                return;
+
+            if (target == probeTerminal)
+                return;
+
+            if (connectedTerminal == target)
+                return;
+
+            if (connectedTerminal != null)
+            {
+                Disconnect();
+            }
+
+            connectedTerminal = target;
+
+            // Tell multimeter which REAL circuit terminal
+            // this probe is touching.
+            if (multimeter != null)
+            {
+                multimeter.NotifyProbeConnected(
+                    this,
+                    target);
+            }
+
+            // ========================================================
+            // NORMAL MEASUREMENT MODE
+            // ========================================================
+            //
+            // Probe connection is measurement-only.
+            //
+            // CurrentDC uses the meter's actual electrical terminals
+            // instead.
+            // ========================================================
+
+            if (multimeter == null ||
+                !multimeter.IsCurrentMeasurementActive)
+            {
+                CreateMeasurementProbeConnection();
+            }
+        }
+
+        // ============================================================
+        // NORMAL PROBE CONNECTION
+        // ============================================================
+
+
+/*
+        private void CreateMeasurementProbeConnection()
+        {
+            if (circuit == null ||
+                probeTerminal == null ||
+                connectedTerminal == null)
+            {
+                return;
+            }
+
+            bool canConnect =
+                connectedTerminal.CanConnectTo(
+                    probeTerminal,
+                    SparkConnectionKind.Probe,
+                    SparkConnectionDirection.Bidirectional,
+                    out string reason);
+
+            if (!canConnect)
+            {
+                Debug.LogWarning(
+                    $"[MULTIMETER PROBE] CONNECTION REJECTED → " +
+                    $"{probeTerminal.name} -> " +
+                    $"{connectedTerminal.name} | " +
+                    $"Reason={reason}",
+                    this);
+
+                return;
+            }
+
+            bool created =
+                circuit.TryCreateConnection(
+                    probeTerminal,
+                    connectedTerminal,
+                    SparkConnectionKind.Probe,
+                    SparkConnectionDirection.Bidirectional,
+                    out SparkCircuitConnection connection);
+
+            if (!created ||
+                connection == null)
+            {
+                Debug.LogWarning(
+                    "[MULTIMETER PROBE] PROBE CONNECTION FAILED",
+                    this);
+
+                return;
+            }
+
+            connectionId =
+                connection.Id;
+
+            ApplyProbeToMultimeter();
+        }*/
+        private void CreateMeasurementProbeConnection()
 {
-    if (probeTerminal == null)
-        return;
-
-    /*
-     * ---------------------------------------------------------
-     * PHYSICAL PROBE ↔ PROBE CONTACT
-     * ---------------------------------------------------------
-     */
-
-    /*
- * ---------------------------------------------------------
- * PHYSICAL PROBE ↔ PROBE CONTACT
- * ---------------------------------------------------------
- */ 
-
-if (otherProbe != null &&
-    otherProbe != this &&
-    otherProbe.multimeter == multimeter &&
-    otherProbe.probeColor != probeColor)
-{
-    Transform hitTransform = other.transform;
-
-    bool belongsToOtherProbe =
-        hitTransform == otherProbe.transform ||
-        hitTransform.IsChildOf(otherProbe.transform);
-
-    if (belongsToOtherProbe)
+    if (circuit == null ||
+        probeTerminal == null ||
+        connectedTerminal == null)
     {
-        multimeter?.SetProbeTipContact(true);
-
         Debug.Log(
-            $"[MULTIMETER PROBE] PROBE CONTACT → " +
-            $"{probeColor} ↔ {otherProbe.probeColor}",
+            $"[MULTIMETER PROBE] CREATE FAILED → " +
+            $"Circuit={circuit != null} " +
+            $"ProbeTerminal={probeTerminal?.name ?? "NULL"} " +
+            $"ConnectedTerminal={connectedTerminal?.name ?? "NULL"}",
             this);
 
         return;
     }
-}
-
-    /*
-     * ---------------------------------------------------------
-     * NORMAL CIRCUIT TERMINAL CONNECTION
-     * ---------------------------------------------------------
-     */
-
-    if (circuit == null)
-        return;
-
-    SparkTerminal target =
-        other.GetComponentInParent<SparkTerminal>();
-
-    if (target == null)
-        return;
-
-    if (target == probeTerminal)
-        return;
-
-    if (connectedTerminal != null)
-    {
-        if (connectedTerminal == target)
-            return;
-
-        Disconnect();
-    }
-
-    Debug.Log(
-        $"[MULTIMETER PROBE] TARGET FOUND → " +
-        $"Probe={probeTerminal.name} | " +
-        $"Target={target.name}",
-        this);
 
     bool canConnect =
-        target.CanConnectTo(
+        connectedTerminal.CanConnectTo(
             probeTerminal,
             SparkConnectionKind.Probe,
             SparkConnectionDirection.Bidirectional,
             out string reason);
 
     Debug.Log(
-        $"[MULTIMETER PROBE] CanConnectTo → " +
-        $"Result={canConnect} | " +
+        $"[MULTIMETER PROBE] CAN CONNECT → " +
+        $"Probe={probeTerminal.name} " +
+        $"Target={connectedTerminal.name} " +
+        $"Result={canConnect} " +
         $"Reason={reason ?? "NONE"}",
         this);
 
     if (!canConnect)
+    {
         return;
+    }
 
     bool created =
         circuit.TryCreateConnection(
             probeTerminal,
-            target,
+            connectedTerminal,
             SparkConnectionKind.Probe,
             SparkConnectionDirection.Bidirectional,
             out SparkCircuitConnection connection);
 
-    if (!created || connection == null)
-    {
-        Debug.LogWarning(
-            "[MULTIMETER PROBE] CONNECTION FAILED",
-            this);
-
-        return;
-    }
-
-    connectedTerminal = target;
-    connectionId = connection.Id;
-
-    ApplyProbeToMultimeter(target);
-
     Debug.Log(
-        $"[MULTIMETER PROBE] CONNECTED → " +
-        $"{probeTerminal.name} -> {target.name} | " +
-        $"ID={connectionId}",
+        $"[MULTIMETER PROBE] CREATE RESULT → " +
+        $"Created={created} " +
+        $"Connection={(connection != null ? connection.ToString() : "NULL")}",
         this);
-}
-        private void TryDisconnect(Collider other)
-{
-    if (otherProbe != null &&
-        otherProbe != this &&
-        otherProbe.multimeter == multimeter &&
-        otherProbe.probeColor != probeColor)
+
+    if (!created ||
+        connection == null)
     {
-        Transform hitTransform = other.transform;
-
-        bool belongsToOtherProbe =
-            hitTransform == otherProbe.transform ||
-            hitTransform.IsChildOf(otherProbe.transform);
-
-        if (belongsToOtherProbe)
-        {
-            multimeter?.SetProbeTipContact(false);
-
-            Debug.Log(
-                $"[MULTIMETER PROBE] PROBE CONTACT LOST → " +
-                $"{probeColor} ↔ {otherProbe.probeColor}",
-                this);
-
-            return;
-        }
+        return;
     }
 
-    if (connectedTerminal == null)
-        return;
+    connectionId =
+        connection.Id;
 
-    SparkTerminal target =
-        other.GetComponentInParent<SparkTerminal>();
-
-    if (target != connectedTerminal)
-        return;
-
-    Disconnect();
+    ApplyProbeToMultimeter();
 }
+
+        // ============================================================
+        // DISCONNECT
+        // ============================================================
+
+        private void TryDisconnect(Collider other)
+        {
+            // Physical probe contact.
+            if (otherProbe != null &&
+                otherProbe != this &&
+                otherProbe.multimeter == multimeter &&
+                otherProbe.probeColor != probeColor)
+            {
+                Transform hitTransform = other.transform;
+
+                bool belongsToOtherProbe =
+                    hitTransform == otherProbe.transform ||
+                    hitTransform.IsChildOf(otherProbe.transform);
+
+                if (belongsToOtherProbe)
+                {
+                    multimeter?.SetProbeTipContact(false);
+                    return;
+                }
+            }
+
+            if (connectedTerminal == null)
+                return;
+
+            SparkTerminal target =
+                other.GetComponentInParent<SparkTerminal>();
+
+            if (target != connectedTerminal)
+                return;
+
+            Disconnect();
+        }
 
         private void Disconnect()
+        {
+            RemoveMeasurementProbeConnection();
+
+            if (multimeter != null)
+            {
+                multimeter.NotifyProbeDisconnected(
+                    this,
+                    connectedTerminal);
+            }
+
+            connectedTerminal = null;
+
+            ClearProbeFromMultimeter();
+        }
+
+        // ============================================================
+        // NORMAL PROBE CONNECTION REMOVE
+        // ============================================================
+
+        private void RemoveMeasurementProbeConnection()
         {
             if (circuit != null &&
                 connectionId != 0UL)
@@ -253,19 +359,14 @@ if (otherProbe != null &&
                     out _);
             }
 
-            Debug.Log(
-                $"[MULTIMETER PROBE] DISCONNECTED → " +
-                $"{probeTerminal?.name ?? "NULL"}",
-                this);
-
-            connectedTerminal = null;
             connectionId = 0UL;
-
-            ClearProbeFromMultimeter();
         }
 
-        private void ApplyProbeToMultimeter(
-            SparkTerminal target)
+        // ============================================================
+        // MULTIMETER PROBE STATE
+        // ============================================================
+
+        private void ApplyProbeToMultimeter()
         {
             if (multimeter == null)
                 return;
@@ -296,6 +397,36 @@ if (otherProbe != null &&
             else
             {
                 multimeter.SetBlackProbe(null);
+            }
+        }
+
+        // ============================================================
+        // CURRENT MODE
+        // ============================================================
+
+        public void EnterCurrentMeasurementMode()
+        {
+            if (connectedTerminal == null)
+                return;
+
+            // Remove measurement-only Probe connection.
+            //
+            // The actual electrical path will be:
+            //
+            // Circuit -> Meter Red -> Shunt -> Meter Black -> Circuit
+            //
+            RemoveMeasurementProbeConnection();
+        }
+
+        public void ExitCurrentMeasurementMode()
+        {
+            if (connectedTerminal == null)
+                return;
+
+            // Restore normal measurement-only connection.
+            if (connectionId == 0UL)
+            {
+                CreateMeasurementProbeConnection();
             }
         }
     }

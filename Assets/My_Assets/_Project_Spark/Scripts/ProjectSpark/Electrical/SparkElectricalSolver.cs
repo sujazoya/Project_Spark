@@ -115,12 +115,12 @@ namespace ProjectSpark.Electrical
         public void MarkDirty()
 {
     dirty = true;
-
+/*
     Debug.Log(
         $"[SPARK SOLVER] TOPOLOGY DIRTY RECEIVED | " +
         $"Circuit={circuit?.name ?? "NULL"} | " +
         $"Version={circuit?.TopologyVersion ?? -1}",
-        this);
+        this);*/
 }
 private readonly List<SparkCircuitConnection> connectionBuffer = new();
 
@@ -565,54 +565,40 @@ for (int i = 0; i < terminals.Count; i++)
         // LED
         // ========================================================
 
-        else if (component is SparkLED led)
-        {
-            bool on =
-                GetDiodeState(
-                    led,
-                    ta,
-                    tb,
-                    graph,
-                    voltages);
+       // ========================================================
+// LED
+// ========================================================
 
-            if (on)
-            {
-                // ------------------------------------------------
-                // LED CURRENT LIMIT MODEL
-                // ------------------------------------------------
+else if (component is SparkLED led)
+{
+    bool on =
+        GetDiodeState(
+            led,
+            ta,
+            tb,
+            graph,
+            voltages);
 
-                float referenceVoltage =
-                    GetMaximumActiveSupplyVoltage();
+    if (on)
+    {
+        // ------------------------------------------------
+        // REALISTIC LED MODEL
+        //
+        // Forward voltage + on resistance.
+        //
+        // MaximumForwardCurrent is a rating/safety
+        // specification, NOT an internal resistor.
+        // ------------------------------------------------
 
-                float currentLimit =
-                    Mathf.Max(
-                        0.000001f,
-                        led.MaximumForwardCurrent);
-
-                float voltageAboveForward =
-                    Mathf.Max(
-                        0f,
-                        referenceVoltage -
-                        led.ForwardVoltage);
-
-                float currentLimitResistance =
-                    voltageAboveForward /
-                    currentLimit;
-
-                float effectiveResistance =
-                    Mathf.Max(
-                        led.OnResistance,
-                        currentLimitResistance);
-
-                StampForwardDrop(
-                    A,
-                    b,
-                    ai,
-                    bi,
-                    led.ForwardVoltage,
-                    effectiveResistance);
-            }
-        }
+        StampForwardDrop(
+            A,
+            b,
+            ai,
+            bi,
+            led.ForwardVoltage,
+            led.OnResistance);
+    }
+}
 
         // ========================================================
         // CAPACITOR
@@ -875,38 +861,49 @@ private float GetLEDEffectiveResistance(
             voltages[na] -
             voltages[nb];
 
-        float current = 0f;
+       float current = 0f;
 
-        // ------------------------------------------------------------
-        // COMPONENT CURRENT
-        // ------------------------------------------------------------
+// ------------------------------------------------------------
+// COMPONENT CURRENT
+// ------------------------------------------------------------
 
-        if (component is SparkResistor resistor)
-        {
-            current =
-                voltage /
-                Mathf.Max(
-                    resistor.ResistanceOhms,
-                    minimumResistance);
-        }
-        else if (component is SparkSwitch sw)
-        {
-            if (sw.IsConducting)
-            {
-                float resistance =
-                    Mathf.Max(
-                        minimumResistance,
-                        sw.ClosedResistance);
+if (component is SparkMultimeterElectricalComponent multimeter)
+{
+    float resistance =
+        Mathf.Max(
+            minimumResistance,
+            multimeter.ShuntResistanceOhms);
 
-                current =
-                    voltage /
-                    resistance;
-            }
-            else
-            {
-                current = 0f;
-            }
-        }
+    current =
+        voltage /
+        resistance;        
+}
+else if (component is SparkResistor resistor1)
+{
+    current =
+        voltage /
+        Mathf.Max(
+            resistor1.ResistanceOhms,
+            minimumResistance);
+}
+else if (component is SparkSwitch sw)
+{
+    if (sw.IsConducting)
+    {
+        float resistance =
+            Mathf.Max(
+                minimumResistance,
+                sw.ClosedResistance);
+
+        current =
+            voltage /
+            resistance;
+    }
+    else
+    {
+        current = 0f;
+    }
+}
         else if (component is SparkDiode diode)
         {
             bool wasOn =
@@ -1005,7 +1002,7 @@ private float GetLEDEffectiveResistance(
 }
 
         float power =
-            voltage * current;
+            voltage * current;           
 
         if (component is SparkPowerSupply)
             power = -Mathf.Abs(power);
@@ -1048,6 +1045,13 @@ private float GetLEDEffectiveResistance(
 
         SparkTerminalElectricalState previousB =
             tb.ElectricalState;
+
+/*
+            Debug.Log(
+    $"[TERMINAL STATE] " +
+    $"Component={component.name} " +
+    $"A={ta.name} V={voltages[na]:F4} " +
+    $"B={tb.name} V={voltages[nb]:F4}");*/
 
         ApplyTerminalElectricalStates(
             voltages,

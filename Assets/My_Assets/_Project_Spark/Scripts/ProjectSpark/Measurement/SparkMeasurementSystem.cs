@@ -116,7 +116,7 @@ private readonly Dictionary<SparkTerminal, float>
              */
             SparkTerminal measurementTerminal =
                 ResolveMeasurementTerminal(
-                    terminal);
+                    terminal);                 
 
             if (measurementTerminal == null)
             {
@@ -560,12 +560,12 @@ private static bool TryGetTwoTerminalComponent(
 
     circuit.GetConnections(probe, connectionBuffer);
 
-  /*  Debug.Log(
+   Debug.Log(
         $"[MULTIMETER] Resolve CONNECTIONS → " +
         $"Probe={probe.name} | " +
         $"Found={connectionBuffer.Count} | " +
         $"ActiveConnectionCount={probe.ActiveConnectionCount}",
-        probe);*/
+        probe);
 
     for (int i = 0; i < connectionBuffer.Count; i++)
     {
@@ -573,12 +573,12 @@ private static bool TryGetTwoTerminalComponent(
 
         SparkTerminal other = connection.GetOther(probe);
 
-       /* Debug.Log(
+        Debug.Log(
             $"[MULTIMETER] Connection[{i}] → " +
             $"{connection} | " +
             $"Other={(other != null ? other.name : "NULL")} | " +
             $"OtherOwner={(other != null && other.Owner != null ? other.Owner.name : "NULL")}",
-            probe);*/
+            probe);
 
         if (other == null)
             continue;

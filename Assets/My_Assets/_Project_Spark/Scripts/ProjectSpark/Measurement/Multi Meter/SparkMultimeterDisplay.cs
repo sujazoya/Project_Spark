@@ -109,7 +109,8 @@ namespace ProjectSpark.Measurement
 
         private void HandleReadingChanged(
             SparkMultimeterReading reading)
-        {
+        {           
+
             if (valueText != null)
             {
                 valueText.text =

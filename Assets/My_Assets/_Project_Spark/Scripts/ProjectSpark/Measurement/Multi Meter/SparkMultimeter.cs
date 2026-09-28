@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using ProjectSpark.Gameplay;
+using ProjectSpark.Circuit;
 
 namespace ProjectSpark.Measurement
 {
@@ -129,6 +130,10 @@ namespace ProjectSpark.Measurement
         [SerializeField]
         private SparkTerminal blackProbeTerminal;
 
+        [Header("Circuit")]
+[SerializeField]
+private SparkCircuitSystem circuit;
+
 
         // ============================================================
         // DISPLAY
@@ -248,7 +253,48 @@ namespace ProjectSpark.Measurement
             redProbeTerminal;
 
         public SparkTerminal BlackProbeTerminal =>
-            blackProbeTerminal;       
+            blackProbeTerminal; 
+
+
+
+            [Header("Electrical Current Path")]
+[SerializeField]
+private SparkMultimeterElectricalComponent electricalComponent;
+
+[SerializeField]
+private SparkTerminal currentRedTerminal;
+
+[SerializeField]
+private SparkTerminal currentBlackTerminal;
+
+
+
+public SparkMultimeterElectricalComponent ElectricalComponent =>
+    electricalComponent;
+
+public SparkTerminal CurrentRedTerminal =>
+    currentRedTerminal;
+
+public SparkTerminal CurrentBlackTerminal =>
+    currentBlackTerminal;
+
+
+    // ============================================================
+// REAL CURRENT-MEASUREMENT STATE
+// ============================================================
+
+public bool IsCurrentMeasurementActive =>
+    poweredOn &&
+    mode == SparkMultimeterMode.CurrentDC;
+
+private SparkMultimeterProbe currentRedProbe;
+private SparkMultimeterProbe currentBlackProbe;
+
+private SparkTerminal currentRedTarget;
+private SparkTerminal currentBlackTarget;
+
+private ulong currentRedConnectionId;
+private ulong currentBlackConnectionId;
 
 
         // ============================================================
@@ -258,12 +304,14 @@ namespace ProjectSpark.Measurement
         protected override void Awake()
         {
             base.Awake();
+            
 
             ResolveReferences();
 
             ResetReading();
 
             SynchronizeOperationalState();
+            
         }
 
         protected override void OnValidate()
@@ -355,18 +403,292 @@ public void SetProbeTipContact(bool touching)
 
 
         // ============================================================
+// PROBE CONNECTION NOTIFICATION
+// ============================================================
+
+public void NotifyProbeConnected(
+    SparkMultimeterProbe probe,
+    SparkTerminal target)
+{
+    if (probe == null || target == null)
+        return;
+
+    if (probe.ProbeColor ==
+        SparkMultimeterProbeColor.Red)
+    {
+        currentRedProbe = probe;
+        currentRedTarget = target;
+    }
+    else
+    {
+        currentBlackProbe = probe;
+        currentBlackTarget = target;
+    }
+
+    if (IsCurrentMeasurementActive)
+    {
+        RebuildCurrentMeasurementPath();
+    }
+}
+
+public void NotifyProbeDisconnected(
+    SparkMultimeterProbe probe,
+    SparkTerminal target)
+{
+    if (probe == null)
+        return;
+
+    if (probe.ProbeColor ==
+        SparkMultimeterProbeColor.Red)
+    {
+        RemoveCurrentRedConnection();
+
+        currentRedProbe = null;
+        currentRedTarget = null;
+    }
+    else
+    {
+        RemoveCurrentBlackConnection();
+
+        currentBlackProbe = null;
+        currentBlackTarget = null;
+    }
+}
+
+
+// ============================================================
+// CURRENT MEASUREMENT TOPOLOGY
+// ============================================================
+
+private void RebuildCurrentMeasurementPath()
+{
+    RemoveCurrentMeasurementConnections();
+
+    if (!IsCurrentMeasurementActive)
+        return;
+
+    if (electricalComponent == null)
+        return;
+
+    if (currentRedTarget == null ||
+        currentBlackTarget == null)
+    {
+        electricalComponent.SetElectricalEnabled(false);
+        return;
+    }
+
+    if (currentRedTerminal == null ||
+        currentBlackTerminal == null)
+    {
+        Debug.LogWarning(
+            "[MULTIMETER] Current terminals are not configured.",
+            this);
+
+        electricalComponent.SetElectricalEnabled(false);
+        return;
+    }
+
+    if (circuit == null)
+    {
+        Debug.LogWarning(
+            "[MULTIMETER] Circuit system is missing.",
+            this);
+
+        electricalComponent.SetElectricalEnabled(false);
+        return;
+    }
+
+    // ------------------------------------------------------------
+    // CIRCUIT A -> METER RED
+    // ------------------------------------------------------------
+
+    bool redCreated =
+        circuit.TryCreateConnection(
+            currentRedTarget,
+            currentRedTerminal,
+            SparkConnectionKind.Connector,
+            SparkConnectionDirection.Bidirectional,
+            out SparkCircuitConnection redConnection);
+
+    if (!redCreated ||
+        redConnection == null)
+    {
+        Debug.LogWarning(
+            "[MULTIMETER] Failed to connect RED current path.",
+            this);
+
+        electricalComponent.SetElectricalEnabled(false);
+        return;
+    }
+
+    currentRedConnectionId =
+        redConnection.Id;
+
+    // ------------------------------------------------------------
+    // METER BLACK -> CIRCUIT B
+    // ------------------------------------------------------------
+
+    bool blackCreated =
+        circuit.TryCreateConnection(
+            currentBlackTerminal,
+            currentBlackTarget,
+            SparkConnectionKind.Connector,
+            SparkConnectionDirection.Bidirectional,
+            out SparkCircuitConnection blackConnection);
+
+    if (!blackCreated ||
+        blackConnection == null)
+    {
+        circuit.TryRemoveConnection(
+            currentRedConnectionId,
+            out _);
+
+        currentRedConnectionId = 0UL;
+
+        Debug.LogWarning(
+            "[MULTIMETER] Failed to connect BLACK current path.",
+            this);
+
+        electricalComponent.SetElectricalEnabled(false);
+        return;
+    }
+
+    currentBlackConnectionId =
+        blackConnection.Id;
+
+    electricalComponent.SetElectricalEnabled(true);
+
+    Debug.Log(
+        $"[MULTIMETER] CURRENT PATH ACTIVE → " +
+        $"{currentRedTarget.name} -> METER -> {currentBlackTarget.name}",
+        this);
+}
+
+
+private void RemoveCurrentMeasurementConnections()
+{
+    if (circuit != null)
+    {
+        if (currentRedConnectionId != 0UL)
+        {
+            circuit.TryRemoveConnection(
+                currentRedConnectionId,
+                out _);
+        }
+
+        if (currentBlackConnectionId != 0UL)
+        {
+            circuit.TryRemoveConnection(
+                currentBlackConnectionId,
+                out _);
+        }
+    }
+
+    currentRedConnectionId = 0UL;
+    currentBlackConnectionId = 0UL;
+
+    if (electricalComponent != null)
+    {
+        electricalComponent.SetElectricalEnabled(false);
+    }
+}
+
+private void RemoveCurrentRedConnection()
+{
+    if (circuit != null &&
+        currentRedConnectionId != 0UL)
+    {
+        circuit.TryRemoveConnection(
+            currentRedConnectionId,
+            out _);
+    }
+
+    currentRedConnectionId = 0UL;
+
+    if (currentBlackTarget == null &&
+        electricalComponent != null)
+    {
+        electricalComponent.SetElectricalEnabled(false);
+    }
+}
+
+private void RemoveCurrentBlackConnection()
+{
+    if (circuit != null &&
+        currentBlackConnectionId != 0UL)
+    {
+        circuit.TryRemoveConnection(
+            currentBlackConnectionId,
+            out _);
+    }
+
+    currentBlackConnectionId = 0UL;
+
+    if (currentRedTarget == null &&
+        electricalComponent != null)
+    {
+        electricalComponent.SetElectricalEnabled(false);
+    }
+}
+
+private void ReconfigureCurrentMeasurementMode()
+{
+    if (IsCurrentMeasurementActive)
+    {
+        currentRedProbe?.EnterCurrentMeasurementMode();
+        currentBlackProbe?.EnterCurrentMeasurementMode();
+
+        RebuildCurrentMeasurementPath();
+    }
+    else
+    {
+        RemoveCurrentMeasurementConnections();
+
+        currentRedProbe?.ExitCurrentMeasurementMode();
+        currentBlackProbe?.ExitCurrentMeasurementMode();
+    }
+}
+
+
+        // ============================================================
         // REFERENCE RESOLUTION
         // ============================================================
 
-        private void ResolveReferences()
+private void ResolveReferences()
+{
+    if (measurementSystem == null)
+    {
+        measurementSystem =
+            GetComponent<SparkMeasurementSystem>();
+    }
+
+    if (electricalComponent == null)
+    {
+        electricalComponent =
+            GetComponent<SparkMultimeterElectricalComponent>();
+    }
+
+    if (electricalComponent != null)
+    {
+        if (currentRedTerminal == null)
         {
-            if (measurementSystem == null)
-            {
-                measurementSystem =
-                    GetComponent<SparkMeasurementSystem>();
-            }
+            currentRedTerminal =
+                electricalComponent.RedTerminal;
         }
 
+        if (currentBlackTerminal == null)
+        {
+            currentBlackTerminal =
+                electricalComponent.BlackTerminal;
+        }
+    }
+
+    if (circuit == null)
+    {
+        circuit =
+            FindFirstObjectByType<SparkCircuitSystem>();
+    }
+}
 
         // ============================================================
         // PROJECT SPARK INTERACTION
@@ -410,6 +732,8 @@ public void SetProbeTipContact(bool touching)
             poweredOn = enabled;
 
             SynchronizeOperationalState();
+
+            ReconfigureCurrentMeasurementMode();
 
             if (!poweredOn)
             {
@@ -469,6 +793,12 @@ public void SetProbeTipContact(bool touching)
              * A mode change invalidates the stability history.
              */
             ResetStability();
+
+
+            /*
+ * Current mode uses the real internal shunt path.
+ */
+ReconfigureCurrentMeasurementMode();
 
             /*
              * Auto range is always safe after changing modes.
@@ -654,112 +984,56 @@ public void SetProbeTipContact(bool touching)
 
     /*
      * All other measurements require both
-     * probe terminals to be assigned.
-     */
-    if (redProbeTerminal == null ||
-        blackProbeTerminal == null)
-    {
-        SetInvalid(
-            SparkMultimeterDisplayState.Open,
-            "---");
+     * probe terminals to be assigned.*/
+   if (mode == SparkMultimeterMode.CurrentDC)
+{
+    MeasureCurrent();
+    return;
+}
 
-        return;
-    }
+/*
+ * All other measurements require both
+ * probe terminals to be assigned.
+ */
+if (redProbeTerminal == null ||
+    blackProbeTerminal == null)
+{
+    SetInvalid(
+        SparkMultimeterDisplayState.Open,
+        "---");
+
+    return;
+}
+
 
     switch (mode)
-    {
-        case SparkMultimeterMode.VoltageDC:
-            MeasureVoltage();
-            break;
+{
+    case SparkMultimeterMode.VoltageDC:
+        MeasureVoltage();
+        break;
 
-        case SparkMultimeterMode.CurrentDC:
-            MeasureCurrent();
-            break;
+    case SparkMultimeterMode.Resistance:
+        MeasureResistance();
+        break;
 
-        case SparkMultimeterMode.Resistance:
-            MeasureResistance();
-            break;
+    case SparkMultimeterMode.Continuity:
+        MeasureContinuity();
+        break;
 
-        case SparkMultimeterMode.Continuity:
-            MeasureContinuity();
-            break;
-
-        default:
-            SetInvalid(
-                SparkMultimeterDisplayState.Off,
-                "---");
-            break;
-    }
+    default:
+        SetInvalid(
+            SparkMultimeterDisplayState.Off,
+            "---");
+        break;
+}
 }
 
         // ============================================================
         // VOLTAGE
         // ============================================================
 
-        private void MeasureVoltage()
-        {
-            if (measurementSystem == null)
-            {
-                SetInvalid(
-                    SparkMultimeterDisplayState.Invalid,
-                    "ERR");
-
-                return;
-            }
-
-            SparkResult redResult =
-                measurementSystem.TryMeasureTerminal(
-                    redProbeTerminal,
-                    SparkMeasurementType.Voltage,
-                    out SparkMeasurementReading redReading);
-
-                        if (!redResult.Succeeded ||
-                !redReading.Valid)
-            {
-                SetInvalid(
-                    SparkMultimeterDisplayState.Open,
-                    "---");
-
-                return;
-            }
-
-            SparkResult blackResult =
-                measurementSystem.TryMeasureTerminal(
-                    blackProbeTerminal,
-                    SparkMeasurementType.Voltage,
-                    out SparkMeasurementReading blackReading);
-
-           if (!blackResult.Succeeded ||
-                !blackReading.Valid)
-            {
-                SetInvalid(
-                    SparkMultimeterDisplayState.Open,
-                    "---");
-
-                return;
-            }
-
-            /*
-             * True differential measurement:
-             *
-             * V = Vred - Vblack
-             */
-            float value =
-                redReading.Value -
-                blackReading.Value;
-
-            PublishNumericReading(
-                value,
-                SparkMultimeterMode.VoltageDC,
-                SparkMultimeterDisplayState.Measuring);
-        }
-
-
-        // ============================================================
-        // CURRENT
-        // ============================================================
-
-      private void MeasureCurrent()
+     
+private void MeasureVoltage()
 {
     if (measurementSystem == null)
     {
@@ -770,14 +1044,8 @@ public void SetProbeTipContact(bool touching)
         return;
     }
 
-    SparkResult result =
-        measurementSystem.TryMeasureCurrent(
-            redProbeTerminal,
-            blackProbeTerminal,
-            out SparkMeasurementReading reading);
-
-    if (!result.Succeeded ||
-        !reading.Valid)
+    if (redProbeTerminal == null ||
+        blackProbeTerminal == null)
     {
         SetInvalid(
             SparkMultimeterDisplayState.Open,
@@ -786,8 +1054,139 @@ public void SetProbeTipContact(bool touching)
         return;
     }
 
+    /*
+     * Read the solved voltage of each probe terminal
+     * through the existing measurement system.
+     *
+     * Do NOT read SparkTerminal.ElectricalState directly
+     * here because some electrical components, such as the
+     * LED, do not necessarily publish their component voltage
+     * to the terminal state in the same way as resistors.
+     */
+
+    SparkResult redResult =
+        measurementSystem.TryMeasureTerminal(
+            redProbeTerminal,
+            SparkMeasurementType.Voltage,
+            out SparkMeasurementReading redReading);
+
+    if (!redResult.Succeeded ||
+        !redReading.Valid)
+    {
+        SetInvalid(
+            SparkMultimeterDisplayState.Open,
+            "---");
+
+        return;
+    }
+
+    SparkResult blackResult =
+        measurementSystem.TryMeasureTerminal(
+            blackProbeTerminal,
+            SparkMeasurementType.Voltage,
+            out SparkMeasurementReading blackReading);
+
+    if (!blackResult.Succeeded ||
+        !blackReading.Valid)
+    {
+        SetInvalid(
+            SparkMultimeterDisplayState.Open,
+            "---");
+
+        return;
+    }
+
+    /*
+     * TRUE DIFFERENTIAL DC VOLTAGE
+     *
+     * V = Vred - Vblack
+     */
+    float value =
+        redReading.Value -
+        blackReading.Value;
+
     PublishNumericReading(
-        reading.Value,
+        value,
+        SparkMultimeterMode.VoltageDC,
+        SparkMultimeterDisplayState.Measuring);
+}
+
+
+
+
+        // ============================================================
+        // CURRENT
+        // ============================================================
+
+private void MeasureCurrent()
+{
+    // ============================================================
+    // CURRENT DC
+    // ============================================================
+
+    if (electricalComponent == null)
+    {
+        PublishNumericReading(
+            0f,
+            SparkMultimeterMode.CurrentDC,
+            SparkMultimeterDisplayState.Invalid);
+
+        return;
+    }
+
+    if (currentRedTerminal == null ||
+        currentBlackTerminal == null)
+    {
+        PublishNumericReading(
+            0f,
+            SparkMultimeterMode.CurrentDC,
+            SparkMultimeterDisplayState.Open);
+
+        return;
+    }
+
+    if (currentRedTarget == null ||
+        currentBlackTarget == null)
+    {
+        PublishNumericReading(
+            0f,
+            SparkMultimeterMode.CurrentDC,
+            SparkMultimeterDisplayState.Open);
+
+        return;
+    }
+
+    // Both probes must be connected.
+    if (currentRedConnectionId == 0UL ||
+        currentBlackConnectionId == 0UL)
+    {
+        PublishNumericReading(
+            0f,
+            SparkMultimeterMode.CurrentDC,
+            SparkMultimeterDisplayState.Open);
+
+        return;
+    }
+
+    // ============================================================
+    // READ CURRENT FROM THE MULTIMETER'S ELECTRICAL COMPONENT
+    // ============================================================
+
+    Debug.Log(
+    $"[MULTIMETER CURRENT DEBUG] " +
+    $"RedTarget={currentRedTarget.name} " +
+    $"V={currentRedTarget.ElectricalState.Voltage:F6} | " +
+    $"BlackTarget={currentBlackTarget.name} " +
+    $"V={currentBlackTarget.ElectricalState.Voltage:F6} | " +
+    $"ShuntV={electricalComponent.ElectricalState.Voltage:F6} | " +
+    $"ShuntI={electricalComponent.ElectricalState.Current:F6}",
+    this);
+
+    float current =
+        electricalComponent.ElectricalState.Current;
+
+    PublishNumericReading(
+        current,
         SparkMultimeterMode.CurrentDC,
         SparkMultimeterDisplayState.Measuring);
 }
@@ -1182,10 +1581,30 @@ private void PublishNumericReading(
     switch (measurementMode)
     {
         case SparkMultimeterMode.VoltageDC:
-            return "V";
+
+            switch (selectedRange)
+            {
+                case SparkMultimeterRange.Millivolts:
+                    return "mV";
+
+                case SparkMultimeterRange.Volts:
+                default:
+                    return "V";
+            }
+
 
         case SparkMultimeterMode.CurrentDC:
-            return "A";
+
+            switch (selectedRange)
+            {
+                case SparkMultimeterRange.Milliamps:
+                    return "mA";
+
+                case SparkMultimeterRange.Amps:
+                default:
+                    return "A";
+            }
+
 
         case SparkMultimeterMode.Resistance:
         case SparkMultimeterMode.Continuity:
@@ -1202,6 +1621,7 @@ private void PublishNumericReading(
                 default:
                     return "Ω";
             }
+
 
         default:
             return string.Empty;

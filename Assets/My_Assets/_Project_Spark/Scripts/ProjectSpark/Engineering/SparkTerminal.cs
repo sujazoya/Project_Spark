@@ -406,49 +406,62 @@ public SparkTerminalPolarity EffectivePolarity
         // =========================================================
 
         public bool CanAccept(
-            SparkConnectionKind connectionKind,
-            out string reason)
-        {
-            if (owner == null ||
-                !owner.isActiveAndEnabled)
-            {
-                reason =
-                    "Terminal owner unavailable.";
-
-                return false;
-            }
-
-            if (!owner.InteractionsEnabled)
-            {
-                reason =
-                    "Terminal owner disabled.";
-
-                return false;
-            }
-
-            if (AtCapacity)
-            {
-                reason =
-                    "Terminal is at connection capacity.";
-
-                return false;
-            }
-
-           if (connectionKind == SparkConnectionKind.Probe)
+    SparkConnectionKind connectionKind,
+    out string reason)
 {
-    // Measurement probes may contact normal electrical terminals.
-    // Probe connections are measurement relationships and are not
-    // treated as electrical shorts by the solver.
+    if (owner == null ||
+        !owner.isActiveAndEnabled)
+    {
+        reason =
+            "Terminal owner unavailable.";
+
+        return false;
+    }
+
+    if (!owner.InteractionsEnabled)
+    {
+        reason =
+            "Terminal owner disabled.";
+
+        return false;
+    }
+
+    // =========================================================
+    // PROBE CONNECTION
+    // =========================================================
+    //
+    // Measurement probes do NOT consume normal terminal
+    // connection capacity.
+    //
+    // Example:
+    // LED Anode already has a Wire connection.
+    // RED probe can still contact the Anode.
+    //
+    // Probe connections are excluded from the electrical solver.
+    // =========================================================
+
+    if (connectionKind == SparkConnectionKind.Probe)
+    {
+        reason = null;
+        return true;
+    }
+
+    // =========================================================
+    // NORMAL ELECTRICAL CONNECTION
+    // =========================================================
+
+    if (AtCapacity)
+    {
+        reason =
+            "Terminal is at connection capacity.";
+
+        return false;
+    }
+
     reason = null;
+
     return true;
 }
-
-            reason = null;
-
-            return true;
-        }
-
-
         public bool CanConnectTo(
             SparkTerminal other,
             SparkConnectionKind connectionKind,
@@ -548,27 +561,34 @@ public SparkTerminalPolarity EffectivePolarity
         // CONNECTION REGISTRATION
         // =========================================================
 
-        public bool RegisterConnection(
-            out string reason)
-        {
-            if (AtCapacity)
-            {
-                reason =
-                    "Terminal is at capacity.";
+      public bool RegisterConnection(
+    SparkConnectionKind connectionKind,
+    out string reason)
+{
+    // Probe connections do not consume normal terminal capacity.
+    if (connectionKind == SparkConnectionKind.Probe)
+    {
+        reason = null;
+        return true;
+    }
 
-                return false;
-            }
+    if (AtCapacity)
+    {
+        reason =
+            "Terminal is at capacity.";
 
-            connectionCount++;
+        return false;
+    }
 
-            ConnectionStateChanged?.Invoke(
-                this);
+    connectionCount++;
 
-            reason = null;
+    ConnectionStateChanged?.Invoke(
+        this);
 
-            return true;
-        }
+    reason = null;
 
+    return true;
+}
 
         public bool UnregisterConnection()
         {
@@ -584,5 +604,27 @@ public SparkTerminalPolarity EffectivePolarity
 
             return true;
         }
+
+        public bool UnregisterConnection(
+    SparkConnectionKind connectionKind)
+{
+    // Probe connections do not consume normal capacity.
+    if (connectionKind == SparkConnectionKind.Probe)
+    {
+        return true;
+    }
+
+    if (connectionCount <= 0)
+    {
+        return false;
+    }
+
+    connectionCount--;
+
+    ConnectionStateChanged?.Invoke(
+        this);
+
+    return true;
+}
     }
 }

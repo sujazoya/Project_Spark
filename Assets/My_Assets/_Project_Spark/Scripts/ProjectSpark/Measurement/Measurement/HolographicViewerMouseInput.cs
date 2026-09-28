@@ -438,7 +438,7 @@ private bool TryBeginComponentRotation(Vector2 pointer)
                 if (viewerCamera != null)
                 {
                     viewerCamera.Pan(
-                        delta *
+                        -delta *
                         panSensitivity);
                 }
             }

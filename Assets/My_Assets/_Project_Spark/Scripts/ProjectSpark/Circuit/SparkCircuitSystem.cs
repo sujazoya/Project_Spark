@@ -168,40 +168,41 @@ namespace ProjectSpark.Circuit
 
                 return false;
             }
+ulong id =
+    AllocateConnectionId();
 
-            ulong id =
-                AllocateConnectionId();
+bool registeredA =
+    a.RegisterConnection(
+        kind,
+        out string registerReason);
 
-            bool registeredA =
-                a.RegisterConnection(
-                    out string registerReason);
+if (!registeredA)
+{
+    LogRejected(
+        a,
+        b,
+        registerReason);
 
-            if (!registeredA)
-            {
-                LogRejected(
-                    a,
-                    b,
-                    registerReason);
+    return false;
+}
 
-                return false;
-            }
+bool registeredB =
+    b.RegisterConnection(
+        kind,
+        out registerReason);
 
-            bool registeredB =
-                b.RegisterConnection(
-                    out registerReason);
+if (!registeredB)
+{
+    a.UnregisterConnection(
+        kind);
 
-            if (!registeredB)
-            {
-                a.UnregisterConnection();
+    LogRejected(
+        a,
+        b,
+        registerReason);
 
-                LogRejected(
-                    a,
-                    b,
-                    registerReason);
-
-                return false;
-            }
-
+    return false;
+}
             connection =
                 new SparkCircuitConnection(
                     id,
@@ -770,9 +771,9 @@ private void MarkTopologyChanged()
     topologyVersion++;
 
     TopologyChanged?.Invoke();
-    Debug.Log(
+   /* Debug.Log(
     $"[SPARK CIRCUIT] TOPOLOGY CHANGED → Version={topologyVersion}",
-    this);
+    this);*/
 }
 
         // =========================================================

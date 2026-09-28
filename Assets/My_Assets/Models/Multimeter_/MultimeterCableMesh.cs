@@ -802,26 +802,43 @@ namespace ProjectSpark.Gameplay
             // --------------------------------------------------------
             // APPLY
             // --------------------------------------------------------
+// --------------------------------------------------------
+// APPLY
+// --------------------------------------------------------
 
-            cableMesh.Clear();
+cableMesh.Clear();
 
-            cableMesh.vertices =
-                vertices;
+cableMesh.vertices =
+    vertices;
 
-            cableMesh.normals =
-                normals;
+cableMesh.normals =
+    normals;
 
-            cableMesh.uv =
-                uv;
+cableMesh.uv =
+    uv;
 
-            cableMesh.triangles =
-                triangles;
+cableMesh.triangles =
+    triangles;
 
-            cableMesh.RecalculateBounds();
+cableMesh.RecalculateBounds();
 
-            SaveTransformState();
+// --------------------------------------------------------
+// APPLY MATERIAL
+// --------------------------------------------------------
 
-            rebuildRequested = false;
+if (meshRenderer != null)
+{
+    meshRenderer.sharedMaterial =
+        cableMaterial;
+}
+
+// --------------------------------------------------------
+// SAVE STATE
+// --------------------------------------------------------
+
+SaveTransformState();
+
+rebuildRequested = false;
         }
 
         /// <summary>

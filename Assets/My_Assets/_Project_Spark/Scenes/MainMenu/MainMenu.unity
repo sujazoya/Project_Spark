@@ -13321,6 +13321,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 286407838}
   m_CullTransparentMesh: 1
+--- !u!1 &287280084
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 287280085}
+  - component: {fileID: 287280086}
+  m_Layer: 15
+  m_Name: Black_Terminal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &287280085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287280084}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1428173844}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &287280086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287280084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
+  owner: {fileID: 1428173845}
+  kind: 4
+  polarity: 2
+  runtimePolarityThreshold: 0.05
+  runtimePolarity: 2
+  acceptsInput: 1
+  providesOutput: 1
+  connectionKind: 2
+  maxConnections: 1
 --- !u!1 &288791434
 GameObject:
   m_ObjectHideFlags: 0
@@ -23666,6 +23719,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 543098373}
   m_CullTransparentMesh: 1
+--- !u!1 &543136019
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 543136021}
+  - component: {fileID: 543136020}
+  m_Layer: 15
+  m_Name: Red_Terminal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &543136020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543136019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
+  owner: {fileID: 1428173845}
+  kind: 4
+  polarity: 1
+  runtimePolarityThreshold: 0.05
+  runtimePolarity: 1
+  acceptsInput: 1
+  providesOutput: 1
+  connectionKind: 2
+  maxConnections: 1
+--- !u!4 &543136021
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543136019}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1428173844}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &544801021
 GameObject:
   m_ObjectHideFlags: 0
@@ -28876,6 +28982,7 @@ GameObject:
   - component: {fileID: 670486929}
   - component: {fileID: 670486939}
   - component: {fileID: 670486940}
+  - component: {fileID: 670486941}
   m_Layer: 15
   m_Name: MultiMeter_BlackProbe
   m_TagString: Untagged
@@ -28891,15 +28998,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670486927}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.272822, y: -0.060989223, z: -0.021816546, w: 0.95988154}
-  m_LocalPosition: {x: 0.045999944, y: -0.26300007, z: -0.2280002}
+  m_LocalRotation: {x: -0.8083866, y: -0.07978055, z: -0.08714342, w: 0.57667345}
+  m_LocalPosition: {x: 0.415, y: -0.32, z: -0.122}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 968063085}
   - {fileID: 548197931}
   m_Father: {fileID: 2052051526}
-  m_LocalEulerAnglesHint: {x: 31.406, y: -8.692, z: -5.052}
+  m_LocalEulerAnglesHint: {x: -108.87, y: -8.692, z: -5.052}
 --- !u!114 &670486929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29143,6 +29250,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &670486941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670486927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b2de1c132d341741850224a81c32615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkSmartMove
+  movementTarget: {fileID: 0}
+  targetOffset: {x: 0, y: 0.15, z: 0}
+  inputCamera: {fileID: 1360671976}
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 32768
+  raycastDistance: 1000
+  ignoreUI: 1
+  clickThreshold: 5
+  smoothTime: 0.2
+  maxSpeed: 100
+  stopDistance: 0.001
 --- !u!1 &671012242
 GameObject:
   m_ObjectHideFlags: 0
@@ -30478,8 +30609,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 696521178}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.13633999, y: 1.402, z: -0.86829996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30497,7 +30628,7 @@ Transform:
   - {fileID: 61121128}
   - {fileID: 2083469156}
   - {fileID: 1225518164}
-  m_Father: {fileID: 1093371129}
+  m_Father: {fileID: 937297734082975716}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &696521180
 MonoBehaviour:
@@ -36143,7 +36274,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 267ef2e137fadd24cb046994f9352100, type: 2}
   - {fileID: 11400000, guid: d559e5db5ead04540bd4dc6241da849f, type: 2}
   - {fileID: 11400000, guid: d559e5db5ead04540bd4dc6241da849f, type: 2}
-  activeLevelIndex: 2
+  activeLevelIndex: 0
   runtimeState: 0
   autoStartFirstLevel: 1
   autoEvaluate: 1
@@ -43212,7 +43343,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 521347269818069515, guid: 6880b12373445064b9d235632a963da9, type: 3}
+  - {fileID: 2100000, guid: 8391099974a89084688d918915e69187, type: 2}
   - {fileID: 2100000, guid: 4c9a855f5765cb8438dd192dad35fc4c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -49689,15 +49820,14 @@ Transform:
   m_GameObject: {fileID: 1093371128}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.101799995, y: 0.59256995, z: -1.5258001}
+  m_LocalPosition: {x: 0.13633999, y: 1.402, z: -0.86829996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 191412831}
   - {fileID: 1994137950}
-  - {fileID: 696521179}
   - {fileID: 1743105314}
-  m_Father: {fileID: 1149205028}
+  m_Father: {fileID: 937297734082975716}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1093705469
 GameObject:
@@ -50434,6 +50564,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5dfe09e00bac8904f8112af4baa4ff5e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1441911657}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5dfe09e00bac8904f8112af4baa4ff5e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1428173844}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5dfe09e00bac8904f8112af4baa4ff5e, type: 3}
 --- !u!4 &1124700766 stripped
@@ -52166,7 +52299,6 @@ Transform:
   - {fileID: 701464196}
   - {fileID: 1909909858}
   - {fileID: 788274398}
-  - {fileID: 1093371129}
   - {fileID: 595599801}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -61578,7 +61710,7 @@ MonoBehaviour:
   maxDistance: 7
   wheelZoomSpeed: 0.05
   zoomSmoothTime: 0.12
-  panLimit: 1.5
+  panLimit: 4
   defaultOffset: {x: -1.6, y: 0.5, z: 0}
 --- !u!1 &1362007280
 GameObject:
@@ -64153,6 +64285,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1421977302}
   m_CullTransparentMesh: 1
+--- !u!1 &1428173843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1428173844}
+  - component: {fileID: 1428173845}
+  m_Layer: 15
+  m_Name: SparkMultimeterElectricalComponent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1428173844
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428173843}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 543136021}
+  - {fileID: 287280085}
+  m_Father: {fileID: 1124700766}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1428173845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428173843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 942ea4f30f41aa741b2de9d4dbaa3ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Measurement.SparkMultimeterElectricalComponent
+  objectId: MultiMeter_Electric_Component
+  displayName: MultiMeter Electric Component
+  interactionsEnabled: 1
+  operationalState: 1
+  componentFamily: Generic
+  electricalModelId: generic
+  electricalEnabled: 1
+  shuntResistanceOhms: 0.05
+  redTerminal: {fileID: 543136020}
+  blackTerminal: {fileID: 287280086}
 --- !u!1 &1428760216
 GameObject:
   m_ObjectHideFlags: 0
@@ -87736,8 +87924,8 @@ MonoBehaviour:
   electricalEnabled: 1
   terminalA: {fileID: 256401731}
   terminalB: {fileID: 1823709209}
-  resistance: 1000
-  maximumPowerWatts: 1
+  resistance: 330
+  maximumPowerWatts: 0.25
 --- !u!114 &1910408503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93824,7 +94012,7 @@ MonoBehaviour:
   generateOnEnable: 1
   castShadows: 1
   receiveShadows: 1
-  cableMaterial: {fileID: 0}
+  cableMaterial: {fileID: 2100000, guid: 49ee3b13b0418604594c175493a37d8d, type: 2}
   drawDebugPath: 0
   logGenerationWarnings: 0
 --- !u!23 &2052051529
@@ -94684,6 +94872,7 @@ GameObject:
   - component: {fileID: 2081683187}
   - component: {fileID: 2081683197}
   - component: {fileID: 2081683198}
+  - component: {fileID: 2081683199}
   m_Layer: 15
   m_Name: MultiMeter_RedProbe
   m_TagString: Untagged
@@ -94699,15 +94888,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2081683185}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.272822, y: -0.060989223, z: -0.021816546, w: 0.95988154}
-  m_LocalPosition: {x: 0.045999944, y: -0.26300007, z: -0.2280002}
+  m_LocalRotation: {x: -0.7812022, y: -0.08132972, z: -0.086678974, w: 0.61285836}
+  m_LocalPosition: {x: 0.415, y: -0.32, z: -0.122}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8295350476132676865}
   - {fileID: 1431766464}
   m_Father: {fileID: 2130851336082935432}
-  m_LocalEulerAnglesHint: {x: 31.406, y: -8.692, z: -5.052}
+  m_LocalEulerAnglesHint: {x: -103.68, y: -8.692, z: -5.052}
 --- !u!114 &2081683187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94951,6 +95140,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2081683199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081683185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b2de1c132d341741850224a81c32615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkSmartMove
+  movementTarget: {fileID: 0}
+  targetOffset: {x: 0, y: 0.15, z: 0}
+  inputCamera: {fileID: 1360671976}
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 32768
+  raycastDistance: 1000
+  ignoreUI: 1
+  clickThreshold: 5
+  smoothTime: 0.2
+  maxSpeed: 100
+  stopDistance: 0.001
 --- !u!1 &2081869559
 GameObject:
   m_ObjectHideFlags: 0
@@ -98694,6 +98907,8 @@ Transform:
   - {fileID: 7996286762320911705}
   - {fileID: 810545242}
   - {fileID: 2021302033}
+  - {fileID: 1093371129}
+  - {fileID: 696521179}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &938999873764271294
@@ -100186,7 +100401,7 @@ MonoBehaviour:
   rotationSensitivity: 0.25
   invertX: 0
   invertY: 1
-  useWorldSpace: 0
+  useWorldSpace: 1
   clampVerticalRotation: 0
   minVerticalAngle: -80
   maxVerticalAngle: 80
@@ -107385,7 +107600,7 @@ MonoBehaviour:
   generateOnEnable: 1
   castShadows: 1
   receiveShadows: 1
-  cableMaterial: {fileID: 0}
+  cableMaterial: {fileID: 2100000, guid: a19fe342efa4c4349b91b370adcd4bb9, type: 2}
   drawDebugPath: 0
   logGenerationWarnings: 0
 --- !u!64 &7778283798225982443
@@ -108083,7 +108298,7 @@ MonoBehaviour:
   generateOnEnable: 1
   castShadows: 1
   receiveShadows: 1
-  cableMaterial: {fileID: 0}
+  cableMaterial: {fileID: 357394926527877259, guid: 995e4a0430ba45b40a8a62b495848b23, type: 3}
   drawDebugPath: 0
   logGenerationWarnings: 0
 --- !u!64 &8583529958641421812
@@ -108974,7 +109189,7 @@ Transform:
   m_GameObject: {fileID: 8491955606921869647}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7596232, z: 0.6503634, w: 0}
-  m_LocalPosition: {x: -2.46, y: 2.63, z: 0.54}
+  m_LocalPosition: {x: -1.14, y: 2.63, z: 0.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -109042,6 +109257,7 @@ MonoBehaviour:
   measurementSystem: {fileID: 4604471978043747382}
   redProbeTerminal: {fileID: 2081683187}
   blackProbeTerminal: {fileID: 670486929}
+  circuit: {fileID: 7599571614260267257}
   poweredOn: 0
   mode: 4
   range: 0
@@ -109055,6 +109271,9 @@ MonoBehaviour:
   displayDecimals: 3
   useScientificNotationForVerySmallValues: 0
   zeroThreshold: 0.000001
+  electricalComponent: {fileID: 1428173845}
+  currentRedTerminal: {fileID: 543136020}
+  currentBlackTerminal: {fileID: 287280086}
 --- !u!65 &9120541368492925945
 BoxCollider:
   m_ObjectHideFlags: 0
