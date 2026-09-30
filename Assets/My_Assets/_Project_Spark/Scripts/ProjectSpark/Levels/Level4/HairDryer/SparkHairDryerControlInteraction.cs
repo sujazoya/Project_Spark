@@ -3,14 +3,21 @@ using UnityEngine;
 namespace ProjectSpark.Gameplay
 {
     /// <summary>
-    /// Interaction component for Project Spark hair-dryer controls.
+    /// Physical interaction component for a hair-dryer control.
     ///
-    /// Connects a physical control to SparkHairDryerVisualController.
+    /// This component operates the actual SparkSwitch.
     ///
-    /// Visual/control interaction only.
-    /// Does NOT perform electrical simulation.
+    /// Electrical simulation:
+    ///     SparkSwitch
+    ///         ↓
+    ///     SparkElectricalSolver
     ///
-    /// Attach this to the collider/object representing:
+    /// Visual simulation:
+    ///     SparkHairDryerVisualController
+    ///
+    /// No appliance-level electrical owner is required.
+    ///
+    /// Attach this component to the clickable object representing:
     /// - Power switch
     /// - Heat switch
     /// - Fan speed switch
@@ -18,6 +25,10 @@ namespace ProjectSpark.Gameplay
     [DisallowMultipleComponent]
     public sealed class SparkHairDryerControlInteraction : MonoBehaviour
     {
+        // ============================================================
+        // CONTROL TYPE
+        // ============================================================
+
         public enum ControlType
         {
             Power,
@@ -25,9 +36,17 @@ namespace ProjectSpark.Gameplay
             FanSpeed
         }
 
-        [Header("Controller")]
+        // ============================================================
+        // ELECTRICAL SWITCH
+        // ============================================================
+
+        [Header("Electrical Switch")]
         [SerializeField]
-        private SparkHairDryerVisualController controller;
+        private SparkSwitch sparkSwitch;
+
+        // ============================================================
+        // CONTROL
+        // ============================================================
 
         [Header("Control")]
         [SerializeField]
@@ -35,187 +54,139 @@ namespace ProjectSpark.Gameplay
 
         [Header("Interaction")]
         [SerializeField]
-        private bool cycleOnClick = true;
+        private bool toggleOnClick = true;
 
         [SerializeField]
-        private bool allowDirectPositionSelection = true;
+        private bool allowDirectStateSelection = true;
 
-        [Header("Current Position")]
+        // ============================================================
+        // STATE
+        // ============================================================
+
+        [Header("Runtime State")]
         [SerializeField]
-        private int currentPosition;
+        private bool isOn;
 
         public ControlType Type =>
             controlType;
 
-        public int CurrentPosition =>
-            currentPosition;
+        public bool IsOn =>
+            isOn;
+
+        public SparkSwitch Switch =>
+            sparkSwitch;
+
+        // ============================================================
+        // UNITY
+        // ============================================================
 
         private void Awake()
         {
-            SyncFromController();
+            if (sparkSwitch == null)
+                sparkSwitch = GetComponent<SparkSwitch>();
+
+            SyncFromSwitch();
         }
 
+        // ============================================================
+        // INTERACTION
+        // ============================================================
+
+        /// <summary>
+        /// Called by the Project Spark interaction system.
+        /// </summary>
         public void Activate()
         {
-            if (controller == null)
+            if (sparkSwitch == null)
                 return;
 
-            if (cycleOnClick)
+            if (toggleOnClick)
             {
-                CycleControl();
+                Toggle();
                 return;
             }
 
-            ApplyCurrentPosition();
+            ApplyCurrentState();
         }
 
-        public void SetPosition(int position)
+        // ============================================================
+        // TOGGLE
+        // ============================================================
+
+        public void Toggle()
         {
-            if (!allowDirectPositionSelection)
+            if (sparkSwitch == null)
                 return;
 
-            if (controller == null)
+            sparkSwitch.ToggleState();
+
+            SyncFromSwitch();
+        }
+
+        // ============================================================
+        // DIRECT STATE
+        // ============================================================
+
+        public void SetState(bool on)
+        {
+            if (!allowDirectStateSelection)
                 return;
 
-            switch (controlType)
-            {
-                case ControlType.Power:
-
-                    position =
-                        Mathf.Clamp(position, 0, 1);
-
-                    currentPosition = position;
-
-                    controller.SetPower(
-                        position == 1);
-
-                    break;
-
-                case ControlType.Heat:
-
-                    position =
-                        Mathf.Clamp(position, 0, 2);
-
-                    currentPosition = position;
-
-                    switch (position)
-                    {
-                        case 0:
-                            controller.SetCold();
-                            break;
-
-                        case 1:
-                            controller.SetLowHeat();
-                            break;
-
-                        case 2:
-                            controller.SetHighHeat();
-                            break;
-                    }
-
-                    break;
-
-                case ControlType.FanSpeed:
-
-                    position =
-                        Mathf.Clamp(position, 0, 2);
-
-                    currentPosition = position;
-
-                    switch (position)
-                    {
-                        case 0:
-                            controller.SetFanOff();
-                            break;
-
-                        case 1:
-                            controller.SetFanLow();
-                            break;
-
-                        case 2:
-                            controller.SetFanHigh();
-                            break;
-                    }
-
-                    break;
-            }
-        }
-
-        private void CycleControl()
-        {
-            switch (controlType)
-            {
-                case ControlType.Power:
-
-                    currentPosition++;
-
-                    if (currentPosition > 1)
-                        currentPosition = 0;
-
-                    SetPosition(currentPosition);
-
-                    break;
-
-                case ControlType.Heat:
-
-                    currentPosition++;
-
-                    if (currentPosition > 2)
-                        currentPosition = 0;
-
-                    SetPosition(currentPosition);
-
-                    break;
-
-                case ControlType.FanSpeed:
-
-                    currentPosition++;
-
-                    if (currentPosition > 2)
-                        currentPosition = 0;
-
-                    SetPosition(currentPosition);
-
-                    break;
-            }
-        }
-
-        private void ApplyCurrentPosition()
-        {
-            SetPosition(currentPosition);
-        }
-
-        public void SyncFromController()
-        {
-            if (controller == null)
+            if (sparkSwitch == null)
                 return;
 
-            switch (controlType)
+            sparkSwitch.SetState(
+                on
+                    ? SparkSwitchState.Closed
+                    : SparkSwitchState.Open);
+
+            SyncFromSwitch();
+        }
+
+        // ============================================================
+        // CURRENT STATE
+        // ============================================================
+
+        private void ApplyCurrentState()
+        {
+            SetState(isOn);
+        }
+
+        // ============================================================
+        // SYNCHRONIZATION
+        // ============================================================
+
+        public void SyncFromSwitch()
+        {
+            if (sparkSwitch == null)
             {
-                case ControlType.Power:
-
-                    currentPosition =
-                        controller.CurrentPowerState ==
-                        SparkHairDryerVisualController.PowerState.On
-                            ? 1
-                            : 0;
-
-                    break;
-
-                case ControlType.Heat:
-
-                    currentPosition =
-                        (int)controller.CurrentHeatMode;
-
-                    break;
-
-                case ControlType.FanSpeed:
-
-                    currentPosition =
-                        (int)controller.CurrentFanSpeed;
-
-                    break;
+                isOn = false;
+                return;
             }
+
+            isOn =
+                sparkSwitch.State ==
+                SparkSwitchState.Closed;
+        }
+
+        // ============================================================
+        // PUBLIC HELPERS
+        // ============================================================
+
+        public void TurnOn()
+        {
+            SetState(true);
+        }
+
+        public void TurnOff()
+        {
+            SetState(false);
+        }
+
+        public bool IsSwitchClosed()
+        {
+            return sparkSwitch != null &&
+                   sparkSwitch.IsClosed;
         }
 
         // ============================================================
@@ -228,22 +199,22 @@ namespace ProjectSpark.Gameplay
             Activate();
         }
 
-        [ContextMenu("Test / Position 0")]
-        private void TestPosition0()
+        [ContextMenu("Test / Turn On")]
+        private void TestTurnOn()
         {
-            SetPosition(0);
+            TurnOn();
         }
 
-        [ContextMenu("Test / Position 1")]
-        private void TestPosition1()
+        [ContextMenu("Test / Turn Off")]
+        private void TestTurnOff()
         {
-            SetPosition(1);
+            TurnOff();
         }
 
-        [ContextMenu("Test / Position 2")]
-        private void TestPosition2()
+        [ContextMenu("Test / Toggle")]
+        private void TestToggle()
         {
-            SetPosition(2);
+            Toggle();
         }
     }
 }

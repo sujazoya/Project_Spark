@@ -2,51 +2,34 @@ using UnityEngine;
 
 namespace ProjectSpark.Gameplay
 {
-    /// <summary>
-    /// Main Project Spark player interaction controller.
-    ///
-    /// Responsibilities:
-    /// - Raycast from the player camera.
-    /// - Detect SparkInteractable objects.
-    /// - Highlight the object under the cursor.
-    /// - Interact with the object on mouse click.
-    ///
-    /// This system is intentionally small.
-    ///
-    /// It does NOT control:
-    /// - Movement
-    /// - Rotation
-    /// - Electrical simulation
-    /// - Circuit topology
-    /// - Hair-dryer logic
-    /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkInteractionController : MonoBehaviour
     {
         [Header("Camera")]
+
         [SerializeField]
         private Camera targetCamera;
 
         [Header("Raycast")]
+
         [SerializeField]
         [Min(0.1f)]
         private float interactionDistance = 5f;
 
         [SerializeField]
-        private LayerMask interactionLayers =
-            ~0;
+        private LayerMask interactionLayers = ~0;
 
         [SerializeField]
-        private QueryTriggerInteraction
-            triggerInteraction =
-                QueryTriggerInteraction.Ignore;
+        private QueryTriggerInteraction triggerInteraction =
+            QueryTriggerInteraction.Ignore;
 
         [Header("Input")]
+
         [SerializeField]
-        private KeyCode interactKey =
-            KeyCode.Mouse0;
+        private KeyCode interactKey = KeyCode.Mouse0;
 
         [Header("Settings")]
+
         [SerializeField]
         private bool interactionEnabled = true;
 
@@ -54,6 +37,7 @@ namespace ProjectSpark.Gameplay
         private bool highlightTarget = true;
 
         [Header("Runtime")]
+
         [SerializeField]
         private SparkInteractable currentTarget;
 
@@ -71,8 +55,7 @@ namespace ProjectSpark.Gameplay
 
         private void Awake()
         {
-            if (targetCamera == null)
-                targetCamera = Camera.main;
+            ResolveCamera();
         }
 
         private void Update()
@@ -91,28 +74,40 @@ namespace ProjectSpark.Gameplay
             }
         }
 
+        private void ResolveCamera()
+        {
+            if (targetCamera != null)
+                return;
+
+            targetCamera = Camera.main;
+        }
+
         private void UpdateTarget()
         {
-            SparkInteractable newTarget =
+            SparkInteractable detectedTarget =
                 RaycastForInteractable();
 
-            if (newTarget == currentTarget)
+            if (detectedTarget == currentTarget)
                 return;
 
             previousTarget =
                 currentTarget;
 
             currentTarget =
-                newTarget;
+                detectedTarget;
 
             UpdateHighlightState();
         }
 
-        private SparkInteractable
-            RaycastForInteractable()
+        private SparkInteractable RaycastForInteractable()
         {
             if (targetCamera == null)
-                return null;
+            {
+                ResolveCamera();
+
+                if (targetCamera == null)
+                    return null;
+            }
 
             Ray ray =
                 targetCamera.ScreenPointToRay(
@@ -128,18 +123,38 @@ namespace ProjectSpark.Gameplay
                 return null;
             }
 
+            return FindInteractable(hit.collider);
+        }
+
+        private SparkInteractable FindInteractable(
+            Collider hitCollider)
+        {
+            if (hitCollider == null)
+                return null;
+
             SparkInteractable interactable =
-                hit.collider.GetComponent<
+                hitCollider.GetComponent<
                     SparkInteractable>();
 
             if (interactable == null)
             {
                 interactable =
-                    hit.collider.GetComponentInParent<
+                    hitCollider.GetComponentInParent<
                         SparkInteractable>();
             }
 
             if (interactable == null)
+            {
+                interactable =
+                    hitCollider.GetComponentInChildren<
+                        SparkInteractable>(
+                            true);
+            }
+
+            if (interactable == null)
+                return null;
+
+            if (!interactable.isActiveAndEnabled)
                 return null;
 
             if (!interactable.CanInteract())
@@ -150,13 +165,58 @@ namespace ProjectSpark.Gameplay
 
         private void TryInteract()
         {
-            if (currentTarget == null)
+            SparkInteractable target =
+                currentTarget;
+
+            if (target == null)
                 return;
 
-            if (!currentTarget.CanInteract())
+            if (!target.isActiveAndEnabled)
                 return;
 
-            currentTarget.Interact();
+            if (!target.CanInteract())
+                return;
+
+            SparkObjectVisibilityController
+                visibilityController =
+                    FindVisibilityController(target);
+
+            if (visibilityController != null)
+            {
+                visibilityController.OpenPanel();
+                return;
+            }
+
+            target.Interact();
+        }
+
+        private SparkObjectVisibilityController
+            FindVisibilityController(
+                SparkInteractable interactable)
+        {
+            if (interactable == null)
+                return null;
+
+            SparkObjectVisibilityController controller =
+                interactable.GetComponent<
+                    SparkObjectVisibilityController>();
+
+            if (controller != null)
+                return controller;
+
+            controller =
+                interactable.GetComponentInParent<
+                    SparkObjectVisibilityController>();
+
+            if (controller != null)
+                return controller;
+
+            controller =
+                interactable.GetComponentInChildren<
+                    SparkObjectVisibilityController>(
+                        true);
+
+            return controller;
         }
 
         private void UpdateHighlightState()
@@ -182,6 +242,12 @@ namespace ProjectSpark.Gameplay
                 currentTarget.SetHighlighted(false);
             }
 
+            if (previousTarget != null &&
+                previousTarget != currentTarget)
+            {
+                previousTarget.SetHighlighted(false);
+            }
+
             currentTarget = null;
             previousTarget = null;
         }
@@ -189,10 +255,13 @@ namespace ProjectSpark.Gameplay
         public void SetInteractionEnabled(
             bool enabled)
         {
-            interactionEnabled = enabled;
+            interactionEnabled =
+                enabled;
 
             if (!enabled)
+            {
                 ClearTarget();
+            }
         }
 
         public void SetInteractionDistance(
@@ -202,6 +271,12 @@ namespace ProjectSpark.Gameplay
                 Mathf.Max(
                     0.1f,
                     distance);
+        }
+
+        public void SetCamera(
+            Camera camera)
+        {
+            targetCamera = camera;
         }
 
         [ContextMenu("Test / Clear Target")]

@@ -1,203 +1,105 @@
 using UnityEngine;
+using UnityEngine.VFX;
 
 namespace ProjectSpark.Gameplay
 {
     /// <summary>
-    /// Complete visual controller for Project Spark Level 4 Hair Dryer.
+    /// Visual coordinator for the Project Spark hair dryer.
     ///
-    /// Coordinates the already-existing visual components:
+    /// IMPORTANT:
+    /// This component does NOT control the electrical circuit.
     ///
-    /// - Power switch
-    /// - Heat selector
-    /// - Fan-speed selector
-    /// - Power indicator
-    /// - Fan motor
-    /// - Heater
-    /// - Airflow VFX
-    /// - Thermal protection visual
+    /// Electrical state comes from:
+    ///     SparkHairDryerMotorElectrical
+    ///     SparkHairDryerHeaterElectrical
     ///
-    /// VISUAL ONLY.
+    /// Visual state:
+    ///     Motor rotation
+    ///     Airflow VFX
+    ///     Heater visual
     ///
-    /// This component does NOT perform:
-    /// - Electrical simulation
-    /// - Voltage calculation
-    /// - Current calculation
-    /// - Resistance calculation
-    /// - Motor electrical simulation
-    /// - Heater electrical simulation
-    /// - Real thermal protection
-    ///
-    /// Those systems will be connected later.
+    /// There is intentionally no SparkHairDryer electrical owner.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkHairDryerVisualController : MonoBehaviour
     {
         // ============================================================
-        // ENUMS
+        // ELECTRICAL COMPONENTS
         // ============================================================
 
-        public enum PowerState
-        {
-            Off,
-            On
-        }
+        [Header("Electrical State")]
+        [SerializeField]
+        private SparkHairDryerMotorElectrical motorElectrical;
 
-        public enum HeatMode
-        {
-            Cold,
-            Low,
-            High
-        }
-
-        public enum FanSpeed
-        {
-            Off,
-            Low,
-            High
-        }
+        [SerializeField]
+        private SparkHairDryerHeaterElectrical heaterElectrical;
 
         // ============================================================
-        // COMPONENT REFERENCES
+        // MOTOR VISUAL
         // ============================================================
 
-        [Header("Fan")]
+        [Header("Motor Visual")]
         [SerializeField]
         private SparkHairDryerMotorVisual motorVisual;
 
-        [Header("Heater")]
-        [SerializeField]
-        private SparkHairDryerHeaterVisual heaterVisual;
-
-        [Header("Airflow")]
-        [SerializeField]
-        private SparkHairDryerAirflowVisual airflowVisual;
-
-        [Header("Thermal Protection")]
-        [SerializeField]
-        private SparkHairDryerThermalProtectionVisual
-            thermalProtectionVisual;
-
         // ============================================================
-        // SWITCH VISUALS
+        // AIRFLOW
         // ============================================================
 
-        [Header("Control Switches")]
+        [Header("Airflow VFX")]
         [SerializeField]
-        private SparkHairDryerSwitchVisual powerSwitchVisual;
+        private VisualEffect airflowVfx;
 
         [SerializeField]
-        private SparkHairDryerSwitchVisual heatSwitchVisual;
-
-        [SerializeField]
-        private SparkHairDryerSwitchVisual fanSwitchVisual;
+        private bool disableAirflowObjectWhenOff;
 
         // ============================================================
-        // INDICATORS
+        // HEATER VISUAL
         // ============================================================
 
-        [Header("Indicators")]
+        [Header("Heater Visual")]
         [SerializeField]
-        private SparkHairDryerSwitchIndicatorVisual powerIndicator;
+        private GameObject heaterVisual;
 
         [SerializeField]
-        private SparkHairDryerSwitchIndicatorVisual heatIndicator;
+        private bool disableHeaterObjectWhenOff;
 
         // ============================================================
-        // STATES
+        // HEATER MATERIAL
         // ============================================================
 
-        [Header("Runtime State")]
+        [Header("Heater Material")]
         [SerializeField]
-        private PowerState powerState =
-            PowerState.Off;
+        private Renderer heaterRenderer;
 
         [SerializeField]
-        private HeatMode heatMode =
-            HeatMode.Cold;
+        private string heaterIntensityProperty = "_EmissionIntensity";
 
-        [SerializeField]
-        private FanSpeed fanSpeed =
-            FanSpeed.Off;
+        [SerializeField, Min(0f)]
+        private float heaterOffIntensity = 0f;
+
+        [SerializeField, Min(0f)]
+        private float heaterOnIntensity = 1f;
 
         // ============================================================
-        // FAN SETTINGS
+        // RUNTIME STATE
         // ============================================================
 
-        [Header("Fan Settings")]
-        [SerializeField]
-        [Min(0f)]
-        private float lowFanRPM = 4500f;
-
-        [SerializeField]
-        [Min(0f)]
-        private float highFanRPM = 7500f;
+        private bool lastMotorRunning;
+        private bool lastHeaterRunning;
+        private bool initialized;
 
         // ============================================================
-        // AIRFLOW SETTINGS
+        // PUBLIC STATE
         // ============================================================
 
-        [Header("Airflow Settings")]
-        [SerializeField]
-        [Range(0f, 1f)]
-        private float lowAirflow = 0.45f;
-
-        [SerializeField]
-        [Range(0f, 1f)]
-        private float highAirflow = 1f;
-
-        // ============================================================
-        // HEAT SETTINGS
-        // ============================================================
-
-        [Header("Heat Settings")]
-        [SerializeField]
-        [Range(0f, 1f)]
-        private float lowHeatTemperature = 0.55f;
-
-        [SerializeField]
-        [Range(0f, 1f)]
-        private float highHeatTemperature = 1f;
-
-        // ============================================================
-        // AIR TEMPERATURE
-        // ============================================================
-
-        [Header("Air Temperature")]
-        [SerializeField]
-        [Range(0f, 1f)]
-        private float coldAirTemperature = 0f;
-
-        [SerializeField]
-        [Range(0f, 1f)]
-        private float lowAirTemperature = 0.45f;
-
-        [SerializeField]
-        [Range(0f, 1f)]
-        private float highAirTemperature = 1f;
-
-        // ============================================================
-        // RUNTIME PROPERTIES
-        // ============================================================
-
-        public PowerState CurrentPowerState =>
-            powerState;
-
-        public HeatMode CurrentHeatMode =>
-            heatMode;
-
-        public FanSpeed CurrentFanSpeed =>
-            fanSpeed;
-
-        public bool IsPowered =>
-            powerState == PowerState.On;
-
-        public bool IsRunning =>
-            IsPowered &&
-            fanSpeed != FanSpeed.Off;
+        public bool IsMotorRunning =>
+            motorElectrical != null &&
+            motorElectrical.IsRunning;
 
         public bool IsHeating =>
-            IsPowered &&
-            heatMode != HeatMode.Cold;
+            heaterElectrical != null &&
+            heaterElectrical.IsHeating;
 
         // ============================================================
         // UNITY
@@ -205,257 +107,131 @@ namespace ProjectSpark.Gameplay
 
         private void Awake()
         {
-            ApplyCompleteStateImmediate();
+            AutoAssignReferences();
+            ApplyVisualState();
+        }
+
+        private void Update()
+        {
+            RefreshVisualState();
         }
 
         // ============================================================
-        // POWER
+        // REFERENCE SETUP
         // ============================================================
 
-        public void SetPower(PowerState state)
+        private void AutoAssignReferences()
         {
-            if (powerState == state)
+            if (motorElectrical == null)
             {
-                ApplyCompleteState();
-                return;
+                motorElectrical =
+                    GetComponentInChildren<
+                        SparkHairDryerMotorElectrical>(true);
             }
 
-            powerState = state;
-
-            ApplyCompleteState();
-        }
-
-        public void SetPower(bool enabled)
-        {
-            SetPower(
-                enabled
-                    ? PowerState.On
-                    : PowerState.Off);
-        }
-
-        public void PowerOn()
-        {
-            SetPower(PowerState.On);
-        }
-
-        public void PowerOff()
-        {
-            SetPower(PowerState.Off);
-        }
-
-        // ============================================================
-        // HEAT
-        // ============================================================
-
-        public void SetHeatMode(HeatMode mode)
-        {
-            heatMode = mode;
-
-            ApplyCompleteState();
-        }
-
-        public void SetCold()
-        {
-            SetHeatMode(HeatMode.Cold);
-        }
-
-        public void SetLowHeat()
-        {
-            SetHeatMode(HeatMode.Low);
-        }
-
-        public void SetHighHeat()
-        {
-            SetHeatMode(HeatMode.High);
-        }
-
-        // ============================================================
-        // FAN
-        // ============================================================
-
-        public void SetFanSpeed(FanSpeed speed)
-        {
-            fanSpeed = speed;
-
-            ApplyCompleteState();
-        }
-
-        public void SetFanOff()
-        {
-            SetFanSpeed(FanSpeed.Off);
-        }
-
-        public void SetFanLow()
-        {
-            SetFanSpeed(FanSpeed.Low);
-        }
-
-        public void SetFanHigh()
-        {
-            SetFanSpeed(FanSpeed.High);
-        }
-
-        // ============================================================
-        // COMPLETE STATE
-        // ============================================================
-
-        private void ApplyCompleteState()
-        {
-            ApplyControlVisuals();
-            ApplyPowerIndicator();
-            ApplyMotor();
-            ApplyHeater();
-            ApplyAirflow();
-            ApplyThermalProtectionVisual();
-        }
-
-        private void ApplyCompleteStateImmediate()
-        {
-            ApplyControlVisualsImmediate();
-            ApplyPowerIndicatorImmediate();
-
-            ApplyMotor();
-            ApplyHeater();
-            ApplyAirflow();
-            ApplyThermalProtectionVisual();
-        }
-
-        // ============================================================
-        // SWITCH VISUALS
-        // ============================================================
-
-        private void ApplyControlVisuals()
-        {
-            if (powerSwitchVisual != null)
+            if (heaterElectrical == null)
             {
-                powerSwitchVisual.SetPosition(
-                    powerState == PowerState.On
-                        ? 1
-                        : 0);
+                heaterElectrical =
+                    GetComponentInChildren<
+                        SparkHairDryerHeaterElectrical>(true);
             }
 
-            if (heatSwitchVisual != null)
+            if (motorVisual == null)
             {
-                heatSwitchVisual.SetPosition(
-                    GetHeatSwitchPosition());
-            }
-
-            if (fanSwitchVisual != null)
-            {
-                fanSwitchVisual.SetPosition(
-                    GetFanSwitchPosition());
-            }
-        }
-
-        private void ApplyControlVisualsImmediate()
-        {
-            if (powerSwitchVisual != null)
-            {
-                powerSwitchVisual.SetPositionImmediate(
-                    powerState == PowerState.On
-                        ? 1
-                        : 0);
-            }
-
-            if (heatSwitchVisual != null)
-            {
-                heatSwitchVisual.SetPositionImmediate(
-                    GetHeatSwitchPosition());
-            }
-
-            if (fanSwitchVisual != null)
-            {
-                fanSwitchVisual.SetPositionImmediate(
-                    GetFanSwitchPosition());
-            }
-        }
-
-        private int GetHeatSwitchPosition()
-        {
-            switch (heatMode)
-            {
-                case HeatMode.Cold:
-                    return 0;
-
-                case HeatMode.Low:
-                    return 1;
-
-                case HeatMode.High:
-                    return 2;
-
-                default:
-                    return 0;
-            }
-        }
-
-        private int GetFanSwitchPosition()
-        {
-            switch (fanSpeed)
-            {
-                case FanSpeed.Off:
-                    return 0;
-
-                case FanSpeed.Low:
-                    return 1;
-
-                case FanSpeed.High:
-                    return 2;
-
-                default:
-                    return 0;
+                motorVisual =
+                    GetComponentInChildren<
+                        SparkHairDryerMotorVisual>(true);
             }
         }
 
         // ============================================================
-        // POWER INDICATOR
+        // STATE REFRESH
         // ============================================================
 
-        private void ApplyPowerIndicator()
+        private void RefreshVisualState()
         {
-            if (powerIndicator == null)
-                return;
+            bool motorRunning = IsMotorRunning;
+            bool heating = IsHeating;
 
-            powerIndicator.SetState(
-                powerState == PowerState.On);
+            if (!initialized ||
+                motorRunning != lastMotorRunning ||
+                heating != lastHeaterRunning)
+            {
+                ApplyMotorVisual(motorRunning);
+                ApplyHeaterVisual(heating);
+
+                lastMotorRunning = motorRunning;
+                lastHeaterRunning = heating;
+
+                initialized = true;
+            }
         }
 
-        private void ApplyPowerIndicatorImmediate()
-        {
-            if (powerIndicator == null)
-                return;
+        // ============================================================
+        // APPLY ALL
+        // ============================================================
 
-            powerIndicator.SetState(
-                powerState == PowerState.On);
+        private void ApplyVisualState()
+        {
+            bool motorRunning = IsMotorRunning;
+            bool heating = IsHeating;
+
+            ApplyMotorVisual(motorRunning);
+            ApplyHeaterVisual(heating);
+
+            lastMotorRunning = motorRunning;
+            lastHeaterRunning = heating;
+
+            initialized = true;
         }
 
         // ============================================================
         // MOTOR
         // ============================================================
 
-        private void ApplyMotor()
+        private void ApplyMotorVisual(bool running)
         {
-            if (motorVisual == null)
+            if (motorVisual != null)
+                motorVisual.SetRunning(running);
+
+            SetAirflow(running);
+        }
+
+        // ============================================================
+        // AIRFLOW
+        // ============================================================
+
+        private void SetAirflow(bool active)
+        {
+            if (airflowVfx == null)
                 return;
 
-            if (powerState == PowerState.Off)
+            if (disableAirflowObjectWhenOff)
             {
-                motorVisual.Stop();
+                if (airflowVfx.gameObject.activeSelf != active)
+                {
+                    airflowVfx.gameObject.SetActive(active);
+                }
+
+                if (!active)
+                    airflowVfx.Stop();
+
                 return;
             }
 
-            switch (fanSpeed)
+            if (active)
             {
-                case FanSpeed.Off:
-                    motorVisual.Stop();
-                    break;
+                if (!airflowVfx.enabled)
+                    airflowVfx.enabled = true;
 
-                case FanSpeed.Low:
-                    motorVisual.SetRPM(lowFanRPM);
-                    break;
+                airflowVfx.Play();
+            }
+            else
+            {
+                airflowVfx.Stop();
 
-                case FanSpeed.High:
-                    motorVisual.SetRPM(highFanRPM);
-                    break;
+                if (airflowVfx.enabled)
+                    airflowVfx.enabled = false;
             }
         }
 
@@ -463,260 +239,84 @@ namespace ProjectSpark.Gameplay
         // HEATER
         // ============================================================
 
-        private void ApplyHeater()
+        private void ApplyHeaterVisual(bool heating)
         {
-            if (heaterVisual == null)
+            if (heaterVisual != null &&
+                disableHeaterObjectWhenOff)
+            {
+                if (heaterVisual.activeSelf != heating)
+                {
+                    heaterVisual.SetActive(heating);
+                }
+            }
+
+            if (heaterRenderer == null)
                 return;
 
-            if (powerState == PowerState.Off)
-            {
-                heaterVisual.SetCold();
-                return;
-            }
+            Material material = heaterRenderer.material;
 
-            switch (heatMode)
-            {
-                case HeatMode.Cold:
-                    heaterVisual.SetCold();
-                    break;
-
-                case HeatMode.Low:
-                    heaterVisual.SetTemperature(
-                        lowHeatTemperature);
-                    break;
-
-                case HeatMode.High:
-                    heaterVisual.SetTemperature(
-                        highHeatTemperature);
-                    break;
-            }
-        }
-
-        // ============================================================
-        // AIRFLOW
-        // ============================================================
-
-        private void ApplyAirflow()
-        {
-            if (airflowVisual == null)
+            if (material == null)
                 return;
 
-            if (powerState == PowerState.Off)
-            {
-                airflowVisual.StopAirflow();
-                airflowVisual.SetAirTemperature(
-                    coldAirTemperature);
-                return;
-            }
-
-            switch (fanSpeed)
-            {
-                case FanSpeed.Off:
-
-                    airflowVisual.StopAirflow();
-
-                    airflowVisual.SetAirTemperature(
-                        coldAirTemperature);
-
-                    break;
-
-                case FanSpeed.Low:
-
-                    airflowVisual.SetAirflowStrength(
-                        lowAirflow);
-
-                    ApplyAirTemperature();
-
-                    break;
-
-                case FanSpeed.High:
-
-                    airflowVisual.SetAirflowStrength(
-                        highAirflow);
-
-                    ApplyAirTemperature();
-
-                    break;
-            }
-        }
-
-        private void ApplyAirTemperature()
-        {
-            switch (heatMode)
-            {
-                case HeatMode.Cold:
-
-                    airflowVisual.SetAirTemperature(
-                        coldAirTemperature);
-
-                    break;
-
-                case HeatMode.Low:
-
-                    airflowVisual.SetAirTemperature(
-                        lowAirTemperature);
-
-                    break;
-
-                case HeatMode.High:
-
-                    airflowVisual.SetAirTemperature(
-                        highAirTemperature);
-
-                    break;
-            }
-        }
-
-        // ============================================================
-        // THERMAL PROTECTION VISUAL
-        // ============================================================
-
-        private void ApplyThermalProtectionVisual()
-        {
-            if (thermalProtectionVisual == null)
+            if (!material.HasProperty(heaterIntensityProperty))
                 return;
 
-            if (powerState == PowerState.Off ||
-                heatMode == HeatMode.Cold)
-            {
-                thermalProtectionVisual.SetTemperature(
-                    0f);
-
-                return;
-            }
-
-            switch (heatMode)
-            {
-                case HeatMode.Low:
-
-                    thermalProtectionVisual.SetTemperature(
-                        0.45f);
-
-                    break;
-
-                case HeatMode.High:
-
-                    thermalProtectionVisual.SetTemperature(
-                        0.80f);
-
-                    break;
-            }
+            material.SetFloat(
+                heaterIntensityProperty,
+                heating
+                    ? heaterOnIntensity
+                    : heaterOffIntensity);
         }
 
         // ============================================================
-        // PRESET MODES
+        // PUBLIC REFERENCE SETTERS
         // ============================================================
 
-        /// <summary>
-        /// Power OFF.
-        /// </summary>
-        public void PresetOff()
+        public void SetMotorElectrical(
+            SparkHairDryerMotorElectrical motor)
         {
-            powerState = PowerState.Off;
-            heatMode = HeatMode.Cold;
-            fanSpeed = FanSpeed.Off;
-
-            ApplyCompleteState();
+            motorElectrical = motor;
+            ApplyVisualState();
         }
 
-        /// <summary>
-        /// Cold air, low fan.
-        /// </summary>
-        public void PresetColdLow()
+        public void SetHeaterElectrical(
+            SparkHairDryerHeaterElectrical heater)
         {
-            powerState = PowerState.On;
-            heatMode = HeatMode.Cold;
-            fanSpeed = FanSpeed.Low;
-
-            ApplyCompleteState();
+            heaterElectrical = heater;
+            ApplyVisualState();
         }
 
-        /// <summary>
-        /// Cold air, high fan.
-        /// </summary>
-        public void PresetColdHigh()
+        public void SetMotorVisual(
+            SparkHairDryerMotorVisual visual)
         {
-            powerState = PowerState.On;
-            heatMode = HeatMode.Cold;
-            fanSpeed = FanSpeed.High;
-
-            ApplyCompleteState();
+            motorVisual = visual;
+            ApplyVisualState();
         }
 
-        /// <summary>
-        /// Low heat, low fan.
-        /// </summary>
-        public void PresetLowHeatLowFan()
+        public void SetAirflowVfx(
+            VisualEffect vfx)
         {
-            powerState = PowerState.On;
-            heatMode = HeatMode.Low;
-            fanSpeed = FanSpeed.Low;
+            airflowVfx = vfx;
 
-            ApplyCompleteState();
+            if (airflowVfx != null)
+                SetAirflow(IsMotorRunning);
         }
 
-        /// <summary>
-        /// Low heat, high fan.
-        /// </summary>
-        public void PresetLowHeatHighFan()
+        public void SetHeaterVisual(
+            GameObject visual)
         {
-            powerState = PowerState.On;
-            heatMode = HeatMode.Low;
-            fanSpeed = FanSpeed.High;
-
-            ApplyCompleteState();
-        }
-
-        /// <summary>
-        /// High heat, high fan.
-        /// </summary>
-        public void PresetHighHeatHighFan()
-        {
-            powerState = PowerState.On;
-            heatMode = HeatMode.High;
-            fanSpeed = FanSpeed.High;
-
-            ApplyCompleteState();
+            heaterVisual = visual;
+            ApplyHeaterVisual(IsHeating);
         }
 
         // ============================================================
-        // TEST CONTEXT MENUS
+        // DEBUG / TEST
         // ============================================================
 
-        [ContextMenu("Test / OFF")]
-        private void TestOff()
+        [ContextMenu("Refresh Visual State")]
+        private void TestRefreshVisualState()
         {
-            PresetOff();
-        }
-
-        [ContextMenu("Test / Cold + Low Fan")]
-        private void TestColdLow()
-        {
-            PresetColdLow();
-        }
-
-        [ContextMenu("Test / Cold + High Fan")]
-        private void TestColdHigh()
-        {
-            PresetColdHigh();
-        }
-
-        [ContextMenu("Test / Low Heat + Low Fan")]
-        private void TestLowHeatLowFan()
-        {
-            PresetLowHeatLowFan();
-        }
-
-        [ContextMenu("Test / Low Heat + High Fan")]
-        private void TestLowHeatHighFan()
-        {
-            PresetLowHeatHighFan();
-        }
-
-        [ContextMenu("Test / High Heat + High Fan")]
-        private void TestHighHeatHighFan()
-        {
-            PresetHighHeatHighFan();
+            ApplyVisualState();
         }
     }
 }

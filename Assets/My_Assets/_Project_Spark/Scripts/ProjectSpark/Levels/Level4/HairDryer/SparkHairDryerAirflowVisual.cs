@@ -3,35 +3,12 @@ using UnityEngine.VFX;
 
 namespace ProjectSpark.Gameplay
 {
-    /// <summary>
-    /// Controls the visual airflow of the Level 4 hair dryer.
-    ///
-    /// Responsibilities:
-    /// - Starts/stops airflow.
-    /// - Controls airflow strength.
-    /// - Controls airflow direction.
-    /// - Controls hot/cold visual state.
-    /// - Sends values to a VFX Graph.
-    ///
-    /// This component is VISUAL ONLY.
-    ///
-    /// Future electrical flow:
-    ///
-    /// Motor electrical state
-    ///        ↓
-    /// Fan RPM
-    ///        ↓
-    /// Airflow strength
-    ///        ↓
-    /// This component
-    ///        ↓
-    /// VFX Graph
-    /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkHairDryerAirflowVisual : MonoBehaviour
     {
         // ============================================================
-        // VFX PROPERTY IDS
+        // VFX PROPERTY NAMES
+        // Must exactly match the exposed properties in VFX Graph.
         // ============================================================
 
         private static readonly int AirflowStrengthID =
@@ -44,123 +21,59 @@ namespace ProjectSpark.Gameplay
             Shader.PropertyToID("AirflowDirection");
 
         // ============================================================
-        // VFX
+        // REFERENCES
         // ============================================================
 
         [Header("VFX")]
+        [SerializeField] private VisualEffect airflowVFX;
 
-        [Tooltip(
-            "Visual Effect Graph used to display the expelled airflow.")]
-        [SerializeField]
-        private VisualEffect airflowVFX;
+        [SerializeField] private GameObject controlVFXObject;
 
-        [Tooltip(
-            "Enables/disables the VFX object when airflow stops.")]
-        [SerializeField]
-        private bool controlVFXObject = true;
+        [Header("Direction")]
+        [SerializeField] private Transform airflowDirection;
 
         // ============================================================
         // AIRFLOW
         // ============================================================
 
         [Header("Airflow")]
-
-        [Tooltip(
-            "Current airflow strength.")]
         [SerializeField]
         [Range(0f, 1f)]
         private float airflowStrength;
 
-        [Tooltip(
-            "Target airflow strength.")]
         [SerializeField]
         [Range(0f, 1f)]
         private float targetAirflowStrength;
 
-        [Tooltip(
-            "How quickly airflow accelerates.")]
         [SerializeField]
-        [Min(0f)]
         private float acceleration = 2.5f;
 
-        [Tooltip(
-            "How quickly airflow stops.")]
         [SerializeField]
-        [Min(0f)]
         private float deceleration = 4f;
 
         // ============================================================
         // TEMPERATURE
         // ============================================================
 
-        [Header("Air Temperature")]
-
-        [Tooltip(
-            "Current visual air temperature.\n" +
-            "0 = cold air.\n" +
-            "1 = maximum hot air.")]
+        [Header("Temperature")]
         [SerializeField]
         [Range(0f, 1f)]
         private float airTemperature;
 
-        [Tooltip(
-            "Target visual air temperature.")]
         [SerializeField]
         [Range(0f, 1f)]
         private float targetAirTemperature;
 
-        [Tooltip(
-            "How quickly the visual air temperature changes.")]
         [SerializeField]
-        [Min(0f)]
         private float temperatureResponse = 0.8f;
 
         // ============================================================
-        // DIRECTION
+        // STATE
         // ============================================================
 
-        [Header("Direction")]
-
-        [Tooltip(
-            "Transform representing the hair-dryer nozzle direction.")]
-        [SerializeField]
-        private Transform airflowDirection;
-
-        // ============================================================
-        // PUBLIC STATE
-        // ============================================================
-
-        /// <summary>
-        /// Current airflow strength.
-        /// </summary>
-        public float AirflowStrength =>
-            airflowStrength;
-
-        /// <summary>
-        /// Current visual air temperature.
-        /// </summary>
-        public float AirTemperature =>
-            airTemperature;
-
-        /// <summary>
-        /// True when airflow is visually active.
-        /// </summary>
-        public bool IsAirflowActive =>
-            airflowStrength > 0.01f;
-
-        /// <summary>
-        /// Current airflow direction.
-        /// </summary>
-        public Vector3 AirflowDirection
-        {
-            get
-            {
-                if (airflowDirection == null)
-                    return transform.forward;
-
-                return airflowDirection.forward;
-            }
-        }
+        public float AirflowStrength => airflowStrength;
+        public float AirTemperature => airTemperature;
+        public bool IsRunning => airflowStrength > 0.001f;
 
         // ============================================================
         // UNITY
@@ -168,53 +81,61 @@ namespace ProjectSpark.Gameplay
 
         private void Awake()
         {
-            ApplyVFXState(true);
+            if (controlVFXObject == null && airflowVFX != null)
+                controlVFXObject = airflowVFX.gameObject;
+
+            airflowStrength = 0f;
+            targetAirflowStrength = 0f;
+
+            airTemperature = 0f;
+            targetAirTemperature = 0f;
+
+            ApplyVFXProperties();
+            StopVFXImmediate();
         }
 
         private void Update()
         {
-            UpdateAirflowStrength();
-            UpdateAirTemperature();
-            UpdateVFX();
+            UpdateAirflow();
+            UpdateTemperature();
+            ApplyVFXProperties();
+            UpdateVFXPlayback();
         }
 
         // ============================================================
-        // AIRFLOW
+        // AIRFLOW UPDATE
         // ============================================================
 
-        private void UpdateAirflowStrength()
+        private void UpdateAirflow()
         {
             float speed =
                 targetAirflowStrength > airflowStrength
                     ? acceleration
                     : deceleration;
 
-            airflowStrength =
-                Mathf.MoveTowards(
-                    airflowStrength,
-                    targetAirflowStrength,
-                    speed * Time.deltaTime);
+            airflowStrength = Mathf.MoveTowards(
+                airflowStrength,
+                targetAirflowStrength,
+                speed * Time.deltaTime);
         }
 
         // ============================================================
-        // AIR TEMPERATURE
+        // TEMPERATURE UPDATE
         // ============================================================
 
-        private void UpdateAirTemperature()
+        private void UpdateTemperature()
         {
-            airTemperature =
-                Mathf.MoveTowards(
-                    airTemperature,
-                    targetAirTemperature,
-                    temperatureResponse *
-                    Time.deltaTime);
+            airTemperature = Mathf.MoveTowards(
+                airTemperature,
+                targetAirTemperature,
+                temperatureResponse * Time.deltaTime);
         }
 
         // ============================================================
-        // VFX
+        // APPLY VFX
         // ============================================================
 
-        private void UpdateVFX()
+        private void ApplyVFXProperties()
         {
             if (airflowVFX == null)
                 return;
@@ -227,114 +148,86 @@ namespace ProjectSpark.Gameplay
                 AirflowTemperatureID,
                 airTemperature);
 
-            airflowVFX.SetVector3(
-                AirflowDirectionID,
-                AirflowDirection);
-
-            if (controlVFXObject)
+            if (airflowDirection != null)
             {
-                bool shouldBeActive =
-                    airflowStrength > 0.001f;
+                airflowVFX.SetVector3(
+                    AirflowDirectionID,
+                    airflowDirection.forward);
+            }
+        }
 
-                if (airflowVFX.gameObject.activeSelf !=
-                    shouldBeActive)
+        // ============================================================
+        // PLAYBACK
+        // ============================================================
+
+        private void UpdateVFXPlayback()
+        {
+            if (airflowVFX == null)
+                return;
+
+            bool shouldRun = airflowStrength > 0.001f;
+
+            if (shouldRun)
+            {
+                if (controlVFXObject != null &&
+                    !controlVFXObject.activeSelf)
                 {
-                    airflowVFX.gameObject.SetActive(
-                        shouldBeActive);
+                    controlVFXObject.SetActive(true);
+                }
+
+                if (!airflowVFX.enabled)
+                    airflowVFX.enabled = true;
+
+                airflowVFX.Play();
+            }
+            else
+            {
+                if (airflowVFX.enabled)
+                    airflowVFX.Stop();
+
+                if (controlVFXObject != null &&
+                    controlVFXObject.activeSelf)
+                {
+                    controlVFXObject.SetActive(false);
                 }
             }
         }
 
-        private void ApplyVFXState(
-            bool force)
-        {
-            if (airflowVFX == null)
-                return;
-
-            airflowVFX.SetFloat(
-                AirflowStrengthID,
-                airflowStrength);
-
-            airflowVFX.SetFloat(
-                AirflowTemperatureID,
-                airTemperature);
-
-            airflowVFX.SetVector3(
-                AirflowDirectionID,
-                AirflowDirection);
-
-            if (!controlVFXObject)
-                return;
-
-            bool shouldBeActive =
-                airflowStrength > 0.001f;
-
-            if (force ||
-                airflowVFX.gameObject.activeSelf !=
-                shouldBeActive)
-            {
-                airflowVFX.gameObject.SetActive(
-                    shouldBeActive);
-            }
-        }
-
         // ============================================================
-        // CONTROL
+        // PUBLIC CONTROL
         // ============================================================
 
-        /// <summary>
-        /// Stops airflow.
-        /// </summary>
         public void StopAirflow()
         {
             targetAirflowStrength = 0f;
+            targetAirTemperature = 0f;
         }
 
-        /// <summary>
-        /// Low fan airflow.
-        /// </summary>
         public void SetLowAirflow()
         {
             targetAirflowStrength = 0.45f;
         }
 
-        /// <summary>
-        /// High fan airflow.
-        /// </summary>
         public void SetHighAirflow()
         {
             targetAirflowStrength = 1f;
         }
 
-        /// <summary>
-        /// Sets airflow strength directly.
-        /// </summary>
-        public void SetAirflowStrength(
-            float value)
+        public void SetAirflowStrength(float strength)
         {
             targetAirflowStrength =
-                Mathf.Clamp01(value);
+                Mathf.Clamp01(strength);
         }
 
-        /// <summary>
-        /// Sets airflow temperature.
-        ///
-        /// 0 = cold
-        /// 1 = maximum hot
-        /// </summary>
-        public void SetAirTemperature(
-            float value)
+        public void SetAirTemperature(float temperature)
         {
             targetAirTemperature =
-                Mathf.Clamp01(value);
+                Mathf.Clamp01(temperature);
         }
 
-        /// <summary>
-        /// Immediately synchronizes airflow without interpolation.
-        /// </summary>
         public void SetAirflowImmediate(
             float strength,
-            float temperatureValue)
+            float temperature)
         {
             airflowStrength =
                 Mathf.Clamp01(strength);
@@ -343,44 +236,81 @@ namespace ProjectSpark.Gameplay
                 airflowStrength;
 
             airTemperature =
-                Mathf.Clamp01(
-                    temperatureValue);
+                Mathf.Clamp01(temperature);
 
             targetAirTemperature =
                 airTemperature;
 
-            ApplyVFXState(true);
+            ApplyVFXProperties();
+
+            if (airflowStrength > 0.001f)
+            {
+                if (controlVFXObject != null)
+                    controlVFXObject.SetActive(true);
+
+                if (airflowVFX != null)
+                {
+                    airflowVFX.enabled = true;
+                    airflowVFX.Play();
+                }
+            }
+            else
+            {
+                StopVFXImmediate();
+            }
         }
 
         // ============================================================
-        // TEST
+        // IMMEDIATE STOP
         // ============================================================
 
-        [ContextMenu("Test / Airflow OFF")]
-        private void TestAirflowOff()
+        private void StopVFXImmediate()
+        {
+            if (airflowVFX != null)
+            {
+                airflowVFX.Stop();
+                airflowVFX.enabled = true;
+            }
+
+            if (controlVFXObject != null)
+                controlVFXObject.SetActive(false);
+        }
+
+        // ============================================================
+        // TESTS
+        // ============================================================
+
+        [ContextMenu("Test OFF")]
+        private void TestOff()
         {
             StopAirflow();
         }
 
-        [ContextMenu("Test / Cold Air")]
+        [ContextMenu("Test Cold Air")]
         private void TestColdAir()
         {
-            SetHighAirflow();
+            SetAirflowStrength(0.45f);
             SetAirTemperature(0f);
         }
 
-        [ContextMenu("Test / Low Warm Air")]
+        [ContextMenu("Test Low Warm Air")]
         private void TestLowWarmAir()
         {
-            SetLowAirflow();
-            SetAirTemperature(0.55f);
+            SetAirflowStrength(0.45f);
+            SetAirTemperature(0.45f);
         }
 
-        [ContextMenu("Test / High Hot Air")]
+        [ContextMenu("Test High Hot Air")]
         private void TestHighHotAir()
         {
-            SetHighAirflow();
+            SetAirflowStrength(1f);
             SetAirTemperature(1f);
+        }
+
+        [ContextMenu("Test Immediate High")]
+        private void TestImmediateHigh()
+        {
+            SetAirflowImmediate(1f, 1f);
         }
     }
 }

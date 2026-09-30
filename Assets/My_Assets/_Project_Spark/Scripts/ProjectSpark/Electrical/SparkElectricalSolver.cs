@@ -535,6 +535,45 @@ for (int i = 0; i < terminals.Count; i++)
             }
         }
 
+
+        // ========================================================
+// HAIR DRYER MOTOR
+// ========================================================
+
+else if (component is SparkHairDryerMotorElectrical motor)
+{
+    double resistance =
+        Math.Max(
+            minimumResistance,
+            motor.Resistance);
+
+    AddConductance(
+        A,
+        b,
+        ai,
+        bi,
+        1.0 / resistance);
+}
+
+// ========================================================
+// HAIR DRYER HEATER
+// ========================================================
+
+else if (component is SparkHairDryerHeaterElectrical heater)
+{
+    double resistance =
+        Math.Max(
+            minimumResistance,
+            heater.Resistance);
+
+    AddConductance(
+        A,
+        b,
+        ai,
+        bi,
+        1.0 / resistance);
+}
+
         // ========================================================
         // DIODE
         // ========================================================
@@ -863,48 +902,66 @@ private float GetLEDEffectiveResistance(
 
        float current = 0f;
 
-// ------------------------------------------------------------
-// COMPONENT CURRENT
-// ------------------------------------------------------------
+            // ------------------------------------------------------------
+            // COMPONENT CURRENT
+            // ------------------------------------------------------------
 
-if (component is SparkMultimeterElectricalComponent multimeter)
-{
-    float resistance =
-        Mathf.Max(
-            minimumResistance,
-            multimeter.ShuntResistanceOhms);
+            if (component is SparkMultimeterElectricalComponent multimeter)
+            {
+                float resistance =
+                    Mathf.Max(
+                        minimumResistance,
+                        multimeter.ShuntResistanceOhms);
 
-    current =
-        voltage /
-        resistance;        
-}
-else if (component is SparkResistor resistor1)
-{
-    current =
-        voltage /
-        Mathf.Max(
-            resistor1.ResistanceOhms,
-            minimumResistance);
-}
-else if (component is SparkSwitch sw)
-{
-    if (sw.IsConducting)
-    {
-        float resistance =
-            Mathf.Max(
-                minimumResistance,
-                sw.ClosedResistance);
+                current =
+                    voltage /
+                    resistance;        
+            }
+            else if (component is SparkResistor resistor1)
+            {
+                current =
+                    voltage /
+                    Mathf.Max(
+                        resistor1.ResistanceOhms,
+                        minimumResistance);
+            }
+            else if (component is SparkSwitch sw)
+            {
+                if (sw.IsConducting)
+                {
+                    float resistance =
+                        Mathf.Max(
+                            minimumResistance,
+                            sw.ClosedResistance);
 
-        current =
-            voltage /
-            resistance;
-    }
-    else
-    {
-        current = 0f;
-    }
-}
-        else if (component is SparkDiode diode)
+                    current =
+                        voltage /
+                        resistance;
+                }
+                else
+                {
+                    current = 0f;
+                }
+            }
+
+            else if (component is SparkHairDryerMotorElectrical motor)
+            {
+                current =
+                    voltage /
+                    Mathf.Max(
+                        motor.Resistance,
+                        minimumResistance);
+            }
+
+            else if (component is SparkHairDryerHeaterElectrical heater)
+            {
+                current =
+                    voltage /
+                    Mathf.Max(
+                        heater.Resistance,
+                        minimumResistance);
+            }
+                    else if (component is SparkDiode diode)
         {
             bool wasOn =
                 diodeStates.TryGetValue(
@@ -1365,6 +1422,23 @@ for (int i = 0;
         return a != null &&
                b != null;
     }
+    if (component is SparkHairDryerMotorElectrical motor)
+{
+    a = motor.LiveTerminal;
+    b = motor.NeutralTerminal;
+
+    return a != null &&
+           b != null;
+}
+
+if (component is SparkHairDryerHeaterElectrical heater)
+{
+    a = heater.LiveTerminal;
+    b = heater.NeutralTerminal;
+
+    return a != null &&
+           b != null;
+}
 
     var childTerminals =
         component.GetComponentsInChildren<SparkTerminal>(true);

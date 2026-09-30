@@ -1,162 +1,124 @@
+
 using UnityEngine;
 
 namespace ProjectSpark.Gameplay
 {
     /// <summary>
-    /// Visual motor controller for the hair dryer.
+    /// Visual representation of the hair-dryer motor/fan.
     ///
-    /// Responsibilities:
-    /// - Smooth motor startup.
-    /// - Smooth motor shutdown.
-    /// - Rotor rotation.
-    /// - RPM control.
-    /// - Provides runtime motor state.
-    ///
-    /// Visual only.
-    /// Actual motor physics/electrical behavior comes later.
+    /// Electrical behavior belongs to SparkHairDryerMotorElectrical.
+    /// This component only handles the visual fan rotation.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkHairDryerMotorVisual : MonoBehaviour
     {
-        [Header("Rotor")]
-        [SerializeField]
-        private Transform rotor;
+        // ============================================================
+        // FAN
+        // ============================================================
 
+        [Header("Fan")]
         [SerializeField]
-        private Vector3 rotationAxis = Vector3.forward;
-
-        [Header("Motor Speed")]
-        [SerializeField]
-        [Min(0f)]
-        private float maximumRPM = 9000f;
+        private Transform fanTransform;
 
         [SerializeField]
-        [Min(0f)]
-        private float accelerationRPMPerSecond = 18000f;
+        private Vector3 localRotationAxis = Vector3.forward;
+
+        [SerializeField, Min(0f)]
+        private float idleRotationSpeed = 0f;
+
+        [SerializeField, Min(0f)]
+        private float runningRotationSpeed = 1800f;
 
         [SerializeField]
-        [Min(0f)]
-        private float decelerationRPMPerSecond = 24000f;
+        private bool reverseRotation = false;
 
-        [Header("Runtime")]
+        // ============================================================
+        // ELECTRICAL SOURCE
+        // ============================================================
+
+        [Header("Motor Electrical")]
         [SerializeField]
-        private float currentRPM;
+        private SparkHairDryerMotorElectrical motorElectrical;
 
-        [SerializeField]
-        private float targetRPM;
+        // ============================================================
+        // STATE
+        // ============================================================
 
-        public float CurrentRPM => currentRPM;
+        private bool isRunning;
 
-        public float TargetRPM => targetRPM;
+        public bool IsRunning => isRunning;
 
-        public bool IsRunning =>
-            currentRPM > 10f;
-
-        public bool IsAtSpeed =>
-            Mathf.Abs(currentRPM - targetRPM) < 10f;
+        // ============================================================
+        // UNITY
+        // ============================================================
 
         private void Awake()
         {
-            rotationAxis =
-                rotationAxis.sqrMagnitude > 0.0001f
-                    ? rotationAxis.normalized
-                    : Vector3.forward;
+            if (fanTransform == null)
+                fanTransform = transform;
+
+            if (motorElectrical == null)
+                motorElectrical =
+                    GetComponent<SparkHairDryerMotorElectrical>();
+
+            localRotationAxis.Normalize();
+
+            if (localRotationAxis.sqrMagnitude <= 0.0001f)
+                localRotationAxis = Vector3.forward;
         }
 
         private void Update()
         {
-            UpdateRPM();
-            RotateMotor();
-        }
-
-        private void UpdateRPM()
-        {
-            float speed =
-                targetRPM > currentRPM
-                    ? accelerationRPMPerSecond
-                    : decelerationRPMPerSecond;
-
-            currentRPM =
-                Mathf.MoveTowards(
-                    currentRPM,
-                    targetRPM,
-                    speed * Time.deltaTime);
-        }
-
-        private void RotateMotor()
-        {
-            if (rotor == null)
+            if (fanTransform == null)
                 return;
 
-            if (currentRPM <= 0.01f)
+            if (motorElectrical == null)
                 return;
 
-            float degreesPerSecond =
-                currentRPM * 6f;
+            bool shouldRun = motorElectrical.IsRunning;
 
-            rotor.Rotate(
-                rotationAxis,
-                degreesPerSecond * Time.deltaTime,
+            if (shouldRun != isRunning)
+                isRunning = shouldRun;
+
+            if (!isRunning)
+            {
+                if (idleRotationSpeed <= 0f)
+                    return;
+
+                RotateFan(idleRotationSpeed);
+                return;
+            }
+
+            RotateFan(runningRotationSpeed);
+        }
+
+        // ============================================================
+        // ROTATION
+        // ============================================================
+
+        private void RotateFan(float degreesPerSecond)
+        {
+            float direction = reverseRotation ? -1f : 1f;
+
+            fanTransform.Rotate(
+                localRotationAxis,
+                degreesPerSecond * direction * Time.deltaTime,
                 Space.Self);
         }
 
-        public void Stop()
+        // ============================================================
+        // PUBLIC
+        // ============================================================
+
+        public void SetMotorElectrical(
+            SparkHairDryerMotorElectrical motor)
         {
-            targetRPM = 0f;
+            motorElectrical = motor;
         }
 
-        public void SetLowSpeed()
+        public void SetRunning(bool running)
         {
-            SetRPM(maximumRPM * 0.55f);
-        }
-
-        public void SetHighSpeed()
-        {
-            SetRPM(maximumRPM);
-        }
-
-        public void SetRPM(float rpm)
-        {
-            targetRPM =
-                Mathf.Clamp(
-                    rpm,
-                    0f,
-                    maximumRPM);
-        }
-
-        public void SetRPMImmediate(float rpm)
-        {
-            currentRPM =
-                Mathf.Clamp(
-                    rpm,
-                    0f,
-                    maximumRPM);
-
-            targetRPM = currentRPM;
-        }
-
-        [ContextMenu("Test / Motor OFF")]
-        private void TestOff()
-        {
-            Stop();
-        }
-
-        [ContextMenu("Test / Motor LOW")]
-        private void TestLow()
-        {
-            SetLowSpeed();
-        }
-
-        [ContextMenu("Test / Motor HIGH")]
-        private void TestHigh()
-        {
-            SetHighSpeed();
-        }
-
-        [ContextMenu("Test / Motor Immediate Stop")]
-        private void TestImmediateStop()
-        {
-            SetRPMImmediate(0f);
+            isRunning = running;
         }
     }
 }
