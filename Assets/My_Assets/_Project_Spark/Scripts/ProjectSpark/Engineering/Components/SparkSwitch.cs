@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ProjectSpark.Gameplay
 {
@@ -79,6 +80,21 @@ namespace ProjectSpark.Gameplay
             IsSolverConducting;
 
         #endregion
+
+        // ============================================================
+// VISUAL STATE EVENT
+// ============================================================
+
+/// <summary>
+/// Raised whenever the switch electrical/visual status
+/// changes in a way that can affect SparkSwitchVisual.
+///
+/// This is visual notification only.
+/// It does not modify the electrical solver.
+/// </summary>
+public event System.Action VisualStateChanged;
+
+private int lastVisualState = -1;
 
 
         #region Resistance
@@ -377,8 +393,9 @@ namespace ProjectSpark.Gameplay
     in SparkElectricalState state)
 {
     base.ApplyElectricalState(state);
-}
 
+    NotifyVisualStateChanged();
+}
 
 
         #endregion
@@ -395,24 +412,29 @@ namespace ProjectSpark.Gameplay
                     : SparkSwitchState.Open);
         }
 
-        public void SetState(
-    SparkSwitchState newState)
-{
-    if (state == newState)
-        return;
+            public void SetState(
+            SparkSwitchState newState)
+        {
+            if (state == newState)
+                return;
 
-    state = newState;
+            state = newState;
 
-    /*
-     * Immediately update visual/runtime polarity.
-     */
-    UpdateRuntimeTerminalPolarity();
+            /*
+            * Immediately update runtime polarity.
+            */
+            UpdateRuntimeTerminalPolarity();
 
-    /*
-     * Tell the electrical system to solve again.
-     */
-    NotifyElectricalConfigurationChanged();
-}
+            /*
+            * Tell the electrical system to solve again.
+            */
+            NotifyElectricalConfigurationChanged();
+
+            /*
+            * Immediately notify the visual.
+            */
+            NotifyVisualStateChanged();
+        }
 
         public void ToggleFromButton()
         {
@@ -487,7 +509,41 @@ namespace ProjectSpark.Gameplay
                     0.000001f,
                     runtimePolarityThreshold);
         }
+        
 
         #endregion
+
+        private int GetVisualState()
+{
+    // 2 = Closed / Green
+    if (IsClosed)
+        return 2;
+
+    // 1 = Open but voltage/current exists / Red
+    if (HasVoltage ||
+        HasCurrent ||
+        InputHasPower ||
+        OutputHasPower)
+    {
+        return 1;
+    }
+
+    // 0 = No voltage/current / Grey
+    return 0;
+}
+
+private void NotifyVisualStateChanged()
+{
+    int newState =
+        GetVisualState();
+
+    if (newState == lastVisualState)
+        return;
+
+    lastVisualState =
+        newState;
+
+    VisualStateChanged?.Invoke();
+}
     }
 }

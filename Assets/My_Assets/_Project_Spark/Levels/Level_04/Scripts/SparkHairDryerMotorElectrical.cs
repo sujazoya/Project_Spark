@@ -107,6 +107,17 @@ namespace ProjectSpark.Gameplay
         // CONDUCTIVE DEVICE
         // ============================================================
 
+        private void Update()
+{
+    Debug.Log(
+        $"[Motor Electrical] " +
+        $"V={Voltage:F2} | " +
+        $"I={Current:F3} | " +
+        $"Power={Power:F2} | " +
+        $"Conduction={Conduction}",
+        this);
+}
+
         public bool CanConductBetween(
             SparkTerminal from,
             SparkTerminal to)

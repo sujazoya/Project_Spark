@@ -90,6 +90,12 @@ namespace ProjectSpark.Gameplay
             }
 
             RotateFan(runningRotationSpeed);
+
+            Debug.Log(
+    $"Motor Visual | Running={motorElectrical.IsRunning} " +
+    $"V={motorElectrical.Voltage:F2} " +
+    $"I={motorElectrical.Current:F3} " +
+    $"Conduction={motorElectrical.Conduction}");
         }
 
         // ============================================================

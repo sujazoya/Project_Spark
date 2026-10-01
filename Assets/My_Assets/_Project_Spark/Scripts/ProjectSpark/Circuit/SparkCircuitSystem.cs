@@ -880,5 +880,64 @@ private void MarkTopologyChanged()
                 nextConnectionId = 1UL;
             }
         }
+        [ContextMenu("Diagnostics / Print All Connections")]
+private void PrintAllConnections()
+{
+    Debug.Log(
+        $"========== SPARK CIRCUIT CONNECTIONS ==========\n" +
+        $"Count = {connections.Count}");
+
+    foreach (
+        KeyValuePair<ulong, SparkCircuitConnection> pair
+        in connections)
+    {
+        SparkCircuitConnection connection =
+            pair.Value;
+
+        if (connection == null)
+            continue;
+
+        Debug.Log(
+            $"[CONNECTION] " +
+            $"ID={connection.Id} | " +
+            $"A={connection.A?.name ?? "NULL"} " +
+            $"({connection.A?.Owner?.name ?? "NO OWNER"}) | " +
+            $"B={connection.B?.name ?? "NULL"} " +
+            $"({connection.B?.Owner?.name ?? "NO OWNER"}) | " +
+            $"Kind={connection.Kind} | " +
+            $"Direction={connection.Direction}");
+    }
+
+    Debug.Log(
+        $"========== END CONNECTIONS ==========");
+}
+
+[ContextMenu("Diagnostics / Print Connection Terminals")]
+private void PrintConnectionTerminals()
+{
+    Debug.Log("========== CONNECTION TERMINAL DETAILS ==========");
+
+    foreach (
+        KeyValuePair<ulong, SparkCircuitConnection> pair
+        in connections)
+    {
+        SparkCircuitConnection connection = pair.Value;
+
+        if (connection == null)
+            continue;
+
+        Debug.Log(
+            $"ID={connection.Id} | " +
+            $"A={connection.A?.name ?? "NULL"} | " +
+            $"A InstanceID={(connection.A != null ? connection.A.GetInstanceID() : 0)} | " +
+            $"A Owner={connection.A?.Owner?.name ?? "NULL"} | " +
+            $"B={connection.B?.name ?? "NULL"} | " +
+            $"B InstanceID={(connection.B != null ? connection.B.GetInstanceID() : 0)} | " +
+            $"B Owner={connection.B?.Owner?.name ?? "NULL"} | " +
+            $"Kind={connection.Kind}");
+    }
+
+    Debug.Log("========== END CONNECTION TERMINAL DETAILS ==========");
+}
     }
 }

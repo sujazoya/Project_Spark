@@ -274,11 +274,11 @@ namespace ProjectSpark.Measurement
             SparkConnectionDirection.Bidirectional,
             out SparkCircuitConnection connection);
 
-    Debug.Log(
+/*    Debug.Log(
         $"[MULTIMETER PROBE] CREATE RESULT → " +
         $"Created={created} " +
         $"Connection={(connection != null ? connection.ToString() : "NULL")}",
-        this);
+        this);*/
 
     if (!created ||
         connection == null)

@@ -5,22 +5,21 @@ namespace ProjectSpark.Gameplay
     /// <summary>
     /// Physical interaction component for a hair-dryer control.
     ///
-    /// This component operates the actual SparkSwitch.
+    /// Supports both:
     ///
-    /// Electrical simulation:
     ///     SparkSwitch
-    ///         ↓
-    ///     SparkElectricalSolver
+    ///         → normal ON / OFF
     ///
-    /// Visual simulation:
-    ///     SparkHairDryerVisualController
+    ///     SparkSwitchIndex
+    ///         → indexed control
+    ///            0 = OFF
+    ///            1 = LOW
+    ///            2 = HIGH
+    ///            etc.
     ///
-    /// No appliance-level electrical owner is required.
+    /// Electrical simulation is handled by the actual electrical component.
     ///
-    /// Attach this component to the clickable object representing:
-    /// - Power switch
-    /// - Heat switch
-    /// - Fan speed switch
+    /// This component only handles player interaction.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkHairDryerControlInteraction : MonoBehaviour
@@ -37,35 +36,57 @@ namespace ProjectSpark.Gameplay
         }
 
         // ============================================================
-        // ELECTRICAL SWITCH
+        // ELECTRICAL COMPONENTS
         // ============================================================
 
-        [Header("Electrical Switch")]
+        [Header("Electrical Components")]
+
+        [Tooltip("Use for normal ON/OFF control.")]
         [SerializeField]
         private SparkSwitch sparkSwitch;
+
+        [Tooltip("Use for indexed Heat/Fan controls.")]
+        [SerializeField]
+        private SparkSwitchIndex sparkSwitchIndex;
+
 
         // ============================================================
         // CONTROL
         // ============================================================
 
         [Header("Control")]
+
         [SerializeField]
         private ControlType controlType;
 
         [Header("Interaction")]
+
         [SerializeField]
         private bool toggleOnClick = true;
 
         [SerializeField]
         private bool allowDirectStateSelection = true;
 
+        [SerializeField]
+        private bool cycleIndexOnClick = true;
+
+
         // ============================================================
         // STATE
         // ============================================================
 
         [Header("Runtime State")]
+
         [SerializeField]
         private bool isOn;
+
+        [SerializeField]
+        private int currentIndex;
+
+
+        // ============================================================
+        // PUBLIC PROPERTIES
+        // ============================================================
 
         public ControlType Type =>
             controlType;
@@ -73,8 +94,15 @@ namespace ProjectSpark.Gameplay
         public bool IsOn =>
             isOn;
 
+        public int Index =>
+            currentIndex;
+
         public SparkSwitch Switch =>
             sparkSwitch;
+
+        public SparkSwitchIndex IndexedSwitch =>
+            sparkSwitchIndex;
+
 
         // ============================================================
         // UNITY
@@ -82,11 +110,32 @@ namespace ProjectSpark.Gameplay
 
         private void Awake()
         {
+            AutoFindComponents();
+            SyncFromElectricalComponent();
+        }
+
+
+        // ============================================================
+        // AUTO FIND
+        // ============================================================
+
+        private void AutoFindComponents()
+        {
             if (sparkSwitch == null)
                 sparkSwitch = GetComponent<SparkSwitch>();
 
-            SyncFromSwitch();
+            if (sparkSwitchIndex == null)
+                sparkSwitchIndex =
+                    GetComponent<SparkSwitchIndex>();
+
+            /*
+             * Do not allow both electrical components to control
+             * the same interaction.
+             *
+             * SparkSwitchIndex has priority if both are assigned.
+             */
         }
+
 
         // ============================================================
         // INTERACTION
@@ -97,9 +146,25 @@ namespace ProjectSpark.Gameplay
         /// </summary>
         public void Activate()
         {
-            if (sparkSwitch == null)
+            if (sparkSwitchIndex != null)
+            {
+                ActivateIndexed();
                 return;
+            }
 
+            if (sparkSwitch != null)
+            {
+                ActivateBinary();
+            }
+        }
+
+
+        // ============================================================
+        // BINARY SWITCH
+        // ============================================================
+
+        private void ActivateBinary()
+        {
             if (toggleOnClick)
             {
                 Toggle();
@@ -109,8 +174,28 @@ namespace ProjectSpark.Gameplay
             ApplyCurrentState();
         }
 
+
         // ============================================================
-        // TOGGLE
+        // INDEXED SWITCH
+        // ============================================================
+
+        private void ActivateIndexed()
+        {
+            if (sparkSwitchIndex == null)
+                return;
+
+            if (cycleIndexOnClick)
+            {
+                NextIndex();
+                return;
+            }
+
+            ApplyCurrentIndex();
+        }
+
+
+        // ============================================================
+        // NORMAL TOGGLE
         // ============================================================
 
         public void Toggle()
@@ -120,11 +205,42 @@ namespace ProjectSpark.Gameplay
 
             sparkSwitch.ToggleState();
 
-            SyncFromSwitch();
+            SyncFromElectricalComponent();
         }
 
+
         // ============================================================
-        // DIRECT STATE
+        // INDEX NEXT
+        // ============================================================
+
+        public void NextIndex()
+        {
+            if (sparkSwitchIndex == null)
+                return;
+
+            sparkSwitchIndex.NextIndex();
+
+            SyncFromElectricalComponent();
+        }
+
+
+        // ============================================================
+        // INDEX PREVIOUS
+        // ============================================================
+
+        public void PreviousIndex()
+        {
+            if (sparkSwitchIndex == null)
+                return;
+
+            sparkSwitchIndex.PreviousIndex();
+
+            SyncFromElectricalComponent();
+        }
+
+
+        // ============================================================
+        // DIRECT BINARY STATE
         // ============================================================
 
         public void SetState(bool on)
@@ -140,11 +256,30 @@ namespace ProjectSpark.Gameplay
                     ? SparkSwitchState.Closed
                     : SparkSwitchState.Open);
 
-            SyncFromSwitch();
+            SyncFromElectricalComponent();
         }
 
+
         // ============================================================
-        // CURRENT STATE
+        // DIRECT INDEX
+        // ============================================================
+
+        public void SetIndex(int index)
+        {
+            if (!allowDirectStateSelection)
+                return;
+
+            if (sparkSwitchIndex == null)
+                return;
+
+            sparkSwitchIndex.SetIndex(index);
+
+            SyncFromElectricalComponent();
+        }
+
+
+        // ============================================================
+        // CURRENT BINARY STATE
         // ============================================================
 
         private void ApplyCurrentState()
@@ -152,22 +287,62 @@ namespace ProjectSpark.Gameplay
             SetState(isOn);
         }
 
+
+        // ============================================================
+        // CURRENT INDEX
+        // ============================================================
+
+        private void ApplyCurrentIndex()
+        {
+            SetIndex(currentIndex);
+        }
+
+
         // ============================================================
         // SYNCHRONIZATION
         // ============================================================
 
-        public void SyncFromSwitch()
+        public void SyncFromElectricalComponent()
         {
-            if (sparkSwitch == null)
+            // --------------------------------------------------------
+            // INDEXED SWITCH
+            // --------------------------------------------------------
+
+            if (sparkSwitchIndex != null)
             {
-                isOn = false;
+                currentIndex =
+                    sparkSwitchIndex.Index;
+
+                isOn =
+                    !sparkSwitchIndex.IsOff;
+
                 return;
             }
 
-            isOn =
-                sparkSwitch.State ==
-                SparkSwitchState.Closed;
+            // --------------------------------------------------------
+            // NORMAL SWITCH
+            // --------------------------------------------------------
+
+            if (sparkSwitch != null)
+            {
+                isOn =
+                    sparkSwitch.State ==
+                    SparkSwitchState.Closed;
+
+                currentIndex =
+                    isOn ? 1 : 0;
+
+                return;
+            }
+
+            // --------------------------------------------------------
+            // NOTHING ASSIGNED
+            // --------------------------------------------------------
+
+            isOn = false;
+            currentIndex = 0;
         }
+
 
         // ============================================================
         // PUBLIC HELPERS
@@ -178,16 +353,50 @@ namespace ProjectSpark.Gameplay
             SetState(true);
         }
 
+
         public void TurnOff()
         {
+            if (sparkSwitchIndex != null)
+            {
+                sparkSwitchIndex.TurnOff();
+                SyncFromElectricalComponent();
+                return;
+            }
+
             SetState(false);
         }
+
 
         public bool IsSwitchClosed()
         {
             return sparkSwitch != null &&
                    sparkSwitch.IsClosed;
         }
+
+
+        public bool IsIndexed()
+        {
+            return sparkSwitchIndex != null;
+        }
+
+
+        public int GetIndex()
+        {
+            if (sparkSwitchIndex == null)
+                return isOn ? 1 : 0;
+
+            return sparkSwitchIndex.Index;
+        }
+
+
+        public int GetPositionCount()
+        {
+            if (sparkSwitchIndex == null)
+                return 2;
+
+            return sparkSwitchIndex.PositionCount;
+        }
+
 
         // ============================================================
         // CONTEXT TESTS
@@ -199,11 +408,13 @@ namespace ProjectSpark.Gameplay
             Activate();
         }
 
+
         [ContextMenu("Test / Turn On")]
         private void TestTurnOn()
         {
             TurnOn();
         }
+
 
         [ContextMenu("Test / Turn Off")]
         private void TestTurnOff()
@@ -211,10 +422,46 @@ namespace ProjectSpark.Gameplay
             TurnOff();
         }
 
+
         [ContextMenu("Test / Toggle")]
         private void TestToggle()
         {
             Toggle();
+        }
+
+
+        [ContextMenu("Test / Next Index")]
+        private void TestNextIndex()
+        {
+            NextIndex();
+        }
+
+
+        [ContextMenu("Test / Previous Index")]
+        private void TestPreviousIndex()
+        {
+            PreviousIndex();
+        }
+
+
+        [ContextMenu("Test / Set Index 0")]
+        private void TestIndex0()
+        {
+            SetIndex(0);
+        }
+
+
+        [ContextMenu("Test / Set Index 1")]
+        private void TestIndex1()
+        {
+            SetIndex(1);
+        }
+
+
+        [ContextMenu("Test / Set Index 2")]
+        private void TestIndex2()
+        {
+            SetIndex(2);
         }
     }
 }

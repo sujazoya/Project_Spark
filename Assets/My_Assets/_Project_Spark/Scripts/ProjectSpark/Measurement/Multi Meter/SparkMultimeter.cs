@@ -375,11 +375,11 @@ public void SetProbeTipContact(bool touching)
             Mathf.Max(0, probeTipContactCount - 1);
     }
 
-    Debug.Log(
+/*    Debug.Log(
         $"[MULTIMETER] PROBE TIP CONTACT STATE → " +
         $"Touching={ProbesPhysicallyTouching} | " +
         $"Count={probeTipContactCount}",
-        this);
+        this);*/
 }
 
         private void Update()
@@ -1234,10 +1234,10 @@ private void MeasureResistance()
 
        private void MeasureContinuity()
 {
-    Debug.Log(
+/*    Debug.Log(
         $"[MULTIMETER] CONTINUITY MEASURE → " +
         $"PhysicalContact={ProbesPhysicallyTouching}",
-        this);
+        this);*/
 
     if (measurementSystem == null)
     {
