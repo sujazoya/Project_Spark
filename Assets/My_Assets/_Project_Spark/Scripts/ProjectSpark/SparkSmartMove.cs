@@ -298,6 +298,7 @@ namespace ProjectSpark.Gameplay
             {
                 return;
             }
+            
 
             Transform clickedObject =
                 hit.collider.transform;

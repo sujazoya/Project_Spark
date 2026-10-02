@@ -27,6 +27,51 @@ namespace ProjectSpark.Circuit
         private bool logRejectedConnections;
 
         // =========================================================
+        // ELECTRIC FLOW VISUALS
+        // =========================================================
+
+        [Header("Electric Flow Materials")]
+        [Tooltip(
+            "Material used when a wire is disconnected or has no "
+            + "electrical state.")]
+        [SerializeField]
+        private Material neutralWireMaterial;
+
+        [Tooltip(
+            "Material used when positive voltage is present but "
+            + "meaningful current is not flowing.")]
+        [SerializeField]
+        private Material positiveVoltageMaterial;
+
+        [Tooltip(
+            "Material used when negative/return voltage is present "
+            + "but meaningful current is not flowing.")]
+        [SerializeField]
+        private Material negativeVoltageMaterial;
+
+        [Tooltip(
+            "Material used when positive current is actually flowing.")]
+        [SerializeField]
+        private Material positiveCurrentFlowMaterial;
+
+        [Tooltip(
+            "Material used when negative/return current is actually flowing.")]
+        [SerializeField]
+        private Material negativeCurrentFlowMaterial;
+
+        [Tooltip(
+            "Material used for a detected electrical fault or short.")]
+        [SerializeField]
+        private Material shortCircuitMaterial;
+
+        [Header("Electric Flow Thresholds")]
+        [SerializeField, Min(0f)]
+        private float voltageVisualThreshold = 0.001f;
+
+        [SerializeField, Min(0f)]
+        private float currentVisualThreshold = 0.001f;
+
+        // =========================================================
         // CONNECTION STORAGE
         // =========================================================
 
@@ -76,6 +121,38 @@ namespace ProjectSpark.Circuit
         public bool IsEmpty =>
             connections.Count == 0;
 
+        // =========================================================
+        // ELECTRIC FLOW VISUAL PUBLIC STATE
+        // =========================================================
+
+        public Material NeutralWireMaterial =>
+            neutralWireMaterial;
+
+        public Material PositiveVoltageMaterial =>
+            positiveVoltageMaterial;
+
+        public Material NegativeVoltageMaterial =>
+            negativeVoltageMaterial;
+
+        public Material PositiveCurrentFlowMaterial =>
+            positiveCurrentFlowMaterial;
+
+        public Material NegativeCurrentFlowMaterial =>
+            negativeCurrentFlowMaterial;
+
+        public Material ShortCircuitMaterial =>
+            shortCircuitMaterial;
+
+        public float VoltageVisualThreshold =>
+            voltageVisualThreshold;
+
+        public float CurrentVisualThreshold =>
+            currentVisualThreshold;
+
+        // =========================================================
+        // EVENTS
+        // =========================================================
+
         public event Action
             TopologyChanged;
 
@@ -84,6 +161,16 @@ namespace ProjectSpark.Circuit
 
         public event Action<SparkCircuitConnection>
             ConnectionRemoved;
+
+        /// <summary>
+        /// Fired when the electrical visual state of a connection
+        /// should be refreshed.
+        ///
+        /// The electrical solver should trigger this after it has
+        /// calculated voltage/current states.
+        /// </summary>
+        public event Action
+            ElectricalFlowVisualsChanged;
 
         // =========================================================
         // UNITY
@@ -168,41 +255,43 @@ namespace ProjectSpark.Circuit
 
                 return false;
             }
-ulong id =
-    AllocateConnectionId();
 
-bool registeredA =
-    a.RegisterConnection(
-        kind,
-        out string registerReason);
+            ulong id =
+                AllocateConnectionId();
 
-if (!registeredA)
-{
-    LogRejected(
-        a,
-        b,
-        registerReason);
+            bool registeredA =
+                a.RegisterConnection(
+                    kind,
+                    out string registerReason);
 
-    return false;
-}
+            if (!registeredA)
+            {
+                LogRejected(
+                    a,
+                    b,
+                    registerReason);
 
-bool registeredB =
-    b.RegisterConnection(
-        kind,
-        out registerReason);
+                return false;
+            }
 
-if (!registeredB)
-{
-    a.UnregisterConnection(
-        kind);
+            bool registeredB =
+                b.RegisterConnection(
+                    kind,
+                    out registerReason);
 
-    LogRejected(
-        a,
-        b,
-        registerReason);
+            if (!registeredB)
+            {
+                a.UnregisterConnection(
+                    kind);
 
-    return false;
-}
+                LogRejected(
+                    a,
+                    b,
+                    registerReason);
+
+                return false;
+            }
+
             connection =
                 new SparkCircuitConnection(
                     id,
@@ -227,6 +316,8 @@ if (!registeredB)
 
             ConnectionCreated?.Invoke(
                 connection);
+
+            NotifyElectricalFlowVisualsChanged();
 
             if (logConnectionChanges)
             {
@@ -274,6 +365,8 @@ if (!registeredB)
 
             ConnectionRemoved?.Invoke(
                 connection);
+
+            NotifyElectricalFlowVisualsChanged();
 
             if (logConnectionChanges)
             {
@@ -340,6 +433,11 @@ if (!registeredB)
             terminalConnections.Clear();
 
             MarkTopologyChanged();
+
+            if (notify)
+            {
+                NotifyElectricalFlowVisualsChanged();
+            }
 
             return removedCount;
         }
@@ -505,47 +603,156 @@ if (!registeredB)
         // =========================================================
 
         public void RebuildTopology()
-{
-    if (rebuilding)
-        return;
-
-    if (!topologyDirty)
-        return;
-
-    rebuilding = true;
-
-    try
-    {
-        terminalConnections.Clear();
-
-        foreach (
-            SparkCircuitConnection connection
-            in connections.Values)
         {
-            if (!connection.IsValid)
-                continue;
+            if (rebuilding)
+                return;
 
-            AddTerminalConnection(
-                connection.A,
-                connection.Id);
+            if (!topologyDirty)
+                return;
 
-            AddTerminalConnection(
-                connection.B,
-                connection.Id);
+            rebuilding = true;
+
+            try
+            {
+                terminalConnections.Clear();
+
+                foreach (
+                    SparkCircuitConnection connection
+                    in connections.Values)
+                {
+                    if (!connection.IsValid)
+                        continue;
+
+                    AddTerminalConnection(
+                        connection.A,
+                        connection.Id);
+
+                    AddTerminalConnection(
+                        connection.B,
+                        connection.Id);
+                }
+
+                topologyDirty = false;
+            }
+            finally
+            {
+                rebuilding = false;
+            }
         }
 
-        topologyDirty = false;
-    }
-    finally
-    {
-        rebuilding = false;
-    }
-}
-
         public void MarkTopologyDirty()
-{
-    MarkTopologyChanged();
-}
+        {
+            MarkTopologyChanged();
+        }
+
+        // =========================================================
+        // ELECTRICAL FLOW VISUAL NOTIFICATION
+        // =========================================================
+
+        /// <summary>
+        /// Called by the electrical solver after a new electrical
+        /// solution has been calculated.
+        ///
+        /// This does NOT calculate electricity.
+        /// It only tells visual systems that their materials/state
+        /// may need refreshing.
+        /// </summary>
+        public void NotifyElectricalFlowVisualsChanged()
+        {
+            ElectricalFlowVisualsChanged?.Invoke();
+        }
+
+        // =========================================================
+        // VISUAL STATE CLASSIFICATION
+        // =========================================================
+
+        public enum ElectricFlowVisualState
+        {
+            None,
+            Connected,
+            PositiveVoltage,
+            NegativeVoltage,
+            PositiveCurrent,
+            NegativeCurrent,
+            Short
+        }
+
+        /// <summary>
+        /// Converts a solved voltage/current state into a visual state.
+        ///
+        /// Voltage and current are supplied by the electrical solver.
+        /// </summary>
+        public ElectricFlowVisualState GetElectricFlowVisualState(
+            float voltage,
+            float current,
+            bool shortCircuit)
+        {
+            if (shortCircuit)
+            {
+                return ElectricFlowVisualState.Short;
+            }
+
+            bool hasVoltage =
+                Mathf.Abs(voltage) >=
+                voltageVisualThreshold;
+
+            bool hasCurrent =
+                Mathf.Abs(current) >=
+                currentVisualThreshold;
+
+            if (hasCurrent)
+            {
+                if (current > 0f)
+                {
+                    return ElectricFlowVisualState.PositiveCurrent;
+                }
+
+                return ElectricFlowVisualState.NegativeCurrent;
+            }
+
+            if (hasVoltage)
+            {
+                if (voltage > 0f)
+                {
+                    return ElectricFlowVisualState.PositiveVoltage;
+                }
+
+                return ElectricFlowVisualState.NegativeVoltage;
+            }
+
+            return ElectricFlowVisualState.Connected;
+        }
+
+        /// <summary>
+        /// Returns the material configured for an electrical
+        /// visual state.
+        /// </summary>
+        public Material GetMaterialForFlowState(
+            ElectricFlowVisualState state)
+        {
+            switch (state)
+            {
+                case ElectricFlowVisualState.PositiveVoltage:
+                    return positiveVoltageMaterial;
+
+                case ElectricFlowVisualState.NegativeVoltage:
+                    return negativeVoltageMaterial;
+
+                case ElectricFlowVisualState.PositiveCurrent:
+                    return positiveCurrentFlowMaterial;
+
+                case ElectricFlowVisualState.NegativeCurrent:
+                    return negativeCurrentFlowMaterial;
+
+                case ElectricFlowVisualState.Short:
+                    return shortCircuitMaterial;
+
+                case ElectricFlowVisualState.Connected:
+                case ElectricFlowVisualState.None:
+                default:
+                    return neutralWireMaterial;
+            }
+        }
 
         // =========================================================
         // VALIDATION
@@ -760,21 +967,15 @@ if (!registeredB)
         // =========================================================
         // TOPOLOGY CHANGE
         // =========================================================
-// =========================================================
-// TOPOLOGY CHANGE
-// =========================================================
 
-private void MarkTopologyChanged()
-{
-    topologyDirty = true;
+        private void MarkTopologyChanged()
+        {
+            topologyDirty = true;
 
-    topologyVersion++;
+            topologyVersion++;
 
-    TopologyChanged?.Invoke();
-   /* Debug.Log(
-    $"[SPARK CIRCUIT] TOPOLOGY CHANGED → Version={topologyVersion}",
-    this);*/
-}
+            TopologyChanged?.Invoke();
+        }
 
         // =========================================================
         // INVALID CONNECTION CLEANUP
@@ -879,65 +1080,89 @@ private void MarkTopologyChanged()
             {
                 nextConnectionId = 1UL;
             }
+
+            voltageVisualThreshold =
+                Mathf.Max(
+                    0f,
+                    voltageVisualThreshold);
+
+            currentVisualThreshold =
+                Mathf.Max(
+                    0f,
+                    currentVisualThreshold);
         }
+
+        // =========================================================
+        // DIAGNOSTICS
+        // =========================================================
+
         [ContextMenu("Diagnostics / Print All Connections")]
-private void PrintAllConnections()
-{
-    Debug.Log(
-        $"========== SPARK CIRCUIT CONNECTIONS ==========\n" +
-        $"Count = {connections.Count}");
+        private void PrintAllConnections()
+        {
+            Debug.Log(
+                $"========== SPARK CIRCUIT CONNECTIONS ==========\n" +
+                $"Count = {connections.Count}");
 
-    foreach (
-        KeyValuePair<ulong, SparkCircuitConnection> pair
-        in connections)
-    {
-        SparkCircuitConnection connection =
-            pair.Value;
+            foreach (
+                KeyValuePair<
+                    ulong,
+                    SparkCircuitConnection> pair
+                in connections)
+            {
+                SparkCircuitConnection connection =
+                    pair.Value;
 
-        if (connection == null)
-            continue;
+                if (connection == null)
+                    continue;
 
-        Debug.Log(
-            $"[CONNECTION] " +
-            $"ID={connection.Id} | " +
-            $"A={connection.A?.name ?? "NULL"} " +
-            $"({connection.A?.Owner?.name ?? "NO OWNER"}) | " +
-            $"B={connection.B?.name ?? "NULL"} " +
-            $"({connection.B?.Owner?.name ?? "NO OWNER"}) | " +
-            $"Kind={connection.Kind} | " +
-            $"Direction={connection.Direction}");
-    }
+                Debug.Log(
+                    $"[CONNECTION] " +
+                    $"ID={connection.Id} | " +
+                    $"A={connection.A?.name ?? "NULL"} " +
+                    $"({connection.A?.Owner?.name ?? "NO OWNER"}) | " +
+                    $"B={connection.B?.name ?? "NULL"} " +
+                    $"({connection.B?.Owner?.name ?? "NO OWNER"}) | " +
+                    $"Kind={connection.Kind} | " +
+                    $"Direction={connection.Direction}");
+            }
 
-    Debug.Log(
-        $"========== END CONNECTIONS ==========");
-}
+            Debug.Log(
+                $"========== END CONNECTIONS ==========");
+        }
 
-[ContextMenu("Diagnostics / Print Connection Terminals")]
-private void PrintConnectionTerminals()
-{
-    Debug.Log("========== CONNECTION TERMINAL DETAILS ==========");
+        [ContextMenu("Diagnostics / Print Connection Terminals")]
+        private void PrintConnectionTerminals()
+        {
+            Debug.Log(
+                "========== CONNECTION TERMINAL DETAILS ==========");
 
-    foreach (
-        KeyValuePair<ulong, SparkCircuitConnection> pair
-        in connections)
-    {
-        SparkCircuitConnection connection = pair.Value;
+            foreach (
+                KeyValuePair<
+                    ulong,
+                    SparkCircuitConnection> pair
+                in connections)
+            {
+                SparkCircuitConnection connection =
+                    pair.Value;
 
-        if (connection == null)
-            continue;
+                if (connection == null)
+                    continue;
 
-        Debug.Log(
-            $"ID={connection.Id} | " +
-            $"A={connection.A?.name ?? "NULL"} | " +
-            $"A InstanceID={(connection.A != null ? connection.A.GetInstanceID() : 0)} | " +
-            $"A Owner={connection.A?.Owner?.name ?? "NULL"} | " +
-            $"B={connection.B?.name ?? "NULL"} | " +
-            $"B InstanceID={(connection.B != null ? connection.B.GetInstanceID() : 0)} | " +
-            $"B Owner={connection.B?.Owner?.name ?? "NULL"} | " +
-            $"Kind={connection.Kind}");
-    }
+                Debug.Log(
+                    $"ID={connection.Id} | " +
+                    $"A={connection.A?.name ?? "NULL"} | " +
+                    $"A InstanceID=" +
+                    $"{(connection.A != null ? connection.A.GetInstanceID() : 0)} | " +
+                    $"A Owner={connection.A?.Owner?.name ?? "NULL"} | " +
+                    $"B={connection.B?.name ?? "NULL"} | " +
+                    $"B InstanceID=" +
+                    $"{(connection.B != null ? connection.B.GetInstanceID() : 0)} | " +
+                    $"B Owner={connection.B?.Owner?.name ?? "NULL"} | " +
+                    $"Kind={connection.Kind}");
+            }
 
-    Debug.Log("========== END CONNECTION TERMINAL DETAILS ==========");
-}
+            Debug.Log(
+                "========== END CONNECTION TERMINAL DETAILS ==========");
+        }
     }
 }

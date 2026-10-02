@@ -17,7 +17,7 @@ namespace ProjectSpark.Gameplay
     /// Physical plug/socket positioning is handled separately.
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class SparkPowerCable :
+    public  class SparkPowerCable :
         SparkElectricalComponent,
         ISparkConductiveDevice
     {
