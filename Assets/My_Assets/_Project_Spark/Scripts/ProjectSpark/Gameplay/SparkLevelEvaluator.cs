@@ -611,8 +611,8 @@ namespace ProjectSpark.Gameplay
                     SparkCircuitConnection connection =
                         connectionBuffer[i];
 
-                    if (connection == null)
-                        continue;
+                    if (!connection.IsValid)
+                    continue;
 
                     SparkTerminal other =
                         connection.GetOther(current);

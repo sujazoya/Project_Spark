@@ -164,15 +164,14 @@ namespace ProjectSpark.Gameplay
 
        private MaterialPropertyBlock propertyBlock;
 
-        private ulong physicalContactConnectionId;
+       private ulong terminalAConnectionId;
+        private ulong terminalBConnectionId;
 
-        private SparkTerminal physicalContactTerminal;
+        private SparkTerminal physicalContactTerminalA;
+        private SparkTerminal physicalContactTerminalB;
 
-        private bool hasPhysicalContactConnection;
-
-        private Vector3 lastClickedPoint;
-
-        private Vector3 lastClickedNormal;
+        private bool hasTerminalAConnection;
+        private bool hasTerminalBConnection;     
 
 
         // ============================================================
@@ -295,61 +294,38 @@ namespace ProjectSpark.Gameplay
         }
 
 
-        // ============================================================
-        // PHYSICAL CONTACT STATE
-        // ============================================================
+        public bool HasTerminalAConnection =>
+            hasTerminalAConnection;
 
-        /// <summary>
-        /// Returns true when the wire currently has one physical
-        /// electrical contact.
-        /// </summary>
-        public bool HasActiveContact
-        {
-            get
-            {
-                return hasPhysicalContactConnection;
-            }
-        }
+        public bool HasTerminalBConnection =>
+            hasTerminalBConnection;
 
-        /// <summary>
-        /// Single-connection wire can have only one active external
-        /// electrical contact.
-        /// </summary>
+        public bool IsFullyConnected =>
+            hasTerminalAConnection &&
+            hasTerminalBConnection;
+
+        public SparkTerminal ConnectedTerminalA =>
+            physicalContactTerminalA;
+
+        public SparkTerminal ConnectedTerminalB =>
+            physicalContactTerminalB;
+
         public int ActiveContactCount
         {
             get
             {
-                return hasPhysicalContactConnection ? 1 : 0;
+                int count = 0;
+
+                if (hasTerminalAConnection)
+                    count++;
+
+                if (hasTerminalBConnection)
+                    count++;
+
+                return count;
             }
         }
 
-        /// <summary>
-        /// Returns true when the wire can accept another physical
-        /// contact.
-        /// </summary>
-        public bool HasAvailableContactSlot
-        {
-            get
-            {
-                return !hasPhysicalContactConnection;
-            }
-        }
-
-        public Vector3 LastClickedPoint
-        {
-            get
-            {
-                return lastClickedPoint;
-            }
-        }
-
-        public Vector3 LastClickedNormal
-        {
-            get
-            {
-                return lastClickedNormal;
-            }
-        }
 
 
         // ============================================================
@@ -358,9 +334,7 @@ namespace ProjectSpark.Gameplay
 
         protected override void Awake()
         {
-            base.Awake();
-
-            EnsureTerminals();
+            base.Awake();          
 
             ResolveCircuitSystem();
 
@@ -397,6 +371,69 @@ namespace ProjectSpark.Gameplay
 
             Unsubscribe();
         }
+public bool RemovePhysicalContact(
+    SparkTerminal terminal)
+{
+    if (terminal == null)
+        return false;
+
+    ResolveCircuitSystem();
+
+    if (circuitSystem == null)
+        return false;
+
+    bool removed = false;
+
+    // ------------------------------------------------------------
+    // Terminal A connection
+    // ------------------------------------------------------------
+
+    if (hasTerminalAConnection &&
+        physicalContactTerminalA == terminal)
+    {
+        if (circuitSystem.TryRemoveConnection(
+                terminalAConnectionId,
+                out SparkCircuitConnection connectionA))
+        {
+            removed = true;
+        }
+
+        terminalAConnectionId = 0UL;
+        physicalContactTerminalA = null;
+        hasTerminalAConnection = false;
+    }
+
+    // ------------------------------------------------------------
+    // Terminal B connection
+    // ------------------------------------------------------------
+
+    if (hasTerminalBConnection &&
+        physicalContactTerminalB == terminal)
+    {
+        if (circuitSystem.TryRemoveConnection(
+                terminalBConnectionId,
+                out SparkCircuitConnection connectionB))
+        {
+            removed = true;
+        }
+
+        terminalBConnectionId = 0UL;
+        physicalContactTerminalB = null;
+        hasTerminalBConnection = false;
+    }
+
+    if (removed)
+    {
+        RefreshVisuals();
+    }
+
+    return removed;
+}
+
+public void RemovePhysicalContact()
+{
+    RemoveAllPhysicalContacts();
+}
 
 
         private void OnValidate()
@@ -594,181 +631,233 @@ namespace ProjectSpark.Gameplay
         ///
         /// All physical contacts on this wire use Terminal A.
         /// </summary>
-        public bool AddPhysicalContact(
-            SparkTerminal terminal,
-            SparkWireContact source)
+       public bool AddPhysicalContact(
+    SparkTerminal terminal,
+    SparkWireContact source)
+{
+    if (!isActiveAndEnabled)
+        return false;
+
+    if (terminal == null)
+        return false;
+
+    if (source == null)
+        return false;
+
+    EnsureTerminals();
+
+   /* Debug.Log(
+    $"[WIRE CONTACT MAP] {name} | " +
+    $"InternalA={terminalA?.name ?? "NULL"} " +
+    $"ParentA={terminalA?.transform.parent?.name ?? "NULL"} | " +
+    $"InternalB={terminalB?.name ?? "NULL"} " +
+    $"ParentB={terminalB?.transform.parent?.name ?? "NULL"} | " +
+    $"External={terminal?.name ?? "NULL"} " +
+    $"ExternalParent={terminal?.transform.parent?.name ?? "NULL"}",
+    this);*/
+
+    if (!HasValidTerminals)
+        return false;
+
+    // A wire cannot connect to its own terminals.
+    if (terminal == terminalA ||
+        terminal == terminalB)
+    {
+        return false;
+    }
+
+    ResolveCircuitSystem();
+
+    if (circuitSystem == null)
+    {
+        Debug.LogWarning(
+            $"[SparkSingleWire] No SparkCircuitSystem found for {name}.",
+            this);
+
+        return false;
+    }
+
+    // ------------------------------------------------------------
+    // Already connected to this target
+    // ------------------------------------------------------------
+
+    if (physicalContactTerminalA == terminal)
+    {
+        return true;
+    }
+
+    if (physicalContactTerminalB == terminal)
+    {
+        return true;
+    }
+
+    // ------------------------------------------------------------
+    // FIRST END → Terminal A
+    // ------------------------------------------------------------
+
+    if (!hasTerminalAConnection)
+    {
+        if (terminalA.AtCapacity)
         {
-            if (!isActiveAndEnabled)
-                return false;
+            Debug.LogWarning(
+                $"[SparkSingleWire] Terminal A is already at capacity: {name}",
+                this);
 
-            if (terminal == null)
-                return false;
-
-            if (source == null)
-                return false;
-
-            EnsureTerminals();
-
-            if (!HasValidTerminals)
-                return false;
-
-            if (terminal == terminalA ||
-                terminal == terminalB)
-            {
-                return false;
-            }
-
-            ResolveCircuitSystem();
-
-            if (circuitSystem == null)
-            {
-                Debug.LogWarning(
-                    $"[SparkSingleWire] No SparkCircuitSystem found for {name}.",
-                    this);
-
-                return false;
-            }
-
-            // --------------------------------------------------------
-            // Existing connection
-            // --------------------------------------------------------
-
-            if (hasPhysicalContactConnection)
-            {
-                if (physicalContactTerminal == terminal)
-                {
-                    return true;
-                }
-
-                // Single-connection behavior:
-                // another terminal cannot replace the existing one
-                // until the current physical contact is removed.
-                return false;
-            }
-
-            // --------------------------------------------------------
-            // Terminal A is the ONLY external attachment point.
-            // --------------------------------------------------------
-
-            if (terminalA.AtCapacity)
-            {
-                Debug.LogWarning(
-                    $"[SparkSingleWire] Terminal A is already at capacity: {name}",
-                    this);
-
-                return false;
-            }
-
-            bool connected =
-                circuitSystem.TryCreateConnection(
-                    terminalA,
-                    terminal,
-                    SparkConnectionKind.Wire,
-                    SparkConnectionDirection.Bidirectional,
-                    out SparkCircuitConnection connection);
-
-            if (!connected)
-            {
-                return false;
-            }
-
-            physicalContactConnectionId =
-                connection.Id;
-
-            physicalContactTerminal =
-                terminal;
-
-            hasPhysicalContactConnection =
-                true;
-
-            RefreshVisuals();
-
-            return true;
+            return false;
         }
+
+        bool connectedA =
+            circuitSystem.TryCreateConnection(
+                terminalA,
+                terminal,
+                SparkConnectionKind.Wire,
+                SparkConnectionDirection.Bidirectional,
+                out SparkCircuitConnection connectionA);
+
+        if (!connectedA)
+        {
+            return false;
+        }
+
+       terminalAConnectionId =
+    connectionA.Id;
+
+physicalContactTerminalA =
+    terminal;
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+
+Debug.Log(
+    $"[WIRE CONNECTION CREATED] {name} | " +
+    $"ID={connectionA.Id} | " +
+    $"Internal={terminalA.name} | " +
+    $"External={terminal.name} | " +
+    $"Kind={connectionA.Kind}",
+    this);
+
+#endif
+
+        hasTerminalAConnection =
+            true;
+
+        RefreshVisuals();
+
+        return true;
+    }
+
+    // ------------------------------------------------------------
+    // SECOND END → Terminal B
+    // ------------------------------------------------------------
+
+    if (!hasTerminalBConnection)
+    {
+        if (terminalB.AtCapacity)
+        {
+            Debug.LogWarning(
+                $"[SparkSingleWire] Terminal B is already at capacity: {name}",
+                this);
+
+            return false;
+        }
+
+        bool connectedB =
+            circuitSystem.TryCreateConnection(
+                terminalB,
+                terminal,
+                SparkConnectionKind.Wire,
+                SparkConnectionDirection.Bidirectional,
+                out SparkCircuitConnection connectionB);
+
+        if (!connectedB)
+        {
+            return false;
+        }
+
+        terminalBConnectionId =
+            connectionB.Id;
+
+        physicalContactTerminalB =
+            terminal;
+
+            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+
+Debug.Log(
+    $"[WIRE CONNECTION CREATED] {name} | " +
+    $"ID={connectionB.Id} | " +
+    $"Internal={terminalB.name} | " +
+    $"External={terminal.name} | " +
+    $"Kind={connectionB.Kind}",
+    this);
+
+#endif
+
+        hasTerminalBConnection =
+            true;
+
+        RefreshVisuals();
+
+        return true;
+    }
+
+    // Both ends are already connected.
+    return false;
+}
 
 
         /// <summary>
         /// Removes the single physical electrical contact.
         /// </summary>
-        public bool RemovePhysicalContact(
-            SparkTerminal terminal,
-            SparkWireContact source)
-        {
-            if (!hasPhysicalContactConnection)
-                return false;
-
-            if (terminal != null &&
-                physicalContactTerminal != terminal)
-            {
-                return false;
-            }
-
-            ResolveCircuitSystem();
-
-            ulong connectionId =
-                physicalContactConnectionId;
-
-            physicalContactConnectionId =
-                0UL;
-
-            physicalContactTerminal =
-                null;
-
-            hasPhysicalContactConnection =
-                false;
-
-            if (circuitSystem != null &&
-                connectionId != 0UL)
-            {
-                circuitSystem.TryRemoveConnection(
-                    connectionId,
-                    out _);
-            }
-
-            RefreshVisuals();
-
-            return true;
-        }
-
+      
 
         /// <summary>
         /// Removes the current physical electrical contact.
         /// </summary>
-        public void RemovePhysicalContact()
+public void RemoveAllPhysicalContacts()
+{
+
+    /*#if UNITY_EDITOR || DEVELOPMENT_BUILD
+    Debug.Log(
+        $"[SparkSingleWire] REMOVE ALL CONTACTS | " +
+        $"{name} | " +
+        $"A={physicalContactTerminalA?.name ?? "NULL"} | " +
+        $"B={physicalContactTerminalB?.name ?? "NULL"}",
+        this);
+#endif*/
+
+
+    ResolveCircuitSystem();
+
+    if (circuitSystem != null)
+    {
+        if (hasTerminalAConnection)
         {
-            RemovePhysicalContact(
-                physicalContactTerminal,
-                null);
+            circuitSystem.TryRemoveConnection(
+                terminalAConnectionId,
+                out _);
         }
 
-
-        // ============================================================
-        // CLICK
-        // ============================================================
-
-        /// <summary>
-        /// Called by SparkWireContact when the wire collider is
-        /// clicked.
-        ///
-        /// Clicking alone does not create an electrical connection.
-        /// This method stores the exact clicked world position.
-        /// </summary>
-        public void OnWireClicked(
-            Vector3 clickedPoint,
-            Vector3 clickedNormal)
+        if (hasTerminalBConnection)
         {
-            lastClickedPoint =
-                clickedPoint;
-
-            lastClickedNormal =
-                clickedNormal;
-
-            Debug.Log(
-                $"[SparkSingleWire] Wire clicked: {name}\n" +
-                $"Point: {clickedPoint}",
-                this);
+            circuitSystem.TryRemoveConnection(
+                terminalBConnectionId,
+                out _);
         }
+    }
 
+    terminalAConnectionId = 0UL;
+    terminalBConnectionId = 0UL;
+
+    physicalContactTerminalA = null;
+    physicalContactTerminalB = null;
+
+    hasTerminalAConnection = false;
+    hasTerminalBConnection = false;
+
+    RefreshVisuals();
+}
+
+
+       
 
         // ============================================================
         // CONDUCTIVE DEVICE

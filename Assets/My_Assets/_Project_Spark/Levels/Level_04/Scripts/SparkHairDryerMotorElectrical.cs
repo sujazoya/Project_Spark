@@ -109,13 +109,13 @@ namespace ProjectSpark.Gameplay
 
         private void Update()
 {
-    Debug.Log(
+/*    Debug.Log(
         $"[Motor Electrical] " +
         $"V={Voltage:F2} | " +
         $"I={Current:F3} | " +
         $"Power={Power:F2} | " +
         $"Conduction={Conduction}",
-        this);
+        this);*/
 }
 
         public bool CanConductBetween(

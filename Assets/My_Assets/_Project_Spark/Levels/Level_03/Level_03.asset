@@ -17,7 +17,7 @@ MonoBehaviour:
   description: Connect a DC power supply to a device through the correct cable, switch,
     and jack/socket path, then verify that the device receives valid voltage and
     current.
-  completionMode: 0
+  completionMode: 1
   requiredTargetCount: 1
   requireClosedReturn: 0
   rejectShortCircuit: 1
@@ -32,8 +32,8 @@ MonoBehaviour:
     negativeTerminalId: Power_Bnk_Negative
     nominalVoltage: 5
   targets:
-  - targetId: Phone_15
-    displayName: Phone_15
+  - targetId: Mobile_15
+    displayName: Mobile15
     description: Chargr the mobile
     targetType: 3
     targetTerminalId: Mobile_Posetive
