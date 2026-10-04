@@ -57,6 +57,14 @@ namespace ProjectSpark.Gameplay
         private SparkTerminalKind terminalKind =
             SparkTerminalKind.Generic;
 
+            [Header("Electrical Wire")]
+
+[SerializeField, Min(0.000001f)]
+private float wireResistance = 0.001f;
+
+public float WireResistance =>
+    Mathf.Max(0.000001f, wireResistance);
+
 
         // ============================================================
         // VISUALS
@@ -209,16 +217,20 @@ namespace ProjectSpark.Gameplay
         // PUBLIC ELECTRICAL STATE
         // ============================================================
 
-        public float Voltage
+       public float Voltage
+{
+    get
+    {
+        if (terminalA == null ||
+            terminalB == null)
         {
-            get
-            {
-                if (terminalA == null)
-                    return 0f;
-
-                return terminalA.Voltage;
-            }
+            return 0f;
         }
+
+        return terminalA.Voltage -
+               terminalB.Voltage;
+    }
+}
 
         public float Current
         {

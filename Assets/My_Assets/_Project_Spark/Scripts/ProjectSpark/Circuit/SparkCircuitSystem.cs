@@ -256,6 +256,12 @@ namespace ProjectSpark.Circuit
                 return false;
             }
 
+/*            Debug.Log(
+    $"[CONNECT REQUEST] " +
+    $"A={GetTerminalDebugName(a)} | " +
+    $"B={GetTerminalDebugName(b)} | " +
+    $"Kind={kind} | Direction={direction}");*/
+
             ulong id =
                 AllocateConnectionId();
 
@@ -278,6 +284,13 @@ namespace ProjectSpark.Circuit
                 b.RegisterConnection(
                     kind,
                     out registerReason);
+
+                   /* Debug.Log(
+    $"[CONNECT REGISTER RESULT] " +
+    $"A={GetTerminalDebugName(a)} | " +
+    $"B={GetTerminalDebugName(b)} | " +
+    $"RegisteredA={registeredA} | " +
+    $"RegisteredB={registeredB}");*/
 
             if (!registeredB)
             {
@@ -1164,5 +1177,34 @@ namespace ProjectSpark.Circuit
             Debug.Log(
                 "========== END CONNECTION TERMINAL DETAILS ==========");
         }
+        private string GetTerminalDebugName(
+    SparkTerminal terminal)
+{
+    if (terminal == null)
+        return "NULL";
+
+    string ownerName = "NoOwner";
+    string ownerObjectName = "NoOwnerObject";
+
+    if (terminal.Owner != null)
+    {
+        ownerName =
+            terminal.Owner.GetType().Name;
+
+        if (terminal.Owner is Component ownerComponent)
+        {
+            ownerObjectName =
+                ownerComponent.gameObject.name;
+        }
+    }
+
+    return
+        $"{terminal.name}" +
+        $" [ID={terminal.GetInstanceID()}]" +
+        $" [Owner={ownerName}]" +
+        $" [GO={ownerObjectName}]" +
+        $" [TerminalGO={terminal.gameObject.name}]" +
+        $" [Connections={terminal.ConnectionCount}/{terminal.MaxConnections}]";
+}
     }
 }

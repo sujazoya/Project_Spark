@@ -508,7 +508,7 @@ public SparkTerminalPolarity EffectivePolarity
                 return false;
             }
 
-            if (connectionKind ==
+           /* if (connectionKind ==
                 SparkConnectionKind.Wire &&
                 kind == SparkTerminalKind.Ground &&
                 other.kind == SparkTerminalKind.Ground)
@@ -517,7 +517,9 @@ public SparkTerminalPolarity EffectivePolarity
                     "Ground-to-ground connection is invalid.";
 
                 return false;
-            }
+            }*/
+
+            
 
             reason = null;
 

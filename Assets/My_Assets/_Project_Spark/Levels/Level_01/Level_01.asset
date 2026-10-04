@@ -26,7 +26,7 @@ MonoBehaviour:
   minimumVoltage: 0.01
   allowAnyConfiguredPowerSource: 1
   powerSources:
-  - sourceName: Power_Supply
+  - sourceName: PowerSupply_01
     positiveTerminalId: Power_Supply_Posetive
     negativeTerminalId: Power_Supply_Negative
     nominalVoltage: 5
@@ -37,13 +37,13 @@ MonoBehaviour:
 
 '
     targetType: 3
-    targetTerminalId: Bulb_Anode
+    targetTerminalId: 
     requiredPositiveTerminalId: Bulb_Anode
     requiredNegativeTerminalId: Bulb_Cathode
     targetComponentId: LED_Bulb
-    minimumVoltage: 1
-    minimumCurrent: 0.01
-    minimumPower: 0.001
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
     requireElectricalEnabled: 1
     requireConduction: 0
     inverted: 0

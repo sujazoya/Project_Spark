@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4712451567812084684
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9086130853409201452}
+  - component: {fileID: 165134791746813137}
+  - component: {fileID: 7447751813099560554}
+  - component: {fileID: 4352206956068933763}
+  m_Layer: 0
+  m_Name: SparkElectronicSystems
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9086130853409201452
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4712451567812084684}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &165134791746813137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4712451567812084684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06bef1431eadcf34986dd7ec78e19606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Circuit.SparkCircuitSystem
+  allowParallelConnections: 0
+  automaticallyRebuildTopology: 1
+  logConnectionChanges: 0
+  logRejectedConnections: 0
+  neutralWireMaterial: {fileID: 2100000, guid: 35b9aa3fbe6c40d4392d6bd8680baf46, type: 2}
+  positiveVoltageMaterial: {fileID: 2100000, guid: cf6ac813ad15cbc44940831bc4ba936b, type: 2}
+  negativeVoltageMaterial: {fileID: 2100000, guid: 855a3536c4f5f754387a7399449ee056, type: 2}
+  positiveCurrentFlowMaterial: {fileID: 2100000, guid: caea44f0a0f2ac7488cf57ecaaa1bf7a, type: 2}
+  negativeCurrentFlowMaterial: {fileID: 2100000, guid: 14494623cc89b664899eeac35dde166f, type: 2}
+  shortCircuitMaterial: {fileID: 2100000, guid: e84e72ff53e352243aad8e45f8c7719e, type: 2}
+  voltageVisualThreshold: 0.001
+  currentVisualThreshold: 0.001
+--- !u!114 &7447751813099560554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4712451567812084684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99828b01ee6518545a8983584be3d03f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Electrical.SparkElectricalSolver
+  circuit: {fileID: 165134791746813137}
+  powerSupplies: []
+  electricalComponents: []
+  maxIterations: 12
+  convergenceTolerance: 0.000001
+  minimumResistance: 0.000001
+  floatingNodeLeakResistance: 1e+9
+  solveOnDirty: 1
+  solverRegistry: {fileID: 11400000, guid: 4cc61f3ccd37b7a40b098b3f1b83561f, type: 2}
+  simulateCapacitors: 1
+  editorTimeStep: 0.016666668
+--- !u!114 &4352206956068933763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4712451567812084684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c39333e5e3430ec4f87ce6f19541e06d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Wire.SparkWireSystem
+  circuit: {fileID: 165134791746813137}

@@ -189,21 +189,27 @@ private SparkHairDryerThermalProtectionVisual thermalProtectionVisual;
             StopVFXImmediate();
         }
 
-        private void Update()
-        {
-            if (electricalController == null)
-                return;
+       private void Update()
+{
+    if (electricalController == null)
+        return;
 
-            electricalController.RefreshState();
+    electricalController.RefreshState();
 
-            ReadElectricalState();
-            UpdateFan();
-            UpdateAirflowTargets();
-            SmoothAirflow();
-            SmoothTemperature();
-            ApplyVFXProperties();
-            UpdateVFXPlayback();
-        }
+    ReadElectricalState();
+
+    UpdateFan();
+
+    UpdateAirflowTargets();
+
+    SmoothAirflow();
+
+    SmoothTemperature();
+
+    ApplyVFXProperties();
+
+    UpdateVFXPlayback();
+}
 
         // ============================================================
         // REFERENCES
@@ -297,16 +303,30 @@ private SparkHairDryerThermalProtectionVisual thermalProtectionVisual;
         // ============================================================
 
         private void ReadElectricalState()
-        {
-            motorRunning =
-                electricalController.IsMotorRunning;
+{
+    motorRunning =
+        electricalController.IsMotorRunning;
 
-            heaterHeating =
-                electricalController.IsHeaterHeating;
+    heaterHeating =
+        electricalController.IsHeaterHeating;
 
-            speedIndex =
-                electricalController.SpeedIndex;
-        }
+    speedIndex =
+        electricalController.SpeedIndex;
+
+
+    Debug.Log(
+        "[HAIR DRYER VISUAL] " +
+        "Motor=" + motorRunning +
+        " | Heater=" + heaterHeating +
+        " | SpeedIndex=" + speedIndex +
+        " | MotorVoltage=" +
+        electricalController.MotorVoltage.ToString("F2") +
+        " | MotorCurrent=" +
+        electricalController.MotorCurrent.ToString("F4") +
+        " | HeaterPower=" +
+        electricalController.HeaterPower.ToString("F2"),
+        this);
+}
 
         // ============================================================
         // FAN
@@ -387,8 +407,12 @@ private void UpdateFan()
         // AIRFLOW
         // ============================================================
 
-           private void UpdateAirflowTargets()
+         private void UpdateAirflowTargets()
 {
+    // ------------------------------------------------------------
+    // MOTOR OFF
+    // ------------------------------------------------------------
+
     if (!motorRunning)
     {
         targetAirflowStrength = 0f;
@@ -400,19 +424,29 @@ private void UpdateFan()
         return;
     }
 
+
+    // ------------------------------------------------------------
+    // MOTOR ON
+    // ------------------------------------------------------------
+
     targetAirflowStrength =
         GetAirflowForSpeed();
+
 
     float heaterTemperature =
         GetTemperatureForHeater();
 
+
     targetAirTemperature =
         heaterTemperature;
 
-    UpdateHeaterVisual(heaterTemperature);
-    UpdateThermalProtectionVisual(heaterTemperature);
-}
 
+    UpdateHeaterVisual(
+        heaterTemperature);
+
+    UpdateThermalProtectionVisual(
+        heaterTemperature);
+}
         private void UpdateHeaterVisual(
             float temperature)
         {
@@ -528,38 +562,47 @@ private void UpdateFan()
             }
         }
 
-        private void UpdateVFXPlayback()
+       private void UpdateVFXPlayback()
+{
+    if (airflowVFX == null)
+        return;
+
+
+    bool shouldRun =
+        motorRunning &&
+        targetAirflowStrength > 0.001f;
+
+
+    if (shouldRun)
+    {
+        if (controlVFXObject != null &&
+            !controlVFXObject.activeSelf)
         {
-            if (airflowVFX == null)
-                return;
-
-            bool shouldRun =
-                airflowStrength > 0.001f;
-
-            if (shouldRun)
-            {
-                if (controlVFXObject != null &&
-                    !controlVFXObject.activeSelf)
-                {
-                    controlVFXObject.SetActive(true);
-                }
-
-                if (!airflowVFX.enabled)
-                    airflowVFX.enabled = true;
-
-                airflowVFX.Play();
-            }
-            else
-            {
-                airflowVFX.Stop();
-
-                if (controlVFXObject != null &&
-                    controlVFXObject.activeSelf)
-                {
-                    controlVFXObject.SetActive(false);
-                }
-            }
+            controlVFXObject.SetActive(true);
         }
+
+
+        if (!airflowVFX.enabled)
+        {
+            airflowVFX.enabled = true;
+        }
+
+
+        airflowVFX.Play();
+
+        return;
+    }
+
+
+    airflowVFX.Stop();
+
+
+    if (controlVFXObject != null &&
+        controlVFXObject.activeSelf)
+    {
+        controlVFXObject.SetActive(false);
+    }
+}
 
         private void StopVFXImmediate()
         {

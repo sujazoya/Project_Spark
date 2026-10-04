@@ -1,0 +1,172 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3275962262188036997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6330434801320342372}
+  - component: {fileID: 9215813888771051557}
+  - component: {fileID: 167808792397925640}
+  - component: {fileID: 8290034343250540140}
+  m_Layer: 0
+  m_Name: LevelGamePlayManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6330434801320342372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3275962262188036997}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9215813888771051557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3275962262188036997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e84e18f2a91fbbf4ebf813d6f8981d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelProgression
+  levelManager: {fileID: 167808792397925640}
+  initializeOnAwake: 1
+  autoUnlockNextLevel: 1
+  saveProgress: 1
+  saveKey: ProjectSpark.LevelProgress
+  debugLogging: 0
+  progress:
+  - unlocked: 0
+    completed: 0
+    completionCount: 0
+--- !u!114 &167808792397925640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3275962262188036997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a7dc184cecd6524f96f9895ad1dd0d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.LevelGamePlayManager
+  circuitSystem: {fileID: 0}
+  electricalSolver: {fileID: 0}
+  sceneBindings: {fileID: 0}
+  levels:
+  - {fileID: 11400000, guid: 64a97c3041cca0b4eb8e078632d99a80, type: 2}
+  - {fileID: 11400000, guid: d559e5db5ead04540bd4dc6241da849f, type: 2}
+  - {fileID: 11400000, guid: d559e5db5ead04540bd4dc6241da849f, type: 2}
+  activeLevelIndex: 2
+  runtimeState: 0
+  autoStartFirstLevel: 1
+  autoEvaluate: 1
+  autoAdvanceOnCompletion: 0
+  preventInteractionAfterCompletion: 0
+  debugLogging: 1
+  verboseLogging: 1
+  showRuntimeState: 1
+--- !u!114 &8290034343250540140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3275962262188036997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c2f1eac5072564e8675d06932fab72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelSceneBindings
+  terminals:
+  - id: Power_Supply_Posetive
+    terminal: {fileID: 0}
+  - id: Power_Supply_Negative
+    terminal: {fileID: 0}
+  - id: Bulb_Anode
+    terminal: {fileID: 0}
+  - id: Bulb_Cathode
+    terminal: {fileID: 0}
+  - id: Switch_Output
+    terminal: {fileID: 0}
+  - id: Switch_Input
+    terminal: {fileID: 0}
+  - id: charger_jack_Out_Posetive
+    terminal: {fileID: 0}
+  - id: charger_jack_Out_Negative
+    terminal: {fileID: 0}
+  - id: ChargerCable_Posetive
+    terminal: {fileID: 0}
+  - id: ChargerCable_Negative
+    terminal: {fileID: 0}
+  - id: charger_jack_In__Posetive
+    terminal: {fileID: 0}
+  - id: charger_jack_In__Negative
+    terminal: {fileID: 0}
+  - id: Mobile_Posetive
+    terminal: {fileID: 0}
+  - id: Mobile_Negative
+    terminal: {fileID: 0}
+  - id: Power_Bnk_Posetive
+    terminal: {fileID: 0}
+  - id: Power_Bnk_Negative
+    terminal: {fileID: 0}
+  - id: Multi_Meter_Red_Probe
+    terminal: {fileID: 0}
+  - id: Multi_Meter_Black_Probe
+    terminal: {fileID: 0}
+  - id: Register_1kTerimalA
+    terminal: {fileID: 0}
+  - id: Register_1kTerimalB
+    terminal: {fileID: 0}
+  - id: Hair_Dryer_live
+    terminal: {fileID: 0}
+  - id: Hair_Dryer_lNeutral
+    terminal: {fileID: 0}
+  components:
+  - id: LED_Bulb
+    component: {fileID: 0}
+  - id: Power_Switch
+    component: {fileID: 0}
+  - id: PowerSupply_01
+    component: {fileID: 0}
+  - id: Register
+    component: {fileID: 0}
+  - id: Power_Bank
+    component: {fileID: 0}
+  - id: Mobile_15
+    component: {fileID: 0}
+  - id: Spark_Multi_Meter
+    component: {fileID: 0}
+  - id: h_d_motor
+    component: {fileID: 0}
+  electronicObjects:
+  - id: Spark_Multi_Meter
+    electronicObject: {fileID: 0}
+  outputs:
+  - id: LED_Helix
+    target: {fileID: 0}
+  - id: Levels
+    target: {fileID: 0}
+  - id: Charging_visual
+    target: {fileID: 0}
+  - id: Charging_battery
+    target: {fileID: 0}

@@ -591,18 +591,32 @@ namespace ProjectSpark.Gameplay
             traversalQueue.Enqueue(start);
             visitedTerminals.Add(start);
 
+
+/*                        Debug.Log(
+                $"[LEVEL PATH START] " +
+                $"Start={GetTerminalDebugName(start)}");*/
+
             while (traversalQueue.Count > 0)
             {
                 SparkTerminal current =
                     traversalQueue.Dequeue();
 
                 reachable.Add(current);
+           /* Debug.Log(
+                $"[LEVEL PATH WALK] " +
+                $"Start={GetTerminalDebugName(start)} | " +
+                $"Current={GetTerminalDebugName(current)}");*/
 
                 connectionBuffer.Clear();
 
                 circuitSystem.GetConnections(
                     current,
                     connectionBuffer);
+
+                    /*Debug.Log(
+    $"[LEVEL PATH CONNECTION COUNT] " +
+    $"Current={GetTerminalDebugName(current)} | " +
+    $"Count={connectionBuffer.Count}");*/
 
                 for (int i = 0;
                      i < connectionBuffer.Count;
@@ -619,6 +633,11 @@ namespace ProjectSpark.Gameplay
 
                     if (other == null)
                         continue;
+
+                        /* Debug.Log(
+    $"[LEVEL PATH CONNECTION] " +
+    $"Current={GetTerminalDebugName(current)} | " +
+    $"Other={GetTerminalDebugName(other)}");*/
 
                     if (visitedTerminals.Add(other))
                     {
@@ -709,75 +728,129 @@ namespace ProjectSpark.Gameplay
         // INVALID CONNECTION
         // ================================================================
 
-        private bool DetectInvalidConnection(
-            SparkLevelDefinition level,
-            SparkTerminal sourcePositive,
-            SparkTerminal sourceNegative,
-            out SparkTerminal affectedTerminal,
-            out SparkLevelTarget affectedTarget)
-        {
-            affectedTerminal = null;
-            affectedTarget = null;
+       private bool DetectInvalidConnection(
+    SparkLevelDefinition level,
+    SparkTerminal sourcePositive,
+    SparkTerminal sourceNegative,
+    out SparkTerminal affectedTerminal,
+    out SparkLevelTarget affectedTarget)
+{
+    affectedTerminal = null;
+    affectedTarget = null;
 
-            SparkLevelTarget target =
-                GetPrimaryTarget(level);
+    SparkLevelTarget target =
+        GetPrimaryTarget(level);
 
-            if (target == null)
-                return false;
+    if (target == null)
+    {
+        return false;
+    }
 
-            if (!TryResolveTargetTerminalPair(
-                    target,
-                    out SparkTerminal targetPositive,
-                    out SparkTerminal targetNegative))
-            {
-                return false;
-            }
+    if (!TryResolveTargetTerminalPair(
+            target,
+            out SparkTerminal targetPositive,
+            out SparkTerminal targetNegative))
+    {
+        return false;
+    }
 
-            positiveReachable.Clear();
-            negativeReachable.Clear();
+    positiveReachable.Clear();
+    negativeReachable.Clear();
 
-            TraverseWireNetwork(
-                sourcePositive,
-                positiveReachable);
+    Debug.Log(
+    $"[LEVEL SOURCE TERMINALS] " +
+    $"Positive={GetTerminalDebugName(sourcePositive)} | " +
+    $"Negative={GetTerminalDebugName(sourceNegative)}");
 
-            TraverseWireNetwork(
-                sourceNegative,
-                negativeReachable);
 
-            bool positiveToPositive =
-                positiveReachable.Contains(targetPositive);
+    TraverseWireNetwork(
+        sourcePositive,
+        positiveReachable);
 
-            bool negativeToNegative =
-                negativeReachable.Contains(targetNegative);
+/*        Debug.Log(
+    $"[LEVEL NEGATIVE SOURCE] " +
+    $"Terminal={GetTerminalDebugName(sourceNegative)}");*/
 
-            bool positiveToNegative =
-                positiveReachable.Contains(targetNegative);
+    TraverseWireNetwork(
+        sourceNegative,
+        negativeReachable);
 
-            bool negativeToPositive =
-                negativeReachable.Contains(targetPositive);
 
-            bool crossConnection =
-                positiveToNegative ||
-                negativeToPositive;
+    bool positiveToPositive =
+        positiveReachable.Contains(
+            targetPositive);
 
-            if (!crossConnection)
-                return false;
+    bool negativeToNegative =
+        negativeReachable.Contains(
+            targetNegative);
 
-            affectedTarget = target;
+    bool positiveToNegative =
+        positiveReachable.Contains(
+            targetNegative);
 
-            if (positiveToNegative)
-            {
-                affectedTerminal = targetNegative;
-            }
-            else if (negativeToPositive)
-            {
-                affectedTerminal = targetPositive;
-            }
+    bool negativeToPositive =
+        negativeReachable.Contains(
+            targetPositive);
 
-            return
-                crossConnection &&
-                (positiveToPositive || negativeToNegative);
-        }
+
+
+              // ================================================================
+    // DEBUG POLARITY / RETURN PATH
+    // ================================================================
+
+/*    Debug.Log(
+        $"[LEVEL 1 PATH] " +
+        $"Positive→Positive={positiveToPositive} | " +
+        $"Positive→Negative={positiveToNegative} | " +
+        $"Negative→Positive={negativeToPositive} | " +
+        $"Negative→Negative={negativeToNegative}");*/
+
+
+    // ================================================================
+    // CORRECT POLARITY
+    // ================================================================
+
+    if (positiveToPositive &&
+        negativeToNegative &&
+        !positiveToNegative &&
+        !negativeToPositive)
+    {
+        return false;
+    }
+
+
+    // ================================================================
+    // WRONG POLARITY
+    // ================================================================
+
+    bool wrongPolarity =
+        positiveToNegative ||
+        negativeToPositive;
+
+    if (!wrongPolarity)
+    {
+        return false;
+    }
+
+
+    affectedTarget =
+        target;
+
+
+    if (positiveToNegative)
+    {
+        affectedTerminal =
+            targetNegative;
+    }
+    else if (negativeToPositive)
+    {
+        affectedTerminal =
+            targetPositive;
+    }
+
+
+    return true;
+}
 
         // ================================================================
         // SOURCE SHORT
@@ -1443,5 +1516,39 @@ namespace ProjectSpark.Gameplay
 
             return null;
         }
+                // ================================================================
+        // TERMINAL DEBUG NAME
+        // ================================================================
+
+private string GetTerminalDebugName(
+    SparkTerminal terminal)
+{
+    if (terminal == null)
+    {
+        return "NULL";
+    }
+
+    string ownerName = "NoOwner";
+    string ownerObjectName = "NoOwnerObject";
+
+    if (terminal.Owner != null)
+    {
+        ownerName =
+            terminal.Owner.GetType().Name;
+
+        if (terminal.Owner is Component ownerComponent)
+        {
+            ownerObjectName =
+                ownerComponent.gameObject.name;
+        }
+    }
+
+    return
+        $"{terminal.name}" +
+        $" [ID={terminal.GetInstanceID()}]" +
+        $" [Owner={ownerName}]" +
+        $" [GO={ownerObjectName}]" +
+        $" [TerminalGO={terminal.gameObject.name}]";
+}
     }
 }
