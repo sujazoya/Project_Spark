@@ -168,6 +168,8 @@ namespace ProjectSpark.Gameplay
         public bool HasCurrent =>
             Mathf.Abs(Current) >= currentThreshold;
 
+            public int CurrentIndex => currentIndex;
+
 
         // ============================================================
         // VISUAL STATE

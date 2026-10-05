@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
   m_Name: Level_02
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
-  levelId: Level_02
-  displayName: LIGHT THE BULB VIA SWITCH
-  description: CONNECT POWER SSUPPLY POSETIVE TO SWITCH INPUT.AND SWITCH OUTPUT TO
-    LED ANODE. AND POWER SUPPLY NEGATIVE TO LED CATHHODE. LIGHT SHOULD BE ON
+  levelId: LEVEL_01
+  displayName: LIGHT THE BULB
+  description: POWER SSUPPLY POSETIVE TO LED ANODE. AND POWER SUPPLY NEGATIVE TO
+    LED CATHHODE. LIGHT SHOULD BE ON
   completionMode: 0
   requiredTargetCount: 1
   requireClosedReturn: 1
@@ -26,7 +26,7 @@ MonoBehaviour:
   minimumVoltage: 0.01
   allowAnyConfiguredPowerSource: 1
   powerSources:
-  - sourceName: Power_Supply
+  - sourceName: PowerSupply_01
     positiveTerminalId: Power_Supply_Posetive
     negativeTerminalId: Power_Supply_Negative
     nominalVoltage: 5
@@ -37,13 +37,13 @@ MonoBehaviour:
 
 '
     targetType: 3
-    targetTerminalId: Bulb_Anode
+    targetTerminalId: 
     requiredPositiveTerminalId: Bulb_Anode
     requiredNegativeTerminalId: Bulb_Cathode
     targetComponentId: LED_Bulb
-    minimumVoltage: 1
-    minimumCurrent: 0.01
-    minimumPower: 0.001
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
     requireElectricalEnabled: 1
     requireConduction: 0
     inverted: 0

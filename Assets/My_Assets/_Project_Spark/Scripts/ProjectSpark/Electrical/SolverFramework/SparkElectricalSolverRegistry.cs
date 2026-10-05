@@ -5,14 +5,18 @@ using ProjectSpark.Gameplay;
 namespace ProjectSpark.Electrical
 {
     /// <summary>
-    /// Central registry of electrical solver definitions.
+    /// Registry of solver definitions used by SparkElectricalSolver.
     ///
-    /// The registry contains ScriptableObject configuration only.
-    /// Runtime electrical state remains inside the solver/components.
+    /// Responsibilities:
+    /// - Match discovered electrical components to solver definitions.
+    /// - Cache component -> definition lookups.
+    /// - Identify components that are intentionally non-solver objects.
+    /// - Validate the configured definition list.
     ///
-    /// A component is matched through its definition's CanHandle()
-    /// method. Priority resolves multiple definitions that can handle
-    /// the same component.
+    /// Important:
+    /// Automatic component discovery happens in SparkElectricalSolver.
+    /// This registry only decides whether a discovered component
+    /// actually needs an electrical solver definition.
     /// </summary>
     [CreateAssetMenu(
         fileName = "SparkElectricalSolverRegistry",
@@ -20,9 +24,21 @@ namespace ProjectSpark.Electrical
     public sealed class SparkElectricalSolverRegistry :
         ScriptableObject
     {
+        [Header("Solver Definitions")]
         [SerializeField]
         private List<SparkElectricalSolverDefinition> definitions =
             new List<SparkElectricalSolverDefinition>();
+
+        [Header("Ignored Component Types")]
+        [Tooltip(
+            "Components in this list are discovered normally but "
+            + "are intentionally ignored by the electrical solver.")]
+        [SerializeField]
+        private List<string> ignoredComponentTypeNames =
+            new List<string>
+            {
+                "SparkTemporaryObject"
+            };
 
         private readonly Dictionary<
             SparkElectricalComponent,
@@ -32,14 +48,36 @@ namespace ProjectSpark.Electrical
                     SparkElectricalComponent,
                     SparkElectricalSolverDefinition>();
 
-        public IReadOnlyList<
-            SparkElectricalSolverDefinition>
+        private readonly HashSet<string>
+            ignoredTypeCache =
+                new HashSet<string>();
+
+        public IReadOnlyList<SparkElectricalSolverDefinition>
             Definitions =>
             definitions;
 
         /// <summary>
-        /// Finds the highest-priority definition that can handle
-        /// the supplied runtime component.
+        /// Returns true when the component is intentionally ignored
+        /// by the electrical solver.
+        /// </summary>
+        public bool IsIgnored(
+            SparkElectricalComponent component)
+        {
+            if (component == null)
+                return true;
+
+            string typeName =
+                component.GetType().Name;
+
+            return IsIgnoredTypeName(typeName);
+        }
+
+        /// <summary>
+        /// Gets the solver definition for a component.
+        ///
+        /// Returns false for intentionally ignored components.
+        /// Returns false for real components that have no registered
+        /// solver definition.
         /// </summary>
         public bool TryGetDefinition(
             SparkElectricalComponent component,
@@ -48,9 +86,14 @@ namespace ProjectSpark.Electrical
             definition = null;
 
             if (component == null)
-            {
                 return false;
-            }
+
+            /*
+             * Temporary/helper components do not need solver
+             * definitions.
+             */
+            if (IsIgnored(component))
+                return false;
 
             if (runtimeCache.TryGetValue(
                     component,
@@ -63,9 +106,7 @@ namespace ProjectSpark.Electrical
                 FindDefinition(component);
 
             if (definition == null)
-            {
                 return false;
-            }
 
             runtimeCache[component] =
                 definition;
@@ -74,10 +115,28 @@ namespace ProjectSpark.Electrical
         }
 
         /// <summary>
-        /// Clears runtime component-to-definition mappings.
+        /// Determines whether the component has a registered
+        /// solver definition.
         ///
-        /// Call this when the solver's component set changes or
-        /// when the registry configuration needs to be re-evaluated.
+        /// Ignored components return true because they intentionally
+        /// require no solver definition.
+        /// </summary>
+        public bool HasSolverDefinition(
+            SparkElectricalComponent component)
+        {
+            if (component == null)
+                return false;
+
+            if (IsIgnored(component))
+                return true;
+
+            return TryGetDefinition(
+                component,
+                out _);
+        }
+
+        /// <summary>
+        /// Clears component -> definition runtime cache.
         /// </summary>
         public void ClearRuntimeCache()
         {
@@ -85,7 +144,7 @@ namespace ProjectSpark.Electrical
         }
 
         /// <summary>
-        /// Validates that every registry entry is usable.
+        /// Validates the configured registry.
         /// </summary>
         public bool ValidateRegistry(
             out string error)
@@ -120,8 +179,9 @@ namespace ProjectSpark.Electrical
                 if (definition.SupportedComponentType == null)
                 {
                     error =
-                        $"Solver definition '{definition.name}' " +
-                        "does not declare a supported component type.";
+                        $"Solver definition " +
+                        $"'{definition.name}' does not declare " +
+                        "a supported component type.";
 
                     return false;
                 }
@@ -130,6 +190,11 @@ namespace ProjectSpark.Electrical
             return true;
         }
 
+        /// <summary>
+        /// Finds a definition for a component.
+        ///
+        /// Highest priority wins.
+        /// </summary>
         private SparkElectricalSolverDefinition FindDefinition(
             SparkElectricalComponent component)
         {
@@ -139,6 +204,9 @@ namespace ProjectSpark.Electrical
             int bestPriority =
                 int.MinValue;
 
+            if (definitions == null)
+                return null;
+
             for (int i = 0;
                  i < definitions.Count;
                  i++)
@@ -147,19 +215,23 @@ namespace ProjectSpark.Electrical
                     definitions[i];
 
                 if (candidate == null)
+                    continue;
+
+                if (candidate.SupportedComponentType == null)
+                    continue;
+
+                if (!candidate.SupportedComponentType
+                        .IsAssignableFrom(
+                            component.GetType()))
                 {
                     continue;
                 }
 
                 if (!candidate.CanHandle(component))
-                {
                     continue;
-                }
 
                 if (candidate.Priority < bestPriority)
-                {
                     continue;
-                }
 
                 bestDefinition =
                     candidate;
@@ -171,9 +243,51 @@ namespace ProjectSpark.Electrical
             return bestDefinition;
         }
 
+        private bool IsIgnoredTypeName(
+            string typeName)
+        {
+            if (string.IsNullOrEmpty(typeName))
+                return false;
+
+            if (ignoredTypeCache.Contains(typeName))
+                return true;
+
+            if (ignoredComponentTypeNames == null)
+                return false;
+
+            for (int i = 0;
+                 i < ignoredComponentTypeNames.Count;
+                 i++)
+            {
+                string ignoredType =
+                    ignoredComponentTypeNames[i];
+
+                if (string.IsNullOrWhiteSpace(
+                        ignoredType))
+                {
+                    continue;
+                }
+
+                if (!string.Equals(
+                        ignoredType,
+                        typeName,
+                        System.StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                ignoredTypeCache.Add(typeName);
+                return true;
+            }
+
+            return false;
+        }
+
         private void OnEnable()
         {
             runtimeCache.Clear();
+            ignoredTypeCache.Clear();
+            RebuildIgnoredTypeCache();
         }
 
         private void OnValidate()
@@ -181,8 +295,7 @@ namespace ProjectSpark.Electrical
             if (definitions == null)
             {
                 definitions =
-                    new List<
-                        SparkElectricalSolverDefinition>();
+                    new List<SparkElectricalSolverDefinition>();
             }
 
             for (int i = definitions.Count - 1;
@@ -190,12 +303,61 @@ namespace ProjectSpark.Electrical
                  i--)
             {
                 if (definitions[i] == null)
-                {
                     definitions.RemoveAt(i);
-                }
             }
 
+            if (ignoredComponentTypeNames == null)
+            {
+                ignoredComponentTypeNames =
+                    new List<string>();
+            }
+
+            RemoveInvalidIgnoredNames();
+
             runtimeCache.Clear();
+            ignoredTypeCache.Clear();
+
+            RebuildIgnoredTypeCache();
+        }
+
+        private void RebuildIgnoredTypeCache()
+        {
+            if (ignoredComponentTypeNames == null)
+                return;
+
+            for (int i = 0;
+                 i < ignoredComponentTypeNames.Count;
+                 i++)
+            {
+                string typeName =
+                    ignoredComponentTypeNames[i];
+
+                if (string.IsNullOrWhiteSpace(
+                        typeName))
+                {
+                    continue;
+                }
+
+                ignoredTypeCache.Add(
+                    typeName.Trim());
+            }
+        }
+
+        private void RemoveInvalidIgnoredNames()
+        {
+            for (int i =
+                     ignoredComponentTypeNames.Count - 1;
+                 i >= 0;
+                 i--)
+            {
+                string value =
+                    ignoredComponentTypeNames[i];
+
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    ignoredComponentTypeNames.RemoveAt(i);
+                }
+            }
         }
     }
 }

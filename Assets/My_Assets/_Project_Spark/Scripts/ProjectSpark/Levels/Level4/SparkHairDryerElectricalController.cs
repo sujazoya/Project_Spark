@@ -6,15 +6,20 @@ namespace ProjectSpark.Gameplay
     /// Hair dryer appliance-level electrical controller.
     ///
     /// This component does NOT perform electrical calculations.
-    /// SparkElectricalSolver remains responsible for solving the circuit.
     ///
-    /// Responsibilities:
-    /// - Read SparkHairDryerMotorElectrical
-    /// - Read SparkHairDryerHeaterElectrical
-    /// - Read SparkSwitchIndex
-    /// - Expose the final hair-dryer electrical state
+    /// SparkElectricalSolver remains responsible for:
+    /// - Circuit topology
+    /// - Node voltages
+    /// - Component currents
+    /// - Component power
+    /// - Indexed switch voltage
     ///
-    /// Visual behavior belongs to SparkHairDryerVisualController.
+    /// This controller only reads the already-solved electrical
+    /// component states and exposes them to the rest of the
+    /// hair-dryer system.
+    ///
+    /// Visual behavior belongs to:
+    ///     SparkHairDryerVisualController
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkHairDryerElectricalController : MonoBehaviour
@@ -24,6 +29,7 @@ namespace ProjectSpark.Gameplay
         // ============================================================
 
         [Header("Electrical Components")]
+
         [SerializeField]
         private SparkHairDryerMotorElectrical motorElectrical;
 
@@ -37,12 +43,15 @@ namespace ProjectSpark.Gameplay
         // THRESHOLDS
         // ============================================================
 
-        [Header("State Thresholds")]
+        [Header("Motor State Thresholds")]
+
         [SerializeField, Min(0f)]
         private float motorVoltageThreshold = 1f;
 
         [SerializeField, Min(0f)]
         private float motorCurrentThreshold = 0.001f;
+
+        [Header("Heater State Thresholds")]
 
         [SerializeField, Min(0f)]
         private float heaterVoltageThreshold = 1f;
@@ -56,10 +65,11 @@ namespace ProjectSpark.Gameplay
 
         private bool motorRunning;
         private bool heaterHeating;
+
         private int speedIndex;
 
         // ============================================================
-        // PUBLIC ELECTRICAL STATE
+        // PUBLIC REFERENCES
         // ============================================================
 
         public SparkHairDryerMotorElectrical MotorElectrical =>
@@ -71,9 +81,9 @@ namespace ProjectSpark.Gameplay
         public SparkSwitchIndex SpeedSwitch =>
             speedSwitch;
 
-        // ------------------------------------------------------------
-        // Motor
-        // ------------------------------------------------------------
+        // ============================================================
+        // MOTOR ELECTRICAL STATE
+        // ============================================================
 
         public float MotorVoltage =>
             motorElectrical != null
@@ -91,10 +101,12 @@ namespace ProjectSpark.Gameplay
                 : 0f;
 
         public bool MotorHasVoltage =>
-            Mathf.Abs(MotorVoltage) >= motorVoltageThreshold;
+            Mathf.Abs(MotorVoltage) >=
+            motorVoltageThreshold;
 
         public bool MotorHasCurrent =>
-            Mathf.Abs(MotorCurrent) >= motorCurrentThreshold;
+            Mathf.Abs(MotorCurrent) >=
+            motorCurrentThreshold;
 
         public bool MotorConducting =>
             motorElectrical != null &&
@@ -104,9 +116,9 @@ namespace ProjectSpark.Gameplay
         public bool IsMotorRunning =>
             motorRunning;
 
-        // ------------------------------------------------------------
-        // Heater
-        // ------------------------------------------------------------
+        // ============================================================
+        // HEATER ELECTRICAL STATE
+        // ============================================================
 
         public float HeaterVoltage =>
             heaterElectrical != null
@@ -124,10 +136,12 @@ namespace ProjectSpark.Gameplay
                 : 0f;
 
         public bool HeaterHasVoltage =>
-            Mathf.Abs(HeaterVoltage) >= heaterVoltageThreshold;
+            Mathf.Abs(HeaterVoltage) >=
+            heaterVoltageThreshold;
 
         public bool HeaterHasCurrent =>
-            Mathf.Abs(HeaterCurrent) >= heaterCurrentThreshold;
+            Mathf.Abs(HeaterCurrent) >=
+            heaterCurrentThreshold;
 
         public bool HeaterConducting =>
             heaterElectrical != null &&
@@ -137,10 +151,20 @@ namespace ProjectSpark.Gameplay
         public bool IsHeaterHeating =>
             heaterHeating;
 
-        // ------------------------------------------------------------
-        // Speed
-        // ------------------------------------------------------------
+        // ============================================================
+        // SPEED SWITCH STATE
+        // ============================================================
 
+        /// <summary>
+        /// Actual physical index of SparkSwitchIndex.
+        ///
+        /// 0 = OFF
+        /// 1 = LOW
+        /// 2 = HIGH
+        ///
+        /// This value is NOT converted into voltage here.
+        /// The electrical solver is authoritative for voltage.
+        /// </summary>
         public int SpeedIndex =>
             speedIndex;
 
@@ -153,9 +177,27 @@ namespace ProjectSpark.Gameplay
         public bool IsHighSpeed =>
             speedIndex >= 2;
 
-        // ------------------------------------------------------------
-        // Appliance
-        // ------------------------------------------------------------
+        /// <summary>
+        /// Returns the actual switch percentage.
+        ///
+        /// This is useful for diagnostics because the physical
+        /// switch index and the actual electrical motor voltage
+        /// are not necessarily the same thing.
+        /// </summary>
+        public float SpeedVoltagePercent
+        {
+            get
+            {
+                if (speedSwitch == null)
+                    return 0f;
+
+                return speedSwitch.CurrentIndexVoltagePercent;
+            }
+        }
+
+        // ============================================================
+        // APPLIANCE STATE
+        // ============================================================
 
         public bool IsMotorPowered =>
             MotorHasVoltage;
@@ -191,21 +233,24 @@ namespace ProjectSpark.Gameplay
             {
                 motorElectrical =
                     GetComponentInChildren<
-                        SparkHairDryerMotorElectrical>(true);
+                        SparkHairDryerMotorElectrical>(
+                            true);
             }
 
             if (heaterElectrical == null)
             {
                 heaterElectrical =
                     GetComponentInChildren<
-                        SparkHairDryerHeaterElectrical>(true);
+                        SparkHairDryerHeaterElectrical>(
+                            true);
             }
 
             if (speedSwitch == null)
             {
                 speedSwitch =
                     GetComponentInChildren<
-                        SparkSwitchIndex>(true);
+                        SparkSwitchIndex>(
+                            true);
             }
         }
 
@@ -216,7 +261,8 @@ namespace ProjectSpark.Gameplay
         /// <summary>
         /// Reads the already-solved electrical state.
         ///
-        /// No electrical calculations are performed here.
+        /// IMPORTANT:
+        /// This method does NOT calculate electrical values.
         /// </summary>
         public void RefreshState()
         {
@@ -224,6 +270,10 @@ namespace ProjectSpark.Gameplay
             UpdateHeaterState();
             UpdateSpeedState();
         }
+
+        // ============================================================
+        // MOTOR STATE
+        // ============================================================
 
         private void UpdateMotorState()
         {
@@ -233,12 +283,27 @@ namespace ProjectSpark.Gameplay
                 return;
             }
 
+            /*
+             * The motor is considered running only when the actual
+             * electrical component says:
+             *
+             * - electrically enabled
+             * - has sufficient voltage
+             * - has sufficient current
+             * - is conducting
+             *
+             * No switch-index assumption is used here.
+             */
             motorRunning =
                 motorElectrical.ElectricalEnabled &&
                 MotorHasVoltage &&
                 MotorHasCurrent &&
                 MotorConducting;
         }
+
+        // ============================================================
+        // HEATER STATE
+        // ============================================================
 
         private void UpdateHeaterState()
         {
@@ -248,6 +313,10 @@ namespace ProjectSpark.Gameplay
                 return;
             }
 
+            /*
+             * Heater state is based entirely on its actual
+             * electrical state.
+             */
             heaterHeating =
                 heaterElectrical.ElectricalEnabled &&
                 HeaterHasVoltage &&
@@ -255,17 +324,37 @@ namespace ProjectSpark.Gameplay
                 HeaterConducting;
         }
 
+        // ============================================================
+        // SPEED STATE
+        // ============================================================
+
         private void UpdateSpeedState()
         {
             if (speedSwitch == null)
             {
-                speedIndex = motorRunning ? 1 : 0;
+                speedIndex = 0;
                 return;
             }
 
-            speedIndex = Mathf.Max(
-                0,
-                speedSwitch.Index);
+            /*
+             * IMPORTANT:
+             *
+             * Read the actual physical switch index.
+             *
+             * Do NOT derive this from motor voltage.
+             *
+             * Do NOT derive this from motor current.
+             *
+             * The electrical solver decides the resulting motor
+             * voltage independently.
+             */
+            speedIndex =
+                Mathf.Clamp(
+                    speedSwitch.CurrentIndex,
+                    0,
+                    Mathf.Max(
+                        0,
+                        speedSwitch.PositionCount - 1));
         }
 
         // ============================================================
@@ -276,6 +365,7 @@ namespace ProjectSpark.Gameplay
             SparkHairDryerMotorElectrical motor)
         {
             motorElectrical = motor;
+
             RefreshState();
         }
 
@@ -283,6 +373,7 @@ namespace ProjectSpark.Gameplay
             SparkHairDryerHeaterElectrical heater)
         {
             heaterElectrical = heater;
+
             RefreshState();
         }
 
@@ -290,11 +381,12 @@ namespace ProjectSpark.Gameplay
             SparkSwitchIndex switchComponent)
         {
             speedSwitch = switchComponent;
+
             RefreshState();
         }
 
         // ============================================================
-        // DEBUG / TEST
+        // DEBUG
         // ============================================================
 
         [ContextMenu("Refresh Electrical State")]
@@ -309,34 +401,61 @@ namespace ProjectSpark.Gameplay
             RefreshState();
 
             Debug.Log(
-                $"[Hair Dryer Electrical]\n" +
-                $"Motor: " +
-                $"Running={IsMotorRunning}, " +
-                $"V={MotorVoltage:F2}, " +
-                $"I={MotorCurrent:F3}, " +
-                $"P={MotorPower:F2}\n" +
-                $"Heater: " +
-                $"Heating={IsHeaterHeating}, " +
-                $"V={HeaterVoltage:F2}, " +
-                $"I={HeaterCurrent:F3}, " +
-                $"P={HeaterPower:F2}\n" +
-                $"Speed Index={SpeedIndex}",
+                $"[HAIR DRYER ELECTRICAL]\n" +
+
+                $"MOTOR\n" +
+                $"  Running      = {IsMotorRunning}\n" +
+                $"  Voltage      = {MotorVoltage:F3} V\n" +
+                $"  Current      = {MotorCurrent:F6} A\n" +
+                $"  Power        = {MotorPower:F3} W\n" +
+                $"  HasVoltage   = {MotorHasVoltage}\n" +
+                $"  HasCurrent   = {MotorHasCurrent}\n" +
+                $"  Conducting   = {MotorConducting}\n" +
+
+                $"\nHEATER\n" +
+                $"  Heating      = {IsHeaterHeating}\n" +
+                $"  Voltage      = {HeaterVoltage:F3} V\n" +
+                $"  Current      = {HeaterCurrent:F6} A\n" +
+                $"  Power        = {HeaterPower:F3} W\n" +
+                $"  HasVoltage   = {HeaterHasVoltage}\n" +
+                $"  HasCurrent   = {HeaterHasCurrent}\n" +
+                $"  Conducting   = {HeaterConducting}\n" +
+
+                $"\nSWITCH\n" +
+                $"  Index        = {SpeedIndex}\n" +
+                $"  Percent      = {SpeedVoltagePercent:F1}%\n" +
+                $"  Off          = {IsOff}\n" +
+                $"  Low          = {IsLowSpeed}\n" +
+                $"  High         = {IsHighSpeed}\n",
+
                 this);
         }
+
+        // ============================================================
+        // VALIDATION
+        // ============================================================
 
         private void OnValidate()
         {
             motorVoltageThreshold =
-                Mathf.Max(0f, motorVoltageThreshold);
+                Mathf.Max(
+                    0f,
+                    motorVoltageThreshold);
 
             motorCurrentThreshold =
-                Mathf.Max(0f, motorCurrentThreshold);
+                Mathf.Max(
+                    0f,
+                    motorCurrentThreshold);
 
             heaterVoltageThreshold =
-                Mathf.Max(0f, heaterVoltageThreshold);
+                Mathf.Max(
+                    0f,
+                    heaterVoltageThreshold);
 
             heaterCurrentThreshold =
-                Mathf.Max(0f, heaterCurrentThreshold);
+                Mathf.Max(
+                    0f,
+                    heaterCurrentThreshold);
         }
     }
 }

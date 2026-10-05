@@ -40,6 +40,25 @@ namespace ProjectSpark.Electrical
             if (!indexedSwitch.ElectricalEnabled)
                 return;
 
+            /*
+             * IMPORTANT:
+             *
+             * OFF is a real OPEN circuit.
+             *
+             * Do NOT allocate an MNA voltage source when the
+             * switch is OFF.
+             *
+             * If Index 0 were registered as a controlled source
+             * with ratio 0, the solver would enforce:
+             *
+             *     Vout = 0V
+             *
+             * which is NOT an open switch.
+             */
+
+            if (indexedSwitch.IsOff)
+                return;
+
             context.RegisterIndexedSource(
                 indexedSwitch);
         }
@@ -92,6 +111,16 @@ namespace ProjectSpark.Electrical
             if (!indexedSwitch.ElectricalEnabled)
                 return;
 
+            /*
+             * OFF = OPEN.
+             *
+             * No voltage source.
+             * No conductance.
+             * No connection between input and output.
+             */
+            if (indexedSwitch.IsOff)
+                return;
+
             if (!TryGetTerminals(
                     indexedSwitch,
                     context.Graph,
@@ -113,6 +142,18 @@ namespace ProjectSpark.Electrical
                     indexedSwitch.CurrentIndexVoltagePercent /
                     100f);
 
+            /*
+             * Active indexed switch:
+             *
+             * Vout = Vin * ratio
+             *
+             * Index 1:
+             *     Vout = Vin * 0.5
+             *
+             * Index 2:
+             *     Vout = Vin * 1.0
+             */
+
             context.AddControlledVoltageSource(
                 inputTerminal,
                 outputTerminal,
@@ -124,66 +165,182 @@ namespace ProjectSpark.Electrical
         // APPLY SOLVED STATE
         // ---------------------------------------------------------------------
 
-        public override void ApplySolvedState(
-            SparkElectricalComponent component,
-            SparkElectricalSolveResult result)
-        {
-            if (!(component is SparkSwitchIndex indexedSwitch))
-                return;
+      public override void ApplySolvedState(
+    SparkElectricalComponent component,
+    SparkElectricalSolveResult result)
+{
+    if (!(component is SparkSwitchIndex indexedSwitch))
+        return;
 
-            if (result == null)
-                return;
+    if (result == null)
+        return;
 
-            if (!indexedSwitch.ElectricalEnabled)
-            {
-                indexedSwitch.ApplyElectricalState(
-                    new SparkElectricalState());
+    /*
+     * ============================================================
+     * OFF / DISABLED
+     * ============================================================
+     *
+     * Index 0 is an OPEN switch.
+     *
+     * There is no meaningful voltage-source current to read.
+     * Clear the electrical state completely so an old ON-state
+     * voltage/current/power cannot remain visible.
+     */
+    if (!indexedSwitch.ElectricalEnabled ||
+        indexedSwitch.IsOff)
+    {
+        indexedSwitch.ApplyElectricalState(
+            new SparkElectricalState());
 
-                return;
-            }
+        Debug.Log(
+            $"[INDEX SWITCH SOLVER] " +
+            $"Name={indexedSwitch.name} | " +
+            $"Index={indexedSwitch.CurrentIndex} | " +
+            $"Percent={indexedSwitch.CurrentIndexVoltagePercent:F1}% | " +
+            $"InputV=OPEN | " +
+            $"OutputV=OPEN | " +
+            $"SwitchV=0.000 | " +
+            $"Current=0.000000 | " +
+            $"Power=0.000 | " +
+            $"Off=True | " +
+            $"Conducting=False"
+        );
 
-            if (!TryGetTerminals(
-                    indexedSwitch,
-                    result.Context.Graph,
-                    out SparkTerminal inputTerminal,
-                    out SparkTerminal outputTerminal))
-            {
-                indexedSwitch.ApplyElectricalState(
-                    new SparkElectricalState());
+        return;
+    }
 
-                return;
-            }
+    /*
+     * ============================================================
+     * TERMINALS
+     * ============================================================
+     */
+    if (!TryGetTerminals(
+            indexedSwitch,
+            result.Context.Graph,
+            out SparkTerminal inputTerminal,
+            out SparkTerminal outputTerminal))
+    {
+        indexedSwitch.ApplyElectricalState(
+            new SparkElectricalState());
 
-            float voltage =
-                result.GetVoltage(
-                    inputTerminal,
-                    outputTerminal);
+        Debug.LogWarning(
+            $"[INDEX SWITCH SOLVER] " +
+            $"Name={indexedSwitch.name} | " +
+            $"Index={indexedSwitch.CurrentIndex} | " +
+            $"FAILED: Input/Output terminals could not be resolved."
+        );
 
-            float current = 0f;
+        return;
+    }
 
-            result.TryGetIndexedSourceCurrent(
-                indexedSwitch,
-                out current);
+    /*
+     * ============================================================
+     * INPUT / OUTPUT VOLTAGE
+     * ============================================================
+     *
+     * Input voltage:
+     *     voltage at switch input terminal
+     *
+     * Output voltage:
+     *     voltage at switch output terminal
+     *
+     * Switch voltage:
+     *     Vin - Vout
+     */
+    float inputVoltage =
+        result.GetTerminalVoltage(inputTerminal);
 
-            float power =
-                voltage * current;
+    float outputVoltage =
+        result.GetTerminalVoltage(outputTerminal);
 
-            SparkConductionState conduction =
-                Mathf.Abs(current) > 0.000001f
-                    ? SparkConductionState.Conducting
-                    : SparkConductionState.NonConducting;
+    float voltage =
+        inputVoltage - outputVoltage;
 
-            SparkElectricalState state =
-                new SparkElectricalState(
-                    voltage,
-                    current,
-                    power,
-                    conduction);
+    /*
+     * ============================================================
+     * INDEXED VOLTAGE-SOURCE CURRENT
+     * ============================================================
+     *
+     * The current comes from the MNA controlled voltage source
+     * registered for this indexed switch.
+     */
+    float current = 0f;
 
-            indexedSwitch.ApplyElectricalState(
-                state);
-        }
+    result.TryGetIndexedSourceCurrent(
+        indexedSwitch,
+        out current);
 
+    /*
+     * ============================================================
+     * POWER
+     * ============================================================
+     */
+    float power =
+        voltage * current;
+
+    /*
+     * ============================================================
+     * CONDUCTION
+     * ============================================================
+     *
+     * Only consider the switch conducting when there is actual
+     * source current.
+     */
+    SparkConductionState conduction =
+        Mathf.Abs(current) > 0.000001f
+            ? SparkConductionState.Conducting
+            : SparkConductionState.NonConducting;
+
+    /*
+     * ============================================================
+     * APPLY ELECTRICAL STATE
+     * ============================================================
+     */
+    SparkElectricalState state =
+        new SparkElectricalState(
+            voltage,
+            current,
+            power,
+            conduction);
+
+    indexedSwitch.ApplyElectricalState(state);
+
+    /*
+     * ============================================================
+     * DIAGNOSTIC LOG
+     * ============================================================
+     *
+     * This is temporary but useful for Level 4 debugging.
+     *
+     * Expected:
+     *
+     * Index 0:
+     *     Off=True
+     *
+     * Index 1:
+     *     OutputV ~= InputV * 0.5
+     *
+     * Index 2:
+     *     OutputV ~= InputV
+     *
+     * Note:
+     * SwitchV is the voltage DROP across the switch itself.
+     * It is NOT the output voltage.
+     */
+    Debug.Log(
+        $"[INDEX SWITCH SOLVER] " +
+        $"Name={indexedSwitch.name} | " +
+        $"Index={indexedSwitch.CurrentIndex} | " +
+        $"Percent={indexedSwitch.CurrentIndexVoltagePercent:F1}% | " +
+        $"InputV={inputVoltage:F3} | " +
+        $"OutputV={outputVoltage:F3} | " +
+        $"SwitchV={voltage:F3} | " +
+        $"Current={current:F6} | " +
+        $"Power={power:F3} | " +
+        $"Off={indexedSwitch.IsOff} | " +
+        $"Conducting={indexedSwitch.IsConducting}"
+    );
+}
         // ---------------------------------------------------------------------
         // CURRENT
         // ---------------------------------------------------------------------
@@ -201,6 +358,12 @@ namespace ProjectSpark.Electrical
             if (result == null)
                 return false;
 
+            /*
+             * OFF has no allocated indexed source.
+             */
+            if (indexedSwitch.IsOff)
+                return true;
+
             return result.TryGetIndexedSourceCurrent(
                 indexedSwitch,
                 out current);
@@ -216,6 +379,11 @@ namespace ProjectSpark.Electrical
             if (!(component is SparkSwitchIndex indexedSwitch))
                 return false;
 
+            /*
+             * Keep the existing behaviour:
+             * the indexed switch participates in continuous
+             * solving whenever electrically enabled.
+             */
             return indexedSwitch.ElectricalEnabled;
         }
     }

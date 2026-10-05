@@ -104,71 +104,195 @@ namespace ProjectSpark.Electrical
                 conductance);
         }
 
-        public override void ApplySolvedState(
-            SparkElectricalComponent component,
-            SparkElectricalSolveResult result)
-        {
-            if (!(component is SparkHairDryerHeaterElectrical heater))
-            {
-                return;
-            }
+       public override void ApplySolvedState(
+    SparkElectricalComponent component,
+    SparkElectricalSolveResult result)
+{
+    if (!(component is SparkHairDryerHeaterElectrical heater))
+    {
+        return;
+    }
 
-            if (result == null)
-            {
-                return;
-            }
+    if (result == null)
+    {
+        return;
+    }
 
-            if (!heater.ElectricalEnabled)
-            {
-                heater.ApplyElectricalState(
-                    new SparkElectricalState());
+    /*
+     * ============================================================
+     * DISABLED
+     * ============================================================
+     *
+     * The heater is electrically disabled.
+     * Clear any previous voltage/current/power state.
+     */
+    if (!heater.ElectricalEnabled)
+    {
+        heater.ApplyElectricalState(
+            new SparkElectricalState());
 
-                return;
-            }
+        Debug.Log(
+            $"[HEATER ELECTRICAL] " +
+            $"Name={heater.name} | " +
+            $"DISABLED | " +
+            $"LiveV=0.000 | " +
+            $"NeutralV=0.000 | " +
+            $"Voltage=0.000 | " +
+            $"Current=0.000000 | " +
+            $"Power=0.000 | " +
+            $"Heating=False"
+        );
 
-            if (!TryGetTerminals(
-                    heater,
-                    result.Context.Graph,
-                    out SparkTerminal liveTerminal,
-                    out SparkTerminal neutralTerminal))
-            {
-                heater.ApplyElectricalState(
-                    new SparkElectricalState());
+        return;
+    }
 
-                return;
-            }
+    /*
+     * ============================================================
+     * TERMINALS
+     * ============================================================
+     */
+    if (!TryGetTerminals(
+            heater,
+            result.Context.Graph,
+            out SparkTerminal liveTerminal,
+            out SparkTerminal neutralTerminal))
+    {
+        heater.ApplyElectricalState(
+            new SparkElectricalState());
 
-            float voltage =
-                result.GetVoltage(
-                    liveTerminal,
-                    neutralTerminal);
+        Debug.LogWarning(
+            $"[HEATER ELECTRICAL] " +
+            $"Name={heater.name} | " +
+            $"FAILED: Live/Neutral terminals could not be resolved."
+        );
 
-            float resistance =
-                Mathf.Max(
-                    minimumResistance,
-                    heater.Resistance);
+        return;
+    }
 
-            float current =
-                voltage / resistance;
+    /*
+     * ============================================================
+     * TERMINAL VOLTAGES
+     * ============================================================
+     *
+     * The heater voltage is the actual differential between
+     * its live and neutral terminals.
+     *
+     *     Vheater = Vlive - Vneutral
+     */
+    float liveVoltage = 0f;
+    float neutralVoltage = 0f;
 
-            float power =
-                voltage * current;
+    result.TryGetTerminalVoltage(
+        liveTerminal,
+        out liveVoltage);
 
-            SparkConductionState conduction =
-                Mathf.Abs(current) > 0.000001f
-                    ? SparkConductionState.Conducting
-                    : SparkConductionState.NonConducting;
+    result.TryGetTerminalVoltage(
+        neutralTerminal,
+        out neutralVoltage);
 
-            SparkElectricalState state =
-                new SparkElectricalState(
-                    voltage,
-                    current,
-                    power,
-                    conduction);
+    float voltage =
+        liveVoltage - neutralVoltage;
 
-            heater.ApplyElectricalState(
-                state);
-        }
+    /*
+     * ============================================================
+     * RESISTANCE
+     * ============================================================
+     */
+    float resistance =
+        Mathf.Max(
+            minimumResistance,
+            heater.Resistance);
+
+    /*
+     * ============================================================
+     * CURRENT
+     * ============================================================
+     *
+     * Resistive heater:
+     *
+     *     I = V / R
+     */
+    float current =
+        voltage / resistance;
+
+    /*
+     * ============================================================
+     * POWER
+     * ============================================================
+     *
+     * Resistive load:
+     *
+     *     P = V × I
+     *
+     * Equivalent:
+     *
+     *     P = V² / R
+     */
+    float power =
+        voltage * current;
+
+    /*
+     * ============================================================
+     * CONDUCTION
+     * ============================================================
+     */
+    SparkConductionState conduction =
+        Mathf.Abs(current) > 0.000001f
+            ? SparkConductionState.Conducting
+            : SparkConductionState.NonConducting;
+
+    /*
+     * ============================================================
+     * APPLY ELECTRICAL STATE
+     * ============================================================
+     */
+    SparkElectricalState state =
+        new SparkElectricalState(
+            voltage,
+            current,
+            power,
+            conduction);
+
+    heater.ApplyElectricalState(
+        state);
+
+    /*
+     * ============================================================
+     * DEBUG
+     * ============================================================
+     *
+     * This lets us verify the actual heater terminals.
+     *
+     * Example with 230 V:
+     *
+     *     LiveV    = +137.9 V
+     *     NeutralV = -92.1 V
+     *
+     *     HeaterV  = 230 V
+     *
+     * With 29.5 ohms:
+     *
+     *     Current ≈ 7.80 A
+     *     Power   ≈ 1794 W
+     *
+     * If LiveV and NeutralV are nearly equal:
+     *
+     *     HeaterV ≈ 0 V
+     *     Current ≈ 0 A
+     *     Power   ≈ 0 W
+     */
+    Debug.Log(
+        $"[HEATER ELECTRICAL] " +
+        $"Name={heater.name} | " +
+        $"LiveV={liveVoltage:F3} | " +
+        $"NeutralV={neutralVoltage:F3} | " +
+        $"Voltage={voltage:F3} | " +
+        $"Resistance={resistance:F3} | " +
+        $"Current={current:F6} | " +
+        $"Power={power:F3} | " +
+        $"Heating={heater.IsHeating}"
+    );
+}
 
         public override bool TryCalculateCurrent(
             SparkElectricalComponent component,

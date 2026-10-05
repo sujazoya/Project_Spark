@@ -9,13 +9,25 @@ namespace ProjectSpark.Gameplay
     /// Reads the appliance electrical state and converts it into
     /// visual behavior.
     ///
-    /// Responsibilities:
+    /// Electrical values are NOT calculated here.
+    ///
+    /// The electrical controller is the single source of truth for:
+    /// - Motor voltage
+    /// - Motor current
+    /// - Motor conduction
+    /// - Heater voltage
+    /// - Heater current
+    /// - Heater power
+    /// - Heater conduction
+    /// - Speed index
+    ///
+    /// This component controls only:
     /// - Fan rotation
     /// - Airflow VFX
     /// - Airflow strength
     /// - Air temperature
-    ///
-    /// This component does NOT calculate electrical values.
+    /// - Heater visual
+    /// - Thermal protection visual
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkHairDryerVisualController : MonoBehaviour
@@ -28,13 +40,21 @@ namespace ProjectSpark.Gameplay
         [SerializeField]
         private SparkHairDryerElectricalController electricalController;
 
-        [Header("Heater Visual")]
-            [SerializeField]
-            private SparkHairDryerHeaterVisual heaterVisual;
+        // ============================================================
+        // HEATER VISUAL
+        // ============================================================
 
-            [Header("Thermal Protection Visual")]
-[SerializeField]
-private SparkHairDryerThermalProtectionVisual thermalProtectionVisual;
+        [Header("Heater Visual")]
+        [SerializeField]
+        private SparkHairDryerHeaterVisual heaterVisual;
+
+        // ============================================================
+        // THERMAL PROTECTION
+        // ============================================================
+
+        [Header("Thermal Protection Visual")]
+        [SerializeField]
+        private SparkHairDryerThermalProtectionVisual thermalProtectionVisual;
 
         // ============================================================
         // FAN
@@ -116,16 +136,13 @@ private SparkHairDryerThermalProtectionVisual thermalProtectionVisual;
 
         [Header("VFX Properties")]
         [SerializeField]
-        private string airflowStrengthProperty =
-            "AirflowStrength";
+        private string airflowStrengthProperty = "AirflowStrength";
 
         [SerializeField]
-        private string airflowTemperatureProperty =
-            "AirflowTemperature";
+        private string airflowTemperatureProperty = "AirflowTemperature";
 
         [SerializeField]
-        private string airflowDirectionProperty =
-            "AirflowDirection";
+        private string airflowDirectionProperty = "AirflowDirection";
 
         // ============================================================
         // PROPERTY IDS
@@ -136,7 +153,7 @@ private SparkHairDryerThermalProtectionVisual thermalProtectionVisual;
         private int airflowDirectionID;
 
         // ============================================================
-        // RUNTIME
+        // RUNTIME VISUAL STATE
         // ============================================================
 
         private bool motorRunning;
@@ -150,24 +167,21 @@ private SparkHairDryerThermalProtectionVisual thermalProtectionVisual;
         private float targetAirTemperature;
         private float airTemperature;
 
+        private bool airflowVFXPlaying;
+
         // ============================================================
         // PUBLIC STATE
         // ============================================================
 
-        public bool IsMotorRunning =>
-            motorRunning;
+        public bool IsMotorRunning => motorRunning;
 
-        public bool IsHeaterHeating =>
-            heaterHeating;
+        public bool IsHeaterHeating => heaterHeating;
 
-        public int SpeedIndex =>
-            speedIndex;
+        public int SpeedIndex => speedIndex;
 
-        public float AirflowStrength =>
-            airflowStrength;
+        public float AirflowStrength => airflowStrength;
 
-        public float AirTemperature =>
-            airTemperature;
+        public float AirTemperature => airTemperature;
 
         // ============================================================
         // UNITY
@@ -179,6 +193,10 @@ private SparkHairDryerThermalProtectionVisual thermalProtectionVisual;
             BuildPropertyIDs();
             ValidateRotationAxis();
 
+            motorRunning = false;
+            heaterHeating = false;
+            speedIndex = 0;
+
             airflowStrength = 0f;
             targetAirflowStrength = 0f;
 
@@ -189,27 +207,31 @@ private SparkHairDryerThermalProtectionVisual thermalProtectionVisual;
             StopVFXImmediate();
         }
 
-       private void Update()
-{
-    if (electricalController == null)
-        return;
+        private void Update()
+        {
+            if (electricalController == null)
+                return;
 
-    electricalController.RefreshState();
+            /*
+             * The electrical controller is responsible for obtaining
+             * the actual solved electrical state.
+             */
+            electricalController.RefreshState();
 
-    ReadElectricalState();
+            ReadElectricalState();
 
-    UpdateFan();
+            UpdateFan();
 
-    UpdateAirflowTargets();
+            UpdateAirflowTargets();
 
-    SmoothAirflow();
+            SmoothAirflow();
 
-    SmoothTemperature();
+            SmoothTemperature();
 
-    ApplyVFXProperties();
+            ApplyVFXProperties();
 
-    UpdateVFXPlayback();
-}
+            UpdateVFXPlayback();
+        }
 
         // ============================================================
         // REFERENCES
@@ -220,15 +242,13 @@ private SparkHairDryerThermalProtectionVisual thermalProtectionVisual;
             if (electricalController == null)
             {
                 electricalController =
-                    GetComponent<
-                        SparkHairDryerElectricalController>();
+                    GetComponent<SparkHairDryerElectricalController>();
             }
 
             if (electricalController == null)
             {
                 electricalController =
-                    GetComponentInParent<
-                        SparkHairDryerElectricalController>();
+                    GetComponentInParent<SparkHairDryerElectricalController>();
             }
 
             if (electricalController == null)
@@ -237,9 +257,6 @@ private SparkHairDryerThermalProtectionVisual thermalProtectionVisual;
                     GetComponentInChildren<
                         SparkHairDryerElectricalController>(true);
             }
-             // ============================================================
-    // HEATER VISUAL
-    // ============================================================
 
             if (heaterVisual == null)
             {
@@ -247,12 +264,13 @@ private SparkHairDryerThermalProtectionVisual thermalProtectionVisual;
                     GetComponentInChildren<
                         SparkHairDryerHeaterVisual>(true);
             }
+
             if (thermalProtectionVisual == null)
-        {
-            thermalProtectionVisual =
-                GetComponentInChildren<
-                    SparkHairDryerThermalProtectionVisual>(true);
-        }
+            {
+                thermalProtectionVisual =
+                    GetComponentInChildren<
+                        SparkHairDryerThermalProtectionVisual>(true);
+            }
 
             if (fanTransform == null)
             {
@@ -303,85 +321,90 @@ private SparkHairDryerThermalProtectionVisual thermalProtectionVisual;
         // ============================================================
 
         private void ReadElectricalState()
-{
-    motorRunning =
-        electricalController.IsMotorRunning;
+        {
+            /*
+             * IMPORTANT:
+             *
+             * Do not calculate motor voltage/current here.
+             *
+             * Do not calculate heater voltage/current here.
+             *
+             * The electrical controller already owns those values.
+             */
+            motorRunning =
+                electricalController.IsMotorRunning;
 
-    heaterHeating =
-        electricalController.IsHeaterHeating;
+            heaterHeating =
+                electricalController.IsHeaterHeating;
 
-    speedIndex =
-        electricalController.SpeedIndex;
+            speedIndex =
+                Mathf.Clamp(
+                    electricalController.SpeedIndex,
+                    0,
+                    2);
 
-
-    Debug.Log(
-        "[HAIR DRYER VISUAL] " +
-        "Motor=" + motorRunning +
-        " | Heater=" + heaterHeating +
-        " | SpeedIndex=" + speedIndex +
-        " | MotorVoltage=" +
-        electricalController.MotorVoltage.ToString("F2") +
-        " | MotorCurrent=" +
-        electricalController.MotorCurrent.ToString("F4") +
-        " | HeaterPower=" +
-        electricalController.HeaterPower.ToString("F2"),
-        this);
-}
+            Debug.Log(
+                "[HAIR DRYER VISUAL] " +
+                "Motor=" + motorRunning +
+                " | Heater=" + heaterHeating +
+                " | SpeedIndex=" + speedIndex +
+                " | MotorVoltage=" +
+                electricalController.MotorVoltage.ToString("F2") +
+                " | MotorCurrent=" +
+                electricalController.MotorCurrent.ToString("F4") +
+                " | MotorConducting=" +
+                electricalController.MotorConducting +
+                " | HeaterVoltage=" +
+                electricalController.HeaterVoltage.ToString("F2") +
+                " | HeaterCurrent=" +
+                electricalController.HeaterCurrent.ToString("F4") +
+                " | HeaterPower=" +
+                electricalController.HeaterPower.ToString("F2"),
+                this);
+        }
 
         // ============================================================
         // FAN
         // ============================================================
-private void UpdateFan()
-{
-    if (fanTransform == null)
-    {
-        Debug.LogWarning(
-            "[Hair Dryer] FAN TRANSFORM IS NULL.",
-            this);
-        return;
-    }
 
-    if (electricalController == null)
-    {
-        Debug.LogWarning(
-            "[Hair Dryer] ELECTRICAL CONTROLLER IS NULL.",
-            this);
-        return;
-    }
+        private void UpdateFan()
+        {
+            if (fanTransform == null)
+                return;
 
-    if (!motorRunning)
-    {
-        /*bug.Log(
-            $"[Hair Dryer] Motor NOT running | " +
-            $"V={electricalController.MotorVoltage:F2} | " +
-            $"I={electricalController.MotorCurrent:F3} | " +
-            $"Conducting={electricalController.MotorConducting}",
-            this);*/
+            if (!motorRunning)
+                return;
 
-        return;
-    }
+            /*
+             * SpeedIndex is a VISUAL speed selection.
+             *
+             * It does not calculate electrical voltage.
+             *
+             * ElectricalController already determined whether the
+             * motor is actually running.
+             */
+            float multiplier =
+                GetFanSpeedMultiplier();
 
-    float multiplier = GetFanSpeedMultiplier();
+            if (multiplier <= 0f)
+                return;
 
-    float degreesPerSecond =
-        runningRotationSpeed * multiplier;
+            float degreesPerSecond =
+                runningRotationSpeed *
+                multiplier;
 
-    /*bug.Log(
-        $"[Hair Dryer] FAN ROTATING | " +
-        $"SpeedIndex={speedIndex} | " +
-        $"RPM={degreesPerSecond:F0}",
-        this);*/
+            float direction =
+                reverseRotation
+                    ? -1f
+                    : 1f;
 
-    float direction =
-        reverseRotation ? -1f : 1f;
-
-    fanTransform.Rotate(
-        localRotationAxis,
-        degreesPerSecond *
-        direction *
-        Time.deltaTime,
-        Space.Self);
-}
+            fanTransform.Rotate(
+                localRotationAxis,
+                degreesPerSecond *
+                direction *
+                Time.deltaTime,
+                Space.Self);
+        }
 
         private float GetFanSpeedMultiplier()
         {
@@ -396,10 +419,12 @@ private void UpdateFan()
                         lowSpeedRotationMultiplier);
 
                 case 2:
-                default:
                     return Mathf.Max(
                         0f,
                         highSpeedRotationMultiplier);
+
+                default:
+                    return 0f;
             }
         }
 
@@ -407,54 +432,42 @@ private void UpdateFan()
         // AIRFLOW
         // ============================================================
 
-         private void UpdateAirflowTargets()
-{
-    // ------------------------------------------------------------
-    // MOTOR OFF
-    // ------------------------------------------------------------
-
-    if (!motorRunning)
-    {
-        targetAirflowStrength = 0f;
-        targetAirTemperature = 0f;
-
-        UpdateHeaterVisual(0f);
-        UpdateThermalProtectionVisual(0f);
-
-        return;
-    }
-
-
-    // ------------------------------------------------------------
-    // MOTOR ON
-    // ------------------------------------------------------------
-
-    targetAirflowStrength =
-        GetAirflowForSpeed();
-
-
-    float heaterTemperature =
-        GetTemperatureForHeater();
-
-
-    targetAirTemperature =
-        heaterTemperature;
-
-
-    UpdateHeaterVisual(
-        heaterTemperature);
-
-    UpdateThermalProtectionVisual(
-        heaterTemperature);
-}
-        private void UpdateHeaterVisual(
-            float temperature)
+        private void UpdateAirflowTargets()
         {
-            if (heaterVisual == null)
-                return;
+            /*
+             * No motor = no airflow.
+             */
+            if (!motorRunning)
+            {
+                targetAirflowStrength = 0f;
+                targetAirTemperature = 0f;
 
-            heaterVisual.SetTemperature(
-                Mathf.Clamp01(temperature));
+                UpdateHeaterVisual(0f);
+                UpdateThermalProtectionVisual(0f);
+
+                return;
+            }
+
+            /*
+             * Motor is electrically running.
+             */
+            targetAirflowStrength =
+                GetAirflowForSpeed();
+
+            /*
+             * Heater temperature comes from actual heater power.
+             */
+            float heaterTemperature =
+                GetTemperatureForHeater();
+
+            targetAirTemperature =
+                heaterTemperature;
+
+            UpdateHeaterVisual(
+                heaterTemperature);
+
+            UpdateThermalProtectionVisual(
+                heaterTemperature);
         }
 
         private float GetAirflowForSpeed()
@@ -469,10 +482,26 @@ private void UpdateFan()
                         lowSpeedAirflow);
 
                 case 2:
-                default:
                     return Mathf.Clamp01(
                         highSpeedAirflow);
+
+                default:
+                    return 0f;
             }
+        }
+
+        // ============================================================
+        // HEATER VISUAL
+        // ============================================================
+
+        private void UpdateHeaterVisual(
+            float temperature)
+        {
+            if (heaterVisual == null)
+                return;
+
+            heaterVisual.SetTemperature(
+                Mathf.Clamp01(temperature));
         }
 
         // ============================================================
@@ -481,13 +510,26 @@ private void UpdateFan()
 
         private float GetTemperatureForHeater()
         {
+            /*
+             * No motor means no airflow and therefore no useful
+             * heater visual.
+             */
             if (!motorRunning)
                 return 0f;
 
+            /*
+             * Heater electrically OFF.
+             */
             if (!heaterHeating)
+            {
                 return Mathf.Clamp01(
                     coldAirTemperature);
+            }
 
+            /*
+             * Heater power comes directly from the electrical
+             * controller.
+             */
             float heaterPower =
                 Mathf.Max(
                     0f,
@@ -562,50 +604,61 @@ private void UpdateFan()
             }
         }
 
-       private void UpdateVFXPlayback()
-{
-    if (airflowVFX == null)
-        return;
-
-
-    bool shouldRun =
-        motorRunning &&
-        targetAirflowStrength > 0.001f;
-
-
-    if (shouldRun)
-    {
-        if (controlVFXObject != null &&
-            !controlVFXObject.activeSelf)
+        private void UpdateVFXPlayback()
         {
-            controlVFXObject.SetActive(true);
+            if (airflowVFX == null)
+                return;
+
+            bool shouldRun =
+                motorRunning &&
+                targetAirflowStrength > 0.001f;
+
+            if (shouldRun)
+            {
+                if (controlVFXObject != null &&
+                    !controlVFXObject.activeSelf)
+                {
+                    controlVFXObject.SetActive(true);
+                }
+
+                if (!airflowVFX.enabled)
+                {
+                    airflowVFX.enabled = true;
+                }
+
+                /*
+                 * Only call Play when transitioning from stopped
+                 * to running.
+                 */
+                if (!airflowVFXPlaying)
+                {
+                    airflowVFX.Play();
+                    airflowVFXPlaying = true;
+                }
+
+                return;
+            }
+
+            /*
+             * Only stop when actually running.
+             */
+            if (airflowVFXPlaying)
+            {
+                airflowVFX.Stop();
+                airflowVFXPlaying = false;
+            }
+
+            if (controlVFXObject != null &&
+                controlVFXObject.activeSelf)
+            {
+                controlVFXObject.SetActive(false);
+            }
         }
-
-
-        if (!airflowVFX.enabled)
-        {
-            airflowVFX.enabled = true;
-        }
-
-
-        airflowVFX.Play();
-
-        return;
-    }
-
-
-    airflowVFX.Stop();
-
-
-    if (controlVFXObject != null &&
-        controlVFXObject.activeSelf)
-    {
-        controlVFXObject.SetActive(false);
-    }
-}
 
         private void StopVFXImmediate()
         {
+            airflowVFXPlaying = false;
+
             if (airflowVFX != null)
             {
                 airflowVFX.Stop();
@@ -614,6 +667,20 @@ private void UpdateFan()
 
             if (controlVFXObject != null)
                 controlVFXObject.SetActive(false);
+        }
+
+        // ============================================================
+        // THERMAL PROTECTION
+        // ============================================================
+
+        private void UpdateThermalProtectionVisual(
+            float temperature)
+        {
+            if (thermalProtectionVisual == null)
+                return;
+
+            thermalProtectionVisual.SetTemperature(
+                Mathf.Clamp01(temperature));
         }
 
         // ============================================================
@@ -637,6 +704,8 @@ private void UpdateFan()
         {
             airflowVFX = vfx;
 
+            airflowVFXPlaying = false;
+
             if (controlVFXObject == null &&
                 airflowVFX != null)
             {
@@ -644,6 +713,7 @@ private void UpdateFan()
                     airflowVFX.gameObject;
             }
 
+            BuildPropertyIDs();
             ApplyVFXProperties();
         }
 
@@ -661,8 +731,12 @@ private void UpdateFan()
             electricalController.RefreshState();
 
             ReadElectricalState();
+
             UpdateAirflowTargets();
+
             ApplyVFXProperties();
+
+            UpdateVFXPlayback();
         }
 
         // ============================================================
@@ -687,6 +761,9 @@ private void UpdateFan()
 
             airflowStrength = 0f;
             airTemperature = 0f;
+
+            UpdateHeaterVisual(0f);
+            UpdateThermalProtectionVisual(0f);
 
             StopVFXImmediate();
         }
@@ -752,15 +829,5 @@ private void UpdateFan()
 
             ValidateRotationAxis();
         }
-
-        private void UpdateThermalProtectionVisual(
-    float temperature)
-{
-    if (thermalProtectionVisual == null)
-        return;
-
-    thermalProtectionVisual.SetTemperature(
-        Mathf.Clamp01(temperature));
-}
     }
 }

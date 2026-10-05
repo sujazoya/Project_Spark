@@ -150,14 +150,25 @@ namespace ProjectSpark.Gameplay
         [SerializeField]
         private float sagAmount = 0.15f;
 
-        [Tooltip("Direction used for cable sag.")]
-        [SerializeField]
-        private Vector3 sagDirection = Vector3.down;
+      // ============================================================
+// CABLE ARCH
+// ============================================================
 
-        [Tooltip("How strongly the sag follows the cable's middle.")]
-        [Range(0.1f, 4f)]
-        [SerializeField]
-        private float sagPower = 1.5f;
+[Header("Cable Arch")]
+
+[Tooltip("Controls how high the cable arches between endpoints.")]
+[Min(0f)]
+[SerializeField]
+private float archAmount = 0.12f;
+
+[Tooltip("Direction of the cable arch.")]
+[SerializeField]
+private Vector3 archDirection = Vector3.up;
+
+[Tooltip("Controls how concentrated the arch is toward the middle.")]
+[Range(0.1f, 4f)]
+[SerializeField]
+private float archPower = 1.5f;
 
         // ============================================================
         // ENDPOINT DIRECTIONS
@@ -939,25 +950,25 @@ rebuildRequested = false;
                     end,
                     smooth);
 
-            float sagFactor =
-                Mathf.Sin(
-                    t *
-                    Mathf.PI);
+                float archFactor =
+            Mathf.Sin(
+                t * Mathf.PI);
 
-            sagFactor =
-                Mathf.Pow(
-                    Mathf.Clamp01(sagFactor),
-                    sagPower);
+        archFactor =
+            Mathf.Pow(
+                Mathf.Clamp01(archFactor),
+                archPower);
 
-            Vector3 sag =
-                NormalizeSafe(
-                    sagDirection,
-                    Vector3.down)
-                *
-                sagAmount *
-                sagFactor;
+        Vector3 arch =
+            NormalizeSafe(
+                archDirection,
+                Vector3.up)
+            *
+            archAmount
+            *
+            archFactor;
 
-            return point + sag;
+        return point + arch;
         }
 
         private Vector3 EvaluateCableTangent(
@@ -1649,15 +1660,15 @@ rebuildRequested = false;
                     0.01f,
                     endRadiusMultiplier);
 
-            sagAmount =
-                Mathf.Max(
-                    0f,
-                    sagAmount);
+            archAmount =
+    Mathf.Max(
+        0f,
+        archAmount);
 
-            sagPower =
-                Mathf.Max(
-                    0.1f,
-                    sagPower);
+archPower =
+    Mathf.Max(
+        0.1f,
+        archPower);
 
             endpointDirectionInfluence =
                 Mathf.Clamp(

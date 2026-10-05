@@ -69,6 +69,8 @@ namespace ProjectSpark.Electrical
             SparkElectricalComponent component,
             SparkElectricalSolveContext context)
         {
+
+            
             if (!(component is SparkPowerSupply supply))
                 return;
 
