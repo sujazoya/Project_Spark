@@ -44,7 +44,7 @@ namespace ProjectSpark.Audio
         private float animationSpeed = 3.5f;
 
         [SerializeField]
-        [Range(0.01f, 1f)]
+        [Range(0.01f, 5f)]
         private float lineWidth = 2.5f;
 
         [Header("Voice Reaction")]
