@@ -1,0 +1,204 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fe2bd26d9376e04fbe4231cbdba4350, type: 3}
+  m_Name: SparkAIConceptDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIConceptDatabase
+  databaseId: project_spark_concepts
+  concepts:
+  - id: circuit_basics
+    displayName: Circuit Basics
+    description: An electrical circuit is a connected path that allows electrical
+      energy to be transferred from a source through components and back to the source.
+    learningGoal: Understand that an electrical circuit needs connected components
+      and a complete path between the source terminals.
+    playerUnderstanding: The player understands that a circuit is not just a collection
+      of components. The components must form a connected electrical path for the
+      circuit to operate.
+    prerequisiteConceptIds: []
+    recommendedLevel: 1
+    requiredForProgression: 1
+    teacherIntroduction: 'Every circuit starts with one simple idea: electricity
+      needs a path to travel through the circuit. Let''s learn how the pieces fit
+      together.'
+    teacherExplanation: An electrical circuit is a connected path containing a source
+      and other electrical components. For a basic circuit to operate, the path must
+      connect from one source terminal through the circuit and back to the other
+      source terminal.
+    teacherExample: Think of a simple battery, wire, and lamp. When the wires connect
+      the battery to the lamp and the path returns to the battery, the lamp can operate.
+      If the path is broken, the circuit cannot operate normally.
+    teacherQuestion: What must a circuit have before a connected electrical component
+      can operate?
+    teacherHint: Look at what connects the source to the other components. Is there
+      a complete path?
+    teacherStrongHint: The circuit needs a continuous electrical path from one terminal
+      of the source, through the circuit, and back to the other source terminal.
+    teacherSuccessMessage: Correct! A circuit needs a connected path for electrical
+      energy to reach the components.
+    teacherFailureMessage: Not quite. Remember that components must be connected
+      together to form an electrical path.
+    allowVoice: 1
+    voiceEmotion: 1
+    voiceSpeed: 1
+    voicePitch: 0.5
+    allowQuestion: 1
+    allowHint: 1
+    allowStrongHint: 1
+    allowExplanation: 1
+    allowExample: 1
+    realWorldConnection: Every working electrical device contains one or more electrical
+      circuits that provide paths for energy to reach the device's components.
+    commonMisconception: Connecting components physically does not always mean that
+      an electrical circuit is complete. Electrical terminals must be connected correctly
+      to form a usable path.
+    safetyNote: Learn circuit fundamentals using the low-voltage training equipment
+      in Project Spark. Never experiment with mains electricity.
+  - id: source
+    displayName: Electrical Source
+    description: An electrical source provides a potential difference that can drive
+      current through a circuit.
+    learningGoal: Understand that an electrical source provides the potential difference
+      needed to drive current through a circuit.
+    playerUnderstanding: The player can identify the source in a circuit and explain
+      that the source provides the electrical potential difference needed for the
+      circuit to operate.
+    prerequisiteConceptIds: []
+    recommendedLevel: 1
+    requiredForProgression: 1
+    teacherIntroduction: Before we can make a circuit work, we need something that
+      provides electrical energy. This is called the electrical source.
+    teacherExplanation: An electrical source provides a potential difference between
+      its terminals. This potential difference can drive current when a suitable
+      electrical path is connected.
+    teacherExample: A battery is a simple electrical source. Its positive and negative
+      terminals provide a potential difference that can drive current through a connected
+      circuit.
+    teacherQuestion: Which component provides the electrical potential difference
+      in this circuit?
+    teacherHint: The battery or power supply is the source. It provides the potential
+      difference that can drive current.
+    teacherStrongHint: The battery or power supply is the source. It provides the
+      potential difference that can drive current.
+    teacherSuccessMessage: Correct! You found the electrical source.
+    teacherFailureMessage: Not quite. Look for the component that provides the voltage
+      or potential difference for the circuit.
+    allowVoice: 1
+    voiceEmotion: 2
+    voiceSpeed: 1
+    voicePitch: 0.5
+    allowQuestion: 1
+    allowHint: 1
+    allowStrongHint: 1
+    allowExplanation: 1
+    allowExample: 1
+    realWorldConnection: Batteries, laboratory power supplies, solar cells, and generators
+      can act as electrical sources in real circuits.
+    commonMisconception: A source provides potential difference; it does not mean
+      that current automatically flows when nothing is connected. Current depends
+      on the complete circuit and its components.
+    safetyNote: Use low-voltage training sources while learning. Never connect Project
+      Spark circuits to mains electricity.
+  - id: circuit_path
+    displayName: Circuit Path
+    description: A circuit path is the connected electrical route through which current
+      can flow from one source terminal through the circuit and back to the other
+      source terminal.
+    learningGoal: Understand that current requires a continuous electrical path through
+      the circuit.
+    playerUnderstanding: The player can identify whether a circuit has a continuous
+      path and understands that breaking the path prevents normal current flow.
+    prerequisiteConceptIds: []
+    recommendedLevel: 1
+    requiredForProgression: 1
+    teacherIntroduction: We found the source. Now we need to give electricity a path
+      through the circuit and back to the source.
+    teacherExplanation: For current to flow in a basic circuit, there must be a continuous
+      electrical path from one terminal of the source, through the connected components,
+      and back to the other terminal.
+    teacherExample: Imagine a wire connecting a battery to a lamp, with another wire
+      returning from the lamp to the battery. Together they create a complete path.
+      If one wire is disconnected, the path is broken.
+    teacherQuestion: Is there a complete electrical path from the source through
+      the component and back to the source?
+    teacherHint: Start at one source terminal and follow the connections. Can you
+      reach the other source terminal?
+    teacherStrongHint: Trace the entire circuit. The path must leave one source terminal,
+      pass through the circuit, and return to the opposite source terminal without
+      a break.
+    teacherSuccessMessage: Excellent! You traced a complete electrical path.
+    teacherFailureMessage: The path is incomplete. Start at the source and follow
+      every connection until you reach the other source terminal.
+    allowVoice: 1
+    voiceEmotion: 4
+    voiceSpeed: 0.95
+    voicePitch: 0.5
+    allowQuestion: 1
+    allowHint: 1
+    allowStrongHint: 1
+    allowExplanation: 1
+    allowExample: 1
+    realWorldConnection: Electrical wiring in homes, machines, vehicles, computers,
+      and electronic devices creates paths that connect power sources to electrical
+      loads and other components.
+    commonMisconception: Electricity does not simply travel from the positive terminal
+      and stop at the component. In a basic closed circuit, current flows through
+      a continuous path between the source terminals.
+    safetyNote: Use the low-voltage Project Spark environment for circuit experiments.
+      Never test circuit paths using mains electricity.
+  - id: polarity
+    displayName: Polarity
+    description: Polarity identifies the positive and negative sides of a source
+      or polarized component and helps determine how connections should be made.
+    learningGoal: Understand that positive and negative terminals have different
+      electrical polarity and that polarized components may require correct polarity.
+    playerUnderstanding: The player can identify positive and negative terminals
+      and make basic positive-to-positive and negative-to-negative connections.
+    prerequisiteConceptIds: []
+    recommendedLevel: 1
+    requiredForProgression: 1
+    teacherIntroduction: 'Our path is almost ready. There is one more thing to check:
+      polarity. Positive and negative terminals must be understood before we connect
+      them.'
+    teacherExplanation: Polarity tells us which terminal is positive and which is
+      negative. In a basic Project Spark circuit, the source positive terminal and
+      negative terminal form opposite sides of the electrical supply. Polarized components
+      can require their terminals to be connected with the correct polarity.
+    teacherExample: If a battery has a positive terminal and a negative terminal,
+      connect the circuit so the intended positive side reaches the component's positive
+      or anode terminal and the return reaches the negative or cathode terminal when
+      the component requires that polarity.
+    teacherQuestion: Which source terminal should connect to the component's positive
+      or anode side?
+    teacherHint: Look at the symbols or labels on the terminals. Positive connects
+      to the positive or anode side when the component requires that polarity.
+    teacherStrongHint: 'Follow the polarity labels: source positive goes to the intended
+      positive or anode terminal, and source negative returns to the intended negative
+      or cathode terminal.'
+    teacherSuccessMessage: Perfect! You matched the circuit polarity correctly.
+    teacherFailureMessage: Check the polarity labels. The positive and negative sides
+      are not interchangeable for polarized components.
+    allowVoice: 1
+    voiceEmotion: 5
+    voiceSpeed: 0.95
+    voicePitch: 0.5
+    allowQuestion: 1
+    allowHint: 1
+    allowStrongHint: 1
+    allowExplanation: 1
+    allowExample: 1
+    realWorldConnection: Polarity matters in batteries, LEDs, diodes, electrolytic
+      capacitors, DC motors, and many other electronic components.
+    commonMisconception: Positive and negative terminals are not simply two names
+      for the same thing. Their electrical polarity can determine whether a polarized
+      component operates correctly.
+    safetyNote: Use low-voltage Project Spark circuits when learning polarity. Never
+      experiment with mains polarity or mains wiring.

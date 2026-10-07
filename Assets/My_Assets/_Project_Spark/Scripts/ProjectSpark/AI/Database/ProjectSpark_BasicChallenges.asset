@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b739b7e159790c42b8847d7052c27cb, type: 3}
+  m_Name: ProjectSpark_BasicChallenges
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIChallengeDatabase
+  databaseId: project_spark_challenges
+  challenges:
+  - id: find_the_source
+    title: Find the Power Source
+    description: 
+    conceptId: source
+    topic: 1
+    difficulty: 0
+    objective: Identify the component that provides electrical energy.
+    instruction: 'Look at the circuit and identify which component provides
+
+      the
+      electrical potential needed by the circuit.'
+    successDescription: 'You correctly identified the electrical source.
+
+'
+    hint: Look for the component that can provide electrical potential.
+    strongHint: The source is the part that supplies energy to the circuit.
+    requiresCircuitChange: 0
+    requiresMeasurement: 0
+    requiresPlayerAnswer: 1
+    requiredForLesson: 1
+    allowRepeat: 1
+  - id: 'complete_the_path '
+    title: Complete the Path
+    description: 
+    conceptId: closed_circuit
+    topic: 6
+    difficulty: 1
+    objective: 'Create a continuous electrical path from the source
+
+      through
+      the target and back to the source.'
+    instruction: 'Connect the components so that there is a complete
+
+      path
+      from the source and back again.'
+    successDescription: 'The circuit now has a complete return path.
+
+'
+    hint: Start at one terminal of the source and trace the path.
+    strongHint: 'The path must eventually return to the other terminal
+
+      of
+      the source.
+
+'
+    requiresCircuitChange: 1
+    requiresMeasurement: 0
+    requiresPlayerAnswer: 0
+    requiredForLesson: 1
+    allowRepeat: 1
+  - id: match_the_polarity
+    title: Match the Polarity
+    description: 
+    conceptId: polarity
+    topic: 9
+    difficulty: 1
+    objective: Connect positive and negative terminals with the correct polarity.
+    instruction: Connect the positive side of the source to the positive side of
+      the target, and the negative side to the negative side.
+    successDescription: 'The circuit polarity is correct.
+
+'
+    hint: Positive connects to positive. Negative connects to negative.
+    strongHint: "Look for the + and \u2212 markings before connecting the terminals."
+    requiresCircuitChange: 1
+    requiresMeasurement: 0
+    requiresPlayerAnswer: 0
+    requiredForLesson: 1
+    allowRepeat: 1
+  - id: break_the_path
+    title: 'What Happens If We Break It? '
+    description: 
+    conceptId: open_circuit
+    topic: 0
+    difficulty: 0
+    objective: 'Observe what happens when the complete electrical
+
+      path is
+      interrupted.
+
+'
+    instruction: 'Open one connection in the working circuit and observe
+
+      what
+      happens to the target.'
+    successDescription: You observed that breaking the path stops the circuit operation.
+    hint: A circuit needs a continuous path.
+    strongHint: Remove one connection and watch the target.
+    requiresCircuitChange: 1
+    requiresMeasurement: 0
+    requiresPlayerAnswer: 0
+    requiredForLesson: 0
+    allowRepeat: 1

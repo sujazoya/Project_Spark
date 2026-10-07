@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0c0ea0c08ea4134c84cd70dd128b7fb, type: 3}
+  m_Name: ProjectSpark_BasicElectronics_Curriculum
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAICurriculumDefinition
+  curriculumId: project_spark_basic_electronics
+  displayName: Project Spark Electrical Learning
+  description: Progressive electrical learning curriculum.
+  levels:
+  - levelId: LEVEL_01
+    levelNumber: 1
+    displayName: The Complete Path
+    description: Discover what makes an electrical circuit work.
+    learningGoal: 'Understand that a circuit needs a source,
+
+      a connected path,
+      and a load.'
+    playerOutcome: Build a complete circuit and make the target device operate.
+    minimumMasteryPercent: 70
+    requiresAllRequiredLessons: 1
+    lessons:
+    - id: LEVEL_01
+      displayName: Complete Circuit
+      description: Learn how electrical energy travels through a complete circuit.
+      learningObjective: 'Understand the role of the source, path, and load,
+
+        and
+        learn why an open path prevents operation.'
+      successOutcome: 'Build a complete circuit with the correct polarity
+
+        and
+        make the target device operate.'
+      conceptIds:
+      - circuit_basics
+      - source
+      - circuit_path
+      - polarity
+      difficulty: 0
+      masteryRequirement: 0.7
+      requiredForLevelCompletion: 1
+      allowOptionalPractice: 1
+      requiredChallengeIds:
+      - find_the_source
+      - complete_the_path
+      - match_the_polarity
+      optionalChallengeIds:
+      - break_the_path
