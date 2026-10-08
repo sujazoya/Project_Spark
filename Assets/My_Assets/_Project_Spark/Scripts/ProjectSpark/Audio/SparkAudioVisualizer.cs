@@ -32,7 +32,7 @@ namespace ProjectSpark.Audio
         [Header("Wave Visual")]
 
         [SerializeField]
-        [Range(32, 256)]
+        [Range(10, 100)]
         private int points = 128;
 
         [SerializeField]
@@ -44,8 +44,8 @@ namespace ProjectSpark.Audio
         private float animationSpeed = 3.5f;
 
         [SerializeField]
-        [Range(0.01f, 5f)]
-        private float lineWidth = 2.5f;
+        [Range(0.01f, 50f)]
+        private float lineWidth = 10f;
 
         [Header("Voice Reaction")]
 

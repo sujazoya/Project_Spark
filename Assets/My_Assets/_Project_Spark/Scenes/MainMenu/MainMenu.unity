@@ -10731,8 +10731,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 872869765}
   - {fileID: 1214908095}
+  - {fileID: 872869765}
   m_Father: {fileID: 1130325775}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -42421,17 +42421,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872869764}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.05704127, w: 0.9983719}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 225879122}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 6.54}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 648.93005, y: -83}
-  m_SizeDelta: {x: -1297.8601, y: -853.3687}
+  m_AnchoredPosition: {x: 862.7603, y: -487.34396}
+  m_SizeDelta: {x: -1851.9935, y: -1029.3489}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &872869767
 MonoBehaviour:
@@ -42616,6 +42616,8 @@ MonoBehaviour:
   observationCoordinator: {fileID: 1130325791}
   voiceController: {fileID: 872869767}
   allowQuestions: 1
+  knowledge: {fileID: 11400000, guid: c8eaed39c5a619547b32baeb7b71b1df, type: 2}
+  world: {fileID: 0}
   speakAnswers: 1
   logQuestions: 1
 --- !u!114 &872869773
@@ -42625,15 +42627,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872869764}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e06271891700c7c4f998792020b6667c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Audio.SparkVoiceVisualizer
-  points: 128
-  waveLines: 4
+  points: 10
+  waveLines: 1
   animationSpeed: 3.5
-  lineWidth: 2.5
+  lineWidth: 2
   amplitudeStrength: 1.4
   pitchStrength: 1
   smoothing: 0.2
@@ -42643,7 +42645,7 @@ MonoBehaviour:
   startColor: {r: 0.1, g: 0.8, b: 1, a: 1}
   middleColor: {r: 0.9, g: 0.2, b: 1, a: 1}
   endColor: {r: 1, g: 0.3, b: 0.5, a: 1}
-  animateWhenIdle: 1
+  animateWhenIdle: 0
   idleStrength: 0.025
 --- !u!222 &872869774
 CanvasRenderer:
@@ -56375,7 +56377,6 @@ GameObject:
   - component: {fileID: 1130325776}
   - component: {fileID: 1130325783}
   - component: {fileID: 1130325782}
-  - component: {fileID: 1130325781}
   - component: {fileID: 1130325780}
   - component: {fileID: 1130325777}
   - component: {fileID: 1130325785}
@@ -56509,26 +56510,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c68376b4289b44592667b1338f6bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILearning
-  knowledge: {fileID: 1130325781}
+  knowledge: {fileID: 11400000, guid: c8eaed39c5a619547b32baeb7b71b1df, type: 2}
   intent: {fileID: 1130325782}
   brain: {fileID: 1130325772}
   successIncrease: 0.12
   struggleDecrease: 0.1
   repeatedMistakeDecrease: 0.05
   masteryThreshold: 0.8
---- !u!114 &1130325781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87ef084c728618442ba40e934eadd90b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIKnowledge
-  entries: []
 --- !u!114 &1130325782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56558,7 +56546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIDirector
   brain: {fileID: 1130325772}
   memory: {fileID: 1130325776}
-  knowledge: {fileID: 1130325781}
+  knowledge: {fileID: 11400000, guid: c8eaed39c5a619547b32baeb7b71b1df, type: 2}
   observeBrainChanges: 1
 --- !u!114 &1130325784
 MonoBehaviour:
@@ -61975,7 +61963,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 2
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -67957,7 +67945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 765ce4286e7d2e04da0e4d00dba63686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILesson
-  knowledge: {fileID: 1130325781}
+  knowledge: {fileID: 11400000, guid: c8eaed39c5a619547b32baeb7b71b1df, type: 2}
   learning: {fileID: 1130325780}
   lessons:
   - id: LEVEL_01
@@ -79573,6 +79561,7 @@ GameObject:
   - component: {fileID: 1534612856}
   - component: {fileID: 1534612855}
   - component: {fileID: 1534612854}
+  - component: {fileID: 1534612857}
   m_Layer: 0
   m_Name: Ask_Button
   m_TagString: Untagged
@@ -79596,8 +79585,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 228.4, y: -18}
-  m_SizeDelta: {x: 2208.548, y: 1470.9277}
+  m_AnchoredPosition: {x: 202.45432, y: -18}
+  m_SizeDelta: {x: 1689.6343, y: 1470.9277}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1534612854
 MonoBehaviour:
@@ -79681,6 +79670,171 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1534612852}
   m_CullTransparentMesh: 1
+--- !u!114 &1534612857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534612852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b99c140bd9953e047944792296da9897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkCharacterAnimationController
+  characterImage: {fileID: 1534612855}
+  characterRect: {fileID: 1534612853}
+  voiceAudioSource: {fileID: 872869770}
+  audioDrivenTalking: 1
+  audioSensitivity: 2.5
+  audioSmoothing: 12
+  idleFrames:
+  - {fileID: 190213113, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1639293984, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 606026738, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1846318902, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 236353986, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1610116116, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1153438502, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -248214161, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 336216928, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 722215207, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  idleFrameRate: 8
+  idleScaleAmount: 0.015
+  idleRotationAmount: 0.8
+  idleBreathingSpeed: 1.2
+  blinkFrames:
+  - {fileID: -1598732831, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 836849705, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1360490915, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 208669448, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 244452462, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  minimumBlinkDelay: 2.5
+  maximumBlinkDelay: 6
+  blinkFrameRate: 14
+  talkFrames:
+  - {fileID: 1334851166, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1886767801, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1300508495, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1349620633, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 2119942591, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 65721526, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1133145783, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1456880607, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -449503129, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  talkFrameRate: 14
+  talkFrameRateBoost: 12
+  minimumTalkAmplitude: 0.015
+  happyFrames:
+  - {fileID: -1545104609, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1365162174, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1349238199, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -959710361, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1744801748, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1373544049, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  happyFrameRate: 10
+  excitedFrames:
+  - {fileID: -1545104609, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1365162174, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1349238199, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -959710361, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1744801748, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  excitedFrameRate: 14
+  surprisedFrames:
+  - {fileID: 1826046923, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1674801966, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -282522701, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -2123999236, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -890382284, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1458476527, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 772184534, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -278535549, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  surprisedFrameRate: 10
+  thinkingFrames:
+  - {fileID: -427271959, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1658544954, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1598979087, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1409667562, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1216212027, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -397164998, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1382983466, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  thinkingFrameRate: 7
+  sadFrames:
+  - {fileID: 624418633, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 842047572, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1192200265, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1529192807, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -821227043, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 315161174, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -896640114, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -797334036, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  sadFrameRate: 7
+  angryFrames:
+  - {fileID: -1374390976, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1524773045, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1741367899, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1256524622, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1918262101, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 951367215, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1920903066, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  angryFrameRate: 10
+  winkFrames:
+  - {fileID: -1248965556, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 593025587, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -622717205, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 648010853, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1498188325, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1116302567, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -693857370, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  winkFrameRate: 12
+  lookLeftFrames:
+  - {fileID: 681218941, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -237503223, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1461979470, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -54053329, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1095861034, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -195616271, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1646180736, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1229611558, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  lookLeftFrameRate: 10
+  lookRightFrames:
+  - {fileID: 681218941, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -237503223, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1461979470, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -54053329, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1095861034, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -195616271, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1646180736, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1229611558, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  lookRightFrameRate: 10
+  headTiltFrames:
+  - {fileID: -1353343458, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1202466271, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -149203628, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -310110477, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1515367445, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 164942687, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -687720916, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  headTiltFrameRate: 10
+  bounceFrames:
+  - {fileID: 617997341, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -396500061, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -779041593, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -184585040, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 943223444, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1232427949, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -383193030, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 99186657, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  bounceFrameRate: 14
+  bounceScaleAmount: 0.035
+  bounceRotationAmount: 2
+  enableLivingMotion: 0
+  livingMotionSpeed: 1.4
+  livingMotionScale: 0.008
+  livingMotionRotation: 0.45
+  returnToIdleAfterOneShot: 1
+  automaticBlinking: 1
+  talkingOverridesEmotion: 1
 --- !u!1 &1537027383
 GameObject:
   m_ObjectHideFlags: 0
@@ -100398,7 +100552,7 @@ MonoBehaviour:
   interactionMaterial: {fileID: 2100000, guid: c1b4ed26655273f458a7d2c8dd916e16, type: 2}
   diagnosticPanelOffset: {x: 0, y: 0, z: 0}
   interactionWindow: 0.05
-  componentId: Resister_01
+  componentId: Resistor_1K
   displayName: Register
   sourceRenderers:
   - {fileID: 1294624548}
@@ -100445,7 +100599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 937440cd7f931b644b50a25edf026463, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkResistor
-  objectId: Register0014
+  objectId: Resistor_1K
   displayName: Register
   interactionsEnabled: 1
   operationalState: 1
@@ -103683,6 +103837,8 @@ GameObject:
   - component: {fileID: 1980530138}
   - component: {fileID: 1980530140}
   - component: {fileID: 1980530139}
+  - component: {fileID: 1980530142}
+  - component: {fileID: 1980530141}
   m_Layer: 0
   m_Name: Answer Text
   m_TagString: Untagged
@@ -103729,7 +103885,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
   m_sharedMaterial: {fileID: 2201847597516483309, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
@@ -103756,7 +103912,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -103809,6 +103965,141 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1980530137}
   m_CullTransparentMesh: 1
+--- !u!82 &1980530141
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980530137}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.292
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1980530142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980530137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b673438bbf0f8b4d9128fa626511e5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkTMPTypewriter
+  autoTypeOnEnable: 1
+  detectExternalTextChanges: 1
+  changeDebounce: 0.08
+  secondsPerCharacter: 0.025
+  startDelay: 0
+  fastMultiplier: 2.5
+  useUnscaledTime: 1
+  spaceDelayMultiplier: 0.35
+  commaPause: 0.12
+  sentencePause: 0.32
+  colonPause: 0.16
+  typingAudioSource: {fileID: 1980530141}
+  typingClip: {fileID: 8300000, guid: 4843269452556bd45bc781d91d52cccb, type: 3}
+  audioInterval: 0.035
+  minimumPitch: 0.95
+  maximumPitch: 1.05
+  typingVolume: 0.5
+  onTypingStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  onTypingCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  onCharacterRevealed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1980748165
 GameObject:
   m_ObjectHideFlags: 0

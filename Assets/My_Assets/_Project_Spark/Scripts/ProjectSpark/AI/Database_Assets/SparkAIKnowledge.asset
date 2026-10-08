@@ -1,0 +1,331 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87ef084c728618442ba40e934eadd90b, type: 3}
+  m_Name: SparkAIKnowledge
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIKnowledge
+  databaseId: project_spark_knowledge
+  entries:
+  - id: circuit
+    title: Circuit
+    category: Circuit
+    aliases:
+    - electrical circuit
+    - basic circuit
+    - circuit basics
+    definition: An electrical circuit is a connected path containing a source and
+      electrical components that allows electrical energy to be transferred through
+      the circuit.
+    explanation: A basic circuit needs a source and a continuous electrical path
+      through the connected components and back to the other terminal of the source.
+    example: A battery connected to an LED through suitable wiring and a current-limiting
+      resistor forms a basic electrical circuit when the path returns to the battery.
+    importantFacts:
+    - A circuit needs an electrical source.
+    - A circuit needs connected electrical paths.
+    - A complete circuit provides a path between the source terminals.
+    - Components must be electrically connected, not merely physically close.
+    - An open path prevents normal current flow.
+    misconception: A group of components is not automatically a working circuit.
+      The components must form a usable electrical path.
+    safety: Use the low-voltage Project Spark environment while learning circuit
+      fundamentals. Never experiment with mains electricity.
+    relatedEntryIds:
+    - electrical_source
+    - circuit_path
+    - wire
+    - open_circuit
+    - closed_circuit
+    - short_circuit
+  - id: electrical_source
+    title: Electrical Source
+    category: Source
+    aliases:
+    - source
+    - power source
+    - voltage source
+    - battery
+    - power supply
+    definition: An electrical source provides a potential difference that can drive
+      current through a suitable electrical circuit.
+    explanation: A source establishes an electrical potential difference between
+      its terminals. When a suitable closed path is connected, this potential difference
+      can drive current through the circuit.
+    example: A battery or laboratory DC power supply can provide voltage to a circuit.
+    importantFacts:
+    - A source provides electrical potential difference.
+    - A source has electrical terminals.
+    - Voltage can exist without current flowing.
+    - Current requires a suitable electrical path.
+    - A source does not automatically cause current when its circuit is open.
+    misconception: Having voltage at a source does not mean that current is automatically
+      flowing. Current depends on the connected circuit.
+    safety: Use low-voltage training sources in Project Spark. Never connect Project
+      Spark circuits to mains electricity.
+    relatedEntryIds:
+    - circuit
+    - circuit_path
+    - polarity
+    - short_circuit
+  - id: circuit_path
+    title: Circuit Path
+    category: Circuit
+    aliases:
+    - path
+    - electrical path
+    - current path
+    - circuit route
+    definition: A circuit path is the connected electrical route between the terminals
+      of a source through the circuit components.
+    explanation: For current to flow in a basic circuit, there must be a continuous
+      electrical path from one source terminal through the connected components and
+      back to the other source terminal.
+    example: A wire from a battery positive terminal to an LED, followed by a return
+      connection from the LED to the battery negative terminal, creates a complete
+      path.
+    importantFacts:
+    - Current requires a suitable electrical path.
+    - A path can contain multiple components.
+    - A broken connection creates an open circuit.
+    - The complete path normally connects both source terminals through the circuit.
+    misconception: Connecting only one side of a component to a source does not create
+      a complete circuit.
+    safety: Build and test circuit paths using Project Spark's low-voltage training
+      environment.
+    relatedEntryIds:
+    - circuit
+    - electrical_source
+    - wire
+    - open_circuit
+    - closed_circuit
+    - short_circuit
+  - id: polarity
+    title: Polarity
+    category: Fundamentals
+    aliases:
+    - positive
+    - negative
+    - positive terminal
+    - negative terminal
+    - anode
+    - cathode
+    definition: Polarity identifies the positive and negative sides of an electrical
+      source or polarized component.
+    explanation: Polarity tells us which terminals have positive and negative electrical
+      relationships. Polarized components such as LEDs and diodes can require their
+      terminals to be connected with the correct polarity.
+    example: An LED has an anode and cathode. Connecting the source with the appropriate
+      polarity allows the LED to operate when the rest of the circuit is complete.
+    importantFacts:
+    - Positive and negative terminals have different polarity.
+    - LEDs are polarized components.
+    - An LED has an anode and a cathode.
+    - Polarity can determine whether a polarized component operates.
+    - Polarity does not by itself guarantee current flow.
+    misconception: Positive and negative terminals are not interchangeable on polarized
+      components.
+    safety: Use low-voltage Project Spark circuits when learning polarity.
+    relatedEntryIds:
+    - electrical_source
+    - circuit_path
+    - led
+  - id: open_circuit
+    title: Open Circuit
+    category: Circuit
+    aliases:
+    - broken circuit
+    - disconnected circuit
+    - broken path
+    - interrupted circuit
+    definition: An open circuit is a circuit with a broken or interrupted electrical
+      path that prevents normal current flow through that path.
+    explanation: An open switch, disconnected wire, or missing connection can interrupt
+      the circuit. Voltage may still exist across the open portion even though current
+      through that path is effectively zero.
+    example: Opening a switch in a simple battery and lamp circuit interrupts the
+      path and stops normal current flow.
+    importantFacts:
+    - An open circuit interrupts the electrical path.
+    - An ideal open circuit has zero current.
+    - Voltage can exist across an open circuit.
+    - An open switch can create an open circuit.
+    - A disconnected wire can create an open circuit.
+    misconception: An open circuit does not necessarily mean that there is no voltage
+      anywhere in the circuit.
+    safety: Use Project Spark's low-voltage environment when experimenting with open
+      and closed circuits.
+    relatedEntryIds:
+    - circuit
+    - circuit_path
+    - open_circuit
+    - electrical_source
+  - id: closed_circuit
+    title: Closed Circuit
+    category: Circuit
+    aliases:
+    - complete circuit
+    - completed circuit
+    - closed path
+    - complete path
+    definition: A closed circuit has a continuous electrical path that allows current
+      to flow when a source and suitable components are present.
+    explanation: A closed circuit provides a complete path between the source terminals
+      through the connected components. Whether significant current flows depends
+      on the source and the electrical properties of the circuit.
+    example: Closing a switch in a battery and lamp circuit completes the path and
+      allows current to flow through the lamp.
+    importantFacts:
+    - A closed path can allow current flow.
+    - A closed switch normally provides a conducting path.
+    - A closed circuit still needs a source to produce current.
+    - Circuit resistance affects current.
+    - A closed circuit does not mean unlimited current.
+    misconception: A closed circuit does not automatically mean that a large current
+      is flowing. The source and circuit resistance determine the current.
+    safety: Use low-voltage Project Spark circuits when learning about closed circuits.
+    relatedEntryIds:
+    - circuit
+    - circuit_path
+    - electrical_source
+    - open_circuit
+  - id: short_circuit
+    title: Short Circuit
+    category: Safety
+    aliases:
+    - short
+    - electrical short
+    - shorted circuit
+    definition: A short circuit is an unintended low-resistance path that can allow
+      excessive current to flow.
+    explanation: A short circuit can bypass a component or load with a very low-resistance
+      path. The resulting current can become much larger than intended and may damage
+      components or the power source.
+    example: Connecting the positive and negative terminals of a source through a
+      very low-resistance path can create a short circuit.
+    importantFacts:
+    - A short circuit has very low resistance.
+    - A short circuit can produce excessive current.
+    - A short can bypass intended components.
+    - Short circuits can damage electrical components.
+    - Current depends on voltage and circuit resistance.
+    misconception: A short circuit is not simply a circuit that works very well.
+      It is an unintended low-resistance path that can cause excessive current.
+    safety: Never intentionally create short circuits with real batteries, power
+      supplies, or mains electricity. Use Project Spark's simulated environment.
+    relatedEntryIds:
+    - circuit
+    - circuit_path
+    - electrical_source
+    - wire
+  - id: wire
+    title: Wire
+    category: Component
+    aliases:
+    - cable
+    - conductor
+    - connection wire
+    - electrical wire
+    definition: A wire is a conductive connection used to electrically connect terminals
+      and components in a circuit.
+    explanation: A wire provides a relatively low-resistance path between connected
+      electrical terminals. Wires allow components to be connected together to form
+      circuit paths.
+    example: A wire can connect a power supply terminal to a component terminal and
+      provide the electrical path needed by the circuit.
+    importantFacts:
+    - A wire provides an electrical connection.
+    - An ideal wire has approximately zero resistance.
+    - Real wires have some resistance.
+    - Wires can connect components in series or parallel arrangements.
+    - A disconnected wire can break a circuit.
+    misconception: A wire only creates an electrical connection when its conductive
+      ends are actually connected to the intended terminals.
+    safety: Use the simulated wiring system in Project Spark while learning electrical
+      connections.
+    relatedEntryIds:
+    - circuit
+    - circuit_path
+    - open_circuit
+    - short_circuit
+  - id: led
+    title: LED
+    category: Component
+    aliases:
+    - light emitting diode
+    - light-emitting diode
+    - diode
+    - indicator LED
+    - light
+    definition: An LED, or light-emitting diode, is a semiconductor diode that emits
+      light when current flows through it in the appropriate direction.
+    explanation: An LED is a polarized semiconductor device. Its anode and cathode
+      must be connected with appropriate polarity, and the circuit must provide suitable
+      current for normal operation.
+    example: A low-voltage source can drive an LED through a suitable current-limiting
+      resistor when the LED polarity and circuit connections are correct.
+    importantFacts:
+    - An LED is a diode.
+    - An LED has polarity.
+    - An LED has an anode and cathode.
+    - Forward operation requires appropriate polarity.
+    - Current must flow through the LED for normal light emission.
+    - An LED normally requires current limiting.
+    - Excessive current can damage an LED.
+    - Voltage alone does not guarantee that an LED will light.
+    misconception: An LED does not light simply because voltage is present. It needs
+      appropriate polarity, a complete current path, and suitable current.
+    safety: Use low-voltage Project Spark circuits when learning about LEDs. Do not
+      connect an LED directly to an uncontrolled voltage source without appropriate
+      current limiting.
+    relatedEntryIds:
+    - circuit
+    - circuit_path
+    - polarity
+    - resistor
+    - electrical_source
+  - id: resistor
+    title: Resistor
+    category: Component
+    aliases:
+    - resistance
+    - current limiting resistor
+    - current limiter
+    - ohmic resistor
+    definition: A resistor is an electrical component that provides resistance and
+      opposes the flow of current.
+    explanation: A resistor limits current and produces a voltage drop when current
+      flows through it. In a simple circuit, resistance, voltage, and current are
+      related by Ohm's law.
+    example: 'A resistor can be placed in series with an LED to limit the current
+      flowing through the LED.
+
+'
+    importantFacts:
+    - A resistor has resistance.
+    - Resistance is measured in ohms.
+    - A resistor can limit current.
+    - A resistor can produce a voltage drop.
+    - A resistor dissipates electrical power as heat.
+    - Ohm's law relates voltage, current, and resistance.
+    - For a given voltage, increasing resistance generally reduces current in a simple
+      circuit.
+    misconception: A resistor does not stop all current. It limits current according
+      to its resistance and the voltage applied to the circuit.
+    safety: 'Use appropriately rated resistors in real circuits. Excessive current
+      or power can cause a resistor to overheat.
+
+'
+    relatedEntryIds:
+    - circuit
+    - circuit_path
+    - electrical_source
+    - led
+    - polarity

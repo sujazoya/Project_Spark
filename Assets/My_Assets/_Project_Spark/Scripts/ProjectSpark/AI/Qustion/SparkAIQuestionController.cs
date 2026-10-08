@@ -29,6 +29,15 @@ namespace ProjectSpark.AI
         [SerializeField]
         private bool allowQuestions = true;
 
+        
+        [Header("AI Knowledge")]
+        [SerializeField]
+        private SparkAIKnowledge knowledge;
+
+        [SerializeField]
+        private SparkAIWorld world;
+
+        private SparkAIKnowledgeReasoner knowledgeReasoner;
         [SerializeField]
         private bool speakAnswers = true;
 
@@ -44,6 +53,7 @@ namespace ProjectSpark.AI
         public event Action<SparkAIPlayerQuestion> QuestionAsked;
 
         public event Action<string> AnswerCreated;
+
 
         
 
@@ -80,6 +90,27 @@ namespace ProjectSpark.AI
 
                 return;
             }
+            if (knowledge != null && world != null)
+            {
+                knowledgeReasoner =
+                    new SparkAIKnowledgeReasoner(
+                        knowledge,
+                        world);
+            }
+                            if (knowledge != null && world != null)
+                {
+                    knowledgeReasoner =
+                        new SparkAIKnowledgeReasoner(
+                            knowledge,
+                            world);
+                }
+                else
+                {
+                    Debug.LogWarning(
+                        "[SPARK AI QUESTION] Knowledge or World is not assigned. " +
+                        "Knowledge reasoning will be unavailable.",
+                        this);
+                }
 
             initialized = true;
         }
@@ -92,74 +123,493 @@ namespace ProjectSpark.AI
         /// <summary>
         /// Entry point used by the player question UI.
         /// </summary>
-        public void AskQuestion(string text)
+      public void AskQuestion(string text)
+{
+    SparkAIPlayerQuestion question =
+        SparkAIPlayerQuestion.Create(text);
+
+    if (!question.IsValid)
+        return;
+
+    if (logQuestions)
+    {
+        Debug.Log(
+            "[SPARK AI QUESTION] " +
+            question.Text);
+    }
+
+    QuestionAsked?.Invoke(question);
+
+    string answer =
+        BuildAnswer(question.Text);
+
+    AnswerCreated?.Invoke(answer);
+
+    if (logQuestions)
+    {
+        Debug.Log(
+            "[SPARK AI ANSWER] " +
+            answer);
+    }
+
+    SpeakAnswer(answer);
+}
+
+private string BuildObjectAnswer(
+    string question,
+    SparkAIUnifiedObservation observation)
+{
+    SparkAIElectronicObjectSnapshot target;
+
+    if (!SparkAIObjectQuestionResolver.TryFindObject(
+            question,
+            observation.World,
+            out target))
+    {
+        return BuildGeneralAnswer(
+            observation,
+            contextReasoner.ReasonCurrentContext());
+    }
+
+    string objectName =
+        string.IsNullOrWhiteSpace(target.Name)
+            ? "That component"
+            : target.Name;
+
+    string normalizedQuestion =
+        Normalize(question);
+
+    /*
+     * ============================================================
+     * SPECIFIC ELECTRICAL QUESTIONS
+     * ============================================================
+     */
+
+    if (ContainsAny(
+            normalizedQuestion,
+            "voltage",
+            "volt",
+            "how many volts",
+            "potential difference"))
+    {
+        return BuildObjectVoltageAnswer(target, objectName);
+    }
+
+    if (ContainsAny(
+            normalizedQuestion,
+            "current",
+            "amps",
+            "amp",
+            "ampere",
+            "amperes",
+            "how much current"))
+    {
+        return BuildObjectCurrentAnswer(target, objectName);
+    }
+
+    if (ContainsAny(
+            normalizedQuestion,
+            "power",
+            "watt",
+            "watts",
+            "how much power"))
+    {
+        return BuildObjectPowerAnswer(target, objectName);
+    }
+
+    if (ContainsAny(
+            normalizedQuestion,
+            "conducting",
+            "conduct",
+            "current flowing",
+            "is current flowing"))
+    {
+        return BuildObjectConductionAnswer(target, objectName);
+    }
+
+    /*
+     * ============================================================
+     * WHY / PROBLEM QUESTIONS
+     * ============================================================
+     */
+
+    if (IsAskingWhyNotWorking(normalizedQuestion) ||
+        ContainsAny(
+            normalizedQuestion,
+            "what is wrong",
+            "whats wrong",
+            "problem",
+            "issue",
+            "why is",
+            "why isn't",
+            "why isnt",
+            "not working",
+            "doesn't work",
+            "doesnt work"))
+    {
+        return BuildObjectProblemAnswer(
+            target,
+            objectName,
+            observation);
+    }
+
+    /*
+     * ============================================================
+     * POWERED / ACTIVE QUESTIONS
+     * ============================================================
+     */
+
+    if (ContainsAny(
+            normalizedQuestion,
+            "receiving power",
+            "getting power",
+            "powered",
+            "has power",
+            "energized",
+            "energy"))
+    {
+        return BuildObjectPowerStateAnswer(
+            target,
+            objectName);
+    }
+
+    /*
+     * ============================================================
+     * ON / OFF QUESTIONS
+     * ============================================================
+     */
+
+    if (ContainsAny(
+            normalizedQuestion,
+            "on",
+            "off",
+            "active",
+            "inactive"))
+    {
+        return BuildObjectActivityAnswer(
+            target,
+            objectName);
+    }
+
+    /*
+     * ============================================================
+     * GENERAL OBJECT QUESTION
+     * ============================================================
+     */
+
+    return BuildObjectGeneralAnswer(
+        target,
+        objectName);
+}
+
+private string BuildObjectVoltageAnswer(
+    SparkAIElectronicObjectSnapshot target,
+    string objectName)
+{
+    return objectName +
+           " currently has " +
+           FormatValue(target.Voltage, "V") +
+           " across it.";
+}
+
+private string BuildObjectCurrentAnswer(
+    SparkAIElectronicObjectSnapshot target,
+    string objectName)
+{
+    return objectName +
+           " currently has " +
+           FormatValue(target.Current, "A") +
+           " of current.";
+}
+
+private string BuildObjectPowerAnswer(
+    SparkAIElectronicObjectSnapshot target,
+    string objectName)
+{
+    return objectName +
+           " is currently using approximately " +
+           FormatValue(target.Power, "W") +
+           " of electrical power.";
+}
+
+private string BuildObjectConductionAnswer(
+    SparkAIElectronicObjectSnapshot target,
+    string objectName)
+{
+    string state =
+        string.IsNullOrWhiteSpace(target.ConductionState)
+            ? string.Empty
+            : target.ConductionState.Trim();
+
+    if (string.Equals(
+            state,
+            "Conducting",
+            StringComparison.OrdinalIgnoreCase))
+    {
+        return objectName +
+               " is currently conducting current.";
+    }
+
+    if (string.Equals(
+            state,
+            "NonConducting",
+            StringComparison.OrdinalIgnoreCase))
+    {
+        return objectName +
+               " is currently not conducting current.";
+    }
+
+    if (Math.Abs(target.Current) > 0.000001f)
+    {
+        return objectName +
+               " has current flowing through it.";
+    }
+
+    return objectName +
+           " is not currently showing significant current flow.";
+}
+private string BuildObjectPowerStateAnswer(
+    SparkAIElectronicObjectSnapshot target,
+    string objectName)
+{
+    if (!target.Active)
+    {
+        return objectName +
+               " is currently inactive.";
+    }
+
+    if (!target.ElectricalEnabled)
+    {
+        return objectName +
+               " is currently electrically disabled.";
+    }
+
+    if (Math.Abs(target.Voltage) > 0.000001f ||
+        Math.Abs(target.Current) > 0.000001f)
+    {
+        return objectName +
+               " is electrically active. " +
+               "Voltage is " +
+               FormatValue(target.Voltage, "V") +
+               " and current is " +
+               FormatValue(target.Current, "A") +
+               ".";
+    }
+
+    return objectName +
+           " is active, but it is not currently receiving significant electrical energy.";
+}
+
+private string BuildObjectActivityAnswer(
+    SparkAIElectronicObjectSnapshot target,
+    string objectName)
+{
+    if (!target.Active)
+    {
+        return objectName +
+               " is currently inactive.";
+    }
+
+    if (!target.ElectricalEnabled)
+    {
+        return objectName +
+               " is active, but its electrical function is disabled.";
+    }
+
+    return objectName +
+           " is currently active.";
+}
+
+private string BuildObjectProblemAnswer(
+    SparkAIElectronicObjectSnapshot target,
+    string objectName,
+    SparkAIUnifiedObservation observation)
+{
+    if (!target.Active)
+    {
+        return objectName +
+               " is inactive, so it cannot operate right now.";
+    }
+
+    if (!target.ElectricalEnabled)
+    {
+        return objectName +
+               " is electrically disabled.";
+    }
+
+    if (Math.Abs(target.Voltage) < 0.000001f &&
+        Math.Abs(target.Current) < 0.000001f)
+    {
+        if (!observation.World.Level.HasValidPowerSource)
         {
-            if (!initialized)
-            {
-                Debug.LogWarning(
-                    "[Spark AI Question] " +
-                    "Controller is not initialized.",
-                    this);
-
-                return;
-            }
-
-            if (!allowQuestions)
-                return;
-
-            SparkAIPlayerQuestion question =
-                SparkAIPlayerQuestion.Create(text);
-
-            if (!question.IsValid)
-            {
-                Debug.LogWarning(
-                    "[Spark AI Question] " +
-                    "Player question was empty.",
-                    this);
-
-                return;
-            }
-
-            if (logQuestions)
-            {
-                Debug.Log(
-                    "[SPARK AI PLAYER QUESTION] " +
-                    question.Text,
-                    this);
-            }
-
-            QuestionAsked?.Invoke(question);
-
-            string answer =
-                BuildAnswer(question.Text);
-
-            if (string.IsNullOrWhiteSpace(answer))
-            {
-                answer =
-                    "I could not determine the answer from the current circuit state.";
-            }
-
-            AnswerCreated?.Invoke(answer);
-
-            if (logQuestions)
-            {
-                Debug.Log(
-                    "[SPARK AI ANSWER] " +
-                    answer,
-                    this);
-            }
-
-            if (speakAnswers)
-            {
-                SpeakAnswer(answer);
-            }
+            return objectName +
+                   " has no significant voltage or current because the circuit does not currently have a valid power source.";
         }
+
+        if (!observation.World.Level.ClosedReturn)
+        {
+            return objectName +
+                   " has no significant current because the circuit does not currently have a complete return path.";
+        }
+
+        return objectName +
+               " currently has no significant voltage or current. Check its connections and the surrounding circuit.";
+    }
+
+    if (Math.Abs(target.Voltage) > 0.000001f &&
+        Math.Abs(target.Current) < 0.000001f)
+    {
+        return objectName +
+               " has " +
+               FormatValue(target.Voltage, "V") +
+               " across it, but essentially no current is flowing.";
+    }
+
+    if (Math.Abs(target.Current) > 0.000001f)
+    {
+        return objectName +
+               " does have current flowing through it. Its current electrical state does not indicate that it is completely inactive.";
+    }
+
+    return objectName +
+           " is electrically active, but I need more information about its behavior to identify a specific problem.";
+}
+
+private string BuildObjectGeneralAnswer(
+    SparkAIElectronicObjectSnapshot target,
+    string objectName)
+{
+    return objectName +
+           " is currently " +
+           (target.Active ? "active" : "inactive") +
+           ", with " +
+           FormatValue(target.Voltage, "V") +
+           ", " +
+           FormatValue(target.Current, "A") +
+           ", and approximately " +
+           FormatValue(target.Power, "W") +
+           ".";
+}
+
+
+
+private string BuildTerminalAnswer(
+    string question,
+    SparkAIUnifiedObservation observation)
+{
+    SparkAITerminalSnapshot terminal;
+
+    if (!SparkAITerminalQuestionResolver.TryFindTerminal(
+            question,
+            observation.World,
+            out terminal))
+    {
+        return
+            "I could not identify the specific terminal you are asking about.";
+    }
+
+    string terminalName =
+        string.IsNullOrWhiteSpace(terminal.Name)
+            ? "That terminal"
+            : terminal.Name;
+
+    /*
+     * Find every connection involving this terminal.
+     */
+    int connectionCount = 0;
+
+    SparkAIConnectionSnapshot matchingConnection =
+        default;
+
+    for (int i = 0;
+         i < observation.World.Connections.Count;
+         i++)
+    {
+        SparkAIConnectionSnapshot connection =
+            observation.World.Connections[i];
+
+        if (connection.SourceTerminalInstanceId ==
+            terminal.InstanceId)
+        {
+            connectionCount++;
+
+            if (connectionCount == 1)
+                matchingConnection = connection;
+        }
+
+        else if (connection.TargetTerminalInstanceId ==
+                 terminal.InstanceId)
+        {
+            connectionCount++;
+
+            if (connectionCount == 1)
+                matchingConnection = connection;
+        }
+    }
+
+    /*
+     * No connection.
+     */
+    if (connectionCount == 0)
+    {
+        return terminalName +
+               " is currently not connected to another terminal.";
+    }
+
+    /*
+     * One connection.
+     */
+    if (connectionCount == 1)
+    {
+        string connectedName =
+            GetOtherTerminalName(
+                matchingConnection,
+                terminal.InstanceId);
+
+        if (string.IsNullOrWhiteSpace(connectedName))
+        {
+            return terminalName +
+                   " has one connection.";
+        }
+
+        return terminalName +
+               " is connected to " +
+               connectedName +
+               ".";
+    }
+
+    /*
+     * Multiple connections.
+     */
+    return terminalName +
+           " currently has " +
+           connectionCount +
+           " connections.";
+}
+
+private string GetOtherTerminalName(
+    SparkAIConnectionSnapshot connection,
+    int terminalInstanceId)
+{
+    if (connection.SourceTerminalInstanceId ==
+        terminalInstanceId)
+    {
+        return connection.TargetTerminalName;
+    }
+
+    if (connection.TargetTerminalInstanceId ==
+        terminalInstanceId)
+    {
+        return connection.SourceTerminalName;
+    }
+
+    return string.Empty;
+}
 
         // =========================================================
         // ANSWER ENGINE
         // =========================================================
-
-  private string BuildAnswer(string question)
+private string BuildAnswer(string question)
 {
     SparkAIQuestionIntentResult intent =
         SparkAIQuestionIntentResolver.Resolve(question);
@@ -179,13 +629,92 @@ namespace ProjectSpark.AI
     string normalizedQuestion =
         Normalize(question);
 
+
     /*
      * ============================================================
-     * LEVEL STATE HAS HIGHEST PRIORITY
+     * 1. SPECIFIC TERMINAL QUESTION
      * ============================================================
      *
-     * If the authoritative level is already complete,
-     * do not continue explaining an old open-circuit state.
+     * Terminal questions must be checked before general polarity,
+     * circuit-path, or knowledge questions.
+     *
+     * Examples:
+     *
+     * "What is connected to LED_1 anode?"
+     * "What is connected to Resistor_1K?"
+     * "Where does this terminal go?"
+     */
+    bool looksLikeTerminalQuestion =
+        ContainsAny(
+            normalizedQuestion,
+            "terminal",
+            "anode",
+            "cathode",
+            "positive side",
+            "negative side",
+            "positive terminal",
+            "negative terminal",
+            "pin",
+            "connected to",
+            "connect to",
+            "where does",
+            "where is connected");
+
+
+    if (looksLikeTerminalQuestion)
+    {
+        SparkAITerminalSnapshot terminalTarget;
+
+        if (SparkAITerminalQuestionResolver.TryFindTerminal(
+                question,
+                observation.World,
+                out terminalTarget))
+        {
+            Debug.Log(
+                "[SPARK AI TERMINAL DEBUG] " +
+                "Terminal=" + terminalTarget.Name +
+                " | Owner=" + terminalTarget.OwnerName +
+                " | Polarity=" + terminalTarget.Polarity +
+                " | EffectivePolarity=" + terminalTarget.EffectivePolarity +
+                " | InstanceID=" + terminalTarget.InstanceId);
+
+            return BuildTerminalAnswer(
+                question,
+                observation);
+        }
+    }
+
+
+    /*
+     * ============================================================
+     * 2. SPECIFIC ELECTRONIC OBJECT QUESTION
+     * ============================================================
+     *
+     * Resolve the actual live object before general knowledge.
+     *
+     * Examples:
+     *
+     * "Why isn't LED_1 working?"
+     * "What voltage is across Resistor_1K?"
+     * "What is wrong with Switch_1?"
+     */
+    SparkAIElectronicObjectSnapshot objectTarget;
+
+    bool hasObjectTarget =
+        SparkAIObjectQuestionResolver.TryFindObject(
+            question,
+            observation.World,
+            out objectTarget);
+
+
+    /*
+     * ============================================================
+     * 3. LEVEL COMPLETION HAS HIGHEST PRIORITY
+     * ============================================================
+     *
+     * Once the authoritative level is completed, do not allow an
+     * old context such as OpenCircuit to override the completed
+     * state.
      */
     if (observation.World.Level.Completed)
     {
@@ -194,14 +723,72 @@ namespace ProjectSpark.AI
             observation);
     }
 
+
     /*
      * ============================================================
-     * QUESTION INTENT
+     * 4. OBJECT-AWARE QUESTIONS
+     * ============================================================
+     *
+     * These must use live SparkAIWorld values.
+     */
+    if (hasObjectTarget &&
+        ContainsAny(
+            normalizedQuestion,
+            "why",
+            "working",
+            "work",
+            "wrong",
+            "problem",
+            "voltage",
+            "current",
+            "power",
+            "receiving",
+            "powered",
+            "powering",
+            "conducting",
+            "on",
+            "off"))
+    {
+        return BuildObjectAnswer(
+            question,
+            observation);
+    }
+    /*
+ * ============================================================
+ * 5. GENERAL ELECTRONICS KNOWLEDGE
+ * ============================================================
+ *
+ * Knowledge is checked only after specific live object and
+ * terminal questions.
+ *
+ * The KnowledgeReasoner combines:
+ *
+ * - stable electronics knowledge
+ * - current Project Spark world state
+ *
+ * It does not modify the simulation.
+ */
+SparkAIKnowledgeReasoningResult knowledgeResult;
+
+if (knowledgeReasoner != null &&
+    knowledgeReasoner.TryExplainQuestion(
+        question,
+        out knowledgeResult))
+{
+    return BuildKnowledgeReasonedAnswer(
+        knowledgeResult);
+}
+
+
+    /*
+     * ============================================================
+     * 6. QUESTION INTENT
      * ============================================================
      *
      * The intent resolver determines what the player is asking.
-     * The actual answer still comes from the authoritative
-     * Project Spark world state.
+     *
+     * The answer still comes from authoritative Project Spark
+     * runtime state.
      */
     switch (intent.Intent)
     {
@@ -281,18 +868,22 @@ namespace ProjectSpark.AI
         default:
 
             /*
-             * Fallback to the old keyword checks.
+             * ====================================================
+             * FALLBACK KEYWORD CHECKS
+             * ====================================================
              *
-             * This keeps the system robust if the intent resolver
+             * Keeps the system robust when the intent resolver
              * cannot confidently classify an unusual question.
              */
 
-            if (IsAskingWhyNotWorking(normalizedQuestion))
+            if (IsAskingWhyNotWorking(
+                    normalizedQuestion))
             {
                 return BuildWhyNotWorkingAnswer(
                     observation,
                     context);
             }
+
 
             if (ContainsAny(
                     normalizedQuestion,
@@ -309,6 +900,7 @@ namespace ProjectSpark.AI
                     context);
             }
 
+
             if (ContainsAny(
                     normalizedQuestion,
                     "voltage",
@@ -318,6 +910,7 @@ namespace ProjectSpark.AI
                 return BuildVoltageAnswer(
                     observation);
             }
+
 
             if (ContainsAny(
                     normalizedQuestion,
@@ -330,6 +923,7 @@ namespace ProjectSpark.AI
                     observation);
             }
 
+
             if (ContainsAny(
                     normalizedQuestion,
                     "power",
@@ -340,6 +934,7 @@ namespace ProjectSpark.AI
                     observation);
             }
 
+
             if (ContainsAny(
                     normalizedQuestion,
                     "source",
@@ -349,6 +944,7 @@ namespace ProjectSpark.AI
                 return BuildSourceAnswer(
                     observation);
             }
+
 
             if (ContainsAny(
                     normalizedQuestion,
@@ -361,6 +957,7 @@ namespace ProjectSpark.AI
                 return BuildPolarityAnswer(
                     observation);
             }
+
 
             if (ContainsAny(
                     normalizedQuestion,
@@ -375,6 +972,7 @@ namespace ProjectSpark.AI
                     context);
             }
 
+
             if (ContainsAny(
                     normalizedQuestion,
                     "switch",
@@ -387,10 +985,47 @@ namespace ProjectSpark.AI
                     context);
             }
 
+
             return BuildGeneralAnswer(
                 observation,
                 context);
     }
+}
+
+private string BuildKnowledgeReasonedAnswer(
+    SparkAIKnowledgeReasoningResult result)
+{
+    if (!result.IsValid)
+        return string.Empty;
+
+    string answer =
+        result.Definition;
+
+    if (string.IsNullOrWhiteSpace(answer))
+        answer = result.Summary;
+
+    if (string.IsNullOrWhiteSpace(answer))
+        return string.Empty;
+
+    if (result.Observations != null &&
+        result.Observations.Count > 0)
+    {
+        for (int i = 0;
+             i < result.Observations.Count;
+             i++)
+        {
+            string observation =
+                result.Observations[i];
+
+            if (string.IsNullOrWhiteSpace(observation))
+                continue;
+
+            answer += " " +
+                      observation.Trim();
+        }
+    }
+
+    return answer.Trim();
 }
 
         private string BuildNextStepAnswer(
@@ -954,16 +1589,20 @@ namespace ProjectSpark.AI
 
         private void SpeakAnswer(string answer)
         {
+            if (!speakAnswers)
+                return;
+
             if (voiceController == null)
                 return;
 
-            /*
-             * Uses the arbitrary-text method we added to
-             * SparkAIVoiceController.
-             */
+            if (string.IsNullOrWhiteSpace(answer))
+                return;
+
             voiceController.SpeakText(
                 answer,
                 SparkAIVoiceTextType.Explanation);
-        }
+        }          
+
+
     }
 }
