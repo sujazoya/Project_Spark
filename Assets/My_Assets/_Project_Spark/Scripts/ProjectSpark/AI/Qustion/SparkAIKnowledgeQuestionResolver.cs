@@ -9,7 +9,8 @@ namespace ProjectSpark.AI
         Explanation,
         Example,
         Misconception,
-        Safety
+        Safety,
+        Measurement
     }
 
     public readonly struct SparkAIKnowledgeQuestionResult
@@ -38,24 +39,62 @@ namespace ProjectSpark.AI
     }
 
     /// <summary>
-    /// Determines what kind of stable knowledge the player is asking for.
-    ///
-    /// This class does NOT search the knowledge database.
-    /// It only determines the requested answer type.
+    /// Determines the type of stable knowledge requested by the player.
+    /// Does not search the knowledge database.
     /// </summary>
     public static class SparkAIKnowledgeQuestionResolver
     {
+
+        private static bool IsMeasurementQuestion(string question)
+{
+    if (string.IsNullOrWhiteSpace(question))
+        return false;
+
+    string q = question.Trim().ToLowerInvariant();
+
+    // Explicit measurement wording.
+    if (q.Contains("measure") ||
+        q.Contains("measured") ||
+        q.Contains("measuring") ||
+        q.Contains("measurement") ||
+        q.Contains("multimeter") ||
+        q.Contains("voltmeter") ||
+        q.Contains("ammeter") ||
+        q.Contains("ohmmeter") ||
+        q.Contains("continuity"))
+    {
+        return true;
+    }
+
+    // Testing a particular component or electrical quantity.
+    if ((q.Contains("test") ||
+         q.Contains("check")) &&
+        (q.Contains("led") ||
+         q.Contains("source") ||
+         q.Contains("battery") ||
+         q.Contains("voltage") ||
+         q.Contains("current") ||
+         q.Contains("resistance") ||
+         q.Contains("resistor") ||
+         q.Contains("wire")))
+    {
+        return true;
+    }
+
+    return false;
+}
         public static SparkAIKnowledgeQuestionResult Resolve(
             string question)
         {
             if (string.IsNullOrWhiteSpace(question))
                 return SparkAIKnowledgeQuestionResult.Invalid();
 
-            string normalized =
-                Normalize(question);
+            string normalized = Normalize(question);
 
             if (string.IsNullOrEmpty(normalized))
                 return SparkAIKnowledgeQuestionResult.Invalid();
+
+                
 
             // ========================================================
             // SAFETY
@@ -69,7 +108,6 @@ namespace ProjectSpark.AI
                     "is it dangerous",
                     "is this dangerous",
                     "is that dangerous",
-                    "is this dangerous",
                     "danger",
                     "dangerous",
                     "safety",
@@ -79,8 +117,7 @@ namespace ProjectSpark.AI
                     "will this damage",
                     "harmful"))
             {
-                return new SparkAIKnowledgeQuestionResult(
-                    true,
+                return Create(
                     SparkAIKnowledgeQuestionType.Safety,
                     0.98f);
             }
@@ -106,10 +143,117 @@ namespace ProjectSpark.AI
                     "incorrect idea",
                     "incorrect assumption"))
             {
-                return new SparkAIKnowledgeQuestionResult(
-                    true,
+                return Create(
                     SparkAIKnowledgeQuestionType.Misconception,
                     0.97f);
+            }
+
+            // ========================================================
+// CALCULATION
+// Check before general explanation phrases.
+// ========================================================
+
+if (ContainsAny(
+        normalized,
+        "calculate current",
+        "calculate voltage",
+        "calculate resistance",
+        "calculate power",
+        "calculate using ohm's law",
+        "calculate using ohms law",
+        "calculate current from",
+        "calculate voltage from",
+        "calculate resistance from",
+        "work out current",
+        "work out voltage",
+        "work out resistance",
+        "solve ohm's law",
+        "ohm's law calculation",
+        "ohms law calculation"))
+{
+    return Create(
+        SparkAIKnowledgeQuestionType.Measurement,
+        0.98f);
+}
+
+           // ========================================================
+            // MEASUREMENT
+            // Check before general explanation phrases such as
+            // "how is" and "how do".
+            // ========================================================
+
+            if (ContainsAny(
+                    normalized,
+
+                    // General measurement wording
+                    "measure",
+                    "measured",
+                    "measuring",
+                    "measurement",
+                    "multimeter",
+                    "voltmeter",
+                    "ammeter",
+                    "ohmmeter",
+                    "continuity",
+
+                    // Testing or checking electrical quantities/components
+                    "test led",
+                    "check led",
+                    "test source",
+                    "check source",
+                    "test battery",
+                    "check battery",
+                    "test resistor",
+                    "check resistor",
+                    "test wire",
+                    "check wire",
+
+                    // Existing current measurement phrases
+                    "how is current measured",
+                    "how do i measure current",
+                    "how to measure current",
+                    "how can i measure current",
+                    "how can current be measured",
+                    "how is electric current measured",
+                    "how do you measure current",
+
+                    // Existing voltage measurement phrases
+                    "how is voltage measured",
+                    "how do i measure voltage",
+                    "how to measure voltage",
+                    "how can i measure voltage",
+                    "how can voltage be measured",
+                    "how do you measure voltage",
+
+                    // Existing resistance measurement phrases
+                    "how is resistance measured",
+                    "how do i measure resistance",
+                    "how to measure resistance",
+                    "how do you measure resistance",
+
+                    // Existing power measurement phrases
+                    "how is power measured",
+                    "how do i measure power",
+                    "how to measure power",
+                    "how do you measure power",
+
+                    // Instrument questions
+                    "what instrument measures current",
+                    "what instrument measures voltage",
+                    "what instrument measures resistance",
+                    "what measures current",
+                    "what measures voltage",
+                    "what measures resistance",
+                    "which meter measures current",
+                    "which meter measures voltage",
+                    "which meter measures resistance",
+                    "how do i use a multimeter",
+                    "how to use a multimeter",
+                    "how do you use a multimeter"))
+            {
+                return Create(
+                    SparkAIKnowledgeQuestionType.Measurement,
+                    0.98f);
             }
 
             // ========================================================
@@ -130,8 +274,7 @@ namespace ProjectSpark.AI
                     "practical example",
                     "show a practical example"))
             {
-                return new SparkAIKnowledgeQuestionResult(
-                    true,
+                return Create(
                     SparkAIKnowledgeQuestionType.Example,
                     0.96f);
             }
@@ -168,8 +311,7 @@ namespace ProjectSpark.AI
                     "what happens if",
                     "what happens to"))
             {
-                return new SparkAIKnowledgeQuestionResult(
-                    true,
+                return Create(
                     SparkAIKnowledgeQuestionType.Explanation,
                     0.95f);
             }
@@ -192,8 +334,7 @@ namespace ProjectSpark.AI
                     "tell me what",
                     "can you explain"))
             {
-                return new SparkAIKnowledgeQuestionResult(
-                    true,
+                return Create(
                     SparkAIKnowledgeQuestionType.Definition,
                     0.92f);
             }
@@ -202,30 +343,33 @@ namespace ProjectSpark.AI
             // NATURAL FALLBACK
             // ========================================================
 
-            return new SparkAIKnowledgeQuestionResult(
-                true,
+            return Create(
                 SparkAIKnowledgeQuestionType.Definition,
                 0.50f);
         }
 
-        // ============================================================
-        // HELPERS
-        // ============================================================
+        
+
+        private static SparkAIKnowledgeQuestionResult Create(
+            SparkAIKnowledgeQuestionType type,
+            float confidence)
+        {
+            return new SparkAIKnowledgeQuestionResult(
+                true,
+                type,
+                confidence);
+        }
 
         private static bool ContainsAny(
             string text,
             params string[] phrases)
         {
-            if (string.IsNullOrEmpty(text) ||
-                phrases == null)
-            {
+            if (string.IsNullOrEmpty(text) || phrases == null)
                 return false;
-            }
 
             for (int i = 0; i < phrases.Length; i++)
             {
-                string phrase =
-                    phrases[i];
+                string phrase = phrases[i];
 
                 if (string.IsNullOrWhiteSpace(phrase))
                     continue;
@@ -241,15 +385,16 @@ namespace ProjectSpark.AI
             return false;
         }
 
-        private static string Normalize(
-            string value)
+        private static string Normalize(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return string.Empty;
 
-            return value
-                .Trim()
-                .ToLowerInvariant();
+            return value.Trim().ToLowerInvariant()
+                .Replace('\u2018', '\'')
+                .Replace('\u2019', '\'')
+                .Replace('\u201C', '"')
+                .Replace('\u201D', '"');
         }
     }
 }

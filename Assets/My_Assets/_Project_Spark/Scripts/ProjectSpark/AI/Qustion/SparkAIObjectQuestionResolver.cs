@@ -4,13 +4,45 @@ using System.Collections.Generic;
 namespace ProjectSpark.AI
 {
     /// <summary>
-    /// Finds a likely Project Spark object name inside a player question.
+    /// Resolves a player question to an electronic object in the
+    /// current Project Spark world snapshot.
+    ///
+    /// Supports:
+    /// - Exact scene-object names.
+    /// - Names containing separators such as LED_1 or Resistor-1.
+    /// - Generic component names such as LED, resistor, and switch.
+    /// - Common aliases such as battery / power supply.
     ///
     /// This class does not inspect or modify gameplay state.
-    /// It only extracts a possible object reference from the question.
     /// </summary>
     public static class SparkAIObjectQuestionResolver
     {
+        private const int ExactNameScore = 100;
+        private const int CompactNameScore = 90;
+        private const int TokenMatchScore = 70;
+        private const int ComponentAliasScore = 40;
+
+        private static readonly string[][] ComponentAliases =
+        {
+            new[] { "led", "light emitting diode" },
+            new[] { "resistor", "resistance component" },
+            new[] { "switch" },
+            new[] { "battery", "cell" },
+            new[] { "power supply", "powersupply", "supply", "source" },
+            new[] { "motor", "dc motor" },
+            new[] { "lamp", "bulb", "light bulb" },
+            new[] { "diode" },
+            new[] { "capacitor", "condenser" },
+            new[] { "inductor", "coil" },
+            new[] { "transistor" },
+            new[] { "fuse" },
+            new[] { "wire", "cable", "lead" },
+            new[] { "multimeter", "voltmeter", "ammeter" },
+            new[] { "potentiometer", "variable resistor" },
+            new[] { "transformer" },
+            new[] { "relay" }
+        };
+
         public static bool TryFindObject(
             string question,
             SparkAIWorldSnapshot world,
@@ -27,13 +59,15 @@ namespace ProjectSpark.AI
                 return false;
             }
 
-            string normalizedQuestion =
-                Normalize(question);
+            string normalizedQuestion = Normalize(question);
 
-            SparkAIElectronicObjectSnapshot bestMatch =
-                default;
+            if (normalizedQuestion.Length == 0)
+                return false;
+
+            SparkAIElectronicObjectSnapshot bestMatch = default;
 
             int bestScore = 0;
+            int bestMatchCount = 0;
 
             for (int i = 0;
                  i < world.ElectronicObjects.Count;
@@ -45,23 +79,46 @@ namespace ProjectSpark.AI
                 if (string.IsNullOrWhiteSpace(candidate.Name))
                     continue;
 
-                string objectName =
-                    Normalize(candidate.Name);
+                string objectName = Normalize(candidate.Name);
 
-                int score =
-                    CalculateMatchScore(
-                        normalizedQuestion,
-                        objectName);
+                if (objectName.Length == 0)
+                    continue;
+
+                int score = CalculateMatchScore(
+                    normalizedQuestion,
+                    objectName);
+
+                if (score <= 0)
+                    continue;
 
                 if (score > bestScore)
                 {
                     bestScore = score;
                     bestMatch = candidate;
+                    bestMatchCount = 1;
+                }
+                else if (score == bestScore)
+                {
+                    bestMatchCount++;
                 }
             }
 
+            /*
+             * A generic name such as "the LED" must not arbitrarily
+             * select one of multiple equally matching LEDs.
+             *
+             * Exact and compact full-name matches are preferred.
+             * Generic ambiguous matches return false so another
+             * component is never silently selected.
+             */
             if (bestScore <= 0)
                 return false;
+
+            if (bestMatchCount > 1 &&
+                bestScore < CompactNameScore)
+            {
+                return false;
+            }
 
             result = bestMatch;
             return true;
@@ -77,62 +134,99 @@ namespace ProjectSpark.AI
                 return 0;
             }
 
-            /*
-             * Exact object name.
-             *
-             * Example:
-             * "why isn't led_1 working"
-             */
-            if (question.Contains(objectName))
-                return 100;
+            // 1. Exact normalized object name.
+            // Example: "is led 1 working" matches "LED 1".
+            if (ContainsPhrase(question, objectName))
+                return ExactNameScore;
 
-            /*
-             * Remove common separators so names such as:
-             *
-             * LED_1
-             * LED-1
-             * LED 1
-             *
-             * can still be recognized.
-             */
-            string compactQuestion =
-                RemoveSeparators(question);
+            // 2. Ignore common separators.
+            // LED_1, LED-1 and LED 1 become LED1.
+            string compactQuestion = RemoveSeparators(question);
+            string compactObject = RemoveSeparators(objectName);
 
-            string compactObject =
-                RemoveSeparators(objectName);
+            if (compactObject.Length >= 2 &&
+                compactQuestion.Contains(compactObject))
+            {
+                return CompactNameScore;
+            }
 
-            if (compactQuestion.Contains(compactObject))
-                return 90;
+            // 3. Match all meaningful words in a multi-word object name.
+            string[] objectTokens = objectName.Split(
+                new[] { ' ' },
+                StringSplitOptions.RemoveEmptyEntries);
 
-            /*
-             * Token-based fallback.
-             */
-            string[] objectTokens =
-                objectName.Split(
-                    new[] { ' ', '_', '-', '.', '/' },
-                    StringSplitOptions.RemoveEmptyEntries);
-
+            int meaningfulTokens = 0;
             int matchedTokens = 0;
 
             for (int i = 0; i < objectTokens.Length; i++)
             {
-                string token =
-                    objectTokens[i];
+                string token = objectTokens[i];
 
+                // Ignore short numeric suffixes such as "1".
                 if (token.Length < 2)
                     continue;
 
-                if (question.Contains(token))
+                meaningfulTokens++;
+
+                if (ContainsPhrase(question, token))
                     matchedTokens++;
             }
 
-            if (matchedTokens == objectTokens.Length &&
-                matchedTokens > 0)
+            if (meaningfulTokens > 0 &&
+                matchedTokens == meaningfulTokens)
             {
-                return 70;
+                return TokenMatchScore;
+            }
+
+            // 4. Generic component aliases.
+            // Example: "the LED" matches an object named "LED_1".
+            // It will not automatically choose between multiple LEDs.
+            for (int i = 0; i < ComponentAliases.Length; i++)
+            {
+                string[] aliases = ComponentAliases[i];
+
+                bool questionMentionsAlias = false;
+
+                for (int j = 0; j < aliases.Length; j++)
+                {
+                    string alias = Normalize(aliases[j]);
+
+                    if (ContainsPhrase(question, alias))
+                    {
+                        questionMentionsAlias = true;
+                        break;
+                    }
+                }
+
+                if (!questionMentionsAlias)
+                    continue;
+
+                for (int j = 0; j < aliases.Length; j++)
+                {
+                    string alias = Normalize(aliases[j]);
+
+                    if (ContainsPhrase(objectName, alias))
+                        return ComponentAliasScore;
+                }
             }
 
             return 0;
+        }
+
+        private static bool ContainsPhrase(
+            string text,
+            string phrase)
+        {
+            if (string.IsNullOrWhiteSpace(text) ||
+                string.IsNullOrWhiteSpace(phrase))
+            {
+                return false;
+            }
+
+            string normalizedText = " " + Normalize(text) + " ";
+            string normalizedPhrase = " " + Normalize(phrase) + " ";
+
+            return normalizedText.Contains(normalizedPhrase);
         }
 
         private static string Normalize(string value)
@@ -142,7 +236,23 @@ namespace ProjectSpark.AI
 
             return value
                 .Trim()
-                .ToLowerInvariant();
+                .ToLowerInvariant()
+                .Replace("_", " ")
+                .Replace("-", " ")
+                .Replace(".", " ")
+                .Replace("/", " ")
+                .Replace("\\", " ")
+                .Replace("(", " ")
+                .Replace(")", " ")
+                .Replace("[", " ")
+                .Replace("]", " ")
+                .Replace(",", " ")
+                .Replace(":", " ")
+                .Replace(";", " ")
+                .Replace("?", " ")
+                .Replace("!", " ")
+                .Replace("'", " ")
+                .Replace("\"", " ");
         }
 
         private static string RemoveSeparators(string value)
@@ -151,11 +261,12 @@ namespace ProjectSpark.AI
                 return string.Empty;
 
             return value
+                .Replace(" ", string.Empty)
                 .Replace("_", string.Empty)
                 .Replace("-", string.Empty)
-                .Replace(" ", string.Empty)
                 .Replace(".", string.Empty)
-                .Replace("/", string.Empty);
+                .Replace("/", string.Empty)
+                .Replace("\\", string.Empty);
         }
     }
 }

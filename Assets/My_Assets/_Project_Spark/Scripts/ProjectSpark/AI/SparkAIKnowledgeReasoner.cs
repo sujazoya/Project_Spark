@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace ProjectSpark.AI
 {
@@ -52,48 +53,36 @@ namespace ProjectSpark.AI
                 knowledgeId,
                 out entry);
         }
+public bool TryExplain(
+    string knowledgeId,
+    out SparkAIKnowledgeReasoningResult result)
+{
+    result = SparkAIKnowledgeReasoningResult.Invalid();
 
-        public bool TryExplain(
-            string knowledgeId,
-            out SparkAIKnowledgeReasoningResult result)
-        {
-            result =
-                SparkAIKnowledgeReasoningResult.Invalid();
+    if (!IsValid)
+        return false;
 
-            if (!IsValid)
-                return false;
+    SparkAIKnowledge.Entry entry;
 
-            SparkAIKnowledge.Entry entry;
+    if (!knowledge.TryGetEntry(knowledgeId, out entry))
+        return false;
 
-            if (!knowledge.TryGetEntry(
-                    knowledgeId,
-                    out entry))
-            {
-                return false;
-            }
+    SparkAIWorldSnapshot snapshot = world.CaptureSnapshot();
 
-            SparkAIWorldSnapshot snapshot =
-                world.CaptureSnapshot();
+    List<string> observations = new List<string>();
+    List<string> teachingPoints = new List<string>();
 
-            List<string> observations =
-                new List<string>();
+    string summary = entry.Definition;
 
-            List<string> teachingPoints =
-                new List<string>();
+    AddLiveContext(
+        entry,
+        snapshot,
+        observations,
+        teachingPoints);
 
-            string summary =
-                entry.Definition;          
-
-            AddLiveContext(
-                entry,
-                snapshot,
-                observations,
-                teachingPoints);
-
-           result =
-    new SparkAIKnowledgeReasoningResult(
+    result = new SparkAIKnowledgeReasoningResult(
         true,
-        knowledgeId,
+        entry.Id,
         entry.Title,
         summary,
         entry.Definition,
@@ -103,10 +92,11 @@ namespace ProjectSpark.AI
         entry.Safety,
         observations,
         teachingPoints,
-        SparkAIKnowledgeQuestionType.Unknown);
+        SparkAIKnowledgeQuestionType.Unknown,
+        entry.Measurement);
 
-            return true;
-        }
+    return true;
+}
 public bool TryExplainQuestion(
     string question,
     out SparkAIKnowledgeReasoningResult result)
@@ -116,21 +106,69 @@ public bool TryExplainQuestion(
     if (!IsValid || string.IsNullOrWhiteSpace(question))
         return false;
 
-    SparkAIKnowledge.Entry entry;
+    SparkAIKnowledgeQuestionResult questionResult =
+        SparkAIKnowledgeQuestionResolver.Resolve(question);
 
-    if (!knowledge.TryFindEntryForQuestion(
-            question,
-            out entry))
+
+       Debug.Log(
+    "[SPARK AI MEASUREMENT DEBUG] Question=" + question +
+    " | Type=" + questionResult.Type);
+
+
+
+    SparkAIKnowledge.Entry entry = null;
+
+    string normalizedQuestion = question.Trim().ToLowerInvariant();
+
+    bool isCalculationQuestion =
+        normalizedQuestion.Contains("calculate") ||
+        normalizedQuestion.Contains("ohm's law") ||
+        normalizedQuestion.Contains("ohms law") ||
+        normalizedQuestion.Contains("from voltage and resistance");
+
+    bool foundEntry = false;
+
+    // Prioritize the specific knowledge entry for measurement questions.
+    if (questionResult.Type == SparkAIKnowledgeQuestionType.Measurement ||
+        isCalculationQuestion)
     {
-        return false;
+        foundEntry = TryResolveMeasurementEntry(
+            question,
+            out entry);
     }
+
+    // Preserve the existing general knowledge matching as a fallback.
+    if (!foundEntry)
+    {
+        foundEntry = knowledge.TryFindEntryForQuestion(
+            question,
+            out entry);
+    }
+
+    if (!foundEntry || entry == null)
+        return false;
+
+
+       /* Debug.Log(
+    "[SPARK AI MEASUREMENT DEBUG] SelectedEntry=" + entry.Id +
+    " | Title=" + entry.Title +
+    " | Measurement=" +
+    (string.IsNullOrWhiteSpace(entry.Measurement)
+        ? "<EMPTY>"
+        : entry.Measurement));*/
 
     if (!TryExplain(entry.Id, out result))
         return false;
 
-    SparkAIKnowledgeQuestionResult questionResult =
-        SparkAIKnowledgeQuestionResolver.Resolve(question);
+        /*Debug.Log(
+    "[SPARK AI MEASUREMENT DEBUG] ResultType=" + questionResult.Type +
+    " | ResultEntry=" + result.KnowledgeId +
+    " | ResultMeasurement=" +
+    (string.IsNullOrWhiteSpace(result.Measurement)
+        ? "<EMPTY>"
+        : result.Measurement));*/
 
+    // Preserve all existing reasoning data, including measurement steps.
     result = new SparkAIKnowledgeReasoningResult(
         result.IsValid,
         result.KnowledgeId,
@@ -143,7 +181,8 @@ public bool TryExplainQuestion(
         result.Safety,
         result.Observations,
         result.TeachingPoints,
-        questionResult.Type);
+        questionResult.Type,
+        result.Measurement);
 
     return true;
 }
@@ -250,6 +289,113 @@ public bool TryExplainQuestion(
 
                     break;
             }
+        }
+
+       
+        private bool TryResolveMeasurementEntry(
+            string question,
+            out SparkAIKnowledge.Entry entry)
+        {
+            entry = null;
+
+            if (string.IsNullOrWhiteSpace(question) || knowledge == null)
+                return false;
+
+            string q = question.Trim().ToLowerInvariant();
+
+            // 1. Ohm's law calculations take priority over component matching.
+            if (q.Contains("calculate current") ||
+                q.Contains("calculate voltage") ||
+                q.Contains("calculate resistance") ||
+                q.Contains("current from voltage") ||
+                q.Contains("voltage and resistance") ||
+                q.Contains("resistance and voltage") ||
+                q.Contains("ohm's law") ||
+                q.Contains("ohms law"))
+            {
+                return knowledge.TryGetEntry("ohms_law", out entry);
+            }
+
+            // 2. LED measurement questions must precede generic voltage matching.
+            if (q.Contains("led") &&
+                (q.Contains("measure") ||
+                q.Contains("test") ||
+                q.Contains("voltage") ||
+                q.Contains("current") ||
+                q.Contains("check")))
+            {
+                return knowledge.TryGetEntry("led", out entry);
+            }
+
+            // 3. Source measurements must precede generic voltage/current matching.
+            if ((q.Contains("source") ||
+                q.Contains("battery") ||
+                q.Contains("power supply")) &&
+                (q.Contains("measure") ||
+                q.Contains("voltage") ||
+                q.Contains("current") ||
+                q.Contains("check") ||
+                q.Contains("test")))
+            {
+                return knowledge.TryGetEntry("electrical_source", out entry);
+            }
+
+            // 4. Resistor resistance measurements.
+            if (q.Contains("resistance") ||
+                q.Contains("measure resistor") ||
+                q.Contains("test resistor") ||
+                q.Contains("ohmmeter"))
+            {
+                return knowledge.TryGetEntry("resistor", out entry);
+            }
+
+            // 5. Wire continuity and open-wire checks.
+            if (q.Contains("open wire") ||
+                q.Contains("test a wire") ||
+                q.Contains("check a wire") ||
+                q.Contains("wire continuity") ||
+                q.Contains("continuity of a wire"))
+            {
+                return knowledge.TryGetEntry("wire", out entry);
+            }
+
+            // 6. Circuit continuity and path measurements.
+            if (q.Contains("open circuit"))
+                return knowledge.TryGetEntry("open_circuit", out entry);
+
+            if (q.Contains("closed circuit"))
+                return knowledge.TryGetEntry("closed_circuit", out entry);
+
+            if (q.Contains("circuit path") ||
+                q.Contains("continuity of the path"))
+            {
+                return knowledge.TryGetEntry("circuit_path", out entry);
+            }
+
+            if (q.Contains("measure a circuit") ||
+                q.Contains("measure the circuit"))
+            {
+                return knowledge.TryGetEntry("circuit", out entry);
+            }
+
+            // 7. Generic current measurement.
+            if (q.Contains("current") ||
+                q.Contains("ammeter") ||
+                q.Contains("measure amps") ||
+                q.Contains("measure amperes"))
+            {
+                return knowledge.TryGetEntry("current", out entry);
+            }
+
+            // 8. Generic voltage measurement.
+            if (q.Contains("voltage") ||
+                q.Contains("voltmeter") ||
+                q.Contains("measure volts"))
+            {
+                return knowledge.TryGetEntry("voltage", out entry);
+            }
+
+            return false;
         }
 
         private static void AddCircuitContext(
@@ -594,49 +740,54 @@ public bool TryExplainQuestion(
 
         public SparkAIKnowledgeQuestionType QuestionType { get; }
 
-       public SparkAIKnowledgeReasoningResult(
-    bool isValid,
-    string knowledgeId,
-    string title,
-    string summary,
-    string definition,
-    string explanation,
-    string example,
-    string misconception,
-    string safety,
-    IReadOnlyList<string> observations,
-    IReadOnlyList<string> teachingPoints,
-    SparkAIKnowledgeQuestionType questionType)
-{
-    IsValid = isValid;
-    KnowledgeId = knowledgeId;
-    Title = title;
-    Summary = summary;
-    Definition = definition;
-    Explanation = explanation;
-    Example = example;
-    Misconception = misconception;
-    Safety = safety;
-    Observations = observations;
-    TeachingPoints = teachingPoints;
-    QuestionType = questionType;
-}
+        public string Measurement { get; }
 
-       public static SparkAIKnowledgeReasoningResult Invalid()
-{
-    return new SparkAIKnowledgeReasoningResult(
-        false,
-        string.Empty,
-        string.Empty,
-        string.Empty,
-        string.Empty,
-        string.Empty,
-        string.Empty,
-        string.Empty,
-        string.Empty,
-        null,
-        null,
-        SparkAIKnowledgeQuestionType.Unknown);
-}
+            public SparkAIKnowledgeReasoningResult(
+            bool isValid,
+            string knowledgeId,
+            string title,
+            string summary,
+            string definition,
+            string explanation,
+            string example,
+            string misconception,
+            string safety,
+            IReadOnlyList<string> observations,
+            IReadOnlyList<string> teachingPoints,
+            SparkAIKnowledgeQuestionType questionType,
+            string measurement = "")
+        {
+            IsValid = isValid;
+            KnowledgeId = knowledgeId;
+            Title = title;
+            Summary = summary;
+            Definition = definition;
+            Explanation = explanation;
+            Example = example;
+            Misconception = misconception;
+            Safety = safety;
+            Observations = observations;
+            TeachingPoints = teachingPoints;
+            QuestionType = questionType;
+            Measurement = measurement;
+        }
+
+        public static SparkAIKnowledgeReasoningResult Invalid()
+        {
+            return new SparkAIKnowledgeReasoningResult(
+                false,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                null,
+                null,
+                SparkAIKnowledgeQuestionType.Unknown,
+                string.Empty);
+        }
     }
 }

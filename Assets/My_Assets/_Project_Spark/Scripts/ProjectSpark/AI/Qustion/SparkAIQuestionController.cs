@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace ProjectSpark.AI
 {
@@ -90,27 +92,20 @@ namespace ProjectSpark.AI
 
                 return;
             }
-            if (knowledge != null && world != null)
+           if (knowledge != null && world != null)
             {
                 knowledgeReasoner =
                     new SparkAIKnowledgeReasoner(
                         knowledge,
                         world);
             }
-                            if (knowledge != null && world != null)
-                {
-                    knowledgeReasoner =
-                        new SparkAIKnowledgeReasoner(
-                            knowledge,
-                            world);
-                }
-                else
-                {
-                    Debug.LogWarning(
-                        "[SPARK AI QUESTION] Knowledge or World is not assigned. " +
-                        "Knowledge reasoning will be unavailable.",
-                        this);
-                }
+            else
+            {
+                Debug.LogWarning(
+                    "[SPARK AI QUESTION] Knowledge or World is not assigned. " +
+                    "Knowledge reasoning will be unavailable.",
+                    this);
+            }
 
             initialized = true;
         }
@@ -155,6 +150,243 @@ namespace ProjectSpark.AI
     SpeakAnswer(answer);
 }
 
+
+private bool TryBuildOhmsLawCalculationAnswer(
+    string question,
+    out string answer)
+{
+    answer = string.Empty;
+
+    if (string.IsNullOrWhiteSpace(question))
+        return false;
+
+    string normalized = Normalize(question);
+
+    // Identify the quantity the player wants to calculate.
+    bool asksCurrent = ContainsAny(
+        normalized,
+        "calculate current",
+        "calculate the current",
+        "find current",
+        "find the current",
+        "work out current",
+        "solve for current",
+        "current from voltage",
+        "how much current",
+        "what is the current",
+        "current through",
+        "current flowing");
+
+    bool asksVoltage = ContainsAny(
+        normalized,
+        "calculate voltage",
+        "calculate the voltage",
+        "find voltage",
+        "find the voltage",
+        "work out voltage",
+        "solve for voltage",
+        "voltage from current",
+        "what is the voltage",
+        "voltage across");
+
+    bool asksResistance = ContainsAny(
+        normalized,
+        "calculate resistance",
+        "calculate the resistance",
+        "find resistance",
+        "find the resistance",
+        "work out resistance",
+        "solve for resistance",
+        "resistance from voltage",
+        "what is the resistance");
+
+    // Handle questions phrased as:
+    // "How do I calculate voltage using Ohm's law?"
+    if (ContainsAny(
+            normalized,
+            "calculate",
+            "calculate the",
+            "work out",
+            "solve for"))
+    {
+        if (!asksCurrent && normalized.Contains("current"))
+            asksCurrent = true;
+
+        if (!asksVoltage && normalized.Contains("voltage"))
+            asksVoltage = true;
+
+        if (!asksResistance && normalized.Contains("resistance"))
+            asksResistance = true;
+    }
+
+    if (!asksCurrent && !asksVoltage && !asksResistance)
+        return false;
+
+    // Extract explicit numerical values and their units.
+    Match voltageMatch = Regex.Match(
+        question,
+        @"(?<![\w.])(\d+(?:\.\d+)?)\s*(?:V\b|volts?\b)",
+        RegexOptions.IgnoreCase);
+
+    Match resistanceMatch = Regex.Match(
+        question,
+        @"(?<![\w.])(\d+(?:\.\d+)?)\s*(?:Ω\b|ohms?\b)",
+        RegexOptions.IgnoreCase);
+
+    Match currentMatch = Regex.Match(
+        question,
+        @"(?<![\w.])(\d+(?:\.\d+)?)\s*(?:A\b|amps?\b|amperes?\b)",
+        RegexOptions.IgnoreCase);
+
+    float voltage = 0f;
+    float resistance = 0f;
+    float current = 0f;
+
+    bool hasVoltage =
+        voltageMatch.Success &&
+        float.TryParse(
+            voltageMatch.Groups[1].Value,
+            NumberStyles.Float,
+            CultureInfo.InvariantCulture,
+            out voltage);
+
+    bool hasResistance =
+        resistanceMatch.Success &&
+        float.TryParse(
+            resistanceMatch.Groups[1].Value,
+            NumberStyles.Float,
+            CultureInfo.InvariantCulture,
+            out resistance);
+
+    bool hasCurrent =
+        currentMatch.Success &&
+        float.TryParse(
+            currentMatch.Groups[1].Value,
+            NumberStyles.Float,
+            CultureInfo.InvariantCulture,
+            out current);
+
+    // CURRENT: I = V / R
+    if (asksCurrent)
+    {
+        if (hasVoltage && hasResistance)
+        {
+            if (resistance <= 0f)
+            {
+                answer =
+                    "Resistance must be greater than zero to calculate current using Ohm's law.";
+                return true;
+            }
+
+            current = voltage / resistance;
+
+            answer =
+                "To calculate current, use Ohm's law: I = V / R.\n\n" +
+                "Voltage = " +
+                voltage.ToString("0.###", CultureInfo.InvariantCulture) +
+                " V\n" +
+                "Resistance = " +
+                resistance.ToString("0.###", CultureInfo.InvariantCulture) +
+                " Ω\n\n" +
+                "I = " +
+                voltage.ToString("0.###", CultureInfo.InvariantCulture) +
+                " / " +
+                resistance.ToString("0.###", CultureInfo.InvariantCulture) +
+                "\nI = " +
+                current.ToString("0.###", CultureInfo.InvariantCulture) +
+                " A";
+
+            return true;
+        }
+
+        answer =
+            "To calculate current, use I = V / R.\n\n" +
+            "Divide the voltage across the component by its resistance.\n" +
+            "Example: 12 V / 6 Ω = 2 A.\n\n" +
+            "You need the voltage and resistance values to calculate a specific answer.";
+
+        return true;
+    }
+
+    // VOLTAGE: V = I × R
+    if (asksVoltage)
+    {
+        if (hasCurrent && hasResistance)
+        {
+            voltage = current * resistance;
+
+            answer =
+                "To calculate voltage, use Ohm's law: V = I × R.\n\n" +
+                "Current = " +
+                current.ToString("0.###", CultureInfo.InvariantCulture) +
+                " A\n" +
+                "Resistance = " +
+                resistance.ToString("0.###", CultureInfo.InvariantCulture) +
+                " Ω\n\n" +
+                "V = " +
+                current.ToString("0.###", CultureInfo.InvariantCulture) +
+                " × " +
+                resistance.ToString("0.###", CultureInfo.InvariantCulture) +
+                "\nV = " +
+                voltage.ToString("0.###", CultureInfo.InvariantCulture) +
+                " V";
+
+            return true;
+        }
+
+        answer =
+            "To calculate voltage, use V = I × R.\n\n" +
+            "Multiply the current through the component by its resistance.\n" +
+            "Example: 2 A × 6 Ω = 12 V.\n\n" +
+            "You need the current and resistance values to calculate a specific answer.";
+
+        return true;
+    }
+
+    // RESISTANCE: R = V / I
+    if (asksResistance)
+    {
+        if (hasVoltage && hasCurrent)
+        {
+            if (Mathf.Abs(current) < 0.000001f)
+            {
+                answer =
+                    "Resistance cannot be calculated using R = V / I when current is zero.";
+                return true;
+            }
+
+            resistance = voltage / current;
+
+            answer =
+                "To calculate resistance, use Ohm's law: R = V / I.\n\n" +
+                "Voltage = " +
+                voltage.ToString("0.###", CultureInfo.InvariantCulture) +
+                " V\n" +
+                "Current = " +
+                current.ToString("0.###", CultureInfo.InvariantCulture) +
+                " A\n\n" +
+                "R = " +
+                voltage.ToString("0.###", CultureInfo.InvariantCulture) +
+                " / " +
+                current.ToString("0.###", CultureInfo.InvariantCulture) +
+                "\nR = " +
+                resistance.ToString("0.###", CultureInfo.InvariantCulture) +
+                " Ω";
+
+            return true;
+        }
+
+        answer =
+            "To calculate resistance, use R = V / I.\n\n" +
+            "Divide the voltage across the component by the current through it.\n" +
+            "Example: 12 V / 2 A = 6 Ω.\n\n" +
+            "You need the voltage and current values to calculate a specific answer.";
+
+        return true;
+    }
+
+    return false;
+}
 private string BuildObjectAnswer(
     string question,
     SparkAIUnifiedObservation observation)
@@ -178,6 +410,15 @@ private string BuildObjectAnswer(
 
     string normalizedQuestion =
         Normalize(question);
+
+        bool isMeasurementQuestion =
+    SparkAIKnowledgeQuestionResolver.Resolve(question).Type ==
+    SparkAIKnowledgeQuestionType.Measurement;
+
+bool isCalculationQuestion =
+    normalizedQuestion.Contains("calculate") ||
+    normalizedQuestion.Contains("ohm's law") ||
+    normalizedQuestion.Contains("ohms law");
 
     /*
      * ============================================================
@@ -629,6 +870,15 @@ private string BuildAnswer(string question)
     string normalizedQuestion =
         Normalize(question);
 
+        bool isMeasurementQuestion =
+    SparkAIKnowledgeQuestionResolver.Resolve(question).Type ==
+    SparkAIKnowledgeQuestionType.Measurement;
+
+bool isCalculationQuestion =
+    normalizedQuestion.Contains("calculate") ||
+    normalizedQuestion.Contains("ohm's law") ||
+    normalizedQuestion.Contains("ohms law");
+
 
     /*
      * ============================================================
@@ -706,6 +956,57 @@ private string BuildAnswer(string question)
             observation.World,
             out objectTarget);
 
+            Debug.Log(
+    "[SPARK AI OBJECT ROUTING] Question=" + question +
+    " | HasObjectTarget=" + hasObjectTarget +
+    " | ObjectName=" +
+    (hasObjectTarget ? objectTarget.Name : "<NONE>"));
+
+
+                // Numerical calculations take priority over matching a named
+    // component, because a calculation may mention a resistor.
+   string calculationAnswer;
+
+// Do not intercept questions about actual live circuit values.
+// These must continue through the live circuit reasoning path.
+bool asksLiveVoltage =
+    ContainsAny(
+        normalizedQuestion,
+        "voltage across",
+        "voltage at",
+        "voltage on");
+
+bool asksLiveCurrent =
+    ContainsAny(
+        normalizedQuestion,
+        "current flowing",
+        "current through",
+        "current in",
+        "how much current");
+
+bool asksLiveCircuitValue =
+    (asksLiveVoltage || asksLiveCurrent) &&
+    ContainsAny(
+        normalizedQuestion,
+        "led",
+        "resistor",
+        "switch",
+        "source",
+        "battery",
+        "circuit",
+        "component",
+        "motor",
+        "lamp",
+        "bulb");
+
+if (!asksLiveCircuitValue &&
+    TryBuildOhmsLawCalculationAnswer(
+        question,
+        out calculationAnswer))
+{
+    return calculationAnswer;
+}
+
 
     /*
      * ============================================================
@@ -723,36 +1024,67 @@ private string BuildAnswer(string question)
             observation);
     }
 
-
     /*
-     * ============================================================
-     * 4. OBJECT-AWARE QUESTIONS
-     * ============================================================
-     *
-     * These must use live SparkAIWorld values.
-     */
-    if (hasObjectTarget &&
-        ContainsAny(
-            normalizedQuestion,
-            "why",
-            "working",
-            "work",
-            "wrong",
-            "problem",
-            "voltage",
-            "current",
-            "power",
-            "receiving",
-            "powered",
-            "powering",
-            "conducting",
-            "on",
-            "off"))
-    {
-        return BuildObjectAnswer(
+ * ============================================================
+ * EDUCATIONAL MEASUREMENT QUESTIONS
+ * ============================================================
+ *
+ * Answer measurement questions from the knowledge database
+ * before object-aware logic can return a component definition.
+ */
+
+if (isMeasurementQuestion &&
+    knowledgeReasoner != null)
+{
+    SparkAIKnowledgeReasoningResult measurementResult;
+
+    if (knowledgeReasoner.TryExplainQuestion(
             question,
-            observation);
+            out measurementResult))
+    {
+        string measurementAnswer =
+            BuildKnowledgeReasonedAnswer(measurementResult);
+
+        if (!string.IsNullOrWhiteSpace(measurementAnswer))
+            return measurementAnswer;
     }
+}
+
+
+   /*
+ * ============================================================
+ * OBJECT-AWARE QUESTIONS
+ * ============================================================
+ *
+ * Route live component questions to BuildObjectAnswer().
+ * Measurement and calculation questions are handled by their
+ * dedicated answer paths instead.
+ */
+
+if (!isMeasurementQuestion &&
+    !isCalculationQuestion &&
+    hasObjectTarget &&
+    ContainsAny(
+        normalizedQuestion,
+        "why",
+        "working",
+        "work",
+        "wrong",
+        "problem",
+        "voltage",
+        "current",
+        "power",
+        "receiving",
+        "powered",
+        "powering",
+        "conducting",
+        "on",
+        "off"))
+{
+    return BuildObjectAnswer(
+        question,
+        observation);
+}
     /*
  * ============================================================
  * 5. GENERAL KNOWLEDGE
@@ -765,6 +1097,7 @@ private string BuildAnswer(string question)
 bool isLiveCircuitQuestion =
     ContainsAny(
         normalizedQuestion,
+        // Circuit diagnosis
         "why isn't",
         "why is not",
         "why doesn't",
@@ -778,11 +1111,55 @@ bool isLiveCircuitQuestion =
         "what's wrong",
         "where is the problem",
         "find the problem",
+
+        // General live measurements
         "what voltage",
+        "how much voltage",
         "how much current",
         "how much power",
         "is it connected",
-        "is it conducting");
+        "is it conducting",
+
+        // Voltage across a live component
+        "voltage across",
+        "voltage at",
+        "voltage on",
+        "voltage across the",
+        "voltage at the",
+        "voltage on the",
+        "measure the voltage across",
+        "measure voltage across",
+        "measure voltage at",
+        "check voltage across",
+        "check voltage at",
+
+        // Current through a live component
+        "current flowing",
+        "current through",
+        "current in the",
+        "current through the",
+        "how much current is flowing",
+        "measure current through",
+        "measure the current through",
+        "check current through",
+
+        // Power in a live circuit
+        "power consumed by",
+        "power used by",
+        "power dissipated by",
+        "power of the led",
+        "power of the resistor",
+
+        // Live component state
+        "is the led on",
+        "is the led off",
+        "is the resistor conducting",
+        "is the switch open",
+        "is the switch closed",
+        "is the component powered",
+        "is the component receiving power",
+        "is the battery supplying",
+        "is the source supplying");
 
 if (!isLiveCircuitQuestion)
 {
@@ -1043,53 +1420,75 @@ private string BuildKnowledgeReasonedAnswer(
             answer = result.Safety;
             break;
 
+        case SparkAIKnowledgeQuestionType.Measurement:
+            answer = result.Measurement;
+            break;
+
         default:
             answer = result.Definition;
             break;
     }
 
+    // Fall back only if the selected answer field is empty.
     if (string.IsNullOrWhiteSpace(answer))
         answer = result.Summary;
 
     if (string.IsNullOrWhiteSpace(answer))
         return string.Empty;
 
+        if (result.QuestionType == SparkAIKnowledgeQuestionType.Measurement)
+        {
+            return answer;
+        }
+
+    System.Text.StringBuilder builder =
+        new System.Text.StringBuilder(answer);
+
     if (result.Observations != null)
     {
-        for (int i = 0; i < result.Observations.Count; i++)
+        foreach (string observation in result.Observations)
         {
-            string observation = result.Observations[i];
+            if (!string.IsNullOrWhiteSpace(observation))
+            {
+                builder.AppendLine();
+                builder.AppendLine();
+                builder.Append(observation);
+            }
+        }
+    }
 
-            if (string.IsNullOrWhiteSpace(observation))
+    if (result.TeachingPoints != null)
+    {
+        foreach (string teachingPoint in result.TeachingPoints)
+        {
+            if (string.IsNullOrWhiteSpace(teachingPoint))
                 continue;
 
-            answer += "\n\n" + observation;
+            if (answer.IndexOf(
+                    teachingPoint,
+                    System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                continue;
+            }
+
+            builder.AppendLine();
+            builder.AppendLine();
+            builder.Append(teachingPoint);
         }
     }
 
-   if (result.TeachingPoints != null)
-{
-    for (int i = 0; i < result.TeachingPoints.Count; i++)
-    {
-        string point = result.TeachingPoints[i];
+    Debug.Log(
+    "[SPARK AI MEASUREMENT DEBUG] FinalType=" + result.QuestionType +
+    " | FinalMeasurement=" +
+    (string.IsNullOrWhiteSpace(result.Measurement)
+        ? "<EMPTY>"
+        : result.Measurement) +
+    " | SelectedAnswer=" + answer);
 
-        if (string.IsNullOrWhiteSpace(point))
-            continue;
-
-        if (string.Equals(
-                answer.Trim(),
-                point.Trim(),
-                StringComparison.OrdinalIgnoreCase))
-        {
-            continue;
-        }
-
-        answer += "\n\n" + point;
-    }
+    return builder.ToString();
 }
 
-    return answer.Trim();
-}
+
         private string BuildNextStepAnswer(
     SparkAIUnifiedObservation observation,
     SparkAIContextReasoning context)

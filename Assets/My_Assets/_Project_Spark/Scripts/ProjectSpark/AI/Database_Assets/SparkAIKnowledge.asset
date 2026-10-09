@@ -17,6 +17,14 @@ MonoBehaviour:
   - id: circuit
     title: Circuit
     category: Circuit
+    measurement: A circuit can be examined by measuring voltage between two points,
+      current through a branch, and resistance when the circuit is de-energized and
+      isolated as required. Use a voltmeter or multimeter in voltage mode in parallel
+      with the points being tested. Measure current with an ammeter in series with
+      the branch. Before measuring resistance or continuity, disconnect the power
+      and ensure stored energy is safely discharged. Compare measurements with the
+      expected circuit behavior to identify open paths, incorrect connections, or
+      unexpected voltage drops.
     aliases:
     - electrical circuit
     - basic circuit
@@ -48,6 +56,13 @@ MonoBehaviour:
   - id: electrical_source
     title: Electrical Source
     category: Source
+    measurement: Measure a source's output voltage by setting a multimeter to the
+      appropriate voltage mode and connecting the probes across its positive and
+      negative output terminals. For a DC source, use DC voltage mode and observe
+      the polarity of the reading. Measure source current only with an appropriate
+      current-measurement setup in series with a load, following the meter and source
+      instructions. Never connect a current-mode meter directly across a voltage
+      source. Check the source's rated voltage and current limits before testing.
     aliases:
     - source
     - power source
@@ -78,6 +93,14 @@ MonoBehaviour:
   - id: circuit_path
     title: Circuit Path
     category: Circuit
+    measurement: Use a multimeter in voltage mode to measure voltage across individual
+      components and connection points. To check continuity of a path, disconnect
+      power first, isolate the path where necessary, and use continuity mode according
+      to the meter instructions. A continuity beep indicates a sufficiently low-resistance
+      path through the tested section, not necessarily that the entire circuit is
+      correctly connected. To measure branch current, use a suitable ammeter connected
+      in series. Compare readings at different points to help locate breaks, unexpected
+      voltage drops, or incorrect connections.
     aliases:
     - path
     - electrical path
@@ -110,6 +133,13 @@ MonoBehaviour:
   - id: polarity
     title: Polarity
     category: Fundamentals
+    measurement: Measure DC polarity by placing the red probe on the point being
+      tested as positive and the black probe on the reference point. A positive voltage
+      reading means the red probe is at a higher potential than the black probe;
+      a negative reading means it is at a lower potential. For a polarized component
+      such as an LED, identify its anode and cathode from its markings or documentation
+      before connecting it. Do not rely on a voltage reading alone to prove that
+      a component is correctly connected or operating.
     aliases:
     - positive
     - negative
@@ -140,6 +170,14 @@ MonoBehaviour:
   - id: open_circuit
     title: Open Circuit
     category: Circuit
+    measurement: To investigate an open circuit, use voltage mode to measure across
+      the suspected break while the circuit is energized only if it is safe and within
+      the meter's ratings. An open switch or broken path may have a voltage across
+      it, but the reading depends on the surrounding circuit. To check continuity,
+      turn off and disconnect the power, safely discharge stored energy, and isolate
+      the tested section as needed. Use continuity or resistance mode only on a de-energized
+      circuit. A continuity test can help identify a broken wire, open switch, or
+      disconnected terminal.
     aliases:
     - broken circuit
     - disconnected circuit
@@ -170,6 +208,13 @@ MonoBehaviour:
   - id: closed_circuit
     title: Closed Circuit
     category: Circuit
+    measurement: To check a closed circuit, measure the source voltage across its
+      output terminals and measure voltage across the intended load. A working, energized
+      circuit may show a voltage across the load, depending on the circuit design.
+      Measure current by inserting a suitable ammeter in series with the load or
+      branch. With power disconnected, continuity mode can help check whether a switch
+      or wire provides a conductive path. A closed path alone does not guarantee
+      current flow; the source, load, and all connections must also be suitable.
     aliases:
     - complete circuit
     - completed circuit
@@ -199,6 +244,14 @@ MonoBehaviour:
   - id: short_circuit
     title: Short Circuit
     category: Safety
+    measurement: A suspected short circuit must be investigated cautiously. Turn
+      off the source and disconnect power before using resistance or continuity mode.
+      Safely discharge capacitors and isolate the relevant section where necessary.
+      A very low resistance between two points that should not be directly connected
+      may indicate a short, but other parallel paths can also produce low readings.
+      Do not deliberately create a short to test it. If the source reports overcurrent
+      or activates current limiting, disconnect power and inspect the circuit before
+      further testing.
     aliases:
     - short
     - electrical short
@@ -228,6 +281,14 @@ MonoBehaviour:
   - id: wire
     title: Wire
     category: Component
+    measurement: To check a wire, disconnect power and isolate at least one end when
+      necessary to avoid parallel paths affecting the reading. Use continuity mode
+      to check whether the wire conducts between its two ends, or resistance mode
+      to measure its resistance. A good short wire usually has low resistance, but
+      the reading depends on wire length, thickness, contact quality, and meter-lead
+      resistance. To check its role in an energized circuit, use voltage mode across
+      appropriate points. Never use continuity or resistance mode on an energized
+      circuit.
     aliases:
     - cable
     - conductor
@@ -258,6 +319,14 @@ MonoBehaviour:
   - id: led
     title: LED
     category: Component
+    measurement: Measure the voltage across an LED using DC voltage mode, with the
+      probes placed across its two terminals while it is operating in a suitable
+      current-limited circuit. Measure circuit current by placing an appropriate
+      ammeter in series with the LED branch, or use a suitable current-measurement
+      feature designed for the circuit. A typical LED has a forward voltage that
+      depends on its type and operating current. Do not connect an LED directly to
+      a voltage source without suitable current limiting. For an isolated LED, use
+      the multimeter's diode-test mode only according to the meter instructions.
     aliases:
     - light emitting diode
     - light-emitting diode
@@ -294,6 +363,13 @@ MonoBehaviour:
   - id: resistor
     title: Resistor
     category: Component
+    measurement: To measure resistance, disconnect power, safely discharge stored
+      energy, and isolate at least one resistor lead when other circuit paths could
+      affect the reading. Select resistance mode and place one probe at each end
+      of the resistor. Compare the measured value with its rated resistance and tolerance.
+      To measure voltage across an operating resistor, use voltage mode in parallel
+      with it. To measure current through it, use an appropriate ammeter in series.
+      Never use resistance mode on an energized circuit.
     aliases:
     - resistance
     - current limiting resistor
@@ -332,6 +408,13 @@ MonoBehaviour:
   - id: voltage
     title: Voltage
     category: Electricity
+    measurement: Voltage is measured in volts (V) using a voltmeter or a multimeter
+      set to the correct voltage mode. Connect the probes in parallel across the
+      two points being compared. Select DC voltage for a DC circuit or the appropriate
+      AC voltage mode for an AC circuit. The reading represents the electrical potential
+      difference between the red and black probe points. A negative DC reading means
+      the red probe is at a lower potential than the black probe. Verify the expected
+      voltage and meter rating before testing.
     aliases:
     - electric potential difference
     - potential difference
@@ -381,23 +464,29 @@ MonoBehaviour:
   - id: current
     title: Electric Current
     category: Electricity
+    measurement: Electric current is measured in amperes (A) using an ammeter or
+      a multimeter configured for current measurement. In a conventional circuit,
+      the meter is connected in series with the branch so the current flows through
+      the meter. Select the correct current type, input terminal, and range, and
+      follow the meter instructions. Never connect a current-mode meter directly
+      across a voltage source. If a circuit has a dedicated current sensor or shunt,
+      current may also be calculated from the measured shunt voltage and its known
+      resistance using I = V / R.
     aliases:
-    - current flow
-    - amperes
-    - amps
-    - electric charge flow
+    - current
+    - electric current
+    - measuring current
     - current measurement
+    - ammeter
     definition: Electric current is the rate at which electric charge passes through
       a point in a circuit. Its unit is the ampere (A).
-    explanation: Current describes how much electric charge passes a point per unit
-      of time. In a basic closed circuit, a voltage source can drive current through
-      connected components. The amount of current depends on the applied voltage,
-      the resistance, and the overall circuit conditions. Current does not automatically
-      flow just because a voltage source is present; a suitable conductive path is
-      needed.
-    example: "If a circuit carries a steady current of 2 A, a total charge of 2 coulombs
-      passes a given cross-section each second. If a 5 V source is connected across
-      a 10 \u03A9 resistor in an ideal circuit, the current is 0.5 A."
+    explanation: Electric current describes how much electric charge passes a point
+      per unit of time. It is measured in amperes (A). To measure current in a circuit,
+      an ammeter is connected in series so that the circuit current passes through
+      the meter. The meter must use the correct current input and range. Never connect
+      a current meter directly across a voltage source.
+    example: If 0.5 amperes flows through a resistor, an ammeter connected in series
+      with that resistor reads 0.5 A.
     importantFacts:
     - Current is measured in amperes (A).
     - One ampere equals one coulomb of charge per second.
@@ -412,9 +501,8 @@ MonoBehaviour:
       potential difference between two points, while current measures the rate of
       electric charge flow. A circuit can have voltage across an open switch or disconnected
       load while current through that open path is zero.
-    safety: Learn current measurements using low-voltage training circuits. An ammeter
-      must be connected correctly in series; connecting it directly across a voltage
-      source can cause a short circuit and damage equipment.
+    safety: Use the correct current input and range. Connect the meter in series,
+      not directly across a voltage source while measuring current.
     relatedEntryIds:
     - voltage  Voltage can drive current through a suitable circuit.
     - "ohms_law  Ohm\u2019s law relates current to voltage and resistance."
@@ -430,6 +518,16 @@ MonoBehaviour:
   - id: ohms_law
     title: Ohm's Law
     category: Electricity
+    measurement: "Ohm's law relates voltage, current, and resistance.\r\n\r\nMain
+      formula:\r\nV = I \xD7 R\r\n\r\nCalculate current:\r\nI = V / R\r\n\r\nCalculate
+      resistance:\r\nR = V / I\r\n\r\nExample:\r\nA 12 V source is connected across
+      a 6 \u03A9 resistor.\r\n\r\nI = V / R\r\nI = 12 / 6\r\nI = 2 A\r\n\r\nThe current
+      is 2 amperes.\r\n\r\nV = voltage in volts (V)\r\nI = current in amperes (A)\r\nR
+      = resistance in ohms (\u03A9)\r\n\r\nFor a fixed resistance, increasing voltage
+      increases current.\r\nFor a fixed voltage, increasing resistance decreases
+      current.\r\n\r\nThis relationship applies to ohmic components when their resistance
+      remains approximately constant. Not all electronic components have a linear
+      voltage-current relationship."
     aliases:
     - ohm's law
     - ohms law

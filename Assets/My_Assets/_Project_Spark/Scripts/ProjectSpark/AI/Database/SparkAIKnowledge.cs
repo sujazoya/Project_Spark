@@ -50,6 +50,11 @@ namespace ProjectSpark.AI
             [SerializeField]
             private string category;
 
+            [TextArea(3, 10)]
+            [Tooltip("Practical instructions for measuring this concept.")]
+            [SerializeField]
+            private string measurement;
+
             // --------------------------------------------------------
             // Search
             // --------------------------------------------------------
@@ -162,12 +167,11 @@ namespace ProjectSpark.AI
 
             public string Example =>
                 example;
-
             public IReadOnlyList<string> ImportantFacts =>
                 importantFacts;
-                public IReadOnlyList<string> RelatedEntryIds =>
-                relatedEntryIds;
 
+            public IReadOnlyList<string> RelatedEntryIds =>
+                relatedEntryIds;
             public string Misconception =>
                 misconception;
 
@@ -182,6 +186,8 @@ namespace ProjectSpark.AI
                 importantFacts != null
                     ? importantFacts.Count
                     : 0;
+
+            public string Measurement => measurement;
         }
 
         // ============================================================
@@ -286,6 +292,16 @@ namespace ProjectSpark.AI
                     entry.Id,
                     entry);
             }
+        }
+
+                public string GetMeasurement(string id)
+        {
+            Entry entry;
+
+            if (!TryGetEntry(id, out entry))
+                return string.Empty;
+
+            return entry.Measurement;
         }
 
         // ============================================================
@@ -728,16 +744,19 @@ private static int CountWords(
                        StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        private static string Normalize(
-            string value)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                return string.Empty;
+       private static string Normalize(string value)
+{
+    if (string.IsNullOrWhiteSpace(value))
+        return string.Empty;
 
-            return value
-                .Trim()
-                .ToLowerInvariant();
-        }
+    return value
+        .Trim()
+        .ToLowerInvariant()
+        .Replace('\u2018', '\'')
+        .Replace('\u2019', '\'')
+        .Replace('\u201C', '"')
+        .Replace('\u201D', '"');
+}
         public bool TryGetRelatedEntries(
     string id,
     out IReadOnlyList<Entry> relatedEntries)

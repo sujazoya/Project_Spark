@@ -1,0 +1,984 @@
+============================================================
+PROJECT SPARK — SCRIPTABLEOBJECT EXPORT
+============================================================
+
+ASSET INFORMATION
+-----------------
+Asset Name: SparkAIKnowledge
+Asset Type: ProjectSpark.AI.SparkAIKnowledge
+Unity Asset Path: Assets/My_Assets/_Project_Spark/Scripts/ProjectSpark/AI/Database_Assets/SparkAIKnowledge.asset
+Export Date: 2026-10-10 03:21:18
+
+SERIALIZED DATA
+---------------
+
+Database Id: 
+project_spark_knowledge
+Entries:
+  [0]
+    circuit:
+      Id: 
+circuit
+      Title: 
+Circuit
+      Category: 
+Circuit
+      Measurement: 
+A circuit can be examined by measuring voltage between two points, current through a branch, and resistance when the circuit is de-energized and isolated as required. Use a voltmeter or multimeter in voltage mode in parallel with the points being tested. Measure current with an ammeter in series with the branch. Before measuring resistance or continuity, disconnect the power and ensure stored energy is safely discharged. Compare measurements with the expected circuit behavior to identify open paths, incorrect connections, or unexpected voltage drops.
+      Aliases:
+        [0]
+          Element 0: 
+electrical circuit
+        [1]
+          Element 1: 
+basic circuit
+        [2]
+          Element 2: 
+circuit basics
+      Definition: 
+An electrical circuit is a connected path containing a source and electrical components that allows electrical energy to be transferred through the circuit.
+      Explanation: 
+A basic circuit needs a source and a continuous electrical path through the connected components and back to the other terminal of the source.
+      Example: 
+A battery connected to an LED through suitable wiring and a current-limiting resistor forms a basic electrical circuit when the path returns to the battery.
+      Important Facts:
+        [0]
+          Element 0: 
+A circuit needs an electrical source.
+        [1]
+          Element 1: 
+A circuit needs connected electrical paths.
+        [2]
+          Element 2: 
+A complete circuit provides a path between the source terminals.
+        [3]
+          Element 3: 
+Components must be electrically connected, not merely physically close.
+        [4]
+          Element 4: 
+An open path prevents normal current flow.
+      Misconception: 
+A group of components is not automatically a working circuit. The components must form a usable electrical path.
+      Safety: 
+Use the low-voltage Project Spark environment while learning circuit fundamentals. Never experiment with mains electricity.
+      Related Entry Ids:
+        [0]
+          Element 0: 
+electrical_source
+        [1]
+          Element 1: 
+circuit_path
+        [2]
+          Element 2: 
+wire
+        [3]
+          Element 3: 
+open_circuit
+        [4]
+          Element 4: 
+closed_circuit
+        [5]
+          Element 5: 
+short_circuit
+  [1]
+    electrical_source:
+      Id: 
+electrical_source
+      Title: 
+Electrical Source
+      Category: 
+Source
+      Measurement: 
+Measure a source's output voltage by setting a multimeter to the appropriate voltage mode and connecting the probes across its positive and negative output terminals. For a DC source, use DC voltage mode and observe the polarity of the reading. Measure source current only with an appropriate current-measurement setup in series with a load, following the meter and source instructions. Never connect a current-mode meter directly across a voltage source. Check the source's rated voltage and current limits before testing.
+      Aliases:
+        [0]
+          Element 0: 
+source
+        [1]
+          Element 1: 
+power source
+        [2]
+          Element 2: 
+voltage source
+        [3]
+          Element 3: 
+battery
+        [4]
+          Element 4: 
+power supply
+      Definition: 
+An electrical source provides a potential difference that can drive current through a suitable electrical circuit.
+      Explanation: 
+A source establishes an electrical potential difference between its terminals. When a suitable closed path is connected, this potential difference can drive current through the circuit.
+      Example: 
+A battery or laboratory DC power supply can provide voltage to a circuit.
+      Important Facts:
+        [0]
+          Element 0: 
+A source provides electrical potential difference.
+        [1]
+          Element 1: 
+A source has electrical terminals.
+        [2]
+          Element 2: 
+Voltage can exist without current flowing.
+        [3]
+          Element 3: 
+Current requires a suitable electrical path.
+        [4]
+          Element 4: 
+A source does not automatically cause current when its circuit is open.
+      Misconception: 
+Having voltage at a source does not mean that current is automatically flowing. Current depends on the connected circuit.
+      Safety: 
+Use low-voltage training sources in Project Spark. Never connect Project Spark circuits to mains electricity.
+      Related Entry Ids:
+        [0]
+          Element 0: 
+circuit
+        [1]
+          Element 1: 
+circuit_path
+        [2]
+          Element 2: 
+polarity
+        [3]
+          Element 3: 
+short_circuit
+  [2]
+    circuit_path:
+      Id: 
+circuit_path
+      Title: 
+Circuit Path
+      Category: 
+Circuit
+      Measurement: 
+Use a multimeter in voltage mode to measure voltage across individual components and connection points. To check continuity of a path, disconnect power first, isolate the path where necessary, and use continuity mode according to the meter instructions. A continuity beep indicates a sufficiently low-resistance path through the tested section, not necessarily that the entire circuit is correctly connected. To measure branch current, use a suitable ammeter connected in series. Compare readings at different points to help locate breaks, unexpected voltage drops, or incorrect connections.
+      Aliases:
+        [0]
+          Element 0: 
+path
+        [1]
+          Element 1: 
+electrical path
+        [2]
+          Element 2: 
+current path
+        [3]
+          Element 3: 
+circuit route
+      Definition: 
+A circuit path is the connected electrical route between the terminals of a source through the circuit components.
+      Explanation: 
+For current to flow in a basic circuit, there must be a continuous electrical path from one source terminal through the connected components and back to the other source terminal.
+      Example: 
+A wire from a battery positive terminal to an LED, followed by a return connection from the LED to the battery negative terminal, creates a complete path.
+      Important Facts:
+        [0]
+          Element 0: 
+Current requires a suitable electrical path.
+        [1]
+          Element 1: 
+A path can contain multiple components.
+        [2]
+          Element 2: 
+A broken connection creates an open circuit.
+        [3]
+          Element 3: 
+The complete path normally connects both source terminals through the circuit.
+      Misconception: 
+Connecting only one side of a component to a source does not create a complete circuit.
+      Safety: 
+Build and test circuit paths using Project Spark's low-voltage training environment.
+      Related Entry Ids:
+        [0]
+          Element 0: 
+circuit
+        [1]
+          Element 1: 
+electrical_source
+        [2]
+          Element 2: 
+wire
+        [3]
+          Element 3: 
+open_circuit
+        [4]
+          Element 4: 
+closed_circuit
+        [5]
+          Element 5: 
+short_circuit
+  [3]
+    polarity:
+      Id: 
+polarity
+      Title: 
+Polarity
+      Category: 
+Fundamentals
+      Measurement: 
+Measure DC polarity by placing the red probe on the point being tested as positive and the black probe on the reference point. A positive voltage reading means the red probe is at a higher potential than the black probe; a negative reading means it is at a lower potential. For a polarized component such as an LED, identify its anode and cathode from its markings or documentation before connecting it. Do not rely on a voltage reading alone to prove that a component is correctly connected or operating.
+      Aliases:
+        [0]
+          Element 0: 
+positive
+        [1]
+          Element 1: 
+negative
+        [2]
+          Element 2: 
+positive terminal
+        [3]
+          Element 3: 
+negative terminal
+        [4]
+          Element 4: 
+anode
+        [5]
+          Element 5: 
+cathode
+      Definition: 
+Polarity identifies the positive and negative sides of an electrical source or polarized component.
+      Explanation: 
+Polarity tells us which terminals have positive and negative electrical relationships. Polarized components such as LEDs and diodes can require their terminals to be connected with the correct polarity.
+      Example: 
+An LED has an anode and cathode. Connecting the source with the appropriate polarity allows the LED to operate when the rest of the circuit is complete.
+      Important Facts:
+        [0]
+          Element 0: 
+Positive and negative terminals have different polarity.
+        [1]
+          Element 1: 
+LEDs are polarized components.
+        [2]
+          Element 2: 
+An LED has an anode and a cathode.
+        [3]
+          Element 3: 
+Polarity can determine whether a polarized component operates.
+        [4]
+          Element 4: 
+Polarity does not by itself guarantee current flow.
+      Misconception: 
+Positive and negative terminals are not interchangeable on polarized components.
+      Safety: 
+Use low-voltage Project Spark circuits when learning polarity.
+      Related Entry Ids:
+        [0]
+          Element 0: 
+electrical_source
+        [1]
+          Element 1: 
+circuit_path
+        [2]
+          Element 2: 
+led
+  [4]
+    open_circuit:
+      Id: 
+open_circuit
+      Title: 
+Open Circuit
+      Category: 
+Circuit
+      Measurement: 
+To investigate an open circuit, use voltage mode to measure across the suspected break while the circuit is energized only if it is safe and within the meter's ratings. An open switch or broken path may have a voltage across it, but the reading depends on the surrounding circuit. To check continuity, turn off and disconnect the power, safely discharge stored energy, and isolate the tested section as needed. Use continuity or resistance mode only on a de-energized circuit. A continuity test can help identify a broken wire, open switch, or disconnected terminal.
+      Aliases:
+        [0]
+          Element 0: 
+broken circuit
+        [1]
+          Element 1: 
+disconnected circuit
+        [2]
+          Element 2: 
+broken path
+        [3]
+          Element 3: 
+interrupted circuit
+      Definition: 
+An open circuit is a circuit with a broken or interrupted electrical path that prevents normal current flow through that path.
+      Explanation: 
+An open switch, disconnected wire, or missing connection can interrupt the circuit. Voltage may still exist across the open portion even though current through that path is effectively zero.
+      Example: 
+Opening a switch in a simple battery and lamp circuit interrupts the path and stops normal current flow.
+      Important Facts:
+        [0]
+          Element 0: 
+An open circuit interrupts the electrical path.
+        [1]
+          Element 1: 
+An ideal open circuit has zero current.
+        [2]
+          Element 2: 
+Voltage can exist across an open circuit.
+        [3]
+          Element 3: 
+An open switch can create an open circuit.
+        [4]
+          Element 4: 
+A disconnected wire can create an open circuit.
+      Misconception: 
+An open circuit does not necessarily mean that there is no voltage anywhere in the circuit.
+      Safety: 
+Use Project Spark's low-voltage environment when experimenting with open and closed circuits.
+      Related Entry Ids:
+        [0]
+          Element 0: 
+circuit
+        [1]
+          Element 1: 
+circuit_path
+        [2]
+          Element 2: 
+open_circuit
+        [3]
+          Element 3: 
+electrical_source
+  [5]
+    closed_circuit:
+      Id: 
+closed_circuit
+      Title: 
+Closed Circuit
+      Category: 
+Circuit
+      Measurement: 
+To check a closed circuit, measure the source voltage across its output terminals and measure voltage across the intended load. A working, energized circuit may show a voltage across the load, depending on the circuit design. Measure current by inserting a suitable ammeter in series with the load or branch. With power disconnected, continuity mode can help check whether a switch or wire provides a conductive path. A closed path alone does not guarantee current flow; the source, load, and all connections must also be suitable.
+      Aliases:
+        [0]
+          Element 0: 
+complete circuit
+        [1]
+          Element 1: 
+completed circuit
+        [2]
+          Element 2: 
+closed path
+        [3]
+          Element 3: 
+complete path
+      Definition: 
+A closed circuit has a continuous electrical path that allows current to flow when a source and suitable components are present.
+      Explanation: 
+A closed circuit provides a complete path between the source terminals through the connected components. Whether significant current flows depends on the source and the electrical properties of the circuit.
+      Example: 
+Closing a switch in a battery and lamp circuit completes the path and allows current to flow through the lamp.
+      Important Facts:
+        [0]
+          Element 0: 
+A closed path can allow current flow.
+        [1]
+          Element 1: 
+A closed switch normally provides a conducting path.
+        [2]
+          Element 2: 
+A closed circuit still needs a source to produce current.
+        [3]
+          Element 3: 
+Circuit resistance affects current.
+        [4]
+          Element 4: 
+A closed circuit does not mean unlimited current.
+      Misconception: 
+A closed circuit does not automatically mean that a large current is flowing. The source and circuit resistance determine the current.
+      Safety: 
+Use low-voltage Project Spark circuits when learning about closed circuits.
+      Related Entry Ids:
+        [0]
+          Element 0: 
+circuit
+        [1]
+          Element 1: 
+circuit_path
+        [2]
+          Element 2: 
+electrical_source
+        [3]
+          Element 3: 
+open_circuit
+  [6]
+    short_circuit:
+      Id: 
+short_circuit
+      Title: 
+Short Circuit
+      Category: 
+Safety
+      Measurement: 
+A suspected short circuit must be investigated cautiously. Turn off the source and disconnect power before using resistance or continuity mode. Safely discharge capacitors and isolate the relevant section where necessary. A very low resistance between two points that should not be directly connected may indicate a short, but other parallel paths can also produce low readings. Do not deliberately create a short to test it. If the source reports overcurrent or activates current limiting, disconnect power and inspect the circuit before further testing.
+      Aliases:
+        [0]
+          Element 0: 
+short
+        [1]
+          Element 1: 
+electrical short
+        [2]
+          Element 2: 
+shorted circuit
+      Definition: 
+A short circuit is an unintended low-resistance path that can allow excessive current to flow.
+      Explanation: 
+A short circuit can bypass a component or load with a very low-resistance path. The resulting current can become much larger than intended and may damage components or the power source.
+      Example: 
+Connecting the positive and negative terminals of a source through a very low-resistance path can create a short circuit.
+      Important Facts:
+        [0]
+          Element 0: 
+A short circuit has very low resistance.
+        [1]
+          Element 1: 
+A short circuit can produce excessive current.
+        [2]
+          Element 2: 
+A short can bypass intended components.
+        [3]
+          Element 3: 
+Short circuits can damage electrical components.
+        [4]
+          Element 4: 
+Current depends on voltage and circuit resistance.
+      Misconception: 
+A short circuit is not simply a circuit that works very well. It is an unintended low-resistance path that can cause excessive current.
+      Safety: 
+Never intentionally create short circuits with real batteries, power supplies, or mains electricity. Use Project Spark's simulated environment.
+      Related Entry Ids:
+        [0]
+          Element 0: 
+circuit
+        [1]
+          Element 1: 
+circuit_path
+        [2]
+          Element 2: 
+electrical_source
+        [3]
+          Element 3: 
+wire
+  [7]
+    wire:
+      Id: 
+wire
+      Title: 
+Wire
+      Category: 
+Component
+      Measurement: 
+To check a wire, disconnect power and isolate at least one end when necessary to avoid parallel paths affecting the reading. Use continuity mode to check whether the wire conducts between its two ends, or resistance mode to measure its resistance. A good short wire usually has low resistance, but the reading depends on wire length, thickness, contact quality, and meter-lead resistance. To check its role in an energized circuit, use voltage mode across appropriate points. Never use continuity or resistance mode on an energized circuit.
+      Aliases:
+        [0]
+          Element 0: 
+cable
+        [1]
+          Element 1: 
+conductor
+        [2]
+          Element 2: 
+connection wire
+        [3]
+          Element 3: 
+electrical wire
+      Definition: 
+A wire is a conductive connection used to electrically connect terminals and components in a circuit.
+      Explanation: 
+A wire provides a relatively low-resistance path between connected electrical terminals. Wires allow components to be connected together to form circuit paths.
+      Example: 
+A wire can connect a power supply terminal to a component terminal and provide the electrical path needed by the circuit.
+      Important Facts:
+        [0]
+          Element 0: 
+A wire provides an electrical connection.
+        [1]
+          Element 1: 
+An ideal wire has approximately zero resistance.
+        [2]
+          Element 2: 
+Real wires have some resistance.
+        [3]
+          Element 3: 
+Wires can connect components in series or parallel arrangements.
+        [4]
+          Element 4: 
+A disconnected wire can break a circuit.
+      Misconception: 
+A wire only creates an electrical connection when its conductive ends are actually connected to the intended terminals.
+      Safety: 
+Use the simulated wiring system in Project Spark while learning electrical connections.
+      Related Entry Ids:
+        [0]
+          Element 0: 
+circuit
+        [1]
+          Element 1: 
+circuit_path
+        [2]
+          Element 2: 
+open_circuit
+        [3]
+          Element 3: 
+short_circuit
+  [8]
+    led:
+      Id: 
+led
+      Title: 
+LED
+      Category: 
+Component
+      Measurement: 
+Measure the voltage across an LED using DC voltage mode, with the probes placed across its two terminals while it is operating in a suitable current-limited circuit. Measure circuit current by placing an appropriate ammeter in series with the LED branch, or use a suitable current-measurement feature designed for the circuit. A typical LED has a forward voltage that depends on its type and operating current. Do not connect an LED directly to a voltage source without suitable current limiting. For an isolated LED, use the multimeter's diode-test mode only according to the meter instructions.
+      Aliases:
+        [0]
+          Element 0: 
+light emitting diode
+        [1]
+          Element 1: 
+light-emitting diode
+        [2]
+          Element 2: 
+diode
+        [3]
+          Element 3: 
+indicator LED
+        [4]
+          Element 4: 
+light
+      Definition: 
+An LED, or light-emitting diode, is a semiconductor diode that emits light when current flows through it in the appropriate direction.
+      Explanation: 
+An LED is a polarized semiconductor device. Its anode and cathode must be connected with appropriate polarity, and the circuit must provide suitable current for normal operation.
+      Example: 
+A low-voltage source can drive an LED through a suitable current-limiting resistor when the LED polarity and circuit connections are correct.
+      Important Facts:
+        [0]
+          Element 0: 
+An LED is a diode.
+        [1]
+          Element 1: 
+An LED has polarity.
+        [2]
+          Element 2: 
+An LED has an anode and cathode.
+        [3]
+          Element 3: 
+Forward operation requires appropriate polarity.
+        [4]
+          Element 4: 
+Current must flow through the LED for normal light emission.
+        [5]
+          Element 5: 
+An LED normally requires current limiting.
+        [6]
+          Element 6: 
+Excessive current can damage an LED.
+        [7]
+          Element 7: 
+Voltage alone does not guarantee that an LED will light.
+      Misconception: 
+An LED does not light simply because voltage is present. It needs appropriate polarity, a complete current path, and suitable current.
+      Safety: 
+Use low-voltage Project Spark circuits when learning about LEDs. Do not connect an LED directly to an uncontrolled voltage source without appropriate current limiting.
+      Related Entry Ids:
+        [0]
+          Element 0: 
+circuit
+        [1]
+          Element 1: 
+circuit_path
+        [2]
+          Element 2: 
+polarity
+        [3]
+          Element 3: 
+resistor
+        [4]
+          Element 4: 
+electrical_source
+  [9]
+    resistor:
+      Id: 
+resistor
+      Title: 
+Resistor
+      Category: 
+Component
+      Measurement: 
+To measure resistance, disconnect power, safely discharge stored energy, and isolate at least one resistor lead when other circuit paths could affect the reading. Select resistance mode and place one probe at each end of the resistor. Compare the measured value with its rated resistance and tolerance. To measure voltage across an operating resistor, use voltage mode in parallel with it. To measure current through it, use an appropriate ammeter in series. Never use resistance mode on an energized circuit.
+      Aliases:
+        [0]
+          Element 0: 
+resistance
+        [1]
+          Element 1: 
+current limiting resistor
+        [2]
+          Element 2: 
+current limiter
+        [3]
+          Element 3: 
+ohmic resistor
+      Definition: 
+A resistor is an electrical component that provides resistance and opposes the flow of current.
+      Explanation: 
+A resistor limits current and produces a voltage drop when current flows through it. In a simple circuit, resistance, voltage, and current are related by Ohm's law.
+      Example: 
+A resistor can be placed in series with an LED to limit the current flowing through the LED.
+
+      Important Facts:
+        [0]
+          Element 0: 
+A resistor has resistance.
+        [1]
+          Element 1: 
+Resistance is measured in ohms.
+        [2]
+          Element 2: 
+A resistor can limit current.
+        [3]
+          Element 3: 
+A resistor can produce a voltage drop.
+        [4]
+          Element 4: 
+A resistor dissipates electrical power as heat.
+        [5]
+          Element 5: 
+Ohm's law relates voltage, current, and resistance.
+        [6]
+          Element 6: 
+For a given voltage, increasing resistance generally reduces current in a simple circuit.
+      Misconception: 
+A resistor does not stop all current. It limits current according to its resistance and the voltage applied to the circuit.
+      Safety: 
+Use appropriately rated resistors in real circuits. Excessive current or power can cause a resistor to overheat.
+
+      Related Entry Ids:
+        [0]
+          Element 0: 
+circuit
+        [1]
+          Element 1: 
+circuit_path
+        [2]
+          Element 2: 
+electrical_source
+        [3]
+          Element 3: 
+led
+        [4]
+          Element 4: 
+polarity
+  [10]
+    voltage:
+      Id: 
+voltage
+      Title: 
+Voltage
+      Category: 
+Electricity
+      Measurement: 
+Voltage is measured in volts (V) using a voltmeter or a multimeter set to the correct voltage mode. Connect the probes in parallel across the two points being compared. Select DC voltage for a DC circuit or the appropriate AC voltage mode for an AC circuit. The reading represents the electrical potential difference between the red and black probe points. A negative DC reading means the red probe is at a lower potential than the black probe. Verify the expected voltage and meter rating before testing.
+      Aliases:
+        [0]
+          Element 0: 
+electric potential difference
+        [1]
+          Element 1: 
+potential difference
+        [2]
+          Element 2: 
+volts
+        [3]
+          Element 3: 
+voltage drop
+      Definition: 
+Voltage is the electrical potential difference between two points. It represents the energy transferred per unit of electric charge between those points.
+      Explanation: 
+Voltage describes the difference in electric potential between two points in a circuit. A voltage source establishes a potential difference between its terminals. When a suitable closed circuit is connected, that potential difference can drive current. Voltage can exist even when no current flows.
+      Example: 
+A 5 V battery has a potential difference of 5 volts between its terminals. If a suitable load is connected in a complete circuit, current can flow. The actual voltage across each component depends on the circuit.
+      Important Facts:
+        [0]
+          Element 0: 
+The unit of voltage is the volt (V).
+        [1]
+          Element 1: 
+Voltage is measured between two points.
+        [2]
+          Element 2: 
+A multimeter measures voltage in parallel with the component.
+        [3]
+          Element 3: 
+Voltage can exist without current flowing.
+      Misconception: 
+Voltage and current are not the same. Voltage is a potential difference; current is the rate of flow of electric charge.
+      Safety: 
+Learn voltage measurements using low-voltage training circuits. Never measure or experiment with mains electricity without appropriate training and equipment.
+      Related Entry Ids:
+        [0]
+          Element 0: 
+electrical_source  An electrical source establishes a potential difference between its terminals.
+        [1]
+          Element 1: 
+current  Voltage can drive current through a suitable conductive path.
+        [2]
+          Element 2: 
+ohms_law  Ohm’s law relates voltage, current, and resistance.
+        [3]
+          Element 3: 
+resistor  Voltage across a resistor relates to its current and resistance.
+        [4]
+          Element 4: 
+power  Voltage and current determine electrical power.
+        [5]
+          Element 5: 
+circuit_path  A suitable electrical path allows current to flow when a driving potential difference is present.
+        [6]
+          Element 6: 
+open_circuit  Voltage can exist across an open circuit even when current through the open path is zero.
+        [7]
+          Element 7: 
+closed_circuit  A closed circuit can allow current to flow when the source and load conditions permit it.
+        [8]
+          Element 8: 
+short_circuit  A short circuit can produce excessive current, depending on source and circuit resistance.
+        [9]
+          Element 9: 
+polarity  Polarity identifies positive and negative sides and helps establish voltage reference direction.
+        [10]
+          Element 10: 
+led  The voltage across an LED depends on its operating current and electrical characteristics.
+        [11]
+          Element 11: 
+wire  Wires connect circuit terminals; ideal wires have no voltage drop, while real wires can have a small drop.
+  [11]
+    current:
+      Id: 
+current
+      Title: 
+Electric Current
+      Category: 
+Electricity
+      Measurement: 
+Electric current is measured in amperes (A) using an ammeter or a multimeter configured for current measurement. In a conventional circuit, the meter is connected in series with the branch so the current flows through the meter. Select the correct current type, input terminal, and range, and follow the meter instructions. Never connect a current-mode meter directly across a voltage source. If a circuit has a dedicated current sensor or shunt, current may also be calculated from the measured shunt voltage and its known resistance using I = V / R.
+      Aliases:
+        [0]
+          Element 0: 
+current
+        [1]
+          Element 1: 
+electric current
+        [2]
+          Element 2: 
+measuring current
+        [3]
+          Element 3: 
+current measurement
+        [4]
+          Element 4: 
+ammeter
+      Definition: 
+Electric current is the rate at which electric charge passes through a point in a circuit. Its unit is the ampere (A).
+      Explanation: 
+Electric current describes how much electric charge passes a point per unit of time. It is measured in amperes (A). To measure current in a circuit, an ammeter is connected in series so that the circuit current passes through the meter. The meter must use the correct current input and range. Never connect a current meter directly across a voltage source.
+      Example: 
+If 0.5 amperes flows through a resistor, an ammeter connected in series with that resistor reads 0.5 A.
+      Important Facts:
+        [0]
+          Element 0: 
+Current is measured in amperes (A).
+        [1]
+          Element 1: 
+One ampere equals one coulomb of charge per second.
+        [2]
+          Element 2: 
+An ammeter is connected in series to measure branch current.
+        [3]
+          Element 3: 
+In a simple resistive circuit, increasing voltage increases current if resistance stays constant.
+        [4]
+          Element 4: 
+Increasing resistance reduces current if voltage stays constant.
+        [5]
+          Element 5: 
+Conventional current direction in an external circuit is from higher potential toward lower potential; electron drift in metal conductors is in the opposite direction.
+      Misconception: 
+Voltage and current are not the same. Voltage is the electrical potential difference between two points, while current measures the rate of electric charge flow. A circuit can have voltage across an open switch or disconnected load while current through that open path is zero.
+      Safety: 
+Use the correct current input and range. Connect the meter in series, not directly across a voltage source while measuring current.
+      Related Entry Ids:
+        [0]
+          Element 0: 
+voltage  Voltage can drive current through a suitable circuit.
+        [1]
+          Element 1: 
+ohms_law  Ohm’s law relates current to voltage and resistance.
+        [2]
+          Element 2: 
+resistor  Resistance affects current in a circuit.
+        [3]
+          Element 3: 
+electrical_source  A source establishes potential difference that can drive current.
+        [4]
+          Element 4: 
+circuit_path  A suitable conductive path is needed for sustained current.
+        [5]
+          Element 5: 
+open_circuit  An open path interrupts current through that path.
+        [6]
+          Element 6: 
+closed_circuit  A closed path can permit current when the circuit conditions allow it.
+        [7]
+          Element 7: 
+short_circuit  A low-resistance path can cause excessive current.
+        [8]
+          Element 8: 
+power  Current and voltage determine electrical power.
+  [12]
+    ohms_law:
+      Id: 
+ohms_law
+      Title: 
+Ohm's Law
+      Category: 
+Electricity
+      Measurement: 
+Ohm's law relates voltage, current, and resistance.
+
+Main formula:
+V = I × R
+
+Calculate current:
+I = V / R
+
+Calculate resistance:
+R = V / I
+
+Example:
+A 12 V source is connected across a 6 Ω resistor.
+
+I = V / R
+I = 12 / 6
+I = 2 A
+
+The current is 2 amperes.
+
+V = voltage in volts (V)
+I = current in amperes (A)
+R = resistance in ohms (Ω)
+
+For a fixed resistance, increasing voltage increases current.
+For a fixed voltage, increasing resistance decreases current.
+
+This relationship applies to ohmic components when their resistance remains approximately constant. Not all electronic components have a linear voltage-current relationship.
+      Aliases:
+        [0]
+          Element 0: 
+ohm's law
+        [1]
+          Element 1: 
+ohms law
+        [2]
+          Element 2: 
+ohm law
+        [3]
+          Element 3: 
+relationship between voltage current and resistance
+        [4]
+          Element 4: 
+calculate current
+        [5]
+          Element 5: 
+calculate voltage
+        [6]
+          Element 6: 
+calculate resistance
+      Definition: 
+Ohm’s law states that the current through an ohmic conductor is equal to the voltage across it divided by its resistance, provided its physical conditions remain constant.
+      Explanation: 
+Ohm’s law relates voltage, current, and resistance in a circuit. Its formula is:
+
+V=I×R
+
+Rearranging the formula gives:
+
+I=
+R
+V
+	​
+
+R=
+I
+V
+	​
+
+
+Here, V is voltage in volts, I is current in amperes, and R is resistance in ohms. For a fixed resistance, higher voltage produces higher current. For a fixed voltage, higher resistance produces lower current. The relationship applies to ohmic components when their resistance remains constant; not all electronic components follow a linear voltage-current relationship.
+      Example: 
+A 10 Ω resistor connected across an ideal 5 V source has a current of:
+
+I=
+10
+5
+	​
+
+=0.5 A
+
+If the voltage rises to 10 V and resistance remains 10 Ω, current rises to 1 A.
+      Important Facts:
+        [0]
+          Element 0: 
+Voltage is measured in volts (V).
+        [1]
+          Element 1: 
+Current is measured in amperes (A).
+        [2]
+          Element 2: 
+Resistance is measured in ohms (Ω). if resistance stays constant.
+        [3]
+          Element 3: 
+For fixed resistance, doubling voltage doubles current.nstant.
+        [4]
+          Element 4: 
+For fixed voltage, doubling resistance halves current. potential toward lower potential; electron drift in metal conductors is in the opposite direction.
+        [5]
+          Element 5: 
+Real components may heat up, changing their resistance.
+      Misconception: 
+Ohm’s law does not mean every component has constant resistance. Incandescent lamps, diodes, LEDs, and many other components can have nonlinear voltage-current behavior. Use the relationship with the appropriate component model and operating conditions.
+      Safety: 
+Use Ohm’s law to plan low-voltage training circuits and check component ratings. Always consider resistor power dissipation using P=VI and never use calculations as a reason to experiment with mains electricity.
+      Related Entry Ids:
+        [0]
+          Element 0: 
+voltage  Voltage can drive current through a suitable circuit.
+        [1]
+          Element 1: 
+ohms_law  Ohm’s law relates current to voltage and resistance.
+        [2]
+          Element 2: 
+resistor  Resistance affects current in a circuit.
+        [3]
+          Element 3: 
+electrical_source  A source establishes potential difference that can drive current.
+        [4]
+          Element 4: 
+circuit_path  A suitable conductive path is needed for sustained current.
+        [5]
+          Element 5: 
+open_circuit  An open path interrupts current through that path.
+        [6]
+          Element 6: 
+closed_circuit  A closed path can permit current when the circuit conditions allow it.
+        [7]
+          Element 7: 
+short_circuit  A low-resistance path can cause excessive current.
+        [8]
+          Element 8: 
+power  Current and voltage determine electrical power.
+
+============================================================
+END OF EXPORT
+============================================================
