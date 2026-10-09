@@ -755,30 +755,51 @@ private string BuildAnswer(string question)
     }
     /*
  * ============================================================
- * 5. GENERAL ELECTRONICS KNOWLEDGE
+ * 5. GENERAL KNOWLEDGE
  * ============================================================
  *
- * Knowledge is checked only after specific live object and
- * terminal questions.
- *
- * The KnowledgeReasoner combines:
- *
- * - stable electronics knowledge
- * - current Project Spark world state
- *
- * It does not modify the simulation.
+ * Only answer from general knowledge here when the question
+ * is clearly educational, not asking for live circuit diagnosis.
  */
-SparkAIKnowledgeReasoningResult knowledgeResult;
 
-if (knowledgeReasoner != null &&
-    knowledgeReasoner.TryExplainQuestion(
-        question,
-        out knowledgeResult))
+bool isLiveCircuitQuestion =
+    ContainsAny(
+        normalizedQuestion,
+        "why isn't",
+        "why is not",
+        "why doesn't",
+        "why does not",
+        "not working",
+        "isn't working",
+        "doesn't work",
+        "not lighting",
+        "not turning on",
+        "what is wrong",
+        "what's wrong",
+        "where is the problem",
+        "find the problem",
+        "what voltage",
+        "how much current",
+        "how much power",
+        "is it connected",
+        "is it conducting");
+
+if (!isLiveCircuitQuestion)
 {
-    return BuildKnowledgeReasonedAnswer(
-        knowledgeResult);
-}
+    SparkAIKnowledgeReasoningResult knowledgeResult;
 
+    if (knowledgeReasoner != null &&
+        knowledgeReasoner.TryExplainQuestion(
+            question,
+            out knowledgeResult))
+    {
+        string knowledgeAnswer =
+            BuildKnowledgeReasonedAnswer(knowledgeResult);
+
+        if (!string.IsNullOrWhiteSpace(knowledgeAnswer))
+            return knowledgeAnswer;
+    }
+}
 
     /*
      * ============================================================
@@ -998,8 +1019,34 @@ private string BuildKnowledgeReasonedAnswer(
     if (!result.IsValid)
         return string.Empty;
 
-    string answer =
-        result.Definition;
+    string answer;
+
+    switch (result.QuestionType)
+    {
+        case SparkAIKnowledgeQuestionType.Definition:
+            answer = result.Definition;
+            break;
+
+        case SparkAIKnowledgeQuestionType.Explanation:
+            answer = result.Explanation;
+            break;
+
+        case SparkAIKnowledgeQuestionType.Example:
+            answer = result.Example;
+            break;
+
+        case SparkAIKnowledgeQuestionType.Misconception:
+            answer = result.Misconception;
+            break;
+
+        case SparkAIKnowledgeQuestionType.Safety:
+            answer = result.Safety;
+            break;
+
+        default:
+            answer = result.Definition;
+            break;
+    }
 
     if (string.IsNullOrWhiteSpace(answer))
         answer = result.Summary;
@@ -1007,27 +1054,42 @@ private string BuildKnowledgeReasonedAnswer(
     if (string.IsNullOrWhiteSpace(answer))
         return string.Empty;
 
-    if (result.Observations != null &&
-        result.Observations.Count > 0)
+    if (result.Observations != null)
     {
-        for (int i = 0;
-             i < result.Observations.Count;
-             i++)
+        for (int i = 0; i < result.Observations.Count; i++)
         {
-            string observation =
-                result.Observations[i];
+            string observation = result.Observations[i];
 
             if (string.IsNullOrWhiteSpace(observation))
                 continue;
 
-            answer += " " +
-                      observation.Trim();
+            answer += "\n\n" + observation;
         }
     }
 
-    return answer.Trim();
+   if (result.TeachingPoints != null)
+{
+    for (int i = 0; i < result.TeachingPoints.Count; i++)
+    {
+        string point = result.TeachingPoints[i];
+
+        if (string.IsNullOrWhiteSpace(point))
+            continue;
+
+        if (string.Equals(
+                answer.Trim(),
+                point.Trim(),
+                StringComparison.OrdinalIgnoreCase))
+        {
+            continue;
+        }
+
+        answer += "\n\n" + point;
+    }
 }
 
+    return answer.Trim();
+}
         private string BuildNextStepAnswer(
     SparkAIUnifiedObservation observation,
     SparkAIContextReasoning context)

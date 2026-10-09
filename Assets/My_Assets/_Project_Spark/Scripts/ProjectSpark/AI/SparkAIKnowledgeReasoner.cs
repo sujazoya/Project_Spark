@@ -82,14 +82,7 @@ namespace ProjectSpark.AI
                 new List<string>();
 
             string summary =
-                entry.Definition;
-
-            if (!string.IsNullOrWhiteSpace(
-                    entry.Explanation))
-            {
-                teachingPoints.Add(
-                    entry.Explanation);
-            }
+                entry.Definition;          
 
             AddLiveContext(
                 entry,
@@ -97,50 +90,63 @@ namespace ProjectSpark.AI
                 observations,
                 teachingPoints);
 
-            result =
-                new SparkAIKnowledgeReasoningResult(
-                    true,
-                    knowledgeId,
-                    entry.Title,
-                    summary,
-                    entry.Definition,
-                    entry.Explanation,
-                    entry.Example,
-                    entry.Misconception,
-                    entry.Safety,
-                    observations,
-                    teachingPoints);
+           result =
+    new SparkAIKnowledgeReasoningResult(
+        true,
+        knowledgeId,
+        entry.Title,
+        summary,
+        entry.Definition,
+        entry.Explanation,
+        entry.Example,
+        entry.Misconception,
+        entry.Safety,
+        observations,
+        teachingPoints,
+        SparkAIKnowledgeQuestionType.Unknown);
 
             return true;
         }
+public bool TryExplainQuestion(
+    string question,
+    out SparkAIKnowledgeReasoningResult result)
+{
+    result = SparkAIKnowledgeReasoningResult.Invalid();
 
-        public bool TryExplainQuestion(
-            string question,
-            out SparkAIKnowledgeReasoningResult result)
-        {
-            result =
-                SparkAIKnowledgeReasoningResult.Invalid();
+    if (!IsValid || string.IsNullOrWhiteSpace(question))
+        return false;
 
-            if (!IsValid ||
-                string.IsNullOrWhiteSpace(question))
-            {
-                return false;
-            }
+    SparkAIKnowledge.Entry entry;
 
-            SparkAIKnowledge.Entry entry;
+    if (!knowledge.TryFindEntryForQuestion(
+            question,
+            out entry))
+    {
+        return false;
+    }
 
-            if (!knowledge.TryFindEntryForQuestion(
-                    question,
-                    out entry))
-            {
-                return false;
-            }
+    if (!TryExplain(entry.Id, out result))
+        return false;
 
-            return TryExplain(
-                entry.Id,
-                out result);
-        }
+    SparkAIKnowledgeQuestionResult questionResult =
+        SparkAIKnowledgeQuestionResolver.Resolve(question);
 
+    result = new SparkAIKnowledgeReasoningResult(
+        result.IsValid,
+        result.KnowledgeId,
+        result.Title,
+        result.Summary,
+        result.Definition,
+        result.Explanation,
+        result.Example,
+        result.Misconception,
+        result.Safety,
+        result.Observations,
+        result.TeachingPoints,
+        questionResult.Type);
+
+    return true;
+}
         private static void AddLiveContext(
             SparkAIKnowledge.Entry entry,
             SparkAIWorldSnapshot snapshot,
@@ -586,46 +592,51 @@ namespace ProjectSpark.AI
 
         public IReadOnlyList<string> TeachingPoints { get; }
 
-        public SparkAIKnowledgeReasoningResult(
-            bool isValid,
-            string knowledgeId,
-            string title,
-            string summary,
-            string definition,
-            string explanation,
-            string example,
-            string misconception,
-            string safety,
-            IReadOnlyList<string> observations,
-            IReadOnlyList<string> teachingPoints)
-        {
-            IsValid = isValid;
-            KnowledgeId = knowledgeId;
-            Title = title;
-            Summary = summary;
-            Definition = definition;
-            Explanation = explanation;
-            Example = example;
-            Misconception = misconception;
-            Safety = safety;
-            Observations = observations;
-            TeachingPoints = teachingPoints;
-        }
+        public SparkAIKnowledgeQuestionType QuestionType { get; }
 
-        public static SparkAIKnowledgeReasoningResult Invalid()
-        {
-            return new SparkAIKnowledgeReasoningResult(
-                false,
-                string.Empty,
-                string.Empty,
-                string.Empty,
-                string.Empty,
-                string.Empty,
-                string.Empty,
-                string.Empty,
-                string.Empty,
-                null,
-                null);
-        }
+       public SparkAIKnowledgeReasoningResult(
+    bool isValid,
+    string knowledgeId,
+    string title,
+    string summary,
+    string definition,
+    string explanation,
+    string example,
+    string misconception,
+    string safety,
+    IReadOnlyList<string> observations,
+    IReadOnlyList<string> teachingPoints,
+    SparkAIKnowledgeQuestionType questionType)
+{
+    IsValid = isValid;
+    KnowledgeId = knowledgeId;
+    Title = title;
+    Summary = summary;
+    Definition = definition;
+    Explanation = explanation;
+    Example = example;
+    Misconception = misconception;
+    Safety = safety;
+    Observations = observations;
+    TeachingPoints = teachingPoints;
+    QuestionType = questionType;
+}
+
+       public static SparkAIKnowledgeReasoningResult Invalid()
+{
+    return new SparkAIKnowledgeReasoningResult(
+        false,
+        string.Empty,
+        string.Empty,
+        string.Empty,
+        string.Empty,
+        string.Empty,
+        string.Empty,
+        string.Empty,
+        string.Empty,
+        null,
+        null,
+        SparkAIKnowledgeQuestionType.Unknown);
+}
     }
 }

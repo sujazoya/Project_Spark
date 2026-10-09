@@ -329,3 +329,152 @@ MonoBehaviour:
     - electrical_source
     - led
     - polarity
+  - id: voltage
+    title: Voltage
+    category: Electricity
+    aliases:
+    - electric potential difference
+    - potential difference
+    - volts
+    - voltage drop
+    definition: Voltage is the electrical potential difference between two points.
+      It represents the energy transferred per unit of electric charge between those
+      points.
+    explanation: Voltage describes the difference in electric potential between two
+      points in a circuit. A voltage source establishes a potential difference between
+      its terminals. When a suitable closed circuit is connected, that potential
+      difference can drive current. Voltage can exist even when no current flows.
+    example: A 5 V battery has a potential difference of 5 volts between its terminals.
+      If a suitable load is connected in a complete circuit, current can flow. The
+      actual voltage across each component depends on the circuit.
+    importantFacts:
+    - The unit of voltage is the volt (V).
+    - Voltage is measured between two points.
+    - A multimeter measures voltage in parallel with the component.
+    - Voltage can exist without current flowing.
+    misconception: Voltage and current are not the same. Voltage is a potential difference;
+      current is the rate of flow of electric charge.
+    safety: Learn voltage measurements using low-voltage training circuits. Never
+      measure or experiment with mains electricity without appropriate training and
+      equipment.
+    relatedEntryIds:
+    - electrical_source  An electrical source establishes a potential difference
+      between its terminals.
+    - current  Voltage can drive current through a suitable conductive path.
+    - "ohms_law  Ohm\u2019s law relates voltage, current, and resistance."
+    - resistor  Voltage across a resistor relates to its current and resistance.
+    - power  Voltage and current determine electrical power.
+    - circuit_path  A suitable electrical path allows current to flow when a driving
+      potential difference is present.
+    - open_circuit  Voltage can exist across an open circuit even when current through
+      the open path is zero.
+    - closed_circuit  A closed circuit can allow current to flow when the source
+      and load conditions permit it.
+    - short_circuit  A short circuit can produce excessive current, depending on
+      source and circuit resistance.
+    - polarity  Polarity identifies positive and negative sides and helps establish
+      voltage reference direction.
+    - led  The voltage across an LED depends on its operating current and electrical
+      characteristics.
+    - wire  Wires connect circuit terminals; ideal wires have no voltage drop, while
+      real wires can have a small drop.
+  - id: current
+    title: Electric Current
+    category: Electricity
+    aliases:
+    - current flow
+    - amperes
+    - amps
+    - electric charge flow
+    - current measurement
+    definition: Electric current is the rate at which electric charge passes through
+      a point in a circuit. Its unit is the ampere (A).
+    explanation: Current describes how much electric charge passes a point per unit
+      of time. In a basic closed circuit, a voltage source can drive current through
+      connected components. The amount of current depends on the applied voltage,
+      the resistance, and the overall circuit conditions. Current does not automatically
+      flow just because a voltage source is present; a suitable conductive path is
+      needed.
+    example: "If a circuit carries a steady current of 2 A, a total charge of 2 coulombs
+      passes a given cross-section each second. If a 5 V source is connected across
+      a 10 \u03A9 resistor in an ideal circuit, the current is 0.5 A."
+    importantFacts:
+    - Current is measured in amperes (A).
+    - One ampere equals one coulomb of charge per second.
+    - An ammeter is connected in series to measure branch current.
+    - In a simple resistive circuit, increasing voltage increases current if resistance
+      stays constant.
+    - Increasing resistance reduces current if voltage stays constant.
+    - Conventional current direction in an external circuit is from higher potential
+      toward lower potential; electron drift in metal conductors is in the opposite
+      direction.
+    misconception: Voltage and current are not the same. Voltage is the electrical
+      potential difference between two points, while current measures the rate of
+      electric charge flow. A circuit can have voltage across an open switch or disconnected
+      load while current through that open path is zero.
+    safety: Learn current measurements using low-voltage training circuits. An ammeter
+      must be connected correctly in series; connecting it directly across a voltage
+      source can cause a short circuit and damage equipment.
+    relatedEntryIds:
+    - voltage  Voltage can drive current through a suitable circuit.
+    - "ohms_law  Ohm\u2019s law relates current to voltage and resistance."
+    - resistor  Resistance affects current in a circuit.
+    - electrical_source  A source establishes potential difference that can drive
+      current.
+    - circuit_path  A suitable conductive path is needed for sustained current.
+    - open_circuit  An open path interrupts current through that path.
+    - closed_circuit  A closed path can permit current when the circuit conditions
+      allow it.
+    - short_circuit  A low-resistance path can cause excessive current.
+    - power  Current and voltage determine electrical power.
+  - id: ohms_law
+    title: Ohm's Law
+    category: Electricity
+    aliases:
+    - ohm's law
+    - ohms law
+    - ohm law
+    - relationship between voltage current and resistance
+    - calculate current
+    - calculate voltage
+    - calculate resistance
+    definition: "Ohm\u2019s law states that the current through an ohmic conductor
+      is equal to the voltage across it divided by its resistance, provided its physical
+      conditions remain constant."
+    explanation: "Ohm\u2019s law relates voltage, current, and resistance in a circuit.
+      Its formula is:\n\nV=I\xD7R\n\nRearranging the formula gives:\n\nI=\nR\nV\n\t\u200B\n\nR=\nI\nV\n\t\u200B\n\n\nHere,
+      V is voltage in volts, I is current in amperes, and R is resistance in ohms.
+      For a fixed resistance, higher voltage produces higher current. For a fixed
+      voltage, higher resistance produces lower current. The relationship applies
+      to ohmic components when their resistance remains constant; not all electronic
+      components follow a linear voltage-current relationship."
+    example: "A 10 \u03A9 resistor connected across an ideal 5 V source has a current
+      of:\n\nI=\n10\n5\n\t\u200B\n\n=0.5 A\n\nIf the voltage rises to 10 V and resistance
+      remains 10 \u03A9, current rises to 1 A."
+    importantFacts:
+    - Voltage is measured in volts (V).
+    - Current is measured in amperes (A).
+    - "Resistance is measured in ohms (\u03A9). if resistance stays constant."
+    - For fixed resistance, doubling voltage doubles current.nstant.
+    - For fixed voltage, doubling resistance halves current. potential toward lower
+      potential; electron drift in metal conductors is in the opposite direction.
+    - Real components may heat up, changing their resistance.
+    misconception: "Ohm\u2019s law does not mean every component has constant resistance.
+      Incandescent lamps, diodes, LEDs, and many other components can have nonlinear
+      voltage-current behavior. Use the relationship with the appropriate component
+      model and operating conditions."
+    safety: "Use Ohm\u2019s law to plan low-voltage training circuits and check component
+      ratings. Always consider resistor power dissipation using P=VI and never use
+      calculations as a reason to experiment with mains electricity."
+    relatedEntryIds:
+    - voltage  Voltage can drive current through a suitable circuit.
+    - "ohms_law  Ohm\u2019s law relates current to voltage and resistance."
+    - resistor  Resistance affects current in a circuit.
+    - electrical_source  A source establishes potential difference that can drive
+      current.
+    - circuit_path  A suitable conductive path is needed for sustained current.
+    - open_circuit  An open path interrupts current through that path.
+    - closed_circuit  A closed path can permit current when the circuit conditions
+      allow it.
+    - short_circuit  A low-resistance path can cause excessive current.
+    - power  Current and voltage determine electrical power.
