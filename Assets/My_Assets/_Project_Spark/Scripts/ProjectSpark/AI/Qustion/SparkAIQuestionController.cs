@@ -162,7 +162,6 @@ private bool TryBuildOhmsLawCalculationAnswer(
 
     string normalized = Normalize(question);
 
-    // Identify the quantity the player wants to calculate.
     bool asksCurrent = ContainsAny(
         normalized,
         "calculate current",
@@ -200,12 +199,9 @@ private bool TryBuildOhmsLawCalculationAnswer(
         "resistance from voltage",
         "what is the resistance");
 
-    // Handle questions phrased as:
-    // "How do I calculate voltage using Ohm's law?"
     if (ContainsAny(
             normalized,
             "calculate",
-            "calculate the",
             "work out",
             "solve for"))
     {
@@ -222,20 +218,22 @@ private bool TryBuildOhmsLawCalculationAnswer(
     if (!asksCurrent && !asksVoltage && !asksResistance)
         return false;
 
-    // Extract explicit numerical values and their units.
+    // Voltage: V, volt, volts
     Match voltageMatch = Regex.Match(
         question,
-        @"(?<![\w.])(\d+(?:\.\d+)?)\s*(?:V\b|volts?\b)",
+        @"(?<![\w.])(?<value>\d+(?:\.\d+)?)\s*(?:V\b|volts?\b)",
         RegexOptions.IgnoreCase);
 
+    // Resistance: Ω, ohm, kΩ, kohm, kiloohm
     Match resistanceMatch = Regex.Match(
         question,
-        @"(?<![\w.])(\d+(?:\.\d+)?)\s*(?:Ω\b|ohms?\b)",
+        @"(?<![\w.])(?<value>\d+(?:\.\d+)?)\s*(?<unit>k\s*Ω|Ω|k(?:ilo)?\s*ohms?)(?!\w)",
         RegexOptions.IgnoreCase);
 
+    // Current: A, amp, amps, ampere, amperes, mA, milliamp
     Match currentMatch = Regex.Match(
         question,
-        @"(?<![\w.])(\d+(?:\.\d+)?)\s*(?:A\b|amps?\b|amperes?\b)",
+        @"(?<![\w.])(?<value>\d+(?:\.\d+)?)\s*(?<unit>m\s*A|A\b|milliamperes?|milliamps?|amperes?|amps?)(?!\w)",
         RegexOptions.IgnoreCase);
 
     float voltage = 0f;
@@ -245,28 +243,57 @@ private bool TryBuildOhmsLawCalculationAnswer(
     bool hasVoltage =
         voltageMatch.Success &&
         float.TryParse(
-            voltageMatch.Groups[1].Value,
+            voltageMatch.Groups["value"].Value,
             NumberStyles.Float,
             CultureInfo.InvariantCulture,
             out voltage);
 
-    bool hasResistance =
-        resistanceMatch.Success &&
-        float.TryParse(
-            resistanceMatch.Groups[1].Value,
+    bool hasResistance = false;
+
+    if (resistanceMatch.Success)
+    {
+        hasResistance = float.TryParse(
+            resistanceMatch.Groups["value"].Value,
             NumberStyles.Float,
             CultureInfo.InvariantCulture,
             out resistance);
 
-    bool hasCurrent =
-        currentMatch.Success &&
-        float.TryParse(
-            currentMatch.Groups[1].Value,
+        if (hasResistance)
+        {
+            string unit = resistanceMatch.Groups["unit"].Value
+                .Replace(" ", string.Empty)
+                .ToLowerInvariant();
+
+            if (unit.StartsWith("k"))
+                resistance *= 1000f;
+        }
+    }
+
+    bool hasCurrent = false;
+
+    if (currentMatch.Success)
+    {
+        hasCurrent = float.TryParse(
+            currentMatch.Groups["value"].Value,
             NumberStyles.Float,
             CultureInfo.InvariantCulture,
             out current);
 
-    // CURRENT: I = V / R
+        if (hasCurrent)
+        {
+            string unit = currentMatch.Groups["unit"].Value
+                .Replace(" ", string.Empty)
+                .ToLowerInvariant();
+
+            if (unit.StartsWith("m") ||
+                unit.StartsWith("milli"))
+            {
+                current /= 1000f;
+            }
+        }
+    }
+
+    // I = V / R
     if (asksCurrent)
     {
         if (hasVoltage && hasResistance)
@@ -275,13 +302,14 @@ private bool TryBuildOhmsLawCalculationAnswer(
             {
                 answer =
                     "Resistance must be greater than zero to calculate current using Ohm's law.";
+
                 return true;
             }
 
             current = voltage / resistance;
 
             answer =
-                "To calculate current, use Ohm's law: I = V / R.\n\n" +
+                "Using Ohm's law: I = V / R.\n\n" +
                 "Voltage = " +
                 voltage.ToString("0.###", CultureInfo.InvariantCulture) +
                 " V\n" +
@@ -293,22 +321,24 @@ private bool TryBuildOhmsLawCalculationAnswer(
                 " / " +
                 resistance.ToString("0.###", CultureInfo.InvariantCulture) +
                 "\nI = " +
-                current.ToString("0.###", CultureInfo.InvariantCulture) +
-                " A";
+                current.ToString("0.######", CultureInfo.InvariantCulture) +
+                " A\n\n" +
+                "Current = " +
+                (current * 1000f).ToString("0.###", CultureInfo.InvariantCulture) +
+                " mA";
 
             return true;
         }
 
         answer =
             "To calculate current, use I = V / R.\n\n" +
-            "Divide the voltage across the component by its resistance.\n" +
-            "Example: 12 V / 6 Ω = 2 A.\n\n" +
-            "You need the voltage and resistance values to calculate a specific answer.";
+            "Provide both the voltage and resistance, for example: " +
+            "\"Calculate current using 5 V and 1 kΩ.\"";
 
         return true;
     }
 
-    // VOLTAGE: V = I × R
+    // V = I × R
     if (asksVoltage)
     {
         if (hasCurrent && hasResistance)
@@ -316,18 +346,15 @@ private bool TryBuildOhmsLawCalculationAnswer(
             voltage = current * resistance;
 
             answer =
-                "To calculate voltage, use Ohm's law: V = I × R.\n\n" +
+                "Using Ohm's law: V = I × R.\n\n" +
                 "Current = " +
-                current.ToString("0.###", CultureInfo.InvariantCulture) +
+                current.ToString("0.######", CultureInfo.InvariantCulture) +
                 " A\n" +
                 "Resistance = " +
                 resistance.ToString("0.###", CultureInfo.InvariantCulture) +
                 " Ω\n\n" +
+                "V = I × R\n" +
                 "V = " +
-                current.ToString("0.###", CultureInfo.InvariantCulture) +
-                " × " +
-                resistance.ToString("0.###", CultureInfo.InvariantCulture) +
-                "\nV = " +
                 voltage.ToString("0.###", CultureInfo.InvariantCulture) +
                 " V";
 
@@ -336,14 +363,12 @@ private bool TryBuildOhmsLawCalculationAnswer(
 
         answer =
             "To calculate voltage, use V = I × R.\n\n" +
-            "Multiply the current through the component by its resistance.\n" +
-            "Example: 2 A × 6 Ω = 12 V.\n\n" +
-            "You need the current and resistance values to calculate a specific answer.";
+            "Provide both the current and resistance.";
 
         return true;
     }
 
-    // RESISTANCE: R = V / I
+    // R = V / I
     if (asksResistance)
     {
         if (hasVoltage && hasCurrent)
@@ -352,24 +377,22 @@ private bool TryBuildOhmsLawCalculationAnswer(
             {
                 answer =
                     "Resistance cannot be calculated using R = V / I when current is zero.";
+
                 return true;
             }
 
             resistance = voltage / current;
 
             answer =
-                "To calculate resistance, use Ohm's law: R = V / I.\n\n" +
+                "Using Ohm's law: R = V / I.\n\n" +
                 "Voltage = " +
                 voltage.ToString("0.###", CultureInfo.InvariantCulture) +
                 " V\n" +
                 "Current = " +
-                current.ToString("0.###", CultureInfo.InvariantCulture) +
+                current.ToString("0.######", CultureInfo.InvariantCulture) +
                 " A\n\n" +
+                "R = V / I\n" +
                 "R = " +
-                voltage.ToString("0.###", CultureInfo.InvariantCulture) +
-                " / " +
-                current.ToString("0.###", CultureInfo.InvariantCulture) +
-                "\nR = " +
                 resistance.ToString("0.###", CultureInfo.InvariantCulture) +
                 " Ω";
 
@@ -378,9 +401,7 @@ private bool TryBuildOhmsLawCalculationAnswer(
 
         answer =
             "To calculate resistance, use R = V / I.\n\n" +
-            "Divide the voltage across the component by the current through it.\n" +
-            "Example: 12 V / 2 A = 6 Ω.\n\n" +
-            "You need the voltage and current values to calculate a specific answer.";
+            "Provide both the voltage and current.";
 
         return true;
     }
@@ -408,69 +429,15 @@ private string BuildObjectAnswer(
             ? "That component"
             : target.Name;
 
-    string normalizedQuestion =
-        Normalize(question);
-
-        bool isMeasurementQuestion =
-    SparkAIKnowledgeQuestionResolver.Resolve(question).Type ==
-    SparkAIKnowledgeQuestionType.Measurement;
-
-bool isCalculationQuestion =
-    normalizedQuestion.Contains("calculate") ||
-    normalizedQuestion.Contains("ohm's law") ||
-    normalizedQuestion.Contains("ohms law");
-
-    /*
-     * ============================================================
-     * SPECIFIC ELECTRICAL QUESTIONS
-     * ============================================================
-     */
-
-    if (ContainsAny(
-            normalizedQuestion,
-            "voltage",
-            "volt",
-            "how many volts",
-            "potential difference"))
-    {
-        return BuildObjectVoltageAnswer(target, objectName);
-    }
-
-    if (ContainsAny(
-            normalizedQuestion,
-            "current",
-            "amps",
-            "amp",
-            "ampere",
-            "amperes",
-            "how much current"))
-    {
-        return BuildObjectCurrentAnswer(target, objectName);
-    }
-
-    if (ContainsAny(
-            normalizedQuestion,
-            "power",
-            "watt",
-            "watts",
-            "how much power"))
-    {
-        return BuildObjectPowerAnswer(target, objectName);
-    }
-
-    if (ContainsAny(
-            normalizedQuestion,
-            "conducting",
-            "conduct",
-            "current flowing",
-            "is current flowing"))
-    {
-        return BuildObjectConductionAnswer(target, objectName);
-    }
+    string normalizedQuestion = Normalize(question);
 
     /*
      * ============================================================
      * WHY / PROBLEM QUESTIONS
+     *
+     * Evaluate diagnosis before individual measurements.
+     * Example:
+     * "Why does the LED have no voltage?"
      * ============================================================
      */
 
@@ -484,14 +451,72 @@ bool isCalculationQuestion =
             "why is",
             "why isn't",
             "why isnt",
+            "why does",
+            "why doesn't",
+            "why doesnt",
             "not working",
             "doesn't work",
-            "doesnt work"))
+            "doesnt work",
+            "not turning on",
+            "not lighting"))
     {
         return BuildObjectProblemAnswer(
             target,
             objectName,
             observation);
+    }
+
+    /*
+     * ============================================================
+     * SPECIFIC ELECTRICAL MEASUREMENTS
+     * ============================================================
+     */
+
+    if (ContainsAny(
+            normalizedQuestion,
+            "voltage",
+            "volt",
+            "how many volts",
+            "potential difference"))
+    {
+        return BuildObjectVoltageAnswer(
+            target,
+            objectName);
+    }
+
+    if (ContainsAny(
+            normalizedQuestion,
+            "current",
+            "amps",
+            "amp",
+            "ampere",
+            "amperes"))
+    {
+        return BuildObjectCurrentAnswer(
+            target,
+            objectName);
+    }
+
+    if (ContainsAny(
+            normalizedQuestion,
+            "power",
+            "watt",
+            "watts"))
+    {
+        return BuildObjectPowerAnswer(
+            target,
+            objectName);
+    }
+
+    if (ContainsAny(
+            normalizedQuestion,
+            "conducting",
+            "conduct",
+            "current flowing"))
+    {
+        return BuildObjectConductionAnswer(
+            target,
+            objectName);
     }
 
     /*
@@ -542,7 +567,6 @@ bool isCalculationQuestion =
         target,
         objectName);
 }
-
 private string BuildObjectVoltageAnswer(
     SparkAIElectronicObjectSnapshot target,
     string objectName)
@@ -869,6 +893,46 @@ private string BuildAnswer(string question)
 
     string normalizedQuestion =
         Normalize(question);
+        bool asksLevelStatus =
+    ContainsAny(
+        normalizedQuestion,
+        "did i complete the level",
+        "have i completed the level",
+        "is the level complete",
+        "did i win",
+        "have i won");
+
+bool asksCompletionTargetVoltage =
+    ContainsAny(
+        normalizedQuestion,
+        "target voltage at completion",
+        "voltage at completion",
+        "target voltage when completed",
+        "voltage when completed");
+
+if (asksLevelStatus)
+{
+    if (observation.World.Level.Completed)
+    {
+        return BuildCompletedLevelAnswer(
+            normalizedQuestion,
+            observation);
+    }
+
+    return "The level is not yet marked as completed. Keep working on the circuit until its completion conditions are satisfied.";
+}
+
+if (asksCompletionTargetVoltage)
+{
+    if (observation.World.Level.Completed)
+    {
+        return BuildCompletedLevelAnswer(
+            normalizedQuestion,
+            observation);
+    }
+
+    return "The level has not been completed yet, so there is no completed-level target voltage to report.";
+}
 
         bool isMeasurementQuestion =
     SparkAIKnowledgeQuestionResolver.Resolve(question).Type ==
@@ -934,6 +998,30 @@ bool isCalculationQuestion =
         }
     }
 
+// ============================================================
+// LED POLARITY QUESTIONS
+// ============================================================
+
+bool asksLedPolarity =
+    ContainsAny(
+        normalizedQuestion,
+        "correct polarity",
+        "wrong polarity",
+        "reversed polarity",
+        "reverse polarity",
+        "led polarity",
+        "led connected correctly");
+
+if (asksLedPolarity &&
+    ContainsAny(
+        normalizedQuestion,
+        "led",
+        "light emitting diode"))
+{
+    //return BuildObjectPolarityAnswer(
+       // question,
+       // observation);
+}
 
     /*
      * ============================================================
@@ -1017,14 +1105,71 @@ if (!asksLiveCircuitValue &&
      * old context such as OpenCircuit to override the completed
      * state.
      */
-    if (observation.World.Level.Completed)
-    {
-        return BuildCompletedLevelAnswer(
-            normalizedQuestion,
-            observation);
-    }
+   bool asksLevelCompletion =
+    ContainsAny(
+        normalizedQuestion,
+        "did i complete",
+        "have i completed",
+        "is the level complete",
+        "is the level completed",
+        "did i win",
+        "have i won",
+        "level completion",
+        "level result",
+        "target voltage at completion",
+        "voltage at completion");
 
-    /*
+if (observation.World.Level.Completed &&
+    asksLevelCompletion)
+{
+    return BuildCompletedLevelAnswer(
+        normalizedQuestion,
+        observation);
+}
+
+    
+
+   /*
+ * ============================================================
+ * OBJECT-AWARE QUESTIONS
+ * ============================================================
+ *
+ * Route live component questions to BuildObjectAnswer().
+ * Measurement and calculation questions are handled by their
+ * dedicated answer paths instead.
+ */
+
+bool isLiveObjectMeasurement =
+    hasObjectTarget &&
+    asksLiveCircuitValue;
+
+if ((!isMeasurementQuestion || isLiveObjectMeasurement) &&
+    !isCalculationQuestion &&
+    hasObjectTarget &&
+    ContainsAny(
+        normalizedQuestion,
+        "why",
+        "working",
+        "work",
+        "wrong",
+        "problem",
+        "voltage",
+        "current",
+        "power",
+        "receiving",
+        "powered",
+        "powering",
+        "conducting",
+        "on",
+        "off"))
+{
+    return BuildObjectAnswer(
+        question,
+        observation);
+}
+
+
+/*
  * ============================================================
  * EDUCATIONAL MEASUREMENT QUESTIONS
  * ============================================================
@@ -1050,41 +1195,6 @@ if (isMeasurementQuestion &&
     }
 }
 
-
-   /*
- * ============================================================
- * OBJECT-AWARE QUESTIONS
- * ============================================================
- *
- * Route live component questions to BuildObjectAnswer().
- * Measurement and calculation questions are handled by their
- * dedicated answer paths instead.
- */
-
-if (!isMeasurementQuestion &&
-    !isCalculationQuestion &&
-    hasObjectTarget &&
-    ContainsAny(
-        normalizedQuestion,
-        "why",
-        "working",
-        "work",
-        "wrong",
-        "problem",
-        "voltage",
-        "current",
-        "power",
-        "receiving",
-        "powered",
-        "powering",
-        "conducting",
-        "on",
-        "off"))
-{
-    return BuildObjectAnswer(
-        question,
-        observation);
-}
     /*
  * ============================================================
  * 5. GENERAL KNOWLEDGE

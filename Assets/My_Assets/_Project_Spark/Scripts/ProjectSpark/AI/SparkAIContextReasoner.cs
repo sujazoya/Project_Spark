@@ -66,6 +66,32 @@ namespace ProjectSpark.AI
             SparkAIUnifiedObservation observation =
                 observationCoordinator.ObserveCurrentWorld();
 
+
+
+              /*  if (observation.World.ElectronicObjects != null)
+            {
+                Debug.Log(
+                    "[SPARK AI WORLD OBJECTS] Count=" +
+                    observation.World.ElectronicObjects.Count);
+
+                for (int i = 0;
+                    i < observation.World.ElectronicObjects.Count;
+                    i++)
+                {
+                    SparkAIElectronicObjectSnapshot item =
+                        observation.World.ElectronicObjects[i];
+
+                    Debug.Log(
+                        "[SPARK AI WORLD OBJECT] Index=" + i +
+                        " | Name=" + item.Name);
+                }
+            }
+            else
+            {
+                Debug.Log("[SPARK AI WORLD OBJECTS] ElectronicObjects is NULL");
+            }*/
+
+
             return Reason(observation);
         }
 

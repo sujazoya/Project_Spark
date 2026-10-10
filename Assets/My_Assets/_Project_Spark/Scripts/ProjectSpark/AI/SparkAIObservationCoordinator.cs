@@ -118,20 +118,31 @@ namespace ProjectSpark.AI
         /// Builds one unified observation from the latest
         /// authoritative world snapshot.
         /// </summary>
-        public SparkAIUnifiedObservation
-            ObserveCurrentWorld()
-        {
-            if (!initialized)
-            {
-                currentObservation =
-                    SparkAIUnifiedObservation.Invalid();
+       public SparkAIUnifiedObservation ObserveCurrentWorld()
+{
+    if (!initialized || world == null)
+    {
+        currentObservation =
+            SparkAIUnifiedObservation.Invalid();
 
-                return currentObservation;
-            }
+        return currentObservation;
+    }
 
-            return Observe(
-                world.LatestSnapshot);
-        }
+    // Capture a fresh snapshot of the authoritative world.
+    // This does not run or modify the electrical solver.
+    SparkAIWorldSnapshot snapshot =
+        world.CaptureSnapshot();
+
+    if (snapshot == null)
+    {
+        currentObservation =
+            SparkAIUnifiedObservation.Invalid();
+
+        return currentObservation;
+    }
+
+    return Observe(snapshot);
+}
 
         /// <summary>
         /// Builds one unified observation from the supplied snapshot.
