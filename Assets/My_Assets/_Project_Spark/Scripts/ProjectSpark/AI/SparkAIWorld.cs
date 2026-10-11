@@ -789,70 +789,99 @@ private void HandleSelectionChanged(
                     situation);
         }
 
-        private void BuildObjectSnapshots()
+       private void BuildObjectSnapshots()
+{
+    objectSnapshots.Clear();
+
+    for (int i = 0;
+         i < electronicObjects.Count;
+         i++)
+    {
+        SparkElectronicObject objectReference =
+            electronicObjects[i];
+
+        if (objectReference == null)
         {
-            objectSnapshots.Clear();
+            continue;
+        }
 
-            for (int i = 0;
-                 i < electronicObjects.Count;
-                 i++)
+        SparkElectricalComponent electrical =
+            objectReference as SparkElectricalComponent;
+
+        bool isElectrical =
+            electrical != null;
+
+        float voltage = 0f;
+        float current = 0f;
+        float power = 0f;
+
+        string conduction = string.Empty;
+
+        bool electricalEnabled = false;
+
+        if (electrical != null)
+        {
+            electricalEnabled =
+                electrical.ElectricalEnabled;
+
+            SparkElectricalState state =
+                electrical.ElectricalState;
+
+            voltage = state.Voltage;
+            current = state.Current;
+            power = state.Power;
+
+            conduction =
+                state.Conduction.ToString();
+        }
+
+        // ============================================================
+        // LED TERMINAL REFERENCES
+        // ============================================================
+
+        int anodeTerminalId = 0;
+        int cathodeTerminalId = 0;
+
+        SparkLED led =
+            objectReference as SparkLED;
+
+        if (led != null)
+        {
+            if (led.AnodeTerminal != null)
             {
-                SparkElectronicObject objectReference =
-                    electronicObjects[i];
+                anodeTerminalId =
+                    led.AnodeTerminal.GetInstanceID();
+            }
 
-                if (objectReference == null)
-                {
-                    continue;
-                }
-
-                SparkElectricalComponent electrical =
-                    objectReference as SparkElectricalComponent;
-
-                bool isElectrical =
-                    electrical != null;
-
-                float voltage = 0f;
-                float current = 0f;
-                float power = 0f;
-                string conduction = string.Empty;
-                bool electricalEnabled = false;
-
-                if (electrical != null)
-                {
-                    electricalEnabled =
-                        electrical.ElectricalEnabled;
-
-                    SparkElectricalState state =
-                        electrical.ElectricalState;
-
-                    voltage =
-                        state.Voltage;
-
-                    current =
-                        state.Current;
-
-                    power =
-                        state.Power;
-
-                    conduction =
-                        state.Conduction.ToString();
-                }
-
-                objectSnapshots.Add(
-                    new SparkAIElectronicObjectSnapshot(
-                        objectReference.GetInstanceID(),
-                        objectReference.name,
-                        objectReference.isActiveAndEnabled,
-                        objectReference.InteractionsEnabled,
-                        objectReference.OperationalState.ToString(),
-                        isElectrical,
-                        electricalEnabled,
-                        voltage,
-                        current,
-                        power,
-                        conduction));
+            if (led.CathodeTerminal != null)
+            {
+                cathodeTerminalId =
+                    led.CathodeTerminal.GetInstanceID();
             }
         }
+
+        // ============================================================
+        // CREATE OBJECT SNAPSHOT
+        // ============================================================
+
+        objectSnapshots.Add(
+            new SparkAIElectronicObjectSnapshot(
+                objectReference.GetInstanceID(),
+                objectReference.name,
+                objectReference.isActiveAndEnabled,
+                objectReference.InteractionsEnabled,
+                objectReference.OperationalState.ToString(),
+                isElectrical,
+                electricalEnabled,
+                voltage,
+                current,
+                power,
+                conduction,
+                anodeTerminalId,
+                cathodeTerminalId));
+    }
+}
+
 
         private void BuildTerminalSnapshots()
         {

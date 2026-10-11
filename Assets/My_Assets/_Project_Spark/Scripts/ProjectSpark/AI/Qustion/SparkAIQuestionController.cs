@@ -690,36 +690,166 @@ private string BuildObjectProblemAnswer(
     string objectName,
     SparkAIUnifiedObservation observation)
 {
-    if (!target.Active)
-    {
-        return objectName +
-               " is inactive, so it cannot operate right now.";
-    }
+    // ============================================================
+    // 1. OBJECT AVAILABILITY
+    // ============================================================
 
+    // Electrical disablement is more specific than inactivity.
     if (!target.ElectricalEnabled)
     {
         return objectName +
-               " is electrically disabled.";
+               " is electrically disabled. " +
+               "Enable its electrical behavior before testing the circuit.";
     }
+
+    if (!target.Active)
+    {
+        return objectName +
+               " is inactive, so it cannot operate right now. " +
+               "Check whether the component is enabled in the scene.";
+    }
+
+    SparkAIWorldSnapshot world = observation.World;
+
+    // ============================================================
+    // 2. CIRCUIT-LEVEL DIAGNOSIS
+    // ============================================================
+
+    if (world != null)
+    {
+        if (!world.Level.HasValidPowerSource)
+        {
+            return objectName +
+                   " may not be operating because no valid active " +
+                   "power source is available. Check the supply's " +
+                   "enabled state, output switch, and connections.";
+        }
+
+        if (!world.Level.ClosedReturn)
+        {
+            return objectName +
+                   " may not be operating because the circuit does " +
+                   "not have a complete return path. Check the wires, " +
+                   "switch positions, and connection to supply negative.";
+        }
+    }
+
+    // ============================================================
+    // 3. COMPONENT IS ALREADY CONDUCTING
+    // ============================================================
+
+    if (target.IsElectricalComponent &&
+        target.Current > 0.000001f)
+    {
+        return objectName +
+               " is currently conducting, with " +
+               FormatValue(target.Current, "A") +
+               " flowing through it. " +
+               "If the LED appears dark, check its visual state and " +
+               "whether its rendering is synchronized with the electrical state.";
+    }
+
+    // ============================================================
+    // 4. LED REVERSE-POLARITY DIAGNOSIS
+    // ============================================================
+
+    // LED terminal IDs are populated by SparkAIWorld.
+    // Other components normally have zero for these fields.
+
+    if (target.AnodeTerminalInstanceId != 0 &&
+        target.CathodeTerminalInstanceId != 0 &&
+        world != null)
+    {
+        float anodeVoltage = 0f;
+        float cathodeVoltage = 0f;
+
+        bool foundAnode = false;
+        bool foundCathode = false;
+
+        for (int i = 0; i < world.Terminals.Count; i++)
+        {
+            SparkAITerminalSnapshot terminal =
+                world.Terminals[i];
+
+            if (terminal.InstanceId ==
+                target.AnodeTerminalInstanceId)
+            {
+                anodeVoltage = terminal.Voltage;
+                foundAnode = true;
+            }
+            else if (terminal.InstanceId ==
+                     target.CathodeTerminalInstanceId)
+            {
+                cathodeVoltage = terminal.Voltage;
+                foundCathode = true;
+            }
+
+            if (foundAnode && foundCathode)
+            {
+                break;
+            }
+        }
+
+        if (foundAnode &&
+            foundCathode &&
+            !float.IsNaN(anodeVoltage) &&
+            !float.IsInfinity(anodeVoltage) &&
+            !float.IsNaN(cathodeVoltage) &&
+            !float.IsInfinity(cathodeVoltage))
+        {
+            float ledVoltage =
+                anodeVoltage - cathodeVoltage;
+
+            const float polarityTolerance = 0.05f;
+
+            if (ledVoltage < -polarityTolerance)
+            {
+                return objectName +
+                       " is reverse-biased and is unlikely to turn on normally. " +
+                       "Its anode is at " +
+                       FormatValue(anodeVoltage, "V") +
+                       " and its cathode is at " +
+                       FormatValue(cathodeVoltage, "V") +
+                       ", giving " +
+                       FormatValue(ledVoltage, "V") +
+                       " from anode to cathode. " +
+                       "Check the LED orientation and supply connections. " +
+                       "Avoid exceeding the LED's reverse-voltage rating.";
+            }
+        }
+    }
+
+    // ============================================================
+    // 5. NO VOLTAGE AND NO CURRENT
+    // ============================================================
 
     if (Math.Abs(target.Voltage) < 0.000001f &&
         Math.Abs(target.Current) < 0.000001f)
     {
-        if (!observation.World.Level.HasValidPowerSource)
+        if (world != null &&
+            !world.Level.HasValidPowerSource)
         {
             return objectName +
-                   " has no significant voltage or current because the circuit does not currently have a valid power source.";
+                   " has no significant voltage or current because " +
+                   "the circuit does not currently have a valid power source.";
         }
 
-        if (!observation.World.Level.ClosedReturn)
+        if (world != null &&
+            !world.Level.ClosedReturn)
         {
             return objectName +
-                   " has no significant current because the circuit does not currently have a complete return path.";
+                   " has no significant current because the circuit " +
+                   "does not currently have a complete return path.";
         }
 
         return objectName +
-               " currently has no significant voltage or current. Check its connections and the surrounding circuit.";
+               " currently has no significant voltage or current. " +
+               "Check its connections and the surrounding circuit.";
     }
+
+    // ============================================================
+    // 6. VOLTAGE PRESENT, BUT NO SIGNIFICANT CURRENT
+    // ============================================================
 
     if (Math.Abs(target.Voltage) > 0.000001f &&
         Math.Abs(target.Current) < 0.000001f)
@@ -727,17 +857,30 @@ private string BuildObjectProblemAnswer(
         return objectName +
                " has " +
                FormatValue(target.Voltage, "V") +
-               " across it, but essentially no current is flowing.";
+               " across it, but essentially no current is flowing. " +
+               "Check the component's polarity, connections, and " +
+               "the continuity of the circuit path.";
     }
+
+    // ============================================================
+    // 7. CURRENT IS FLOWING
+    // ============================================================
 
     if (Math.Abs(target.Current) > 0.000001f)
     {
         return objectName +
-               " does have current flowing through it. Its current electrical state does not indicate that it is completely inactive.";
+               " does have current flowing through it. " +
+               "Its current electrical state does not indicate " +
+               "that it is completely inactive.";
     }
 
+    // ============================================================
+    // 8. GENERAL FALLBACK
+    // ============================================================
+
     return objectName +
-           " is electrically active, but I need more information about its behavior to identify a specific problem.";
+           " is electrically active, but I need more information " +
+           "about its behavior to identify a specific problem.";
 }
 
 private string BuildObjectGeneralAnswer(
@@ -1018,9 +1161,9 @@ if (asksLedPolarity &&
         "led",
         "light emitting diode"))
 {
-    //return BuildObjectPolarityAnswer(
-       // question,
-       // observation);
+    return BuildObjectPolarityAnswer(
+        question,
+        observation);
 }
 
     /*
@@ -1194,6 +1337,7 @@ if (isMeasurementQuestion &&
             return measurementAnswer;
     }
 }
+
 
     /*
  * ============================================================
@@ -2172,7 +2316,172 @@ private string BuildKnowledgeReasonedAnswer(
             voiceController.SpeakText(
                 answer,
                 SparkAIVoiceTextType.Explanation);
-        }          
+        } 
+        // ============================================================
+// LED POLARITY DIAGNOSIS
+// ============================================================
+
+private string BuildObjectPolarityAnswer(
+    string question,
+    SparkAIUnifiedObservation observation)
+{
+   if (observation.World == null)
+{
+    return "I cannot determine the LED polarity because the current circuit observation is unavailable.";
+}
+
+    SparkAIWorldSnapshot world =
+        observation.World;
+
+    string normalizedQuestion =
+        Normalize(question);
+
+    SparkAIElectronicObjectSnapshot ledSnapshot = default;
+    bool foundLed = false;
+
+    // --------------------------------------------------------
+    // Find the LED snapshot
+    // --------------------------------------------------------
+
+    for (int i = 0;
+         i < world.ElectronicObjects.Count;
+         i++)
+    {
+        SparkAIElectronicObjectSnapshot candidate =
+            world.ElectronicObjects[i];
+
+        string objectName =
+            Normalize(candidate.Name);
+
+        if (objectName.Contains("led") ||
+            objectName.Contains("light emitting diode"))
+        {
+            ledSnapshot = candidate;
+            foundLed = true;
+            break;
+        }
+    }
+
+    if (!foundLed)
+    {
+        return "I cannot determine the LED polarity because no LED was found in the current observation.";
+    }
+
+    if (!ledSnapshot.Active)
+    {
+        return "The LED is inactive. Activate it before evaluating its electrical polarity.";
+    }
+
+    if (!ledSnapshot.IsElectricalComponent ||
+        !ledSnapshot.ElectricalEnabled)
+    {
+        return "I found the LED, but its electrical component is disabled or unavailable. I cannot reliably evaluate its polarity.";
+    }
+
+    int anodeId =
+        ledSnapshot.AnodeTerminalInstanceId;
+
+    int cathodeId =
+        ledSnapshot.CathodeTerminalInstanceId;
+
+    if (anodeId == 0 || cathodeId == 0)
+    {
+        return "I cannot determine the LED polarity because its anode or cathode terminal is not assigned.";
+    }
+
+    SparkAITerminalSnapshot anode = default;
+    SparkAITerminalSnapshot cathode = default;
+
+    bool foundAnode = false;
+    bool foundCathode = false;
+
+    // --------------------------------------------------------
+    // Find actual anode and cathode terminal snapshots
+    // --------------------------------------------------------
+
+    for (int i = 0;
+         i < world.Terminals.Count;
+         i++)
+    {
+        SparkAITerminalSnapshot terminal =
+            world.Terminals[i];
+
+        if (terminal.InstanceId == anodeId)
+        {
+            anode = terminal;
+            foundAnode = true;
+        }
+        else if (terminal.InstanceId == cathodeId)
+        {
+            cathode = terminal;
+            foundCathode = true;
+        }
+
+        if (foundAnode && foundCathode)
+        {
+            break;
+        }
+    }
+
+    if (!foundAnode || !foundCathode)
+    {
+        return "I cannot determine the LED polarity because its anode and cathode terminal readings are not available in the current observation.";
+    }
+
+    // --------------------------------------------------------
+    // Validate terminal readings
+    // --------------------------------------------------------
+
+    if (float.IsNaN(anode.Voltage) ||
+        float.IsInfinity(anode.Voltage) ||
+        float.IsNaN(cathode.Voltage) ||
+        float.IsInfinity(cathode.Voltage))
+    {
+        return "The LED terminal voltages are invalid, so I cannot determine its polarity.";
+    }
+
+    float ledVoltage =
+        anode.Voltage - cathode.Voltage;
+
+    const float voltageTolerance = 0.05f;
+
+    // --------------------------------------------------------
+    // Report polarity based on measured voltage
+    // --------------------------------------------------------
+
+    if (ledVoltage > voltageTolerance)
+    {
+        return
+            "The LED has forward polarity: its anode is " +
+            FormatValue(anode.Voltage, "V") +
+            " and its cathode is " +
+            FormatValue(cathode.Voltage, "V") +
+            ". The anode is at a higher potential than the cathode. " +
+            "This is the correct voltage polarity for forward operation, " +
+            "but it does not by itself prove that enough current is flowing.";
+    }
+
+    if (ledVoltage < -voltageTolerance)
+    {
+        return
+            "The LED has reverse polarity: its anode is " +
+            FormatValue(anode.Voltage, "V") +
+            " and its cathode is " +
+            FormatValue(cathode.Voltage, "V") +
+            ". The cathode is at a higher potential than the anode. " +
+            "Check the LED connections and the supply polarity. " +
+            "Avoid exceeding the LED's reverse-voltage rating.";
+    }
+
+    return
+        "The voltage across the LED is approximately zero: anode " +
+        FormatValue(anode.Voltage, "V") +
+        ", cathode " +
+        FormatValue(cathode.Voltage, "V") +
+        ". The current readings do not establish a forward or reverse " +
+        "voltage bias, so I cannot confirm that the LED is operating " +
+        "with sufficient forward bias.";
+}         
 
 
     }

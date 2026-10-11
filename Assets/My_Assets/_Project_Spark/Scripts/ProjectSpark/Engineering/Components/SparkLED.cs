@@ -93,6 +93,21 @@ namespace ProjectSpark.Gameplay
                 ElectricalState.Conduction ==
                 SparkConductionState.Conducting;
         }
+        [ContextMenu("Debug LED Electrical State")]
+private void DebugElectricalState()
+{
+    Debug.Log(
+        $"[LED ELECTRICAL STATE] " +
+        $"LED={name} | " +
+        $"Enabled={ElectricalEnabled} | " +
+        $"Anode={(anodeTerminal != null ? anodeTerminal.name : "NULL")} | " +
+        $"Cathode={(cathodeTerminal != null ? cathodeTerminal.name : "NULL")} | " +
+        $"Voltage={ElectricalState.Voltage:F3} V | " +
+        $"Current={ElectricalState.Current:F6} A | " +
+        $"Conduction={ElectricalState.Conduction} | " +
+        $"IsOn={IsOn}",
+        this);
+}
 
         private void OnValidate()
         {

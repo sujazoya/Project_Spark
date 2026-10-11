@@ -316,6 +316,10 @@ public readonly struct SparkAIPlayerSnapshot
 
         public string ConductionState { get; }
 
+        public int AnodeTerminalInstanceId { get; }
+
+        public int CathodeTerminalInstanceId { get; }
+
         public SparkAIElectronicObjectSnapshot(
             int instanceId,
             string name,
@@ -327,7 +331,9 @@ public readonly struct SparkAIPlayerSnapshot
             float voltage,
             float current,
             float power,
-            string conductionState)
+            string conductionState,
+            int anodeTerminalInstanceId,
+            int cathodeTerminalInstanceId)
         {
             InstanceId = instanceId;
             Name = name ?? string.Empty;
@@ -350,6 +356,8 @@ public readonly struct SparkAIPlayerSnapshot
 
             ConductionState =
                 conductionState ?? string.Empty;
+            AnodeTerminalInstanceId = anodeTerminalInstanceId;
+            CathodeTerminalInstanceId = cathodeTerminalInstanceId;
         }
     }
 
