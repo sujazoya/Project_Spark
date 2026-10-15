@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using ProjectSpark.Gameplay;
 
 namespace ProjectSpark.AI
 {
@@ -84,6 +85,10 @@ namespace ProjectSpark.AI
 
             BuildIndexes(snapshot);
 
+            Debug.Log(
+    "[SPARK AI TERMINAL CANDIDATES] " +
+    BuildTerminalCandidateSummary(snapshot));
+
             if (snapshot.Terminals == null ||
                 snapshot.Terminals.Count == 0)
             {
@@ -96,31 +101,38 @@ namespace ProjectSpark.AI
                 return SparkAICircuitAnalysis.NoConnections();
             }
 
-            int poweredPositiveTerminalId =
-                FindLikelyPoweredPositiveTerminal(snapshot);
+          bool hasSource = TryFindPoweredSourcePair(
+    snapshot,
+    out int poweredPositiveTerminalId,
+    out int poweredNegativeTerminalId);
 
-            int poweredNegativeTerminalId =
-                FindLikelyPoweredNegativeTerminal(snapshot);
-
-            bool hasPositiveSource =
-                poweredPositiveTerminalId != 0;
-
-            bool hasNegativeSource =
-                poweredNegativeTerminalId != 0;
-
-            bool hasSource =
-                hasPositiveSource &&
-                hasNegativeSource;
-
+bool hasPositiveSource = hasSource;
+bool hasNegativeSource = hasSource;
             bool returnPathClosed = false;
 
-            if (hasSource)
-            {
-                returnPathClosed =
-                    AreConnected(
-                        poweredPositiveTerminalId,
-                        poweredNegativeTerminalId);
-            }
+if (hasSource)
+{
+    returnPathClosed =
+        AreConnected(
+            poweredPositiveTerminalId,
+            poweredNegativeTerminalId);
+}
+
+Debug.Log(
+    "[SPARK AI ANALYZER CONNECTIVITY] " +
+    "PositiveTerminalID=" + poweredPositiveTerminalId +
+    " | NegativeTerminalID=" + poweredNegativeTerminalId +
+    " | HasSource=" + hasSource +
+    " | ReturnPathClosed=" + returnPathClosed +
+    " | Connections=" +
+        (snapshot.Connections != null
+            ? snapshot.Connections.Count
+            : 0) +
+    " | Terminals=" +
+        (snapshot.Terminals != null
+            ? snapshot.Terminals.Count
+            : 0) +
+    " | ConnectedComponents=" + CountConnectedComponents());
 
             bool sourceShorted =
                 DetectSourceShort(
@@ -182,6 +194,53 @@ namespace ProjectSpark.AI
                     : 0);
         }
 
+       private void AddInternalConductivePaths(
+    SparkAIWorldSnapshot snapshot)
+{
+    if (snapshot == null ||
+        snapshot.ElectronicObjects == null)
+    {
+        return;
+    }
+
+    IReadOnlyList<SparkAIElectronicObjectSnapshot> objects =
+        snapshot.ElectronicObjects;
+
+    for (int i = 0; i < objects.Count; i++)
+    {
+        SparkAIElectronicObjectSnapshot obj = objects[i];
+
+        if (!obj.Active ||
+            !obj.IsElectricalComponent ||
+            !obj.ElectricalEnabled)
+        {
+            continue;
+        }
+
+        if (!string.Equals(
+                obj.ConductionState,
+                SparkConductionState.Conducting.ToString(),
+                StringComparison.Ordinal))
+        {
+            continue;
+        }
+
+        int anodeId = obj.AnodeTerminalInstanceId;
+        int cathodeId = obj.CathodeTerminalInstanceId;
+
+        if (anodeId == 0 ||
+            cathodeId == 0 ||
+            anodeId == cathodeId)
+        {
+            continue;
+        }
+
+        // Internal conductive path through the component.
+        // Preserve the LED's anode-to-cathode direction.
+        AddEdge(anodeId, cathodeId);
+    }
+}
+
         /// <summary>
         /// Builds the AI-side topology graph from the authoritative
         /// world snapshot.
@@ -221,6 +280,7 @@ namespace ProjectSpark.AI
                 }
             }
 
+
             IReadOnlyList<SparkAIConnectionSnapshot> connections =
                 snapshot.Connections;
 
@@ -257,6 +317,7 @@ namespace ProjectSpark.AI
                     targetTerminalId,
                     sourceTerminalId);
             }
+            AddInternalConductivePaths(snapshot);
         }
 
         private void AddEdge(
@@ -279,89 +340,151 @@ namespace ProjectSpark.AI
                 neighbors.Add(to);
         }
 
+
+        private string BuildTerminalCandidateSummary(
+            SparkAIWorldSnapshot snapshot)
+        {
+            if (snapshot.Terminals == null)
+                return "<NO TERMINALS>";
+
+            System.Text.StringBuilder builder =
+                new System.Text.StringBuilder(512);
+
+            for (int i = 0; i < snapshot.Terminals.Count; i++)
+            {
+                SparkAITerminalSnapshot terminal =
+                    snapshot.Terminals[i];
+
+                if (!terminal.Powered)
+                    continue;
+
+                bool positive =
+                    IsPositivePolarity(terminal.Polarity) ||
+                    IsPositivePolarity(terminal.EffectivePolarity);
+
+                bool negative =
+                    IsNegativePolarity(terminal.Polarity) ||
+                    IsNegativePolarity(terminal.EffectivePolarity);
+
+                if (!positive && !negative)
+                    continue;
+
+                builder.Append(
+                    "\nID=").Append(terminal.InstanceId)
+                        .Append(" Name=").Append(terminal.Name)
+                        .Append(" Owner=").Append(terminal.OwnerName)
+                        .Append(" Polarity=").Append(terminal.Polarity)
+                        .Append(" EffectivePolarity=").Append(
+                            terminal.EffectivePolarity)
+                        .Append(" Voltage=").Append(
+                            terminal.Voltage.ToString("F3"))
+                        .Append(" Connections=").Append(
+                            terminal.ConnectionCount);
+            }
+
+            return builder.ToString();
+        }
         /// <summary>
         /// Finds a likely powered positive source terminal.
         ///
         /// This is deliberately conservative.
         /// </summary>
-        private int FindLikelyPoweredPositiveTerminal(
-            SparkAIWorldSnapshot snapshot)
+       private bool TryFindPoweredSourcePair(
+    SparkAIWorldSnapshot snapshot,
+    out int positiveTerminalId,
+    out int negativeTerminalId)
+{
+    positiveTerminalId = 0;
+    negativeTerminalId = 0;
+
+    if (snapshot == null || snapshot.Terminals == null)
+        return false;
+
+    IReadOnlyList<SparkAITerminalSnapshot> terminals =
+        snapshot.Terminals;
+
+    int bestScore = int.MinValue;
+
+    for (int i = 0; i < terminals.Count; i++)
+    {
+        SparkAITerminalSnapshot positive = terminals[i];
+
+        if (positive.OwnerName == "PowerSupply_01")
+{
+    Debug.Log(
+        "[SPARK AI TARGET SOURCE CHECK] " +
+        "Name=" + positive.Name +
+        " | ID=" + positive.InstanceId +
+        " | OwnerID=" + positive.OwnerInstanceId +
+        " | Polarity=" + positive.Polarity +
+        " | EffectivePolarity=" + positive.EffectivePolarity +
+        " | Powered=" + positive.Powered +
+        " | Enabled=" + positive.ElectricalEnabled +
+        " | Connections=" + positive.ConnectionCount);
+}
+
+        if (positive.InstanceId == 0 ||
+            positive.OwnerInstanceId == 0 ||
+            //!positive.Powered ||
+            !positive.ElectricalEnabled)
+            continue;
+
+        if (!IsPositivePolarity(positive.Polarity) &&
+            !IsPositivePolarity(positive.EffectivePolarity))
+            continue;
+
+        for (int j = 0; j < terminals.Count; j++)
         {
-            IReadOnlyList<SparkAITerminalSnapshot> terminals =
-                snapshot.Terminals;
+            SparkAITerminalSnapshot negative = terminals[j];
 
-            if (terminals == null)
-                return 0;
+            if (negative.InstanceId == 0 ||
+                negative.InstanceId == positive.InstanceId ||
+                negative.OwnerInstanceId != positive.OwnerInstanceId ||
+               // !negative.Powered ||
+                !negative.ElectricalEnabled)
+                continue;
 
-            for (int i = 0;
-                 i < terminals.Count;
-                 i++)
-            {
-                SparkAITerminalSnapshot terminal =
-                    terminals[i];
+            if (!IsNegativePolarity(negative.Polarity) &&
+                !IsNegativePolarity(negative.EffectivePolarity))
+                continue;
+                
 
-                if (terminal.InstanceId == 0)
-                    continue;
+            int score = 0;
 
-                if (!terminal.Powered)
-                    continue;
+            if (positive.ConnectionCount > 0)
+                score += 10;
 
-                if (IsPositivePolarity(
-                        terminal.Polarity) ||
-                    IsPositivePolarity(
-                        terminal.EffectivePolarity))
-                {
-                    return terminal.InstanceId;
-                }
-            }
+            if (negative.ConnectionCount > 0)
+                score += 10;
 
-            return 0;
+            if (adjacency.TryGetValue(
+                    positive.InstanceId, out List<int> positiveNeighbors) &&
+                positiveNeighbors.Count > 0)
+                score += 5;
+
+            if (adjacency.TryGetValue(
+                    negative.InstanceId, out List<int> negativeNeighbors) &&
+                negativeNeighbors.Count > 0)
+                score += 5;
+
+            if (score <= bestScore)
+                continue;
+
+            bestScore = score;
+            positiveTerminalId = positive.InstanceId;
+            negativeTerminalId = negative.InstanceId;
         }
+    }
+    Debug.Log(
+    "[SPARK AI SOURCE PAIR RESULT] " +
+    "PositiveID=" + positiveTerminalId +
+    " | NegativeID=" + negativeTerminalId +
+    " | Found=" +
+    (positiveTerminalId != 0 && negativeTerminalId != 0));
 
-        /// <summary>
-        /// Finds a likely powered negative source terminal.
-        ///
-        /// The terminal must be powered as well as having
-        /// negative polarity. This prevents an arbitrary
-        /// negative load terminal from being treated as the
-        /// source negative terminal.
-        /// </summary>
-        private int FindLikelyPoweredNegativeTerminal(
-            SparkAIWorldSnapshot snapshot)
-        {
-            IReadOnlyList<SparkAITerminalSnapshot> terminals =
-                snapshot.Terminals;
-
-            if (terminals == null)
-                return 0;
-
-            for (int i = 0;
-                 i < terminals.Count;
-                 i++)
-            {
-                SparkAITerminalSnapshot terminal =
-                    terminals[i];
-
-                if (terminal.InstanceId == 0)
-                    continue;
-
-                if (!terminal.Powered)
-                    continue;
-
-                if (!IsNegativePolarity(
-                        terminal.Polarity) &&
-                    !IsNegativePolarity(
-                        terminal.EffectivePolarity))
-                {
-                    continue;
-                }
-
-                return terminal.InstanceId;
-            }
-
-            return 0;
-        }
-
+    return positiveTerminalId != 0 &&
+           negativeTerminalId != 0;
+}
         private bool IsPositivePolarity(
             string polarity)
         {
@@ -406,55 +529,71 @@ namespace ProjectSpark.AI
         /// Determines whether two terminals belong to the same
         /// connected topology.
         /// </summary>
-        private bool AreConnected(
-            int start,
-            int target)
+        private bool AreConnected(int start, int target)
+{
+    if (start == 0 || target == 0)
+        return false;
+
+    if (start == target)
+        return true;
+
+    visited.Clear();
+    searchQueue.Clear();
+
+    visited.Add(start);
+    searchQueue.Enqueue(start);
+
+    Debug.Log(
+        "[SPARK AI PATH TRACE] Start=" + start +
+        " | Target=" + target);
+
+    while (searchQueue.Count > 0)
+    {
+        int current = searchQueue.Dequeue();
+
+        if (terminalById.TryGetValue(
+                current, out SparkAITerminalSnapshot terminal))
         {
-            if (start == 0 ||
-                target == 0)
-            {
-                return false;
-            }
-
-            if (start == target)
-                return true;
-
-            visited.Clear();
-            searchQueue.Clear();
-
-            visited.Add(start);
-            searchQueue.Enqueue(start);
-
-            while (searchQueue.Count > 0)
-            {
-                int current =
-                    searchQueue.Dequeue();
-
-                if (!adjacency.TryGetValue(
-                        current,
-                        out List<int> neighbors))
-                {
-                    continue;
-                }
-
-                for (int i = 0;
-                     i < neighbors.Count;
-                     i++)
-                {
-                    int next =
-                        neighbors[i];
-
-                    if (next == target)
-                        return true;
-
-                    if (visited.Add(next))
-                        searchQueue.Enqueue(next);
-                }
-            }
-
-            return false;
+            Debug.Log(
+                "[SPARK AI PATH NODE] ID=" + current +
+                " | Name=" + terminal.Name +
+                " | Owner=" + terminal.OwnerName +
+                " | Neighbors=" +
+                (adjacency.TryGetValue(current, out List<int> list)
+                    ? list.Count
+                    : 0));
         }
 
+        if (!adjacency.TryGetValue(
+                current, out List<int> neighbors))
+            continue;
+
+        for (int i = 0; i < neighbors.Count; i++)
+        {
+            int next = neighbors[i];
+
+            if (next == target)
+            {
+                Debug.Log(
+                    "[SPARK AI PATH FOUND] " +
+                    current + " -> " + target);
+
+                return true;
+            }
+
+            if (visited.Add(next))
+                searchQueue.Enqueue(next);
+        }
+    }
+
+    Debug.Log(
+        "[SPARK AI PATH NOT FOUND] " +
+        "Visited=" + visited.Count +
+        " | Start=" + start +
+        " | Target=" + target);
+
+    return false;
+}
         /// <summary>
         /// Detects a direct source-to-source connection.
         ///

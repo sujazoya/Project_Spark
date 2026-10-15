@@ -60,55 +60,50 @@ namespace ProjectSpark.AI
         
 
         private void Awake()
-        {
-            initialized = false;
+{
+    initialized = false;
 
-            if (contextReasoner == null)
-            {
-                Debug.LogError(
-                    "[Spark AI Question] " +
-                    "Context Reasoner is not assigned.",
-                    this);
+    if (contextReasoner == null)
+    {
+        Debug.LogError(
+            "[Spark AI Question] Context Reasoner is not assigned.",
+            this);
+        return;
+    }
 
-                return;
-            }
+    if (observationCoordinator == null)
+    {
+        Debug.LogError(
+            "[Spark AI Question] Observation Coordinator is not assigned.",
+            this);
+        return;
+    }
 
-            if (observationCoordinator == null)
-            {
-                Debug.LogError(
-                    "[Spark AI Question] " +
-                    "Observation Coordinator is not assigned.",
-                    this);
+    // Voice is optional when speech output is disabled.
+    if (speakAnswers && voiceController == null)
+    {
+        Debug.LogWarning(
+            "[Spark AI Question] Voice Controller is missing. " +
+            "Answers will be generated without speech.",
+            this);
+    }
 
-                return;
-            }
+    if (knowledge != null && world != null)
+    {
+        knowledgeReasoner = new SparkAIKnowledgeReasoner(
+            knowledge,
+            world);
+    }
+    else
+    {
+        Debug.LogWarning(
+            "[SPARK AI QUESTION] Knowledge or World is not assigned. " +
+            "Knowledge reasoning will be unavailable.",
+            this);
+    }
 
-            if (voiceController == null)
-            {
-                Debug.LogError(
-                    "[Spark AI Question] " +
-                    "Voice Controller is not assigned.",
-                    this);
-
-                return;
-            }
-           if (knowledge != null && world != null)
-            {
-                knowledgeReasoner =
-                    new SparkAIKnowledgeReasoner(
-                        knowledge,
-                        world);
-            }
-            else
-            {
-                Debug.LogWarning(
-                    "[SPARK AI QUESTION] Knowledge or World is not assigned. " +
-                    "Knowledge reasoning will be unavailable.",
-                    this);
-            }
-
-            initialized = true;
-        }
+    initialized = true;
+}
 
         private void OnDestroy()
         {
@@ -120,6 +115,18 @@ namespace ProjectSpark.AI
         /// </summary>
       public void AskQuestion(string text)
 {
+    if (!allowQuestions)
+        return;
+
+    if (!initialized)
+    {
+        Debug.LogWarning(
+            "[SPARK AI QUESTION] Cannot answer because the controller " +
+            "has not initialized successfully.",
+            this);
+        return;
+    }
+
     SparkAIPlayerQuestion question =
         SparkAIPlayerQuestion.Create(text);
 
@@ -129,22 +136,28 @@ namespace ProjectSpark.AI
     if (logQuestions)
     {
         Debug.Log(
-            "[SPARK AI QUESTION] " +
-            question.Text);
+            "[SPARK AI QUESTION] " + question.Text,
+            this);
     }
 
     QuestionAsked?.Invoke(question);
 
-    string answer =
-        BuildAnswer(question.Text);
+    string answer = BuildAnswer(question.Text);
+
+    if (string.IsNullOrWhiteSpace(answer))
+    {
+        answer =
+            "I could not produce a reliable answer from the current " +
+            "Project Spark observations.";
+    }
 
     AnswerCreated?.Invoke(answer);
 
     if (logQuestions)
     {
         Debug.Log(
-            "[SPARK AI ANSWER] " +
-            answer);
+            "[SPARK AI ANSWER] " + answer,
+            this);
     }
 
     SpeakAnswer(answer);
@@ -408,20 +421,101 @@ private bool TryBuildOhmsLawCalculationAnswer(
 
     return false;
 }
+
+
+
+private bool IsAskingLedOnOff(string normalizedQuestion)
+{
+    // Fault-diagnosis questions must reach the diagnosis handler.
+    if (ContainsAny(
+            normalizedQuestion,
+            "why",
+            "not working",
+            "doesn't work",
+            "doesnt work",
+            "not glowing",
+            "not lighting",
+            "not lighting up",
+            "not conducting",
+            "not turning on",
+            "what is wrong",
+            "what's wrong",
+            "whats wrong",
+            "what is the problem",
+            "what is wrong with",
+            "problem with"))
+    {
+        return false;
+    }
+
+    return ContainsAny(
+        normalizedQuestion,
+
+        // LED state
+        "is led on",
+        "is the led on",
+        "led on",
+        "is led off",
+        "is the led off",
+        "led off",
+        "is the led lit",
+        "is led lit",
+        "is the led illuminated",
+        "is led illuminated",
+        "is the led glowing",
+        "is led glowing",
+        "is the led working",
+        "is led working",
+        "does the led work",
+
+        // Bulb state
+        "is the bulb on",
+        "is bulb on",
+        "is the bulb off",
+        "is bulb off",
+        "is the bulb lit",
+        "is the bulb glowing",
+        "is the bulb working",
+
+        // Lamp state
+        "is the lamp on",
+        "is lamp on",
+        "is the lamp off",
+        "is lamp off",
+        "is the lamp lit",
+        "is the lamp glowing",
+        "is the lamp working");
+}
+
 private string BuildObjectAnswer(
     string question,
     SparkAIUnifiedObservation observation)
 {
+    Debug.Log(
+        "[SPARK AI OBJECT ENTRY] BuildObjectAnswer called. " +
+        "Question=" + question);
+
+    if ( observation.World == null)
+    {
+        return "I cannot read the current circuit state right now.";
+    }
+
     SparkAIElectronicObjectSnapshot target;
 
-    if (!SparkAIObjectQuestionResolver.TryFindObject(
+    bool foundObject =
+        SparkAIObjectQuestionResolver.TryFindObject(
             question,
             observation.World,
-            out target))
+            out target);
+
+    if (!foundObject)
     {
+        Debug.LogWarning(
+            "[SPARK AI OBJECT RESOLVER] No matching object. " +
+            "Question=" + question);
         return BuildGeneralAnswer(
             observation,
-            contextReasoner.ReasonCurrentContext());
+            contextReasoner.Reason(observation));
     }
 
     string objectName =
@@ -431,21 +525,29 @@ private string BuildObjectAnswer(
 
     string normalizedQuestion = Normalize(question);
 
-    /*
-     * ============================================================
-     * WHY / PROBLEM QUESTIONS
-     *
-     * Evaluate diagnosis before individual measurements.
-     * Example:
-     * "Why does the LED have no voltage?"
-     * ============================================================
-     */
+   
+    
+
+    Debug.Log(
+        "[SPARK AI OBJECT STATE] " +
+        "Name=" + objectName +
+        " | Active=" + target.Active +
+        " | Electrical=" + target.IsElectricalComponent +
+        " | Enabled=" + target.ElectricalEnabled +
+        " | Conduction=" + target.ConductionState +
+        " | Voltage=" + target.Voltage +
+        " | Current=" + target.Current);
+
+    // ============================================================
+    // 1. WHY / PROBLEM QUESTIONS
+    // ============================================================
 
     if (IsAskingWhyNotWorking(normalizedQuestion) ||
         ContainsAny(
             normalizedQuestion,
             "what is wrong",
             "whats wrong",
+            "what is the problem",
             "problem",
             "issue",
             "why is",
@@ -457,20 +559,32 @@ private string BuildObjectAnswer(
             "not working",
             "doesn't work",
             "doesnt work",
+            "not on",
+            "isn't on",
+            "isnt on",
+            "is not on",
             "not turning on",
-            "not lighting"))
+            "not lighting",
+            "not lighting up",
+            "not glowing",
+            "not conducting",
+            "not receiving power",
+            "not powered",
+            "won't turn on",
+            "will not turn on"))
     {
         return BuildObjectProblemAnswer(
-            target,
-            objectName,
-            observation);
+    target,
+    objectName,
+    observation,
+    false
+    ,false
+    );
     }
 
-    /*
-     * ============================================================
-     * SPECIFIC ELECTRICAL MEASUREMENTS
-     * ============================================================
-     */
+    // ============================================================
+    // 2. SPECIFIC MEASUREMENTS
+    // ============================================================
 
     if (ContainsAny(
             normalizedQuestion,
@@ -508,6 +622,10 @@ private string BuildObjectAnswer(
             objectName);
     }
 
+    // ============================================================
+    // 3. CONDUCTION QUESTIONS
+    // ============================================================
+
     if (ContainsAny(
             normalizedQuestion,
             "conducting",
@@ -519,11 +637,74 @@ private string BuildObjectAnswer(
             objectName);
     }
 
-    /*
-     * ============================================================
-     * POWERED / ACTIVE QUESTIONS
-     * ============================================================
-     */
+    // ============================================================
+    // 4. LED / BULB ON-OFF QUESTIONS
+    // Check before generic activity or powered-state routing.
+    // ============================================================
+
+    bool asksIlluminationState =
+        ContainsAny(
+            normalizedQuestion,
+            "is led on",
+            "is the led on",
+            "led on",
+            "is led off",
+            "is the led off",
+            "led off",
+            "is the led lit",
+            "is the led illuminated",
+            "is the led lighting",
+            "is the bulb on",
+            "is the bulb off",
+            "is bulb on",
+            "is bulb off",
+            "is the bulb lit");
+
+    bool targetLooksLikeLedOrBulb =
+        objectName.IndexOf(
+            "led",
+            StringComparison.OrdinalIgnoreCase) >= 0 ||
+        objectName.IndexOf(
+            "bulb",
+            StringComparison.OrdinalIgnoreCase) >= 0 ||
+        objectName.IndexOf(
+            "lamp",
+            StringComparison.OrdinalIgnoreCase) >= 0;
+
+    if (asksIlluminationState && targetLooksLikeLedOrBulb)
+    {
+        if (!target.Active || !target.ElectricalEnabled)
+        {
+            return objectName +
+                   " is OFF because the component is inactive or its electrical model is disabled.";
+        }
+
+       bool conducting = string.Equals(
+    target.ConductionState,
+    "Conducting",
+    StringComparison.OrdinalIgnoreCase);
+
+        if (conducting && target.Current > 0f)
+        {
+            return "Yes, " + objectName +
+                   " is electrically conducting with forward current. " +
+                   "Its electrical state indicates that it should be ON.";
+        }
+
+        return "No, " + objectName +
+               " is not currently confirmed ON. " +
+               "Its conduction state is " +
+               (string.IsNullOrWhiteSpace(target.ConductionState)
+                   ? "unknown"
+                   : target.ConductionState) +
+               ", and its reported current is " +
+               target.Current.ToString("F4") +
+               " A.";
+    }
+
+    // ============================================================
+    // 5. POWERED / ACTIVE QUESTIONS
+    // ============================================================
 
     if (ContainsAny(
             normalizedQuestion,
@@ -539,11 +720,9 @@ private string BuildObjectAnswer(
             objectName);
     }
 
-    /*
-     * ============================================================
-     * ON / OFF QUESTIONS
-     * ============================================================
-     */
+    // ============================================================
+    // 6. GENERIC ON / OFF QUESTIONS
+    // ============================================================
 
     if (ContainsAny(
             normalizedQuestion,
@@ -557,25 +736,32 @@ private string BuildObjectAnswer(
             objectName);
     }
 
-    /*
-     * ============================================================
-     * GENERAL OBJECT QUESTION
-     * ============================================================
-     */
+    // ============================================================
+    // 7. GENERAL OBJECT QUESTION
+    // ============================================================
 
     return BuildObjectGeneralAnswer(
         target,
         objectName);
 }
+
 private string BuildObjectVoltageAnswer(
     SparkAIElectronicObjectSnapshot target,
     string objectName)
 {
-    return objectName +
-           " currently has " +
+    if (float.IsNaN(target.Voltage) ||
+        float.IsInfinity(target.Voltage))
+    {
+        return "The voltage reading for " + objectName +
+               " is unavailable or invalid in the current snapshot.";
+    }
+
+    return "The current electrical snapshot reports " +
            FormatValue(target.Voltage, "V") +
-           " across it.";
+           " across " + objectName +
+           ". This is the reported component voltage, not an independent meter measurement.";
 }
+
 
 private string BuildObjectCurrentAnswer(
     SparkAIElectronicObjectSnapshot target,
@@ -685,80 +871,52 @@ private string BuildObjectActivityAnswer(
            " is currently active.";
 }
 
+
 private string BuildObjectProblemAnswer(
     SparkAIElectronicObjectSnapshot target,
     string objectName,
-    SparkAIUnifiedObservation observation)
+    SparkAIUnifiedObservation observation,
+    bool asksAboutReverseBias,
+    bool asksAboutLedNotGlowing)
 {
     // ============================================================
     // 1. OBJECT AVAILABILITY
     // ============================================================
 
-    // Electrical disablement is more specific than inactivity.
     if (!target.ElectricalEnabled)
     {
         return objectName +
-               " is electrically disabled. " +
-               "Enable its electrical behavior before testing the circuit.";
+               " is electrically disabled. Enable its electrical " +
+               "behavior before testing the circuit.";
     }
 
     if (!target.Active)
     {
         return objectName +
-               " is inactive, so it cannot operate right now. " +
-               "Check whether the component is enabled in the scene.";
+               " is inactive. Check whether the component is enabled " +
+               "and configured correctly in the scene.";
     }
 
     SparkAIWorldSnapshot world = observation.World;
+    bool hasValidCurrent =
+        !float.IsNaN(target.Current) &&
+        !float.IsInfinity(target.Current);
 
+    bool hasSignificantComponentCurrent =
+        hasValidCurrent &&
+        Math.Abs(target.Current) > 0.000001f;
     // ============================================================
-    // 2. CIRCUIT-LEVEL DIAGNOSIS
-    // ============================================================
-
-    if (world != null)
-    {
-        if (!world.Level.HasValidPowerSource)
-        {
-            return objectName +
-                   " may not be operating because no valid active " +
-                   "power source is available. Check the supply's " +
-                   "enabled state, output switch, and connections.";
-        }
-
-        if (!world.Level.ClosedReturn)
-        {
-            return objectName +
-                   " may not be operating because the circuit does " +
-                   "not have a complete return path. Check the wires, " +
-                   "switch positions, and connection to supply negative.";
-        }
-    }
-
-    // ============================================================
-    // 3. COMPONENT IS ALREADY CONDUCTING
+    // 2. CHECK THE COMPONENT'S OWN ELECTRICAL STATE FIRST
+    //
+    // Do not diagnose the whole circuit as open before inspecting
+    // the actual component's voltage, current, and terminal polarity.
     // ============================================================
 
-    if (target.IsElectricalComponent &&
-        target.Current > 0.000001f)
-    {
-        return objectName +
-               " is currently conducting, with " +
-               FormatValue(target.Current, "A") +
-               " flowing through it. " +
-               "If the LED appears dark, check its visual state and " +
-               "whether its rendering is synchronized with the electrical state.";
-    }
+    bool hasTerminalIds =
+        target.AnodeTerminalInstanceId != 0 &&
+        target.CathodeTerminalInstanceId != 0;
 
-    // ============================================================
-    // 4. LED REVERSE-POLARITY DIAGNOSIS
-    // ============================================================
-
-    // LED terminal IDs are populated by SparkAIWorld.
-    // Other components normally have zero for these fields.
-
-    if (target.AnodeTerminalInstanceId != 0 &&
-        target.CathodeTerminalInstanceId != 0 &&
-        world != null)
+    if (world != null && hasTerminalIds)
     {
         float anodeVoltage = 0f;
         float cathodeVoltage = 0f;
@@ -766,10 +924,32 @@ private string BuildObjectProblemAnswer(
         bool foundAnode = false;
         bool foundCathode = false;
 
+        if (logQuestions)
+{
+    Debug.Log(
+        "[SPARK AI LED TERMINAL IDS] " +
+        "Object=" + objectName +
+        " | AnodeID=" + target.AnodeTerminalInstanceId +
+        " | CathodeID=" + target.CathodeTerminalInstanceId +
+        " | TerminalCount=" + world.Terminals.Count);
+}
+
         for (int i = 0; i < world.Terminals.Count; i++)
         {
             SparkAITerminalSnapshot terminal =
                 world.Terminals[i];
+
+
+    if (logQuestions)
+    {
+        Debug.Log(
+            "[SPARK AI LED TERMINAL SNAPSHOT] " +
+            "ID=" + terminal.InstanceId +
+            " | Name=" + terminal.Name +
+            " | Owner=" + terminal.OwnerName +
+            " | Voltage=" + terminal.Voltage);
+    }
+
 
             if (terminal.InstanceId ==
                 target.AnodeTerminalInstanceId)
@@ -777,8 +957,9 @@ private string BuildObjectProblemAnswer(
                 anodeVoltage = terminal.Voltage;
                 foundAnode = true;
             }
-            else if (terminal.InstanceId ==
-                     target.CathodeTerminalInstanceId)
+
+            if (terminal.InstanceId ==
+                target.CathodeTerminalInstanceId)
             {
                 cathodeVoltage = terminal.Voltage;
                 foundCathode = true;
@@ -790,99 +971,237 @@ private string BuildObjectProblemAnswer(
             }
         }
 
-        if (foundAnode &&
-            foundCathode &&
+
+        bool validAnodeVoltage =
+            foundAnode &&
             !float.IsNaN(anodeVoltage) &&
-            !float.IsInfinity(anodeVoltage) &&
+            !float.IsInfinity(anodeVoltage);
+
+        bool validCathodeVoltage =
+            foundCathode &&
             !float.IsNaN(cathodeVoltage) &&
-            !float.IsInfinity(cathodeVoltage))
+            !float.IsInfinity(cathodeVoltage);
+
+        if (validAnodeVoltage && validCathodeVoltage)
         {
-            float ledVoltage =
-                anodeVoltage - cathodeVoltage;
+            float ledVoltage = anodeVoltage - cathodeVoltage;
 
             const float polarityTolerance = 0.05f;
+
+            // ----------------------------------------------------
+            // 2A. REVERSE-BIASED LED
+            // ----------------------------------------------------
 
             if (ledVoltage < -polarityTolerance)
             {
                 return objectName +
-                       " is reverse-biased and is unlikely to turn on normally. " +
-                       "Its anode is at " +
+                       " appears reverse-biased according to the current " +
+                       "terminal-voltage snapshot. The anode is at " +
                        FormatValue(anodeVoltage, "V") +
-                       " and its cathode is at " +
+                       " and the cathode is at " +
                        FormatValue(cathodeVoltage, "V") +
                        ", giving " +
                        FormatValue(ledVoltage, "V") +
-                       " from anode to cathode. " +
-                       "Check the LED orientation and supply connections. " +
-                       "Avoid exceeding the LED's reverse-voltage rating.";
+                       " from anode to cathode. Verify the terminal " +
+                       "identification and connect the anode toward the " +
+                       "positive side and the cathode toward the negative " +
+                       "side of the supply. Avoid exceeding the LED's " +
+                       "reverse-voltage rating.";
+            } 
+            
+       
+            if (asksAboutReverseBias &&
+                ledVoltage >= -polarityTolerance)
+            {
+                string answer =
+                    objectName +
+                    " is not reverse-biased according to the current " +
+                    "terminal-voltage snapshot. The anode is at " +
+                    FormatValue(anodeVoltage, "V") +
+                    " and the cathode is at " +
+                    FormatValue(cathodeVoltage, "V") +
+                    ", giving " +
+                    FormatValue(ledVoltage, "V") +
+                    " from anode to cathode.";
+
+                if (hasSignificantComponentCurrent)
+                {
+                    answer +=
+                        " The component also reports " +
+                        FormatValue(target.Current, "A") +
+                        " of current, which supports electrical conduction.";
+                }
+                else
+                {
+                    answer +=
+                        " These voltages do not establish whether the circuit " +
+                        "has a complete return path. Check the actual terminal " +
+                        "connections and the supply return before drawing a " +
+                        "conclusion about current flow.";
+                }
+
+                return answer;
             }
+
+
+            if (asksAboutReverseBias)
+            {
+                return objectName +
+                    " cannot be confirmed as reverse-biased from the current " +
+                    "terminal-voltage snapshot. The anode is at " +
+                    FormatValue(anodeVoltage, "V") +
+                    " and the cathode is at " +
+                    FormatValue(cathodeVoltage, "V") +
+                    ", giving " +
+                    FormatValue(ledVoltage, "V") +
+                    " from anode to cathode. A negative voltage difference " +
+                    "beyond the polarity tolerance would indicate reverse bias. " +
+                    "Check the terminal connections and the supply return path.";
+            }                    
         }
     }
 
     // ============================================================
-    // 5. NO VOLTAGE AND NO CURRENT
+    // 3. COMPONENT CURRENT
+    //
+    // Current through the component is stronger evidence of
+    // conduction than a global level flag.
     // ============================================================
 
-    if (Math.Abs(target.Voltage) < 0.000001f &&
-        Math.Abs(target.Current) < 0.000001f)
+        
+if (asksAboutLedNotGlowing &&
+    hasSignificantComponentCurrent)
+{
+    return objectName +
+           " reports " +
+           FormatValue(target.Current, "A") +
+           " of current, which indicates electrical conduction " +
+           "in the current snapshot. However, this reading alone " +
+           "cannot confirm that the LED is visibly illuminated. " +
+           "Check whether the LED's visual component is enabled " +
+           "and whether its rendered light state follows its " +
+           "electrical operating state.";
+}
+
+
+    if (target.IsElectricalComponent &&
+    hasSignificantComponentCurrent)
     {
-        if (world != null &&
-            !world.Level.HasValidPowerSource)
+        return objectName +
+               " currently has " +
+               FormatValue(target.Current, "A") +
+               " flowing through it. The electrical snapshot " +
+               "indicates current is flowing. If the component " +
+               "appears dark or inactive, check whether its visual " +
+               "state is synchronized with its electrical state.";
+    }
+
+    // ============================================================
+    // 4. COMPONENT VOLTAGE WITH NO SIGNIFICANT CURRENT
+    // ============================================================
+
+    const float voltageTolerance = 0.000001f;
+    const float currentTolerance = 0.000001f;
+
+    bool hasSignificantVoltage =
+        Math.Abs(target.Voltage) > voltageTolerance;
+
+    bool hasSignificantCurrent =
+    hasValidCurrent &&
+    Math.Abs(target.Current) > currentTolerance;
+
+    if (!hasValidCurrent ||
+    float.IsNaN(target.Voltage) ||
+    float.IsInfinity(target.Voltage))
+{
+    return objectName +
+           " cannot be diagnosed reliably because its electrical " +
+           "voltage or current reading is invalid. Check the electrical " +
+           "solver result and the component's electrical snapshot.";
+}
+    // ============================================================
+    // 5. CIRCUIT-LEVEL DIAGNOSIS
+    //
+    // These are level-wide findings, not proof of a fault inside
+    // this specific component. Report the evaluator's finding
+    // accurately and prioritize an explicit source short.
+    // ============================================================
+
+    if (world != null)
+    {
+        if (world.Level.SourceShorted)
         {
             return objectName +
-                   " has no significant voltage or current because " +
-                   "the circuit does not currently have a valid power source.";
+                   " is not operating as expected. The level evaluator " +
+                   "reports a short circuit at the source. Inspect the " +
+                   "wiring for an unintended direct connection between " +
+                   "the supply terminals before continuing.";
         }
 
-        if (world != null &&
-            !world.Level.ClosedReturn)
+        if (!world.Level.HasValidPowerSource)
         {
             return objectName +
-                   " has no significant current because the circuit " +
-                   "does not currently have a complete return path.";
+                   " may not be operating because the level evaluator " +
+                   "reports no valid active power source. Check the " +
+                   "supply's electrical enable state, output switch, " +
+                   "voltage, and connections.";
         }
 
-        return objectName +
-               " currently has no significant voltage or current. " +
-               "Check its connections and the surrounding circuit.";
+        if (!world.Level.ClosedReturn)
+        {
+            return objectName +
+                   " is not conducting in the current snapshot, and the " +
+                   "level evaluator reports that the circuit's return " +
+                   "path is incomplete. This may explain the component's " +
+                   "state, but it does not by itself prove that the " +
+                   "component is faulty. Trace the path from the supply's " +
+                   "positive terminal through the circuit and back to " +
+                   "the supply's negative terminal.";
+        }
     }
 
+
+    
     // ============================================================
-    // 6. VOLTAGE PRESENT, BUT NO SIGNIFICANT CURRENT
+    // 6. NO SIGNIFICANT VOLTAGE OR CURRENT
     // ============================================================
 
-    if (Math.Abs(target.Voltage) > 0.000001f &&
-        Math.Abs(target.Current) < 0.000001f)
+    if (!hasSignificantVoltage && !hasSignificantCurrent)
     {
+        string stateDescription =
+            string.Equals(
+                target.ConductionState,
+                "Conducting",
+                StringComparison.OrdinalIgnoreCase)
+                ? "The snapshot reports a conducting state, but the " +
+                  "measured voltage and current are both approximately zero. "
+                : string.Equals(
+                    target.ConductionState,
+                    "NonConducting",
+                    StringComparison.OrdinalIgnoreCase)
+                    ? "The snapshot reports that the component is not conducting. "
+                    : "The component's conduction state is unknown. ";
+
         return objectName +
-               " has " +
-               FormatValue(target.Voltage, "V") +
-               " across it, but essentially no current is flowing. " +
-               "Check the component's polarity, connections, and " +
-               "the continuity of the circuit path.";
+               " has approximately 0 V across it and approximately 0 A " +
+               "through it in the current electrical snapshot. " +
+               stateDescription +
+               "These readings alone cannot identify the cause. Check " +
+               "whether the source is producing voltage, whether the " +
+               "component terminals are connected to different electrical " +
+               "potentials, and whether the intended circuit path is complete.";
     }
 
-    // ============================================================
-    // 7. CURRENT IS FLOWING
-    // ============================================================
-
-    if (Math.Abs(target.Current) > 0.000001f)
-    {
-        return objectName +
-               " does have current flowing through it. " +
-               "Its current electrical state does not indicate " +
-               "that it is completely inactive.";
-    }
 
     // ============================================================
-    // 8. GENERAL FALLBACK
+    // 7. FALLBACK
     // ============================================================
 
     return objectName +
-           " is electrically active, but I need more information " +
-           "about its behavior to identify a specific problem.";
+           " is not showing a clear electrical fault in the available " +
+           "snapshot. Check its terminal voltages, current, connections, " +
+           "and visual-state synchronization.";
 }
-
 private string BuildObjectGeneralAnswer(
     SparkAIElectronicObjectSnapshot target,
     string objectName)
@@ -1014,635 +1333,1023 @@ private string GetOtherTerminalName(
     return string.Empty;
 }
 
+
         // =========================================================
         // ANSWER ENGINE
         // =========================================================
-private string BuildAnswer(string question)
-{
-    SparkAIQuestionIntentResult intent =
-        SparkAIQuestionIntentResolver.Resolve(question);
+        private string BuildAnswer(string question)
+        {
+            SparkAIQuestionIntentResult intent =
+                SparkAIQuestionIntentResolver.Resolve(question);
 
-    SparkAIUnifiedObservation observation =
-        observationCoordinator.ObserveCurrentWorld();
+            SparkAIUnifiedObservation observation =
+                observationCoordinator.ObserveCurrentWorld();
 
-    if (!observation.IsValid)
-    {
-        return
-            "I cannot read the Project Spark circuit right now.";
-    }
+            if (!observation.IsValid)
+            {
+                return "I cannot read the Project Spark circuit right now.";
+            }
 
-    SparkAIContextReasoning context =
-        contextReasoner.ReasonCurrentContext();
+            if (observation.World == null)
+            {
+                return "I cannot read the current Project Spark world state.";
+            }
 
-    string normalizedQuestion =
-        Normalize(question);
-        bool asksLevelStatus =
+        SparkAIContextReasoning context =
+            contextReasoner.Reason(observation);
+                
+            string normalizedQuestion = Normalize(question);
+             bool asksAboutReverseBias =
     ContainsAny(
         normalizedQuestion,
-        "did i complete the level",
-        "have i completed the level",
-        "is the level complete",
-        "did i win",
-        "have i won");
-
-bool asksCompletionTargetVoltage =
-    ContainsAny(
-        normalizedQuestion,
-        "target voltage at completion",
-        "voltage at completion",
-        "target voltage when completed",
-        "voltage when completed");
-
-if (asksLevelStatus)
-{
-    if (observation.World.Level.Completed)
-    {
-        return BuildCompletedLevelAnswer(
-            normalizedQuestion,
-            observation);
-    }
-
-    return "The level is not yet marked as completed. Keep working on the circuit until its completion conditions are satisfied.";
-}
-
-if (asksCompletionTargetVoltage)
-{
-    if (observation.World.Level.Completed)
-    {
-        return BuildCompletedLevelAnswer(
-            normalizedQuestion,
-            observation);
-    }
-
-    return "The level has not been completed yet, so there is no completed-level target voltage to report.";
-}
-
-        bool isMeasurementQuestion =
-    SparkAIKnowledgeQuestionResolver.Resolve(question).Type ==
-    SparkAIKnowledgeQuestionType.Measurement;
-
-bool isCalculationQuestion =
-    normalizedQuestion.Contains("calculate") ||
-    normalizedQuestion.Contains("ohm's law") ||
-    normalizedQuestion.Contains("ohms law");
+        "does not light",
+        "doesn't light",
+        "reverse biased",
+        "reverse-biased",
+        "reverse bias");
 
 
-    /*
-     * ============================================================
-     * 1. SPECIFIC TERMINAL QUESTION
-     * ============================================================
-     *
-     * Terminal questions must be checked before general polarity,
-     * circuit-path, or knowledge questions.
-     *
-     * Examples:
-     *
-     * "What is connected to LED_1 anode?"
-     * "What is connected to Resistor_1K?"
-     * "Where does this terminal go?"
-     */
-    bool looksLikeTerminalQuestion =
-        ContainsAny(
-            normalizedQuestion,
-            "terminal",
-            "anode",
-            "cathode",
-            "positive side",
-            "negative side",
-            "positive terminal",
-            "negative terminal",
-            "pin",
-            "connected to",
-            "connect to",
-            "where does",
-            "where is connected");
+
+            // Explicit LED/Bulb state questions.
+            // Never select a generic Bulb when the player asked
+            // specifically about an LED.
+            bool asksWhetherLedIsOn =
+                IsAskingLedOnOff(normalizedQuestion);
+
+            bool explicitlyAsksAboutLed =
+                ContainsAny(
+                    normalizedQuestion,
+                    "led",
+                    "light emitting diode");
+
+            bool explicitlyAsksAboutBulb =
+                ContainsAny(
+                    normalizedQuestion,
+                    "bulb",
+                    "lamp");
+
+                    
+            bool asksAboutLedNotGlowing =
+                explicitlyAsksAboutLed &&
+                ContainsAny(
+                    normalizedQuestion,
+                    "not glowing",
+                    "not lighting",
+                    "not lighting up",
+                    "not illuminated",
+                    "looks dark",
+                    "appears dark",
+                    "is dark");               
+
+                    
+            bool asksLedDiagnosis =
+                IsAskingWhyNotWorking(normalizedQuestion) ||
+                ContainsAny(
+                    normalizedQuestion,
+                    "why is",
+                    "why isn't",
+                    "why isnt",
+                    "why does",
+                    "why doesn't",
+                    "why doesnt",
+                    "not working",
+                    "not glowing",
+                    "not lighting",
+                    "not lighting up",
+                    "not turning on",
+                    "not conducting",
+                    "what is wrong",
+                    "what's wrong",
+                    "whats wrong",
+                    "what is the problem");
+
+            if (asksWhetherLedIsOn && !asksLedDiagnosis)
+            {
+                SparkAIElectronicObjectSnapshot stateTarget = default;          
+              
+                bool foundStateTarget = false;
+
+                
+                if (logQuestions)
+                {
+                    for (int i = 0;
+                         i < observation.World.ElectronicObjects.Count;
+                         i++)
+                    {
+                        SparkAIElectronicObjectSnapshot item =
+                            observation.World.ElectronicObjects[i];
+
+                       /* Debug.Log(
+                            "[SPARK AI OBJECT CANDIDATE] " +
+                            "Name=" + item.Name +
+                            " | Active=" + item.Active +
+                            " | ElectricalEnabled=" + item.ElectricalEnabled +
+                            " | Conduction=" + item.ConductionState +
+                            " | Current=" + item.Current);*/
+                    }
+                }
 
 
-    if (looksLikeTerminalQuestion)
-    {
-        SparkAITerminalSnapshot terminalTarget;
+                for (int i = 0;
+                     i < observation.World.ElectronicObjects.Count;
+                     i++)
+                {
+                    SparkAIElectronicObjectSnapshot candidate =
+                        observation.World.ElectronicObjects[i];
 
-        if (SparkAITerminalQuestionResolver.TryFindTerminal(
+                    if (string.IsNullOrWhiteSpace(candidate.Name))
+                        continue;
+
+                    bool nameMatches =
+                        explicitlyAsksAboutLed
+                            ? ContainsAny(
+                                Normalize(candidate.Name),
+                                "led",
+                                "light emitting diode")
+                            : explicitlyAsksAboutBulb
+                                ? ContainsAny(
+                                    Normalize(candidate.Name),
+                                    "bulb",
+                                    "lamp")
+                                : false;
+
+                    if (!nameMatches)
+                        continue;
+
+                    stateTarget = candidate;
+                    foundStateTarget = true;
+                    break;
+                }
+
+                if (!foundStateTarget)
+                {
+                    return explicitlyAsksAboutLed
+                        ? "I cannot identify an LED in the current circuit snapshot."
+                        : "I cannot identify the requested light component in the current circuit snapshot.";
+                }
+
+                return BuildLedStateAnswer(stateTarget);
+            }
+
+
+           
+        // ============================================================
+        // LIVE COMPONENT STATE QUESTIONS
+        // Must run before educational knowledge resolution.
+        // ============================================================
+
+      /*  bool asksWhetherLedIsOn =
+            ContainsAny(
+                normalizedQuestion,
+
+                // LED state
+                "is led on",
+                "is the led on",
+                "led on",
+                "is led off",
+                "is the led off",
+                "led off",
+
+                // LED operation / illumination
+                "is the led working",
+                "is led working",
+                "does the led work",
+                "is the led illuminated",
+                "is led illuminated",
+                "is the led lighting",
+                "is the led lit",
+                "is led lit",
+                "is the led glowing",
+                "is led glowing",
+                "is the led turning on",
+                "did the led turn on",
+                "why is the led not glowing",
+
+                // Bulb / lamp state
+                "is the bulb on",
+                "is bulb on",
+                "is the bulb off",
+                "is bulb off",
+                "is the bulb working",
+                "is the bulb lit",
+                "is the bulb glowing",
+                "is the lamp on",
+                "is lamp on",
+                "is the lamp off",
+                "is the lamp working",
+                "is the lamp lit");
+*/
+
+            // ============================================================
+            // 1. AUTHORITATIVE LEVEL STATUS
+            // ============================================================
+
+            bool asksLevelStatus =
+                ContainsAny(
+                    normalizedQuestion,
+                    "did i complete the level",
+                    "did i complete level",
+                    "have i completed the level",
+                    "have i completed level",
+                    "is the level complete",
+                    "is level complete",
+                    "is the level completed",
+                    "is level completed",
+                    "level complete",
+                    "level completed",
+                    "level status",
+                    "level progress",
+                    "did i win",
+                    "have i won",
+                    "am i finished",
+                    "is this level finished",
+                    "is level finished");
+
+            bool asksCompletionTargetVoltage =
+                ContainsAny(
+                    normalizedQuestion,
+                    "target voltage at completion",
+                    "voltage at completion",
+                    "target voltage when completed",
+                    "voltage when completed");
+
+            if (asksLevelStatus)
+            {
+                if (observation.World.Level.Completed)
+                {
+                    return BuildCompletedLevelAnswer(
+                        normalizedQuestion,
+                        observation);
+                }
+
+                return
+                    "The current level is not marked as completed yet. " +
+                    "Keep working until the level's actual completion " +
+                    "conditions are satisfied.";
+            }
+
+            if (asksCompletionTargetVoltage)
+            {
+                if (observation.World.Level.Completed)
+                {
+                    return BuildCompletedLevelAnswer(
+                        normalizedQuestion,
+                        observation);
+                }
+
+                return
+                    "The level has not been completed yet, so there is " +
+                    "no completed-level target voltage to report.";
+            }
+
+            // ============================================================
+            // 2. QUESTION CLASSIFICATION
+            // ============================================================
+
+            bool isMeasurementQuestion =
+                SparkAIKnowledgeQuestionResolver.Resolve(question).Type ==
+                SparkAIKnowledgeQuestionType.Measurement;
+
+            bool isCalculationQuestion =
+                normalizedQuestion.Contains("calculate") ||
+                normalizedQuestion.Contains("ohm's law") ||
+                normalizedQuestion.Contains("ohms law");
+
+            // ============================================================
+            // 3. SPECIFIC TERMINAL QUESTIONS
+            // ============================================================
+
+            bool looksLikeTerminalQuestion =
+                ContainsAny(
+                    normalizedQuestion,
+                    "terminal",
+                    "anode",
+                    "cathode",
+                    "positive side",
+                    "negative side",
+                    "positive terminal",
+                    "negative terminal",
+                    "pin",
+                    "connected to",
+                    "connect to",
+                    "where does",
+                    "where is connected");
+
+            if (looksLikeTerminalQuestion)
+            {
+                SparkAITerminalSnapshot terminalTarget;
+
+                if (SparkAITerminalQuestionResolver.TryFindTerminal(
+                        question,
+                        observation.World,
+                        out terminalTarget))
+                {
+                    Debug.Log(
+                        "[SPARK AI TERMINAL DEBUG] " +
+                        "Terminal=" + terminalTarget.Name +
+                        " | Owner=" + terminalTarget.OwnerName +
+                        " | Polarity=" + terminalTarget.Polarity +
+                        " | EffectivePolarity=" + terminalTarget.EffectivePolarity +
+                        " | InstanceID=" + terminalTarget.InstanceId);
+
+                    return BuildTerminalAnswer(
+                        question,
+                        observation);
+                }
+            }
+
+            // ============================================================
+            // 4. LED POLARITY QUESTIONS
+            // ============================================================
+
+            bool mentionsLed =
+                ContainsAny(
+                    normalizedQuestion,
+                    "led",
+                    "light emitting diode");
+
+            bool asksLedPolarity =
+                ContainsAny(
+                    normalizedQuestion,
+                    "correct polarity",
+                    "wrong polarity",
+                    "reversed polarity",
+                    "reverse polarity",
+                    "led polarity",
+                    "led connected correctly",
+                    "connected with correct polarity",
+                    "connected with the correct polarity",
+                    "led backwards",
+                    "led backward");
+
+            if (mentionsLed && asksLedPolarity)
+            {
+                return BuildObjectPolarityAnswer(
+                    question,
+                    observation);
+            }
+        // ============================================================
+        // 5. RESOLVE THE LIVE ELECTRONIC OBJECT
+        // ============================================================
+
+        SparkAIElectronicObjectSnapshot objectTarget;
+
+        bool hasObjectTarget =
+            SparkAIObjectQuestionResolver.TryFindObject(
                 question,
                 observation.World,
-                out terminalTarget))
+                out objectTarget);
+
+                
+
+        bool asksObjectProblem =
+            IsAskingWhyNotWorking(normalizedQuestion) ||
+            ContainsAny(
+                normalizedQuestion,
+                "what is wrong",
+                "what's wrong",
+                "whats wrong",
+                "what is the problem",
+                "problem",
+                "issue",
+                "why is",
+                "why isn't",
+                "why isnt",
+                "why does",
+                "why doesn't",
+                "why doesnt",
+                "not working",
+                "doesn't work",
+                "doesnt work",
+                "not on",
+                "isn't on",
+                "isnt on",
+                "is not on",
+                "not turning on",
+                "not lighting",
+                "not lighting up",
+                "not glowing",
+                "not conducting",
+                "not receiving power",
+                "not powered",
+                "won't turn on",
+                "will not turn on",
+                "does not light",
+                "doesn't light");
+
+        // Explicit LED fallback if name matching did not resolve it.
+       
+        // Explicit LED diagnosis target.
+        // Never diagnose an unrelated object when the player
+        // explicitly asks why an LED is not working.
+        if (mentionsLed && asksObjectProblem)
         {
-            Debug.Log(
-                "[SPARK AI TERMINAL DEBUG] " +
-                "Terminal=" + terminalTarget.Name +
-                " | Owner=" + terminalTarget.OwnerName +
-                " | Polarity=" + terminalTarget.Polarity +
-                " | EffectivePolarity=" + terminalTarget.EffectivePolarity +
-                " | InstanceID=" + terminalTarget.InstanceId);
+            bool resolvedTargetIsLed =
+                hasObjectTarget &&
+                !string.IsNullOrWhiteSpace(objectTarget.Name) &&
+                (
+                    objectTarget.Name.IndexOf(
+                        "LED",
+                        System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    objectTarget.Name.IndexOf(
+                        "light emitting diode",
+                        System.StringComparison.OrdinalIgnoreCase) >= 0
+                );
 
-            return BuildTerminalAnswer(
-                question,
-                observation);
+            if (!resolvedTargetIsLed)
+            {
+                objectTarget = default;
+                hasObjectTarget = false;
+
+                for (int i = 0;
+                     i < observation.World.ElectronicObjects.Count;
+                     i++)
+                {
+                    SparkAIElectronicObjectSnapshot candidate =
+                        observation.World.ElectronicObjects[i];
+
+                    if (string.IsNullOrWhiteSpace(candidate.Name))
+                        continue;
+
+                    bool candidateIsLed =
+                        candidate.Name.IndexOf(
+                            "LED",
+                            System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        candidate.Name.IndexOf(
+                            "light emitting diode",
+                            System.StringComparison.OrdinalIgnoreCase) >= 0;
+
+                    if (!candidateIsLed)
+                        continue;
+
+                    objectTarget = candidate;
+                    hasObjectTarget = true;
+
+                    if (logQuestions)
+                    {
+                        Debug.Log(
+                            "[SPARK AI LED DIAGNOSIS] Target=" +
+                            candidate.Name);
+                    }
+
+                    break;
+                }
+            }
         }
+
+
+        Debug.Log(
+            "[SPARK AI OBJECT ROUTING] Question=" + question +
+            " | HasObjectTarget=" + hasObjectTarget +
+            " | ObjectName=" +
+            (hasObjectTarget ? objectTarget.Name : "<NONE>"));          
+
+        // ============================================================
+        // 6. LIVE OBJECT DIAGNOSIS
+        // ============================================================
+        
+
+if (asksWhetherLedIsOn && !asksLedDiagnosis)
+{
+    // Simple LED state questions are handled by
+    // BuildLedStateAnswer earlier in this method.
+    // Do not route them into generic problem diagnosis.
+}
+else if (hasObjectTarget && asksObjectProblem)
+{
+    string objectName =
+        string.IsNullOrWhiteSpace(objectTarget.Name)
+            ? "That component"
+            : objectTarget.Name;
+
+    if (logQuestions)
+    {
+        Debug.Log(
+            "[SPARK AI DIAGNOSIS ROUTING] " +
+            "Question=" + normalizedQuestion +
+            " | Object=" + objectName +
+            " | AsksAboutReverseBias=" + asksAboutReverseBias +
+            " | AsksAboutLedNotGlowing=" + asksAboutLedNotGlowing);
     }
 
-// ============================================================
-// LED POLARITY QUESTIONS
-// ============================================================
-
-bool asksLedPolarity =
-    ContainsAny(
-        normalizedQuestion,
-        "correct polarity",
-        "wrong polarity",
-        "reversed polarity",
-        "reverse polarity",
-        "led polarity",
-        "led connected correctly");
-
-if (asksLedPolarity &&
-    ContainsAny(
-        normalizedQuestion,
-        "led",
-        "light emitting diode"))
-{
-    return BuildObjectPolarityAnswer(
-        question,
-        observation);
-}
-
-    /*
-     * ============================================================
-     * 2. SPECIFIC ELECTRONIC OBJECT QUESTION
-     * ============================================================
-     *
-     * Resolve the actual live object before general knowledge.
-     *
-     * Examples:
-     *
-     * "Why isn't LED_1 working?"
-     * "What voltage is across Resistor_1K?"
-     * "What is wrong with Switch_1?"
-     */
-    SparkAIElectronicObjectSnapshot objectTarget;
-
-    bool hasObjectTarget =
-        SparkAIObjectQuestionResolver.TryFindObject(
-            question,
-            observation.World,
-            out objectTarget);
-
-            Debug.Log(
-    "[SPARK AI OBJECT ROUTING] Question=" + question +
-    " | HasObjectTarget=" + hasObjectTarget +
-    " | ObjectName=" +
-    (hasObjectTarget ? objectTarget.Name : "<NONE>"));
-
-
-                // Numerical calculations take priority over matching a named
-    // component, because a calculation may mention a resistor.
-   string calculationAnswer;
-
-// Do not intercept questions about actual live circuit values.
-// These must continue through the live circuit reasoning path.
-bool asksLiveVoltage =
-    ContainsAny(
-        normalizedQuestion,
-        "voltage across",
-        "voltage at",
-        "voltage on");
-
-bool asksLiveCurrent =
-    ContainsAny(
-        normalizedQuestion,
-        "current flowing",
-        "current through",
-        "current in",
-        "how much current");
-
-bool asksLiveCircuitValue =
-    (asksLiveVoltage || asksLiveCurrent) &&
-    ContainsAny(
-        normalizedQuestion,
-        "led",
-        "resistor",
-        "switch",
-        "source",
-        "battery",
-        "circuit",
-        "component",
-        "motor",
-        "lamp",
-        "bulb");
-
-if (!asksLiveCircuitValue &&
-    TryBuildOhmsLawCalculationAnswer(
-        question,
-        out calculationAnswer))
-{
-    return calculationAnswer;
+    return BuildObjectProblemAnswer(
+        objectTarget,
+        objectName,
+        observation,
+        asksAboutReverseBias,
+        asksAboutLedNotGlowing);
 }
 
 
-    /*
-     * ============================================================
-     * 3. LEVEL COMPLETION HAS HIGHEST PRIORITY
-     * ============================================================
-     *
-     * Once the authoritative level is completed, do not allow an
-     * old context such as OpenCircuit to override the completed
-     * state.
-     */
-   bool asksLevelCompletion =
-    ContainsAny(
-        normalizedQuestion,
-        "did i complete",
-        "have i completed",
-        "is the level complete",
-        "is the level completed",
-        "did i win",
-        "have i won",
-        "level completion",
-        "level result",
-        "target voltage at completion",
-        "voltage at completion");
+            // ============================================================
+            // 7. LIVE MEASUREMENT CLASSIFICATION
+            // ============================================================
 
-if (observation.World.Level.Completed &&
-    asksLevelCompletion)
-{
-    return BuildCompletedLevelAnswer(
-        normalizedQuestion,
-        observation);
-}
+        bool explicitCalculation =
+            SparkAIQuestionIntentResolver.IsExplicitCalculationQuestion(
+                question) ||
+            SparkAIKnowledgeQuestionResolver.Resolve(question).Type ==
+                SparkAIKnowledgeQuestionType.Calculation;
 
-    
+        bool asksLiveVoltage =
+            ContainsAny(
+                normalizedQuestion,
+                "voltage across",
+                "voltage at",
+                "voltage on",
+                "what voltage",
+                "how much voltage");
 
-   /*
- * ============================================================
- * OBJECT-AWARE QUESTIONS
- * ============================================================
- *
- * Route live component questions to BuildObjectAnswer().
- * Measurement and calculation questions are handled by their
- * dedicated answer paths instead.
- */
+        bool asksLiveCurrent =
+            ContainsAny(
+                normalizedQuestion,
+                "current flowing",
+                "current through",
+                "current in",
+                "how much current",
+                "what current");
 
-bool isLiveObjectMeasurement =
-    hasObjectTarget &&
-    asksLiveCircuitValue;
+        bool mentionsCircuitObject =
+            ContainsAny(
+                normalizedQuestion,
+                "led",
+                "resistor",
+                "switch",
+                "source",
+                "battery",
+                "circuit",
+                "component",
+                "motor",
+                "lamp",
+                "bulb");
 
-if ((!isMeasurementQuestion || isLiveObjectMeasurement) &&
-    !isCalculationQuestion &&
-    hasObjectTarget &&
-    ContainsAny(
-        normalizedQuestion,
-        "why",
-        "working",
-        "work",
-        "wrong",
-        "problem",
-        "voltage",
-        "current",
-        "power",
-        "receiving",
-        "powered",
-        "powering",
-        "conducting",
-        "on",
-        "off"))
-{
-    return BuildObjectAnswer(
-        question,
-        observation);
-}
+        bool asksLiveCircuitValue =
+            (asksLiveVoltage || asksLiveCurrent) &&
+            mentionsCircuitObject;
 
+        // A calculation using supplied values must not be blocked just
+        // because it mentions a component or says "current through".
+        bool explicitLiveRequest =
+            IsExplicitLiveValueQuestion(normalizedQuestion);
 
-/*
- * ============================================================
- * EDUCATIONAL MEASUREMENT QUESTIONS
- * ============================================================
- *
- * Answer measurement questions from the knowledge database
- * before object-aware logic can return a component definition.
- */
+        if (explicitCalculation && !explicitLiveRequest)
+        {
+            string explicitCalculationAnswer;
 
-if (isMeasurementQuestion &&
-    knowledgeReasoner != null)
-{
-    SparkAIKnowledgeReasoningResult measurementResult;
-
-    if (knowledgeReasoner.TryExplainQuestion(
-            question,
-            out measurementResult))
-    {
-        string measurementAnswer =
-            BuildKnowledgeReasonedAnswer(measurementResult);
-
-        if (!string.IsNullOrWhiteSpace(measurementAnswer))
-            return measurementAnswer;
-    }
-}
-
-
-    /*
- * ============================================================
- * 5. GENERAL KNOWLEDGE
- * ============================================================
- *
- * Only answer from general knowledge here when the question
- * is clearly educational, not asking for live circuit diagnosis.
- */
-
-bool isLiveCircuitQuestion =
-    ContainsAny(
-        normalizedQuestion,
-        // Circuit diagnosis
-        "why isn't",
-        "why is not",
-        "why doesn't",
-        "why does not",
-        "not working",
-        "isn't working",
-        "doesn't work",
-        "not lighting",
-        "not turning on",
-        "what is wrong",
-        "what's wrong",
-        "where is the problem",
-        "find the problem",
-
-        // General live measurements
-        "what voltage",
-        "how much voltage",
-        "how much current",
-        "how much power",
-        "is it connected",
-        "is it conducting",
-
-        // Voltage across a live component
-        "voltage across",
-        "voltage at",
-        "voltage on",
-        "voltage across the",
-        "voltage at the",
-        "voltage on the",
-        "measure the voltage across",
-        "measure voltage across",
-        "measure voltage at",
-        "check voltage across",
-        "check voltage at",
-
-        // Current through a live component
-        "current flowing",
-        "current through",
-        "current in the",
-        "current through the",
-        "how much current is flowing",
-        "measure current through",
-        "measure the current through",
-        "check current through",
-
-        // Power in a live circuit
-        "power consumed by",
-        "power used by",
-        "power dissipated by",
-        "power of the led",
-        "power of the resistor",
-
-        // Live component state
-        "is the led on",
-        "is the led off",
-        "is the resistor conducting",
-        "is the switch open",
-        "is the switch closed",
-        "is the component powered",
-        "is the component receiving power",
-        "is the battery supplying",
-        "is the source supplying");
-
-if (!isLiveCircuitQuestion)
-{
-    SparkAIKnowledgeReasoningResult knowledgeResult;
-
-    if (knowledgeReasoner != null &&
-        knowledgeReasoner.TryExplainQuestion(
-            question,
-            out knowledgeResult))
-    {
-        string knowledgeAnswer =
-            BuildKnowledgeReasonedAnswer(knowledgeResult);
-
-        if (!string.IsNullOrWhiteSpace(knowledgeAnswer))
-            return knowledgeAnswer;
-    }
-}
-
-    /*
-     * ============================================================
-     * 6. QUESTION INTENT
-     * ============================================================
-     *
-     * The intent resolver determines what the player is asking.
-     *
-     * The answer still comes from authoritative Project Spark
-     * runtime state.
-     */
-    switch (intent.Intent)
-    {
-        case SparkAIQuestionIntent.WhyNotWorking:
-
-            return BuildWhyNotWorkingAnswer(
-                observation,
-                context);
-
-
-        case SparkAIQuestionIntent.FindProblem:
-
-            return BuildProblemAnswer(
-                observation,
-                context);
-
-
-        case SparkAIQuestionIntent.NextStep:
-
-            return BuildNextStepAnswer(
-                observation,
-                context);
-
-
-        case SparkAIQuestionIntent.Voltage:
-
-            return BuildVoltageAnswer(
-                observation);
-
-
-        case SparkAIQuestionIntent.Current:
-
-            return BuildCurrentAnswer(
-                observation);
-
-
-        case SparkAIQuestionIntent.Power:
-
-            return BuildPowerAnswer(
-                observation);
-
-
-        case SparkAIQuestionIntent.Source:
-
-            return BuildSourceAnswer(
-                observation);
-
-
-        case SparkAIQuestionIntent.Polarity:
-
-            return BuildPolarityAnswer(
-                observation);
-
-
-        case SparkAIQuestionIntent.CircuitPath:
-
-            return BuildPathAnswer(
-                observation,
-                context);
-
-
-        case SparkAIQuestionIntent.Switch:
-
-            return BuildSwitchAnswer(
-                observation,
-                context);
-
-
-        case SparkAIQuestionIntent.Explanation:
-
-            return BuildGeneralAnswer(
-                observation,
-                context);
-
-
-        case SparkAIQuestionIntent.Unknown:
-        default:
-
-            /*
-             * ====================================================
-             * FALLBACK KEYWORD CHECKS
-             * ====================================================
-             *
-             * Keeps the system robust when the intent resolver
-             * cannot confidently classify an unusual question.
-             */
-
-            if (IsAskingWhyNotWorking(
-                    normalizedQuestion))
+            if (TryBuildOhmsLawCalculationAnswer(
+                    question,
+                    out explicitCalculationAnswer))
             {
-                return BuildWhyNotWorkingAnswer(
-                    observation,
-                    context);
+                return explicitCalculationAnswer;
+            }
+        }
+
+        if (!explicitCalculation &&
+            !asksLiveCircuitValue &&
+            !isMeasurementQuestion)
+        {
+            
+
+            // ============================================================
+            // 8. OHM'S LAW CALCULATION
+            // Do not intercept actual live circuit measurements.
+            // ============================================================
+
+            string calculationAnswer;
+
+            if (TryBuildOhmsLawCalculationAnswer(
+                    question,
+                    out calculationAnswer))
+            {
+                return calculationAnswer;
+            }
+        }
+
+            // ============================================================
+            // 9. COMPLETED LEVEL QUESTIONS
+            // Additional completion wording.
+            // ============================================================
+
+            bool asksLevelCompletion =
+                ContainsAny(
+                    normalizedQuestion,
+                    "did i complete",
+                    "have i completed",
+                    "is the level complete",
+                    "is the level completed",
+                    "did i win",
+                    "have i won",
+                    "level completion",
+                    "level result");
+
+            if (observation.World.Level.Completed &&
+                asksLevelCompletion)
+            {
+                return BuildCompletedLevelAnswer(
+                    normalizedQuestion,
+                    observation);
             }
 
+            // ============================================================
+            // 10. OBJECT-AWARE LIVE QUESTIONS
+            // ============================================================
 
-            if (ContainsAny(
+            bool isLiveObjectMeasurement =
+                hasObjectTarget && asksLiveCircuitValue;
+
+            bool asksObjectStateOrValue =
+                ContainsAny(
                     normalizedQuestion,
-                    "where is the problem",
-                    "what is wrong",
-                    "whats wrong",
-                    "where is wrong",
-                    "find the problem",
-                    "find problem",
-                    "what should i fix"))
-            {
-                return BuildProblemAnswer(
-                    observation,
-                    context);
-            }
-
-
-            if (ContainsAny(
-                    normalizedQuestion,
+                    "why",
+                    "working",
+                    "work",
+                    "wrong",
+                    "problem",
                     "voltage",
-                    "volt",
-                    "how many volts"))
-            {
-                return BuildVoltageAnswer(
-                    observation);
-            }
-
-
-            if (ContainsAny(
-                    normalizedQuestion,
                     "current",
-                    "amps",
-                    "ampere",
-                    "amperes"))
-            {
-                return BuildCurrentAnswer(
-                    observation);
-            }
-
-
-            if (ContainsAny(
-                    normalizedQuestion,
                     "power",
-                    "watts",
-                    "watt"))
+                    "receiving",
+                    "powered",
+                    "powering",
+                    "conducting",
+                    "on",
+                    "off",
+                    "active",
+                    "inactive",
+                    "connected",
+                    "disconnected",
+                    "resistance",
+                    "resistive");
+
+            if ((!isMeasurementQuestion || isLiveObjectMeasurement) &&
+                !isCalculationQuestion &&
+                hasObjectTarget &&
+                asksObjectStateOrValue)
             {
-                return BuildPowerAnswer(
+                return BuildObjectAnswer(
+                    question,
                     observation);
             }
 
+            // ============================================================
+            // 11. EDUCATIONAL MEASUREMENT QUESTIONS
+            // ============================================================
 
-            if (ContainsAny(
-                    normalizedQuestion,
-                    "source",
-                    "battery",
-                    "power supply"))
+            if (isMeasurementQuestion &&
+                knowledgeReasoner != null)
             {
-                return BuildSourceAnswer(
-                    observation);
+                SparkAIKnowledgeReasoningResult measurementResult;
+
+                if (knowledgeReasoner.TryExplainQuestion(
+                        question,
+                        out measurementResult))
+                {
+                    string measurementAnswer =
+                        BuildKnowledgeReasonedAnswer(measurementResult);
+
+                    if (!string.IsNullOrWhiteSpace(measurementAnswer))
+                    {
+                        return measurementAnswer;
+                    }
+                }
+            }
+
+            // ============================================================
+            // 12. IDENTIFY LIVE CIRCUIT QUESTIONS
+            // Prevent generic educational answers from intercepting them.
+            // ============================================================
+
+            bool isLiveCircuitQuestion =
+                ContainsAny(
+                    normalizedQuestion,
+
+                    // Circuit diagnosis
+                    "why isn't",
+                    "why is not",
+                    "why doesn't",
+                    "why does not",
+                    "not working",
+                    "isn't working",
+                    "is not working",
+                    "doesn't work",
+                    "does not work",
+                    "not lighting",
+                    "not lighting up",
+                    "not turning on",
+                    "not on",
+                    "isn't on",
+                    "is not on",
+                    "not glowing",
+                    "what is wrong",
+                    "what's wrong",
+                    "where is the problem",
+                    "find the problem",
+                    "problem with",
+
+                    // Live measurements
+                    "what voltage",
+                    "how much voltage",
+                    "how much current",
+                    "how much power",
+                    "is it connected",
+                    "is it conducting",
+
+                    // Voltage
+                    "voltage across",
+                    "voltage at",
+                    "voltage on",
+                    "measure voltage across",
+                    "measure the voltage across",
+                    "measure voltage at",
+                    "check voltage across",
+                    "check voltage at",
+
+                    // Current
+                    "current flowing",
+                    "current through",
+                    "current in the",
+                    "how much current is flowing",
+                    "measure current through",
+                    "measure the current through",
+                    "check current through",
+
+                    // Power
+                    "power consumed by",
+                    "power used by",
+                    "power dissipated by",
+                    "power of the led",
+                    "power of the resistor",
+
+                    // Live component state
+                    "is the led on",
+                    "is the led off",
+                    "is the resistor conducting",
+                    "is the switch open",
+                    "is the switch closed",
+                    "is the component powered",
+                    "is the component receiving power",
+                    "is the battery supplying",
+                    "is the source supplying");
+
+            // ============================================================
+            // 13. GENERAL KNOWLEDGE
+            // Only for questions that are not live circuit diagnosis.
+            // ============================================================
+
+            if (!isLiveCircuitQuestion)
+            {
+                SparkAIKnowledgeReasoningResult knowledgeResult;
+
+                if (knowledgeReasoner != null &&
+                    knowledgeReasoner.TryExplainQuestion(
+                        question,
+                        out knowledgeResult))
+                {
+                    string knowledgeAnswer =
+                        BuildKnowledgeReasonedAnswer(knowledgeResult);
+
+                    if (!string.IsNullOrWhiteSpace(knowledgeAnswer))
+                    {
+                        return knowledgeAnswer;
+                    }
+                }
+            }
+
+            // ============================================================
+            // 14. QUESTION INTENT
+            // ============================================================
+
+            switch (intent.Intent)
+            {
+                case SparkAIQuestionIntent.WhyNotWorking:
+                    return BuildWhyNotWorkingAnswer(
+                        observation,
+                        context);
+
+                case SparkAIQuestionIntent.FindProblem:
+                    return BuildProblemAnswer(
+                        observation,
+                        context);
+
+                case SparkAIQuestionIntent.NextStep:
+                    return BuildNextStepAnswer(
+                        observation,
+                        context);
+
+                case SparkAIQuestionIntent.Voltage:
+                    return BuildVoltageAnswer(observation);
+
+                case SparkAIQuestionIntent.Current:
+                    return BuildCurrentAnswer(observation);
+
+                case SparkAIQuestionIntent.Power:
+                    return BuildPowerAnswer(observation);
+
+                case SparkAIQuestionIntent.Source:
+                    return BuildSourceAnswer(observation);
+
+                case SparkAIQuestionIntent.Polarity:
+                    return BuildPolarityAnswer(observation);
+
+                case SparkAIQuestionIntent.CircuitPath:
+                    return BuildPathAnswer(
+                        observation,
+                        context);
+
+                case SparkAIQuestionIntent.Switch:
+                    return BuildSwitchAnswer(
+                        observation,
+                        context);
+
+                case SparkAIQuestionIntent.Calculation:
+                    string answer;
+
+                    if (TryBuildOhmsLawCalculationAnswer(
+                            question,
+                            out answer))
+                    {
+                        return answer;
+                    }
+                    return
+                        "I can calculate current, voltage, or resistance using " +
+                        "Ohm's law. Please provide the required electrical values.";
+
+                case SparkAIQuestionIntent.Explanation:
+                    return BuildGeneralAnswer(
+                        observation,
+                        context);
+
+                case SparkAIQuestionIntent.Unknown:
+                default:
+
+                    // -----------------------------------------------
+                    // Fallback: object problem
+                    // -----------------------------------------------
+
+                    if (hasObjectTarget &&
+                        asksObjectProblem)
+                    {
+                        return BuildObjectAnswer(
+                            question,
+                            observation);
+                    }
+
+                    if (IsAskingWhyNotWorking(normalizedQuestion))
+                    {
+                        return BuildWhyNotWorkingAnswer(
+                            observation,
+                            context);
+                    }
+
+                    // -----------------------------------------------
+                    // Fallback: general problem
+                    // -----------------------------------------------
+
+                    if (ContainsAny(
+                            normalizedQuestion,
+                            "where is the problem",
+                            "what is wrong",
+                            "whats wrong",
+                            "where is wrong",
+                            "find the problem",
+                            "find problem",
+                            "what should i fix"))
+                    {
+                        return BuildProblemAnswer(
+                            observation,
+                            context);
+                    }
+
+                    
+
+                    // -----------------------------------------------
+                    // Fallback: voltage
+                    // -----------------------------------------------
+
+                    if (ContainsAny(
+                            normalizedQuestion,
+                            "voltage",
+                            "volt",
+                            "how many volts"))
+                    {
+                        return BuildVoltageAnswer(observation);
+                    }
+
+                    // -----------------------------------------------
+                    // Fallback: current
+                    // -----------------------------------------------
+
+                    if (ContainsAny(
+                            normalizedQuestion,
+                            "current",
+                            "amps",
+                            "ampere",
+                            "amperes"))
+                    {
+                        return BuildCurrentAnswer(observation);
+                    }
+
+                    // -----------------------------------------------
+                    // Fallback: power
+                    // -----------------------------------------------
+
+                    if (ContainsAny(
+                            normalizedQuestion,
+                            "power",
+                            "watts",
+                            "watt"))
+                    {
+                        return BuildPowerAnswer(observation);
+                    }
+
+                    // -----------------------------------------------
+                    // Fallback: source
+                    // -----------------------------------------------
+
+                    if (ContainsAny(
+                            normalizedQuestion,
+                            "source",
+                            "battery",
+                            "power supply"))
+                    {
+                        return BuildSourceAnswer(observation);
+                    }
+
+                    // -----------------------------------------------
+                    // Fallback: polarity
+                    // -----------------------------------------------
+
+                    if (ContainsAny(
+                            normalizedQuestion,
+                            "polarity",
+                            "positive",
+                            "negative",
+                            "anode",
+                            "cathode"))
+                    {
+                        return BuildPolarityAnswer(observation);
+                    }
+
+                    // -----------------------------------------------
+                    // Fallback: circuit path
+                    // -----------------------------------------------
+
+                    if (ContainsAny(
+                            normalizedQuestion,
+                            "complete",
+                            "closed circuit",
+                            "open circuit",
+                            "circuit path",
+                            "path"))
+                    {
+                        return BuildPathAnswer(
+                            observation,
+                            context);
+                    }
+
+                    // -----------------------------------------------
+                    // Fallback: switch
+                    // -----------------------------------------------
+
+                    if (ContainsAny(
+                            normalizedQuestion,
+                            "switch",
+                            "switched",
+                            "turn on",
+                            "turn off"))
+                    {
+                        return BuildSwitchAnswer(
+                            observation,
+                            context);
+                    }
+
+                    return BuildGeneralAnswer(
+                        observation,
+                        context);
+            }
+        }
+
+
+            private static bool IsExplicitLiveValueQuestion(string question)
+            {
+                return ContainsAny(
+                    question,
+                    "right now",
+                    "currently",
+                    "at the moment",
+                    "in the current circuit",
+                    "in my circuit",
+                    "in this circuit",
+                    "what does the meter read",
+                    "what is the meter reading",
+                    "what is the live voltage",
+                    "what is the live current",
+                    "read the voltage",
+                    "read the current");
             }
 
 
-            if (ContainsAny(
-                    normalizedQuestion,
-                    "polarity",
-                    "positive",
-                    "negative",
-                    "anode",
-                    "cathode"))
-            {
-                return BuildPolarityAnswer(
-                    observation);
-            }
 
-
-            if (ContainsAny(
-                    normalizedQuestion,
-                    "complete",
-                    "closed circuit",
-                    "open circuit",
-                    "circuit path",
-                    "path"))
-            {
-                return BuildPathAnswer(
-                    observation,
-                    context);
-            }
-
-
-            if (ContainsAny(
-                    normalizedQuestion,
-                    "switch",
-                    "switched",
-                    "turn on",
-                    "turn off"))
-            {
-                return BuildSwitchAnswer(
-                    observation,
-                    context);
-            }
-
-
-            return BuildGeneralAnswer(
-                observation,
-                context);
-    }
-}
 
 private string BuildKnowledgeReasonedAnswer(
     SparkAIKnowledgeReasoningResult result)
@@ -1678,9 +2385,15 @@ private string BuildKnowledgeReasonedAnswer(
             answer = result.Measurement;
             break;
 
+        case SparkAIKnowledgeQuestionType.Calculation:
+            answer = result.Summary;
+            break;
+
         default:
             answer = result.Definition;
             break;
+
+
     }
 
     // Fall back only if the selected answer field is empty.
@@ -1690,10 +2403,11 @@ private string BuildKnowledgeReasonedAnswer(
     if (string.IsNullOrWhiteSpace(answer))
         return string.Empty;
 
-        if (result.QuestionType == SparkAIKnowledgeQuestionType.Measurement)
-        {
-            return answer;
-        }
+        if (result.QuestionType == SparkAIKnowledgeQuestionType.Measurement ||
+    result.QuestionType == SparkAIKnowledgeQuestionType.Safety)
+{
+    return answer;
+}
 
     System.Text.StringBuilder builder =
         new System.Text.StringBuilder(answer);
@@ -2261,39 +2975,92 @@ private string BuildKnowledgeReasonedAnswer(
                 "why isnt the led");
         }
 
+        
         private static bool ContainsAny(
             string text,
             params string[] values)
         {
-            if (string.IsNullOrEmpty(text))
+            if (string.IsNullOrWhiteSpace(text) || values == null)
                 return false;
 
             for (int i = 0; i < values.Length; i++)
             {
-                if (text.Contains(values[i]))
+                if (ContainsPhrase(text, values[i]))
                     return true;
             }
 
             return false;
         }
 
-        private static string Normalize(
-            string text)
+        private static bool ContainsPhrase(
+            string text,
+            string phrase)
+        {
+            if (string.IsNullOrEmpty(text) ||
+                string.IsNullOrEmpty(phrase))
+                return false;
+
+            int start = 0;
+
+            while (start < text.Length)
+            {
+                int index = text.IndexOf(
+                    phrase,
+                    start,
+                    StringComparison.OrdinalIgnoreCase);
+
+                if (index < 0)
+                    return false;
+
+                int end = index + phrase.Length;
+
+                bool leftBoundary =
+                    index == 0 ||
+                    !IsWordCharacter(text[index - 1]);
+
+                bool rightBoundary =
+                    end >= text.Length ||
+                    !IsWordCharacter(text[end]);
+
+                if (leftBoundary && rightBoundary)
+                    return true;
+
+                start = index + 1;
+            }
+
+            return false;
+        }
+
+        private static bool IsWordCharacter(char value)
+        {
+            return char.IsLetterOrDigit(value) || value == '_';
+        }
+
+        private static string Normalize(string text)
         {
             if (string.IsNullOrWhiteSpace(text))
                 return string.Empty;
 
-            return text
-                .Trim()
-                .ToLowerInvariant();
+            return text.Trim()
+                .ToLowerInvariant()
+                .Replace('\u2018', '\'')
+                .Replace('\u2019', '\'')
+                .Replace('\u201C', '"')
+                .Replace('\u201D', '"')
+                .Replace('\u2013', '-')
+                .Replace('\u2014', '-');
         }
 
-        private static string FormatValue(
-            float value,
-            string unit)
+      
+        
+        private static string FormatValue(float value, string unit)
         {
-            return
-                value.ToString("0.###") +
+            if (float.IsNaN(value) || float.IsInfinity(value))
+                return "unavailable";
+
+            return value.ToString(
+                "0.###",
+                CultureInfo.InvariantCulture) +
                 " " +
                 unit;
         }
@@ -2317,6 +3084,85 @@ private string BuildKnowledgeReasonedAnswer(
                 answer,
                 SparkAIVoiceTextType.Explanation);
         } 
+
+
+
+        
+
+private string BuildLedStateAnswer(
+    SparkAIElectronicObjectSnapshot target)
+{
+    string objectName =
+        string.IsNullOrWhiteSpace(target.Name)
+            ? "The LED"
+            : target.Name;
+
+    if (!target.Active)
+    {
+        return objectName +
+               " is inactive in the current scene.";
+    }
+
+    if (!target.ElectricalEnabled)
+    {
+        return objectName +
+               " has its electrical behavior disabled.";
+    }
+
+    if (float.IsNaN(target.Current) ||
+        float.IsInfinity(target.Current))
+    {
+        return objectName +
+               " has an invalid current reading. " +
+               "I cannot reliably determine its operating state.";
+    }
+
+    if (string.Equals(
+            target.ConductionState,
+            "Conducting",
+            StringComparison.OrdinalIgnoreCase))
+    {
+        if (Math.Abs(target.Current) > 0.000001f)
+        {
+            return objectName +
+                   " is electrically conducting, with a reported current of " +
+                   FormatValue(target.Current, "A") +
+                   ". This supports electrical operation, but the electrical " +
+                   "snapshot alone does not confirm that the rendered LED " +
+                   "is visibly illuminated.";
+        }
+
+        return objectName +
+               " reports a conducting state, but its reported current is " +
+               FormatValue(target.Current, "A") +
+               ". The conduction state and current reading disagree, so I " +
+               "cannot reliably confirm illumination.";
+    }
+
+    if (string.Equals(
+            target.ConductionState,
+            "NonConducting",
+            StringComparison.OrdinalIgnoreCase))
+    {
+        return objectName +
+               " is not currently conducting according to the electrical " +
+               "snapshot. Its reported current is " +
+               FormatValue(target.Current, "A") +
+               ".";
+    }
+
+    return objectName +
+           " cannot be confirmed ON or OFF from the available electrical " +
+           "evidence. Its conduction state is " +
+           (string.IsNullOrWhiteSpace(target.ConductionState)
+               ? "unknown"
+               : target.ConductionState) +
+           ", and its reported current is " +
+           FormatValue(target.Current, "A") +
+           ".";
+}
+
+
         // ============================================================
 // LED POLARITY DIAGNOSIS
 // ============================================================
@@ -2405,6 +3251,16 @@ private string BuildObjectPolarityAnswer(
     {
         SparkAITerminalSnapshot terminal =
             world.Terminals[i];
+
+            if (logQuestions)
+{
+    Debug.Log(
+        "[SPARK AI LED TERMINAL SNAPSHOT] " +
+        "ID=" + terminal.InstanceId +
+        " | Name=" + terminal.Name +
+        " | Owner=" + terminal.OwnerName +
+        " | Voltage=" + terminal.Voltage);
+}
 
         if (terminal.InstanceId == anodeId)
         {

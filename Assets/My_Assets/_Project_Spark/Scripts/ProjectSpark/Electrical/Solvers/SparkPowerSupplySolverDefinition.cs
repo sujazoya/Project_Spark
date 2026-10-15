@@ -147,44 +147,70 @@ namespace ProjectSpark.Electrical
         ///
         /// using a generic MNA voltage-source equation.
         /// </summary>
-        public override void Stamp(
-            SparkElectricalComponent component,
-            SparkElectricalSolveContext context)
-        {
-            if (!(component is SparkPowerSupply supply))
-                return;
+        
+public override void Stamp(
+    SparkElectricalComponent component,
+    SparkElectricalSolveContext context)
+{
+    if (!(component is SparkPowerSupply supply))
+        return;
 
-            if (context == null)
-                return;
+    if (context == null)
+        return;
 
-            if (!supply.ElectricalEnabled ||
-                !supply.IsOutputActive)
-            {
-                return;
-            }
+    if (!supply.ElectricalEnabled ||
+        !supply.IsOutputActive)
+    {
+        Debug.Log(
+            $"[POWER SUPPLY STAMP SKIPPED] {supply.name} | " +
+            $"Enabled={supply.ElectricalEnabled} | " +
+            $"Active={supply.IsOutputActive} | " +
+            $"State={supply.State}",
+            supply);
 
-            if (!context.TryGetVoltageSourceIndex(
-                    supply,
-                    out int sourceIndex))
-            {
-                return;
-            }
+        return;
+    }
 
-            if (!TryGetTerminals(
-                    supply,
-                    context.Graph,
-                    out SparkTerminal positiveTerminal,
-                    out SparkTerminal negativeTerminal))
-            {
-                return;
-            }
+    if (!context.TryGetVoltageSourceIndex(
+            supply,
+            out int sourceIndex))
+    {
+        Debug.LogWarning(
+            $"[POWER SUPPLY STAMP FAILED] {supply.name} | " +
+            "No registered voltage-source index.",
+            supply);
 
-            context.AddFixedVoltageSource(
-                positiveTerminal,
-                negativeTerminal,
-                sourceIndex,
-                supply.OutputVoltage);
-        }
+        return;
+    }
+
+    if (!TryGetTerminals(
+            supply,
+            context.Graph,
+            out SparkTerminal positiveTerminal,
+            out SparkTerminal negativeTerminal))
+    {
+        Debug.LogWarning(
+            $"[POWER SUPPLY STAMP FAILED] {supply.name} | " +
+            "Positive or negative terminal is missing.",
+            supply);
+
+        return;
+    }
+
+    Debug.Log(
+        $"[POWER SUPPLY STAMP] {supply.name} | " +
+        $"ConfiguredV={supply.OutputVoltage:F6} | " +
+        $"Active={supply.IsOutputActive} | " +
+        $"SourceIndex={sourceIndex}",
+        supply);
+
+    context.AddFixedVoltageSource(
+        positiveTerminal,
+        negativeTerminal,
+        sourceIndex,
+        supply.OutputVoltage);
+}
+
 
         // ---------------------------------------------------------------------
         // APPLY SOLVED STATE

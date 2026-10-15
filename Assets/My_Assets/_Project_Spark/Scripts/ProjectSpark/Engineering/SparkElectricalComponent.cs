@@ -51,7 +51,17 @@ namespace ProjectSpark.Gameplay
         }
 
         /// <summary>Derived electrical components call this after changing solver inputs.</summary>
-        protected void NotifyElectricalConfigurationChanged() => ElectricalConfigurationChanged?.Invoke();
+        /// 
+        [ContextMenu("Debug/Test Electrical Configuration Event")]
+        protected void NotifyElectricalConfigurationChanged() {
+            Debug.Log(
+        $"[SPARK COMPONENT] Configuration changed | " +
+        $"Component={name} | " +
+        $"Type={GetType().Name} | " +
+        $"InstanceID={GetInstanceID()}",
+        this);
+             
+             ElectricalConfigurationChanged?.Invoke();}
 
         public virtual void ApplyElectricalState(in SparkElectricalState state)
         {

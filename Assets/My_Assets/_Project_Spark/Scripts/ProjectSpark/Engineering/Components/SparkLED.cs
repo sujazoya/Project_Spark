@@ -7,6 +7,9 @@ namespace ProjectSpark.Gameplay
         SparkElectricalComponent,
         ISparkConductiveDevice
     {
+        [Header("LED Visual")]
+        [SerializeField]
+        private GameObject ledHelix;
         [Header("Terminals")]
         [SerializeField]
         private SparkTerminal anodeTerminal;
@@ -49,9 +52,10 @@ namespace ProjectSpark.Gameplay
             onResistance;
 
         public bool IsOn =>
-            ElectricalState.Conduction ==
-            SparkConductionState.Conducting &&
-            ElectricalState.Current > 0f;
+    ElectricalEnabled &&
+    ElectricalState.Conduction ==
+        SparkConductionState.Conducting &&
+    ElectricalState.Current > 0.000001f;
 
         public bool IsOverCurrent =>
             Mathf.Abs(
@@ -65,6 +69,11 @@ namespace ProjectSpark.Gameplay
 
             public float ConductionHysteresis =>
     conductionHysteresis;
+
+    private void OnEnable()
+{
+    RefreshLEDVisual();
+}
 
         public bool CanConductBetween(
             SparkTerminal from,
@@ -134,7 +143,45 @@ private void DebugElectricalState()
             conductionHysteresis =
                 Mathf.Max(
                     0.01f,
-                    conductionHysteresis);
+                    conductionHysteresis);       }
+
+        private void RefreshLEDVisual()
+        {
+            // A missing visual must never interrupt the electrical solver.
+            if (ledHelix == null)
+                return;
+
+            bool shouldBeVisible = IsOn;
+
+            if (ledHelix.activeSelf != shouldBeVisible)
+            {
+                ledHelix.SetActive(shouldBeVisible);
+            }
         }
+
+        
+        
+        public override void ApplyElectricalState(
+                in SparkElectricalState state)
+            {
+                base.ApplyElectricalState(in state);
+                RefreshLEDVisual();
+            }
+
+            [ContextMenu("Debug LED State")]
+private void DebugLEDState()
+{
+    Debug.Log(
+        $"[LED DEBUG] {name} | " +
+        $"Enabled={ElectricalEnabled} | " +
+        $"Voltage={ElectricalState.Voltage:F3} V | " +
+        $"Current={ElectricalState.Current:F6} A | " +
+        $"Conduction={ElectricalState.Conduction} | " +
+        $"IsOn={IsOn} | " +
+        $"HelixAssigned={ledHelix != null} | " +
+        $"HelixActive={(ledHelix != null && ledHelix.activeSelf)}",
+        this);
+}
+            
     }
 }

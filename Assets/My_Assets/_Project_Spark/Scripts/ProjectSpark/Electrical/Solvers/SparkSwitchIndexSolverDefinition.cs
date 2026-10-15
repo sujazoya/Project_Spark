@@ -192,7 +192,7 @@ namespace ProjectSpark.Electrical
         indexedSwitch.ApplyElectricalState(
             new SparkElectricalState());
 
-        Debug.Log(
+       /* Debug.Log(
             $"[INDEX SWITCH SOLVER] " +
             $"Name={indexedSwitch.name} | " +
             $"Index={indexedSwitch.CurrentIndex} | " +
@@ -204,7 +204,7 @@ namespace ProjectSpark.Electrical
             $"Power=0.000 | " +
             $"Off=True | " +
             $"Conducting=False"
-        );
+        );*/
 
         return;
     }

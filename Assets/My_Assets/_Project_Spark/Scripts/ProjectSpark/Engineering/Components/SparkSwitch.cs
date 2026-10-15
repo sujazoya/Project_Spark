@@ -396,7 +396,17 @@ private int lastVisualState = -1;
 
     NotifyVisualStateChanged();
 }
+       private void Update()
+{
+    if (UnityEngine.InputSystem.Keyboard.current == null)
+        return;
 
+    if (UnityEngine.InputSystem.Keyboard.current.f6Key.wasPressedThisFrame)
+    {
+        Debug.Log("[SPARK SOLVER] Manual solve requested with F6.", this);
+        ToggleState();
+    }
+}
 
         #endregion
 
@@ -412,29 +422,36 @@ private int lastVisualState = -1;
                     : SparkSwitchState.Open);
         }
 
-            public void SetState(
-            SparkSwitchState newState)
-        {
-            if (state == newState)
-                return;
+           public void SetState(SparkSwitchState newState)
+            {
+                Debug.Log(
+                    $"[SWITCH DEBUG] SetState called | " +
+                    $"Switch={name} | Current={state} | Requested={newState}",
+                    this);
 
-            state = newState;
+                if (state == newState)
+                {
+                    Debug.Log("[SWITCH DEBUG] State unchanged.", this);
+                    return;
+                }
 
-            /*
-            * Immediately update runtime polarity.
-            */
-            UpdateRuntimeTerminalPolarity();
+                state = newState;
 
-            /*
-            * Tell the electrical system to solve again.
-            */
-            NotifyElectricalConfigurationChanged();
+                Debug.Log(
+                    $"[SWITCH DEBUG] State changed to {state}. " +
+                    "Requesting electrical solve.",
+                    this);
 
-            /*
-            * Immediately notify the visual.
-            */
-            NotifyVisualStateChanged();
-        }
+                UpdateRuntimeTerminalPolarity();
+
+                NotifyElectricalConfigurationChanged();
+
+                Debug.Log(
+                    "[SWITCH DEBUG] Electrical configuration notification sent.",
+                    this);
+
+                NotifyVisualStateChanged();
+            }
 
         public void ToggleFromButton()
         {
@@ -544,6 +561,21 @@ private void NotifyVisualStateChanged()
         newState;
 
     VisualStateChanged?.Invoke();
+}
+[ContextMenu("Debug Switch Electrical State")]
+private void DebugSwitchElectricalState()
+{
+    Debug.Log(
+        $"[SWITCH ELECTRICAL DEBUG] {name} | " +
+        $"State={State} | " +
+        $"IsConducting={IsConducting} | " +
+        $"ElectricalEnabled={ElectricalEnabled} | " +
+        $"InputVoltage={InputVoltage:F3} V | " +
+        $"OutputVoltage={OutputVoltage:F3} V | " +
+        $"Voltage={Voltage:F3} V | " +
+        $"Current={Current:F6} A | " +
+        $"Conduction={Conduction}",
+        this);
 }
     }
 }

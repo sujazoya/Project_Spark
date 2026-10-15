@@ -1,16 +1,20 @@
+
 using System;
 
 namespace ProjectSpark.AI
 {
     public enum SparkAIKnowledgeQuestionType
     {
-        Unknown,
-        Definition,
-        Explanation,
-        Example,
-        Misconception,
-        Safety,
-        Measurement
+        Unknown = 0,
+        Definition = 1,
+        Explanation = 2,
+        Example = 3,
+        Misconception = 4,
+        Safety = 5,
+        Measurement = 6,
+
+        // Appended to preserve existing serialized numeric values.
+        Calculation = 7
     }
 
     public readonly struct SparkAIKnowledgeQuestionResult
@@ -39,362 +43,276 @@ namespace ProjectSpark.AI
     }
 
     /// <summary>
-    /// Determines the type of stable knowledge requested by the player.
-    /// Does not search the knowledge database.
+    /// Classifies the educational task requested by the player.
+    /// Does not access the circuit, calculate electrical values,
+    /// or search the knowledge database.
     /// </summary>
     public static class SparkAIKnowledgeQuestionResolver
     {
-
-        private static bool IsMeasurementQuestion(string question)
-{
-    if (string.IsNullOrWhiteSpace(question))
-        return false;
-
-    string q = question.Trim().ToLowerInvariant();
-
-    // Explicit measurement wording.
-    if (q.Contains("measure") ||
-        q.Contains("measured") ||
-        q.Contains("measuring") ||
-        q.Contains("measurement") ||
-        q.Contains("multimeter") ||
-        q.Contains("voltmeter") ||
-        q.Contains("ammeter") ||
-        q.Contains("ohmmeter") ||
-        q.Contains("continuity"))
-    {
-        return true;
-    }
-
-    // Testing a particular component or electrical quantity.
-    if ((q.Contains("test") ||
-         q.Contains("check")) &&
-        (q.Contains("led") ||
-         q.Contains("source") ||
-         q.Contains("battery") ||
-         q.Contains("voltage") ||
-         q.Contains("current") ||
-         q.Contains("resistance") ||
-         q.Contains("resistor") ||
-         q.Contains("wire")))
-    {
-        return true;
-    }
-
-    return false;
-}
         public static SparkAIKnowledgeQuestionResult Resolve(
             string question)
         {
             if (string.IsNullOrWhiteSpace(question))
                 return SparkAIKnowledgeQuestionResult.Invalid();
 
-            string normalized = Normalize(question);
+            string text = Normalize(question);
 
-            if (string.IsNullOrEmpty(normalized))
+            if (text.Length == 0)
                 return SparkAIKnowledgeQuestionResult.Invalid();
 
-                
-
-            // ========================================================
-            // SAFETY
-            // ========================================================
-
-            if (ContainsAny(
-                    normalized,
-                    "is it safe",
-                    "is this safe",
-                    "is that safe",
-                    "is it dangerous",
-                    "is this dangerous",
-                    "is that dangerous",
-                    "danger",
-                    "dangerous",
-                    "safety",
-                    "safe to",
-                    "can this damage",
-                    "can it damage",
-                    "will this damage",
-                    "harmful"))
+            if (ContainsAny(text,
+                "is it safe", "is this safe", "is that safe",
+                "is it dangerous", "is this dangerous",
+                "is that dangerous", "is this connection dangerous",
+                "danger", "dangerous", "safety",
+                "safe to", "can this damage", "can it damage",
+                "will this damage", "harmful"))
             {
                 return Create(
-                    SparkAIKnowledgeQuestionType.Safety,
-                    0.98f);
+                    SparkAIKnowledgeQuestionType.Safety, 0.97f);
             }
 
-            // ========================================================
-            // MISCONCEPTION / COMMON MISTAKE
-            // ========================================================
-
-            if (ContainsAny(
-                    normalized,
-                    "common mistake",
-                    "common mistakes",
-                    "common misconception",
-                    "common misconceptions",
-                    "misconception",
-                    "misconceptions",
-                    "wrong idea",
-                    "wrong ideas",
-                    "mistake",
-                    "mistakes",
-                    "what am i getting wrong",
-                    "what am i doing wrong",
-                    "incorrect idea",
-                    "incorrect assumption"))
+            if (ContainsAny(text,
+                "common mistake", "common mistakes",
+                "common misconception", "common misconceptions",
+                "misconception", "misconceptions",
+                "wrong idea", "wrong ideas",
+                "what am i getting wrong",
+                "what am i doing wrong",
+                "incorrect idea", "incorrect assumption"))
             {
                 return Create(
-                    SparkAIKnowledgeQuestionType.Misconception,
-                    0.97f);
+                    SparkAIKnowledgeQuestionType.Misconception, 0.96f);
             }
 
-            // ========================================================
-// CALCULATION
-// Check before general explanation phrases.
-// ========================================================
-
-if (ContainsAny(
-        normalized,
-        "calculate current",
-        "calculate voltage",
-        "calculate resistance",
-        "calculate power",
-        "calculate using ohm's law",
-        "calculate using ohms law",
-        "calculate current from",
-        "calculate voltage from",
-        "calculate resistance from",
-        "work out current",
-        "work out voltage",
-        "work out resistance",
-        "solve ohm's law",
-        "ohm's law calculation",
-        "ohms law calculation"))
-{
-    return Create(
-        SparkAIKnowledgeQuestionType.Measurement,
-        0.98f);
-}
-
-           // ========================================================
-            // MEASUREMENT
-            // Check before general explanation phrases such as
-            // "how is" and "how do".
-            // ========================================================
-
-            if (ContainsAny(
-                    normalized,
-
-                    // General measurement wording
-                    "measure",
-                    "measured",
-                    "measuring",
-                    "measurement",
-                    "multimeter",
-                    "voltmeter",
-                    "ammeter",
-                    "ohmmeter",
-                    "continuity",
-
-                    // Testing or checking electrical quantities/components
-                    "test led",
-                    "check led",
-                    "test source",
-                    "check source",
-                    "test battery",
-                    "check battery",
-                    "test resistor",
-                    "check resistor",
-                    "test wire",
-                    "check wire",
-
-                    // Existing current measurement phrases
-                    "how is current measured",
-                    "how do i measure current",
-                    "how to measure current",
-                    "how can i measure current",
-                    "how can current be measured",
-                    "how is electric current measured",
-                    "how do you measure current",
-
-                    // Existing voltage measurement phrases
-                    "how is voltage measured",
-                    "how do i measure voltage",
-                    "how to measure voltage",
-                    "how can i measure voltage",
-                    "how can voltage be measured",
-                    "how do you measure voltage",
-
-                    // Existing resistance measurement phrases
-                    "how is resistance measured",
-                    "how do i measure resistance",
-                    "how to measure resistance",
-                    "how do you measure resistance",
-
-                    // Existing power measurement phrases
-                    "how is power measured",
-                    "how do i measure power",
-                    "how to measure power",
-                    "how do you measure power",
-
-                    // Instrument questions
-                    "what instrument measures current",
-                    "what instrument measures voltage",
-                    "what instrument measures resistance",
-                    "what measures current",
-                    "what measures voltage",
-                    "what measures resistance",
-                    "which meter measures current",
-                    "which meter measures voltage",
-                    "which meter measures resistance",
-                    "how do i use a multimeter",
-                    "how to use a multimeter",
-                    "how do you use a multimeter"))
+            // Calculation is its own category, not a kind of
+            // instrument/measurement instruction.
+            if (SparkAIQuestionIntentResolver
+                .IsExplicitCalculationQuestion(text))
             {
                 return Create(
-                    SparkAIKnowledgeQuestionType.Measurement,
-                    0.98f);
+                    SparkAIKnowledgeQuestionType.Calculation, 0.96f);
             }
 
-            // ========================================================
-            // EXAMPLE
-            // ========================================================
-
-            if (ContainsAny(
-                    normalized,
-                    "give me an example",
-                    "give an example",
-                    "show me an example",
-                    "show an example",
-                    "example of",
-                    "examples of",
-                    "for example",
-                    "real world example",
-                    "real-world example",
-                    "practical example",
-                    "show a practical example"))
+            // Recognize instrument-use and measurement-instruction
+            // questions. A bare mention of voltage/current does not
+            // automatically make a question a measurement question.
+            if (IsMeasurementInstruction(text))
             {
                 return Create(
-                    SparkAIKnowledgeQuestionType.Example,
-                    0.96f);
+                    SparkAIKnowledgeQuestionType.Measurement, 0.95f);
             }
 
-            // ========================================================
-            // EXPLANATION
-            // ========================================================
-
-            if (ContainsAny(
-                    normalized,
-                    "how does",
-                    "how do",
-                    "how is",
-                    "how are",
-                    "how can",
-                    "how does it work",
-                    "how do they work",
-                    "how does this work",
-                    "how does that work",
-                    "how is it used",
-                    "how are they used",
-                    "explain",
-                    "explain how",
-                    "explain why",
-                    "tell me how",
-                    "tell me why",
-                    "why does",
-                    "why do",
-                    "why is",
-                    "why are",
-                    "why can",
-                    "why does it",
-                    "what happens when",
-                    "what happens if",
-                    "what happens to"))
+            if (ContainsAny(text,
+                "give me an example", "give an example",
+                "show me an example", "show an example",
+                "example of", "examples of", "for example",
+                "real world example", "real-world example",
+                "practical example", "show a practical example"))
             {
                 return Create(
-                    SparkAIKnowledgeQuestionType.Explanation,
-                    0.95f);
+                    SparkAIKnowledgeQuestionType.Example, 0.94f);
             }
 
-            // ========================================================
-            // DEFINITION
-            // ========================================================
-
-            if (ContainsAny(
-                    normalized,
-                    "what is",
-                    "what are",
-                    "what's",
-                    "define",
-                    "definition",
-                    "meaning of",
-                    "what does mean",
-                    "what do you mean by",
-                    "tell me about",
-                    "tell me what",
-                    "can you explain"))
+            if (ContainsAny(text,
+                "how does", "how do", "how is", "how are",
+                "how can", "how does it work",
+                "how do they work", "how does this work",
+                "how does that work", "how is it used",
+                "how are they used", "explain", "explain how",
+                "explain why", "tell me how", "tell me why",
+                "why does", "why do", "why is", "why are",
+                "why can", "what happens when",
+                "what happens if", "what happens to"))
             {
                 return Create(
-                    SparkAIKnowledgeQuestionType.Definition,
-                    0.92f);
+                    SparkAIKnowledgeQuestionType.Explanation, 0.93f);
             }
 
-            // ========================================================
-            // NATURAL FALLBACK
-            // ========================================================
+            if (ContainsAny(text,
+                "what is", "what are", "what's", "define",
+                "definition", "meaning of", "what does mean",
+                "what do you mean by", "tell me about",
+                "tell me what", "can you explain"))
+            {
+                return Create(
+                    SparkAIKnowledgeQuestionType.Definition, 0.90f);
+            }
 
+            // A fallback is useful for routing, but its confidence
+            // is deliberately low because the wording was unknown.
             return Create(
-                SparkAIKnowledgeQuestionType.Definition,
-                0.50f);
+                SparkAIKnowledgeQuestionType.Definition, 0.40f);
         }
 
-        
+       
+        private static bool IsMeasurementInstruction(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return false;
+
+            // Explicit measurement instructions take priority.
+            if (ContainsAny(text,
+                "how do i measure",
+                "how do you measure",
+                "how to measure",
+                "how can i measure",
+                "how can you measure",
+                "how is measured",
+                "how are measured",
+                "how do i use a multimeter",
+                "how to use a multimeter",
+                "how do you use a multimeter",
+                "how do i use the multimeter",
+                "how to use the multimeter",
+                "which meter measures",
+                "what instrument measures",
+                "what meter measures",
+                "what measures voltage",
+                "what measures current",
+                "what measures resistance",
+                "how to test continuity",
+                "how do i test continuity",
+                "how to check continuity",
+                "how do i check continuity"))
+            {
+                return true;
+            }
+
+            // Do not classify diagnostic, state, or explanation
+            // questions as instrument-use instructions.
+            if (ContainsAny(text,
+                "why ",
+                "why does",
+                "why do",
+                "why is",
+                "why are",
+                "what is happening",
+                "what is wrong",
+                "what is the voltage",
+                "what is the current",
+                "what is the resistance",
+                "what is the power",
+                "is my ",
+                "is the ",
+                "is this ",
+                "does my ",
+                "does the ",
+                "does this ",
+                "right now",
+                "currently",
+                "at the moment"))
+            {
+                return false;
+            }
+
+            bool hasInstrument = ContainsAny(text,
+                "multimeter",
+                "voltmeter",
+                "ammeter",
+                "ohmmeter",
+                "continuity tester");
+
+            bool hasMeasurementAction = ContainsAny(text,
+                "measure",
+                "measured",
+                "measuring",
+                "measurement",
+                "test",
+                "testing",
+                "check",
+                "checking");
+
+            bool hasElectricalTarget = ContainsAny(text,
+                "voltage",
+                "current",
+                "resistance",
+                "power",
+                "led",
+                "battery",
+                "source",
+                "resistor",
+                "wire",
+                "continuity");
+
+            return hasMeasurementAction &&
+                (hasInstrument || hasElectricalTarget);
+        }
+
 
         private static SparkAIKnowledgeQuestionResult Create(
             SparkAIKnowledgeQuestionType type,
             float confidence)
         {
             return new SparkAIKnowledgeQuestionResult(
-                true,
-                type,
-                confidence);
+                true, type, confidence);
+        }
+
+        private static string Normalize(string value)
+        {
+            return value.Trim()
+                .ToLowerInvariant()
+                .Replace('\u2018', '\'')
+                .Replace('\u2019', '\'')
+                .Replace('\u201C', '"')
+                .Replace('\u201D', '"')
+                .Replace('\u2013', '-')
+                .Replace('\u2014', '-');
         }
 
         private static bool ContainsAny(
             string text,
             params string[] phrases)
         {
-            if (string.IsNullOrEmpty(text) || phrases == null)
-                return false;
-
             for (int i = 0; i < phrases.Length; i++)
             {
-                string phrase = phrases[i];
-
-                if (string.IsNullOrWhiteSpace(phrase))
-                    continue;
-
-                if (text.IndexOf(
-                        phrase,
-                        StringComparison.OrdinalIgnoreCase) >= 0)
-                {
+                if (ContainsPhrase(text, phrases[i]))
                     return true;
-                }
             }
 
             return false;
         }
 
-        private static string Normalize(string value)
+        private static bool ContainsPhrase(
+            string text,
+            string phrase)
         {
-            if (string.IsNullOrWhiteSpace(value))
-                return string.Empty;
+            if (string.IsNullOrEmpty(text) ||
+                string.IsNullOrEmpty(phrase))
+                return false;
 
-            return value.Trim().ToLowerInvariant()
-                .Replace('\u2018', '\'')
-                .Replace('\u2019', '\'')
-                .Replace('\u201C', '"')
-                .Replace('\u201D', '"');
+            int start = 0;
+
+            while (start < text.Length)
+            {
+                int index = text.IndexOf(
+                    phrase, start, StringComparison.Ordinal);
+
+                if (index < 0)
+                    return false;
+
+                int end = index + phrase.Length;
+
+                bool leftBoundary =
+                    index == 0 ||
+                    !IsWordCharacter(text[index - 1]);
+
+                bool rightBoundary =
+                    end >= text.Length ||
+                    !IsWordCharacter(text[end]);
+
+                if (leftBoundary && rightBoundary)
+                    return true;
+
+                start = index + 1;
+            }
+
+            return false;
+        }
+
+        private static bool IsWordCharacter(char value)
+        {
+            return char.IsLetterOrDigit(value) || value == '_';
         }
     }
 }

@@ -175,7 +175,8 @@ namespace ProjectSpark.AI
                 observation.CircuitReasoning;
 
             SparkAICircuitAnalysis analysis =
-                observation.CircuitAnalysis;
+                observation.CircuitAnalysis;                
+
 
             if (!analysis.IsValid)
             {

@@ -74,6 +74,9 @@ namespace ProjectSpark.Electrical
         public IReadOnlyList<SparkElectricalComponent> ElectricalComponents =>
             electricalComponents;
 
+            private SparkElectricalComponent[] subscribedComponents =
+    Array.Empty<SparkElectricalComponent>();
+
         // ---------------------------------------------------------------------
         // LATEST SOLVE RESULT
         // ---------------------------------------------------------------------
@@ -85,6 +88,9 @@ namespace ProjectSpark.Electrical
         /// </summary>
         public SparkElectricalSolveResult LatestSolveResult =>
             latestSolveResult;
+
+
+
 
         // ---------------------------------------------------------------------
         // SOLVER SETTINGS
@@ -213,29 +219,170 @@ namespace ProjectSpark.Electrical
 
         private void Awake()
         {
+
+            
             dirty = true;
             latestSolveResult = null;
         }
 
-        private void OnEnable()
+       private void OnEnable()
+{
+    dirty = true;
+    latestSolveResult = null;
+
+    if (solverRegistry != null)
+    {
+        solverRegistry.ClearRuntimeCache();
+    }
+
+    if (circuit != null)
+    {
+        circuit.TopologyChanged += HandleCircuitTopologyChanged;
+    }
+
+    RefreshElectricalComponents();
+    RebindElectricalComponentEvents();
+}
+
+private void OnDisable()
+{
+    if (circuit != null)
+    {
+        circuit.TopologyChanged -= HandleCircuitTopologyChanged;
+    }
+
+    UnbindElectricalComponentEvents();
+}
+
+private void HandleCircuitTopologyChanged()
+{
+    MarkTopologyDirty();
+}
+
+
+private void HandleElectricalConfigurationChanged()
+{
+   /* Debug.Log(
+        "[SPARK SOLVER DEBUG] Configuration change received.",
+        this);*/
+
+    MarkDirty();
+
+    /*Debug.Log(
+        $"[SPARK SOLVER DEBUG] Before SolveNow | " +
+        $"Solving={solving} | " +
+        $"Enabled={isActiveAndEnabled} | " +
+        $"Dirty={dirty} | " +
+        $"HasResult={latestSolveResult != null}",
+        this);*/
+
+    if (solving || !isActiveAndEnabled)
+    {
+       /* Debug.LogWarning(
+            "[SPARK SOLVER DEBUG] Immediate solve skipped.",
+            this);
+        return;*/
+    }
+
+    bool success = SolveNow();
+
+    /*Debug.Log(
+        $"[SPARK SOLVER DEBUG] SolveNow returned | " +
+        $"Success={success} | " +
+        $"Solving={solving} | " +
+        $"Dirty={dirty} | " +
+        $"HasResult={latestSolveResult != null}",
+        this);*/
+}
+private void RebindElectricalComponentEvents()
+{
+    UnbindElectricalComponentEvents();
+
+    if (electricalComponents == null)
+    {
+        subscribedComponents =
+            Array.Empty<SparkElectricalComponent>();
+
+        Debug.LogWarning(
+            "[SPARK SOLVER] Cannot subscribe: electricalComponents is null.",
+            this);
+
+        return;
+    }
+
+    subscribedComponents =
+        (SparkElectricalComponent[])electricalComponents.Clone();
+
+    int subscribedCount = 0;
+
+    for (int i = 0; i < subscribedComponents.Length; i++)
+    {
+        SparkElectricalComponent component =
+            subscribedComponents[i];
+
+        if (component == null)
         {
-            dirty = true;
-            latestSolveResult = null;
+            Debug.LogWarning(
+                $"[SPARK SOLVER] Null component at index {i}.",
+                this);
 
-            if (solverRegistry != null)
-            {
-                solverRegistry.ClearRuntimeCache();
-            }
+            continue;
         }
+
+        component.ElectricalConfigurationChanged +=
+            HandleElectricalConfigurationChanged;
+
+        subscribedCount++;
+
+       /* Debug.Log(
+            $"[SPARK SOLVER] Subscribed to configuration changes | " +
+            $"Component={component.name} | " +
+            $"InstanceID={component.GetInstanceID()}",
+            component);*/
+    }
+
+   /* Debug.Log(
+        $"[SPARK SOLVER] Event subscriptions rebound | " +
+        $"Components={subscribedComponents.Length} | " +
+        $"Subscribed={subscribedCount}",
+        this);*/
+}
+
+private void UnbindElectricalComponentEvents()
+{
+    if (subscribedComponents == null)
+        return;
+
+    for (int i = 0; i < subscribedComponents.Length; i++)
+    {
+        SparkElectricalComponent component =
+            subscribedComponents[i];
+
+        if (component == null)
+            continue;
+
+        component.ElectricalConfigurationChanged -=
+            HandleElectricalConfigurationChanged;
+    }
+
+    subscribedComponents =
+        Array.Empty<SparkElectricalComponent>();
+}
 
         // ---------------------------------------------------------------------
         // EXTERNAL DIRTY
         // ---------------------------------------------------------------------
+public void MarkDirty()
+{
+    dirty = true;
 
-        public void MarkDirty()
-        {
-            dirty = true;
-        }
+    Debug.Log(
+        $"[SPARK SOLVER] MarkDirty called | " +
+        $"InstanceID={GetInstanceID()} | " +
+        $"TopologyVersion={topologyVersion} | " +
+        $"HasResult={latestSolveResult != null}",
+        this);
+}
 
         /// <summary>
         /// Marks both electrical topology and solver-definition lookup
@@ -261,35 +408,114 @@ namespace ProjectSpark.Electrical
         // MAIN SOLVE
         // ---------------------------------------------------------------------
 
-        public bool Solve()
+
+
+        void Update()
         {
-            if (solving)
-                return false;
-
-            solving = true;
-
-            bool solved = false;
-
-            try
-            {
-                solved = SolveInternal();
-            }
-            finally
-            {
-                solving = false;
-            }
-
-            if (solved)
-            {
-                SolveCompleted?.Invoke();
-            }
-            else
-            {
-                SolveFailed?.Invoke();
-            }
-
-            return solved;
+            if (UnityEngine.InputSystem.Keyboard.current != null &&
+        UnityEngine.InputSystem.Keyboard.current.kKey.wasPressedThisFrame)
+    {
+        SolveNow();
+    }
+            
         }
+
+        private int solveCallSequence;
+
+public bool Solve()
+{
+    int callId = ++solveCallSequence;
+
+    Debug.Log(
+        $"[SPARK SOLVER #{callId}] ENTER | " +
+        $"Solving={solving} | Dirty={dirty} | " +
+        $"HasResult={latestSolveResult != null} | " +
+        $"SolveOnDirty={solveOnDirty} | " +
+        $"TopologyVersion={topologyVersion}",
+        this);
+
+    if (solving)
+    {
+        Debug.LogWarning(
+            $"[SPARK SOLVER #{callId}] REJECTED: already solving.",
+            this);
+
+        return false;
+    }
+
+    if (solveOnDirty && !dirty && latestSolveResult != null)
+    {
+        Debug.Log(
+            $"[SPARK SOLVER #{callId}] SKIPPED: clean cached result.",
+            this);
+
+        return true;
+    }
+
+    solving = true;
+    bool solved = false;
+
+    try
+    {
+        Debug.Log(
+            $"[SPARK SOLVER #{callId}] EXECUTING SolveInternal.",
+            this);
+
+        solved = SolveInternal();
+
+        /*Debug.Log(
+            $"[SPARK SOLVER #{callId}] INTERNAL RESULT | " +
+            $"Success={solved} | Dirty={dirty} | " +
+            $"HasResult={latestSolveResult != null} | " +
+            $"TopologyVersion={topologyVersion} | " +
+            $"NodeCount={(currentGraph != null ? currentGraph.NodeCount : 0)}",
+            this);*/
+    }
+    catch (Exception exception)
+    {
+        Debug.LogError(
+            $"[SPARK SOLVER #{callId}] EXCEPTION.",
+            this);
+
+        Debug.LogException(exception, this);
+        solved = false;
+    }
+    finally
+    {
+        solving = false;
+    }
+
+    if (solved)
+    {
+        Debug.Log(
+            $"[SPARK SOLVER #{callId}] COMPLETED EVENT.",
+            this);
+
+        SolveCompleted?.Invoke();
+    }
+   else
+{
+   /* Debug.LogError(
+        $"[SPARK SOLVER #{callId}] FAILED EVENT | " +
+        $"SolveInternal returned false or an exception occurred. " +
+        $"Dirty={dirty} | " +
+        $"HasResult={latestSolveResult != null} | " +
+        $"TopologyVersion={topologyVersion} | " +
+        $"NodeCount={(currentGraph != null ? currentGraph.NodeCount : 0)}",
+        this);*/
+
+    SolveFailed?.Invoke();
+}
+
+    Debug.Log(
+        $"[SPARK SOLVER #{callId}] EXIT | " +
+        $"Success={solved} | Dirty={dirty} | " +
+        $"HasResult={latestSolveResult != null}",
+        this);
+
+    return solved;
+}
+
 
         /// <summary>
         /// Explicit public solve entry point used by measurement,
@@ -405,11 +631,9 @@ namespace ProjectSpark.Electrical
                 nodeVoltages,
                 iterationVoltages,
                 nodeVoltages.Length);
-
             double[] finalSolution = null;
-
-            bool solved =
-                false;
+            bool solved = false;
+            bool converged = false;
 
             for (int iteration = 0;
                  iteration < maxIterations;
@@ -448,9 +672,9 @@ namespace ProjectSpark.Electrical
                 solved =
                     true;
 
-                if (maximumDelta <=
-                    convergenceTolerance)
+                if (maximumDelta <= convergenceTolerance)
                 {
+                    converged = true;
                     break;
                 }
 
@@ -460,11 +684,11 @@ namespace ProjectSpark.Electrical
                     nodeVoltages.Length);
             }
 
-            if (!solved ||
+           if (!solved ||
+                !converged ||
                 finalSolution == null)
             {
                 ZeroStates();
-
                 return false;
             }
 
@@ -493,26 +717,24 @@ namespace ProjectSpark.Electrical
             // APPLY DEVICE STATES
             // -------------------------------------------------------------
 
-            ApplyAllDeviceStates(
-                result);
+            
+ApplyAllDeviceStates(result);
 
-              //  DebugPowerSupplyVoltage();
+CommitTransientStates(result);
 
-            // -------------------------------------------------------------
-            // COMMIT TRANSIENT STATE
-            // -------------------------------------------------------------
+// Update terminal voltages from the newly solved matrix first.
+ApplyTerminalStates(result);
 
-            CommitTransientStates(
-                result);
+// Now diagnostics read the current solve, not the previous terminal state.
+DebugPowerSupplyVoltage();
 
-            // -------------------------------------------------------------
-            // UPDATE TERMINAL STATES
-            // -------------------------------------------------------------
+dirty = false;
 
-            ApplyTerminalStates(
-                result);
+Debug.Log(
+    $"[SOLVER TEST] Finished | Success={solved} | " +
+    $"Dirty={dirty} | HasResult={latestSolveResult != null}",
+    this);
 
-            dirty = false;
 
             return true;
         }
@@ -582,6 +804,8 @@ namespace ProjectSpark.Electrical
 
             electricalComponents =
                 discovered;
+
+                RebindElectricalComponentEvents();
 
             // Component topology changed.
             dirty = true;
@@ -1159,13 +1383,40 @@ private bool ShouldIgnoreComponent(
                 int node =
                     pair.Value;
 
-                if (!result.TryGetNodeVoltage(
-                        node,
-                        out float voltage))
+                
+            if (!result.TryGetNodeVoltage(
+                    node,
+                    out float voltage))
+            {
+                if (terminal.name == "Anode" ||
+                    terminal.name == "Cathode")
                 {
-                    terminal.ClearElectricalState();
-                    continue;
+                    Debug.LogWarning(
+                        "[SPARK SOLVER TERMINAL VOLTAGE MISSING] " +
+                        "Terminal=" + terminal.name +
+                        " | Owner=" +
+                        (terminal.Owner != null
+                            ? terminal.Owner.name
+                            : "None") +
+                        " | InstanceID=" + terminal.GetInstanceID() +
+                        " | Node=" + node);
                 }
+
+                terminal.ClearElectricalState();
+                continue;
+            }
+
+            if (terminal.Owner != null &&
+                terminal.Owner.name == "LED")
+            {
+                Debug.Log(
+                    "[SPARK SOLVER LED TERMINAL VOLTAGE] " +
+                    "Terminal=" + terminal.name +
+                    " | InstanceID=" + terminal.GetInstanceID() +
+                    " | Node=" + node +
+                    " | SolvedVoltage=" + voltage);
+            }
+
 
                 // Terminal current is deliberately reset here.
                 //
@@ -1192,6 +1443,11 @@ private bool ShouldIgnoreComponent(
     SparkElectricalComponent component,
     out float current)
 {
+            if (dirty)
+        {
+            current = 0f;
+            return false;
+        }
     current = 0f;
 
             if (component == null ||
@@ -1606,46 +1862,52 @@ private bool ShouldIgnoreComponent(
         // ---------------------------------------------------------------------
 
         private void ZeroStates()
+{
+    nonlinearStates.Clear();
+    previousComponentVoltages.Clear();
+
+    latestSolveResult = null;
+
+    nodeVoltages = Array.Empty<float>();
+    reducedSolution = Array.Empty<double>();
+
+    // Clear terminal states so a failed solve cannot leave
+    // voltage readings from the previous successful solve.
+    if (terminals != null)
+    {
+        for (int i = 0; i < terminals.Count; i++)
         {
-            nonlinearStates.Clear();
-            previousComponentVoltages.Clear();
+            SparkTerminal terminal = terminals[i];
 
-            latestSolveResult =
-                null;
-
-            nodeVoltages =
-                Array.Empty<float>();
-
-            reducedSolution =
-                Array.Empty<double>();
-
-            if (electricalComponents == null)
-                return;
-
-                    for (int i = 0;
-                i < electricalComponents.Length;
-                i++)
-            {
-                SparkElectricalComponent component =
-                    electricalComponents[i];
-
-                if (component == null)
-                    continue;
-
-                if (ShouldIgnoreComponent(component))
-                    continue;
-
-                if (!TryGetSolverDefinition(
-                        component,
-                        out SparkElectricalSolverDefinition definition))
-                {
-                    continue;
-                }
-
-                definition.ResetRuntimeState(
-                    component);
-            }
+            if (terminal != null)
+                terminal.ClearElectricalState();
         }
+    }
+
+    if (electricalComponents == null)
+        return;
+
+    for (int i = 0; i < electricalComponents.Length; i++)
+    {
+        SparkElectricalComponent component =
+            electricalComponents[i];
+
+        if (component == null)
+            continue;
+
+        if (ShouldIgnoreComponent(component))
+            continue;
+
+        if (!TryGetSolverDefinition(
+                component,
+                out SparkElectricalSolverDefinition definition))
+        {
+            continue;
+        }
+
+        definition.ResetRuntimeState(component);
+    }
+}
 
         private void ApplyZeroResult(
             SparkElectricalSolveContext context)
@@ -1664,6 +1926,8 @@ private bool ShouldIgnoreComponent(
             ApplyAllDeviceStates(result);
 
             ApplyTerminalStates(result);
+
+            
 
             CommitTransientStates(result);
         }
@@ -1802,42 +2066,38 @@ private bool ShouldIgnoreComponent(
             }
         }
                 private void DebugPowerSupplyVoltage()
-        {
-            if (electricalComponents == null)
-                return;
+{
+    if (electricalComponents == null)
+        return;
 
-            for (int i = 0; i < electricalComponents.Length; i++)
-            {
-                SparkElectricalComponent component =
-                    electricalComponents[i];
+    for (int i = 0; i < electricalComponents.Length; i++)
+    {
+        if (!(electricalComponents[i] is SparkPowerSupply supply))
+            continue;
 
-                if (!(component is SparkPowerSupply supply))
-                    continue;
+        float positiveVoltage =
+            supply.PositiveTerminal != null
+                ? supply.PositiveTerminal.ElectricalState.Voltage
+                : float.NaN;
 
-                if (supply.PositiveTerminal == null ||
-                    supply.NegativeTerminal == null)
-                {
-                    continue;
-                }
+        float negativeVoltage =
+            supply.NegativeTerminal != null
+                ? supply.NegativeTerminal.ElectricalState.Voltage
+                : float.NaN;
 
-                float voltage =
-                    supply.PositiveTerminal.ElectricalState.Voltage -
-                    supply.NegativeTerminal.ElectricalState.Voltage;
-
-                Debug.Log(
-                    $"[POWER SUPPLY SOLVED STATE] " +
-                    $"{supply.name} | " +
-                    $"PositiveStateV=" +
-                    $"{supply.PositiveTerminal.ElectricalState.Voltage:F6} | " +
-                    $"NegativeStateV=" +
-                    $"{supply.NegativeTerminal.ElectricalState.Voltage:F6} | " +
-                    $"DeltaV={voltage:F6} | " +
-                    $"SupplyStateV=" +
-                    $"{supply.ElectricalState.Voltage:F6} | " +
-                    $"SupplyCurrent=" +
-                    $"{supply.ElectricalState.Current:F6}",
-                    supply);
-            }
-        }
+        Debug.Log(
+            $"[POWER SUPPLY DIAGNOSTIC] {supply.name} | " +
+            $"ConfiguredV={supply.OutputVoltage:F6} | " +
+            $"SupplyActive={supply.IsOutputActive} | " +
+            $"ElectricalEnabled={supply.ElectricalEnabled} | " +
+            $"Dirty={dirty} | " +
+            $"HasResult={latestSolveResult != null} | " +
+            $"PositiveV={positiveVoltage:F6} | " +
+            $"NegativeV={negativeVoltage:F6} | " +
+            $"DeltaV={positiveVoltage - negativeVoltage:F6} | " +
+            $"SupplyStateV={supply.ElectricalState.Voltage:F6}",
+            supply);
+    }
+}
     }
 }

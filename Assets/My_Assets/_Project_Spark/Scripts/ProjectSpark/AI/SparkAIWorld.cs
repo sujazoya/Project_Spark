@@ -942,6 +942,12 @@ private void HandleSelectionChanged(
             circuitSystem.CopyConnections(
                 connectionBuffer);
 
+
+               /* Debug.Log(
+    "[SPARK AI CONNECTION SOURCE] " +
+    "CopiedConnections=" + connectionBuffer.Count +
+    " | CircuitSystem=" + circuitSystem.name);*/
+
             for (int i = 0;
                  i < connectionBuffer.Count;
                  i++)
@@ -978,6 +984,16 @@ private void HandleSelectionChanged(
 
                 connectionSnapshots.Add(
                     snapshot);
+
+                   /* Debug.Log(
+    "[SPARK AI CAPTURED CONNECTION] " +
+    "ID=" + snapshot.Id +
+    " | A=" + snapshot.SourceTerminalName +
+    " (" + snapshot.SourceTerminalInstanceId + ")" +
+    " | B=" + snapshot.TargetTerminalName +
+    " (" + snapshot.TargetTerminalInstanceId + ")" +
+    " | Kind=" + snapshot.Kind +
+    " | Valid=" + snapshot.Valid);*/
 
                 if (connection.Kind ==
                     SparkConnectionKind.Wire)

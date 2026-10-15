@@ -3,9 +3,6 @@ using UnityEngine;
 
 namespace ProjectSpark.Gameplay
 {
-    /// <summary>
-    /// Represents the operating state of a Project Spark power supply.
-    /// </summary>
     public enum SparkPowerSupplyState
     {
         Off,
@@ -14,31 +11,17 @@ namespace ProjectSpark.Gameplay
         Fault
     }
 
-    /// <summary>
-    /// Provides a configurable DC electrical power source.
-    ///
-    /// The supply exposes positive and negative terminals and can
-    /// conduct between them while its output is active.
-    /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkPowerSupply :
         SparkElectricalComponent,
         ISparkConductiveDevice
     {
-        // =========================================================
-        // TERMINALS
-        // =========================================================
-
         [Header("Terminals")]
         [SerializeField]
         private SparkTerminal positiveTerminal;
 
         [SerializeField]
         private SparkTerminal negativeTerminal;
-
-        // =========================================================
-        // OUTPUT
-        // =========================================================
 
         [Header("Output")]
         [SerializeField, Min(0f)]
@@ -51,88 +34,36 @@ namespace ProjectSpark.Gameplay
         private SparkPowerSupplyState state =
             SparkPowerSupplyState.Off;
 
-        // =========================================================
-        // TERMINAL ACCESS
-        // =========================================================
+        private float validatedOutputVoltage;
+        private float validatedCurrentLimit;
+        private SparkPowerSupplyState validatedState;
+        private SparkTerminal validatedPositiveTerminal;
+        private SparkTerminal validatedNegativeTerminal;
+        private bool validationSnapshotInitialized;
 
-        /// <summary>
-        /// Gets the positive output terminal.
-        /// </summary>
-        public SparkTerminal PositiveTerminal =>
-            positiveTerminal;
+        public SparkTerminal PositiveTerminal => positiveTerminal;
+        public SparkTerminal NegativeTerminal => negativeTerminal;
 
-        /// <summary>
-        /// Gets the negative output terminal.
-        /// </summary>
-        public SparkTerminal NegativeTerminal =>
-            negativeTerminal;
+        public float OutputVoltage => outputVoltage;
+        public float CurrentLimit => currentLimit;
+        public SparkPowerSupplyState State => state;
 
-        // =========================================================
-        // OUTPUT ACCESS
-        // =========================================================
-
-        /// <summary>
-        /// Gets the configured output voltage in volts.
-        /// </summary>
-        public float OutputVoltage =>
-            outputVoltage;
-
-        /// <summary>
-        /// Gets the configured maximum output current in amps.
-        /// </summary>
-        public float CurrentLimit =>
-            currentLimit;
-
-        /// <summary>
-        /// Gets the current operating state of the power supply.
-        /// </summary>
-        public SparkPowerSupplyState State =>
-            state;
-
-        /// <summary>
-        /// Returns true when the supply is actively providing output
-        /// and the underlying electrical component is enabled.
-        /// </summary>
         public bool IsOutputActive =>
             state == SparkPowerSupplyState.Active &&
             ElectricalEnabled;
 
-        /// <summary>
-        /// Returns true when the supply has reached its configured
-        /// current limit.
-        /// </summary>
-        public bool IsCurrentLimited
+        public bool IsCurrentLimited { get; private set; }
+
+        public bool IsOverloaded => IsCurrentLimited;
+
+        public bool IsShortCircuit =>
+            IsOutputActive && IsCurrentLimited;
+
+        private void Awake()
         {
-            get;
-            private set;
+            CaptureValidationSnapshot();
         }
 
-        /// <summary>
-        /// Returns true when the supply is currently overloaded.
-        ///
-        /// Project Spark represents an overload through the
-        /// current-limit condition.
-        /// </summary>
-        public bool IsOverloaded =>
-            IsCurrentLimited;
-
-        // =========================================================
-        // CONDUCTION
-        // =========================================================
-
-        /// <summary>
-/// Returns true when the supply has reached its configured
-/// current limit.
-/// </summary>
-
-public bool IsShortCircuit =>
-    IsOutputActive &&
-    IsCurrentLimited;
-
-        /// <summary>
-        /// Determines whether electrical conduction is allowed
-        /// between two terminals of this power supply.
-        /// </summary>
         public bool CanConductBetween(
             SparkTerminal from,
             SparkTerminal to)
@@ -144,28 +75,11 @@ public bool IsShortCircuit =>
                 return false;
             }
 
-            bool validForwardPath =
-                from == positiveTerminal &&
-                to == negativeTerminal;
-
-            bool validReversePath =
-                from == negativeTerminal &&
-                to == positiveTerminal;
-
             return
-                validForwardPath ||
-                validReversePath;
+                (from == positiveTerminal && to == negativeTerminal) ||
+                (from == negativeTerminal && to == positiveTerminal);
         }
 
-        // =========================================================
-        // CONFIGURATION
-        // =========================================================
-
-        /// <summary>
-        /// Configures the output voltage and current limit.
-        ///
-        /// Configuration is rejected while the supply is active.
-        /// </summary>
         public bool TryConfigure(
             float voltage,
             float limit,
@@ -185,51 +99,46 @@ public bool IsShortCircuit =>
 
             if (state == SparkPowerSupplyState.Active)
             {
-                reason =
-                    "Disable output before configuration.";
-
+                reason = "Disable output before configuration.";
                 return false;
+            }
+
+            if (Mathf.Approximately(outputVoltage, voltage) &&
+                Mathf.Approximately(currentLimit, limit))
+            {
+                reason = null;
+                return true;
             }
 
             outputVoltage = voltage;
             currentLimit = limit;
-
             IsCurrentLimited = false;
 
+            CaptureValidationSnapshot();
             NotifyElectricalConfigurationChanged();
 
             reason = null;
             return true;
         }
 
-        // =========================================================
-        // OUTPUT CONTROL
-        // =========================================================
-
-        /// <summary>
-        /// Enables or disables the power supply output.
-        /// </summary>
         public SparkResult SetOutput(
             bool enabled,
             in SparkInteractionContext context)
         {
-            if (!CanInteract(
-                    context,
-                    out string reason))
-            {
+            if (!CanInteract(context, out string reason))
                 return SparkResult.Rejected(reason);
-            }
 
             if (state == SparkPowerSupplyState.Fault)
-            {
-                return SparkResult.Fault(
-                    "Power supply is faulted.");
-            }
+                return SparkResult.Fault("Power supply is faulted.");
 
-            state =
-                enabled
-                    ? SparkPowerSupplyState.Active
-                    : SparkPowerSupplyState.Standby;
+            SparkPowerSupplyState nextState = enabled
+                ? SparkPowerSupplyState.Active
+                : SparkPowerSupplyState.Standby;
+
+            if (state == nextState)
+                return SparkResult.Success();
+
+            state = nextState;
 
             SetOperationalState(
                 enabled
@@ -238,89 +147,107 @@ public bool IsShortCircuit =>
 
             IsCurrentLimited = false;
 
+            CaptureValidationSnapshot();
             NotifyElectricalConfigurationChanged();
 
             return SparkResult.Success();
         }
 
-        // =========================================================
-        // FAULT CONTROL
-        // =========================================================
-
-        /// <summary>
-        /// Places the power supply into the fault state.
-        /// </summary>
         public void SetFault()
         {
-            state = SparkPowerSupplyState.Fault;
+            if (state == SparkPowerSupplyState.Fault)
+                return;
 
+            state = SparkPowerSupplyState.Fault;
             IsCurrentLimited = false;
 
-            SetOperationalState(
-                SparkOperationalState.Fault);
+            SetOperationalState(SparkOperationalState.Fault);
 
+            CaptureValidationSnapshot();
             NotifyElectricalConfigurationChanged();
         }
 
-        /// <summary>
-        /// Clears the current fault and places the supply into
-        /// standby mode.
-        /// </summary>
         public void ClearFault()
         {
             if (state != SparkPowerSupplyState.Fault)
-            {
                 return;
-            }
 
             state = SparkPowerSupplyState.Standby;
-
             IsCurrentLimited = false;
 
-            SetOperationalState(
-                SparkOperationalState.Standby);
+            SetOperationalState(SparkOperationalState.Standby);
 
+            CaptureValidationSnapshot();
             NotifyElectricalConfigurationChanged();
         }
 
-        // =========================================================
-        // CURRENT LIMIT
-        // =========================================================
-
         /// <summary>
-        /// Updates the current-limit condition.
+        /// Updates solver-owned current-limit status.
+        /// This does not invalidate electrical configuration.
         /// </summary>
         public void SetCurrentLimited(bool value)
         {
             IsCurrentLimited = value;
         }
 
-        // =========================================================
-        // UNITY VALIDATION
-        // =========================================================
-
         private void OnValidate()
         {
-            outputVoltage =
-                Mathf.Max(
-                    0f,
-                    outputVoltage);
+            outputVoltage = IsFiniteNonNegative(outputVoltage)
+                ? outputVoltage
+                : 0f;
 
-            currentLimit =
-                Mathf.Max(
-                    0.0001f,
-                    currentLimit);
+            currentLimit = IsFinitePositive(currentLimit)
+                ? currentLimit
+                : 0.0001f;
+
+            // During Edit Mode, just refresh the baseline.
+            // During Play Mode, detect Inspector changes and notify
+            // the solver if the electrical configuration actually changed.
+            if (!Application.isPlaying)
+            {
+                CaptureValidationSnapshot();
+                return;
+            }
+
+            if (!validationSnapshotInitialized)
+            {
+                CaptureValidationSnapshot();
+                return;
+            }
+
+            bool changed =
+                !Mathf.Approximately(outputVoltage, validatedOutputVoltage) ||
+                !Mathf.Approximately(currentLimit, validatedCurrentLimit) ||
+                state != validatedState ||
+                positiveTerminal != validatedPositiveTerminal ||
+                negativeTerminal != validatedNegativeTerminal;
+
+            if (!changed)
+                return;
+
+            CaptureValidationSnapshot();
+
+            Debug.Log(
+                $"[SPARK POWER SUPPLY] Inspector configuration changed | " +
+                $"Voltage={outputVoltage} V | " +
+                $"CurrentLimit={currentLimit} A | " +
+                $"State={state}",
+                this);
+
+            NotifyElectricalConfigurationChanged();
         }
 
-        // =========================================================
-        // NUMERIC VALIDATION
-        // =========================================================
+        private void CaptureValidationSnapshot()
+        {
+            validatedOutputVoltage = outputVoltage;
+            validatedCurrentLimit = currentLimit;
+            validatedState = state;
+            validatedPositiveTerminal = positiveTerminal;
+            validatedNegativeTerminal = negativeTerminal;
+            validationSnapshotInitialized = true;
+        }
 
-        /// <summary>
-        /// Returns true when the value is finite and zero or greater.
-        /// </summary>
-        private static bool IsFiniteNonNegative(
-            float value)
+        private static bool IsFiniteNonNegative(float value)
         {
             return
                 !float.IsNaN(value) &&
@@ -328,11 +255,7 @@ public bool IsShortCircuit =>
                 value >= 0f;
         }
 
-        /// <summary>
-        /// Returns true when the value is finite and greater than zero.
-        /// </summary>
-        private static bool IsFinitePositive(
-            float value)
+        private static bool IsFinitePositive(float value)
         {
             return
                 !float.IsNaN(value) &&
