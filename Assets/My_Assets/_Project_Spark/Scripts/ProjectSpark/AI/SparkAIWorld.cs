@@ -102,6 +102,7 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
 
         private bool initialized;
         private bool subscribed;
+        private bool electricalObservationPending;
 
         private int observedTopologyVersion = -1;
 
@@ -228,37 +229,43 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
         /// This is intended for scene/world structure changes, not per-frame
         /// execution.
         /// </summary>
-        public void RebuildObservationCache()
-        {
-            UnsubscribeFromTerminals();
+      public void RebuildObservationCache()
+{
+    UnsubscribeFromTerminals();
+    UnsubscribeFromElectricalComponents();
 
-            electronicObjects.Clear();
-            terminals.Clear();
+    electronicObjects.Clear();
+    terminals.Clear();
 
-            AddExplicitElectronicObjects();
+    AddExplicitElectronicObjects();
 
-            if (electronicObjectRoot != null)
-            {
-                SparkElectronicObject[] discoveredObjects =
-                    electronicObjectRoot
-                        .GetComponentsInChildren<SparkElectronicObject>(
-                            true);
+    if (electronicObjectRoot != null)
+    {
+        SparkElectronicObject[] discoveredObjects =
+            electronicObjectRoot
+                .GetComponentsInChildren<SparkElectronicObject>(true);
 
-                AddElectronicObjects(
-                    discoveredObjects);
-            }
+        AddElectronicObjects(discoveredObjects);
+    }
 
-            AddTerminalsFromElectronicObjects();
+    // First collect terminals from known objects.
+    AddTerminalsFromElectronicObjects();
 
-            AddConnectedTerminals();
+    // This may discover additional connected owners.
+    AddConnectedTerminals();
 
-            SubscribeToTerminals();
+    // Collect terminals from any owners discovered by connections.
+    AddTerminalsFromElectronicObjects();
 
-            observedTopologyVersion =
-                circuitSystem != null
-                    ? circuitSystem.TopologyVersion
-                    : -1;
-        }
+    // Subscribe only after the cache is complete.
+    SubscribeToTerminals();
+    SubscribeToElectricalComponents();
+
+    observedTopologyVersion =
+        circuitSystem != null
+            ? circuitSystem.TopologyVersion
+            : -1;
+}
 
         // =====================================================================
         // REFERENCES
@@ -469,6 +476,22 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
             }
 
             SubscribeToTerminals();
+            
+            if (electricalSolver != null)
+            {
+                electricalSolver.SolveCompleted -=
+                    HandleSolverSolveCompleted;
+
+                electricalSolver.SolveCompleted +=
+                    HandleSolverSolveCompleted;
+
+                electricalSolver.SolveFailed -=
+                    HandleSolverSolveFailed;
+
+                electricalSolver.SolveFailed +=
+                    HandleSolverSolveFailed;
+            }
+
 
             subscribed = true;
         }
@@ -512,6 +535,17 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
                 selectionController.SelectionChanged -=
                     HandleSelectionChanged;
             }
+
+            
+if (electricalSolver != null)
+{
+    electricalSolver.SolveCompleted -=
+        HandleSolverSolveCompleted;
+
+    electricalSolver.SolveFailed -=
+        HandleSolverSolveFailed;
+}
+
 
             UnsubscribeFromTerminals();
 
@@ -568,6 +602,110 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
             }
         }
 
+        
+private void SubscribeToElectricalComponents()
+{
+    for (int i = 0; i < electronicObjects.Count; i++)
+    {
+        SparkElectricalComponent component =
+            electronicObjects[i] as SparkElectricalComponent;
+
+        if (component == null)
+            continue;
+
+        component.ElectricalStateChanged -=
+            HandleComponentElectricalStateChanged;
+
+        component.ElectricalStateChanged +=
+            HandleComponentElectricalStateChanged;
+    }
+}
+
+private void UnsubscribeFromElectricalComponents()
+{
+    for (int i = 0; i < electronicObjects.Count; i++)
+    {
+        SparkElectricalComponent component =
+            electronicObjects[i] as SparkElectricalComponent;
+
+        if (component == null)
+            continue;
+
+        component.ElectricalStateChanged -=
+            HandleComponentElectricalStateChanged;
+    }
+}
+private void HandleTerminalElectricalStateChanged(
+    SparkTerminal terminal)
+{
+    if (terminal == null)
+        return;
+
+    if (electricalSolver != null &&
+        electricalSolver.IsSolving)
+    {
+        electricalObservationPending = true;
+        return;
+    }
+
+    RaiseWorldChanged(
+        new SparkAIEvent(
+            SparkAIEventType.ElectricalStateChanged,
+            Time.time,
+            terminal: terminal,
+            message:
+                "An observed terminal electrical state changed."));
+}
+
+private void HandleComponentElectricalStateChanged(
+    SparkElectricalState state)
+{
+    if (electricalSolver != null &&
+        electricalSolver.IsSolving)
+    {
+        electricalObservationPending = true;
+        return;
+    }
+
+    RaiseWorldChanged(
+        new SparkAIEvent(
+            SparkAIEventType.ElectricalStateChanged,
+            Time.time,
+            message:
+                "An observed component electrical state changed."));
+}
+
+private void HandleSolverSolveCompleted()
+{
+    electricalObservationPending = false;
+
+    RaiseWorldChanged(
+        new SparkAIEvent(
+            SparkAIEventType.ElectricalStateChanged,
+            Time.time,
+            message:
+                "Electrical solve completed; publishing the final observation."));
+}
+
+private void HandleSolverSolveFailed()
+{
+    electricalObservationPending = false;
+
+    RaiseWorldChanged(
+        new SparkAIEvent(
+            SparkAIEventType.ElectricalStateChanged,
+            Time.time,
+            message:
+                "Electrical solve failed; publishing the resulting observation."));
+}
+
+
+
+        // =====================================================================
+        // CIRCUIT EVENTS
+        // =====================================================================
+
+       
         // =====================================================================
         // CIRCUIT EVENTS
         // =====================================================================
@@ -576,7 +714,7 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
         {
             RebuildObservationCache();
 
-            RaiseWorldChanged(
+            PublishWorldChangeWhenSafe(
                 new SparkAIEvent(
                     SparkAIEventType.CircuitChanged,
                     Time.time,
@@ -605,62 +743,57 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
                     ? connection.B.Owner
                     : null);
 
-            SubscribeToTerminals();
+            // Include newly discovered owners and their terminals.
+            AddTerminalsFromElectronicObjects();
 
-           RaiseWorldChanged(
-    new SparkAIEvent(
-        SparkAIEventType.TerminalConnected,
-        Time.time,
-        connection,
-        terminal: connection.A,
-        message: "A Project Spark circuit connection was created."));
+            SubscribeToTerminals();
+            SubscribeToElectricalComponents();
+
+            PublishWorldChangeWhenSafe(
+                new SparkAIEvent(
+                    SparkAIEventType.TerminalConnected,
+                    Time.time,
+                    connection,
+                    terminal: connection.A,
+                    message:
+                        "A Project Spark circuit connection was created."));
         }
 
         private void HandleConnectionRemoved(
             SparkCircuitConnection connection)
         {
-           RaiseWorldChanged(
-    new SparkAIEvent(
-        SparkAIEventType.TerminalDisconnected,
-        Time.time,
-        connection,
-        terminal: connection.A,
-        message: "A Project Spark circuit connection was removed."));
+            PublishWorldChangeWhenSafe(
+                new SparkAIEvent(
+                    SparkAIEventType.TerminalDisconnected,
+                    Time.time,
+                    connection,
+                    terminal: connection.A,
+                    message:
+                        "A Project Spark circuit connection was removed."));
         }
 
+
+
+
+
+private void PublishWorldChangeWhenSafe(
+    SparkAIEvent @event)
+{
+    if (electricalSolver != null &&
+        electricalSolver.IsSolving)
+    {
+        electricalObservationPending = true;
+        return;
+    }
+
+    RaiseWorldChanged(@event);
+}
         // =====================================================================
         // ELECTRICAL EVENTS
-        // =====================================================================
+        // =====================================================================    
 
-        private void HandleTerminalElectricalStateChanged(
-            SparkTerminal terminal)
-        {
-            if (terminal == null)
-            {
-                return;
-            }
 
-            /*
-             * Important:
-             *
-             * We do not immediately rebuild the entire world here.
-             *
-             * Terminal electrical events can occur repeatedly during
-             * solver convergence.
-             *
-             * The authoritative terminal state remains available through
-             * CaptureSnapshot().
-             */
-
-            RaiseWorldChanged(
-                new SparkAIEvent(
-                    SparkAIEventType.ElectricalStateChanged,
-                    Time.time,
-                    terminal: terminal,
-                    message:
-                        "An observed terminal electrical state changed."));
-        }
-
+     
         private void HandleTerminalConnectionStateChanged(
             SparkTerminal terminal)
         {
@@ -669,7 +802,7 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
                 return;
             }
 
-            RaiseWorldChanged(
+            PublishWorldChangeWhenSafe(
                 new SparkAIEvent(
                     SparkAIEventType.CircuitChanged,
                     Time.time,
@@ -685,7 +818,7 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
         private void HandleLevelStarted(
             SparkLevelDefinition level)
         {
-            RaiseWorldChanged(
+            PublishWorldChangeWhenSafe(
                 new SparkAIEvent(
                     SparkAIEventType.LevelStarted,
                     Time.time,
@@ -697,7 +830,7 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
         private void HandleLevelCompleted(
             SparkLevelDefinition level)
         {
-            RaiseWorldChanged(
+            PublishWorldChangeWhenSafe(
                 new SparkAIEvent(
                     SparkAIEventType.LevelCompleted,
                     Time.time,
@@ -710,7 +843,7 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
             SparkLevelDefinition level,
             string reason)
         {
-            RaiseWorldChanged(
+            PublishWorldChangeWhenSafe(
                 new SparkAIEvent(
                     SparkAIEventType.LevelFailed,
                     Time.time,
@@ -721,7 +854,7 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
         private void HandleLevelEvaluationChanged(
             SparkLevelDefinition level)
         {
-            RaiseWorldChanged(
+            PublishWorldChangeWhenSafe(
                 new SparkAIEvent(
                     SparkAIEventType.LevelEvaluationChanged,
                     Time.time,
@@ -733,25 +866,27 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
         // =====================================================================
         // SELECTION
         // =====================================================================
-private void HandleSelectionChanged(
-    SparkSelectable previousSelection,
-    SparkSelectable newSelection)
-{
-    SparkAIEventType eventType =
-        newSelection != null
-            ? SparkAIEventType.ObjectSelected
-            : SparkAIEventType.ObjectDeselected;
 
-    RaiseWorldChanged(
-        new SparkAIEvent(
-            eventType,
-            Time.time,
-            electronicObject: null,
-            message:
+        private void HandleSelectionChanged(
+            SparkSelectable previousSelection,
+            SparkSelectable newSelection)
+        {
+            SparkAIEventType eventType =
                 newSelection != null
-                    ? $"Player selected: {newSelection.name}"
-                    : "Player cleared the selection."));
-}
+                    ? SparkAIEventType.ObjectSelected
+                    : SparkAIEventType.ObjectDeselected;
+
+            PublishWorldChangeWhenSafe(
+                new SparkAIEvent(
+                    eventType,
+                    Time.time,
+                    electronicObject: null,
+                    message:
+                        newSelection != null
+                            ? $"Player selected: {newSelection.name}"
+                            : "Player cleared the selection."));
+        }
+
         // =====================================================================
         // SNAPSHOT
         // =====================================================================

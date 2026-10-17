@@ -138,10 +138,15 @@ namespace ProjectSpark.Electrical
                 return;
             }
 
-            float voltage =
-                result.GetVoltage(
-                    terminalA,
-                    terminalB);
+           
+
+                if (!result.TryGetVoltage(
+        terminalA,
+        terminalB,
+        out float voltage))
+{
+   // return false;
+}
 
             float current = 0f;
 
@@ -224,10 +229,13 @@ namespace ProjectSpark.Electrical
                 return true;
             }
 
-            float voltage =
-                result.GetVoltage(
-                    terminalA,
-                    terminalB);
+           if (!result.TryGetVoltage(
+        terminalA,
+        terminalB,
+        out float voltage))
+{
+    return false;
+}
 
             float previousVoltage = 0f;
 
@@ -283,10 +291,13 @@ namespace ProjectSpark.Electrical
                 return;
             }
 
-            float voltage =
-                result.GetVoltage(
-                    terminalA,
-                    terminalB);
+           if (!result.TryGetVoltage(
+        terminalA,
+        terminalB,
+        out float voltage))
+{
+    //return false;
+}
 
             result.CommitPreviousComponentVoltage(
                 capacitor,

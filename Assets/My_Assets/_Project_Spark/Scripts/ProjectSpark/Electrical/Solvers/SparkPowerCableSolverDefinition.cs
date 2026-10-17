@@ -146,10 +146,15 @@ namespace ProjectSpark.Electrical
                     result.Context.MinimumResistance,
                     0.000001f);
 
-            float voltage =
-                result.GetVoltage(
-                    cable.TerminalA,
-                    cable.TerminalB);
+                    if (!result.TryGetVoltage(
+        cable.TerminalA,
+         cable.TerminalB,
+        out float voltage))
+        {
+            return false;
+        }
+
+          
 
             current =
                 voltage / resistance;

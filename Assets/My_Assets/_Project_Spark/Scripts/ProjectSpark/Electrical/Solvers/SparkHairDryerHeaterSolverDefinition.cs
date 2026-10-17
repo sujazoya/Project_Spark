@@ -330,10 +330,13 @@ namespace ProjectSpark.Electrical
                     minimumResistance,
                     heater.Resistance);
 
-            float voltage =
-                result.GetVoltage(
+                    if (!result.TryGetVoltage(
                     liveTerminal,
-                    neutralTerminal);
+                    neutralTerminal,
+                    out float voltage))
+            {
+                return false;
+            }
 
             current =
                 voltage / resistance;

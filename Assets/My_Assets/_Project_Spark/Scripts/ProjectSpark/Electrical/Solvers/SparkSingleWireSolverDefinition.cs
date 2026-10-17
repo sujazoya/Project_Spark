@@ -137,11 +137,13 @@ namespace ProjectSpark.Electrical
                 return;
             }
 
-            float voltage =
-                result.GetVoltage(
-                    terminalA,
-                    terminalB);
-
+            if (!result.TryGetVoltage(
+                terminalA,
+                terminalB,
+                out float voltage))
+            {
+            
+            }
             float resistance =
                 Mathf.Max(
                     0.000000001f,
@@ -200,20 +202,23 @@ namespace ProjectSpark.Electrical
                 return false;
             }
 
-            float voltage =
-                result.GetVoltage(
-                    terminalA,
-                    terminalB);
+            
+                if (!result.TryGetVoltage(
+                        terminalA,
+                        terminalB,
+                        out float voltage))
+                {
+                    return false;
+                }
 
-            float resistance =
-                Mathf.Max(
+                float resistance = Mathf.Max(
                     0.000000001f,
                     wireResistance);
 
-            current =
-                voltage / resistance;
+                current = voltage / resistance;
 
-            return true;
+                return true;
+
         }
 
         public override bool RequiresContinuousSolve(

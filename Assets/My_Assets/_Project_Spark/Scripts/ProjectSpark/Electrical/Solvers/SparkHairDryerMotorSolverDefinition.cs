@@ -176,11 +176,15 @@ namespace ProjectSpark.Electrical
 
                 return;
             }
+           
 
-            float voltage =
-                result.GetVoltage(
+                    if (!result.TryGetVoltage(
                     liveTerminal,
-                    neutralTerminal);
+                    neutralTerminal,
+                    out float voltage))
+            {
+            // return false;
+            }
 
             float resistance =
                 Mathf.Max(
@@ -249,10 +253,13 @@ namespace ProjectSpark.Electrical
                     minimumResistance,
                     motor.Resistance);
 
-            float voltage =
-                result.GetVoltage(
+            if (!result.TryGetVoltage(
                     liveTerminal,
-                    neutralTerminal);
+                    neutralTerminal,
+                    out float voltage))
+            {
+             return false;
+            }
 
             current =
                 voltage / resistance;

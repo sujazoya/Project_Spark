@@ -1,3 +1,4 @@
+
 using System;
 using UnityEngine;
 using ProjectSpark.Gameplay;
@@ -5,16 +6,15 @@ using ProjectSpark.Gameplay;
 namespace ProjectSpark.Electrical
 {
     /// <summary>
-    /// Solver definition for a normal two-terminal SparkSwitch.
+    /// Solver definition for the conventional two-terminal SparkSwitch.
     ///
-    /// Open switch:
-    ///     No electrical conductance.
+    /// CLOSED:
+    ///     Stamps a conductance between input and output.
     ///
-    /// Closed switch:
-    ///     Conducts through ClosedResistance.
+    /// OPEN:
+    ///     Stamps no connection between input and output.
     ///
-    /// Runtime electrical state remains on SparkSwitch.
-    /// This ScriptableObject contains only solver configuration.
+    /// This is a resistive switch, not a controlled voltage source.
     /// </summary>
     [CreateAssetMenu(
         fileName = "SparkSwitchSolverDefinition",
@@ -22,19 +22,12 @@ namespace ProjectSpark.Electrical
     public sealed class SparkSwitchSolverDefinition :
         SparkElectricalSolverDefinition
     {
+        [Header("Solver")]
         [SerializeField, Min(0.000001f)]
         private float minimumResistance = 0.000001f;
 
-        // ---------------------------------------------------------------------
-        // Identity
-        // ---------------------------------------------------------------------
-
         public override Type SupportedComponentType =>
             typeof(SparkSwitch);
-
-        // ---------------------------------------------------------------------
-        // Component matching
-        // ---------------------------------------------------------------------
 
         public override bool CanHandle(
             SparkElectricalComponent component)
@@ -42,9 +35,9 @@ namespace ProjectSpark.Electrical
             return component is SparkSwitch;
         }
 
-        // ---------------------------------------------------------------------
-        // Terminal access
-        // ---------------------------------------------------------------------
+        // ---------------------------------------------------------
+        // TERMINALS
+        // ---------------------------------------------------------
 
         public override bool TryGetTerminals(
             SparkElectricalComponent component,
@@ -55,177 +48,193 @@ namespace ProjectSpark.Electrical
             terminalA = null;
             terminalB = null;
 
-            if (!(component is SparkSwitch switchComponent))
+            if (!(component is SparkSwitch sw))
+                return false;
+
+            if (sw.InputTerminal == null ||
+                sw.OutputTerminal == null)
             {
                 return false;
             }
 
-            if (switchComponent.InputTerminal == null ||
-                switchComponent.OutputTerminal == null)
-            {
-                return false;
-            }
-
-            terminalA =
-                switchComponent.InputTerminal;
-
-            terminalB =
-                switchComponent.OutputTerminal;
+            terminalA = sw.InputTerminal;
+            terminalB = sw.OutputTerminal;
 
             return true;
         }
 
-        // ---------------------------------------------------------------------
-        // Matrix stamping
-        // ---------------------------------------------------------------------
+        // ---------------------------------------------------------
+        // STAMP
+        // ---------------------------------------------------------
 
         public override void Stamp(
             SparkElectricalComponent component,
             SparkElectricalSolveContext context)
         {
-            if (!(component is SparkSwitch switchComponent))
+            if (!(component is SparkSwitch sw))
+                return;
+
+            if (context == null ||
+                context.Graph == null)
             {
                 return;
             }
 
-            if (context == null)
-            {
+            // Disabled and open switches are genuine open circuits.
+            if (!sw.ElectricalEnabled || !sw.IsClosed)
                 return;
-            }
-
-            if (!switchComponent.ElectricalEnabled)
-            {
-                return;
-            }
-
-            /*
-             * An open switch is an electrical open circuit.
-             */
-            if (!switchComponent.IsConducting)
-            {
-                return;
-            }
 
             if (!TryGetTerminals(
-                    switchComponent,
+                    sw,
                     context.Graph,
-                    out SparkTerminal inputTerminal,
-                    out SparkTerminal outputTerminal))
+                    out SparkTerminal input,
+                    out SparkTerminal output))
             {
                 return;
             }
 
             if (!context.Graph.TryGetNode(
-                    inputTerminal,
-                    out int inputNode))
+                    input,
+                    out int inputGraphNode))
             {
                 return;
             }
 
             if (!context.Graph.TryGetNode(
-                    outputTerminal,
-                    out int outputNode))
+                    output,
+                    out int outputGraphNode))
             {
                 return;
             }
 
-            float resistance =
-                Mathf.Max(
-                    minimumResistance,
-                    switchComponent.ClosedResistance);
+            // Both terminals already share the same graph node.
+            if (inputGraphNode == outputGraphNode)
+                return;
 
-            double conductance =
-                1.0 / resistance;
+            float resistance = Mathf.Max(
+                minimumResistance,
+                sw.ClosedResistance);
 
+            double conductance = 1.0 / resistance;
+
+            // AddConductance maps reference nodes correctly.
             context.AddConductance(
-                inputNode,
-                outputNode,
+                input,
+                output,
                 conductance);
+
+#if UNITY_EDITOR
+            // Avoid logging the full matrix on every solve.
+            // Enable this log temporarily when diagnosing a switch.
+            /*
+            Debug.Log(
+                $"[SWITCH STAMP] {sw.name} | " +
+                $"State={sw.State} | " +
+                $"R={resistance:G6} Ohm | " +
+                $"G={conductance:G6} S | " +
+                $"InputNode={inputGraphNode} | " +
+                $"OutputNode={outputGraphNode}",
+                sw);
+            */
+#endif
         }
 
-        // ---------------------------------------------------------------------
-        // Solved electrical state
-        // ---------------------------------------------------------------------
+        // ---------------------------------------------------------
+        // APPLY SOLVED STATE
+        // ---------------------------------------------------------
 
         public override void ApplySolvedState(
             SparkElectricalComponent component,
             SparkElectricalSolveResult result)
         {
-            if (!(component is SparkSwitch switchComponent))
-            {
+            if (!(component is SparkSwitch sw))
                 return;
-            }
 
-            if (result == null)
+            if (result == null ||
+                result.Context == null ||
+                result.Context.Graph == null)
             {
-                return;
-            }
-
-            if (!switchComponent.ElectricalEnabled)
-            {
-                switchComponent.ApplyElectricalState(
+                sw.ApplyElectricalState(
                     new SparkElectricalState());
 
                 return;
             }
 
             if (!TryGetTerminals(
-                    switchComponent,
+                    sw,
                     result.Context.Graph,
-                    out SparkTerminal inputTerminal,
-                    out SparkTerminal outputTerminal))
+                    out SparkTerminal input,
+                    out SparkTerminal output))
             {
-                switchComponent.ApplyElectricalState(
+                sw.ApplyElectricalState(
                     new SparkElectricalState());
 
                 return;
             }
 
-            float voltage =
-                result.GetVoltage(
-                    inputTerminal,
-                    outputTerminal);
+            // The voltage across the switch is Vin - Vout.
+            if (!result.TryGetVoltage(
+                    input,
+                    output,
+                    out float voltage))
+            {
+                sw.ApplyElectricalState(
+                    new SparkElectricalState());
+
+                return;
+            }
 
             float current = 0f;
 
-            /*
-             * Open switch:
-             * no conduction and therefore no switch current.
-             */
-            if (switchComponent.IsConducting)
+            if (sw.ElectricalEnabled && sw.IsClosed)
             {
-                float resistance =
-                    Mathf.Max(
-                        minimumResistance,
-                        switchComponent.ClosedResistance);
-
-                current =
-                    voltage / resistance;
+                if (!TryCalculateCurrent(
+                        sw,
+                        result,
+                        out current))
+                {
+                    current = 0f;
+                }
             }
 
-            float power =
-                voltage * current;
+            float power = voltage * current;
 
             SparkConductionState conduction =
-                switchComponent.IsConducting &&
+                sw.ElectricalEnabled &&
+                sw.IsClosed &&
                 Mathf.Abs(current) > 0.000001f
                     ? SparkConductionState.Conducting
                     : SparkConductionState.NonConducting;
 
-            SparkElectricalState state =
+            SparkElectricalState solvedState =
                 new SparkElectricalState(
                     voltage,
                     current,
                     power,
                     conduction);
 
-            switchComponent.ApplyElectricalState(
-                state);
+            sw.ApplyElectricalState(solvedState);
+
+#if UNITY_EDITOR
+            /*
+            Debug.Log(
+                $"[SWITCH SOLVED] {sw.name} | " +
+                $"State={sw.State} | " +
+                $"Enabled={sw.ElectricalEnabled} | " +
+                $"Vin={input.ElectricalState.Voltage:F4} V | " +
+                $"Vout={output.ElectricalState.Voltage:F4} V | " +
+                $"Vswitch={voltage:F4} V | " +
+                $"I={current:F6} A | " +
+                $"P={power:F6} W | " +
+                $"Conduction={conduction}",
+                sw);
+            */
+#endif
         }
 
-        // ---------------------------------------------------------------------
-        // Current calculation
-        // ---------------------------------------------------------------------
+        // ---------------------------------------------------------
+        // CURRENT
+        // ---------------------------------------------------------
 
         public override bool TryCalculateCurrent(
             SparkElectricalComponent component,
@@ -234,63 +243,71 @@ namespace ProjectSpark.Electrical
         {
             current = 0f;
 
-            if (!(component is SparkSwitch switchComponent))
+            if (!(component is SparkSwitch sw))
+                return false;
+
+            if (result == null ||
+                result.Context == null ||
+                result.Context.Graph == null)
             {
                 return false;
             }
 
-            if (result == null)
-            {
-                return false;
-            }
-
-            if (!switchComponent.ElectricalEnabled)
-            {
+            // An open or disabled switch carries no switch current.
+            if (!sw.ElectricalEnabled || !sw.IsClosed)
                 return true;
-            }
-
-            if (!switchComponent.IsConducting)
-            {
-                return true;
-            }
 
             if (!TryGetTerminals(
-                    switchComponent,
+                    sw,
                     result.Context.Graph,
-                    out SparkTerminal inputTerminal,
-                    out SparkTerminal outputTerminal))
+                    out SparkTerminal input,
+                    out SparkTerminal output))
             {
                 return false;
             }
 
-            float resistance =
-                Mathf.Max(
-                    minimumResistance,
-                    switchComponent.ClosedResistance);
+            if (!result.TryGetVoltage(
+                    input,
+                    output,
+                    out float voltage))
+            {
+                return false;
+            }
 
-            float voltage =
-                result.GetVoltage(
-                    inputTerminal,
-                    outputTerminal);
+            float resistance = Mathf.Max(
+                minimumResistance,
+                sw.ClosedResistance);
 
-            current =
-                voltage / resistance;
+            current = voltage / resistance;
 
             return true;
         }
 
-        // ---------------------------------------------------------------------
-        // Validation
-        // ---------------------------------------------------------------------
+        // ---------------------------------------------------------
+        // CONTINUOUS SOLVE
+        // ---------------------------------------------------------
+
+        public override bool RequiresContinuousSolve(
+            SparkElectricalComponent component)
+        {
+            if (!(component is SparkSwitch sw))
+                return false;
+
+            // Preserve your existing continuous-solve behavior.
+            return sw.ElectricalEnabled;
+        }
+
+        // ---------------------------------------------------------
+        // VALIDATION
+        // ---------------------------------------------------------
 
         protected override void OnValidate()
         {
             base.OnValidate();
 
-            minimumResistance =
-                Mathf.Max(
-                    0.000001f,
-                    minimumResistance);
+            minimumResistance = Mathf.Max(
+                0.000001f,
+                minimumResistance);
         }
     }
 }

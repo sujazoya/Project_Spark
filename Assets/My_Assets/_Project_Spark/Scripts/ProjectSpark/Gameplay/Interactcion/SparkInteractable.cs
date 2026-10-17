@@ -1,17 +1,12 @@
+
 using UnityEngine;
 
 namespace ProjectSpark.Gameplay
 {
     /// <summary>
     /// Generic Project Spark interaction target.
-    ///
-    /// Attach this to an object with a Collider.
-    ///
-    /// The interaction controller detects this component and calls
-    /// Interact().
-    ///
-    /// Optional specialized behavior can be assigned through the
-    /// interaction type.
+    /// Attach to an object with a Collider.
+    /// Routes interaction to a universal switch lever controller.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkInteractable : MonoBehaviour
@@ -19,7 +14,7 @@ namespace ProjectSpark.Gameplay
         public enum InteractionType
         {
             Generic,
-            HairDryerControl
+            SwitchLever
         }
 
         [Header("Interaction")]
@@ -33,10 +28,9 @@ namespace ProjectSpark.Gameplay
         [SerializeField]
         private bool requirePlayerLookingAtObject = true;
 
-        [Header("Hair Dryer")]
+        [Header("Switch Lever")]
         [SerializeField]
-        private SparkHairDryerControlInteraction
-            hairDryerControl;
+        private SwitchLeverController switchLeverController;
 
         [Header("Visual")]
         [SerializeField]
@@ -49,8 +43,7 @@ namespace ProjectSpark.Gameplay
         private Color highlightColor =
             new Color(0.15f, 0.7f, 1f, 1f);
 
-        [SerializeField]
-        [Range(0f, 1f)]
+        [SerializeField, Range(0f, 1f)]
         private float highlightIntensity = 0.15f;
 
         private Material runtimeMaterial;
@@ -61,17 +54,21 @@ namespace ProjectSpark.Gameplay
         private static readonly int BaseColorID =
             Shader.PropertyToID("_BaseColor");
 
-        public bool IsInteractable =>
-            interactable;
+        public bool IsInteractable => interactable;
 
-        public InteractionType Type =>
-            interactionType;
+        public InteractionType Type => interactionType;
 
-        public bool IsHighlighted =>
-            highlighted;
+        public bool IsHighlighted => highlighted;
+
+        public bool RequirePlayerLookingAtObject =>
+            requirePlayerLookingAtObject;
 
         private void Awake()
         {
+            if (switchLeverController == null)
+                switchLeverController =
+                    GetComponent<SwitchLeverController>();
+
             InitializeHighlight();
         }
 
@@ -91,14 +88,24 @@ namespace ProjectSpark.Gameplay
             if (highlightRenderer == null)
                 return;
 
-            runtimeMaterial =
-                highlightRenderer.material;
+            if (runtimeMaterial != null)
+            {
+                if (Application.isPlaying)
+                    Destroy(runtimeMaterial);
+                else
+                    DestroyImmediate(runtimeMaterial);
 
-            if (runtimeMaterial == null)
-                return;
+                runtimeMaterial = null;
+            }
 
-            if (!runtimeMaterial.HasProperty(BaseColorID))
+            runtimeMaterial = highlightRenderer.material;
+
+            if (runtimeMaterial == null ||
+                !runtimeMaterial.HasProperty(BaseColorID))
+            {
+                initialized = false;
                 return;
+            }
 
             originalColor =
                 runtimeMaterial.GetColor(BaseColorID);
@@ -108,9 +115,12 @@ namespace ProjectSpark.Gameplay
 
         public bool CanInteract()
         {
-            return interactable;
+            return interactable && isActiveAndEnabled;
         }
 
+        /// <summary>
+        /// Called by the Project Spark interaction controller.
+        /// </summary>
         public void Interact()
         {
             if (!CanInteract())
@@ -118,18 +128,23 @@ namespace ProjectSpark.Gameplay
 
             switch (interactionType)
             {
-                case InteractionType.HairDryerControl:
-
-                    if (hairDryerControl != null)
+                case InteractionType.SwitchLever:
+                    if (switchLeverController != null)
                     {
-                        hairDryerControl.Activate();
+                        switchLeverController.Activate();
+                    }
+                    else
+                    {
+                        Debug.LogWarning(
+                            "SparkInteractable: SwitchLeverController " +
+                            "is not assigned.",
+                            this);
                     }
 
                     break;
 
                 case InteractionType.Generic:
                 default:
-
                     break;
             }
         }
@@ -144,10 +159,7 @@ namespace ProjectSpark.Gameplay
 
         public void SetHighlighted(bool value)
         {
-            if (!highlightOnHover)
-                return;
-
-            if (!initialized)
+            if (!highlightOnHover || !initialized)
                 return;
 
             if (highlighted == value)
@@ -155,30 +167,24 @@ namespace ProjectSpark.Gameplay
 
             highlighted = value;
 
-            if (highlighted)
-            {
-                Color color =
-                    originalColor +
-                    highlightColor * highlightIntensity;
-
-                runtimeMaterial.SetColor(
-                    BaseColorID,
-                    color);
-            }
-            else
-            {
-                runtimeMaterial.SetColor(
-                    BaseColorID,
-                    originalColor);
-            }
+            runtimeMaterial.SetColor(
+                BaseColorID,
+                highlighted
+                    ? originalColor +
+                      highlightColor * highlightIntensity
+                    : originalColor);
         }
 
-        public void SetHighlightRenderer(
-            Renderer renderer)
+        public void SetHighlightRenderer(Renderer renderer)
         {
             highlightRenderer = renderer;
-
             InitializeHighlight();
+        }
+
+        public void SetSwitchLeverController(
+            SwitchLeverController controller)
+        {
+            switchLeverController = controller;
         }
     }
 }

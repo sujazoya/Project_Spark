@@ -165,11 +165,13 @@ namespace ProjectSpark.Electrical
                 return;
             }
 
-            float voltage =
-                result.GetVoltage(
-                    anodeTerminal,
-                    cathodeTerminal);
-
+          if (!result.TryGetVoltage(
+        anodeTerminal,
+        cathodeTerminal,
+        out float voltage))
+            {
+            
+            }
             bool conducting =
                 result.GetNonlinearState(
                     diode);
@@ -253,10 +255,13 @@ namespace ProjectSpark.Electrical
                 return true;
             }
 
-            float voltage =
-                result.GetVoltage(
-                    anodeTerminal,
-                    cathodeTerminal);
+          if (!result.TryGetVoltage(
+        anodeTerminal,
+        cathodeTerminal,
+        out float voltage))
+        {
+            return false;
+        }
 
             float resistance =
                 Mathf.Max(

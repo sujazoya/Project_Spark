@@ -359,12 +359,8 @@ namespace ProjectSpark.Circuit
             }
 
             connections.Remove(id);
-
-            UnregisterTerminal(
-                connection.A);
-
-            UnregisterTerminal(
-                connection.B);
+            UnregisterTerminal(connection.A, connection.Kind);
+            UnregisterTerminal(connection.B, connection.Kind);
 
             RemoveTerminalConnection(
                 connection.A,
@@ -429,11 +425,8 @@ namespace ProjectSpark.Circuit
                 SparkCircuitConnection connection =
                     connectionBuffer[i];
 
-                UnregisterTerminal(
-                    connection.A);
-
-                UnregisterTerminal(
-                    connection.B);
+               UnregisterTerminal(connection.A, connection.Kind);
+                UnregisterTerminal(connection.B, connection.Kind);
 
                 if (notify)
                 {
@@ -937,16 +930,15 @@ namespace ProjectSpark.Circuit
             }
         }
 
-        private static void UnregisterTerminal(
-            SparkTerminal terminal)
-        {
-            if (terminal == null)
-            {
-                return;
-            }
+     private static void UnregisterTerminal(
+    SparkTerminal terminal,
+    SparkConnectionKind kind)
+{
+    if (terminal == null)
+        return;
 
-            terminal.UnregisterConnection();
-        }
+    terminal.UnregisterConnection(kind);
+}
 
         // =========================================================
         // ID GENERATION

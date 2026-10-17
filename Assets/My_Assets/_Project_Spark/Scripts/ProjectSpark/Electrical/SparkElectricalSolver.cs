@@ -177,6 +177,8 @@ namespace ProjectSpark.Electrical
 
         private bool solving;
 
+        private bool solveRequestedDuringSolve;
+
         // ---------------------------------------------------------------------
         // PUBLIC STATE
         // ---------------------------------------------------------------------
@@ -241,7 +243,10 @@ namespace ProjectSpark.Electrical
     }
 
     RefreshElectricalComponents();
+    if (isActiveAndEnabled)
+{
     RebindElectricalComponentEvents();
+}
 }
 
 private void OnDisable()
@@ -262,37 +267,21 @@ private void HandleCircuitTopologyChanged()
 
 private void HandleElectricalConfigurationChanged()
 {
-   /* Debug.Log(
-        "[SPARK SOLVER DEBUG] Configuration change received.",
-        this);*/
-
     MarkDirty();
 
-    /*Debug.Log(
-        $"[SPARK SOLVER DEBUG] Before SolveNow | " +
-        $"Solving={solving} | " +
-        $"Enabled={isActiveAndEnabled} | " +
-        $"Dirty={dirty} | " +
-        $"HasResult={latestSolveResult != null}",
-        this);*/
-
-    if (solving || !isActiveAndEnabled)
+    if (!isActiveAndEnabled)
     {
-       /* Debug.LogWarning(
-            "[SPARK SOLVER DEBUG] Immediate solve skipped.",
-            this);
-        return;*/
+        return;
     }
 
-    bool success = SolveNow();
+    if (solving)
+    {
+        // Preserve the request until the current solve finishes.
+        solveRequestedDuringSolve = true;
+        return;
+    }
 
-    /*Debug.Log(
-        $"[SPARK SOLVER DEBUG] SolveNow returned | " +
-        $"Success={success} | " +
-        $"Solving={solving} | " +
-        $"Dirty={dirty} | " +
-        $"HasResult={latestSolveResult != null}",
-        this);*/
+    SolveNow();
 }
 private void RebindElectricalComponentEvents()
 {
@@ -422,99 +411,162 @@ public void MarkDirty()
 
         private int solveCallSequence;
 
-public bool Solve()
-{
-    int callId = ++solveCallSequence;
 
-    Debug.Log(
-        $"[SPARK SOLVER #{callId}] ENTER | " +
-        $"Solving={solving} | Dirty={dirty} | " +
-        $"HasResult={latestSolveResult != null} | " +
-        $"SolveOnDirty={solveOnDirty} | " +
-        $"TopologyVersion={topologyVersion}",
-        this);
+            public bool Solve()
+            {
+                int callId = ++solveCallSequence;
 
-    if (solving)
-    {
-        Debug.LogWarning(
-            $"[SPARK SOLVER #{callId}] REJECTED: already solving.",
-            this);
+                Debug.Log(
+                    $"[SPARK SOLVER #{callId}] ENTER | " +
+                    $"Solving={solving} | Dirty={dirty} | " +
+                    $"HasResult={latestSolveResult != null} | " +
+                    $"SolveOnDirty={solveOnDirty} | " +
+                    $"TopologyVersion={topologyVersion}",
+                    this);
 
-        return false;
-    }
+               
+              if (solving)
+            {
+                solveRequestedDuringSolve = true;
 
-    if (solveOnDirty && !dirty && latestSolveResult != null)
-    {
-        Debug.Log(
-            $"[SPARK SOLVER #{callId}] SKIPPED: clean cached result.",
-            this);
+                Debug.LogWarning(
+                    $"[SPARK SOLVER #{callId}] " +
+                    "Solve request deferred because a solve is already running.",
+                    this);
 
-        return true;
-    }
+                return false;
+            }
 
-    solving = true;
-    bool solved = false;
+                // Reuse the cached result only when it is still valid.
+                if (solveOnDirty &&
+                    !dirty &&
+                    latestSolveResult != null)
+                {
+                    Debug.Log(
+                        $"[SPARK SOLVER #{callId}] SKIPPED: clean cached result.",
+                        this);
 
-    try
-    {
-        Debug.Log(
-            $"[SPARK SOLVER #{callId}] EXECUTING SolveInternal.",
-            this);
+                    return true;
+                }
 
-        solved = SolveInternal();
+                solving = true;
 
-        /*Debug.Log(
-            $"[SPARK SOLVER #{callId}] INTERNAL RESULT | " +
-            $"Success={solved} | Dirty={dirty} | " +
-            $"HasResult={latestSolveResult != null} | " +
-            $"TopologyVersion={topologyVersion} | " +
-            $"NodeCount={(currentGraph != null ? currentGraph.NodeCount : 0)}",
-            this);*/
-    }
-    catch (Exception exception)
-    {
-        Debug.LogError(
-            $"[SPARK SOLVER #{callId}] EXCEPTION.",
-            this);
+                bool solved = false;
 
-        Debug.LogException(exception, this);
-        solved = false;
-    }
-    finally
-    {
-        solving = false;
-    }
+                try
+                {
+                    Debug.Log(
+                        $"[SPARK SOLVER #{callId}] EXECUTING SolveInternal.",
+                        this);
 
-    if (solved)
-    {
-        Debug.Log(
-            $"[SPARK SOLVER #{callId}] COMPLETED EVENT.",
-            this);
+                    solved = SolveInternal();
+                }
+                catch (Exception exception)
+                {
+                    Debug.LogError(
+                        $"[SPARK SOLVER #{callId}] EXCEPTION.",
+                        this);
 
-        SolveCompleted?.Invoke();
-    }
-   else
-{
-   /* Debug.LogError(
-        $"[SPARK SOLVER #{callId}] FAILED EVENT | " +
-        $"SolveInternal returned false or an exception occurred. " +
-        $"Dirty={dirty} | " +
-        $"HasResult={latestSolveResult != null} | " +
-        $"TopologyVersion={topologyVersion} | " +
-        $"NodeCount={(currentGraph != null ? currentGraph.NodeCount : 0)}",
-        this);*/
+                    Debug.LogException(exception, this);
 
-    SolveFailed?.Invoke();
-}
+                    // Invalidate results if the solve failed unexpectedly.
+                    try
+                    {
+                        ZeroStates();
+                    }
+                    catch (Exception resetException)
+                    {
+                        Debug.LogError(
+                            "[SPARK SOLVER] Failed to reset electrical states " +
+                            "after a solve exception.",
+                            this);
 
-    Debug.Log(
-        $"[SPARK SOLVER #{callId}] EXIT | " +
-        $"Success={solved} | Dirty={dirty} | " +
-        $"HasResult={latestSolveResult != null}",
-        this);
+                        Debug.LogException(resetException, this);
+                    }
 
-    return solved;
-}
+                    dirty = true;
+                    solved = false;
+                }
+                finally
+                {
+                    solving = false;
+                }
+
+                // Preserve requests made while the solver was running.
+                
+                    bool runFollowUpSolve = solveRequestedDuringSolve;
+
+                    if (runFollowUpSolve)
+                    {
+                        solveRequestedDuringSolve = false;
+                        dirty = true;
+
+                        if (isActiveAndEnabled)
+                        {
+                            return SolveNow();
+                        }
+
+                        // Keep the request pending until the solver can run again.
+                        solveRequestedDuringSolve = true;
+                    }
+
+
+                if (solved)
+                {
+                    Debug.Log(
+                        $"[SPARK SOLVER #{callId}] COMPLETED EVENT.",
+                        this);
+
+                   InvokeSolveEventSafely(
+                    SolveCompleted,
+                    nameof(SolveCompleted));
+                }
+                else
+                {
+                    // A failed numerical solve must remain eligible for retry.
+                    dirty = true;
+
+                  InvokeSolveEventSafely(
+                    SolveFailed,
+                    nameof(SolveFailed));
+                }
+
+                Debug.Log(
+                    $"[SPARK SOLVER #{callId}] EXIT | " +
+                    $"Success={solved} | Dirty={dirty} | " +
+                    $"HasResult={latestSolveResult != null}",
+                    this);
+
+                return solved;
+            }
+
+
+        private void InvokeSolveEventSafely(
+            Action solveEvent,
+            string eventName)
+        {
+            if (solveEvent == null)
+                return;
+
+            Delegate[] subscribers = solveEvent.GetInvocationList();
+
+            for (int i = 0; i < subscribers.Length; i++)
+            {
+                try
+                {
+                    ((Action)subscribers[i]).Invoke();
+                }
+                catch (Exception exception)
+                {
+                    Debug.LogError(
+                        "[SPARK SOLVER] Subscriber failed during " +
+                        eventName + ".",
+                        this);
+
+                    Debug.LogException(exception, this);
+                }
+            }
+        }
 
 
         /// <summary>
@@ -528,32 +580,39 @@ public bool Solve()
 
         private bool SolveInternal()
         {
-            if (solverRegistry == null)
-            {
-                Debug.LogError(
-                    "[ELECTRICAL SOLVER] Solver registry is missing.",
-                    this);
+                  if (solverRegistry == null)
+        {
+            Debug.LogError(
+                "[ELECTRICAL SOLVER] Solver registry is missing.",
+                this);
 
-                return false;
-            }
+            ZeroStates();
+            dirty = true;
 
-            if (circuit == null)
-            {
-                Debug.LogError(
-                    "[ELECTRICAL SOLVER] Circuit reference is missing.",
-                    this);
+            return false;
+        }
 
-                return false;
-            }
+                if (circuit == null)
+        {
+            Debug.LogError(
+                "[ELECTRICAL SOLVER] Circuit reference is missing.",
+                this);
+
+            ZeroStates();
+            dirty = true;
+
+            return false;
+        }
 
             if (!RefreshTopologyIfRequired())
             {
                 return true;
             }
 
-            if (currentGraph == null)
+           if (currentGraph == null)
             {
                 ZeroStates();
+                dirty = true;
 
                 return false;
             }
@@ -684,14 +743,15 @@ public bool Solve()
                     nodeVoltages.Length);
             }
 
-           if (!solved ||
+                if (!solved ||
                 !converged ||
                 finalSolution == null)
             {
                 ZeroStates();
+                dirty = true;
+
                 return false;
             }
-
             // -------------------------------------------------------------
             // SAVE FINAL SOLUTION
             // -------------------------------------------------------------
@@ -805,7 +865,10 @@ Debug.Log(
             electricalComponents =
                 discovered;
 
+             if (isActiveAndEnabled)
+            {
                 RebindElectricalComponentEvents();
+            }
 
             // Component topology changed.
             dirty = true;
@@ -865,13 +928,12 @@ Debug.Log(
         // TOPOLOGY
         // ---------------------------------------------------------------------
 
+      
         private bool RefreshTopologyIfRequired()
         {
-            int currentVersion =
-                circuit.TopologyVersion;
+            bool componentsChanged = RefreshElectricalComponents();
 
-            bool componentsChanged =
-                RefreshElectricalComponents();
+            int currentVersion = circuit.TopologyVersion;
 
             bool graphNeedsRefresh =
                 currentGraph == null ||
@@ -880,23 +942,17 @@ Debug.Log(
 
             if (graphNeedsRefresh)
             {
-                currentGraph =
-                    BuildGraph();
-
-                topologyVersion =
-                    currentVersion;
-
+                currentGraph = BuildGraph();
+                topologyVersion = currentVersion;
                 dirty = true;
             }
 
-            if (solveOnDirty &&
-                !dirty)
-            {
+            if (solveOnDirty && !dirty)
                 return false;
-            }
 
             return true;
         }
+
 
         // ---------------------------------------------------------------------
         // GRAPH BUILD
@@ -1255,7 +1311,37 @@ private bool ShouldIgnoreComponent(
         {
             continue;
         }
+        
+#if UNITY_EDITOR
+for (int j = 0; j < electricalComponents.Length; j++)
+{
+    if (!(electricalComponents[j] is SparkSwitch sw))
+        continue;
 
+    if (!context.Graph.TryGetNode(
+            sw.InputTerminal, out int inputNode) ||
+        !context.Graph.TryGetNode(
+            sw.OutputTerminal, out int outputNode))
+    {
+        Debug.LogWarning(
+            "[SWITCH MATRIX DEBUG] Could not resolve switch nodes.",
+            sw);
+
+        continue;
+    }
+
+    Debug.Log(
+        $"[SWITCH MATRIX DEBUG] " +
+        $"State={sw.State} | " +
+        $"InputNode={inputNode} | " +
+        $"OutputNode={outputNode} | " +
+        $"Aii={context.Matrix[inputNode, inputNode]:G8} | " +
+        $"Aoo={context.Matrix[outputNode, outputNode]:G8} | " +
+        $"Aio={context.Matrix[inputNode, outputNode]:G8} | " +
+        $"Aoi={context.Matrix[outputNode, inputNode]:G8}",
+        sw);
+}
+#endif
         definition.Stamp(
             component,
             context);
@@ -1861,76 +1947,101 @@ private bool ShouldIgnoreComponent(
         // ZERO STATE
         // ---------------------------------------------------------------------
 
+                
         private void ZeroStates()
-{
-    nonlinearStates.Clear();
-    previousComponentVoltages.Clear();
-
-    latestSolveResult = null;
-
-    nodeVoltages = Array.Empty<float>();
-    reducedSolution = Array.Empty<double>();
-
-    // Clear terminal states so a failed solve cannot leave
-    // voltage readings from the previous successful solve.
-    if (terminals != null)
-    {
-        for (int i = 0; i < terminals.Count; i++)
         {
-            SparkTerminal terminal = terminals[i];
+            dirty = true;
 
-            if (terminal != null)
-                terminal.ClearElectricalState();
-        }
-    }
+            nonlinearStates.Clear();
+            previousComponentVoltages.Clear();
 
-    if (electricalComponents == null)
-        return;
+            latestSolveResult = null;
 
-    for (int i = 0; i < electricalComponents.Length; i++)
-    {
-        SparkElectricalComponent component =
-            electricalComponents[i];
+            nodeVoltages = Array.Empty<float>();
+            reducedSolution = Array.Empty<double>();
 
-        if (component == null)
-            continue;
+            // Clear terminal states so a failed solve cannot leave
+            // voltage readings from the previous successful solve.
+            if (terminals != null)
+            {
+                for (int i = 0; i < terminals.Count; i++)
+                {
+                    SparkTerminal terminal = terminals[i];
 
-        if (ShouldIgnoreComponent(component))
-            continue;
+                    if (terminal != null)
+                        terminal.ClearElectricalState();
+                }
+            }
 
-        if (!TryGetSolverDefinition(
-                component,
-                out SparkElectricalSolverDefinition definition))
-        {
-            continue;
-        }
-
-        definition.ResetRuntimeState(component);
-    }
-}
-
-        private void ApplyZeroResult(
-            SparkElectricalSolveContext context)
-        {
             if (electricalComponents == null)
                 return;
 
-            SparkElectricalSolveResult result =
-                new SparkElectricalSolveResult(
-                    context,
-                    nodeVoltages,
-                    reducedSolution);
+            for (int i = 0; i < electricalComponents.Length; i++)
+            {
+                SparkElectricalComponent component =
+                    electricalComponents[i];
 
-            latestSolveResult =
-                result;
-            ApplyAllDeviceStates(result);
+                if (component == null)
+                    continue;
 
-            ApplyTerminalStates(result);
+                if (ShouldIgnoreComponent(component))
+                    continue;
 
-            
+                if (!TryGetSolverDefinition(
+                        component,
+                        out SparkElectricalSolverDefinition definition))
+                {
+                    continue;
+                }
 
-            CommitTransientStates(result);
+                definition.ResetRuntimeState(component);
+            }
         }
+
+       
+private void ApplyZeroResult(
+    SparkElectricalSolveContext context)
+{
+    if (context == null)
+    {
+        throw new ArgumentNullException(
+            nameof(context));
+    }
+
+    // Ensure the zero-state result always has valid arrays.
+    if (nodeVoltages == null)
+    {
+        nodeVoltages = Array.Empty<float>();
+    }
+
+    if (reducedSolution == null)
+    {
+        reducedSolution = Array.Empty<double>();
+    }
+
+    
+        SparkElectricalSolveResult result =
+            new SparkElectricalSolveResult(
+                context,
+                nodeVoltages,
+                reducedSolution);
+
+        // Apply the newly calculated solution.
+        ApplyAllDeviceStates(result);
+        ApplyTerminalStates(result);
+
+        // Commit transient state only after the solve and
+        // state application have succeeded.
+        CommitTransientStates(result);
+
+        DebugPowerSupplyVoltage();
+
+        // Publish after state application succeeds.
+        latestSolveResult = result;
+        dirty = false;
+
+        }
+
 
         // ---------------------------------------------------------------------
         // NODE BUFFER

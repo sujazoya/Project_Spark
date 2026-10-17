@@ -54,12 +54,12 @@ namespace ProjectSpark.Gameplay
         /// 
         [ContextMenu("Debug/Test Electrical Configuration Event")]
         protected void NotifyElectricalConfigurationChanged() {
-            Debug.Log(
+/*            Debug.Log(
         $"[SPARK COMPONENT] Configuration changed | " +
         $"Component={name} | " +
         $"Type={GetType().Name} | " +
         $"InstanceID={GetInstanceID()}",
-        this);
+        this);*/
              
              ElectricalConfigurationChanged?.Invoke();}
 

@@ -29,25 +29,28 @@ namespace ProjectSpark.Electrical
         // CONSTRUCTOR
         // ---------------------------------------------------------------------
 
-        public SparkElectricalSolveResult(
-            SparkElectricalSolveContext context,
-            float[] nodeVoltages,
-            double[] reducedSolution)
-        {
-            this.context =
-                context ??
-                throw new ArgumentNullException(
-                    nameof(context));
+       
+public SparkElectricalSolveResult(
+    SparkElectricalSolveContext context,
+    float[] nodeVoltages,
+    double[] reducedSolution)
+{
+    this.context =
+        context ??
+        throw new ArgumentNullException(
+            nameof(context));
 
-            this.nodeVoltages =
-                nodeVoltages ??
-                throw new ArgumentNullException(
-                    nameof(nodeVoltages));
+    this.nodeVoltages =
+        nodeVoltages != null
+            ? (float[])nodeVoltages.Clone()
+            : throw new ArgumentNullException(
+                nameof(nodeVoltages));
 
-            this.reducedSolution =
-                reducedSolution ??
-                Array.Empty<double>();
-        }
+    this.reducedSolution =
+        reducedSolution != null
+            ? (double[])reducedSolution.Clone()
+            : Array.Empty<double>();
+}
 
         // ---------------------------------------------------------------------
         // BASIC INFORMATION
@@ -84,22 +87,24 @@ namespace ProjectSpark.Electrical
             return nodeVoltages[node];
         }
 
-        public bool TryGetNodeVoltage(
-            int node,
-            out float voltage)
-        {
-            if (node < 0 ||
-                node >= nodeVoltages.Length)
-            {
-                voltage = 0f;
-                return false;
-            }
 
-            voltage =
-                nodeVoltages[node];
+public bool TryGetNodeVoltage(
+    int node,
+    out float voltage)
+{
+    voltage = 0f;
 
-            return true;
-        }
+    if (nodeVoltages == null ||
+        node < 0 ||
+        node >= nodeVoltages.Length)
+    {
+        return false;
+    }
+
+    voltage = nodeVoltages[node];
+    return true;
+}
+
 
         // ---------------------------------------------------------------------
         // TERMINAL VOLTAGE
@@ -121,29 +126,29 @@ namespace ProjectSpark.Electrical
             return GetNodeVoltage(node);
         }
 
-        public bool TryGetTerminalVoltage(
-            SparkTerminal terminal,
-            out float voltage)
-        {
-            if (terminal == null)
-            {
-                voltage = 0f;
-                return false;
-            }
+       
+public bool TryGetTerminalVoltage(
+    SparkTerminal terminal,
+    out float voltage)
+{
+    voltage = 0f;
 
-            if (!context.Graph.TryGetNode(
-                    terminal,
-                    out int node))
-            {
-                voltage = 0f;
-                return false;
-            }
+    if (terminal == null ||
+        context.Graph == null)
+    {
+        return false;
+    }
 
-            voltage =
-                GetNodeVoltage(node);
+    if (!context.Graph.TryGetNode(
+            terminal,
+            out int node))
+    {
+        return false;
+    }
 
-            return true;
-        }
+    return TryGetNodeVoltage(node, out voltage);
+}
+
 
         // ---------------------------------------------------------------------
         // DIFFERENTIAL VOLTAGE
@@ -154,21 +159,68 @@ namespace ProjectSpark.Electrical
         ///
         /// V(positive) - V(negative)
         /// </summary>
-        public float GetVoltage(
-            SparkTerminal positive,
-            SparkTerminal negative)
-        {
-            if (positive == null ||
-                negative == null)
-            {
-                return 0f;
-            }
+     
+public bool TryGetVoltage(
+    SparkTerminal positive,
+    SparkTerminal negative,
+    out float voltage)
+{
+    voltage = 0f;
 
-            return
-                GetTerminalVoltage(positive)
-                -
-                GetTerminalVoltage(negative);
-        }
+    if (positive == null || negative == null)
+        return false;
+
+    if (!TryGetTerminalVoltage(
+            positive,
+            out float positiveVoltage))
+    {
+        return false;
+    }
+
+    if (!TryGetTerminalVoltage(
+            negative,
+            out float negativeVoltage))
+    {
+        return false;
+    }
+
+    voltage = positiveVoltage - negativeVoltage;
+    return true;
+}
+
+public bool TryCalculateResistiveCurrent(
+    SparkTerminal positive,
+    SparkTerminal negative,
+    float resistance,
+    out float current)
+{
+    current = 0f;
+
+    if (positive == null || negative == null)
+        return false;
+
+    if (!TryGetVoltage(
+            positive,
+            negative,
+            out float voltage))
+    {
+        return false;
+    }
+
+    if (float.IsNaN(resistance) ||
+        float.IsInfinity(resistance))
+    {
+        return false;
+    }
+
+    resistance = Mathf.Max(
+        context.MinimumResistance,
+        resistance);
+
+    current = voltage / resistance;
+
+    return true;
+}
 
         // ---------------------------------------------------------------------
         // RESISTIVE CURRENT
@@ -182,23 +234,7 @@ namespace ProjectSpark.Electrical
         /// Positive current flows from positive terminal
         /// toward negative terminal.
         /// </summary>
-        public float CalculateResistiveCurrent(
-            SparkTerminal positive,
-            SparkTerminal negative,
-            float resistance)
-        {
-            resistance =
-                Mathf.Max(
-                    context.MinimumResistance,
-                    resistance);
 
-            float voltage =
-                GetVoltage(
-                    positive,
-                    negative);
-
-            return voltage / resistance;
-        }
 
         // ---------------------------------------------------------------------
         // NONLINEAR STATE

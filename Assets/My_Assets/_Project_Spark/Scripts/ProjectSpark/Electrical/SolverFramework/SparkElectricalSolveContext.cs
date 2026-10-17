@@ -608,41 +608,52 @@ public void AddFixedVoltageSource(
         /// <summary>
         /// Stamps a conductance between reduced node indices.
         /// </summary>
-        public void AddConductance(
-            int nodeA,
-            int nodeB,
-            double conductance)
-        {
-            if (conductance <= 0d)
-                return;
+      public void AddConductance(
+    int nodeA,
+    int nodeB,
+    double conductance)
+{
+    if (double.IsNaN(conductance) ||
+        double.IsInfinity(conductance) ||
+        conductance <= 0d)
+    {
+        return;
+    }
 
-            if (nodeA >= 0)
-                AddMatrixValue(
-                    nodeA,
-                    nodeA,
-                    conductance);
+    // A component connected between the same
+    // matrix node cannot introduce a voltage drop.
+    if (nodeA == nodeB)
+        return;
 
-            if (nodeB >= 0)
-                AddMatrixValue(
-                    nodeB,
-                    nodeB,
-                    conductance);
+    if (nodeA >= 0)
+    {
+        AddMatrixValue(
+            nodeA,
+            nodeA,
+            conductance);
+    }
 
-            if (nodeA >= 0 &&
-                nodeB >= 0 &&
-                nodeA != nodeB)
-            {
-                AddMatrixValue(
-                    nodeA,
-                    nodeB,
-                    -conductance);
+    if (nodeB >= 0)
+    {
+        AddMatrixValue(
+            nodeB,
+            nodeB,
+            conductance);
+    }
 
-                AddMatrixValue(
-                    nodeB,
-                    nodeA,
-                    -conductance);
-            }
-        }
+    if (nodeA >= 0 && nodeB >= 0)
+    {
+        AddMatrixValue(
+            nodeA,
+            nodeB,
+            -conductance);
+
+        AddMatrixValue(
+            nodeB,
+            nodeA,
+            -conductance);
+    }
+}
 
         /// <summary>
         /// Stamps a conductance plus an equivalent Norton
@@ -717,35 +728,50 @@ public void AddFixedVoltageSource(
         ///
         /// G(Va - Vb) = I + G*Vdrop
         /// </summary>
-        public void AddForwardDrop(
-            SparkTerminal positiveTerminal,
-            SparkTerminal negativeTerminal,
-            double forwardVoltage,
-            double resistance)
-        {
-            resistance =
-                Math.Max(
-                    MinimumResistance,
-                    resistance);
+       public void AddForwardDrop(
+    SparkTerminal positiveTerminal,
+    SparkTerminal negativeTerminal,
+    double forwardVoltage,
+    double resistance)
+{
+    if (positiveTerminal == null ||
+        negativeTerminal == null)
+    {
+        return;
+    }
 
-            double conductance =
-                1.0 /
-                resistance;
+    if (double.IsNaN(forwardVoltage) ||
+        double.IsInfinity(forwardVoltage) ||
+        double.IsNaN(resistance) ||
+        double.IsInfinity(resistance))
+    {
+        return;
+    }
 
-            AddConductance(
-                positiveTerminal,
-                negativeTerminal,
-                conductance);
+    resistance = Math.Max(
+        MinimumResistance,
+        resistance);
 
-            double equivalentCurrent =
-                conductance *
-                forwardVoltage;
+    double conductance = 1.0 / resistance;
 
-            AddCurrentSource(
-                positiveTerminal,
-                negativeTerminal,
-                equivalentCurrent);
-        }
+    AddConductance(
+        positiveTerminal,
+        negativeTerminal,
+        conductance);
+
+    // AddCurrentSource injects current into terminal A
+    // and removes it from terminal B.
+    //
+    // To model Va - Vb = Vf + I*R,
+    // the equivalent source must point from B to A.
+    double equivalentCurrent =
+        conductance * forwardVoltage;
+
+    AddCurrentSource(
+    positiveTerminal,
+    negativeTerminal,
+    equivalentCurrent);
+}
 
         // ---------------------------------------------------------------------
         // CONTROLLED VOLTAGE SOURCE

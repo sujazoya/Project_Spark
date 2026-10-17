@@ -48,263 +48,283 @@ namespace ProjectSpark.Electrical
             return true;
         }
 
-        public override void Stamp(
-            SparkElectricalComponent component,
-            SparkElectricalSolveContext context)
-        {
-            if (!(component is SparkLED led))
-            {
-                return;
-            }
+       
+public override void Stamp(
+    SparkElectricalComponent component,
+    SparkElectricalSolveContext context)
+{
+    if (!(component is SparkLED led))
+        return;
 
-            if (context == null ||
-                !led.ElectricalEnabled)
-            {
-                return;
-            }
+    if (context == null || !led.ElectricalEnabled)
+        return;
 
-            if (!TryGetTerminals(
-                    led,
-                    context.Graph,
-                    out SparkTerminal anodeTerminal,
-                    out SparkTerminal cathodeTerminal))
-            {
-                return;
-            }
+    if (!TryGetTerminals(
+            led,
+            context.Graph,
+            out SparkTerminal anodeTerminal,
+            out SparkTerminal cathodeTerminal))
+    {
+        return;
+    }
 
-            if (!context.Graph.TryGetNode(
-                    anodeTerminal,
-                    out int anodeNode))
-            {
-                return;
-            }
+    if (!context.Graph.TryGetNode(
+            anodeTerminal,
+            out int anodeNode))
+    {
+        return;
+    }
 
-            if (!context.Graph.TryGetNode(
-                    cathodeTerminal,
-                    out int cathodeNode))
-            {
-                return;
-            }
+    if (!context.Graph.TryGetNode(
+            cathodeTerminal,
+            out int cathodeNode))
+    {
+        return;
+    }
 
-            float anodeVoltage =
-                context.GetIterationNodeVoltage(
-                    anodeNode);
+    float anodeVoltage =
+        context.GetIterationNodeVoltage(anodeNode);
 
-            float cathodeVoltage =
-                context.GetIterationNodeVoltage(
-                    cathodeNode);
+    float cathodeVoltage =
+        context.GetIterationNodeVoltage(cathodeNode);
 
-            float ledVoltage =
-                anodeVoltage -
-                cathodeVoltage;
+    float ledVoltage = anodeVoltage - cathodeVoltage;
 
-            bool wasConducting =
-                context.GetNonlinearState(
-                    led);
+    bool wasConducting = context.GetNonlinearState(led);
 
-            float conductionThreshold =
-                led.ForwardVoltage;
+    float conductionThreshold = led.ForwardVoltage;
 
-            if (wasConducting)
-            {
-                conductionThreshold -=
-                    Mathf.Max(
-                        0f,
-                        led.ConductionHysteresis);
-            }
+    if (wasConducting)
+    {
+        conductionThreshold -= Mathf.Max(
+            0f,
+            led.ConductionHysteresis);
+    }
 
-            bool conducting =
-                ledVoltage >=
-                conductionThreshold;
+    bool conducting = ledVoltage >= conductionThreshold;
 
-            context.SetNonlinearState(
-                led,
-                conducting);
+    context.SetNonlinearState(led, conducting);
+if (!conducting)
+    return;
 
-            if (!conducting)
-            {
-                return;
-            }
+float resistance = Mathf.Max(
+    minimumResistance,
+    led.OnResistance);
 
-            float resistance =
-                Mathf.Max(
-                    minimumResistance,
-                    led.OnResistance);
+// AddForwardDrop maps terminal graph nodes correctly,
+// stamps conductance once, and adds the forward-drop source.
+context.AddForwardDrop(
+    anodeTerminal,
+    cathodeTerminal,
+    led.ForwardVoltage,
+    resistance);
 
-            double conductance =
-                1.0 / resistance;
+  /*  double conductance = 1.0 / resistance;
 
-            context.AddConductance(
-                anodeNode,
-                cathodeNode,
-                conductance);
+    /*context.AddConductance(
+        anodeNode,
+        cathodeNode,
+        conductance);*/
 
-            context.AddForwardDrop(
-                anodeTerminal,
-                cathodeTerminal,
-                led.ForwardVoltage,
-                conductance);
-        }
+    context.AddForwardDrop(
+        anodeTerminal,
+        cathodeTerminal,
+        led.ForwardVoltage,
+        resistance);
+}
 
-        public override void ApplySolvedState(
-            SparkElectricalComponent component,
-            SparkElectricalSolveResult result)
-        {
-            if (!(component is SparkLED led))
-            {
-                return;
-            }
 
-            if (result == null)
-            {
-                return;
-            }
+      public override void ApplySolvedState(
+    SparkElectricalComponent component,
+    SparkElectricalSolveResult result)
+{
+    if (!(component is SparkLED led))
+        return;
 
-            if (!led.ElectricalEnabled)
-            {
-                led.ApplyElectricalState(
-                    new SparkElectricalState());
+    if (result == null)
+        return;
+        
 
-                return;
-            }
+    if (!led.ElectricalEnabled)
+    {
+        led.ApplyElectricalState(new SparkElectricalState());
+        return;
+    }
 
-            if (!TryGetTerminals(
-                    led,
-                    result.Context.Graph,
-                    out SparkTerminal anodeTerminal,
-                    out SparkTerminal cathodeTerminal))
-            {
-                led.ApplyElectricalState(
-                    new SparkElectricalState());
+    if (!TryGetTerminals(
+            led,
+            result.Context.Graph,
+            out SparkTerminal anodeTerminal,
+            out SparkTerminal cathodeTerminal))
+    {
+        Debug.LogError(
+            $"[LED SOLVE] Terminals unavailable for {led.name}.",
+            led);
 
-                return;
-            }
+        led.ApplyElectricalState(new SparkElectricalState());
+        return;
+    }
+if (!result.TryGetVoltage(
+        anodeTerminal,
+        cathodeTerminal,
+        out float voltage))
+{
+    Debug.LogError(
+        $"[LED SOLVE] Could not read solved voltage for {led.name}.",
+        led);
 
-            float voltage =
-                result.GetVoltage(
-                    anodeTerminal,
-                    cathodeTerminal);
+    led.ApplyElectricalState(new SparkElectricalState());
+    return;
+}
 
-            bool conducting =
-                result.GetNonlinearState(
-                    led);
+       Debug.Log(
+    "[LED CIRCUIT DIAGNOSTIC] " +
+    "LED=" + led.name +
+    " | AnodeID=" + anodeTerminal.GetInstanceID() +
+    " | AnodeVoltage=" +
+        result.GetTerminalVoltage(anodeTerminal).ToString("F4") + " V" +
+    " | CathodeID=" + cathodeTerminal.GetInstanceID() +
+    " | CathodeVoltage=" +
+        result.GetTerminalVoltage(cathodeTerminal).ToString("F4") + " V" +
+    " | LEDVoltage=" + voltage.ToString("F4") + " V",
+    led);
 
-            float current = 0f;
+    bool conducting = result.GetNonlinearState(led);
+   
+Debug.Log(
+    "[LED FINAL STATE CHECK] " +
+    "LED=" + led.name +
+    " | FinalVoltage=" + voltage.ToString("F6") + " V" +
+    " | ForwardThreshold=" +
+        led.ForwardVoltage.ToString("F6") + " V" +
+    " | NonlinearConducting=" + conducting,
+    led);
 
-            if (conducting)
-            {
-                float effectiveVoltage =
-                    voltage -
-                    led.ForwardVoltage;
+    float current = 0f;
 
-                float resistance =
-                    Mathf.Max(
-                        minimumResistance,
-                        led.OnResistance);
+    if (conducting)
+    {
+        float effectiveVoltage = voltage - led.ForwardVoltage;
 
-                current =
-                    Mathf.Max(
-                        0f,
-                        effectiveVoltage / resistance);
+        float resistance = Mathf.Max(
+            minimumResistance,
+            led.OnResistance);
 
-                if (led.MaximumForwardCurrent > 0f)
-                {
-                    current =
-                        Mathf.Min(
-                            current,
-                            led.MaximumForwardCurrent);
-                }
-            }
+        current = Mathf.Max(0f, effectiveVoltage / resistance);
 
-            float power =
-                voltage * current;
+        if (led.MaximumForwardCurrent > 0f)
+            current = Mathf.Min(current, led.MaximumForwardCurrent);
+    }
 
-            SparkConductionState conduction =
-                Mathf.Abs(current) > 0.000001f
-                    ? SparkConductionState.Conducting
-                    : SparkConductionState.NonConducting;
+    float power = voltage * current;
 
-            SparkElectricalState state =
-                new SparkElectricalState(
-                    voltage,
-                    current,
-                    power,
-                    conduction);
+    SparkConductionState conduction =
+        current > 0.000001f
+            ? SparkConductionState.Conducting
+            : SparkConductionState.NonConducting;
 
-            led.ApplyElectricalState(
-                state);
-        }
+    Debug.Log(
+        $"[LED SOLVE RESULT] LED={led.name} | " +
+        $"AnodeID={anodeTerminal.GetInstanceID()} | " +
+        $"CathodeID={cathodeTerminal.GetInstanceID()} | " +
+        $"Voltage={voltage:F4} V | " +
+        $"NonlinearConducting={conducting} | " +
+        $"ForwardVoltage={led.ForwardVoltage:F4} V | " +
+        $"Current={current:F6} A | " +
+        $"Conduction={conduction}",
+        led);
 
-        public override bool TryCalculateCurrent(
-            SparkElectricalComponent component,
-            SparkElectricalSolveResult result,
-            out float current)
-        {
-            current = 0f;
+        
 
-            if (!(component is SparkLED led))
-            {
-                return false;
-            }
+    led.ApplyElectricalState(
+        new SparkElectricalState(
+            voltage,
+            current,
+            power,
+            conduction));
 
-            if (result == null)
-            {
-                return false;
-            }
 
-            if (!led.ElectricalEnabled)
-            {
-                return true;
-            }
+            Debug.Log(
+    "[LED APPLIED STATE] " +
+    "LED=" + led.name +
+    " | Voltage=" + voltage.ToString("F6") + " V" +
+    " | Current=" + current.ToString("F6") + " A" +
+    " | Power=" + power.ToString("F6") + " W" +
+    " | Conduction=" + conduction +
+    " | IsOn=" + led.IsOn,
+    led);
+}
 
-            if (!TryGetTerminals(
-                    led,
-                    result.Context.Graph,
-                    out SparkTerminal anodeTerminal,
-                    out SparkTerminal cathodeTerminal))
-            {
-                return false;
-            }
 
-            bool conducting =
-                result.GetNonlinearState(
-                    led);
+       public override bool TryCalculateCurrent(
+    SparkElectricalComponent component,
+    SparkElectricalSolveResult result,
+    out float current)
+{
+    current = 0f;
 
-            if (!conducting)
-            {
-                current = 0f;
-                return true;
-            }
+    if (!(component is SparkLED led))
+    {
+        return false;
+    }
 
-            float voltage =
-                result.GetVoltage(
-                    anodeTerminal,
-                    cathodeTerminal);
+    if (result == null)
+    {
+        return false;
+    }
 
-            float resistance =
-                Mathf.Max(
-                    minimumResistance,
-                    led.OnResistance);
+    if (!led.ElectricalEnabled)
+    {
+        return true;
+    }
 
-            float effectiveVoltage =
-                voltage -
-                led.ForwardVoltage;
+    if (!TryGetTerminals(
+            led,
+            result.Context.Graph,
+            out SparkTerminal anodeTerminal,
+            out SparkTerminal cathodeTerminal))
+    {
+        return false;
+    }
 
-            current =
-                Mathf.Max(
-                    0f,
-                    effectiveVoltage / resistance);
+    bool conducting = result.GetNonlinearState(led);
 
-            if (led.MaximumForwardCurrent > 0f)
-            {
-                current =
-                    Mathf.Min(
-                        current,
-                        led.MaximumForwardCurrent);
-            }
+    if (!conducting)
+    {
+        current = 0f;
+        return true;
+    }
 
-            return true;
-        }
+    // Fail explicitly if either LED terminal is missing
+    // from the solved electrical graph.
+    if (!result.TryGetVoltage(
+            anodeTerminal,
+            cathodeTerminal,
+            out float voltage))
+    {
+        return false;
+    }
+
+    float resistance = Mathf.Max(
+        minimumResistance,
+        led.OnResistance);
+
+    float effectiveVoltage =
+        voltage - led.ForwardVoltage;
+
+    current = Mathf.Max(
+        0f,
+        effectiveVoltage / resistance);
+
+    if (led.MaximumForwardCurrent > 0f)
+    {
+        current = Mathf.Min(
+            current,
+            led.MaximumForwardCurrent);
+    }
+
+    return true;
+}
 
         public override bool RequiresContinuousSolve(
             SparkElectricalComponent component)

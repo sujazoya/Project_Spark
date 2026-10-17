@@ -166,10 +166,13 @@ namespace ProjectSpark.Electrical
                 return;
             }
 
-            float voltage =
-                result.GetVoltage(
-                    terminalA,
-                    terminalB);
+           if (!result.TryGetVoltage(
+        terminalA,
+        terminalB,
+        out float voltage))
+        {
+            //return false;
+        }
 
             float resistance =
                 Mathf.Max(
@@ -237,11 +240,13 @@ namespace ProjectSpark.Electrical
                 Mathf.Max(
                     minimumResistance,
                     resistor.EffectiveResistance);
-
-            float voltage =
-                result.GetVoltage(
-                    terminalA,
-                    terminalB);
+if (!result.TryGetVoltage(
+        terminalA,
+        terminalB,
+        out float voltage))
+{
+    return false;
+}
 
             current =
                 voltage / resistance;

@@ -30,7 +30,7 @@ namespace ProjectSpark.Gameplay
 
         [Header("Electrical")]
         [SerializeField, Min(0f)]
-        private float closedResistance = 0.01f;
+        private float closedResistance = 0.1f;
 
         [SerializeField, Min(0f)]
         private float openResistance = 1000000000f;
@@ -223,37 +223,30 @@ private int lastVisualState = -1;
             return SparkTerminalPolarity.None;
         }
 
-       private void UpdateRuntimeTerminalPolarity()
-        {
-            
-            if (InputTerminal == null ||
-        OutputTerminal == null)
+      private void UpdateRuntimeTerminalPolarity()
+{
+    if (inputTerminal == null ||
+        outputTerminal == null)
     {
         return;
     }
 
-    // Open or disabled switch cannot propagate
-    // runtime polarity to the output.
-    if (!IsClosed || !ElectricalEnabled)
+    if (!ElectricalEnabled || !IsClosed)
     {
-        OutputTerminal.ClearRuntimePolarity();
+        outputTerminal.ClearRuntimePolarity();
         return;
     }
 
+    // Polarity comes from each terminal's solved voltage.
     SparkTerminalPolarity inputPolarity =
-        InputTerminal.SolvedPolarity;
+        GetRuntimePolarity(InputVoltage);
 
-    if (inputPolarity == SparkTerminalPolarity.None)
-    {
-        OutputTerminal.ClearRuntimePolarity();
-        return;
-    }
+    SparkTerminalPolarity outputPolarity =
+        GetRuntimePolarity(OutputVoltage);
 
-    // Propagate BOTH polarities.
-    OutputTerminal.SetRuntimePolarity(
-        inputPolarity);
-        }
-
+    inputTerminal.SetRuntimePolarity(inputPolarity);
+    outputTerminal.SetRuntimePolarity(outputPolarity);
+}
         #endregion
 
 
@@ -389,25 +382,19 @@ private int lastVisualState = -1;
         /// Runtime polarity is then synchronized
         /// from the solved terminal voltages.
         /// </summary>
-        public override void ApplyElectricalState(
-    in SparkElectricalState state)
+      public override void ApplyElectricalState(
+    in SparkElectricalState solvedState)
 {
-    base.ApplyElectricalState(state);
+    // Store authoritative solver result.
+    base.ApplyElectricalState(solvedState);
 
+    // Update runtime polarity using the latest terminal data.
+    UpdateRuntimeTerminalPolarity();
+
+    // Electrical values can change even when the
+    // mechanical switch position remains unchanged.
     NotifyVisualStateChanged();
 }
-       private void Update()
-{
-    if (UnityEngine.InputSystem.Keyboard.current == null)
-        return;
-
-    if (UnityEngine.InputSystem.Keyboard.current.f6Key.wasPressedThisFrame)
-    {
-        Debug.Log("[SPARK SOLVER] Manual solve requested with F6.", this);
-        ToggleState();
-    }
-}
-
         #endregion
 
 
@@ -422,50 +409,35 @@ private int lastVisualState = -1;
                     : SparkSwitchState.Open);
         }
 
-           public void SetState(SparkSwitchState newState)
-            {
-                Debug.Log(
-                    $"[SWITCH DEBUG] SetState called | " +
-                    $"Switch={name} | Current={state} | Requested={newState}",
-                    this);
+         
+public void SetState(SparkSwitchState newState)
+{
+    if (state == newState)
+        return;
 
-                if (state == newState)
-                {
-                    Debug.Log("[SWITCH DEBUG] State unchanged.", this);
-                    return;
-                }
+    SparkSwitchState previousState = state;
 
-                state = newState;
+    state = newState;
 
-                Debug.Log(
-                    $"[SWITCH DEBUG] State changed to {state}. " +
-                    "Requesting electrical solve.",
-                    this);
+    // Immediately invalidate the previous output polarity.
+    // Do not propagate old solver data.
+    if (!IsClosed || !ElectricalEnabled)
+    {
+        if (outputTerminal != null)
+            outputTerminal.ClearRuntimePolarity();
+    }
 
-                UpdateRuntimeTerminalPolarity();
+    // Request a fresh electrical calculation.
+    NotifyElectricalConfigurationChanged();
 
-                NotifyElectricalConfigurationChanged();
+    // Notify mechanical state listeners immediately.
+    VisualStateChanged?.Invoke();
 
-                Debug.Log(
-                    "[SWITCH DEBUG] Electrical configuration notification sent.",
-                    this);
-
-                NotifyVisualStateChanged();
-            }
-
-        public void ToggleFromButton()
-        {
-            ToggleState();
-        }
-
-        public void SetSwitchFromToggle(
-            bool closed)
-        {
-            SetState(
-                closed
-                    ? SparkSwitchState.Closed
-                    : SparkSwitchState.Open);
-        }
+    Debug.Log(
+        $"[SPARK SWITCH] {name}: " +
+        $"{previousState} -> {state}",
+        this);
+}
 
         public SparkResult Toggle(
             in SparkInteractionContext context)
@@ -551,14 +523,7 @@ private int lastVisualState = -1;
 
 private void NotifyVisualStateChanged()
 {
-    int newState =
-        GetVisualState();
-
-    if (newState == lastVisualState)
-        return;
-
-    lastVisualState =
-        newState;
+    lastVisualState = GetVisualState();
 
     VisualStateChanged?.Invoke();
 }

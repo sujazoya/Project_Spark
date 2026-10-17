@@ -186,10 +186,14 @@ namespace ProjectSpark.Electrical
                     result.Context.MinimumResistance,
                     meter.ShuntResistanceOhms);
 
-            float voltage =
-                result.GetVoltage(
+           
+                    if (!result.TryGetVoltage(
                     red,
-                    black);
+                    black,
+                    out float voltage))
+            {
+                return false;
+            }
 
             current =
                 voltage / resistance;

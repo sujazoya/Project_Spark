@@ -247,10 +247,13 @@ public override void Stamp(
                 return;
             }
 
-            float voltage =
-                result.GetVoltage(
-                    positiveTerminal,
-                    negativeTerminal);
+           if (!result.TryGetVoltage(
+        positiveTerminal,
+        negativeTerminal,
+        out float voltage))
+{
+    //return false;
+}
 
             float current = 0f;
 

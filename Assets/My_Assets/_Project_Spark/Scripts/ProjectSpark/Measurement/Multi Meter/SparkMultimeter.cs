@@ -460,20 +460,27 @@ public void NotifyProbeDisconnected(
 // CURRENT MEASUREMENT TOPOLOGY
 // ============================================================
 
+
 private void RebuildCurrentMeasurementPath()
 {
+    // Remove the previous path before rebuilding it.
     RemoveCurrentMeasurementConnections();
 
     if (!IsCurrentMeasurementActive)
         return;
 
     if (electricalComponent == null)
+    {
+        Debug.LogError(
+            "[MULTIMETER] Missing electrical shunt component.",
+            this);
         return;
+    }
 
     if (currentRedTarget == null ||
         currentBlackTarget == null)
     {
-        electricalComponent.SetElectricalEnabled(false);
+        SetCurrentShuntActive(false);
         return;
     }
 
@@ -484,7 +491,7 @@ private void RebuildCurrentMeasurementPath()
             "[MULTIMETER] Current terminals are not configured.",
             this);
 
-        electricalComponent.SetElectricalEnabled(false);
+        SetCurrentShuntActive(false);
         return;
     }
 
@@ -494,14 +501,11 @@ private void RebuildCurrentMeasurementPath()
             "[MULTIMETER] Circuit system is missing.",
             this);
 
-        electricalComponent.SetElectricalEnabled(false);
+        SetCurrentShuntActive(false);
         return;
     }
 
-    // ------------------------------------------------------------
     // CIRCUIT A -> METER RED
-    // ------------------------------------------------------------
-
     bool redCreated =
         circuit.TryCreateConnection(
             currentRedTarget,
@@ -510,24 +514,19 @@ private void RebuildCurrentMeasurementPath()
             SparkConnectionDirection.Bidirectional,
             out SparkCircuitConnection redConnection);
 
-    if (!redCreated ||
-        redConnection == null)
+    if (!redCreated || redConnection == null)
     {
         Debug.LogWarning(
             "[MULTIMETER] Failed to connect RED current path.",
             this);
 
-        electricalComponent.SetElectricalEnabled(false);
+        SetCurrentShuntActive(false);
         return;
     }
 
-    currentRedConnectionId =
-        redConnection.Id;
+    currentRedConnectionId = redConnection.Id;
 
-    // ------------------------------------------------------------
     // METER BLACK -> CIRCUIT B
-    // ------------------------------------------------------------
-
     bool blackCreated =
         circuit.TryCreateConnection(
             currentBlackTerminal,
@@ -536,9 +535,9 @@ private void RebuildCurrentMeasurementPath()
             SparkConnectionDirection.Bidirectional,
             out SparkCircuitConnection blackConnection);
 
-    if (!blackCreated ||
-        blackConnection == null)
+    if (!blackCreated || blackConnection == null)
     {
+        // Roll back the RED connection if BLACK fails.
         circuit.TryRemoveConnection(
             currentRedConnectionId,
             out _);
@@ -549,18 +548,19 @@ private void RebuildCurrentMeasurementPath()
             "[MULTIMETER] Failed to connect BLACK current path.",
             this);
 
-        electricalComponent.SetElectricalEnabled(false);
+        SetCurrentShuntActive(false);
         return;
     }
 
-    currentBlackConnectionId =
-        blackConnection.Id;
+    currentBlackConnectionId = blackConnection.Id;
 
-    electricalComponent.SetElectricalEnabled(true);
+    // Activate the shunt and synchronize its measurement flag.
+    SetCurrentShuntActive(true);
 
     Debug.Log(
-        $"[MULTIMETER] CURRENT PATH ACTIVE → " +
-        $"{currentRedTarget.name} -> METER -> {currentBlackTarget.name}",
+        $"[MULTIMETER] CURRENT PATH ACTIVE -> " +
+        $"{currentRedTarget.name} -> METER -> " +
+        $"{currentBlackTarget.name}",
         this);
 }
 
@@ -1114,79 +1114,96 @@ private void MeasureVoltage()
 
 
 
+private void SetCurrentShuntActive(bool active)
+{
+    if (electricalComponent == null)
+        return;
+
+    // Enable/disable the electrical component.
+    electricalComponent.SetElectricalEnabled(active);
+
+    // Synchronize the current-measurement flag.
+    electricalComponent.SetCurrentMeasurementEnabled(active);
+}
+
+
+
         // ============================================================
         // CURRENT
         // ============================================================
 
+
 private void MeasureCurrent()
 {
-    // ============================================================
-    // CURRENT DC
-    // ============================================================
-
     if (electricalComponent == null)
     {
-        PublishNumericReading(
-            0f,
-            SparkMultimeterMode.CurrentDC,
-            SparkMultimeterDisplayState.Invalid);
-
+        Debug.LogError(
+            "[MULTIMETER] Missing SparkMultimeterElectricalComponent.",
+            this);
+        SetInvalid(SparkMultimeterDisplayState.Invalid, "ERR");
         return;
     }
 
-    if (currentRedTerminal == null ||
-        currentBlackTerminal == null)
+    if (currentRedTarget == null || currentBlackTarget == null)
     {
-        PublishNumericReading(
-            0f,
-            SparkMultimeterMode.CurrentDC,
-            SparkMultimeterDisplayState.Open);
+        Debug.LogWarning(
+            $"[MULTIMETER] Missing current probe targets. " +
+            $"Red={currentRedTarget != null}, " +
+            $"Black={currentBlackTarget != null}",
+            this);
 
+        SetInvalid(SparkMultimeterDisplayState.Open, "---");
         return;
     }
 
-    if (currentRedTarget == null ||
-        currentBlackTarget == null)
-    {
-        PublishNumericReading(
-            0f,
-            SparkMultimeterMode.CurrentDC,
-            SparkMultimeterDisplayState.Open);
-
-        return;
-    }
-
-    // Both probes must be connected.
     if (currentRedConnectionId == 0UL ||
         currentBlackConnectionId == 0UL)
     {
-        PublishNumericReading(
-            0f,
-            SparkMultimeterMode.CurrentDC,
-            SparkMultimeterDisplayState.Open);
+        Debug.LogWarning(
+            $"[MULTIMETER] Incomplete current path. " +
+            $"RedConnection={currentRedConnectionId}, " +
+            $"BlackConnection={currentBlackConnectionId}",
+            this);
 
+        SetInvalid(SparkMultimeterDisplayState.Open, "---");
         return;
     }
 
-    // ============================================================
-    // READ CURRENT FROM THE MULTIMETER'S ELECTRICAL COMPONENT
-    // ============================================================
+    if (!electricalComponent.isActiveAndEnabled)
+    {
+        Debug.LogError(
+            "[MULTIMETER] Electrical component is disabled.",
+            electricalComponent);
 
-    Debug.Log(
-    $"[MULTIMETER CURRENT DEBUG] " +
-    $"RedTarget={currentRedTarget.name} " +
-    $"V={currentRedTarget.ElectricalState.Voltage:F6} | " +
-    $"BlackTarget={currentBlackTarget.name} " +
-    $"V={currentBlackTarget.ElectricalState.Voltage:F6} | " +
-    $"ShuntV={electricalComponent.ElectricalState.Voltage:F6} | " +
-    $"ShuntI={electricalComponent.ElectricalState.Current:F6}",
-    this);
+        SetInvalid(SparkMultimeterDisplayState.Invalid, "ERR");
+        return;
+    }
 
-    float current =
+    float redVoltage =
+        currentRedTarget.ElectricalState.Voltage;
+
+    float blackVoltage =
+        currentBlackTarget.ElectricalState.Voltage;
+
+    float shuntVoltage =
+        electricalComponent.ElectricalState.Voltage;
+
+    float shuntCurrent =
         electricalComponent.ElectricalState.Current;
 
+    Debug.Log(
+        $"[MULTIMETER DIAGNOSTIC] " +
+        $"Mode={mode} | Powered={poweredOn} | " +
+        $"ElectricalEnabled={electricalComponent.enabled} | " +
+        $"Red={currentRedTarget.name} ({redVoltage:F6} V) | " +
+        $"Black={currentBlackTarget.name} ({blackVoltage:F6} V) | " +
+        $"ShuntVoltage={shuntVoltage:F6} V | " +
+        $"ShuntCurrent={shuntCurrent:F9} A | " +
+        $"DisplayExpected={shuntCurrent * 1000f:F6} mA",
+        this);
+
     PublishNumericReading(
-        current,
+        shuntCurrent,
         SparkMultimeterMode.CurrentDC,
         SparkMultimeterDisplayState.Measuring);
 }

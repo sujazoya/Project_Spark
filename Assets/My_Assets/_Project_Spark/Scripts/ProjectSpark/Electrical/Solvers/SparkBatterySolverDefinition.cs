@@ -143,10 +143,13 @@ namespace ProjectSpark.Electrical
              * where Vterminal is the solved voltage difference
              * between the battery's positive and negative terminals.
              */
-            float terminalVoltage =
-                result.GetVoltage(
-                    battery.PositiveTerminal,
-                    battery.NegativeTerminal);
+           if (!result.TryGetVoltage(
+        battery.PositiveTerminal,
+        battery.NegativeTerminal,
+        out float terminalVoltage))
+{
+    
+}
 
             float resistance =
                 Mathf.Max(
@@ -194,45 +197,46 @@ namespace ProjectSpark.Electrical
             return true;
         }
 
-        public override bool TryCalculateCurrent(
-            SparkElectricalComponent component,
-            SparkElectricalSolveResult result,
-            out float current)
-        {
-            current = 0f;
+public override bool TryCalculateCurrent(
+    SparkElectricalComponent component,
+    SparkElectricalSolveResult result,
+    out float current)
+{
+    current = 0f;
 
-            if (!(component is SparkBattery battery))
-                return false;
+    if (!(component is SparkBattery battery))
+        return false;
 
-            if (result == null)
-                return false;
+    if (result == null)
+        return false;
 
-            if (!IsActive(battery))
-                return true;
+    if (!IsActive(battery))
+        return true;
 
-            if (battery.PositiveTerminal == null ||
-                battery.NegativeTerminal == null)
-            {
-                return false;
-            }
+    if (battery.PositiveTerminal == null ||
+        battery.NegativeTerminal == null)
+    {
+        return false;
+    }
 
-            float terminalVoltage =
-                result.GetVoltage(
-                    battery.PositiveTerminal,
-                    battery.NegativeTerminal);
+    if (!result.TryGetVoltage(
+            battery.PositiveTerminal,
+            battery.NegativeTerminal,
+            out float terminalVoltage))
+    {
+        return false;
+    }
 
-            float resistance =
-                Mathf.Max(
-                    result.Context.MinimumResistance,
-                    battery.InternalResistance);
+    float resistance = Mathf.Max(
+        result.Context.MinimumResistance,
+        battery.InternalResistance);
 
-            current =
-                (battery.NominalVoltage -
-                 terminalVoltage) /
-                resistance;
+    current =
+        (battery.NominalVoltage - terminalVoltage) /
+        resistance;
 
-            return IsFinite(current);
-        }
+    return IsFinite(current);
+}
 
         public override bool TryGetTerminals(
             SparkElectricalComponent component,
