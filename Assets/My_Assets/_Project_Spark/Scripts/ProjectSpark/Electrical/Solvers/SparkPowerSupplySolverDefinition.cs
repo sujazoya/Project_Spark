@@ -197,12 +197,12 @@ public override void Stamp(
         return;
     }
 
-    Debug.Log(
+    /*Debug.Log(
         $"[POWER SUPPLY STAMP] {supply.name} | " +
         $"ConfiguredV={supply.OutputVoltage:F6} | " +
         $"Active={supply.IsOutputActive} | " +
         $"SourceIndex={sourceIndex}",
-        supply);
+        supply);*/
 
     context.AddFixedVoltageSource(
         positiveTerminal,

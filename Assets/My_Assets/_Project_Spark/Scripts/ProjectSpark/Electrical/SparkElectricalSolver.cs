@@ -1329,17 +1329,7 @@ for (int j = 0; j < electricalComponents.Length; j++)
 
         continue;
     }
-
-    Debug.Log(
-        $"[SWITCH MATRIX DEBUG] " +
-        $"State={sw.State} | " +
-        $"InputNode={inputNode} | " +
-        $"OutputNode={outputNode} | " +
-        $"Aii={context.Matrix[inputNode, inputNode]:G8} | " +
-        $"Aoo={context.Matrix[outputNode, outputNode]:G8} | " +
-        $"Aio={context.Matrix[inputNode, outputNode]:G8} | " +
-        $"Aoi={context.Matrix[outputNode, inputNode]:G8}",
-        sw);
+   
 }
 #endif
         definition.Stamp(
@@ -2196,7 +2186,7 @@ private void ApplyZeroResult(
                 ? supply.NegativeTerminal.ElectricalState.Voltage
                 : float.NaN;
 
-        Debug.Log(
+/*        Debug.Log(
             $"[POWER SUPPLY DIAGNOSTIC] {supply.name} | " +
             $"ConfiguredV={supply.OutputVoltage:F6} | " +
             $"SupplyActive={supply.IsOutputActive} | " +
@@ -2207,7 +2197,7 @@ private void ApplyZeroResult(
             $"NegativeV={negativeVoltage:F6} | " +
             $"DeltaV={positiveVoltage - negativeVoltage:F6} | " +
             $"SupplyStateV={supply.ElectricalState.Voltage:F6}",
-            supply);
+            supply);*/
     }
 }
     }

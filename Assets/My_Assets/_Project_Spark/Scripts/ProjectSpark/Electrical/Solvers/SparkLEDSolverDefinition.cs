@@ -177,7 +177,7 @@ if (!result.TryGetVoltage(
     return;
 }
 
-       Debug.Log(
+       /*Debug.Log(
     "[LED CIRCUIT DIAGNOSTIC] " +
     "LED=" + led.name +
     " | AnodeID=" + anodeTerminal.GetInstanceID() +
@@ -187,18 +187,18 @@ if (!result.TryGetVoltage(
     " | CathodeVoltage=" +
         result.GetTerminalVoltage(cathodeTerminal).ToString("F4") + " V" +
     " | LEDVoltage=" + voltage.ToString("F4") + " V",
-    led);
+    led);*/
 
     bool conducting = result.GetNonlinearState(led);
    
-Debug.Log(
+/*Debug.Log(
     "[LED FINAL STATE CHECK] " +
     "LED=" + led.name +
     " | FinalVoltage=" + voltage.ToString("F6") + " V" +
     " | ForwardThreshold=" +
         led.ForwardVoltage.ToString("F6") + " V" +
     " | NonlinearConducting=" + conducting,
-    led);
+    led);*/
 
     float current = 0f;
 
@@ -223,7 +223,7 @@ Debug.Log(
             ? SparkConductionState.Conducting
             : SparkConductionState.NonConducting;
 
-    Debug.Log(
+/*    Debug.Log(
         $"[LED SOLVE RESULT] LED={led.name} | " +
         $"AnodeID={anodeTerminal.GetInstanceID()} | " +
         $"CathodeID={cathodeTerminal.GetInstanceID()} | " +
@@ -233,7 +233,7 @@ Debug.Log(
         $"Current={current:F6} A | " +
         $"Conduction={conduction}",
         led);
-
+*/
         
 
     led.ApplyElectricalState(
@@ -244,7 +244,7 @@ Debug.Log(
             conduction));
 
 
-            Debug.Log(
+           /* Debug.Log(
     "[LED APPLIED STATE] " +
     "LED=" + led.name +
     " | Voltage=" + voltage.ToString("F6") + " V" +
@@ -252,7 +252,7 @@ Debug.Log(
     " | Power=" + power.ToString("F6") + " W" +
     " | Conduction=" + conduction +
     " | IsOn=" + led.IsOn,
-    led);
+    led);*/
 }
 
 

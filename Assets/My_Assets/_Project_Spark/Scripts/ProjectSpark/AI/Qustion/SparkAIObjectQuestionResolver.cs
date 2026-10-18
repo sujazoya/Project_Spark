@@ -43,6 +43,7 @@ namespace ProjectSpark.AI
             new[] { "relay" }
         };
 
+       
         public static bool TryFindObject(
             string question,
             SparkAIWorldSnapshot world,
@@ -50,10 +51,8 @@ namespace ProjectSpark.AI
         {
             result = default;
 
-            if (string.IsNullOrWhiteSpace(question))
-                return false;
-
-            if (world.ElectronicObjects == null ||
+            if (string.IsNullOrWhiteSpace(question) ||
+                world.ElectronicObjects == null ||
                 world.ElectronicObjects.Count == 0)
             {
                 return false;
@@ -61,17 +60,18 @@ namespace ProjectSpark.AI
 
             string normalizedQuestion = Normalize(question);
 
-            if (normalizedQuestion.Length == 0)
+            if (string.IsNullOrWhiteSpace(normalizedQuestion))
                 return false;
 
-            SparkAIElectronicObjectSnapshot bestMatch = default;
+            // ------------------------------------------------------------
+            // 1. Prefer explicit instance names.
+            // Example: "Why is LED_2 not glowing?" -> LED_2
+            // ------------------------------------------------------------
 
-            int bestScore = 0;
-            int bestMatchCount = 0;
+            SparkAIElectronicObjectSnapshot exactMatch = default;
+            int exactMatchCount = 0;
 
-            for (int i = 0;
-                 i < world.ElectronicObjects.Count;
-                 i++)
+            for (int i = 0; i < world.ElectronicObjects.Count; i++)
             {
                 SparkAIElectronicObjectSnapshot candidate =
                     world.ElectronicObjects[i];
@@ -81,7 +81,52 @@ namespace ProjectSpark.AI
 
                 string objectName = Normalize(candidate.Name);
 
-                if (objectName.Length == 0)
+                if (string.IsNullOrWhiteSpace(objectName))
+                    continue;
+
+                // Avoid treating generic names such as "LED" as an
+                // explicit instance match when the question says LED_2.
+                if (objectName.Length <= 3)
+                    continue;
+
+                if (!normalizedQuestion.Contains(objectName))
+                    continue;
+
+                exactMatch = candidate;
+                exactMatchCount++;
+            }
+
+            if (exactMatchCount == 1)
+            {
+                result = exactMatch;
+                return true;
+            }
+
+            if (exactMatchCount > 1)
+            {
+                // Do not silently select between multiple named matches.
+                return false;
+            }
+
+            // ------------------------------------------------------------
+            // 2. Fall back to the existing score-based matching.
+            // ------------------------------------------------------------
+
+            SparkAIElectronicObjectSnapshot bestMatch = default;
+            int bestScore = 0;
+            int bestMatchCount = 0;
+
+            for (int i = 0; i < world.ElectronicObjects.Count; i++)
+            {
+                SparkAIElectronicObjectSnapshot candidate =
+                    world.ElectronicObjects[i];
+
+                if (string.IsNullOrWhiteSpace(candidate.Name))
+                    continue;
+
+                string objectName = Normalize(candidate.Name);
+
+                if (string.IsNullOrWhiteSpace(objectName))
                     continue;
 
                 int score = CalculateMatchScore(
@@ -103,14 +148,6 @@ namespace ProjectSpark.AI
                 }
             }
 
-            /*
-             * A generic name such as "the LED" must not arbitrarily
-             * select one of multiple equally matching LEDs.
-             *
-             * Exact and compact full-name matches are preferred.
-             * Generic ambiguous matches return false so another
-             * component is never silently selected.
-             */
             if (bestScore <= 0)
                 return false;
 
@@ -123,6 +160,9 @@ namespace ProjectSpark.AI
             result = bestMatch;
             return true;
         }
+
+        
+
 
         private static int CalculateMatchScore(
             string question,
@@ -268,5 +308,8 @@ namespace ProjectSpark.AI
                 .Replace("/", string.Empty)
                 .Replace("\\", string.Empty);
         }
+
+
+        
     }
 }

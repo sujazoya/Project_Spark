@@ -103,6 +103,8 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
         private bool initialized;
         private bool subscribed;
         private bool electricalObservationPending;
+        private readonly List<SparkAIEvent> pendingWorldEvents =
+        new List<SparkAIEvent>(8);
 
         private int observedTopologyVersion = -1;
 
@@ -239,14 +241,59 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
 
     AddExplicitElectronicObjects();
 
-    if (electronicObjectRoot != null)
-    {
-        SparkElectronicObject[] discoveredObjects =
-            electronicObjectRoot
-                .GetComponentsInChildren<SparkElectronicObject>(true);
+    
+if (electronicObjectRoot != null)
+{
+    SparkElectronicObject[] discoveredObjects =
+        electronicObjectRoot
+            .GetComponentsInChildren<SparkElectronicObject>(true);
 
-        AddElectronicObjects(discoveredObjects);
+   /* Debug.Log(
+        "[SPARK AI DISCOVERY] Root=" +
+        electronicObjectRoot.name +
+        " | SparkElectronicObject components found=" +
+        discoveredObjects.Length);*/
+
+    for (int i = 0; i < discoveredObjects.Length; i++)
+    {
+        SparkElectronicObject item = discoveredObjects[i];
+
+        if (item == null)
+            continue;
+
+       /* Debug.Log(
+            "[SPARK AI DISCOVERY] Found=" +
+            item.name +
+            " | Type=" + item.GetType().Name +
+            " | ActiveInHierarchy=" + item.gameObject.activeInHierarchy);*/
     }
+
+    AddElectronicObjects(discoveredObjects);
+
+    Debug.Log(
+    "[SPARK AI DISCOVERY] Cached electronic objects=" +
+    electronicObjects.Count);
+
+for (int i = 0; i < electronicObjects.Count; i++)
+{
+    SparkElectronicObject item = electronicObjects[i];
+
+    if (item != null)
+    {
+        Debug.Log(
+            "[SPARK AI CACHE] Name=" + item.name +
+            " | Type=" + item.GetType().Name +
+            " | InstanceID=" + item.GetInstanceID());
+    }
+}
+}
+else
+{
+    Debug.LogError(
+        "[SPARK AI DISCOVERY] Electronic Object Root is not assigned.",
+        this);
+}
+
 
     // First collect terminals from known objects.
     AddTerminalsFromElectronicObjects();
@@ -502,6 +549,7 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
             {
                 return;
             }
+          
 
             if (circuitSystem != null)
             {
@@ -537,17 +585,18 @@ public SparkAIPlayerActivity PlayerActivity => playerActivity;
             }
 
             
-if (electricalSolver != null)
-{
-    electricalSolver.SolveCompleted -=
-        HandleSolverSolveCompleted;
+            if (electricalSolver != null)
+            {
+                electricalSolver.SolveCompleted -=
+                    HandleSolverSolveCompleted;
 
-    electricalSolver.SolveFailed -=
-        HandleSolverSolveFailed;
-}
+                electricalSolver.SolveFailed -=
+                    HandleSolverSolveFailed;
+            }
 
 
             UnsubscribeFromTerminals();
+            UnsubscribeFromElectricalComponents();
 
             subscribed = false;
         }
@@ -592,7 +641,7 @@ if (electricalSolver != null)
                 if (terminal == null)
                 {
                     continue;
-                }
+                }               
 
                 terminal.ElectricalStateChanged -=
                     HandleTerminalElectricalStateChanged;
@@ -675,29 +724,17 @@ private void HandleComponentElectricalStateChanged(
                 "An observed component electrical state changed."));
 }
 
-private void HandleSolverSolveCompleted()
-{
-    electricalObservationPending = false;
+        private void HandleSolverSolveCompleted()
+        {
+            PublishPendingWorldEvents(
+                "Electrical solve completed; publishing the final observation.");
+        }
 
-    RaiseWorldChanged(
-        new SparkAIEvent(
-            SparkAIEventType.ElectricalStateChanged,
-            Time.time,
-            message:
-                "Electrical solve completed; publishing the final observation."));
-}
-
-private void HandleSolverSolveFailed()
-{
-    electricalObservationPending = false;
-
-    RaiseWorldChanged(
-        new SparkAIEvent(
-            SparkAIEventType.ElectricalStateChanged,
-            Time.time,
-            message:
-                "Electrical solve failed; publishing the resulting observation."));
-}
+        private void HandleSolverSolveFailed()
+        {
+            PublishPendingWorldEvents(
+                "Electrical solve failed; publishing the resulting observation.");
+        }
 
 
 
@@ -773,21 +810,48 @@ private void HandleSolverSolveFailed()
         }
 
 
-
-
-
-private void PublishWorldChangeWhenSafe(
-    SparkAIEvent @event)
-{
-    if (electricalSolver != null &&
-        electricalSolver.IsSolving)
+    private void PublishPendingWorldEvents(
+        string finalMessage)
     {
-        electricalObservationPending = true;
-        return;
+        if (electricalSolver != null &&
+            electricalSolver.IsSolving)
+        {
+            return;
+        }
+
+        electricalObservationPending = false;
+
+        if (pendingWorldEvents.Count > 0)
+        {
+            for (int i = 0; i < pendingWorldEvents.Count; i++)
+            {
+                RaiseWorldChanged(pendingWorldEvents[i]);
+            }
+
+            pendingWorldEvents.Clear();
+        }
+
+        RaiseWorldChanged(
+            new SparkAIEvent(
+                SparkAIEventType.ElectricalStateChanged,
+                Time.time,
+                message: finalMessage));
     }
 
-    RaiseWorldChanged(@event);
-}
+
+        private void PublishWorldChangeWhenSafe(
+            SparkAIEvent @event)
+        {
+            if (electricalSolver != null &&
+                electricalSolver.IsSolving)
+            {
+                pendingWorldEvents.Add(@event);
+                electricalObservationPending = true;
+                return;
+            }
+
+            RaiseWorldChanged(@event);
+        }
         // =====================================================================
         // ELECTRICAL EVENTS
         // =====================================================================    
@@ -924,98 +988,100 @@ private void PublishWorldChangeWhenSafe(
                     situation);
         }
 
-       private void BuildObjectSnapshots()
-{
-    objectSnapshots.Clear();
-
-    for (int i = 0;
-         i < electronicObjects.Count;
-         i++)
-    {
-        SparkElectronicObject objectReference =
-            electronicObjects[i];
-
-        if (objectReference == null)
+            private void BuildObjectSnapshots()
         {
-            continue;
-        }
+            objectSnapshots.Clear();
 
-        SparkElectricalComponent electrical =
-            objectReference as SparkElectricalComponent;
-
-        bool isElectrical =
-            electrical != null;
-
-        float voltage = 0f;
-        float current = 0f;
-        float power = 0f;
-
-        string conduction = string.Empty;
-
-        bool electricalEnabled = false;
-
-        if (electrical != null)
-        {
-            electricalEnabled =
-                electrical.ElectricalEnabled;
-
-            SparkElectricalState state =
-                electrical.ElectricalState;
-
-            voltage = state.Voltage;
-            current = state.Current;
-            power = state.Power;
-
-            conduction =
-                state.Conduction.ToString();
-        }
-
-        // ============================================================
-        // LED TERMINAL REFERENCES
-        // ============================================================
-
-        int anodeTerminalId = 0;
-        int cathodeTerminalId = 0;
-
-        SparkLED led =
-            objectReference as SparkLED;
-
-        if (led != null)
-        {
-            if (led.AnodeTerminal != null)
+            for (int i = 0;
+                i < electronicObjects.Count;
+                i++)
             {
-                anodeTerminalId =
-                    led.AnodeTerminal.GetInstanceID();
-            }
+                SparkElectronicObject objectReference =
+                    electronicObjects[i];
 
-            if (led.CathodeTerminal != null)
-            {
-                cathodeTerminalId =
-                    led.CathodeTerminal.GetInstanceID();
+                if (objectReference == null)
+                {
+                    continue;
+                }
+
+                SparkElectricalComponent electrical =
+                    objectReference as SparkElectricalComponent;
+
+                bool isElectrical =
+                    electrical != null;
+
+                float voltage = 0f;
+                float current = 0f;
+                float power = 0f;
+
+                string conduction = string.Empty;
+
+                bool electricalEnabled = false;
+
+                if (electrical != null)
+                {
+                    electricalEnabled =
+                        electrical.ElectricalEnabled;
+
+                    SparkElectricalState state =
+                        electrical.ElectricalState;
+
+                    voltage = state.Voltage;
+                    current = state.Current;
+                    power = state.Power;
+
+                    conduction =
+                        state.Conduction.ToString();
+                }
+
+                // ============================================================
+                // LED TERMINAL REFERENCES
+                // ============================================================
+
+                int anodeTerminalId = 0;
+                int cathodeTerminalId = 0;
+
+                SparkLED led =
+                    objectReference as SparkLED;
+
+                if (led != null)
+                {
+                    if (led.AnodeTerminal != null)
+                    {
+                        anodeTerminalId =
+                            led.AnodeTerminal.GetInstanceID();
+                    }
+
+                    if (led.CathodeTerminal != null)
+                    {
+                        cathodeTerminalId =
+                            led.CathodeTerminal.GetInstanceID();
+                    }
+                }
+
+                // ============================================================
+                // CREATE OBJECT SNAPSHOT
+                // ============================================================
+
+                objectSnapshots.Add(
+                    new SparkAIElectronicObjectSnapshot(
+                        
+                        objectReference.GetInstanceID(),
+                        objectReference.name,
+                        objectReference.isActiveAndEnabled,
+                        objectReference.InteractionsEnabled,
+                        objectReference.OperationalState.ToString(),
+                        isElectrical,
+                        electricalEnabled,
+                        voltage,
+                        current,
+                        power,
+                        conduction,
+                        anodeTerminalId,
+                        cathodeTerminalId));
+                        
             }
         }
-
-        // ============================================================
-        // CREATE OBJECT SNAPSHOT
-        // ============================================================
-
-        objectSnapshots.Add(
-            new SparkAIElectronicObjectSnapshot(
-                objectReference.GetInstanceID(),
-                objectReference.name,
-                objectReference.isActiveAndEnabled,
-                objectReference.InteractionsEnabled,
-                objectReference.OperationalState.ToString(),
-                isElectrical,
-                electricalEnabled,
-                voltage,
-                current,
-                power,
-                conduction,
-                anodeTerminalId,
-                cathodeTerminalId));
-    }
-}
 
 
         private void BuildTerminalSnapshots()
@@ -1230,9 +1296,7 @@ private void PublishWorldChangeWhenSafe(
         levelGamePlayManager.TargetShorted,
         levelGamePlayManager.WrongConnection,
 
-        // LevelGamePlayManager currently does not expose
-        // an IsOverloaded property.
-        false,
+        levelGamePlayManager.Overloaded,     
 
         levelGamePlayManager.TargetVoltage,
         levelGamePlayManager.TargetCurrent,
@@ -1368,5 +1432,66 @@ private void PublishWorldChangeWhenSafe(
                 new SparkAIWorldChangedEventArgs(
                     @event));
         }
+
+        
+            /// <summary>
+            /// Gets the actual active power supply's terminal IDs.
+            /// Uses the existing explicit electronic-object cache.
+            /// Does not search the scene or infer polarity from names.
+            /// </summary>
+            public bool TryGetActivePowerSupplyTerminals(
+                out string sourceName,
+                out int positiveTerminalId,
+                out int negativeTerminalId,
+                out bool outputActive)
+            {
+                sourceName = string.Empty;
+                positiveTerminalId = 0;
+                negativeTerminalId = 0;
+                outputActive = false;
+
+                SparkAIWorldSnapshot snapshot = CaptureSnapshot();
+
+                string requestedSourceName =
+                    snapshot.Level.ActiveSourceName;
+
+                if (string.IsNullOrWhiteSpace(requestedSourceName))
+                    return false;
+
+                for (int i = 0; i < electronicObjects.Count; i++)
+                {
+                    SparkElectronicObject item = electronicObjects[i];
+
+                    if (item == null)
+                        continue;
+
+                    SparkPowerSupply supply = item as SparkPowerSupply;
+
+                    if (supply == null)
+                        continue;
+
+                    if (!string.Equals(
+                            supply.name,
+                            requestedSourceName,
+                            StringComparison.OrdinalIgnoreCase))
+                        continue;
+
+                    if (supply.PositiveTerminal == null ||
+                        supply.NegativeTerminal == null)
+                        return false;
+
+                    sourceName = supply.name;
+                    positiveTerminalId =
+                        supply.PositiveTerminal.GetInstanceID();
+                    negativeTerminalId =
+                        supply.NegativeTerminal.GetInstanceID();
+                    outputActive = supply.IsOutputActive;
+
+                    return true;
+                }
+
+                return false;
+            }
+
     }
 }

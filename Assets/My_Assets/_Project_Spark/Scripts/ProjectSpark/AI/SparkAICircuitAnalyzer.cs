@@ -554,14 +554,14 @@ Debug.Log(
         if (terminalById.TryGetValue(
                 current, out SparkAITerminalSnapshot terminal))
         {
-            Debug.Log(
+           /* Debug.Log(
                 "[SPARK AI PATH NODE] ID=" + current +
                 " | Name=" + terminal.Name +
                 " | Owner=" + terminal.OwnerName +
                 " | Neighbors=" +
                 (adjacency.TryGetValue(current, out List<int> list)
                     ? list.Count
-                    : 0));
+                    : 0));*/
         }
 
         if (!adjacency.TryGetValue(
