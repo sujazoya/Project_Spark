@@ -270,7 +270,7 @@ if (electronicObjectRoot != null)
 
     AddElectronicObjects(discoveredObjects);
 
-    Debug.Log(
+   /* Debug.Log(
     "[SPARK AI DISCOVERY] Cached electronic objects=" +
     electronicObjects.Count);
 
@@ -285,14 +285,14 @@ for (int i = 0; i < electronicObjects.Count; i++)
             " | Type=" + item.GetType().Name +
             " | InstanceID=" + item.GetInstanceID());
     }
+}*/
 }
-}
-else
+/*else
 {
     Debug.LogError(
         "[SPARK AI DISCOVERY] Electronic Object Root is not assigned.",
         this);
-}
+}*/
 
 
     // First collect terminals from known objects.
@@ -1044,8 +1044,19 @@ private void HandleComponentElectricalStateChanged(
                 SparkLED led =
                     objectReference as SparkLED;
 
-                if (led != null)
+                bool hasVisualReference = false;
+                bool visualActiveInHierarchy = false;
+                bool hasVisualRenderer = false;
+                bool visualRendererEnabled = false;
+
+                                if (led != null)
                 {
+                    hasVisualReference =
+                        led.HasVisualReference;
+
+                    visualActiveInHierarchy =
+                        led.IsVisualActiveInHierarchy;
+
                     if (led.AnodeTerminal != null)
                     {
                         anodeTerminalId =
@@ -1057,6 +1068,8 @@ private void HandleComponentElectricalStateChanged(
                         cathodeTerminalId =
                             led.CathodeTerminal.GetInstanceID();
                     }
+                    hasVisualRenderer = led.HasVisualRenderer;
+                    visualRendererEnabled = led.IsVisualRendererEnabled;
                 }
 
                 // ============================================================
@@ -1064,21 +1077,24 @@ private void HandleComponentElectricalStateChanged(
                 // ============================================================
 
                 objectSnapshots.Add(
-                    new SparkAIElectronicObjectSnapshot(
-                        
-                        objectReference.GetInstanceID(),
-                        objectReference.name,
-                        objectReference.isActiveAndEnabled,
-                        objectReference.InteractionsEnabled,
-                        objectReference.OperationalState.ToString(),
-                        isElectrical,
-                        electricalEnabled,
-                        voltage,
-                        current,
-                        power,
-                        conduction,
-                        anodeTerminalId,
-                        cathodeTerminalId));
+    new SparkAIElectronicObjectSnapshot(
+        objectReference.GetInstanceID(),
+        objectReference.name,
+        objectReference.isActiveAndEnabled,
+        objectReference.InteractionsEnabled,
+        objectReference.OperationalState.ToString(),
+        isElectrical,
+        electricalEnabled,
+        voltage,
+        current,
+        power,
+        conduction,
+        anodeTerminalId,
+        cathodeTerminalId,
+        hasVisualReference,
+        visualActiveInHierarchy,
+        hasVisualRenderer,
+        visualRendererEnabled));
                         
             }
         }

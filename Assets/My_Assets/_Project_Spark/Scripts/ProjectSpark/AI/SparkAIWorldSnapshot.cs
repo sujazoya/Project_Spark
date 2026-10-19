@@ -319,6 +319,13 @@ public readonly struct SparkAIPlayerSnapshot
         public int AnodeTerminalInstanceId { get; }
 
         public int CathodeTerminalInstanceId { get; }
+        public bool HasVisualReference { get; }
+
+        public bool VisualActiveInHierarchy { get; }
+
+        public bool HasVisualRenderer { get; }
+
+        public bool VisualRendererEnabled { get; }
 
         public SparkAIElectronicObjectSnapshot(
             int instanceId,
@@ -333,7 +340,12 @@ public readonly struct SparkAIPlayerSnapshot
             float power,
             string conductionState,
             int anodeTerminalInstanceId,
-            int cathodeTerminalInstanceId)
+            int cathodeTerminalInstanceId,
+            bool hasVisualReference,
+            bool visualActiveInHierarchy,
+            bool hasVisualRenderer,
+            bool visualRendererEnabled
+            )
         {
             InstanceId = instanceId;
             Name = name ?? string.Empty;
@@ -358,6 +370,12 @@ public readonly struct SparkAIPlayerSnapshot
                 conductionState ?? string.Empty;
             AnodeTerminalInstanceId = anodeTerminalInstanceId;
             CathodeTerminalInstanceId = cathodeTerminalInstanceId;
+            HasVisualReference = hasVisualReference;
+
+            VisualActiveInHierarchy =
+                visualActiveInHierarchy;
+                HasVisualRenderer = hasVisualRenderer;
+VisualRendererEnabled = visualRendererEnabled;
         }
     }
 

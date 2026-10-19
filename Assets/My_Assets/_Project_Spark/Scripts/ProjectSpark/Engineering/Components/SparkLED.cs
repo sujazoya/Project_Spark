@@ -10,6 +10,8 @@ namespace ProjectSpark.Gameplay
         [Header("LED Visual")]
         [SerializeField]
         private GameObject ledHelix;
+
+        
         [Header("Terminals")]
         [SerializeField]
         private SparkTerminal anodeTerminal;
@@ -48,8 +50,37 @@ namespace ProjectSpark.Gameplay
         public float ReverseVoltageLimit =>
             reverseVoltageLimit;
 
-        public float OnResistance =>
-            onResistance;
+            public float OnResistance =>
+                onResistance;
+                public bool HasVisualReference =>
+        ledHelix != null;
+
+        public bool IsVisualActiveInHierarchy =>
+            ledHelix != null &&
+            ledHelix.activeInHierarchy; 
+
+            public bool HasVisualRenderer =>
+            ledHelix != null &&
+            ledHelix.TryGetComponent<MeshRenderer>(out _);
+
+        public bool IsVisualRendererEnabled
+        {
+            get
+            {
+                if (ledHelix == null)
+                    return false;
+
+                if (!ledHelix.TryGetComponent<MeshRenderer>(
+                        out MeshRenderer renderer))
+                {
+                    return false;
+                }
+
+                return renderer.enabled &&
+                    renderer.gameObject.activeInHierarchy;
+            }
+        }         
+            
 
         public bool IsOn =>
     ElectricalEnabled &&

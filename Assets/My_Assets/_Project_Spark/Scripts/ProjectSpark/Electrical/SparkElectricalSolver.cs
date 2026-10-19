@@ -778,25 +778,25 @@ public void MarkDirty()
             // -------------------------------------------------------------
 
             
-ApplyAllDeviceStates(result);
+        ApplyAllDeviceStates(result);
 
-CommitTransientStates(result);
+        CommitTransientStates(result);
 
-// Update terminal voltages from the newly solved matrix first.
-ApplyTerminalStates(result);
+        // Update terminal voltages from the newly solved matrix first.
+        ApplyTerminalStates(result);
 
-// Now diagnostics read the current solve, not the previous terminal state.
-DebugPowerSupplyVoltage();
+        // Now diagnostics read the current solve, not the previous terminal state.
+        DebugPowerSupplyVoltage();
 
-dirty = false;
+        dirty = false;
 
-Debug.Log(
-    $"[SOLVER TEST] Finished | Success={solved} | " +
-    $"Dirty={dirty} | HasResult={latestSolveResult != null}",
-    this);
+        Debug.Log(
+            $"[SOLVER TEST] Finished | Success={solved} | " +
+            $"Dirty={dirty} | HasResult={latestSolveResult != null}",
+            this);
 
 
-            return true;
+                    return true;
         }
 
         // ---------------------------------------------------------------------

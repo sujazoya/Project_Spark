@@ -1,3 +1,4 @@
+
 using System;
 using UnityEngine;
 using ProjectSpark.Gameplay;
@@ -31,12 +32,8 @@ namespace ProjectSpark.Electrical
             terminalA = null;
             terminalB = null;
 
-            if (!(component is SparkSingleWire wire))
-            {
-                return false;
-            }
-
-            if (graph == null)
+            if (!(component is SparkSingleWire wire) ||
+                graph == null)
             {
                 return false;
             }
@@ -51,17 +48,10 @@ namespace ProjectSpark.Electrical
             SparkElectricalComponent component,
             SparkElectricalSolveContext context)
         {
-            if (!(component is SparkSingleWire wire))
-            {
-                return;
-            }
-
-            if (context == null)
-            {
-                return;
-            }
-
-            if (!wire.ElectricalEnabled)
+            if (!(component is SparkSingleWire wire) ||
+                context == null ||
+                context.Graph == null ||
+                !wire.ElectricalEnabled)
             {
                 return;
             }
@@ -77,25 +67,19 @@ namespace ProjectSpark.Electrical
 
             if (!context.Graph.TryGetNode(
                     terminalA,
-                    out int nodeA))
-            {
-                return;
-            }
-
-            if (!context.Graph.TryGetNode(
+                    out int nodeA) ||
+                !context.Graph.TryGetNode(
                     terminalB,
                     out int nodeB))
             {
                 return;
             }
 
-            float resistance =
-                Mathf.Max(
-                    0.000000001f,
-                    wireResistance);
+            float resistance = Mathf.Max(
+                0.000000001f,
+                wireResistance);
 
-            double conductance =
-                1.0 / resistance;
+            double conductance = 1.0 / resistance;
 
             context.AddConductance(
                 nodeA,
@@ -112,12 +96,10 @@ namespace ProjectSpark.Electrical
                 return;
             }
 
-            if (result == null)
-            {
-                return;
-            }
-
-            if (!wire.ElectricalEnabled)
+            if (result == null ||
+                result.Context == null ||
+                result.Context.Graph == null ||
+                !wire.ElectricalEnabled)
             {
                 wire.ApplyElectricalState(
                     new SparkElectricalState());
@@ -138,22 +120,22 @@ namespace ProjectSpark.Electrical
             }
 
             if (!result.TryGetVoltage(
-                terminalA,
-                terminalB,
-                out float voltage))
+                    terminalA,
+                    terminalB,
+                    out float voltage))
             {
-            
+                wire.ApplyElectricalState(
+                    new SparkElectricalState());
+
+                return;
             }
-            float resistance =
-                Mathf.Max(
-                    0.000000001f,
-                    wireResistance);
 
-            float current =
-                voltage / resistance;
+            float resistance = Mathf.Max(
+                0.000000001f,
+                wireResistance);
 
-            float power =
-                voltage * current;
+            float current = voltage / resistance;
+            float power = voltage * current;
 
             SparkConductionState conduction =
                 Mathf.Abs(current) > 0.000001f
@@ -167,8 +149,7 @@ namespace ProjectSpark.Electrical
                     power,
                     conduction);
 
-            wire.ApplyElectricalState(
-                state);
+            wire.ApplyElectricalState(state);
         }
 
         public override bool TryCalculateCurrent(
@@ -183,7 +164,9 @@ namespace ProjectSpark.Electrical
                 return false;
             }
 
-            if (result == null)
+            if (result == null ||
+                result.Context == null ||
+                result.Context.Graph == null)
             {
                 return false;
             }
@@ -202,23 +185,21 @@ namespace ProjectSpark.Electrical
                 return false;
             }
 
-            
-                if (!result.TryGetVoltage(
-                        terminalA,
-                        terminalB,
-                        out float voltage))
-                {
-                    return false;
-                }
+            if (!result.TryGetVoltage(
+                    terminalA,
+                    terminalB,
+                    out float voltage))
+            {
+                return false;
+            }
 
-                float resistance = Mathf.Max(
-                    0.000000001f,
-                    wireResistance);
+            float resistance = Mathf.Max(
+                0.000000001f,
+                wireResistance);
 
-                current = voltage / resistance;
+            current = voltage / resistance;
 
-                return true;
-
+            return true;
         }
 
         public override bool RequiresContinuousSolve(
@@ -236,10 +217,9 @@ namespace ProjectSpark.Electrical
         {
             base.OnValidate();
 
-            wireResistance =
-                Mathf.Max(
-                    0.000000001f,
-                    wireResistance);
+            wireResistance = Mathf.Max(
+                0.000000001f,
+                wireResistance);
         }
     }
 }

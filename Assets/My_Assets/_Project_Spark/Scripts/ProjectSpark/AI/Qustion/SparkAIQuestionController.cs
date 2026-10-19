@@ -707,26 +707,87 @@ private string BuildObjectAnswer(
                 "Conducting",
                 StringComparison.OrdinalIgnoreCase);
 
-        if (conducting && validCurrent && target.Current > 0.000001f)
+       
+if (conducting && validCurrent && target.Current > 0.000001f)
+{
+    string currentDescription =
+        target.Current.ToString("F4") + " A";
+
+    if (!target.HasVisualReference)
+    {
+        return objectName +
+            " is electrically conducting with " +
+            currentDescription +
+            ", but no LED visual object is assigned. " +
+            "Check the LED visual reference in the Inspector.";
+    }
+
+    
+        if (!target.VisualActiveInHierarchy)
         {
             return objectName +
-                   " is electrically conducting with " +
-                   target.Current.ToString("F4") +
-                   " A of forward current. Its electrical state suggests " +
-                   "it should illuminate, but the visual state must be checked separately.";
+                " is electrically conducting with " +
+                currentDescription +
+                ", but its visual GameObject is inactive in the hierarchy. " +
+                "Check its active state and parent objects.";
+        }
+
+        if (!target.HasVisualRenderer)
+        {
+            return objectName +
+                " is electrically conducting with " +
+                currentDescription +
+                ", and its visual GameObject is active, but no MeshRenderer " +
+                "was found directly on the assigned LED visual object. " +
+                "Check the visual object's components in the Inspector.";
+        }
+
+        if (!target.VisualRendererEnabled)
+        {
+            return objectName +
+                " is electrically conducting with " +
+                currentDescription +
+                ", but its MeshRenderer is disabled or inactive in the hierarchy. " +
+                "Check the renderer's enabled state.";
+        }
+
+
+    return objectName +
+        " is electrically conducting with " +
+        currentDescription +
+        ", and its visual GameObject is active in the hierarchy. " +
+        "Actual visible illumination is not confirmed. If it still " +
+        "appears dark, check its Renderer, material emission, and " +
+        "other visual effects.";
+}
+
+        
+        string electricalState =
+            string.IsNullOrWhiteSpace(target.ConductionState)
+                ? "unknown"
+                : target.ConductionState;
+
+        if (validCurrent && target.Current <= 0.000001f)
+        {
+            // Reuse the existing topology diagnosis rather than
+            // creating a second, potentially inconsistent diagnosis path.
+            return BuildObjectProblemAnswer(
+                target,
+                objectName,
+                observation,
+                false,
+                true);
         }
 
         return objectName +
-               " is not currently confirmed to be glowing. Its electrical " +
-               "conduction state is " +
-               (string.IsNullOrWhiteSpace(target.ConductionState)
-                   ? "unknown"
-                   : target.ConductionState) +
-               ", and its reported current is " +
-               (validCurrent
-                   ? target.Current.ToString("F4")
-                   : "invalid") +
-               " A.";
+            " is not currently confirmed to be glowing. Its electrical " +
+            "conduction state is " + electricalState +
+            ", and its reported current is " +
+            (validCurrent
+                ? target.Current.ToString("F4")
+                : "invalid") +
+            " A.";
+
     }
 
 
@@ -1293,18 +1354,84 @@ private string BuildObjectProblemAnswer(
 
         
 if (asksAboutLedNotGlowing &&
+    target.IsElectricalComponent &&
     hasSignificantComponentCurrent)
 {
+    string conductionState =
+        target.ConductionState ?? string.Empty;
+
+    bool reportsConducting =
+        string.Equals(
+            conductionState,
+            "Conducting",
+            StringComparison.OrdinalIgnoreCase);
+
+    string currentDescription =
+        FormatValue(target.Current, "A");
+
+    if (!reportsConducting)
+    {
+        return objectName +
+               " reports " + currentDescription +
+               " of current, but its conduction state is '" +
+               (string.IsNullOrWhiteSpace(conductionState)
+                   ? "Unknown"
+                   : conductionState) +
+               "'. The electrical snapshot is inconsistent. " +
+               "Check the latest electrical state before diagnosing " +
+               "the visual behavior.";
+    }
+
+    if (!target.HasVisualReference)
+    {
+        return objectName +
+               " is electrically conducting with " +
+               currentDescription +
+               " of current, but no LED visual object is assigned " +
+               "in the captured snapshot. Assign the LED visual " +
+               "reference in the Inspector.";
+    }
+
+    if (!target.VisualActiveInHierarchy)
+    {
+        return objectName +
+               " is electrically conducting with " +
+               currentDescription +
+               " of current, but its visual GameObject is inactive " +
+               "in the hierarchy. Check the LED visual object's " +
+               "active state and the active states of its parent objects.";
+    }
+    
+        if (!target.HasVisualRenderer)
+        {
+            return objectName +
+                " is electrically conducting with " +
+                currentDescription +
+                " of current, and its visual GameObject is active, " +
+                "but no MeshRenderer was found directly on the assigned " +
+                "LED visual object. Check its components in the Inspector.";
+        }
+
+        if (!target.VisualRendererEnabled)
+        {
+            return objectName +
+                " is electrically conducting with " +
+                currentDescription +
+                " of current, but its MeshRenderer is disabled or " +
+                "inactive in the hierarchy. Check the renderer's enabled state.";
+        }
+
+
     return objectName +
-           " reports " +
-           FormatValue(target.Current, "A") +
-           " of current, which indicates electrical conduction " +
-           "in the current snapshot. However, this reading alone " +
-           "cannot confirm that the LED is visibly illuminated. " +
-           "Check whether the LED's visual component is enabled " +
-           "and whether its rendered light state follows its " +
-           "electrical operating state.";
+           " is electrically conducting with " +
+           currentDescription +
+           " of current, and its visual GameObject is active " +
+           "in the hierarchy. This does not guarantee visible " +
+           "illumination. Check the renderer, material or emission " +
+           "settings, and any other visual effects if the LED still " +
+           "appears dark.";
 }
+
 
 
     if (target.IsElectricalComponent &&

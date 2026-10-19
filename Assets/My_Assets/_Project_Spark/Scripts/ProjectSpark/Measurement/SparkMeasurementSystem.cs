@@ -816,6 +816,46 @@ namespace ProjectSpark.Measurement
                 float currentResistance =
                     resistanceDistances[current];
 
+                    // -------------------------------------------------------------
+                // SINGLE WIRE INTERNAL CONDUCTIVE PATH
+                // -------------------------------------------------------------
+
+                SparkSingleWire wire =
+                    current.Owner as SparkSingleWire;
+
+                if (wire != null &&
+                    wire.ElectricalEnabled)
+                {
+                    SparkTerminal wireOther =
+                        wire.GetOppositeTerminal(current);
+
+                    if (wireOther != null &&
+                        wire.CanConductBetween(
+                            current,
+                            wireOther))
+                    {
+                        float totalResistance =
+                            currentResistance +
+                            wire.WireResistance;
+
+                        if (wireOther == target)
+                        {
+                            resistance = totalResistance;
+                            return true;
+                        }
+
+                        if (!resistanceVisited.Contains(wireOther))
+                        {
+                            resistanceVisited.Add(wireOther);
+
+                            resistanceDistances[wireOther] =
+                                totalResistance;
+
+                            resistanceQueue.Enqueue(wireOther);
+                        }
+                    }
+                }
+
                 // -------------------------------------------------------------
                 // RESISTOR
                 // -------------------------------------------------------------

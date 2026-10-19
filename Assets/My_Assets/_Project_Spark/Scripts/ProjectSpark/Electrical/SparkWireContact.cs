@@ -151,214 +151,146 @@ namespace ProjectSpark.Gameplay
         // CONNECT COLLIDER
         // ============================================================
 
-        private void TryConnectCollider(
-            Collider other)
-        {
-            if (wire == null)
-                return;
+       private void TryConnectCollider(Collider other)
+{
+    if (wire == null || other == null)
+        return;
 
-            if (other == null)
-                return;
+    if (contactCollider != null &&
+        other == contactCollider)
+    {
+        return;
+    }
 
-            if (contactCollider != null &&
-                other == contactCollider)
-            {
-                return;
-            }
+    if (!IsLayerAllowed(other.gameObject.layer))
+        return;
 
-            if (!IsLayerAllowed(
-                    other.gameObject.layer))
-            {
-                return;
-            }
+    SparkTerminal terminal =
+        other.GetComponentInParent<SparkTerminal>();
 
-            SparkTerminal terminal =
-                other.GetComponentInParent<SparkTerminal>();
+    if (terminal == null)
+        return;
 
-            if (terminal == null)
-                return;
+    if (terminal == wire.TerminalA ||
+        terminal == wire.TerminalB)
+    {
+        return;
+    }
 
-            // Never connect the wire to its own
-            // internal terminals.
-            if (terminal == wire.TerminalA ||
-                terminal == wire.TerminalB)
-            {
-                return;
-            }
+    if (!touchingTerminalColliders.TryGetValue(
+        terminal,
+        out HashSet<Collider> colliders))
+    {
+        colliders = new HashSet<Collider>();
 
+        touchingTerminalColliders.Add(
+            terminal,
+            colliders);
+    }
 
-            // --------------------------------------------------------
-            // Get/create collider set for this terminal
-            // --------------------------------------------------------
+    // Always register the physical collider.
+    colliders.Add(other);
 
-            if (!touchingTerminalColliders.TryGetValue(
-                    terminal,
-                    out HashSet<Collider> colliders))
-            {
-                colliders =
-                    new HashSet<Collider>();
+    // Check the connection owned by THIS physical end.
+    bool isContactA = wire.ContactA == this;
+    bool isContactB = wire.ContactB == this;
 
-                touchingTerminalColliders.Add(
-                    terminal,
-                    colliders);
-            }
+    if (!isContactA && !isContactB)
+        return;
 
+    SparkTerminal currentTarget =
+        isContactA
+            ? wire.ConnectedTerminalA
+            : wire.ConnectedTerminalB;
 
-            // --------------------------------------------------------
-            // This exact collider is already registered.
-            // --------------------------------------------------------
+    bool hasConnection =
+        isContactA
+            ? wire.HasTerminalAConnection
+            : wire.HasTerminalBConnection;
 
-            if (colliders.Contains(other))
-            {
-                return;
-            }
+    // Already connected to this exact terminal.
+    if (hasConnection && currentTarget == terminal)
+        return;
 
+    // This physical end is occupied by another terminal.
+    if (hasConnection)
+        return;
 
-            // --------------------------------------------------------
-            // Register physical overlap FIRST.
-            //
-            // This is important because OnTriggerStay may run before
-            // another collider belonging to the same terminal exits.
-            // --------------------------------------------------------
+    // IMPORTANT:
+    // Retry the electrical connection even if this collider
+    // was registered during a previous physics callback.
+    //
+    // This allows rejected contacts to connect later when
+    // terminal capacity becomes available.
+    bool connected =
+        wire.AddPhysicalContact(
+            terminal,
+            this);
 
-            colliders.Add(other);
-
-
-            // --------------------------------------------------------
-            // If this terminal is already electrically connected,
-            // we only need to remember the new collider.
-            // --------------------------------------------------------
-
-            if (wire.ConnectedTerminalA == terminal ||
-                wire.ConnectedTerminalB == terminal)
-            {
-                return;
-            }
-
-
-            // --------------------------------------------------------
-            // Ask the wire to occupy its next endpoint.
-            // --------------------------------------------------------
-
-            bool connected =
-                wire.AddPhysicalContact(
-                    terminal,
-                    this);
-
-            if (!connected)
-            {
-                /*
-                 * Important:
-                 *
-                 * Keep the physical collider registered even when
-                 * electrical connection was rejected.
-                 *
-                 * This prevents OnTriggerStay from repeatedly trying
-                 * the same collider every physics frame.
-                 */
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-                Debug.Log(
-                    $"[SparkWireContact] " +
-                    $"CONTACT REJECTED | " +
-                    $"Wire={wire.name} | " +
-                    $"Target={terminal.name}",
-                    this);
-#endif
-
-                return;
-            }
-
+    if (!connected)
+        return;
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            Debug.Log(
-                $"[SparkWireContact] " +
-                $"CONNECTED | " +
-                $"Wire={wire.name} | " +
-                $"Target={terminal.name} | " +
-                $"A={wire.HasTerminalAConnection} | " +
-                $"B={wire.HasTerminalBConnection} | " +
-                $"Fully={wire.IsFullyConnected}",
-                this);
+
+    Debug.Log(
+        $"[WIRE CONTACT] {wire.name} | " +
+        $"Source={name} | " +
+        $"External={terminal.name} | " +
+        $"End={(isContactA ? "A" : "B")} | " +
+        $"FullyConnected={wire.IsFullyConnected}",
+        this);
+
 #endif
-        }
-
-
+}
         // ============================================================
         // DISCONNECT COLLIDER
         // ============================================================
 
-        private void TryDisconnectCollider(
-            Collider other)
-        {
-            if (wire == null)
-                return;
+private void TryDisconnectCollider(Collider other)
+{
+    if (wire == null || other == null)
+        return;
 
-            if (other == null)
-                return;
+    SparkTerminal terminal =
+        other.GetComponentInParent<SparkTerminal>();
 
-            SparkTerminal terminal =
-                other.GetComponentInParent<SparkTerminal>();
+    if (terminal == null)
+        return;
 
-            if (terminal == null)
-                return;
+    if (!touchingTerminalColliders.TryGetValue(
+        terminal,
+        out HashSet<Collider> colliders))
+    {
+        return;
+    }
 
+    // Ignore exits for colliders we never registered.
+    if (!colliders.Remove(other))
+        return;
 
-            // --------------------------------------------------------
-            // Find the collider set belonging to this terminal.
-            // --------------------------------------------------------
+    // Another collider belonging to the same terminal
+    // is still physically touching this wire end.
+    if (colliders.Count > 0)
+        return;
 
-            if (!touchingTerminalColliders.TryGetValue(
-                    terminal,
-                    out HashSet<Collider> colliders))
-            {
-                return;
-            }
+    touchingTerminalColliders.Remove(terminal);
 
-
-            // --------------------------------------------------------
-            // Remove ONLY this collider.
-            // --------------------------------------------------------
-
-            colliders.Remove(other);
-
-
-            // --------------------------------------------------------
-            // Other colliders of the SAME terminal are still touching.
-            //
-            // Therefore the electrical connection must remain.
-            // --------------------------------------------------------
-
-            if (colliders.Count > 0)
-            {
-                return;
-            }
-
-
-            // --------------------------------------------------------
-            // No colliders remain.
-            //
-            // Now the terminal has physically left the wire.
-            // --------------------------------------------------------
-
-            touchingTerminalColliders.Remove(
-                terminal);
-
-            wire.RemovePhysicalContact(
-                terminal);
-
+    // Only disconnect the electrical connection owned
+    // by this specific SparkWireContact.
+    wire.RemovePhysicalContact(
+        terminal,
+        this);
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            Debug.Log(
-                $"[SparkWireContact] " +
-                $"DISCONNECTED | " +
-                $"Wire={wire.name} | " +
-                $"Target={terminal.name} | " +
-                $"A={wire.HasTerminalAConnection} | " +
-                $"B={wire.HasTerminalBConnection} | " +
-                $"Fully={wire.IsFullyConnected}",
-                this);
+
+    Debug.Log(
+        $"[WIRE CONTACT EXIT] {wire.name} | " +
+        $"Source={name} | " +
+        $"External={terminal.name}",
+        this);
+
 #endif
-        }
+}
 
 
         // ============================================================
@@ -371,43 +303,36 @@ namespace ProjectSpark.Gameplay
         }
 
 
-        private void DisconnectAll()
-        {
-            if (touchingTerminalColliders.Count == 0)
-                return;
+       private void DisconnectAll()
+{
+    if (touchingTerminalColliders.Count == 0)
+        return;
 
+    SparkTerminal[] terminals =
+        new SparkTerminal[
+            touchingTerminalColliders.Count];
 
-            SparkTerminal[] terminals =
-                new SparkTerminal[
-                    touchingTerminalColliders.Count];
+    touchingTerminalColliders.Keys.CopyTo(
+        terminals,
+        0);
 
+    touchingTerminalColliders.Clear();
 
-            touchingTerminalColliders.Keys.CopyTo(
-                terminals,
-                0);
+    if (wire == null)
+        return;
 
+    for (int i = 0; i < terminals.Length; i++)
+    {
+        SparkTerminal terminal = terminals[i];
 
-            touchingTerminalColliders.Clear();
+        if (terminal == null)
+            continue;
 
-
-            if (wire == null)
-                return;
-
-
-            for (int i = 0;
-                 i < terminals.Length;
-                 i++)
-            {
-                SparkTerminal terminal =
-                    terminals[i];
-
-                if (terminal == null)
-                    continue;
-
-                wire.RemovePhysicalContact(
-                    terminal);
-            }
-        }
+        wire.RemovePhysicalContact(
+            terminal,
+            this);
+    }
+}
 
 
         // ============================================================

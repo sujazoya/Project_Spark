@@ -526,50 +526,92 @@ namespace ProjectSpark.Gameplay
         // BUILD REACHABILITY
         // ================================================================
 
-        private void BuildReachability(
-            SparkLevelDefinition level,
-            SparkTerminal sourcePositive,
-            SparkTerminal sourceNegative,
-            out bool closedReturn)
-        {
-            positiveReachable.Clear();
-            negativeReachable.Clear();
+private void BuildReachability(
+    SparkLevelDefinition level,
+    SparkTerminal sourcePositive,
+    SparkTerminal sourceNegative,
+    out bool closedReturn)
+{
+    positiveReachable.Clear();
+    negativeReachable.Clear();
 
-            closedReturn = false;
+    closedReturn = false;
 
-            if (level == null ||
-                sourcePositive == null ||
-                sourceNegative == null)
-            {
-                return;
-            }
+    if (level == null ||
+        sourcePositive == null ||
+        sourceNegative == null)
+    {
+        Debug.LogWarning(
+            "[LEVEL REACHABILITY] Missing level or source terminal.");
+        return;
+    }
 
-            TraverseWireNetwork(
-                sourcePositive,
-                positiveReachable);
+    TraverseWireNetwork(
+        sourcePositive,
+        positiveReachable);
 
-            TraverseWireNetwork(
-                sourceNegative,
-                negativeReachable);
+    TraverseWireNetwork(
+        sourceNegative,
+        negativeReachable);
 
-            SparkLevelTarget target =
-                GetPrimaryTarget(level);
+    SparkLevelTarget target = GetPrimaryTarget(level);
 
-            if (target == null)
-                return;
+    if (target == null)
+    {
+        Debug.LogWarning(
+            "[LEVEL REACHABILITY] No primary target found.");
+        return;
+    }
 
-            if (!TryResolveTargetTerminalPair(
-                    target,
-                    out SparkTerminal targetPositive,
-                    out SparkTerminal targetNegative))
-            {
-                return;
-            }
+    if (!TryResolveTargetTerminalPair(
+            target,
+            out SparkTerminal targetPositive,
+            out SparkTerminal targetNegative))
+    {
+        Debug.LogWarning(
+            $"[LEVEL TARGET PAIR] Failed to resolve terminal pair. " +
+            $"Target={target.TargetComponentId} | " +
+            $"PositiveID={target.RequiredPositiveTerminalId} | " +
+            $"NegativeID={target.RequiredNegativeTerminalId}");
 
-            closedReturn =
-                positiveReachable.Contains(targetPositive) &&
-                negativeReachable.Contains(targetNegative);
-        }
+        return;
+    }
+
+    Debug.Log(
+        "[LEVEL TARGET PAIR] " +
+        $"Target={target.TargetComponentId} | " +
+        $"Positive={GetTerminalDebugName(targetPositive)} | " +
+        $"Negative={GetTerminalDebugName(targetNegative)}");
+
+    bool positiveHasTargetPositive =
+        positiveReachable.Contains(targetPositive);
+
+    bool negativeHasTargetNegative =
+        negativeReachable.Contains(targetNegative);
+
+    bool positiveHasTargetNegative =
+        positiveReachable.Contains(targetNegative);
+
+    bool negativeHasTargetPositive =
+        negativeReachable.Contains(targetPositive);
+
+    Debug.Log(
+        "[LEVEL REACHABILITY RESULT] " +
+        $"PositiveHasTargetPositive={positiveHasTargetPositive} | " +
+        $"NegativeHasTargetNegative={negativeHasTargetNegative} | " +
+        $"PositiveHasTargetNegative={positiveHasTargetNegative} | " +
+        $"NegativeHasTargetPositive={negativeHasTargetPositive} | " +
+        $"PositiveCount={positiveReachable.Count} | " +
+        $"NegativeCount={negativeReachable.Count}");
+
+    closedReturn =
+        positiveHasTargetPositive &&
+        negativeHasTargetNegative;
+
+    Debug.Log(
+        $"[LEVEL CLOSED RETURN] ClosedReturn={closedReturn}");
+}
+
 
         // ================================================================
         // WIRE NETWORK TRAVERSAL
@@ -642,6 +684,43 @@ namespace ProjectSpark.Gameplay
                     if (visitedTerminals.Add(other))
                     {
                         traversalQueue.Enqueue(other);
+                    }
+                }
+                // --------------------------------------------------------
+                // CONDUCTING LED
+                // --------------------------------------------------------
+
+                SparkLED led =
+                    current.GetComponentInParent<SparkLED>();
+
+                if (led == null &&
+                    current.Owner is SparkLED ownerLed)
+                {
+                    led = ownerLed;
+                }
+
+                if (led != null &&
+                    led.ElectricalEnabled &&
+                    led.ElectricalState.Conduction ==
+                        SparkConductionState.Conducting)
+                {
+                    SparkTerminal anode =
+                        led.AnodeTerminal;
+
+                    SparkTerminal cathode =
+                        led.CathodeTerminal;
+
+                    SparkTerminal ledOpposite = null;
+
+                    if (led.CanConductBetween(current, anode))
+                    {
+                        ledOpposite = cathode;
+                    }
+
+                    if (ledOpposite != null &&
+                        visitedTerminals.Add(ledOpposite))
+                    {
+                        traversalQueue.Enqueue(ledOpposite);
                     }
                 }
 
