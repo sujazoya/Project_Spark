@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using ProjectSpark.Gameplay;
 
@@ -229,6 +229,7 @@ public override void Stamp(
             if (!supply.ElectricalEnabled ||
                 !supply.IsOutputActive)
             {
+                supply.SetCurrentLimited(false);
                 supply.ApplyElectricalState(
                     new SparkElectricalState());
 
@@ -241,25 +242,31 @@ public override void Stamp(
                     out SparkTerminal positiveTerminal,
                     out SparkTerminal negativeTerminal))
             {
+                supply.SetCurrentLimited(false);
                 supply.ApplyElectricalState(
                     new SparkElectricalState());
 
                 return;
             }
 
-           if (!result.TryGetVoltage(
-        positiveTerminal,
-        negativeTerminal,
-        out float voltage))
-{
-    //return false;
-}
+            if (!result.TryGetVoltage(
+                    positiveTerminal,
+                    negativeTerminal,
+                    out float voltage) ||
+                !result.TryGetVoltageSourceCurrent(supply, out float current) ||
+                float.IsNaN(voltage) || float.IsInfinity(voltage) ||
+                float.IsNaN(current) || float.IsInfinity(current))
+            {
+                supply.SetCurrentLimited(false);
+                supply.ApplyElectricalState(new SparkElectricalState());
+                return;
+            }
 
-            float current = 0f;
-
-            result.TryGetVoltageSourceCurrent(
-                supply,
-                out current);
+            // Diagnostic only: the existing ideal-voltage source does NOT
+            // implement constant-current regulation in its matrix stamp.
+            supply.SetCurrentLimited(
+                Mathf.Abs(current) > supply.CurrentLimit +
+                Mathf.Max(0.000001f, supply.CurrentLimit * 0.0001f));
 
             float power =
                 voltage * current;

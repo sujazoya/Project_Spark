@@ -72,134 +72,143 @@ namespace ProjectSpark.Electrical
         // Matrix stamping
         // ---------------------------------------------------------------------
 
-        public override void Stamp(
-            SparkElectricalComponent component,
-            SparkElectricalSolveContext context)
-        {
-            if (!(component is SparkResistor resistor))
-            {
-                return;
-            }
+       
+public override void Stamp(
+    SparkElectricalComponent component,
+    SparkElectricalSolveContext context)
+{
+    if (!(component is SparkResistor resistor))
+        return;
 
-            if (context == null)
-            {
-                return;
-            }
+    if (context == null || !resistor.ElectricalEnabled)
+        return;
 
-            if (!resistor.ElectricalEnabled)
-            {
-                return;
-            }
+    if (!TryGetTerminals(
+            resistor,
+            context.Graph,
+            out SparkTerminal terminalA,
+            out SparkTerminal terminalB))
+    {
+        Debug.LogWarning(
+            $"[RESISTOR STAMP] Missing terminals: {resistor.name}",
+            resistor);
+        return;
+    }
 
-            if (!TryGetTerminals(
-                    resistor,
-                    context.Graph,
-                    out SparkTerminal terminalA,
-                    out SparkTerminal terminalB))
-            {
-                return;
-            }
+    if (!context.Graph.TryGetNode(terminalA, out int nodeA) ||
+        !context.Graph.TryGetNode(terminalB, out int nodeB))
+    {
+        Debug.LogWarning(
+            $"[RESISTOR STAMP] Terminals not found in graph: " +
+            $"{resistor.name}",
+            resistor);
+        return;
+    }
 
-            if (!context.Graph.TryGetNode(
-                    terminalA,
-                    out int nodeA))
-            {
-                return;
-            }
+    float resistance = Mathf.Max(
+        minimumResistance,
+        resistor.EffectiveResistance);
 
-            if (!context.Graph.TryGetNode(
-                    terminalB,
-                    out int nodeB))
-            {
-                return;
-            }
+    double conductance = 1.0 / resistance;
 
-            float resistance =
-                Mathf.Max(
-                    minimumResistance,
-                    resistor.EffectiveResistance);
+    // IMPORTANT:
+    // Use terminals, not graph node IDs.
+    // The context converts terminals to reduced MNA indices.
+    context.AddConductance(
+        terminalA,
+        terminalB,
+        conductance);
 
-            double conductance =
-                1.0 / resistance;
+    Debug.Log(
+        $"[RESISTOR STAMP] {resistor.name} | " +
+        $"A={terminalA.name} GraphNode={nodeA} " +
+        $"MatrixIndex={context.MapTerminal(terminalA)} | " +
+        $"B={terminalB.name} GraphNode={nodeB} " +
+        $"MatrixIndex={context.MapTerminal(terminalB)} | " +
+        $"Resistance={resistance:F3} Ohm",
+        resistor);
+}
 
-            context.AddConductance(
-                nodeA,
-                nodeB,
-                conductance);
-        }
 
         // ---------------------------------------------------------------------
         // Solved electrical state
         // ---------------------------------------------------------------------
 
-        public override void ApplySolvedState(
-            SparkElectricalComponent component,
-            SparkElectricalSolveResult result)
-        {
-            if (!(component is SparkResistor resistor))
-            {
-                return;
-            }
+       
+public override void ApplySolvedState(
+    SparkElectricalComponent component,
+    SparkElectricalSolveResult result)
+{
+    if (!(component is SparkResistor resistor))
+        return;
 
-            if (result == null)
-            {
-                return;
-            }
+    if (result == null)
+        return;
 
-            if (!resistor.ElectricalEnabled)
-            {
-                resistor.ApplyElectricalState(
-                    new SparkElectricalState());
+    if (!resistor.ElectricalEnabled)
+    {
+        resistor.ApplyElectricalState(
+            new SparkElectricalState());
+        return;
+    }
 
-                return;
-            }
+    if (!TryGetTerminals(
+            resistor,
+            result.Context.Graph,
+            out SparkTerminal terminalA,
+            out SparkTerminal terminalB))
+    {
+        resistor.ApplyElectricalState(
+            new SparkElectricalState());
+        return;
+    }
 
-            if (!TryGetTerminals(
-                    resistor,
-                    result.Context.Graph,
-                    out SparkTerminal terminalA,
-                    out SparkTerminal terminalB))
-            {
-                resistor.ApplyElectricalState(
-                    new SparkElectricalState());
+    if (!result.TryGetVoltage(
+            terminalA,
+            terminalB,
+            out float voltage) ||
+        float.IsNaN(voltage) ||
+        float.IsInfinity(voltage))
+    {
+        Debug.LogWarning(
+            $"[RESISTOR STATE] Unable to read solved voltage " +
+            $"for {resistor.name}.",
+            resistor);
 
-                return;
-            }
+        resistor.ApplyElectricalState(
+            new SparkElectricalState());
+        return;
+    }
 
-           if (!result.TryGetVoltage(
-        terminalA,
-        terminalB,
-        out float voltage))
-        {
-            //return false;
-        }
+    float resistance = Mathf.Max(
+        minimumResistance,
+        resistor.EffectiveResistance);
 
-            float resistance =
-                Mathf.Max(
-                    minimumResistance,
-                    resistor.EffectiveResistance);
+    float current = voltage / resistance;
+    float power = voltage * current;
 
-            float current =
-                voltage / resistance;
+    SparkConductionState conduction =
+        Mathf.Abs(current) > 0.000001f
+            ? SparkConductionState.Conducting
+            : SparkConductionState.NonConducting;
 
-            float power =
-                voltage * current;
+    resistor.ApplyElectricalState(
+        new SparkElectricalState(
+            voltage,
+            current,
+            power,
+            conduction));
 
-            SparkConductionState conduction =
-                Mathf.Abs(current) > 0.000001f
-                    ? SparkConductionState.Conducting
-                    : SparkConductionState.NonConducting;
+    Debug.Log(
+        $"[RESISTOR SOLVED] {resistor.name} | " +
+        $"A={terminalA.name} | B={terminalB.name} | " +
+        $"Resistance={resistance:F3} Ohm | " +
+        $"Voltage={voltage:F6} V | " +
+        $"Current={current:F6} A | " +
+        $"Power={power:F6} W",
+        resistor);
+}
 
-            SparkElectricalState state =
-                new SparkElectricalState(
-                    voltage,
-                    current,
-                    power,
-                    conduction);
-
-            resistor.ApplyElectricalState(
-                state);
-        }
 
         // ---------------------------------------------------------------------
         // Current calculation

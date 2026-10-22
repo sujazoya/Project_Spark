@@ -155,6 +155,14 @@ namespace ProjectSpark.Gameplay
 
         private SparkLevelValidationResult validationResult;
 
+
+                [Header("Progression Access")]
+        [SerializeField]
+        private SparkLevelProgression levelProgression;
+
+        [SerializeField]
+        private bool enforceProgressionAccess = true;
+
         // ============================================================
         // COMPATIBILITY RUNTIME DATA
         // ============================================================
@@ -165,6 +173,7 @@ namespace ProjectSpark.Gameplay
         // ============================================================
         // PUBLIC PROPERTIES
         // ============================================================
+        
 
         public SparkCircuitSystem CircuitSystem =>
             circuitSystem;
@@ -255,6 +264,10 @@ namespace ProjectSpark.Gameplay
         public bool ShowRuntimeState =>
             showRuntimeState;
 
+
+            public SparkLevelProgression LevelProgression =>
+    levelProgression;
+
         // ============================================================
         // EVENTS
         // ============================================================
@@ -329,6 +342,16 @@ namespace ProjectSpark.Gameplay
         {
             SparkLevelDefinition level =
                 GetLevel(index);
+
+                            if (enforceProgressionAccess)
+            {
+                if (levelProgression == null ||
+                    !levelProgression.CanPlayLevel(index))
+                {
+                    Log($"Level {index} is locked.");
+                    return false;
+                }
+            }
 
             if (level == null)
             {
@@ -423,27 +446,37 @@ namespace ProjectSpark.Gameplay
             return true;
         }
 
+       
         public bool NextLevel()
         {
-            int next =
-                activeLevelIndex + 1;
+            int next = activeLevelIndex + 1;
 
             if (next >= LevelCount)
                 return false;
 
-            return StartLevel(next);
+            if (levelProgression != null)
+                return levelProgression.StartLevel(next);
+
+            return !enforceProgressionAccess &&
+                StartLevel(next);
         }
 
+
+        
         public bool PreviousLevel()
         {
-            int previous =
-                activeLevelIndex - 1;
+            int previous = activeLevelIndex - 1;
 
             if (previous < 0)
                 return false;
 
-            return StartLevel(previous);
+            if (levelProgression != null)
+                return levelProgression.StartLevel(previous);
+
+            return !enforceProgressionAccess &&
+                StartLevel(previous);
         }
+
 
         public bool RestartLevel()
         {
@@ -511,15 +544,10 @@ namespace ProjectSpark.Gameplay
                 $"LEVEL COMPLETE: " +
                 $"{level.DisplayName}");
 
-            if (autoAdvanceOnCompletion)
+           if (autoAdvanceOnCompletion &&
+                level.AutoAdvanceOnCompletion)
             {
-                int next =
-                    activeLevelIndex + 1;
-
-                if (next < LevelCount)
-                {
-                    StartLevel(next);
-                }
+                NextLevel();
             }
 
             return true;
@@ -1293,6 +1321,17 @@ private void SetOutput(
                     sceneBindings =
                         GetComponentInParent<
                             SparkLevelSceneBindings>();
+                }
+            }
+            if (levelProgression == null)
+            {
+                levelProgression =
+                    GetComponent<SparkLevelProgression>();
+
+                if (levelProgression == null)
+                {
+                    levelProgression =
+                        FindFirstObjectByType<SparkLevelProgression>();
                 }
             }
         }

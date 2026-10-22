@@ -59,13 +59,20 @@ namespace ProjectSpark.Gameplay
 
             [Header("Electrical Wire")]
 
-[SerializeField, Min(0.000001f)]
-private float wireResistance = 0.001f;
+        [SerializeField, Min(0.000001f)]
+        private float wireResistance = 0.001f;
 
-public float WireResistance =>
-    Mathf.Max(0.000001f, wireResistance);
+        public float WireResistance =>
+            Mathf.Max(0.000001f, wireResistance);
 
     
+
+            
+        public bool IsConducting =>
+            isActiveAndEnabled &&
+            ElectricalEnabled &&
+            HasValidTerminals;
+
 
 
         // ============================================================
@@ -228,39 +235,13 @@ public float WireResistance =>
         // PUBLIC ELECTRICAL STATE
         // ============================================================
 
-       public float Voltage
-{
-    get
-    {
-        if (terminalA == null ||
-            terminalB == null)
-        {
-            return 0f;
-        }
+     
+public float Voltage => ElectricalState.Voltage;
 
-        return terminalA.Voltage -
-               terminalB.Voltage;
-    }
-}
+public float Current => ElectricalState.Current;
 
-        public float Current
-        {
-            get
-            {
-                if (terminalA == null)
-                    return 0f;
+public float Power => ElectricalState.Power;
 
-                return terminalA.Current;
-            }
-        }
-
-        public float Power
-        {
-            get
-            {
-                return Voltage * Current;
-            }
-        }
 
         public bool HasVoltage
         {
@@ -892,20 +873,19 @@ public void RemoveAllPhysicalContacts()
         // CONDUCTIVE DEVICE
         // ============================================================
 
+       
         public bool CanConductBetween(
             SparkTerminal from,
             SparkTerminal to)
         {
-            if (!ElectricalEnabled)
-                return false;
-
-            if (!HasValidTerminals)
+            if (!IsConducting)
                 return false;
 
             return
                 (from == terminalA && to == terminalB) ||
                 (from == terminalB && to == terminalA);
         }
+
 
 
         public bool OwnsTerminal(
@@ -1135,10 +1115,12 @@ public void RemoveAllPhysicalContacts()
     }
 
     renderer.GetPropertyBlock(propertyBlock);
-            if (!enableFlowShader)
-            {
-                return;
-            }
+           if (!enableFlowShader)
+{
+    propertyBlock.SetFloat("_FlowEnabled", 0f);
+    renderer.SetPropertyBlock(propertyBlock);
+    return;
+}
 
             renderer.GetPropertyBlock(
                 propertyBlock);

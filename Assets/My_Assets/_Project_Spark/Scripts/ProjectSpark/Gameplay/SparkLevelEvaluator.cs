@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ProjectSpark.Circuit;
 using ProjectSpark.Electrical;
+using ProjectSpark.Measurement;
 
 namespace ProjectSpark.Gameplay
 {
@@ -200,6 +201,7 @@ namespace ProjectSpark.Gameplay
                 level.IsCompletionSatisfied(
                     satisfiedTargetCount);
 
+           
             // ------------------------------------------------------------
             // TARGET ELECTRICAL STATE
             // ------------------------------------------------------------
@@ -210,12 +212,52 @@ namespace ProjectSpark.Gameplay
                 out float targetCurrent,
                 out float targetPower);
 
+            // ============================================================
+            // DEBUG: TARGET ELECTRICAL STATE
+            // ============================================================
+
+            SparkLevelTarget debugTarget =
+                GetPrimaryTarget(level);
+
+            Debug.Log(
+                $"[LEVEL TARGET DEBUG] " +
+                $"EvaluatedV={targetVoltage:F6} | " +
+                $"EvaluatedI={targetCurrent:F6} | " +
+                $"EvaluatedP={targetPower:F6} | " +
+                $"Targets={satisfiedTargetCount}/{totalTargetCount}");
+
+            if (debugTarget != null &&
+                TryResolveTargetComponent(
+                    debugTarget,
+                    out SparkElectricalComponent debugComponent))
+            {
+                SparkElectricalState state =
+                    debugComponent.ElectricalState;
+
+                Debug.Log(
+                    $"[LEVEL TARGET COMPONENT CHECK] " +
+                    $"Component={debugComponent.name} | " +
+                    $"Type={debugComponent.GetType().Name} | " +
+                    $"Voltage={state.Voltage:F6} V | " +
+                    $"Current={state.Current:F6} A | " +
+                    $"Power={state.Power:F6} W | " +
+                    $"Conduction={state.Conduction} | " +
+                    $"Enabled={debugComponent.ElectricalEnabled}");
+            }
+            else
+            {
+                Debug.LogWarning(
+                    "[LEVEL TARGET COMPONENT CHECK] " +
+                    "Could not resolve the target component.");
+            }
+
             // ------------------------------------------------------------
             // TARGET SHORT
             // ------------------------------------------------------------
 
             bool targetShorted =
                 DetectTargetShort(level);
+
 
             // ------------------------------------------------------------
             // BASE RESULT
@@ -548,11 +590,13 @@ private void BuildReachability(
 
     TraverseWireNetwork(
         sourcePositive,
-        positiveReachable);
+        positiveReachable,
+        traverseResistors: true);
 
     TraverseWireNetwork(
         sourceNegative,
-        negativeReachable);
+        negativeReachable,
+        traverseResistors: true);
 
     SparkLevelTarget target = GetPrimaryTarget(level);
 
@@ -619,7 +663,10 @@ private void BuildReachability(
 
         private void TraverseWireNetwork(
             SparkTerminal start,
-            HashSet<SparkTerminal> reachable)
+            HashSet<SparkTerminal> reachable,
+            bool traverseConductingLeds = true,
+            bool bypassOnly = false,
+            bool traverseResistors = false)
         {
             if (start == null ||
                 reachable == null)
@@ -668,7 +715,13 @@ private void BuildReachability(
                         connectionBuffer[i];
 
                     if (!connection.IsValid)
-                    continue;
+                        continue;
+
+                    // Probe connections are measurements, not conductive wires.
+                    // A bypass search must never treat them as shorting links.
+                    if (bypassOnly &&
+                        connection.Kind == SparkConnectionKind.Probe)
+                        continue;
 
                     SparkTerminal other =
                         connection.GetOther(current);
@@ -699,7 +752,8 @@ private void BuildReachability(
                     led = ownerLed;
                 }
 
-                if (led != null &&
+                if (traverseConductingLeds &&
+                    led != null &&
                     led.ElectricalEnabled &&
                     led.ElectricalState.Conduction ==
                         SparkConductionState.Conducting)
@@ -723,6 +777,112 @@ private void BuildReachability(
                         traversalQueue.Enqueue(ledOpposite);
                     }
                 }
+
+                // --------------------------------------------------------
+                // RESISTOR CONTINUITY (NEVER A WIRE-ONLY SHORT)
+                // --------------------------------------------------------
+                // A resistor connects its two terminals electrically, but
+                // it is a load and must not count as a direct bypass.
+                // Only the closed-return reachability pass enables this.
+                if (traverseResistors && !bypassOnly)
+                {
+                    SparkResistor resistor =
+                        current.GetComponentInParent<SparkResistor>();
+
+                    if (resistor == null &&
+                        current.Owner is SparkResistor ownerResistor)
+                    {
+                        resistor = ownerResistor;
+                    }
+
+                    if (resistor != null && resistor.ElectricalEnabled)
+                    {
+                        SparkTerminal resistorOpposite = null;
+
+                        if (current == resistor.TerminalA)
+                            resistorOpposite = resistor.TerminalB;
+                        else if (current == resistor.TerminalB)
+                            resistorOpposite = resistor.TerminalA;
+
+                        if (resistorOpposite != null &&
+                            visitedTerminals.Add(resistorOpposite))
+                        {
+                            traversalQueue.Enqueue(resistorOpposite);
+                        }
+                    }
+                }
+                
+                // --------------------------------------------------------
+                // INLINE MULTIMETER SHUNT
+                // --------------------------------------------------------
+                // The current-mode multimeter is a conductive component
+                // with a small internal resistance.
+                //
+                // Traverse it for normal circuit reachability, but NEVER
+                // treat it as a wire-only bypass during short detection.
+
+                if (!bypassOnly && traverseResistors)
+                {
+                    SparkMultimeterElectricalComponent meter =
+                        current.GetComponentInParent<
+                            SparkMultimeterElectricalComponent>();
+
+                    if (meter == null &&
+                        current.Owner is
+                            SparkMultimeterElectricalComponent ownerMeter)
+                    {
+                        meter = ownerMeter;
+                    }
+
+                    if (meter != null &&
+                        meter.ElectricalEnabled &&
+                        meter.CurrentMeasurementEnabled)
+                    {
+                        SparkTerminal meterOpposite = null;
+
+                        if (current == meter.RedTerminal)
+                        {
+                            meterOpposite = meter.BlackTerminal;
+                        }
+                        else if (current == meter.BlackTerminal)
+                        {
+                            meterOpposite = meter.RedTerminal;
+                        }
+
+                        if (meterOpposite != null &&
+                            visitedTerminals.Add(meterOpposite))
+                        {
+                            traversalQueue.Enqueue(meterOpposite);
+                        }
+                    }
+                }
+
+              
+            // --------------------------------------------------------
+            // SINGLE WIRE INTERNAL CONTINUITY
+            // --------------------------------------------------------
+            SparkSingleWire singleWire =
+                current.GetComponentInParent<SparkSingleWire>();
+
+            if (singleWire == null &&
+                current.Owner is SparkSingleWire ownerWire)
+            {
+                singleWire = ownerWire;
+            }
+
+            if (singleWire != null)
+            {
+                SparkTerminal wireOpposite =
+                    singleWire.GetOppositeTerminal(current);
+
+                if (wireOpposite != null &&
+                    singleWire.CanConductBetween(current, wireOpposite) &&
+                    visitedTerminals.Add(wireOpposite))
+                {
+                    traversalQueue.Enqueue(wireOpposite);
+                }
+            }
+
 
                 // --------------------------------------------------------
                 // CLOSED SWITCH
@@ -940,35 +1100,37 @@ private void BuildReachability(
             SparkTerminal sourcePositive,
             SparkTerminal sourceNegative)
         {
-            SparkPowerSupply supply =
-                ResolvePowerSupply(sourcePositive);
-
-            if (supply == null)
-            {
-                supply =
-                    ResolvePowerSupply(sourceNegative);
-            }
-
-            if (supply != null &&
-                supply.IsShortCircuit)
-            {
-                return true;
-            }
-
-            if (sourcePositive == null ||
-                sourceNegative == null)
-            {
+            if (sourcePositive == null || sourceNegative == null)
                 return false;
-            }
 
+            // Do not use supply.IsShortCircuit here. In the current power
+            // supply component it is an alias of the current-limit status,
+            // which detects overload, not a conductive bypass.
+            //
+            // A source short is a wire/connector/closed-switch path that
+            // reaches the negative terminal without crossing a load.
             positiveReachable.Clear();
 
             TraverseWireNetwork(
                 sourcePositive,
-                positiveReachable);
+                positiveReachable,
+                traverseConductingLeds: false,
+                bypassOnly: true);
 
-            return positiveReachable.Contains(
-                sourceNegative);
+            bool shorted = positiveReachable.Contains(sourceNegative);
+
+            if (shorted)
+            {
+                Debug.LogWarning(
+                    "[LEVEL SOURCE SHORT] Conductive bypass found between " +
+                    $"{GetTerminalDebugName(sourcePositive)} and " +
+                    $"{GetTerminalDebugName(sourceNegative)}. " +
+                    "The bypass traversal excludes LED conduction and " +
+                    "measurement probes. Check for a direct wire, a " +
+                    "closed-switch-only path, or incorrectly shared terminals.");
+            }
+
+            return shorted;
         }
 
         // ================================================================
@@ -1429,93 +1591,76 @@ private void BuildReachability(
         // TARGET ELECTRICAL STATE
         // ================================================================
 
-        private void GetTargetElectricalState(
-            SparkLevelDefinition level,
-            out float voltage,
-            out float current,
-            out float power)
-        {
-            voltage = 0f;
-            current = 0f;
-            power = 0f;
+private void GetTargetElectricalState(
+    SparkLevelDefinition level,
+    out float voltage,
+    out float current,
+    out float power)
+{
+    voltage = 0f;
+    current = 0f;
+    power = 0f;
 
-            SparkLevelTarget target =
-                GetPrimaryTarget(level);
+    SparkLevelTarget target =
+        GetPrimaryTarget(level);
 
-            if (target == null)
-                return;
+    if (target == null)
+        return;
 
-            // ------------------------------------------------------------
-            // PAIRED TARGET
-            // ------------------------------------------------------------
+    // Prefer the target component's solved electrical state.
+    // Component state contains voltage, current and power.
+    // Terminal state may contain voltage but zero current/power.
+    if (TryResolveTargetComponent(
+            target,
+            out SparkElectricalComponent component))
+    {
+        voltage = Mathf.Abs(
+            component.ElectricalState.Voltage);
 
-            if (TryResolveTargetTerminalPair(
-                    target,
-                    out SparkTerminal positive,
-                    out SparkTerminal negative))
-            {
-                voltage =
-                    Mathf.Abs(
-                        positive.ElectricalState.Voltage -
-                        negative.ElectricalState.Voltage);
+        current = Mathf.Abs(
+            component.ElectricalState.Current);
 
-                current =
-                    Mathf.Max(
-                        Mathf.Abs(
-                            positive.ElectricalState.Current),
-                        Mathf.Abs(
-                            negative.ElectricalState.Current));
+        power = Mathf.Abs(
+            component.ElectricalState.Power);
 
-                power =
-                    voltage * current;
+        return;
+    }
 
-                return;
-            }
+    // Fallback for targets configured using a terminal pair.
+    if (TryResolveTargetTerminalPair(
+            target,
+            out SparkTerminal positive,
+            out SparkTerminal negative))
+    {
+        voltage = Mathf.Abs(
+            positive.ElectricalState.Voltage -
+            negative.ElectricalState.Voltage);
 
-            // ------------------------------------------------------------
-            // SINGLE TARGET TERMINAL
-            // ------------------------------------------------------------
+        current = Mathf.Max(
+            Mathf.Abs(positive.ElectricalState.Current),
+            Mathf.Abs(negative.ElectricalState.Current));
 
-            if (TryResolveTargetTerminal(
-                    target,
-                    out SparkTerminal terminal))
-            {
-                voltage =
-                    Mathf.Abs(
-                        terminal.ElectricalState.Voltage);
+        power = voltage * current;
 
-                current =
-                    Mathf.Abs(
-                        terminal.ElectricalState.Current);
+        return;
+    }
 
-                power =
-                    Mathf.Abs(
-                        terminal.ElectricalState.Power);
+    // Fallback for single-terminal targets.
+    if (TryResolveTargetTerminal(
+            target,
+            out SparkTerminal terminal))
+    {
+        voltage = Mathf.Abs(
+            terminal.ElectricalState.Voltage);
 
-                return;
-            }
+        current = Mathf.Abs(
+            terminal.ElectricalState.Current);
 
-            // ------------------------------------------------------------
-            // COMPONENT
-            // ------------------------------------------------------------
+        power = Mathf.Abs(
+            terminal.ElectricalState.Power);
+    }
+}
 
-            if (TryResolveTargetComponent(
-                    target,
-                    out SparkElectricalComponent component))
-            {
-                voltage =
-                    Mathf.Abs(
-                        component.ElectricalState.Voltage);
-
-                current =
-                    Mathf.Abs(
-                        component.ElectricalState.Current);
-
-                power =
-                    Mathf.Abs(
-                        component.ElectricalState.Power);
-            }
-        }
 
         // ================================================================
         // TARGET SHORT
@@ -1542,7 +1687,9 @@ private void BuildReachability(
 
             TraverseWireNetwork(
                 targetPositive,
-                positiveReachable);
+                positiveReachable,
+                traverseConductingLeds: false,
+                bypassOnly: true);
 
             if (positiveReachable.Contains(
                     targetNegative))

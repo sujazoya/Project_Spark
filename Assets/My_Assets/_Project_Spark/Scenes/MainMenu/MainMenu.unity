@@ -11098,7 +11098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4227022770216407918, guid: e2c739a9edb4e2544bd5e28784f8e3ee, type: 3}
       propertyPath: m_Name
-      value: Level Components
+      value: Level System
       objectReference: {fileID: 0}
     - target: {fileID: 4227022770216407918, guid: e2c739a9edb4e2544bd5e28784f8e3ee, type: 3}
       propertyPath: m_Layer
@@ -11133,6 +11133,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8859104116355241867, guid: e2c739a9edb4e2544bd5e28784f8e3ee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 718526962}
+    - targetCorrespondingSourceObject: {fileID: 8859104116355241867, guid: e2c739a9edb4e2544bd5e28784f8e3ee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1037112642}
     - targetCorrespondingSourceObject: {fileID: 3319408934511022288, guid: e2c739a9edb4e2544bd5e28784f8e3ee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9120541368492925941}
@@ -11152,6 +11155,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4227022770216407918, guid: e2c739a9edb4e2544bd5e28784f8e3ee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 350401876}
+    - targetCorrespondingSourceObject: {fileID: 4227022770216407918, guid: e2c739a9edb4e2544bd5e28784f8e3ee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 350401877}
   m_SourcePrefab: {fileID: 100100000, guid: e2c739a9edb4e2544bd5e28784f8e3ee, type: 3}
 --- !u!4 &230188839 stripped
 Transform:
@@ -12497,7 +12503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
   owner: {fileID: 1910408501}
-  kind: 3
+  kind: 0
   polarity: 0
   runtimePolarityThreshold: 0.001
   runtimePolarity: 0
@@ -18131,6 +18137,20 @@ MonoBehaviour:
   minimum: -1.5
   maximum: 1.5
   position: 0
+--- !u!114 &350401877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350401875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3cc9905b2be7044b3f5a76b2a56fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelLayoutLoader
+  catalog: {fileID: 0}
+  layoutRoot: {fileID: 1037112642}
 --- !u!1 &352260622
 GameObject:
   m_ObjectHideFlags: 0
@@ -30499,7 +30519,7 @@ Transform:
   m_Children:
   - {fileID: 678899040}
   - {fileID: 66862707}
-  m_Father: {fileID: 1635692699}
+  m_Father: {fileID: 1643633322}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &641936269
 GameObject:
@@ -30706,7 +30726,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 645878784}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.936, y: 0.849, z: -2.866}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -30717,7 +30737,7 @@ Transform:
   - {fileID: 54584233}
   - {fileID: 786771195}
   - {fileID: 61652052}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1212969947}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &648895129
 GameObject:
@@ -52154,6 +52174,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1035197736}
   m_CullTransparentMesh: 1
+--- !u!1 &1037112641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1037112642}
+  m_Layer: 15
+  m_Name: LayoutRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1037112642
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037112641}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1643633322}
+  m_Father: {fileID: 230188839}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1039818573
 GameObject:
   m_ObjectHideFlags: 0
@@ -61978,6 +62030,7 @@ Transform:
   m_Children:
   - {fileID: 1306271456}
   - {fileID: 18296639}
+  - {fileID: 645878785}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1214908094
@@ -87627,11 +87680,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1998748581}
-  - {fileID: 1910408496}
-  - {fileID: 641701642}
-  - {fileID: 1729267463}
+  m_Children: []
   m_Father: {fileID: 718526962}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1638751965
@@ -87746,6 +87795,73 @@ MonoBehaviour:
   providesOutput: 1
   connectionKind: 0
   maxConnections: 1
+--- !u!1 &1643633321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1643633322}
+  - component: {fileID: 1643633324}
+  - component: {fileID: 1643633323}
+  m_Layer: 15
+  m_Name: Level_01_Layout
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1643633322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643633321}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1998748581}
+  - {fileID: 1910408496}
+  - {fileID: 641701642}
+  - {fileID: 1729267463}
+  m_Father: {fileID: 1037112642}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1643633323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643633321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c2f1eac5072564e8675d06932fab72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelSceneBindings
+  terminals: []
+  components: []
+  electronicObjects: []
+  outputs: []
+--- !u!114 &1643633324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643633321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 277fb72e5f8a2a544b445da6ce43ad5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelLayout
+  levelDefinition: {fileID: 11400000, guid: 64a97c3041cca0b4eb8e078632d99a80, type: 2}
+  sceneBindings: {fileID: 0}
 --- !u!1 &1647690808
 GameObject:
   m_ObjectHideFlags: 0
@@ -92467,7 +92583,7 @@ Transform:
   - {fileID: 1785396278}
   - {fileID: 1386705495}
   - {fileID: 2037339108}
-  m_Father: {fileID: 1635692699}
+  m_Father: {fileID: 1643633322}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1729554762
 GameObject:
@@ -97601,7 +97717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
   owner: {fileID: 1910408501}
-  kind: 3
+  kind: 0
   polarity: 0
   runtimePolarityThreshold: 0.001
   runtimePolarity: 0
@@ -102142,7 +102258,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1635692699}
+    m_TransformParent: {fileID: 1643633322}
     m_Modifications:
     - target: {fileID: -8831762423203448578, guid: 995e4a0430ba45b40a8a62b495848b23, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -102378,7 +102494,7 @@ MonoBehaviour:
   electricalEnabled: 1
   terminalA: {fileID: 256401731}
   terminalB: {fileID: 1823709209}
-  resistance: 330
+  resistance: 150
   maximumPowerWatts: 0.25
 --- !u!114 &1910408503
 MonoBehaviour:
@@ -106719,7 +106835,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 466822559}
-  m_Father: {fileID: 1635692699}
+  m_Father: {fileID: 1643633322}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1998928993
 GameObject:
@@ -134186,7 +134302,6 @@ SceneRoots:
   - {fileID: 1212969947}
   - {fileID: 920815656}
   - {fileID: 2073729351082236227}
-  - {fileID: 645878785}
   - {fileID: 1946217032}
   - {fileID: 1584694927}
   - {fileID: 1618700994}

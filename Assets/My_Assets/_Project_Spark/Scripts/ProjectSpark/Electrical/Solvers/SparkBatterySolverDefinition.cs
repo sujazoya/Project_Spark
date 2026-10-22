@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using ProjectSpark.Gameplay;
 
@@ -125,56 +125,40 @@ namespace ProjectSpark.Electrical
             if (!(component is SparkBattery battery))
                 return;
 
-            if (result == null)
-                return;
-
-            if (battery.PositiveTerminal == null ||
-                battery.NegativeTerminal == null)
+            if (result == null || !IsActive(battery))
             {
+                battery.ApplyElectricalState(new SparkElectricalState(
+                    0f, 0f, 0f, SparkConductionState.NonConducting));
                 return;
             }
 
-            /*
-             * Battery current is the current delivered from the
-             * positive terminal toward the external circuit.
-             *
-             * I = (Vbattery - Vterminal) / R
-             *
-             * where Vterminal is the solved voltage difference
-             * between the battery's positive and negative terminals.
-             */
-           if (!result.TryGetVoltage(
-        battery.PositiveTerminal,
-        battery.NegativeTerminal,
-        out float terminalVoltage))
-{
-    
-}
-
-            float resistance =
-                Mathf.Max(
-                    result.Context.MinimumResistance,
-                    battery.InternalResistance);
-
-            float current = 0f;
-
-            if (IsActive(battery))
+            if (!result.TryGetVoltage(
+                    battery.PositiveTerminal,
+                    battery.NegativeTerminal,
+                    out float terminalVoltage) ||
+                !TryCalculateCurrent(battery, result, out float current) ||
+                !IsFinite(terminalVoltage))
             {
-                current =
-                    (battery.NominalVoltage -
-                     terminalVoltage) /
-                    resistance;
+                battery.ApplyElectricalState(new SparkElectricalState());
+                return;
             }
 
-            /*
-             * The base electrical component owns the actual
-             * ElectricalState storage in Project Spark.
-             *
-             * The solver's normal state-application pipeline can
-             * use the solver-definition current calculation.
-             *
-             * No direct mutation is required here.
-             */
+            // Positive current denotes current delivered at the positive terminal.
+            // Power here is terminal power delivered, not internal I^2 R loss.
+            float deliveredPower = terminalVoltage * current;
+            if (!IsFinite(deliveredPower))
+            {
+                battery.ApplyElectricalState(new SparkElectricalState());
+                return;
+            }
+
+            battery.ApplyElectricalState(new SparkElectricalState(
+                terminalVoltage,
+                current,
+                deliveredPower,
+                Mathf.Abs(current) > 0.000001f
+                    ? SparkConductionState.Conducting
+                    : SparkConductionState.NonConducting));
         }
 
         public override bool TryGetSourceVoltage(

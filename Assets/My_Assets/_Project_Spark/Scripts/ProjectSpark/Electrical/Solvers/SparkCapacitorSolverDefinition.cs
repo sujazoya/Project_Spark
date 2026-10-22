@@ -119,83 +119,40 @@ namespace ProjectSpark.Electrical
             SparkElectricalComponent component,
             SparkElectricalSolveResult result)
         {
-            if (!(component is SparkCapacitor capacitor))
-            {
+            if (!(component is SparkCapacitor capacitor) || result == null)
                 return;
-            }
 
-            if (result == null)
-            {
+            if (!TryGetTerminals(capacitor, result.Context.Graph,
+                    out SparkTerminal terminalA, out SparkTerminal terminalB))
                 return;
-            }
 
-            if (!TryGetTerminals(
-                    capacitor,
-                    result.Context.Graph,
-                    out SparkTerminal terminalA,
-                    out SparkTerminal terminalB))
-            {
+            if (!result.TryGetVoltage(terminalA, terminalB, out float voltage))
                 return;
-            }
-
-           
-
-                if (!result.TryGetVoltage(
-        terminalA,
-        terminalB,
-        out float voltage))
-{
-   // return false;
-}
 
             float current = 0f;
-
             if (result.Context.SimulateTransientDevices)
             {
+                // Match Stamp(): a missing history entry means an initially
+                // uncharged capacitor, i.e. a previous voltage of zero.
                 float previousVoltage = 0f;
+                result.TryGetPreviousComponentVoltage(capacitor, out previousVoltage);
 
-                if (result.TryGetPreviousComponentVoltage(
-                        capacitor,
-                        out previousVoltage))
-                {
-                    float capacitance =
-                        Mathf.Max(
-                            minimumCapacitance,
-                            capacitor.CapacitanceFarads);
-
-                    float timeStep =
-                        Mathf.Max(
-                            0.000001f,
-                            result.Context.TimeStep);
-
-                    current =
-                        capacitance *
-                        (voltage - previousVoltage) /
-                        timeStep;
-                }
+                float capacitance = Mathf.Max(minimumCapacitance,
+                    capacitor.CapacitanceFarads);
+                float timeStep = Mathf.Max(0.000001f, result.Context.TimeStep);
+                current = capacitance * (voltage - previousVoltage) / timeStep;
             }
 
-            float power =
-                voltage * current;
+            float power = voltage * current;
+            SparkConductionState conduction = Mathf.Abs(current) > 0.000001f
+                ? SparkConductionState.Conducting
+                : SparkConductionState.NonConducting;
 
-            SparkConductionState conduction =
-                Mathf.Abs(current) > 0.000001f
-                    ? SparkConductionState.Conducting
-                    : SparkConductionState.NonConducting;
+            capacitor.ApplyElectricalState(new SparkElectricalState(
+                voltage, current, power, conduction));
 
-            SparkElectricalState state =
-                new SparkElectricalState(
-                    voltage,
-                    current,
-                    power,
-                    conduction);
-
-            capacitor.ApplyElectricalState(
-                state);
-
-            result.CommitPreviousComponentVoltage(
-                capacitor,
-                voltage);
+            // Do not advance history here. The solver calls
+            // CommitTransientState after all device states are published.
         }
 
         public override bool TryCalculateCurrent(
@@ -204,61 +161,24 @@ namespace ProjectSpark.Electrical
             out float current)
         {
             current = 0f;
-
-            if (!(component is SparkCapacitor capacitor))
-            {
+            if (!(component is SparkCapacitor capacitor) || result == null)
                 return false;
-            }
 
-            if (result == null)
-            {
+            if (!TryGetTerminals(capacitor, result.Context.Graph,
+                    out SparkTerminal terminalA, out SparkTerminal terminalB))
                 return false;
-            }
 
-            if (!TryGetTerminals(
-                    capacitor,
-                    result.Context.Graph,
-                    out SparkTerminal terminalA,
-                    out SparkTerminal terminalB))
-            {
+            if (!result.TryGetVoltage(terminalA, terminalB, out float voltage))
                 return false;
-            }
 
             if (!result.Context.SimulateTransientDevices)
-            {
                 return true;
-            }
 
-           if (!result.TryGetVoltage(
-        terminalA,
-        terminalB,
-        out float voltage))
-{
-    return false;
-}
-
-            float previousVoltage = 0f;
-
-            if (result.TryGetPreviousComponentVoltage(
-                    capacitor,
-                    out previousVoltage))
-            {
-                float capacitance =
-                    Mathf.Max(
-                        minimumCapacitance,
-                        capacitor.CapacitanceFarads);
-
-                float timeStep =
-                    Mathf.Max(
-                        0.000001f,
-                        result.Context.TimeStep);
-
-                current =
-                    capacitance *
-                    (voltage - previousVoltage) /
-                    timeStep;
-            }
-
+            // CommitTransientState has already advanced the history by the
+            // time external callers query the accepted solution. Recomputing
+            // from that updated history would incorrectly return zero.
+            // ApplySolvedState stores the current for this accepted solve.
+            current = capacitor.ElectricalState.Current;
             return true;
         }
 
@@ -272,36 +192,18 @@ namespace ProjectSpark.Electrical
             SparkElectricalComponent component,
             SparkElectricalSolveResult result)
         {
-            if (!(component is SparkCapacitor capacitor))
-            {
+            if (!(component is SparkCapacitor capacitor) || result == null ||
+                !result.Context.SimulateTransientDevices)
                 return;
-            }
 
-            if (result == null)
-            {
+            if (!TryGetTerminals(capacitor, result.Context.Graph,
+                    out SparkTerminal terminalA, out SparkTerminal terminalB))
                 return;
-            }
 
-            if (!TryGetTerminals(
-                    capacitor,
-                    result.Context.Graph,
-                    out SparkTerminal terminalA,
-                    out SparkTerminal terminalB))
-            {
+            if (!result.TryGetVoltage(terminalA, terminalB, out float voltage))
                 return;
-            }
 
-           if (!result.TryGetVoltage(
-        terminalA,
-        terminalB,
-        out float voltage))
-{
-    //return false;
-}
-
-            result.CommitPreviousComponentVoltage(
-                capacitor,
-                voltage);
+            result.CommitPreviousComponentVoltage(capacitor, voltage);
         }
 
         public override void ResetRuntimeState(

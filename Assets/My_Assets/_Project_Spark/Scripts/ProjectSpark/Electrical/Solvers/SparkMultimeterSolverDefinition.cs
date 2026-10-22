@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using ProjectSpark.Gameplay;
 using ProjectSpark.Measurement;
@@ -81,7 +81,7 @@ namespace ProjectSpark.Electrical
             if (!enableShunt)
                 return;
 
-            if (!meter.ElectricalEnabled)
+            if (!meter.ElectricalEnabled || !meter.CurrentMeasurementEnabled)
                 return;
 
             if (!meter.TryGetTerminals(
@@ -123,13 +123,32 @@ namespace ProjectSpark.Electrical
             SparkElectricalComponent component,
             SparkElectricalSolveResult result)
         {
-            /*
-             * The multimeter does not need to modify the circuit
-             * during ApplySolvedState.
-             *
-             * The solved shunt voltage/current are read from the
-             * completed SparkElectricalSolveResult.
-             */
+            if (!(component is SparkMultimeterElectricalComponent meter))
+                return;
+
+            if (result == null || !enableShunt || !meter.ElectricalEnabled ||
+                !meter.CurrentMeasurementEnabled ||
+                !meter.TryGetTerminals(out SparkTerminal red, out SparkTerminal black) ||
+                !result.TryGetVoltage(red, black, out float voltage) ||
+                !TryCalculateCurrent(meter, result, out float current))
+            {
+                meter.ApplyElectricalState(new SparkElectricalState(
+                    0f, 0f, 0f, SparkConductionState.NonConducting));
+                return;
+            }
+
+            float power = voltage * current;
+            if (!IsFinite(power))
+            {
+                meter.ApplyElectricalState(new SparkElectricalState());
+                return;
+            }
+
+            meter.ApplyElectricalState(new SparkElectricalState(
+                voltage, current, power,
+                Mathf.Abs(current) > 0.000001f
+                    ? SparkConductionState.Conducting
+                    : SparkConductionState.NonConducting));
         }
 
         public override bool TryGetTerminals(
@@ -168,7 +187,7 @@ namespace ProjectSpark.Electrical
             if (result == null)
                 return false;
 
-            if (!meter.ElectricalEnabled)
+            if (!enableShunt || !meter.ElectricalEnabled || !meter.CurrentMeasurementEnabled)
                 return true;
 
             if (!meter.TryGetTerminals(

@@ -44,48 +44,42 @@ namespace ProjectSpark.Electrical
                 out terminalB);
         }
 
-        public override void Stamp(
-            SparkElectricalComponent component,
-            SparkElectricalSolveContext context)
-        {
-            if (!(component is SparkSingleWire wire) ||
-                context == null ||
-                context.Graph == null ||
-                !wire.ElectricalEnabled)
-            {
-                return;
-            }
+       
+public override void Stamp(
+    SparkElectricalComponent component,
+    SparkElectricalSolveContext context)
+{
+    if (!(component is SparkSingleWire wire) ||
+        context == null ||
+        context.Graph == null ||
+        !wire.ElectricalEnabled)
+    {
+        return;
+    }
 
-            if (!TryGetTerminals(
-                    wire,
-                    context.Graph,
-                    out SparkTerminal terminalA,
-                    out SparkTerminal terminalB))
-            {
-                return;
-            }
+    if (!TryGetTerminals(
+            wire,
+            context.Graph,
+            out SparkTerminal terminalA,
+            out SparkTerminal terminalB))
+    {
+        return;
+    }
 
-            if (!context.Graph.TryGetNode(
-                    terminalA,
-                    out int nodeA) ||
-                !context.Graph.TryGetNode(
-                    terminalB,
-                    out int nodeB))
-            {
-                return;
-            }
+    float resistance = Mathf.Max(
+        context.MinimumResistance,
+        wire.WireResistance);
 
-            float resistance = Mathf.Max(
-                0.000000001f,
-                wireResistance);
+    double conductance = 1.0 / resistance;
 
-            double conductance = 1.0 / resistance;
+    // IMPORTANT:
+    // Pass SparkTerminal objects, not graph node indices.
+    context.AddConductance(
+        terminalA,
+        terminalB,
+        conductance);
+}
 
-            context.AddConductance(
-                nodeA,
-                nodeB,
-                conductance);
-        }
 
         public override void ApplySolvedState(
             SparkElectricalComponent component,
@@ -130,9 +124,9 @@ namespace ProjectSpark.Electrical
                 return;
             }
 
-            float resistance = Mathf.Max(
-                0.000000001f,
-                wireResistance);
+           float resistance = Mathf.Max(
+    result.Context.MinimumResistance,
+    wire.WireResistance);
 
             float current = voltage / resistance;
             float power = voltage * current;
@@ -193,9 +187,9 @@ namespace ProjectSpark.Electrical
                 return false;
             }
 
-            float resistance = Mathf.Max(
-                0.000000001f,
-                wireResistance);
+           float resistance = Mathf.Max(
+    result.Context.MinimumResistance,
+    wire.WireResistance);
 
             current = voltage / resistance;
 

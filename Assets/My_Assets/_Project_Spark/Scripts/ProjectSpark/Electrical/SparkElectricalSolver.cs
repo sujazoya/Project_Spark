@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using ProjectSpark.Gameplay;
@@ -231,6 +231,7 @@ namespace ProjectSpark.Electrical
 {
     dirty = true;
     latestSolveResult = null;
+    hasLiveCircuitSignature = false;
 
     if (solverRegistry != null)
     {
@@ -409,6 +410,56 @@ public void MarkDirty()
             
         }
 
+        private int lastLiveCircuitSignature;
+        private bool hasLiveCircuitSignature;
+
+        // This is a non-destructive validation: disabling a GameObject must not
+        // permanently delete its authored wiring. The graph builder separately
+        // excludes connections whose owners are inactive.
+        private int CalculateLiveCircuitSignature()
+        {
+            unchecked
+            {
+                int signature = 17;
+                Transform root = componentSearchRoot != null
+                    ? componentSearchRoot
+                    : circuit != null ? circuit.transform : transform;
+                SparkElectricalComponent[] liveComponents =
+                    root.GetComponentsInChildren<SparkElectricalComponent>(true);
+                signature = signature * 31 + liveComponents.Length;
+                for (int i = 0; i < liveComponents.Length; i++)
+                {
+                    SparkElectricalComponent component = liveComponents[i];
+                    if (component == null) continue;
+                    signature = signature * 31 + component.GetInstanceID();
+                    signature = signature * 31 + (component.isActiveAndEnabled ? 1 : 0);
+                    signature = signature * 31 + (component.ElectricalEnabled ? 1 : 0);
+                }
+                if (circuit != null)
+                {
+                    signature = signature * 31 + circuit.TopologyVersion;
+                    connectionBuffer.Clear();
+                    circuit.CopyConnections(connectionBuffer);
+                    for (int i = 0; i < connectionBuffer.Count; i++)
+                    {
+                        SparkCircuitConnection connection = connectionBuffer[i];
+                        signature = signature * 31 +
+                            (IsConnectionOwnerActive(connection) ? 1 : 0);
+                    }
+                }
+                return signature;
+            }
+        }
+
+        private static bool IsConnectionOwnerActive(SparkCircuitConnection connection)
+        {
+            return connection.IsValid &&
+                   connection.A != null && connection.B != null &&
+                   connection.A.Owner != null && connection.B.Owner != null &&
+                   connection.A.Owner.isActiveAndEnabled &&
+                   connection.B.Owner.isActiveAndEnabled;
+        }
+
         private int solveCallSequence;
 
 
@@ -437,17 +488,29 @@ public void MarkDirty()
                 return false;
             }
 
-                // Reuse the cached result only when it is still valid.
-                if (solveOnDirty &&
-                    !dirty &&
-                    latestSolveResult != null)
+                // Unity activation changes do not necessarily raise an electrical
+                // configuration event. Revalidate the active-device/connection
+                // signature before using a cached numerical result.
+                int liveSignature = CalculateLiveCircuitSignature();
+                if (!hasLiveCircuitSignature || liveSignature != lastLiveCircuitSignature)
                 {
-                    Debug.Log(
-                        $"[SPARK SOLVER #{callId}] SKIPPED: clean cached result.",
-                        this);
+                    dirty = true;
+                    currentGraph = null;
+                }
 
+                // Reuse the cached result only when it is still valid.
+                            if (solveOnDirty &&
+                    !dirty &&
+                    latestSolveResult != null &&
+                    currentGraph != null &&
+                    circuit != null &&
+                    circuit.TopologyVersion == topologyVersion)
+                {
                     return true;
                 }
+
+                lastLiveCircuitSignature = liveSignature;
+                hasLiveCircuitSignature = true;
 
                 solving = true;
 
@@ -846,6 +909,29 @@ public void MarkDirty()
                     SparkElectricalComponent>(
                         true);
 
+
+                        Debug.Log(
+    $"[COMPONENT DISCOVERY] Root={root.name} | " +
+    $"RootPath={GetHierarchyPath(root)} | " +
+    $"Discovered={discovered.Length}",
+    this);
+
+for (int i = 0; i < discovered.Length; i++)
+{
+    SparkElectricalComponent component = discovered[i];
+
+    if (component == null)
+        continue;
+
+    Debug.Log(
+        $"[COMPONENT DISCOVERY ITEM] " +
+        $"Type={component.GetType().FullName} | " +
+        $"Name={component.name} | " +
+        $"InstanceID={component.GetInstanceID()} | " +
+        $"Path={GetHierarchyPath(component.transform)}",
+        component);
+}
+
             if (discovered == null)
             {
                 discovered =
@@ -882,6 +968,23 @@ public void MarkDirty()
 
             return true;
         }
+
+        private static string GetHierarchyPath(Transform target)
+{
+    if (target == null)
+        return "<null>";
+
+    string path = target.name;
+    Transform parent = target.parent;
+
+    while (parent != null)
+    {
+        path = parent.name + "/" + path;
+        parent = parent.parent;
+    }
+
+    return path;
+}
 
         /// <summary>
         /// Compares component arrays by object reference.
@@ -1047,7 +1150,9 @@ public void MarkDirty()
                 SparkCircuitConnection connection =
                     connectionBuffer[i];
 
-                if (!connection.IsValid)
+                // A disabled or destroyed owner cannot electrically bridge nodes.
+                // Keep the authored connection record for reactivation.
+                if (!IsConnectionOwnerActive(connection))
                     continue;
 
                 connections.Add(
@@ -1342,7 +1447,7 @@ for (int j = 0; j < electricalComponents.Length; j++)
         // DEVICE STATE APPLICATION
         // ---------------------------------------------------------------------
 
-       private void ApplyAllDeviceStates(
+    /*   private void ApplyAllDeviceStates(
     SparkElectricalSolveResult result)
 {
     if (electricalComponents == null)
@@ -1374,7 +1479,84 @@ for (int j = 0; j < electricalComponents.Length; j++)
             component,
             result);
     }
+}*/
+
+
+private void ApplyAllDeviceStates(
+    SparkElectricalSolveResult result)
+{
+    if (electricalComponents == null)
+    {
+        Debug.LogWarning(
+            "[WIRE APPLY TRACE] electricalComponents is null.",
+            this);
+        return;
+    }
+
+    Debug.Log(
+        $"[WIRE APPLY TRACE] Begin | " +
+        $"ComponentCount={electricalComponents.Length}",
+        this);
+
+    for (int i = 0; i < electricalComponents.Length; i++)
+    {
+        SparkElectricalComponent component =
+            electricalComponents[i];
+
+        if (component == null)
+            continue;
+
+        bool isWire = component is SparkSingleWire;
+
+        if (isWire)
+        {
+            Debug.Log(
+                $"[WIRE APPLY TRACE] Found wire | " +
+                $"Name={component.name} | " +
+                $"InstanceID={component.GetInstanceID()} | " +
+                $"Enabled={component.ElectricalEnabled}",
+                component);
+        }
+
+        if (ShouldIgnoreComponent(component))
+        {
+            if (isWire)
+                Debug.LogWarning(
+                    $"[WIRE APPLY TRACE] Wire ignored: {component.name}",
+                    component);
+
+            continue;
+        }
+
+        if (!TryGetSolverDefinition(
+                component,
+                out SparkElectricalSolverDefinition definition))
+        {
+            if (isWire)
+                Debug.LogWarning(
+                    $"[WIRE APPLY TRACE] No solver definition: {component.name}",
+                    component);
+
+            continue;
+        }
+
+        if (isWire)
+        {
+            Debug.Log(
+                $"[WIRE APPLY TRACE] Applying | " +
+                $"Wire={component.name} | " +
+                $"Definition={definition.GetType().Name}",
+                component);
+        }
+
+        definition.ApplySolvedState(
+            component,
+            result);
+    }
+
+    Debug.Log("[WIRE APPLY TRACE] End.", this);
 }
+
         // ---------------------------------------------------------------------
         // TRANSIENT COMMIT
         // ---------------------------------------------------------------------
@@ -2200,5 +2382,6 @@ private void ApplyZeroResult(
             supply);*/
     }
 }
+
     }
 }

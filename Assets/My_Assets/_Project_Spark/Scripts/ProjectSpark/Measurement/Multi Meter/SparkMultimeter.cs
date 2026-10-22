@@ -431,6 +431,7 @@ public void NotifyProbeConnected(
     }
 }
 
+
 public void NotifyProbeDisconnected(
     SparkMultimeterProbe probe,
     SparkTerminal target)
@@ -441,19 +442,35 @@ public void NotifyProbeDisconnected(
     if (probe.ProbeColor ==
         SparkMultimeterProbeColor.Red)
     {
-        RemoveCurrentRedConnection();
-
         currentRedProbe = null;
         currentRedTarget = null;
     }
     else
     {
-        RemoveCurrentBlackConnection();
-
         currentBlackProbe = null;
         currentBlackTarget = null;
     }
+
+    // Remove both internal meter connections.
+    // A current meter must never retain a partial path.
+    RemoveCurrentMeasurementConnections();
+
+    // Explicitly disable the internal shunt.
+    SetCurrentShuntActive(false);
+
+    // If the other probe remains connected and we are
+    // still in current mode, rebuilding will wait until
+    // both valid circuit targets are available.
+    if (IsCurrentMeasurementActive &&
+        currentRedTarget != null &&
+        currentBlackTarget != null)
+    {
+        RebuildCurrentMeasurementPath();
+    }
+
+    ResetStability();
 }
+
 
 
 // ============================================================
@@ -557,16 +574,27 @@ private void RebuildCurrentMeasurementPath()
     // Activate the shunt and synchronize its measurement flag.
     SetCurrentShuntActive(true);
 
-    Debug.Log(
-        $"[MULTIMETER] CURRENT PATH ACTIVE -> " +
-        $"{currentRedTarget.name} -> METER -> " +
-        $"{currentBlackTarget.name}",
-        this);
+    
+Debug.Log(
+    $"[MULTIMETER] CURRENT PATH ACTIVE | " +
+    $"RED={currentRedTarget.name} " +
+    $"Owner={currentRedTarget.Owner?.name} " +
+    $"ID={currentRedTarget.GetInstanceID()} | " +
+    $"BLACK={currentBlackTarget.name} " +
+    $"Owner={currentBlackTarget.Owner?.name} " +
+    $"ID={currentBlackTarget.GetInstanceID()}",
+    this);
+
 }
+
 
 
 private void RemoveCurrentMeasurementConnections()
 {
+    // Disable the shunt before modifying the circuit.
+    // This prevents a partial meter path from remaining active.
+    SetCurrentShuntActive(false);
+
     if (circuit != null)
     {
         if (currentRedConnectionId != 0UL)
@@ -587,10 +615,7 @@ private void RemoveCurrentMeasurementConnections()
     currentRedConnectionId = 0UL;
     currentBlackConnectionId = 0UL;
 
-    if (electricalComponent != null)
-    {
-        electricalComponent.SetElectricalEnabled(false);
-    }
+    ResetStability();
 }
 
 private void RemoveCurrentRedConnection()
@@ -605,11 +630,8 @@ private void RemoveCurrentRedConnection()
 
     currentRedConnectionId = 0UL;
 
-    if (currentBlackTarget == null &&
-        electricalComponent != null)
-    {
-        electricalComponent.SetElectricalEnabled(false);
-    }
+    // An ammeter must have both sides connected.
+    SetCurrentShuntActive(false);
 }
 
 private void RemoveCurrentBlackConnection()
@@ -624,11 +646,8 @@ private void RemoveCurrentBlackConnection()
 
     currentBlackConnectionId = 0UL;
 
-    if (currentRedTarget == null &&
-        electricalComponent != null)
-    {
-        electricalComponent.SetElectricalEnabled(false);
-    }
+    // An ammeter must have both sides connected.
+    SetCurrentShuntActive(false);
 }
 
 private void ReconfigureCurrentMeasurementMode()
@@ -1137,6 +1156,17 @@ private void MeasureCurrent()
 {
     if (electricalComponent == null)
     {
+        
+    if (!IsCurrentMeasurementActive ||
+        !electricalComponent.ElectricalEnabled ||
+        !electricalComponent.CurrentMeasurementEnabled)
+    {
+        SetInvalid(
+            SparkMultimeterDisplayState.Open,
+            "---");
+
+        return;
+    }
         Debug.LogError(
             "[MULTIMETER] Missing SparkMultimeterElectricalComponent.",
             this);

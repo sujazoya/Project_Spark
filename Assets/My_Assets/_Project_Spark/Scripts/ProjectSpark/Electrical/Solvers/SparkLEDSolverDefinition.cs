@@ -49,6 +49,7 @@ namespace ProjectSpark.Electrical
         }
 
        
+
 public override void Stamp(
     SparkElectricalComponent component,
     SparkElectricalSolveContext context)
@@ -82,15 +83,12 @@ public override void Stamp(
         return;
     }
 
-    float anodeVoltage =
-        context.GetIterationNodeVoltage(anodeNode);
-
-    float cathodeVoltage =
+    float ledVoltage =
+        context.GetIterationNodeVoltage(anodeNode) -
         context.GetIterationNodeVoltage(cathodeNode);
 
-    float ledVoltage = anodeVoltage - cathodeVoltage;
-
-    bool wasConducting = context.GetNonlinearState(led);
+    bool wasConducting =
+        context.GetNonlinearState(led);
 
     float conductionThreshold = led.ForwardVoltage;
 
@@ -101,37 +99,30 @@ public override void Stamp(
             led.ConductionHysteresis);
     }
 
-    bool conducting = ledVoltage >= conductionThreshold;
+    bool conducting =
+        ledVoltage >= conductionThreshold;
 
-    context.SetNonlinearState(led, conducting);
-if (!conducting)
-    return;
+    context.SetNonlinearState(
+        led,
+        conducting);
 
-float resistance = Mathf.Max(
-    minimumResistance,
-    led.OnResistance);
+    if (!conducting)
+        return;
 
-// AddForwardDrop maps terminal graph nodes correctly,
-// stamps conductance once, and adds the forward-drop source.
-context.AddForwardDrop(
-    anodeTerminal,
-    cathodeTerminal,
-    led.ForwardVoltage,
-    resistance);
+    float resistance = Mathf.Max(
+        minimumResistance,
+        led.OnResistance);
 
-  /*  double conductance = 1.0 / resistance;
-
-    /*context.AddConductance(
-        anodeNode,
-        cathodeNode,
-        conductance);*/
-
+    // Stamp the LED exactly once.
+    // AddForwardDrop handles both conductance
+    // and the forward-voltage equivalent source.
     context.AddForwardDrop(
         anodeTerminal,
         cathodeTerminal,
         led.ForwardVoltage,
         resistance);
 }
+
 
 
       public override void ApplySolvedState(

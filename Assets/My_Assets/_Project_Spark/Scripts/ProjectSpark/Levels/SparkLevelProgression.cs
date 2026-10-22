@@ -472,13 +472,13 @@ public event Action ProgressChanged;
                         currentCount,
                         data.levels.Length);
 
-                if (progress == null ||
-                    progress.Length != currentCount)
-                {
-                    progress =
-                        new LevelProgressData[
-                            currentCount];
-                }
+               
+            if (progress == null ||
+                progress.Length != currentCount)
+            {
+                Initialize();
+            }
+
 
                 for (int i = 0; i < count; i++)
                 {
@@ -507,11 +507,15 @@ public event Action ProgressChanged;
             Log("Progress save deleted.");
         }
 
+       
         private void SaveIfEnabled()
         {
             if (saveProgress)
                 Save();
+
+            ProgressChanged?.Invoke();
         }
+
 
         // ============================================================
         // HELPERS
