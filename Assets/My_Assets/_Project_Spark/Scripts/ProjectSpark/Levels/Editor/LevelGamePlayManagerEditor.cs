@@ -31,51 +31,75 @@ namespace ProjectSpark.Gameplay.Editor
 
         private bool[] levelFoldouts;
 
-        private void OnEnable()
-        {
-            circuitSystem =
-                serializedObject.FindProperty("circuitSystem");
+       
+private bool HasValidTarget()
+{
+    if (targets == null || targets.Length == 0)
+        return false;
 
-            electricalSolver =
-                serializedObject.FindProperty("electricalSolver");
+    foreach (UnityEngine.Object obj in targets)
+    {
+        if (obj == null)
+            return false;
+    }
 
-            levels =
-                serializedObject.FindProperty("levels");
+    return true;
+}
 
-            activeLevelIndex =
-                serializedObject.FindProperty("activeLevelIndex");
+private void OnEnable()
+{
+    // Avoid creating a SerializedObject for a destroyed
+    // or missing Inspector target.
+    if (!HasValidTarget())
+        return;
 
-            runtimeState =
-                serializedObject.FindProperty("runtimeState");
+    SerializedObject so = serializedObject;
 
-            autoStartFirstLevel =
-                serializedObject.FindProperty("autoStartFirstLevel");
+    circuitSystem =
+        so.FindProperty("circuitSystem");
 
-            autoEvaluate =
-                serializedObject.FindProperty("autoEvaluate");
+    electricalSolver =
+        so.FindProperty("electricalSolver");
 
-            autoAdvanceOnCompletion =
-                serializedObject.FindProperty(
-                    "autoAdvanceOnCompletion");
+    levels =
+        so.FindProperty("levels");
 
-            preventInteractionAfterCompletion =
-                serializedObject.FindProperty(
-                    "preventInteractionAfterCompletion");
+    activeLevelIndex =
+        so.FindProperty("activeLevelIndex");
 
-            debugLogging =
-                serializedObject.FindProperty("debugLogging");
+    runtimeState =
+        so.FindProperty("runtimeState");
 
-            verboseLogging =
-                serializedObject.FindProperty("verboseLogging");
+    autoStartFirstLevel =
+        so.FindProperty("autoStartFirstLevel");
 
-            showRuntimeState =
-                serializedObject.FindProperty("showRuntimeState");
+    autoEvaluate =
+        so.FindProperty("autoEvaluate");
 
-            SyncFoldouts();
-        }
+    autoAdvanceOnCompletion =
+        so.FindProperty("autoAdvanceOnCompletion");
+
+    preventInteractionAfterCompletion =
+        so.FindProperty(
+            "preventInteractionAfterCompletion");
+
+    debugLogging =
+        so.FindProperty("debugLogging");
+
+    verboseLogging =
+        so.FindProperty("verboseLogging");
+
+    showRuntimeState =
+        so.FindProperty("showRuntimeState");
+
+    SyncFoldouts();
+}
+
 
         public override void OnInspectorGUI()
         {
+            if (!HasValidTarget())
+        return;
             serializedObject.Update();
 
             SyncFoldouts();

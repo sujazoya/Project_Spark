@@ -354,43 +354,33 @@ namespace AAAUI.VFX
         /// Creates a new signal wire.
         /// Existing wires remain untouched.
         /// </summary>
-        public SignalPathMesh CreateNextWire(
-            WirePolarity polarity)
-        {
-            currentIndex++;
+       
+public SignalPathMesh CreateNextWire(WirePolarity polarity)
+{
+    currentIndex++;
 
-            SignalPathMesh newMesh =
-                CreateWireMesh(currentIndex);
+    SignalPathMesh newMesh =
+        CreateWireMesh(currentIndex);
 
-            SignalPath newPath =
-                newMesh.GetComponent<SignalPath>();
+    SignalPath newPath =
+        newMesh.GetComponent<SignalPath>();
 
-            if (newPath == null)
-            {
-                newPath =
-                    newMesh.gameObject.AddComponent<SignalPath>();
-            }
+    if (newPath == null)
+        newPath = newMesh.gameObject.AddComponent<SignalPath>();
 
-            newMesh.SetPath(newPath);
+    newMesh.SetPath(newPath);
+    newMesh.SetMaterial(GetMaterial(polarity));
 
-            newMesh.SetMaterial(
-                GetMaterial(polarity));
+    int count = paths.Length;
+    Array.Resize(ref paths, count + 1);
+    paths[count] = newPath;
 
-            Array.Resize(
-                ref paths,
-                currentIndex + 1);
+    currentPath = newPath;
+    currentMesh = newMesh;
 
-            paths[currentIndex] =
-                newPath;
+    return newMesh;
+}
 
-            currentPath =
-                newPath;
-
-            currentMesh =
-                newMesh;
-
-            return newMesh;
-        }
 
         private SignalPathMesh CreateWireMesh(
             int index)
@@ -573,6 +563,40 @@ namespace AAAUI.VFX
         {
             UnsubscribeAllTerminals();
         }
+
+        
+
+        public bool RemovePath(SignalPath path)
+        {
+            if (path == null)
+                return false;
+
+            int index = Array.IndexOf(paths, path);
+
+            if (index < 0)
+                return false;
+
+            UnbindElectricalConnection(path);
+
+            List<SignalPath> updated =
+                new List<SignalPath>(paths);
+
+            updated.RemoveAt(index);
+            paths = updated.ToArray();
+
+            if (currentPath == path)
+            {
+                currentPath = null;
+                currentMesh = null;
+            }
+
+            path.gameObject.SetActive(false);
+            Destroy(path.gameObject);
+
+            return true; 
+                }
+
+
 
         #endregion
     }

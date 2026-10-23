@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+using ProjectSpark.Circuit;
+using ProjectSpark.Electrical;
 
 namespace ProjectSpark.Gameplay.Editor
 {
@@ -152,6 +154,52 @@ namespace ProjectSpark.Gameplay.Editor
         {
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
+            
+EditorGUILayout.LabelField(
+    "Automatic Child Bindings",
+    EditorStyles.boldLabel);
+
+if (GUILayout.Button(
+        "AUTO FETCH ALL CHILD COMPONENTS",
+        GUILayout.Height(32f)))
+{
+    AutoFetchAllChildren();
+}
+
+EditorGUILayout.BeginHorizontal();
+
+if (GUILayout.Button(
+        "Fetch Terminals",
+        GUILayout.Height(ButtonHeight)))
+{
+    AutoFetchTerminals();
+}
+
+if (GUILayout.Button(
+        "Fetch Electrical Components",
+        GUILayout.Height(ButtonHeight)))
+{
+    AutoFetchComponents();
+}
+
+EditorGUILayout.EndHorizontal();
+
+if (GUILayout.Button(
+        "Fetch Electronic Objects",
+        GUILayout.Height(ButtonHeight)))
+{
+    AutoFetchElectronicObjects();
+}
+
+EditorGUILayout.HelpBox(
+    "Searches this GameObject and all children, including " +
+    "inactive objects. Existing IDs are preserved. " +
+    "Missing references are added automatically.",
+    MessageType.Info);
+
+EditorGUILayout.Space(8f);
+
+
             EditorGUILayout.BeginHorizontal();
 
             GUILayout.Label(
@@ -181,7 +229,219 @@ namespace ProjectSpark.Gameplay.Editor
                 EditorStyles.miniLabel);
 
             EditorGUILayout.EndVertical();
+        
         }
+
+        
+        // ============================================================
+        // AUTO FETCH CHILD COMPONENTS
+        // ============================================================
+
+        private void AutoFetchAllChildren()
+        {
+            SparkLevelSceneBindings bindings =
+                (SparkLevelSceneBindings)target;
+
+            int terminals = FetchChildren(
+                terminalsProperty,
+                "terminal",
+                bindings.GetComponentsInChildren<
+                    SparkTerminal>(true),
+                TerminalPrefix);
+
+            int components = FetchChildren(
+                componentsProperty,
+                "component",
+                bindings.GetComponentsInChildren<
+                    SparkElectricalComponent>(true),
+                ComponentPrefix);
+
+            int electronicObjects = FetchChildren(
+                electronicObjectsProperty,
+                "electronicObject",
+                bindings.GetComponentsInChildren<
+                    SparkElectronicObject>(true),
+                ElectronicObjectPrefix);
+
+            FinishAutoFetch();
+
+            Debug.Log(
+                "[SparkLevelSceneBindings] Auto Fetch complete. " +
+                $"Added {terminals} terminals, " +
+                $"{components} electrical components, " +
+                $"{electronicObjects} electronic objects.",
+                bindings);
+        }
+
+        private void AutoFetchTerminals()
+        {
+            SparkLevelSceneBindings bindings =
+                (SparkLevelSceneBindings)target;
+
+            int count = FetchChildren(
+                terminalsProperty,
+                "terminal",
+                bindings.GetComponentsInChildren<
+                    SparkTerminal>(true),
+                TerminalPrefix);
+
+            FinishAutoFetch();
+
+            Debug.Log(
+                $"[SparkLevelSceneBindings] " +
+                $"Added {count} terminal bindings.",
+                bindings);
+        }
+
+        private void AutoFetchComponents()
+        {
+            SparkLevelSceneBindings bindings =
+                (SparkLevelSceneBindings)target;
+
+            int count = FetchChildren(
+                componentsProperty,
+                "component",
+                bindings.GetComponentsInChildren<
+                    SparkElectricalComponent>(true),
+                ComponentPrefix);
+
+            FinishAutoFetch();
+
+            Debug.Log(
+                $"[SparkLevelSceneBindings] " +
+                $"Added {count} electrical component bindings.",
+                bindings);
+        }
+
+        private void AutoFetchElectronicObjects()
+        {
+            SparkLevelSceneBindings bindings =
+                (SparkLevelSceneBindings)target;
+
+            int count = FetchChildren(
+                electronicObjectsProperty,
+                "electronicObject",
+                bindings.GetComponentsInChildren<
+                    SparkElectronicObject>(true),
+                ElectronicObjectPrefix);
+
+            FinishAutoFetch();
+
+            Debug.Log(
+                $"[SparkLevelSceneBindings] " +
+                $"Added {count} electronic object bindings.",
+                bindings);
+        }
+
+        // ============================================================
+        // GENERIC AUTO FETCH
+        // ============================================================
+
+        private int FetchChildren<T>(
+            SerializedProperty array,
+            string referenceField,
+            T[] discovered,
+            string prefix)
+            where T : Component
+        {
+            serializedObject.Update();
+
+            HashSet<UnityEngine.Object> existingReferences =
+                new HashSet<UnityEngine.Object>();
+
+            HashSet<string> usedIds =
+                CollectIds(array);
+
+            // Keep all existing bindings and IDs unchanged.
+            for (int i = 0; i < array.arraySize; i++)
+            {
+                SerializedProperty element =
+                    array.GetArrayElementAtIndex(i);
+
+                SerializedProperty reference =
+                    element.FindPropertyRelative(
+                        referenceField);
+
+                if (reference != null &&
+                    reference.objectReferenceValue != null)
+                {
+                    existingReferences.Add(
+                        reference.objectReferenceValue);
+                }
+            }
+
+            int added = 0;
+
+            foreach (T component in discovered)
+            {
+                if (component == null)
+                    continue;
+
+                if (existingReferences.Contains(component))
+                    continue;
+
+                string baseId =
+                    SanitizeId(component.gameObject.name);
+
+                if (string.IsNullOrWhiteSpace(baseId))
+                    baseId = prefix;
+
+                string uniqueId = baseId;
+                int suffix = 2;
+
+                while (usedIds.Contains(uniqueId))
+                {
+                    uniqueId =
+                        $"{baseId}_{suffix:00}";
+
+                    suffix++;
+                }
+
+                int index = array.arraySize;
+
+                array.InsertArrayElementAtIndex(index);
+
+                SerializedProperty element =
+                    array.GetArrayElementAtIndex(index);
+
+                SerializedProperty id =
+                    element.FindPropertyRelative("id");
+
+                SerializedProperty reference =
+                    element.FindPropertyRelative(
+                        referenceField);
+
+                id.stringValue = uniqueId;
+
+                reference.objectReferenceValue =
+                    component;
+
+                usedIds.Add(uniqueId);
+                existingReferences.Add(component);
+
+                added++;
+            }
+
+            serializedObject.ApplyModifiedProperties();
+
+            return added;
+        }
+
+        // ============================================================
+        // FINISH AUTO FETCH
+        // ============================================================
+
+        private void FinishAutoFetch()
+        {
+            serializedObject.Update();
+
+            EditorUtility.SetDirty(target);
+
+            validationPerformed = false;
+
+            Repaint();
+        }
+
 
         // ============================================================
         // OVERVIEW

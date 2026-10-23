@@ -205,6 +205,145 @@ public bool ExternalInputControl
         CancelWire();
 }
 
+
+
+#region Wire Completion
+
+/// <summary>
+/// Ends construction using the current mouse position.
+/// Used by standalone mouse input.
+/// </summary>
+public void EndWire()
+{
+    TryEndWire((Vector2)Input.mousePosition);
+}
+
+/// <summary>
+/// Ends construction using a supplied screen position.
+/// Preserves compatibility with existing tool callers.
+/// </summary>
+public void EndWire(Vector2 screenPosition)
+{
+    TryEndWire(screenPosition);
+}
+
+/// <summary>
+/// Attempts to create a real electrical connection.
+/// Returns true only when SparkCircuitSystem
+/// successfully registers the connection.
+/// </summary>
+
+public bool TryEndWire(Vector2 screenPosition)
+{
+    if (!drawing)
+        return false;
+
+    // Find the destination terminal.
+    SparkTerminal endTerminal =
+        FindTerminalAtScreenPosition(screenPosition);
+
+    bool connected = false;
+
+    // Register the actual electrical connection.
+    if (startTerminal != null && endTerminal != null)
+    {
+        connected = TryCommitElectricalConnection(
+            startTerminal,
+            endTerminal);
+    }
+
+    if (connected)
+    {
+        // -------------------------------------------------
+        // COMMIT FINAL CABLE ENDPOINT
+        // -------------------------------------------------
+
+        if (currentPath != null)
+        {
+            // Remove the temporary mouse preview.
+            currentPath.ClearPreview();
+
+            // Extend the physical cable to the exact
+            // destination terminal attachment position.
+            currentPath.AddPoint(
+                endTerminal.transform.position);
+
+            // Rebuild the completed 3D cable geometry.
+            Rebuild();
+        }
+
+        if (logWireOperations)
+        {
+            Debug.Log(
+                $"[WIRE] CONNECTED: " +
+                $"{startTerminal.name} ↔ {endTerminal.name}",
+                this);
+        }
+
+        // Preserve the completed visual cable.
+        CompleteVisualWire();
+    }
+    else
+    {
+        if (logWireOperations)
+        {
+            Debug.LogWarning(
+                "[WIRE] Connection rejected. " +
+                "Removing unfinished visual cable.",
+                this);
+        }
+
+        // Remove the uncommitted cable preview.
+        DiscardVisualWire();
+    }
+
+    return connected;
+}
+
+private void CompleteVisualWire()
+{
+    if (currentPath != null)
+    {
+        currentPath.ClearPreview();
+    }
+
+    Rebuild();
+    ResetWireState();
+}
+
+private void DiscardVisualWire()
+{
+    SignalPath rejectedPath = currentPath;
+
+    if (pathManager != null && rejectedPath != null)
+    {
+        pathManager.RemovePath(rejectedPath);
+    }
+
+    ResetWireState();
+}
+
+private void ResetWireState()
+{
+    drawing = false;
+
+    if (pathManager != null)
+    {
+        pathManager.FinishCurrentPath();
+    }
+
+    currentPath = null;
+    startTerminal = null;
+
+    lastColumn = -1;
+    lastRow = -1;
+
+    currentEnd = Vector3.zero;
+}
+
+#endregion
+
+
         // ============================================================
         // VALIDATION
         // ============================================================
@@ -431,35 +570,26 @@ public bool ExternalInputControl
         // POLARITY
         // ============================================================
 
-        private WirePolarity DeterminePolarity(
-            SparkTerminal terminal)
-        {
-            if (terminal == null)
-                return WirePolarity.Positive;
+       
+private WirePolarity DeterminePolarity(
+    SparkTerminal terminal)
+{
+    if (terminal == null)
+        return WirePolarity.Neutral;
 
-            SparkElectricalComponent component =
-                terminal.GetComponentInParent<SparkElectricalComponent>();
-
-            if (component is SparkPowerSupply supply)
-            {
-                SparkTerminal[] terminals =
-                    component.GetComponentsInChildren<SparkTerminal>(true);
-
-                if (terminals.Length > 0 &&
-                    terminals[0] == terminal)
-                {
-                    return WirePolarity.Positive;
-                }
-
-                if (terminals.Length > 1 &&
-                    terminals[1] == terminal)
-                {
-                    return WirePolarity.Negative;
-                }
-            }
-
+    switch (terminal.EffectivePolarity)
+    {
+        case SparkTerminalPolarity.Positive:
             return WirePolarity.Positive;
-        }
+
+        case SparkTerminalPolarity.Negative:
+            return WirePolarity.Negative;
+
+        default:
+            return WirePolarity.Neutral;
+    }
+}
+
 
         // ============================================================
         // DRAGGING
@@ -505,182 +635,42 @@ public bool ExternalInputControl
         // UPDATE WIRE
         // ============================================================
 
-        public void UpdateWire(
-            Vector3 worldPosition)
-        {
-            if (!drawing)
-                return;
+       
+public void UpdateWire(Vector3 worldPosition)
+{
+    if (!drawing || currentPath == null)
+        return;
 
-            if (currentPath == null)
-                return;
+    currentEnd = worldPosition;
 
-            currentEnd = worldPosition;
+    // Snap the preview endpoint when close to a hole.
+    // Do not permanently add every visited hole.
+    if (breadboard != null &&
+        breadboard.TryGetNearestHole(
+            worldPosition,
+            snapDistance,
+            out Vector3 hole,
+            out int column,
+            out int row))
+    {
+        currentEnd = hole;
+        lastColumn = column;
+        lastRow = row;
+    }
 
-            if (breadboard.TryGetNearestHole(
-                    worldPosition,
-                    snapDistance,
-                    out Vector3 hole,
-                    out int column,
-                    out int row))
-            {
-                currentEnd = hole;
+    // Only update the temporary endpoint.
+    currentPath.SetPreviewPoint(currentEnd);
 
-                currentPath.SetPreviewPoint(hole);
+    Rebuild();
+}
 
-                if (column != lastColumn ||
-                    row != lastRow)
-                {
-                    currentPath.AddPoint(hole);
-
-                    lastColumn = column;
-                    lastRow = row;
-                }
-            }
-            else
-            {
-                currentPath.SetPreviewPoint(
-                    worldPosition);
-            }
-
-            Rebuild();
-        }
+       
 
         // ============================================================
         // FINISH
         // ============================================================
 
-        public void EndWire(){
-        if (!drawing)
-        return;
 
-    if (logWireOperations)
-    {
-        Debug.Log(
-            "[WIRE] RELEASE",
-            this);
-    }
-
-    SparkTerminal endTerminal =
-        FindTerminalAtScreenPosition(
-            Input.mousePosition);
-
-    if (endTerminal == null)
-    {
-        Debug.LogWarning(
-            "[WIRE] END TERMINAL = NULL\n" +
-            "No SparkTerminal was detected under the mouse.",
-            this);
-
-        FinishVisualWireOnly();
-        return;
-    }
-
-    if (logWireOperations)
-    {
-        Debug.Log(
-            $"[WIRE] END = {endTerminal.name} | " +
-            $"Kind = {endTerminal.Kind}",
-            endTerminal);
-    }
-
-    if (startTerminal == null)
-    {
-        Debug.LogWarning(
-            "[WIRE] CONNECTION NOT CREATED: " +
-            "Start terminal is NULL.",
-            this);
-
-        FinishVisualWireOnly();
-        return;
-    }
-
-    bool connected =
-        TryCommitElectricalConnection(
-            startTerminal,
-            endTerminal);
-
-    if (connected)
-    {
-        Debug.Log(
-            $"[WIRE] TOPOLOGY SUCCESS: " +
-            $"{startTerminal.name} ↔ {endTerminal.name}",
-            this);
-    }
-    else
-    {
-        Debug.LogWarning(
-            $"[WIRE] TOPOLOGY FAILED: " +
-            $"{startTerminal.name} ↔ {endTerminal.name}",
-            this);
-    }
-
-    FinishVisualWireOnly();
-}
-
-
-public void EndWire(Vector2 screenPosition)
-{
-    if (!drawing)
-        return;
-
-    //if (logWireOperations)
-    //{
-        Debug.Log(
-            $"[WIRE] RELEASE | Screen={screenPosition}",
-            this);
-   // }
-
-    SparkTerminal endTerminal =
-        FindTerminalAtScreenPosition(screenPosition);
-
-    if (endTerminal == null)
-    {
-        Debug.LogWarning(
-            "[WIRE] END TERMINAL = NULL\n" +
-            $"Screen Position = {screenPosition}",
-            this);
-
-        FinishVisualWireOnly();
-        return;
-    }
-
-    Debug.Log(
-        $"[WIRE] END = {endTerminal.name} | " +
-        $"Kind = {endTerminal.Kind}",
-        endTerminal);
-
-    if (startTerminal == null)
-    {
-        Debug.LogWarning(
-            "[WIRE] CONNECTION FAILED: Start terminal is NULL.",
-            this);
-
-        FinishVisualWireOnly();
-        return;
-    }
-
-    bool connected =
-        TryCommitElectricalConnection(
-            startTerminal,
-            endTerminal);
-
-    if (connected)
-    {
-        Debug.Log(
-            $"[WIRE] TOPOLOGY SUCCESS: " +
-            $"{startTerminal.name} ↔ {endTerminal.name}",
-            this);
-    }
-    else
-    {
-        Debug.LogWarning(
-            $"[WIRE] TOPOLOGY FAILED: " +
-            $"{startTerminal.name} ↔ {endTerminal.name}",
-            this);
-    }
-
-    FinishVisualWireOnly();
-}
 private bool TryCommitElectricalConnection(
     SparkTerminal start,
     SparkTerminal end)
@@ -1116,38 +1106,19 @@ private SparkTerminal FindTerminalAtScreenPosition(
         // CANCEL
         // ============================================================
 
-        public void CancelWire()
-        {
-            if (!drawing)
-                return;
+       
+public void CancelWire()
+{
+    if (!drawing)
+        return;
 
-            if (logWireOperations)
-                Debug.Log(
-                    "[WIRE] CANCEL",
-                    this);
+    if (logWireOperations)
+    {
+        Debug.Log("[WIRE] CANCEL", this);
+    }
 
-            drawing = false;
-
-            if (currentPath != null)
-            {
-                currentPath.ClearPreview();
-            }
-
-            Rebuild();
-
-            if (pathManager != null)
-            {
-                pathManager.FinishCurrentPath();
-            }
-
-            currentPath = null;
-            startTerminal = null;
-
-            lastColumn = -1;
-            lastRow = -1;
-
-            currentEnd = Vector3.zero;
-        }
+    DiscardVisualWire();
+}
 
         // ============================================================
         // MESH

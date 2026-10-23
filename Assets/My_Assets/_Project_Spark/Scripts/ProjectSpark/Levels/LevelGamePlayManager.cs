@@ -79,6 +79,10 @@ namespace ProjectSpark.Gameplay
         [SerializeField]
         private int activeLevelIndex;
 
+        [Header("Level Layout Loading")]
+        [SerializeField]
+        private SparkLevelLayoutLoader layoutLoader;
+
         // ============================================================
         // RUNTIME SETTINGS
         // ============================================================
@@ -363,23 +367,16 @@ namespace ProjectSpark.Gameplay
 
             EnsureEvaluator();
 
-            if (evaluator == null)
+           
+            if (!PrepareLevelLayout(level))
             {
                 Log(
                     $"Cannot start level {index}: " +
-                    "level evaluator is unavailable.");
+                    "level layout could not be prepared.");
 
                 return false;
             }
 
-            if (sceneBindings == null)
-            {
-                Log(
-                    $"Cannot start level {index}: " +
-                    "SparkLevelSceneBindings is missing.");
-
-                return false;
-            }
 
             activeLevelIndex = index;
 
@@ -1334,7 +1331,51 @@ private void SetOutput(
                         FindFirstObjectByType<SparkLevelProgression>();
                 }
             }
+            if (layoutLoader == null)
+            {
+                layoutLoader =
+                    FindFirstObjectByType<SparkLevelLayoutLoader>();
+            }
         }
+        
+        private bool PrepareLevelLayout(
+            SparkLevelDefinition level)
+        {
+            if (level == null)
+                return false;
+
+            if (layoutLoader == null)
+            {
+                Debug.LogError(
+                    "[LevelGamePlayManager] Level layout loader missing.",
+                    this);
+
+                return false;
+            }
+
+            if (layoutLoader.ActiveLayout == null ||
+                layoutLoader.ActiveLayout.LevelDefinition != level)
+            {
+                if (!layoutLoader.LoadLevel(level))
+                    return false;
+            }
+
+            SparkLevelSceneBindings newBindings =
+                layoutLoader.ActiveBindings;
+
+            if (newBindings == null)
+                return false;
+
+            // Bind the evaluator to the currently loaded prefab.
+            sceneBindings = newBindings;
+
+            evaluator = new SparkLevelEvaluator(
+                circuitSystem,
+                sceneBindings);
+
+            return true;
+        }
+
 
         private void EnsureEvaluator()
         {
