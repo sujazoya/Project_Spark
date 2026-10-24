@@ -342,6 +342,44 @@ public SparkTerminalPolarity EffectivePolarity
                     1,
                     maxConnections);
         }
+        
+public void ResetRuntimeElectricalState()
+{
+    bool electricalChanged =
+        Mathf.Abs(electricalState.Voltage) > 0.000001f ||
+        Mathf.Abs(electricalState.Current) > 0.000001f;
+
+    bool polarityChanged =
+        runtimePolarity != SparkTerminalPolarity.None;
+
+    electricalState =
+        new SparkTerminalElectricalState(0f, 0f);
+
+    runtimePolarity =
+        SparkTerminalPolarity.None;
+
+    if (electricalChanged || polarityChanged)
+    {
+        ElectricalStateChanged?.Invoke(this);
+    }
+}
+
+public SparkTerminalPolarity VisualElectricalPolarity
+{
+    get
+    {
+        SparkTerminalPolarity solved = SolvedPolarity;
+
+        if (solved != SparkTerminalPolarity.None)
+            return solved;
+
+        if (electricalState.IsPowered)
+            return SparkTerminalPolarity.None;
+
+        return runtimePolarity;
+    }
+}
+
 
 
         // =========================================================

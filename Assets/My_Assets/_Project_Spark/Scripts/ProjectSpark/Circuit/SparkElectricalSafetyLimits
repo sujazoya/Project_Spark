@@ -1,0 +1,63 @@
+
+using UnityEngine;
+
+namespace ProjectSpark.Electrical
+{
+    [DisallowMultipleComponent]
+    public sealed class SparkElectricalSafetyLimits : MonoBehaviour
+    {
+        [Header("Current Protection")]
+        [SerializeField]
+        private bool enableOvercurrentDetection = true;
+
+        [SerializeField, Min(0.001f)]
+        private float maximumSafeCurrent = 2f;
+
+        [SerializeField, Range(0f, 1f)]
+        private float resetHysteresis = 0.1f;
+
+        [Header("Runtime")]
+        [SerializeField]
+        private bool overcurrentActive;
+
+        public bool OvercurrentActive => overcurrentActive;
+
+        public bool EvaluateCurrent(float current)
+        {
+            if (!enableOvercurrentDetection)
+            {
+                overcurrentActive = false;
+                return false;
+            }
+
+            float magnitude = Mathf.Abs(current);
+
+            if (overcurrentActive)
+            {
+                float resetThreshold =
+                    maximumSafeCurrent *
+                    (1f - resetHysteresis);
+
+                if (magnitude < resetThreshold)
+                    overcurrentActive = false;
+            }
+            else if (magnitude > maximumSafeCurrent)
+            {
+                overcurrentActive = true;
+            }
+
+            return overcurrentActive;
+        }
+
+        public void ResetFault()
+        {
+            overcurrentActive = false;
+        }
+
+        private void OnValidate()
+        {
+            maximumSafeCurrent =
+                Mathf.Max(0.001f, maximumSafeCurrent);
+        }
+    }
+}

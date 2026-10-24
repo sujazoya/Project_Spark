@@ -90,7 +90,9 @@ namespace ProjectSpark.Electrical
             latestSolveResult;
 
 
-
+        private readonly HashSet<SparkTerminal>
+            previouslySolvedTerminals =
+                new HashSet<SparkTerminal>();
 
         // ---------------------------------------------------------------------
         // SOLVER SETTINGS
@@ -263,7 +265,19 @@ private void OnDisable()
 private void HandleCircuitTopologyChanged()
 {
     MarkTopologyDirty();
+
+    if (!isActiveAndEnabled)
+        return;
+
+    if (solving)
+    {
+        solveRequestedDuringSolve = true;
+        return;
+    }
+
+    SolveNow();
 }
+
 
 
 private void HandleElectricalConfigurationChanged()
@@ -338,6 +352,44 @@ private void RebindElectricalComponentEvents()
         this);*/
 }
 
+private void ClearTerminalsMissingFromGraph()
+{
+    HashSet<SparkTerminal> currentTerminals =
+        new HashSet<SparkTerminal>();
+
+    if (currentGraph != null &&
+        currentGraph.TerminalNode != null)
+    {
+        foreach (SparkTerminal terminal
+            in currentGraph.TerminalNode.Keys)
+        {
+            if (terminal != null)
+                currentTerminals.Add(terminal);
+        }
+    }
+
+    foreach (SparkTerminal terminal
+        in previouslySolvedTerminals)
+    {
+        if (terminal == null)
+            continue;
+
+        if (currentTerminals.Contains(terminal))
+            continue;
+
+        terminal.ResetRuntimeElectricalState();
+    }
+
+    previouslySolvedTerminals.Clear();
+
+    foreach (SparkTerminal terminal
+        in currentTerminals)
+    {
+        previouslySolvedTerminals.Add(terminal);
+    }
+}
+
+
 private void UnbindElectricalComponentEvents()
 {
     if (subscribedComponents == null)
@@ -378,37 +430,26 @@ public void MarkDirty()
         /// Marks both electrical topology and solver-definition lookup
         /// state as needing refresh.
         /// </summary>
-        public void MarkTopologyDirty()
-        {
-            dirty = true;
+       public void MarkTopologyDirty()
+{
+    dirty = true;
 
-            // Force graph rebuild even if the circuit's own
-            // TopologyVersion did not change.
-            topologyVersion = -1;
+    topologyVersion = -1;
 
-            currentGraph = null;
+    currentGraph = null;
+    latestSolveResult = null;
 
-            if (solverRegistry != null)
-            {
-                solverRegistry.ClearRuntimeCache();
-            }
-        }
+    hasLiveCircuitSignature = false;
+
+    if (solverRegistry != null)
+    {
+        solverRegistry.ClearRuntimeCache();
+    }
+}
 
         // ---------------------------------------------------------------------
         // MAIN SOLVE
-        // ---------------------------------------------------------------------
-
-
-
-        void Update()
-        {
-            if (UnityEngine.InputSystem.Keyboard.current != null &&
-        UnityEngine.InputSystem.Keyboard.current.kKey.wasPressedThisFrame)
-    {
-        SolveNow();
-    }
-            
-        }
+        // ---------------------------------------------------------------------  
 
         private int lastLiveCircuitSignature;
         private bool hasLiveCircuitSignature;
@@ -556,34 +597,33 @@ public void MarkDirty()
                 }
 
                 // Preserve requests made while the solver was running.
-                
-                    bool runFollowUpSolve = solveRequestedDuringSolve;
+            // Do not recursively call SolveNow() here because the
+            // current solve must publish its completion/failure event.
 
-                    if (runFollowUpSolve)
-                    {
-                        solveRequestedDuringSolve = false;
-                        dirty = true;
+            if (solveRequestedDuringSolve)
+            {
+                solveRequestedDuringSolve = false;
 
-                        if (isActiveAndEnabled)
-                        {
-                            return SolveNow();
-                        }
+                // Keep the solver dirty so another solve
+                // can process the pending configuration change.
+                dirty = true;
+            }
 
-                        // Keep the request pending until the solver can run again.
-                        solveRequestedDuringSolve = true;
-                    }
+            if (solved)
+            {
+                Debug.Log(
+                    $"[SPARK SOLVER #{callId}] COMPLETED EVENT.",
+                    this);
 
-
-                if (solved)
-                {
-                    Debug.Log(
-                        $"[SPARK SOLVER #{callId}] COMPLETED EVENT.",
-                        this);
-
-                   InvokeSolveEventSafely(
+                InvokeSolveEventSafely(
                     SolveCompleted,
                     nameof(SolveCompleted));
+
+                if (circuit != null)
+                {
+                    circuit.NotifyElectricalFlowVisualsChanged();
                 }
+            }
                 else
                 {
                     // A failed numerical solve must remain eligible for retry.
@@ -1048,6 +1088,8 @@ for (int i = 0; i < discovered.Length; i++)
                 currentGraph = BuildGraph();
                 topologyVersion = currentVersion;
                 dirty = true;
+
+                ClearTerminalsMissingFromGraph();
             }
 
             if (solveOnDirty && !dirty)
@@ -1086,9 +1128,12 @@ for (int i = 0; i < discovered.Length; i++)
                 {
                     SparkElectricalComponent component =
                         electricalComponents[i];
-
-                    if (component == null)
+                    if (component == null ||
+                        !component.isActiveAndEnabled ||
+                        !component.ElectricalEnabled)
+                    {
                         continue;
+                    }
 
                     SparkTerminal[] found =
                         component.GetComponentsInChildren<
@@ -1302,85 +1347,125 @@ for (int i = 0; i < discovered.Length; i++)
         // ---------------------------------------------------------------------
         // DEFINITION LOOKUP
         // ---------------------------------------------------------------------
-private bool TryGetSolverDefinition(
-    SparkElectricalComponent component,
-    out SparkElectricalSolverDefinition definition)
-{
-    definition = null;
-
-    if (component == null)
-        return false;
-
-    if (solverRegistry == null)
-        return false;
-
-    if (solverRegistry.IsIgnored(component))
-        return false;
-
-    return solverRegistry.TryGetDefinition(
-        component,
-        out definition);
-}
-
-
-private bool ShouldIgnoreComponent(
-    SparkElectricalComponent component)
-{
-    if (component == null)
-        return true;
-
-    if (solverRegistry == null)
-        return false;
-
-    return solverRegistry.IsIgnored(component);
-}
-        // ---------------------------------------------------------------------
-        // TOPOLOGY REGISTRATION
-        // ---------------------------------------------------------------------
-
-        private void RegisterDeviceTopology(
-    SparkElectricalSolveContext context)
-{
-    if (electricalComponents == null)
-        return;
-
-    for (int i = 0;
-         i < electricalComponents.Length;
-         i++)
-    {
-        SparkElectricalComponent component =
-            electricalComponents[i];
-
-        if (component == null ||
-            !component.ElectricalEnabled)
+        private bool TryGetSolverDefinition(
+            SparkElectricalComponent component,
+            out SparkElectricalSolverDefinition definition)
         {
-            continue;
-        }
+            definition = null;
 
-        // Helper / temporary objects are not solver devices.
-        if (ShouldIgnoreComponent(component))
-        {
-            continue;
-        }
+            if (component == null)
+                return false;
 
-        if (!TryGetSolverDefinition(
+            if (solverRegistry == null)
+                return false;
+
+            if (solverRegistry.IsIgnored(component))
+                return false;
+
+            return solverRegistry.TryGetDefinition(
                 component,
-                out SparkElectricalSolverDefinition definition))
-        {
-            Debug.LogError(
-                $"[ELECTRICAL SOLVER] No solver definition " +
-                $"registered for {component.GetType().Name} " +
-                $"on '{component.name}'.",
-                component);
-
-            continue;
+                out definition);
         }
 
-        definition.RegisterTopology(
-            component,
-            context);
-    }
-}
+
+        private bool ShouldIgnoreComponent(
+            SparkElectricalComponent component)
+        {
+            if (component == null)
+                return true;
+
+            if (solverRegistry == null)
+                return false;
+
+            return solverRegistry.IsIgnored(component);
+        }
+                // ---------------------------------------------------------------------
+                // TOPOLOGY REGISTRATION
+                // ---------------------------------------------------------------------
+
+                private void RegisterDeviceTopology(
+            SparkElectricalSolveContext context)
+        {
+            if (electricalComponents == null)
+                return;
+
+            for (int i = 0;
+                i < electricalComponents.Length;
+                i++)
+            {
+                SparkElectricalComponent component =
+                    electricalComponents[i];
+
+                            if (component == null ||
+                    !component.isActiveAndEnabled ||
+                    !component.ElectricalEnabled)
+                {
+                    continue;
+                }
+
+                // Helper / temporary objects are not solver devices.
+                if (ShouldIgnoreComponent(component))
+                {
+                    continue;
+                }
+
+                if (!TryGetSolverDefinition(
+                        component,
+                        out SparkElectricalSolverDefinition definition))
+                {
+                    Debug.LogError(
+                        $"[ELECTRICAL SOLVER] No solver definition " +
+                        $"registered for {component.GetType().Name} " +
+                        $"on '{component.name}'.",
+                        component);
+
+                    continue;
+                }
+
+                definition.RegisterTopology(
+                    component,
+                    context);
+            }
+        }
+
+
+       
+            public void NotifyLevelLayoutChanged()
+            {
+                // Invalidate the previous electrical solution.
+                dirty = true;
+                topologyVersion = -1;
+                currentGraph = null;
+                latestSolveResult = null;
+
+                hasLiveCircuitSignature = false;
+                solveRequestedDuringSolve = false;
+
+                nodeVoltages = Array.Empty<float>();
+                reducedSolution = Array.Empty<double>();
+
+                nonlinearStates.Clear();
+                previousComponentVoltages.Clear();
+
+                // Remove subscriptions to old layout components.
+                UnbindElectricalComponentEvents();
+
+                if (solverRegistry != null)
+                {
+                    solverRegistry.ClearRuntimeCache();
+                }
+
+                // Discover components in the newly loaded layout.
+                RefreshElectricalComponents();
+
+                // Always restore subscriptions, even when the
+                // discovered component list has not changed.
+                if (isActiveAndEnabled)
+                {
+                    RebindElectricalComponentEvents();
+                }
+            }
+
 
         // ---------------------------------------------------------------------
         // DEVICE STAMPING
@@ -1399,11 +1484,12 @@ private bool ShouldIgnoreComponent(
         SparkElectricalComponent component =
             electricalComponents[i];
 
-        if (component == null ||
-            !component.ElectricalEnabled)
-        {
-            continue;
-        }
+       if (component == null ||
+    !component.isActiveAndEnabled ||
+    !component.ElectricalEnabled)
+{
+    continue;
+}
 
         if (ShouldIgnoreComponent(component))
         {
@@ -1442,44 +1528,7 @@ for (int j = 0; j < electricalComponents.Length; j++)
             context);
     }
 }
-
-        // ---------------------------------------------------------------------
-        // DEVICE STATE APPLICATION
-        // ---------------------------------------------------------------------
-
-    /*   private void ApplyAllDeviceStates(
-    SparkElectricalSolveResult result)
-{
-    if (electricalComponents == null)
-        return;
-
-    for (int i = 0;
-         i < electricalComponents.Length;
-         i++)
-    {
-        SparkElectricalComponent component =
-            electricalComponents[i];
-
-        if (component == null)
-            continue;
-
-        if (ShouldIgnoreComponent(component))
-        {
-            continue;
-        }
-
-        if (!TryGetSolverDefinition(
-                component,
-                out SparkElectricalSolverDefinition definition))
-        {
-            continue;
-        }
-
-        definition.ApplySolvedState(
-            component,
-            result);
-    }
-}*/
+        
 
 
 private void ApplyAllDeviceStates(
@@ -1500,11 +1549,15 @@ private void ApplyAllDeviceStates(
 
     for (int i = 0; i < electricalComponents.Length; i++)
     {
-        SparkElectricalComponent component =
+            SparkElectricalComponent component =
             electricalComponents[i];
 
-        if (component == null)
+        if (component == null ||
+            !component.isActiveAndEnabled ||
+            !component.ElectricalEnabled)
+        {
             continue;
+        }
 
         bool isWire = component is SparkSingleWire;
 
@@ -1578,10 +1631,11 @@ private void ApplyAllDeviceStates(
             electricalComponents[i];
 
         if (component == null ||
-            !component.ElectricalEnabled)
-        {
-            continue;
-        }
+    !component.isActiveAndEnabled ||
+    !component.ElectricalEnabled)
+{
+    continue;
+}
 
         if (ShouldIgnoreComponent(component))
         {
@@ -1697,29 +1751,30 @@ private void ApplyAllDeviceStates(
         ///
         /// This is used by measurement systems such as the multimeter.
         /// </summary>
-       public bool TryCalculateComponentCurrent(
+      
+public bool TryCalculateComponentCurrent(
     SparkElectricalComponent component,
     out float current)
 {
-            if (dirty)
-        {
-            current = 0f;
-            return false;
-        }
     current = 0f;
 
-            if (component == null ||
-            ShouldIgnoreComponent(component))
-        {
-            current = 0f;
-            return false;
-        }
-
-    if (latestSolveResult == null)
+    if (dirty ||
+        latestSolveResult == null ||
+        component == null)
+    {
         return false;
+    }
+
+    if (!component.isActiveAndEnabled ||
+        !component.ElectricalEnabled)
+    {
+        return false;
+    }
 
     if (ShouldIgnoreComponent(component))
+    {
         return false;
+    }
 
     if (!TryGetSolverDefinition(
             component,
@@ -1733,6 +1788,7 @@ private void ApplyAllDeviceStates(
         latestSolveResult,
         out current);
 }
+
         // ---------------------------------------------------------------------
         // MAXIMUM ACTIVE SOURCE VOLTAGE
         // ---------------------------------------------------------------------
@@ -1755,12 +1811,12 @@ private void ApplyAllDeviceStates(
         SparkElectricalComponent component =
             electricalComponents[i];
 
-        if (component == null ||
-            !component.ElectricalEnabled)
-        {
-            continue;
-        }
-
+       if (component == null ||
+    !component.isActiveAndEnabled ||
+    !component.ElectricalEnabled)
+{
+    continue;
+}
         if (ShouldIgnoreComponent(component))
         {
             continue;
@@ -2043,6 +2099,7 @@ private void ApplyAllDeviceStates(
                         electricalComponents[i];
 
                                     if (component == null ||
+                        !component.isActiveAndEnabled ||
                         !component.ElectricalEnabled)
                     {
                         continue;
@@ -2141,7 +2198,7 @@ private void ApplyAllDeviceStates(
                     SparkTerminal terminal = terminals[i];
 
                     if (terminal != null)
-                        terminal.ClearElectricalState();
+                    terminal.ResetRuntimeElectricalState();
                 }
             }
 

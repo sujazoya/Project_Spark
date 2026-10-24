@@ -83,6 +83,8 @@ namespace ProjectSpark.Gameplay
         [SerializeField]
         private SparkLevelLayoutLoader layoutLoader;
 
+        private bool pendingAutoAdvance;
+
         // ============================================================
         // RUNTIME SETTINGS
         // ============================================================
@@ -153,11 +155,15 @@ namespace ProjectSpark.Gameplay
         private float targetCurrent;
         private float targetPower;
 
+        private bool forceReloadOnNextStart;
+
         private string activeSourceName = string.Empty;
         private string lastFailureReason = string.Empty;
         private string lastEvaluationMessage = string.Empty;
 
         private SparkLevelValidationResult validationResult;
+
+
 
 
                 [Header("Progression Access")]
@@ -342,146 +348,155 @@ namespace ProjectSpark.Gameplay
         // LEVEL CONTROL
         // ============================================================
 
-        public bool StartLevel(int index)
-        {
-            SparkLevelDefinition level =
-                GetLevel(index);
-
-                            if (enforceProgressionAccess)
-            {
-                if (levelProgression == null ||
-                    !levelProgression.CanPlayLevel(index))
-                {
-                    Log($"Level {index} is locked.");
-                    return false;
-                }
-            }
-
-            if (level == null)
-            {
-                Log(
-                    $"Cannot start level {index}: level not found.");
-
-                return false;
-            }
-
-            EnsureEvaluator();
-
-           
-            if (!PrepareLevelLayout(level))
-            {
-                Log(
-                    $"Cannot start level {index}: " +
-                    "level layout could not be prepared.");
-
-                return false;
-            }
-
-
-            activeLevelIndex = index;
-
-            // IMPORTANT:
-            // SparkLevelDefinition is now a ScriptableObject asset.
-            // Never mutate/normalize the asset at runtime.
-            //
-            // Validation and runtime object resolution are handled
-            // by SparkLevelEvaluator + SparkLevelSceneBindings.
-
-            currentLevelCompleted = false;
-            currentLevelFailed = false;
-
-            satisfiedTargetCount = 0;
-
-            hasValidPowerSource = false;
-            closedReturn = false;
-            sourceShorted = false;
-            targetShorted = false;
-            wrongConnection = false;
-            overloaded = false;
-
-            targetVoltage = 0f;
-            targetCurrent = 0f;
-            targetPower = 0f;
-
-            activeSourceName = string.Empty;
-
-            lastFailureReason = string.Empty;
-            lastEvaluationMessage = string.Empty;
-
-            targetResults.Clear();
-
-            validationResult =
-                new SparkLevelValidationResult(
-                    SparkLevelValidationState.Playing,
-                    "Level started.",
-                    0,
-                    level.TargetCount,
-                    0f,
-                    0f,
-                    0f,
-                    string.Empty,
-                    null,
-                    null);
-
-            runtimeState =
-                LevelRuntimeState.Playing;
-
-            // Scene outputs belong to the scene binding component,
-            // not to the ScriptableObject asset.
-            SetLevelOutputs(
-                false,
-                false);
-
-            QueueEvaluation();
-
-            LevelStarted?.Invoke(level);
-
-            Log(
-                $"Started level {index}: " +
-                $"{level.DisplayName}");
-
-            return true;
-        }
-
-       
-        public bool NextLevel()
-        {
-            int next = activeLevelIndex + 1;
-
-            if (next >= LevelCount)
-                return false;
-
-            if (levelProgression != null)
-                return levelProgression.StartLevel(next);
-
-            return !enforceProgressionAccess &&
-                StartLevel(next);
-        }
-
-
         
-        public bool PreviousLevel()
+public bool StartLevel(int index)
+{
+    SparkLevelDefinition level =
+        GetLevel(index);
+
+    if (level == null)
+    {
+        Log(
+            $"Cannot start level {index}: level not found.");
+
+        return false;
+    }
+
+    if (enforceProgressionAccess)
+    {
+        if (levelProgression == null ||
+            !levelProgression.CanPlayLevel(index))
         {
-            int previous = activeLevelIndex - 1;
-
-            if (previous < 0)
-                return false;
-
-            if (levelProgression != null)
-                return levelProgression.StartLevel(previous);
-
-            return !enforceProgressionAccess &&
-                StartLevel(previous);
+            Log($"Level {index} is locked.");
+            return false;
         }
+    }
 
+    // Capture the restart request.
+    bool forceReload = forceReloadOnNextStart;
+    forceReloadOnNextStart = false;
 
-        public bool RestartLevel()
-        {
-            if (ActiveLevel == null)
-                return false;
+    // PrepareLevelLayout must accept the optional
+    // bool forceReload parameter.
+    if (!PrepareLevelLayout(level, forceReload))
+    {
+        Log(
+            $"Cannot start level {index}: " +
+            "level layout could not be prepared.");
 
-            return StartLevel(activeLevelIndex);
-        }
+        return false;
+    }
+
+    activeLevelIndex = index;
+
+    // Reset level completion and failure state.
+    currentLevelCompleted = false;
+    currentLevelFailed = false;
+    pendingAutoAdvance = false;
+
+    satisfiedTargetCount = 0;
+
+    // Reset electrical validation state.
+    hasValidPowerSource = false;
+    closedReturn = false;
+    sourceShorted = false;
+    targetShorted = false;
+    wrongConnection = false;
+    overloaded = false;
+
+    targetVoltage = 0f;
+    targetCurrent = 0f;
+    targetPower = 0f;
+
+    activeSourceName = string.Empty;
+
+    lastFailureReason = string.Empty;
+    lastEvaluationMessage = string.Empty;
+
+    targetResults.Clear();
+
+    validationResult =
+        new SparkLevelValidationResult(
+            SparkLevelValidationState.Playing,
+            "Level started.",
+            0,
+            level.TargetCount,
+            0f,
+            0f,
+            0f,
+            string.Empty,
+            null,
+            null);
+
+    runtimeState =
+        LevelRuntimeState.Playing;
+
+    // Reset scene outputs for the newly loaded layout.
+    SetLevelOutputs(false, false);
+
+    // Evaluate the new level.
+    QueueEvaluation();
+
+    LevelStarted?.Invoke(level);
+
+    Log(
+        $"Started level {index}: " +
+        $"{level.DisplayName}");
+
+    return true;
+}
+ 
+
+public bool RestartLevel()
+{
+    SparkLevelDefinition level = ActiveLevel;
+
+    if (level == null)
+    {
+        Debug.LogError(
+            "[LevelGamePlayManager] Cannot restart: " +
+            "no active level.",
+            this);
+
+        return false;
+    }
+
+    if (layoutLoader == null ||
+        circuitSystem == null ||
+        electricalSolver == null)
+    {
+        Debug.LogError(
+            "[LevelGamePlayManager] Cannot restart: " +
+            "required layout or electrical system is missing.",
+            this);
+
+        return false;
+    }
+
+    // Force PrepareLevelLayout() to create a fresh
+    // instance even though the level is unchanged.
+    forceReloadOnNextStart = true;
+
+    // StartLevel() reloads the layout, refreshes the
+    // electrical solver, rebuilds the evaluator,
+    // and resets the gameplay state.
+    bool restarted = StartLevel(activeLevelIndex);
+
+    // Ensure a failed restart request cannot affect
+    // a later StartLevel() call.
+    forceReloadOnNextStart = false;
+
+    if (!restarted)
+    {
+        Debug.LogError(
+            "[LevelGamePlayManager] Failed to restart level: " +
+            level.LevelId,
+            this);
+    }
+
+    return restarted;
+}
+
 
         public bool SetActiveLevel(int index)
         {
@@ -497,58 +512,91 @@ namespace ProjectSpark.Gameplay
             return CompleteCurrentLevel(default);
         }
 
-        private bool CompleteCurrentLevel(
-            SparkLevelEvaluation evaluation)
+       
+private bool CompleteCurrentLevel(
+    SparkLevelEvaluation evaluation)
+{
+    SparkLevelDefinition level = ActiveLevel;
+
+    if (level == null)
+        return false;
+
+    // Prevent duplicate completion events.
+    if (currentLevelCompleted)
+        return true;
+
+    // ============================================================
+    // UPDATE RUNTIME STATE
+    // ============================================================
+
+    currentLevelCompleted = true;
+    currentLevelFailed = false;
+
+    runtimeState = LevelRuntimeState.Completed;
+
+    // ============================================================
+    // ACTIVATE SUCCESS OUTPUTS
+    // ============================================================
+
+    SetLevelOutputs(
+        true,
+        false);
+
+    // ============================================================
+    // COMPLETION MESSAGE
+    // ============================================================
+
+    string message =
+        string.IsNullOrWhiteSpace(evaluation.Message)
+            ? "Level completed."
+            : evaluation.Message;
+
+    lastEvaluationMessage = message;
+    lastFailureReason = string.Empty;
+
+    // ============================================================
+    // VALIDATION RESULT
+    // ============================================================
+
+    SetValidationResult(
+        SparkLevelValidationState.Completed,
+        message,
+        evaluation);
+
+    // ============================================================
+    // NOTIFY PROGRESSION AND UI
+    // ============================================================
+
+    // SparkLevelProgression listens to this event to save
+    // completion and unlock the next eligible level.
+    LevelCompleted?.Invoke(level);
+
+    LevelEvaluationChanged?.Invoke(level);
+
+    Log(
+        $"LEVEL COMPLETE: {level.DisplayName}");
+
+    // ============================================================
+    // DEFER AUTOMATIC ADVANCEMENT
+    // ============================================================
+
+    if (autoAdvanceOnCompletion)
+    {
+        if (evaluating)
         {
-            SparkLevelDefinition level =
-                ActiveLevel;
-
-            if (level == null)
-                return false;
-
-            if (currentLevelCompleted)
-                return true;
-
-            currentLevelCompleted = true;
-            currentLevelFailed = false;
-
-            runtimeState =
-                LevelRuntimeState.Completed;
-
-            SetLevelOutputs(
-                true,
-                false);
-
-            string message =
-                string.IsNullOrWhiteSpace(
-                    evaluation.Message)
-                    ? "Level completed."
-                    : evaluation.Message;
-
-            lastEvaluationMessage =
-                message;
-
-            SetValidationResult(
-                SparkLevelValidationState.Completed,
-                message,
-                evaluation);
-
-            LevelCompleted?.Invoke(level);
-
-            LevelEvaluationChanged?.Invoke(level);
-
-            Log(
-                $"LEVEL COMPLETE: " +
-                $"{level.DisplayName}");
-
-           if (autoAdvanceOnCompletion &&
-                level.AutoAdvanceOnCompletion)
-            {
-                NextLevel();
-            }
-
-            return true;
+            // Wait until the current electrical evaluation ends.
+            pendingAutoAdvance = true;
         }
+        else
+        {
+            // Safe when completion occurs outside evaluation.
+            NextLevel();
+        }
+    }
+
+    return true;
+}
+
 
         // ============================================================
         // FAIL LEVEL
@@ -940,10 +988,15 @@ private void SetOutput(
                         evaluation);
                 }
             }
-            finally
+                    finally
             {
                 evaluating = false;
-                evaluationQueued = false;
+
+                if (pendingAutoAdvance)
+                {
+                    pendingAutoAdvance = false;
+                    NextLevel();
+                }
             }
         }
 
@@ -1338,43 +1391,90 @@ private void SetOutput(
             }
         }
         
-        private bool PrepareLevelLayout(
-            SparkLevelDefinition level)
+       
+
+       
+
+private bool PrepareLevelLayout(
+    SparkLevelDefinition level,
+    bool forceReload = false)
+    {
+    if (level == null ||
+        layoutLoader == null ||
+        circuitSystem == null ||
+        electricalSolver == null)
+    {
+        Debug.LogError(
+            "[LevelGamePlayManager] Cannot prepare layout. " +
+            "Missing level, layout loader, circuit system, " +
+            "or electrical solver.",
+            this);
+
+        return false;
+    }
+
+   bool needsNewLayout =
+    forceReload ||
+    layoutLoader.ActiveLayout == null ||
+    layoutLoader.ActiveLayout.LevelDefinition != level;
+
+    if (needsNewLayout)
+    {
+        // Validate the requested layout before replacing
+        // the currently active level.
+        if (!layoutLoader.CanLoadLevel(
+                level,
+                out string error))
         {
-            if (level == null)
-                return false;
+            Debug.LogError(
+                "[LevelGamePlayManager] " + error,
+                this);
 
-            if (layoutLoader == null)
-            {
-                Debug.LogError(
-                    "[LevelGamePlayManager] Level layout loader missing.",
-                    this);
-
-                return false;
-            }
-
-            if (layoutLoader.ActiveLayout == null ||
-                layoutLoader.ActiveLayout.LevelDefinition != level)
-            {
-                if (!layoutLoader.LoadLevel(level))
-                    return false;
-            }
-
-            SparkLevelSceneBindings newBindings =
-                layoutLoader.ActiveBindings;
-
-            if (newBindings == null)
-                return false;
-
-            // Bind the evaluator to the currently loaded prefab.
-            sceneBindings = newBindings;
-
-            evaluator = new SparkLevelEvaluator(
-                circuitSystem,
-                sceneBindings);
-
-            return true;
+            return false;
         }
+      
+
+        // Load and validate the new layout.
+        if (!layoutLoader.LoadLevel(level))
+        {
+            Debug.LogError(
+                "[LevelGamePlayManager] Failed to load layout: " +
+                level.LevelId,
+                this);
+
+            return false;
+        }      
+
+        // Clear cached electrical results and refresh
+        // component discovery for the new layout.
+        electricalSolver.NotifyLevelLayoutChanged();
+    }
+
+    SparkLevelSceneBindings newBindings =
+        layoutLoader.ActiveBindings;
+
+    if (newBindings == null)
+    {
+        Debug.LogError(
+            "[LevelGamePlayManager] Active layout has " +
+            "no SparkLevelSceneBindings.",
+            this);
+
+        return false;
+    }
+
+    // Use the scene bindings from the active layout.
+    sceneBindings = newBindings;
+
+    // Rebuild the evaluator for the active level.
+    evaluator = new SparkLevelEvaluator(
+        circuitSystem,
+        sceneBindings);
+
+    return true;
+}
+
+
 
 
         private void EnsureEvaluator()
@@ -1473,5 +1573,55 @@ private void SetOutput(
             // Asset validation belongs to SparkLevelDefinition's
             // own OnValidate().
         }
+
+        
+        public bool NextLevel()
+        {
+            int nextIndex = activeLevelIndex + 1;
+
+            // Check whether another level exists.
+            SparkLevelDefinition nextLevel =
+                GetLevel(nextIndex);
+
+            if (nextLevel == null)
+            {
+                Debug.Log(
+                    "[LevelGamePlayManager] Already at the last level.",
+                    this);
+
+                return false;
+            }
+
+            // StartLevel handles progression locks,
+            // prefab loading, solver refresh and evaluation.
+            return StartLevel(nextIndex);
+        }
+
+        public bool PreviousLevel()
+        {
+            int previousIndex = activeLevelIndex - 1;
+
+            // Prevent navigating before Level 1.
+            if (previousIndex < 0)
+            {
+                Debug.Log(
+                    "[LevelGamePlayManager] Already at the first level.",
+                    this);
+
+                return false;
+            }
+
+            return StartLevel(previousIndex);
+        }
+        public void OnNextLevelButtonClicked()
+        {
+            NextLevel();
+        }
+
+        public void OnPreviousLevelButtonClicked()
+        {
+            PreviousLevel();
+        }
+
     }
 }

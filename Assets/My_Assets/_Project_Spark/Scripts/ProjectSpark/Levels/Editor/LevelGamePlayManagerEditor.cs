@@ -10,6 +10,8 @@ namespace ProjectSpark.Gameplay.Editor
     {
         private SerializedProperty circuitSystem;
         private SerializedProperty electricalSolver;
+        private SerializedProperty layoutLoaderProperty;
+        private SerializedProperty levelProgressionProperty;
         private SerializedProperty levels;
         private SerializedProperty activeLevelIndex;
 
@@ -60,6 +62,11 @@ private void OnEnable()
 
     electricalSolver =
         so.FindProperty("electricalSolver");
+        layoutLoaderProperty =
+    serializedObject.FindProperty("layoutLoader");
+
+        levelProgressionProperty =
+            serializedObject.FindProperty("levelProgression");
 
     levels =
         so.FindProperty("levels");
@@ -92,6 +99,8 @@ private void OnEnable()
     showRuntimeState =
         so.FindProperty("showRuntimeState");
 
+        
+
     SyncFoldouts();
 }
 
@@ -105,9 +114,9 @@ private void OnEnable()
             SyncFoldouts();
 
             LevelGamePlayManager manager =
-                (LevelGamePlayManager)target;
+                (LevelGamePlayManager)target;              
 
-            DrawHeader(manager);
+            DrawHeader(manager);             
 
             EditorGUILayout.Space(5);
 
@@ -127,7 +136,8 @@ private void OnEnable()
 
             EditorGUILayout.Space(5);
 
-            DrawValidation(manager);
+            DrawValidation(manager);        
+
 
             serializedObject.ApplyModifiedProperties();
         }
@@ -219,41 +229,78 @@ private void OnEnable()
         // SYSTEMS
         // ============================================================
 
-        private void DrawSystems()
+      
+private void DrawSystems()
+{
+    showSystems = DrawSectionHeader(
+        "SIMULATION SYSTEMS",
+        showSystems);
+
+    if (showSystems)
+    {
+        EditorGUILayout.LabelField(
+            "Core Systems",
+            EditorStyles.boldLabel);
+
+        EditorGUILayout.PropertyField(
+            circuitSystem,
+            new GUIContent("Circuit System"));
+
+        EditorGUILayout.PropertyField(
+            electricalSolver,
+            new GUIContent("Electrical Solver"));
+
+        EditorGUILayout.Space(6);
+
+        EditorGUILayout.LabelField(
+            "Level Infrastructure",
+            EditorStyles.boldLabel);
+
+        EditorGUILayout.PropertyField(
+            layoutLoaderProperty,
+            new GUIContent("Level Layout Loader"));
+
+        EditorGUILayout.PropertyField(
+            levelProgressionProperty,
+            new GUIContent("Level Progression"));
+
+        EditorGUILayout.Space(4);
+
+        if (circuitSystem.objectReferenceValue == null)
         {
-            showSystems = DrawSectionHeader(
-                "SIMULATION SYSTEMS",
-                showSystems);
-
-            if (showSystems)
-            {
-                EditorGUILayout.PropertyField(
-                    circuitSystem,
-                    new GUIContent(
-                        "Circuit System"));
-
-                EditorGUILayout.PropertyField(
-                    electricalSolver,
-                    new GUIContent(
-                        "Electrical Solver"));
-
-                if (circuitSystem.objectReferenceValue == null)
-                {
-                    EditorGUILayout.HelpBox(
-                        "Circuit System is required.",
-                        MessageType.Error);
-                }
-
-                if (electricalSolver.objectReferenceValue == null)
-                {
-                    EditorGUILayout.HelpBox(
-                        "Electrical Solver is not assigned.",
-                        MessageType.Warning);
-                }
-            }
-
-            EndSection();
+            EditorGUILayout.HelpBox(
+                "SparkCircuitSystem is required.",
+                MessageType.Error);
         }
+
+        if (electricalSolver.objectReferenceValue == null)
+        {
+            EditorGUILayout.HelpBox(
+                "SparkElectricalSolver is not assigned.",
+                MessageType.Warning);
+        }
+
+        if (layoutLoaderProperty.objectReferenceValue == null)
+        {
+            EditorGUILayout.HelpBox(
+                "SparkLevelLayoutLoader is required " +
+                "for loading level prefabs.",
+                MessageType.Error);
+        }
+
+        if (levelProgressionProperty.objectReferenceValue == null)
+        {
+            EditorGUILayout.HelpBox(
+                "SparkLevelProgression is not assigned. " +
+                "Level unlocking and progression access " +
+                "may not work.",
+                MessageType.Warning);
+        }
+    }
+
+    EndSection();
+}
+
 
         // ============================================================
         // LEVELS
@@ -331,9 +378,12 @@ private void OnEnable()
                     manager.ActiveLevelIndex - 1);
             }
 
-            EditorGUILayout.PropertyField(
-                activeLevelIndex,
-                GUIContent.none);
+            using (new EditorGUI.DisabledScope(Application.isPlaying))
+                {
+                    EditorGUILayout.PropertyField(
+                        activeLevelIndex,
+                        GUIContent.none);
+                }
 
             if (GUILayout.Button("▶"))
             {
@@ -353,10 +403,9 @@ private void OnEnable()
                 Application.isPlaying &&
                 manager.ActiveLevel != null;
 
-            if (GUILayout.Button("START"))
+           if (GUILayout.Button("LOAD LEVEL"))
             {
-                manager.StartLevel(
-                    manager.ActiveLevelIndex);
+                manager.StartLevel(manager.ActiveLevelIndex);
             }
 
             if (GUILayout.Button("EVALUATE"))
@@ -364,10 +413,10 @@ private void OnEnable()
                 manager.EvaluateNow();
             }
 
-            if (GUILayout.Button("RESET"))
-            {
-                manager.ResetLevel();
-            }
+          if (GUILayout.Button("RESTART"))
+{
+        manager.RestartLevel();
+}
 
             GUI.enabled = true;
 
@@ -429,6 +478,7 @@ private void OnEnable()
         // ============================================================
 
       
+
 private void DrawSingleLevel(
     LevelGamePlayManager manager,
     int index,
@@ -437,37 +487,22 @@ private void DrawSingleLevel(
     if (level == null)
         return;
 
-    SparkLevelDefinition levelDefinition =
+    SparkLevelDefinition definition =
         level.objectReferenceValue as SparkLevelDefinition;
 
-    string title =
-        $"LEVEL {index + 1}";
+    string title = $"LEVEL {index + 1}";
 
-    if (levelDefinition != null)
+    if (definition != null)
     {
-        if (!string.IsNullOrWhiteSpace(
-                levelDefinition.LevelId))
-        {
-            title +=
-                $"  [{levelDefinition.LevelId}]";
-        }
-
-        if (!string.IsNullOrWhiteSpace(
-                levelDefinition.DisplayName))
-        {
-            title +=
-                $"  {levelDefinition.DisplayName}";
-        }
+        title += $"  [{definition.LevelId}]";
+        title += $"  {definition.DisplayName}";
     }
     else
     {
         title += "  [MISSING LEVEL]";
     }
 
-    bool active =
-        index == manager.ActiveLevelIndex;
-
-    if (active)
+    if (index == activeLevelIndex.intValue)
         title += "  ★ ACTIVE";
 
     EditorGUILayout.BeginVertical(
@@ -481,43 +516,84 @@ private void DrawSingleLevel(
 
     if (levelFoldouts[index])
     {
-        EditorGUILayout.Space(3);
-
-        DrawLevelIdentity(level);
-
         EditorGUILayout.Space(4);
 
-        DrawLevelRules(level);
+        EditorGUILayout.PropertyField(
+            level,
+            new GUIContent("Level Definition"));
 
-        EditorGUILayout.Space(4);
+        if (definition == null)
+        {
+            EditorGUILayout.HelpBox(
+                "Assign a SparkLevelDefinition asset.",
+                MessageType.Warning);
+        }
+        else
+        {
+            EditorGUILayout.Space(5);
 
-        DrawPowerConfiguration(level);
+            using (new EditorGUI.DisabledScope(true))
+            {
+                EditorGUILayout.TextField(
+                    "Level ID",
+                    definition.LevelId);
 
-        EditorGUILayout.Space(4);
+                EditorGUILayout.TextField(
+                    "Display Name",
+                    definition.DisplayName);
 
-        DrawTargets(level);
+                EditorGUILayout.IntField(
+                    "Power Sources",
+                    definition.SourceCount);
 
-        EditorGUILayout.Space(4);
+                EditorGUILayout.IntField(
+                    "Targets",
+                    definition.TargetCount);
 
-        DrawFailureConfiguration(level);
+                EditorGUILayout.Toggle(
+                    "Unlocked By Default",
+                    definition.UnlockedByDefault);
 
-        EditorGUILayout.Space(4);
+                EditorGUILayout.Toggle(
+                    "Auto Unlock Next Level",
+                    definition.AutoUnlockNextLevel);
 
-        DrawOutputs(level);
+                EditorGUILayout.Toggle(
+                    "Auto Advance",
+                    definition.AutoAdvanceOnCompletion);
+            }
 
-        EditorGUILayout.Space(4);
+            EditorGUILayout.Space(5);
 
-        DrawProgression(level);
+            if (GUILayout.Button(
+                "Select Level Definition Asset",
+                GUILayout.Height(24)))
+            {
+                Selection.activeObject = definition;
+                EditorGUIUtility.PingObject(definition);
+            }
 
-        EditorGUILayout.Space(4);
-
-        DrawLevelValidation(level);
+            if (!definition.Validate(
+                    out string validationError))
+            {
+                EditorGUILayout.HelpBox(
+                    validationError,
+                    MessageType.Error);
+            }
+            else
+            {
+                EditorGUILayout.HelpBox(
+                    "Level definition is valid.",
+                    MessageType.Info);
+            }
+        }
     }
 
     EditorGUILayout.EndVertical();
 
     EditorGUILayout.Space(3);
 }
+
 
         // ============================================================
         // IDENTITY
@@ -1840,54 +1916,47 @@ private void DrawProgression(
         }
 
 
-        private void DuplicateActiveLevel(
-            LevelGamePlayManager manager)
-        {
-            if (levels.arraySize == 0)
-                return;
+       
+private void DuplicateActiveLevel(
+    LevelGamePlayManager manager)
+{
+    if (levels == null || levels.arraySize == 0)
+        return;
 
-            int sourceIndex =
-                Mathf.Clamp(
-                    manager.ActiveLevelIndex,
-                    0,
-                    levels.arraySize - 1);
+    int sourceIndex = Mathf.Clamp(
+        activeLevelIndex.intValue,
+        0,
+        levels.arraySize - 1);
 
-            Undo.RecordObject(
-                target,
-                "Duplicate Spark Level");
+    SparkLevelDefinition source =
+        levels.GetArrayElementAtIndex(sourceIndex)
+            .objectReferenceValue as SparkLevelDefinition;
 
-            levels.InsertArrayElementAtIndex(
-                sourceIndex);
+    if (source == null)
+        return;
 
-            int newIndex =
-                sourceIndex + 1;
+    Undo.RecordObject(
+        manager,
+        "Duplicate Level Slot");
 
-            SerializedProperty level =
-                levels.GetArrayElementAtIndex(
-                    newIndex);
+    int newIndex = sourceIndex + 1;
 
-            SerializedProperty id =
-                level.FindPropertyRelative(
-                    "levelId");
+    levels.InsertArrayElementAtIndex(newIndex);
 
-            SerializedProperty displayName =
-                level.FindPropertyRelative(
-                    "displayName");
+    levels.GetArrayElementAtIndex(newIndex)
+        .objectReferenceValue = source;
 
-            id.stringValue += "_COPY";
+    activeLevelIndex.intValue = newIndex;
 
-            displayName.stringValue +=
-                " Copy";
+    serializedObject.ApplyModifiedProperties();
 
-            activeLevelIndex.intValue =
-                newIndex;
+    EditorUtility.SetDirty(manager);
 
-            SyncFoldouts();
+    SyncFoldouts();
 
-            serializedObject.ApplyModifiedProperties();
+    Repaint();
+}
 
-            EditorUtility.SetDirty(target);
-        }
 
         private void RemoveActiveLevel(
             LevelGamePlayManager manager)
@@ -1945,30 +2014,54 @@ private void DrawProgression(
             EditorUtility.SetDirty(target);
         }
 
-        private void ChangeActiveLevel(
-            int index)
+        
+private void ChangeActiveLevel(int index)
+{
+    if (levels == null || levels.arraySize == 0)
+        return;
+
+    index = Mathf.Clamp(
+        index,
+        0,
+        levels.arraySize - 1);
+
+    LevelGamePlayManager manager =
+        target as LevelGamePlayManager;
+
+    if (manager == null)
+        return;
+
+    if (Application.isPlaying)
+    {
+        // During Play Mode, use the gameplay manager.
+        // This enforces progression access and loads
+        // the correct circuit prefab.
+        if (!manager.StartLevel(index))
         {
-            if (levels.arraySize == 0)
-                return;
-
-            index =
-                Mathf.Clamp(
-                    index,
-                    0,
-                    levels.arraySize - 1);
-
-            Undo.RecordObject(
-                target,
-                "Change Active Level");
-
-            activeLevelIndex.intValue =
-                index;
-
-            serializedObject.ApplyModifiedProperties();
-
-            Repaint();
+            Debug.LogWarning(
+                $"[PROJECT SPARK] Cannot start level {index + 1}. " +
+                "Check progression access and layout configuration.",
+                manager);
         }
-      
+
+        Repaint();
+        return;
+    }
+
+    // Edit Mode: only change the configured starting level.
+    Undo.RecordObject(
+        manager,
+        "Change Active Level");
+
+    activeLevelIndex.intValue = index;
+
+    serializedObject.ApplyModifiedProperties();
+
+    EditorUtility.SetDirty(manager);
+
+    Repaint();
+}
+
         private void ClearLevel(
             SerializedProperty level)
         {

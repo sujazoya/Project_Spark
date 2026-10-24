@@ -1002,17 +1002,19 @@ private void BuildReachability(
     $"Negative={GetTerminalDebugName(sourceNegative)}");
 
 
-    TraverseWireNetwork(
-        sourcePositive,
-        positiveReachable);
+   
+TraverseWireNetwork(
+    sourcePositive,
+    positiveReachable,
+    traverseConductingLeds: false,
+    bypassOnly: true);
 
-/*        Debug.Log(
-    $"[LEVEL NEGATIVE SOURCE] " +
-    $"Terminal={GetTerminalDebugName(sourceNegative)}");*/
+TraverseWireNetwork(
+    sourceNegative,
+    negativeReachable,
+    traverseConductingLeds: false,
+    bypassOnly: true);
 
-    TraverseWireNetwork(
-        sourceNegative,
-        negativeReachable);
 
 
     bool positiveToPositive =

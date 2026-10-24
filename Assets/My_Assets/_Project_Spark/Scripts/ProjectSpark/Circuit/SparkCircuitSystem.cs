@@ -366,11 +366,28 @@ namespace ProjectSpark.Circuit
                 connection.A,
                 id);
 
-            RemoveTerminalConnection(
-                connection.B,
-                id);
+            
+                RemoveTerminalConnection(
+                    connection.B,
+                    id);
 
-            MarkTopologyChanged();
+                // Reset only terminals with no remaining connections.
+                // The solver must subsequently recalculate the network.
+                if (connection.A != null &&
+                    GetConnectionCount(connection.A) == 0)
+                {
+                    connection.A.ResetRuntimeElectricalState();
+                }
+
+                if (connection.B != null &&
+                    connection.B != connection.A &&
+                    GetConnectionCount(connection.B) == 0)
+                {
+                    connection.B.ResetRuntimeElectricalState();
+                }
+
+                MarkTopologyChanged();
+
 
             ConnectionRemoved?.Invoke(
                 connection);
@@ -397,56 +414,76 @@ namespace ProjectSpark.Circuit
             return ClearConnections(true);
         }
 
-        private int ClearConnections(
-            bool notify)
+       
+/// <summary>
+/// Requests that electrical solver subscribers reevaluate
+/// the current circuit topology.
+///
+/// This does not directly calculate voltage/current.
+/// </summary>
+public void RequestElectricalReevaluation()
+{
+    if (topologyDirty && automaticallyRebuildTopology)
+    {
+        RebuildTopology();
+    }
+
+    TopologyChanged?.Invoke();
+}
+
+private int ClearConnections(bool notify)
+{
+    if (connections.Count == 0)
+        return 0;
+
+    // Take a snapshot before changing the dictionary.
+    List<SparkCircuitConnection> removedConnections =
+        new List<SparkCircuitConnection>(
+            connections.Values);
+
+    // First unregister terminal connection counts.
+    foreach (SparkCircuitConnection connection
+        in removedConnections)
+    {
+        UnregisterTerminal(
+            connection.A,
+            connection.Kind);
+
+        UnregisterTerminal(
+            connection.B,
+            connection.Kind);
+    }
+
+    // The electrical topology must be empty before
+    // notifying listeners.
+    connections.Clear();
+    terminalConnections.Clear();
+
+    // Rebuild and notify subscribers once.
+    MarkTopologyChanged();
+
+    if (notify)
+    {
+        foreach (SparkCircuitConnection connection
+            in removedConnections)
         {
-            if (connections.Count == 0)
-            {
-                return 0;
-            }
-
-            connectionBuffer.Clear();
-
-            foreach (
-                SparkCircuitConnection connection
-                in connections.Values)
-            {
-                connectionBuffer.Add(
-                    connection);
-            }
-
-            int removedCount =
-                connectionBuffer.Count;
-
-            for (int i = 0;
-                 i < connectionBuffer.Count;
-                 i++)
-            {
-                SparkCircuitConnection connection =
-                    connectionBuffer[i];
-
-               UnregisterTerminal(connection.A, connection.Kind);
-                UnregisterTerminal(connection.B, connection.Kind);
-
-                if (notify)
-                {
-                    ConnectionRemoved?.Invoke(
-                        connection);
-                }
-            }
-
-            connections.Clear();
-            terminalConnections.Clear();
-
-            MarkTopologyChanged();
-
-            if (notify)
-            {
-                NotifyElectricalFlowVisualsChanged();
-            }
-
-            return removedCount;
+            ConnectionRemoved?.Invoke(connection);
         }
+
+        NotifyElectricalFlowVisualsChanged();
+    }
+
+    if (logConnectionChanges)
+    {
+        Debug.Log(
+            $"[SPARK CIRCUIT] Cleared " +
+            $"{removedConnections.Count} connections.",
+            this);
+    }
+
+    return removedConnections.Count;
+}
+
 
         // =========================================================
         // LOOKUP
@@ -973,15 +1010,18 @@ namespace ProjectSpark.Circuit
         // TOPOLOGY CHANGE
         // =========================================================
 
-        private void MarkTopologyChanged()
-        {
-            topologyDirty = true;
+       private void MarkTopologyChanged()
+{
+    topologyDirty = true;
+    topologyVersion++;
 
-            topologyVersion++;
+    if (automaticallyRebuildTopology)
+    {
+        RebuildTopology();
+    }
 
-            TopologyChanged?.Invoke();
-        }
-
+    TopologyChanged?.Invoke();
+}
         // =========================================================
         // INVALID CONNECTION CLEANUP
         // =========================================================
@@ -1034,24 +1074,19 @@ namespace ProjectSpark.Circuit
             return removed;
         }
 
-        private static bool IsOwnerValid(
-            SparkTerminal terminal)
-        {
-            if (terminal == null)
-            {
-                return false;
-            }
+      private static bool IsOwnerValid(
+    SparkTerminal terminal)
+{
+    if (terminal == null)
+    {
+        return false;
+    }
 
-            SparkElectronicObject owner =
-                terminal.Owner;
+    SparkElectronicObject owner =
+        terminal.Owner;
 
-            if (owner == null)
-            {
-                return false;
-            }
-
-            return owner.isActiveAndEnabled;
-        }
+    return owner != null;
+}
 
         // =========================================================
         // DIAGNOSTICS
@@ -1116,8 +1151,7 @@ namespace ProjectSpark.Circuit
             {
                 SparkCircuitConnection connection =
                     pair.Value;
-
-                if (connection == null)
+                if (!connection.IsValid)
                     continue;
 
                 Debug.Log(
@@ -1150,8 +1184,8 @@ namespace ProjectSpark.Circuit
                 SparkCircuitConnection connection =
                     pair.Value;
 
-                if (connection == null)
-                    continue;
+                if (!connection.IsValid)
+    continue;
 
                 Debug.Log(
                     $"ID={connection.Id} | " +
@@ -1169,6 +1203,79 @@ namespace ProjectSpark.Circuit
             Debug.Log(
                 "========== END CONNECTION TERMINAL DETAILS ==========");
         }
+        
+public int RemoveConnectionsForLayout(
+    Transform layoutRoot)
+{
+    if (layoutRoot == null)
+    {
+        return 0;
+    }
+
+    // Collect IDs first because TryRemoveConnection()
+    // modifies the connection dictionary.
+    List<ulong> idsToRemove = new List<ulong>();
+
+    foreach (KeyValuePair<ulong, SparkCircuitConnection> pair
+        in connections)
+    {
+        SparkCircuitConnection connection = pair.Value;
+
+        if (ConnectionBelongsToLayout(
+                connection,
+                layoutRoot))
+        {
+            idsToRemove.Add(pair.Key);
+        }
+    }
+
+    int removed = 0;
+
+    for (int i = 0; i < idsToRemove.Count; i++)
+    {
+        if (TryRemoveConnection(
+                idsToRemove[i],
+                out _))
+        {
+            removed++;
+        }
+    }
+
+    return removed;
+}
+
+private static bool ConnectionBelongsToLayout(
+    SparkCircuitConnection connection,
+    Transform layoutRoot)
+{
+            if (!connection.IsValid || layoutRoot == null)
+        {
+            return false;
+        }
+
+    return TerminalBelongsToLayout(
+               connection.A,
+               layoutRoot) ||
+           TerminalBelongsToLayout(
+               connection.B,
+               layoutRoot);
+}
+
+private static bool TerminalBelongsToLayout(
+    SparkTerminal terminal,
+    Transform layoutRoot)
+{
+    if (terminal == null || layoutRoot == null)
+    {
+        return false;
+    }
+
+    Transform terminalTransform = terminal.transform;
+
+    return terminalTransform == layoutRoot ||
+           terminalTransform.IsChildOf(layoutRoot);
+}
+
         private string GetTerminalDebugName(
     SparkTerminal terminal)
 {

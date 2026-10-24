@@ -1,25 +1,42 @@
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using ProjectSpark.Circuit;
-using ProjectSpark.Electrical;
 using ProjectSpark.Gameplay;
+using ProjectSpark.Electrical;
 
 namespace AAAUI.VFX
 {
     /// <summary>
-    /// Manages visual signal paths and synchronizes their materials
-    /// with the electrical state of their connected terminals.
+    /// Manages dynamically drawn signal wires.
+    ///
+    /// Features:
+    /// - Creates and stores visual wire paths.
+    /// - Binds paths to electrical connection IDs.
+    /// - Removes one wire and its electrical connection.
+    /// - Undoes the most recently created wire.
+    /// - Clears all player-drawn wires.
+    /// - Automatically removes a visual wire when its
+    ///   electrical connection is removed externally.
+    /// - Updates wire materials from terminal voltage.
+    ///
+    /// This manager does not manage SparkSingleWire objects.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class SignalPath_Manager : MonoBehaviour
     {
         #region Inspector
 
-        [Header("Wire")]
+        [Header("Wire Prefab")]
         [SerializeField]
         private SignalPathMesh meshPrefab;
 
+        [Header("Current Visual Publisher")]
+[SerializeField]
+private SparkWireCurrentVisualPublisher currentVisualPublisher;
+
+        [Header("Wire Materials")]
         [SerializeField]
         private Material positiveMaterial;
 
@@ -29,30 +46,59 @@ namespace AAAUI.VFX
         [SerializeField]
         private Material neutralMaterial;
 
-        [Header("Paths")]
+        [Header("Electrical System")]
         [SerializeField]
-        private SignalPath[] paths = Array.Empty<SignalPath>();
+        private SparkCircuitSystem circuitSystem;
+
+        [Header("Runtime Paths")]
+        [SerializeField]
+        private SignalPath[] paths =
+            Array.Empty<SignalPath>();
+
+        [Header("Debug")]
+        [SerializeField]
+        private bool logOperations;
 
         #endregion
 
-        #region Runtime State
+        #region Runtime
 
-        private readonly Dictionary<SignalPath, SparkCircuitConnection>
-            electricalBindings =
-                new Dictionary<SignalPath, SparkCircuitConnection>();
+        private readonly Dictionary<
+            SignalPath,
+            SparkCircuitConnection> electricalBindings =
+                new Dictionary<
+                    SignalPath,
+                    SparkCircuitConnection>();
+
+        private readonly Dictionary<ulong, SignalPath>
+            pathsByConnectionId =
+                new Dictionary<ulong, SignalPath>();
 
         private readonly HashSet<SparkTerminal>
             subscribedTerminals =
                 new HashSet<SparkTerminal>();
+
+        private readonly List<SignalPath>
+            creationOrder =
+                new List<SignalPath>();
+
+                [Header("Electrical Glow")]
+        [SerializeField]
+        private bool enableElectricalGlow = true;
+
+        [Header("Wire Current Popups")]
+[SerializeField]
+private bool enableWireCurrentFeedback = true;
+
+        [SerializeField]
+        private Material electricalGlowMaterial;
 
         private int currentIndex = -1;
 
         private SignalPath currentPath;
         private SignalPathMesh currentMesh;
 
-        #endregion
-
-        #region Constants
+        private bool clearingPaths;
 
         private const float VoltageThreshold = 0.05f;
 
@@ -60,75 +106,421 @@ namespace AAAUI.VFX
 
         #region Properties
 
-        /// <summary>
-        /// Gets the currently active signal path.
-        /// </summary>
         public SignalPath CurrentPath => currentPath;
 
-        /// <summary>
-        /// Gets the mesh belonging to the currently active signal path.
-        /// </summary>
         public SignalPathMesh CurrentMesh => currentMesh;
 
-        /// <summary>
-        /// Gets the index of the currently active path.
-        /// </summary>
         public int CurrentIndex => currentIndex;
 
-        /// <summary>
-        /// Gets the number of created paths.
-        /// </summary>
         public int Count => paths.Length;
 
-        /// <summary>
-        /// Gets all created signal paths.
-        /// </summary>
         public SignalPath[] Paths => paths;
+
+        public SparkCircuitSystem Circuit => circuitSystem;
+
+        public bool HasWires => paths.Length > 0;
 
         #endregion
 
-        #region Electrical Binding
+        #region Unity Lifecycle
+
+        private void Awake()
+        {
+            ResolveCircuitSystem();
+        }
+
+        private void OnEnable()
+        {
+            ResolveCircuitSystem();
+            SubscribeCircuit();
+        }
+
+        private void OnDisable()
+        {
+            UnsubscribeCircuit();
+        }
+
+        private void OnDestroy()
+        {
+            UnsubscribeCircuit();
+            UnsubscribeAllTerminals();
+        }
+
+        #endregion
+
+        #region Circuit Reference
+
+        private void ResolveCircuitSystem()
+        {
+            if (circuitSystem != null)
+                return;
+
+            circuitSystem =
+                GetComponentInParent<SparkCircuitSystem>();
+
+            if (circuitSystem == null)
+            {
+                circuitSystem =
+                    FindFirstObjectByType<SparkCircuitSystem>();
+            }
+        }
+
+        private void SubscribeCircuit()
+        {
+            if (circuitSystem == null)
+                return;
+
+            circuitSystem.ConnectionRemoved -=
+                OnCircuitConnectionRemoved;
+
+            circuitSystem.ConnectionRemoved +=
+                OnCircuitConnectionRemoved;
+        }
+
+        private void UnsubscribeCircuit()
+        {
+            if (circuitSystem == null)
+                return;
+
+            circuitSystem.ConnectionRemoved -=
+                OnCircuitConnectionRemoved;
+        }
 
         /// <summary>
-        /// Binds a signal path to an electrical connection.
-        /// The wire material is immediately synchronized with
-        /// the current electrical state.
+        /// Synchronize visual wires when the circuit system
+        /// removes a connection independently.
         /// </summary>
-        public void BindElectricalConnection(
+        private void OnCircuitConnectionRemoved(
+            SparkCircuitConnection connection)
+        {
+            if (connection == null || clearingPaths)
+                return;
+
+            if (pathsByConnectionId.TryGetValue(
+                connection.Id,
+                out SignalPath path))
+            {
+                RemovePathInternal(path, false);
+            }
+        }
+
+        #endregion
+
+        #region Wire Creation
+
+        public SignalPathMesh CreateNextWire(
+            WirePolarity polarity)
+        {
+            currentIndex++;
+
+            SignalPathMesh newMesh =
+                CreateWireMesh(currentIndex);
+
+            if (newMesh == null)
+                return null;
+
+            SignalPath newPath =
+                newMesh.GetComponent<SignalPath>();
+
+            if (newPath == null)
+            {
+                newPath =
+                    newMesh.gameObject.AddComponent<SignalPath>();
+            }
+
+            newMesh.SetPath(newPath);
+            newMesh.SetMaterial(GetMaterial(polarity));
+           // -------------------------------------------------
+// RUNTIME ELECTRICAL GLOW
+// -------------------------------------------------
+
+if (enableElectricalGlow &&
+    electricalGlowMaterial != null)
+{
+    SignalWireElectricalGlow glow =
+        newMesh.GetComponent<SignalWireElectricalGlow>();
+
+    if (glow == null)
+    {
+        glow = newMesh.gameObject
+            .AddComponent<SignalWireElectricalGlow>();
+    }
+
+    glow.Initialize(
+        newMesh,
+        electricalGlowMaterial);
+}
+
+// -------------------------------------------------
+// RUNTIME CURRENT FEEDBACK
+// -------------------------------------------------
+
+if (enableWireCurrentFeedback)
+{
+    SignalWireCurrentFeedback feedback =
+        newMesh.GetComponent<SignalWireCurrentFeedback>();
+
+    if (feedback == null)
+    {
+        feedback = newMesh.gameObject
+            .AddComponent<SignalWireCurrentFeedback>();
+    }
+}
+
+            int count = paths.Length;
+
+            Array.Resize(ref paths, count + 1);
+            paths[count] = newPath;
+
+            creationOrder.Add(newPath);
+
+            currentPath = newPath;
+            currentMesh = newMesh;        
+
+            Log(
+                $"Created wire: {newPath.name}");
+
+            return newMesh;
+        }
+
+                private void RefreshWireGlow(
             SignalPath path,
             SparkCircuitConnection connection)
         {
             if (path == null || connection == null)
                 return;
 
-            UnbindElectricalConnection(path);
+            SignalWireElectricalGlow glow =
+                path.GetComponent<SignalWireElectricalGlow>();
 
-            electricalBindings[path] = connection;
+            if (glow == null)
+                return;
 
-            SubscribeTerminal(connection.A);
-            SubscribeTerminal(connection.B);
+            SparkTerminal a = connection.A;
+            SparkTerminal b = connection.B;
 
-            RefreshWireMaterial(path, connection);
+            if (a == null || b == null)
+            {
+                glow.SetVoltage(0f);
+                return;
+            }
+
+            float voltageA = a.Voltage;
+            float voltageB = b.Voltage;
+
+            // For ideal wires, endpoints should share
+            // the same solved electrical node.
+            float representativeVoltage =
+                (voltageA + voltageB) * 0.5f;
+
+            glow.SetVoltage(representativeVoltage);
         }
 
-        /// <summary>
-        /// Removes the electrical binding from a signal path.
-        /// </summary>
-        public void UnbindElectricalConnection(
-            SignalPath path)
+        private SignalPathMesh CreateWireMesh(
+            int index)
         {
-            if (path == null)
-                return;
+            if (meshPrefab != null)
+            {
+                SignalPathMesh instance =
+                    Instantiate(meshPrefab, transform);
 
-            if (!electricalBindings.Remove(path))
-                return;
+                instance.name =
+                    $"SignalWire_{index}";
 
-            CleanupTerminalSubscriptions();
+                return instance;
+            }
+
+            GameObject wireObject =
+                new GameObject(
+                    $"SignalWire_{index}");
+
+            wireObject.transform.SetParent(
+                transform,
+                false);
+
+            wireObject.AddComponent<MeshFilter>();
+            wireObject.AddComponent<MeshRenderer>();
+
+            return wireObject
+                .AddComponent<SignalPathMesh>();
         }
 
         #endregion
 
-        #region Terminal Subscription
+        #region Electrical Bindings
+
+        
+public void BindElectricalConnection(
+    SignalPath path,
+    SparkCircuitConnection connection)
+{
+    
+    if (path == null || connection == null)
+        return;
+
+    ResolveCircuitSystem();
+    SubscribeCircuit();
+
+    // Remove any previous binding for this path.
+    UnbindElectricalConnection(path);
+
+    // A connection ID must identify only one path.
+    if (pathsByConnectionId.TryGetValue(
+            connection.Id,
+            out SignalPath existingPath) &&
+        existingPath != path)
+    {
+        // Remove stale duplicate visual without
+        // deleting the electrical connection.
+        RemovePathInternal(
+            existingPath,
+            false);
+    }
+
+    electricalBindings[path] = connection;
+    pathsByConnectionId[connection.Id] = path;
+
+    SubscribeTerminal(connection.A);
+    SubscribeTerminal(connection.B);
+
+    // -------------------------------------------------
+    // BIND WIRE CURRENT FEEDBACK
+    // -------------------------------------------------
+
+    SignalWireCurrentFeedback feedback =
+        path.GetComponent<SignalWireCurrentFeedback>();
+
+    if (feedback == null)
+    {
+        feedback =
+            path.gameObject.AddComponent<SignalWireCurrentFeedback>();
+    }
+
+    feedback.Bind(connection);
+
+    Debug.Log(
+        $"[WIRE CURRENT BIND] " +
+        $"Wire={path.name} | " +
+        $"ConnectionId={connection.Id} | " +
+        $"Feedback={feedback.name}",
+        path);
+
+    // -------------------------------------------------
+    // REFRESH VISUAL STATE
+    // -------------------------------------------------
+
+            RefreshWireMaterial(path, connection);
+            if (currentVisualPublisher == null)
+        {
+            currentVisualPublisher =
+                FindFirstObjectByType<
+                    SparkWireCurrentVisualPublisher>();
+        }
+
+        if (currentVisualPublisher != null)
+        {
+            currentVisualPublisher.RefreshCurrentVisuals();
+        }
+
+    Log(
+        $"Bound {path.name} to connection " +
+        $"{connection.Id}");
+}
+
+
+public void UnbindElectricalConnection(
+    SignalPath path)
+{
+    if (path == null)
+        return;
+
+    // -----------------------------------------------------
+    // 1. CLEAR RUNTIME CURRENT FEEDBACK
+    // -----------------------------------------------------
+
+    SignalWireCurrentFeedback currentFeedback =
+        path.GetComponent<SignalWireCurrentFeedback>();
+
+    if (currentFeedback != null)
+    {
+        currentFeedback.Unbind();
+    }
+
+    // -----------------------------------------------------
+    // 2. GET EXISTING ELECTRICAL CONNECTION
+    // -----------------------------------------------------
+
+    if (!electricalBindings.TryGetValue(
+        path,
+        out SparkCircuitConnection connection))
+    {
+        return;
+    }
+
+    // -----------------------------------------------------
+    // 3. REMOVE PATH-TO-CONNECTION BINDING
+    // -----------------------------------------------------
+
+    electricalBindings.Remove(path);
+
+    // -----------------------------------------------------
+    // 4. REMOVE CONNECTION ID LOOKUP
+    // -----------------------------------------------------
+
+    if (connection != null &&
+        pathsByConnectionId.TryGetValue(
+            connection.Id,
+            out SignalPath mappedPath) &&
+        mappedPath == path)
+    {
+        pathsByConnectionId.Remove(
+            connection.Id);
+    }
+
+    // -----------------------------------------------------
+    // 5. CLEAN UP TERMINAL EVENT SUBSCRIPTIONS
+    // -----------------------------------------------------
+
+    CleanupTerminalSubscriptions();
+}
+
+
+        public bool TryGetPath(
+            ulong connectionId,
+            out SignalPath path)
+        {
+            return pathsByConnectionId.TryGetValue(
+                connectionId,
+                out path) &&
+                path != null;
+        }
+
+        public bool TryGetConnectionId(
+            SignalPath path,
+            out ulong connectionId)
+        {
+            connectionId = 0UL;
+
+            if (path == null)
+                return false;
+
+            if (!electricalBindings.TryGetValue(
+                path,
+                out SparkCircuitConnection connection))
+            {
+                return false;
+            }
+
+            if (connection == null)
+                return false;
+
+            connectionId = connection.Id;
+            return true;
+        }
+
+        #endregion
+
+        #region Terminal Subscriptions
 
         private void SubscribeTerminal(
             SparkTerminal terminal)
@@ -148,16 +540,17 @@ namespace AAAUI.VFX
             if (subscribedTerminals.Count == 0)
                 return;
 
-            List<SparkTerminal> terminalsToRemove =
+            List<SparkTerminal> unused =
                 new List<SparkTerminal>();
 
-            foreach (SparkTerminal terminal in subscribedTerminals)
+            foreach (SparkTerminal terminal
+                in subscribedTerminals)
             {
                 if (!IsTerminalStillUsed(terminal))
-                    terminalsToRemove.Add(terminal);
+                    unused.Add(terminal);
             }
 
-            foreach (SparkTerminal terminal in terminalsToRemove)
+            foreach (SparkTerminal terminal in unused)
             {
                 if (terminal != null)
                 {
@@ -197,6 +590,21 @@ namespace AAAUI.VFX
             return false;
         }
 
+        private void UnsubscribeAllTerminals()
+        {
+            foreach (SparkTerminal terminal
+                in subscribedTerminals)
+            {
+                if (terminal != null)
+                {
+                    terminal.ElectricalStateChanged -=
+                        OnTerminalElectricalStateChanged;
+                }
+            }
+
+            subscribedTerminals.Clear();
+        }
+
         private void OnTerminalElectricalStateChanged(
             SparkTerminal terminal)
         {
@@ -229,110 +637,137 @@ namespace AAAUI.VFX
 
         #endregion
 
-        #region Electrical Visual State
+        #region Electrical Visuals
 
-       private void RefreshWireMaterial(
+      
+private void RefreshWireMaterial(
     SignalPath path,
     SparkCircuitConnection connection)
 {
     if (path == null || connection == null)
         return;
 
-    SparkTerminal terminalA = connection.A;
-    SparkTerminal terminalB = connection.B;
+    SparkTerminal a = connection.A;
+    SparkTerminal b = connection.B;
 
-    if (terminalA == null || terminalB == null)
-        return;
+    // -----------------------------------------------------
+    // VALIDATE TERMINALS
+    // -----------------------------------------------------
 
-   SparkTerminalPolarity polarity =
-    DeterminePolarity(
-        terminalA.ElectricalState.Voltage,
-        terminalB.ElectricalState.Voltage,
-        terminalA,
-        terminalB);
-
-            Debug.Log(
-    $"[WIRE POLARITY] {path.name} | " +
-    $"A={terminalA.name} " +
-    $"V={terminalA.ElectricalState.Voltage:F3} " +
-    $"P={terminalA.SolvedPolarity} | " +
-    $"B={terminalB.name} " +
-    $"V={terminalB.ElectricalState.Voltage:F3} " +
-    $"P={terminalB.SolvedPolarity} | " +
-    $"WIRE={polarity}");
-
-    UpdateWireMaterial(
-        path,
-        polarity);
-}
-       private SparkTerminalPolarity DeterminePolarity(
-    float voltageA,
-    float voltageB,
-    SparkTerminal terminalA,
-    SparkTerminal terminalB)
-{
-    bool aPowered =
-        Mathf.Abs(voltageA) > VoltageThreshold;
-
-    bool bPowered =
-        Mathf.Abs(voltageB) > VoltageThreshold;
-
-    // Only A has meaningful solved voltage.
-    if (aPowered && !bPowered)
-        return GetPolarity(voltageA);
-
-    // Only B has meaningful solved voltage.
-    if (!aPowered && bPowered)
-        return GetPolarity(voltageB);
-
-    // Both have meaningful solved voltage.
-    if (aPowered && bPowered)
+    if (a == null || b == null)
     {
-        // Opposite voltage signs indicate a polarity conflict.
-        if (Mathf.Sign(voltageA) !=
-            Mathf.Sign(voltageB))
+        SignalWireElectricalGlow missingGlow =
+            path.GetComponent<SignalWireElectricalGlow>();
+
+        if (missingGlow != null)
         {
-            return SparkTerminalPolarity.None;
+            missingGlow.SetVoltage(0f);
         }
 
-        return GetPolarity(
-            (voltageA + voltageB) * 0.5f);
+        return;
     }
 
-    // Neither terminal has meaningful solved voltage.
+    // -----------------------------------------------------
+    // READ SOLVED TERMINAL VOLTAGES
+    // -----------------------------------------------------
+
+    float voltageA = a.ElectricalState.Voltage;
+    float voltageB = b.ElectricalState.Voltage;
+
+    // -----------------------------------------------------
+    // UPDATE PHYSICAL WIRE MATERIAL
+    // -----------------------------------------------------
+
+    SparkTerminalPolarity polarity =
+        DeterminePolarity(
+            voltageA,
+            voltageB,
+            a,
+            b);
+
+    UpdateWireMaterial(path, polarity);
+
+    // -----------------------------------------------------
+    // UPDATE RUNTIME ELECTRICAL GLOW
+    // -----------------------------------------------------
+
+    SignalWireElectricalGlow glow =
+        path.GetComponent<SignalWireElectricalGlow>();
+
+    if (glow == null)
+        return;
+
+    // Ideal wires normally connect terminals belonging
+    // to the same electrical node.
     //
-    // Use authored/runtime polarity only as a
-    // visual fallback.
-    SparkTerminalPolarity polarityA =
-        terminalA != null
-            ? terminalA.EffectivePolarity
-            : SparkTerminalPolarity.None;
+    // Use their average voltage as a representative
+    // voltage relative to the solver reference.
+    float representativeVoltage =
+        (voltageA + voltageB) * 0.5f;
 
-    SparkTerminalPolarity polarityB =
-        terminalB != null
-            ? terminalB.EffectivePolarity
-            : SparkTerminalPolarity.None;
-
-    if (polarityA != SparkTerminalPolarity.None &&
-        polarityB == SparkTerminalPolarity.None)
-    {
-        return polarityA;
-    }
-
-    if (polarityB != SparkTerminalPolarity.None &&
-        polarityA == SparkTerminalPolarity.None)
-    {
-        return polarityB;
-    }
-
-    if (polarityA == polarityB &&
-        polarityA != SparkTerminalPolarity.None)
-    {
-        return polarityA;
-    }
-
-    return SparkTerminalPolarity.None;
+    glow.SetVoltage(representativeVoltage);
 }
+
+        private SparkTerminalPolarity DeterminePolarity(
+            float voltageA,
+            float voltageB,
+            SparkTerminal terminalA,
+            SparkTerminal terminalB)
+        {
+            bool aPowered =
+                Mathf.Abs(voltageA) > VoltageThreshold;
+
+            bool bPowered =
+                Mathf.Abs(voltageB) > VoltageThreshold;
+
+            if (aPowered && !bPowered)
+                return GetPolarity(voltageA);
+
+            if (!aPowered && bPowered)
+                return GetPolarity(voltageB);
+
+            if (aPowered && bPowered)
+            {
+                if (Mathf.Sign(voltageA) !=
+                    Mathf.Sign(voltageB))
+                {
+                    return SparkTerminalPolarity.None;
+                }
+
+                return GetPolarity(
+                    (voltageA + voltageB) * 0.5f);
+            }
+
+            SparkTerminalPolarity polarityA =
+                terminalA != null
+                    ? terminalA.EffectivePolarity
+                    : SparkTerminalPolarity.None;
+
+            SparkTerminalPolarity polarityB =
+                terminalB != null
+                    ? terminalB.EffectivePolarity
+                    : SparkTerminalPolarity.None;
+
+            if (polarityA != SparkTerminalPolarity.None &&
+                polarityB == SparkTerminalPolarity.None)
+            {
+                return polarityA;
+            }
+
+            if (polarityB != SparkTerminalPolarity.None &&
+                polarityA == SparkTerminalPolarity.None)
+            {
+                return polarityB;
+            }
+
+            if (polarityA == polarityB &&
+                polarityA != SparkTerminalPolarity.None)
+            {
+                return polarityA;
+            }
+
+            return SparkTerminalPolarity.None;
+        }
 
         private SparkTerminalPolarity GetPolarity(
             float voltage)
@@ -346,70 +781,20 @@ namespace AAAUI.VFX
             return SparkTerminalPolarity.None;
         }
 
-        #endregion
-
-        #region Wire Creation
-
-        /// <summary>
-        /// Creates a new signal wire.
-        /// Existing wires remain untouched.
-        /// </summary>
-       
-public SignalPathMesh CreateNextWire(WirePolarity polarity)
-{
-    currentIndex++;
-
-    SignalPathMesh newMesh =
-        CreateWireMesh(currentIndex);
-
-    SignalPath newPath =
-        newMesh.GetComponent<SignalPath>();
-
-    if (newPath == null)
-        newPath = newMesh.gameObject.AddComponent<SignalPath>();
-
-    newMesh.SetPath(newPath);
-    newMesh.SetMaterial(GetMaterial(polarity));
-
-    int count = paths.Length;
-    Array.Resize(ref paths, count + 1);
-    paths[count] = newPath;
-
-    currentPath = newPath;
-    currentMesh = newMesh;
-
-    return newMesh;
-}
-
-
-        private SignalPathMesh CreateWireMesh(
-            int index)
+        public void UpdateWireMaterial(
+            SignalPath path,
+            SparkTerminalPolarity polarity)
         {
-            if (meshPrefab != null)
-            {
-                SignalPathMesh mesh =
-                    Instantiate(
-                        meshPrefab,
-                        transform);
+            if (path == null)
+                return;
 
-                mesh.name =
-                    $"SignalWire_{index}";
+            SignalPathMesh mesh =
+                path.GetComponent<SignalPathMesh>();
 
-                return mesh;
-            }
+            if (mesh == null)
+                return;
 
-            GameObject wireObject =
-                new GameObject(
-                    $"SignalWire_{index}");
-
-            wireObject.transform.SetParent(
-                transform,
-                false);
-
-            wireObject.AddComponent<MeshFilter>();
-            wireObject.AddComponent<MeshRenderer>();
-
-            return wireObject.AddComponent<SignalPathMesh>();
+            mesh.SetMaterial(GetMaterial(polarity));
         }
 
         private Material GetMaterial(
@@ -423,7 +808,6 @@ public SignalPathMesh CreateNextWire(WirePolarity polarity)
                 case WirePolarity.Negative:
                     return negativeMaterial;
 
-                case WirePolarity.Neutral:
                 default:
                     return neutralMaterial;
             }
@@ -440,7 +824,6 @@ public SignalPathMesh CreateNextWire(WirePolarity polarity)
                 case SparkTerminalPolarity.Negative:
                     return negativeMaterial;
 
-                case SparkTerminalPolarity.None:
                 default:
                     return neutralMaterial;
             }
@@ -450,25 +833,16 @@ public SignalPathMesh CreateNextWire(WirePolarity polarity)
 
         #region Path Access
 
-        /// <summary>
-        /// Gets the path currently being edited.
-        /// </summary>
         public SignalPath GetCurrentPath()
         {
             return currentPath;
         }
 
-        /// <summary>
-        /// Gets the mesh belonging to the current path.
-        /// </summary>
         public SignalPathMesh GetCurrentMesh()
         {
             return currentMesh;
         }
 
-        /// <summary>
-        /// Gets the mesh associated with a specific path.
-        /// </summary>
         public SignalPathMesh GetMeshForPath(
             SignalPath path)
         {
@@ -478,9 +852,6 @@ public SignalPathMesh CreateNextWire(WirePolarity polarity)
             return path.GetComponent<SignalPathMesh>();
         }
 
-        /// <summary>
-        /// Ends editing of the current path without deleting it.
-        /// </summary>
         public void FinishCurrentPath()
         {
             currentPath = null;
@@ -489,114 +860,267 @@ public SignalPathMesh CreateNextWire(WirePolarity polarity)
 
         #endregion
 
-        #region Material Control
+        #region Advanced Wire Management
 
         /// <summary>
-        /// Updates the visual material of a signal path.
+        /// Remove a specific wire by connection ID.
         /// </summary>
-        public void UpdateWireMaterial(
-            SignalPath path,
-            SparkTerminalPolarity polarity)
+        public bool RemoveWire(ulong connectionId)
         {
-            if (path == null)
-                return;
+            if (!pathsByConnectionId.TryGetValue(
+                connectionId,
+                out SignalPath path))
+            {
+                return false;
+            }
 
-            SignalPathMesh mesh =
-                path.GetComponent<SignalPathMesh>();
+            return RemovePathInternal(path, true);
+        }
 
-            if (mesh == null)
-                return;
+        /// <summary>
+        /// Remove a specific wire by visual path.
+        /// </summary>
+        public bool RemoveWire(SignalPath path)
+        {
+            return RemovePathInternal(path, true);
+        }
 
-            mesh.SetMaterial(
-                GetMaterial(polarity));
+        /// <summary>
+        /// Compatibility method used by SignalWireBuilder.
+        /// </summary>
+        public bool RemovePath(SignalPath path)
+        {
+            return RemovePathInternal(path, true);
+        }
+
+        /// <summary>
+        /// Undo the newest visual wire.
+        /// </summary>
+        public bool UndoLastWire()
+        {
+            for (int i = creationOrder.Count - 1;
+                 i >= 0;
+                 i--)
+            {
+                SignalPath path = creationOrder[i];
+
+                if (path == null)
+                {
+                    creationOrder.RemoveAt(i);
+                    continue;
+                }
+
+                return RemovePathInternal(path, true);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Remove all drawn wires.
+        /// </summary>
+        public int UndoAllWires()
+        {
+            return ClearAllWiresInternal();
+        }
+
+        /// <summary>
+        /// Reset drawn wires during a level change.
+        /// </summary>
+        public void ClearLevelWires()
+        {
+            ClearAllWiresInternal();
+        }
+
+        /// <summary>
+        /// Compatibility with older code.
+        /// </summary>
+        public void ClearPaths()
+        {
+            ClearAllWiresInternal();
+        }
+
+       
+private bool RemovePathInternal(
+    SignalPath path,
+    bool removeElectricalConnection)
+{
+    if (path == null)
+        return false;
+
+    int index = Array.IndexOf(paths, path);
+
+    if (index < 0)
+        return false;
+
+    bool hasConnection =
+    electricalBindings.TryGetValue(
+        path,
+        out SparkCircuitConnection connection);
+
+ulong connectionId =
+    hasConnection ? connection.Id : 0UL;
+    // First remove this path from the manager's
+    // lookup tables. This prevents recursive removal
+    // when the circuit raises ConnectionRemoved.
+    UnbindElectricalConnection(path);
+
+    List<SignalPath> updated =
+        new List<SignalPath>(paths);
+
+    updated.RemoveAt(index);
+    paths = updated.ToArray();
+
+    creationOrder.Remove(path);
+
+    if (currentPath == path)
+    {
+        currentPath = null;
+        currentMesh = null;
+    }
+
+    // Hide the visual cable immediately.
+    path.gameObject.SetActive(false);
+
+    // Remove the actual electrical connection.
+   if (removeElectricalConnection && hasConnection)
+    {
+        if (circuitSystem == null)
+            ResolveCircuitSystem();
+
+        
+        if (circuitSystem != null)
+        {
+            int connectionsBefore =
+                circuitSystem.ConnectionCount;
+
+            bool removed =
+                circuitSystem.TryRemoveConnection(
+                    connectionId,
+                    out SparkCircuitConnection removedConnection);
+
+            int connectionsAfter =
+                circuitSystem.ConnectionCount;
+
+            if (removed)
+            {
+                Debug.Log(
+                    $"[WIRE REMOVE SUCCESS] " +
+                    $"Connection ID: {connectionId} | " +
+                    $"Connections: {connectionsBefore} -> {connectionsAfter}",
+                    this);
+            }
+            else
+            {
+                Debug.LogWarning(
+                    $"[WIRE REMOVE FAILED] " +
+                    $"Connection ID: {connectionId} | " +
+                    $"Connections: {connectionsBefore} -> {connectionsAfter}. " +
+                    "Connection was not found in SparkCircuitSystem.",
+                    this);
+            }
+        }
+        else
+        {
+            Debug.LogError(
+                "[WIRE REMOVE ERROR] SparkCircuitSystem is missing. " +
+                "The visual wire may be removed, but its electrical " +
+                "connection cannot be removed.",
+                this);
+        }
+
+            }
+
+            if (Application.isPlaying)
+                Destroy(path.gameObject);
+            else
+                DestroyImmediate(path.gameObject);
+
+            return true;
+        }
+
+        private int ClearAllWiresInternal()
+        {
+            if (clearingPaths)
+                return 0;
+
+            clearingPaths = true;
+
+            int removed = 0;
+
+            try
+            {
+                SignalPath[] snapshot =
+                    (SignalPath[])paths.Clone();
+
+                for (int i = snapshot.Length - 1;
+                     i >= 0;
+                     i--)
+                {
+                    if (snapshot[i] != null &&
+                        RemovePathInternal(
+                            snapshot[i],
+                            true))
+                    {
+                        removed++;
+                    }
+                }
+
+                paths = Array.Empty<SignalPath>();
+
+                electricalBindings.Clear();
+                pathsByConnectionId.Clear();
+                creationOrder.Clear();
+
+                UnsubscribeAllTerminals();
+
+                currentPath = null;
+                currentMesh = null;
+                currentIndex = -1;
+            }
+            finally
+            {
+                clearingPaths = false;
+            }
+
+            Log(
+                $"Cleared {removed} drawn wires.");
+
+            return removed;
         }
 
         #endregion
 
-        #region Cleanup
+        #region Unity UI Button Callbacks
 
-        /// <summary>
-        /// Deletes all created signal paths and clears
-        /// their electrical bindings.
-        /// </summary>
-        public void ClearPaths()
+        public void OnUndoLastWireClicked()
         {
-            UnsubscribeAllTerminals();
-
-            electricalBindings.Clear();
-
-            for (int i = 0; i < paths.Length; i++)
-            {
-                SignalPath path = paths[i];
-
-                if (path == null)
-                    continue;
-
-                Destroy(path.gameObject);
-            }
-
-            paths =
-                Array.Empty<SignalPath>();
-
-            currentIndex = -1;
-
-            currentPath = null;
-            currentMesh = null;
+            UndoLastWire();
         }
 
-        private void UnsubscribeAllTerminals()
+        public void OnUndoAllWiresClicked()
         {
-            foreach (SparkTerminal terminal
-                in subscribedTerminals)
-            {
-                if (terminal == null)
-                    continue;
-
-                terminal.ElectricalStateChanged -=
-                    OnTerminalElectricalStateChanged;
-            }
-
-            subscribedTerminals.Clear();
+            UndoAllWires();
         }
 
-        private void OnDestroy()
+        public void OnClearLevelWiresClicked()
         {
-            UnsubscribeAllTerminals();
+            ClearLevelWires();
         }
 
-        
+        #endregion
 
-        public bool RemovePath(SignalPath path)
+        #region Debug
+
+        private void Log(string message)
         {
-            if (path == null)
-                return false;
+            if (!logOperations)
+                return;
 
-            int index = Array.IndexOf(paths, path);
-
-            if (index < 0)
-                return false;
-
-            UnbindElectricalConnection(path);
-
-            List<SignalPath> updated =
-                new List<SignalPath>(paths);
-
-            updated.RemoveAt(index);
-            paths = updated.ToArray();
-
-            if (currentPath == path)
-            {
-                currentPath = null;
-                currentMesh = null;
-            }
-
-            path.gameObject.SetActive(false);
-            Destroy(path.gameObject);
-
-            return true; 
-                }
-
-
+            Debug.Log(
+                "[SignalPath_Manager] " + message,
+                this);
+        }
 
         #endregion
     }

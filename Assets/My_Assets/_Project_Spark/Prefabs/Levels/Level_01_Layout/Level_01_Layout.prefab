@@ -131,32 +131,20 @@ MonoBehaviour:
   terminals:
   - id: Battery_positive
     terminal: {fileID: 6129310125352558409}
-  - id: indicator
-    terminal: {fileID: 8895489796695253345}
   - id: Battery_negative
     terminal: {fileID: 6514072887332870672}
-  - id: indicator_02
-    terminal: {fileID: 806335049870719041}
   - id: Register_Output
     terminal: {fileID: 1135703841393450140}
-  - id: indicator_03
-    terminal: {fileID: 5394565477829452124}
   - id: Register_Input
     terminal: {fileID: 7526252595554342347}
-  - id: indicator_04
-    terminal: {fileID: 300748449714792137}
   - id: SwitchInput
     terminal: {fileID: 5110934304855057572}
   - id: SwitchOutput
     terminal: {fileID: 463923644033507544}
   - id: LED_Anode
     terminal: {fileID: 6611749108570430833}
-  - id: indicator_05
-    terminal: {fileID: 3562440353264056392}
   - id: LED_Cathode
     terminal: {fileID: 6204671045673096171}
-  - id: indicator_06
-    terminal: {fileID: 1480069736750527956}
   components:
   - id: PowerSupply_01
     component: {fileID: 3170105024404234530}
@@ -428,6 +416,41 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &1381172975068384566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1300067229988821543}
+  m_Layer: 0
+  m_Name: VoltagePopupPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1300067229988821543
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381172975068384566}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: 0, z: 0.52499986}
+  m_LocalScale: {x: 0.49999994, y: 0.5000002, z: 0.50000006}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 530065573449249317}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.2450006, y: -0.000050485134}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2335558165161290500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,6 +1277,7 @@ GameObject:
   - component: {fileID: 2892820009050367126}
   - component: {fileID: 667135647102576074}
   - component: {fileID: 2038157003630778804}
+  - component: {fileID: 5085530566975771073}
   m_Layer: 15
   m_Name: Resistor_1K
   m_TagString: Untagged
@@ -1500,6 +1524,21 @@ MonoBehaviour:
   overlayScale: {x: 1, y: 1, z: 1}
   overlayRotation: {x: 0, y: 0, z: 0}
   overlayOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &5085530566975771073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6139390918296780920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b261b6e48f3f9d4ab8d09d956dc5ca7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Electrical.SparkComponentCurrentFeedback
+  hasReading: 1
+  signedCurrentAmps: 0
+  changeThresholdAmps: 0.0001
 --- !u!1 &6693301870698393321
 GameObject:
   m_ObjectHideFlags: 0
@@ -1993,6 +2032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminalIndicator
   indicatorRenderer: {fileID: 3601909114524567189}
   intensityProperty: _Intensity
+  updateElectricalShaderProperties: 1
   indicatorMode: 2
   detectionMode: 2
   minimumVoltage: 0.05
@@ -2002,12 +2042,37 @@ MonoBehaviour:
   highIntensity: 3
   highVoltageThreshold: 3
   highCurrentThreshold: 0.02
+  smoothIntensity: 1
+  intensityRiseSpeed: 12
+  intensityFallSpeed: 6
+  enablePowerOnBurst: 1
+  burstIntensity: 2
+  burstDuration: 0.35
   blinkSpeed: 2
   smoothBlink: 1
   useUnscaledTime: 0
+  shortCircuitActive: 0
+  shortCircuitFlashSpeed: 12
+  shortCircuitFlashIntensity: 5
+  enableVoltagePopup: 1
+  popupPrefab: {fileID: 1559556390102783751, guid: 339359c7dedc87049a8e9fb38a567e3e, type: 3}
+  popupDisplayMode: 0
+  popupVoltageThreshold: 0.01
+  popupCooldown: 0
+  popupOnInitialVoltage: 0
+  reusePopup: 1
+  useIndicatorMeshPosition: 1
+  popupOffset: {x: 0, y: 0.2, z: 0}
+  offsetUsesLocalSpace: 1
+  positiveVoltageColor: {r: 0.25, g: 1, b: 0.55, a: 1}
+  negativeVoltageColor: {r: 0.35, g: 0.7, b: 1, a: 1}
+  voltageDecreaseColor: {r: 1, g: 0.7, b: 0.2, a: 1}
+  zeroVoltageColor: {r: 0.75, g: 0.8, b: 0.9, a: 1}
   showRuntimeValues: 0
   isActive: 0
   currentIntensity: 0
+  voltage: 0
+  current: 0
 --- !u!1 &7519099697840113184
 GameObject:
   m_ObjectHideFlags: 0
@@ -2213,6 +2278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminalIndicator
   indicatorRenderer: {fileID: 7482554402207803980}
   intensityProperty: _Intensity
+  updateElectricalShaderProperties: 1
   indicatorMode: 2
   detectionMode: 2
   minimumVoltage: 0.05
@@ -2222,12 +2288,37 @@ MonoBehaviour:
   highIntensity: 3
   highVoltageThreshold: 3
   highCurrentThreshold: 0.02
+  smoothIntensity: 1
+  intensityRiseSpeed: 12
+  intensityFallSpeed: 6
+  enablePowerOnBurst: 1
+  burstIntensity: 2
+  burstDuration: 0.35
   blinkSpeed: 2
   smoothBlink: 1
   useUnscaledTime: 0
+  shortCircuitActive: 0
+  shortCircuitFlashSpeed: 12
+  shortCircuitFlashIntensity: 5
+  enableVoltagePopup: 1
+  popupPrefab: {fileID: 1559556390102783751, guid: 339359c7dedc87049a8e9fb38a567e3e, type: 3}
+  popupDisplayMode: 0
+  popupVoltageThreshold: 0.01
+  popupCooldown: 0
+  popupOnInitialVoltage: 0
+  reusePopup: 1
+  useIndicatorMeshPosition: 1
+  popupOffset: {x: 0, y: 0.2, z: 0}
+  offsetUsesLocalSpace: 1
+  positiveVoltageColor: {r: 0.25, g: 1, b: 0.55, a: 1}
+  negativeVoltageColor: {r: 0.35, g: 0.7, b: 1, a: 1}
+  voltageDecreaseColor: {r: 1, g: 0.7, b: 0.2, a: 1}
+  zeroVoltageColor: {r: 0.75, g: 0.8, b: 0.9, a: 1}
   showRuntimeValues: 0
   isActive: 0
   currentIntensity: 0
+  voltage: 0
+  current: 0
 --- !u!1 &7797074354711334716
 GameObject:
   m_ObjectHideFlags: 0
@@ -2407,6 +2498,7 @@ GameObject:
   - component: {fileID: 5683324294340087958}
   - component: {fileID: 3170105024404234530}
   - component: {fileID: 9216947520024046116}
+  - component: {fileID: 8790740976883759835}
   m_Layer: 15
   m_Name: PowerSupply_01
   m_TagString: Untagged
@@ -2476,6 +2568,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.3, y: 0.4, z: 0.3}
   m_Center: {x: -2.3, y: 0.17, z: 0.42}
+--- !u!114 &8790740976883759835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8951892836992250863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b261b6e48f3f9d4ab8d09d956dc5ca7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Electrical.SparkComponentCurrentFeedback
+  hasReading: 0
+  signedCurrentAmps: 0
+  changeThresholdAmps: 0.0001
 --- !u!1 &9091575356834298557
 GameObject:
   m_ObjectHideFlags: 0
@@ -2648,6 +2755,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminalIndicator
   indicatorRenderer: {fileID: 4558066616764718614}
   intensityProperty: _Intensity
+  updateElectricalShaderProperties: 1
   indicatorMode: 2
   detectionMode: 2
   minimumVoltage: 0.05
@@ -2657,12 +2765,37 @@ MonoBehaviour:
   highIntensity: 3
   highVoltageThreshold: 3
   highCurrentThreshold: 0.02
+  smoothIntensity: 1
+  intensityRiseSpeed: 12
+  intensityFallSpeed: 6
+  enablePowerOnBurst: 1
+  burstIntensity: 2
+  burstDuration: 0.35
   blinkSpeed: 2
   smoothBlink: 1
   useUnscaledTime: 0
+  shortCircuitActive: 0
+  shortCircuitFlashSpeed: 12
+  shortCircuitFlashIntensity: 5
+  enableVoltagePopup: 1
+  popupPrefab: {fileID: 1559556390102783751, guid: 339359c7dedc87049a8e9fb38a567e3e, type: 3}
+  popupDisplayMode: 0
+  popupVoltageThreshold: 0.01
+  popupCooldown: 0
+  popupOnInitialVoltage: 0
+  reusePopup: 1
+  useIndicatorMeshPosition: 1
+  popupOffset: {x: 0, y: 0.2, z: 0}
+  offsetUsesLocalSpace: 1
+  positiveVoltageColor: {r: 0.25, g: 1, b: 0.55, a: 1}
+  negativeVoltageColor: {r: 0.35, g: 0.7, b: 1, a: 1}
+  voltageDecreaseColor: {r: 1, g: 0.7, b: 0.2, a: 1}
+  zeroVoltageColor: {r: 0.75, g: 0.8, b: 0.9, a: 1}
   showRuntimeValues: 0
   isActive: 0
   currentIntensity: 0
+  voltage: 0
+  current: 0
 --- !u!1001 &614357599183009027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2794,6 +2927,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6998843224335310597, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3972972043798435688}
+    - targetCorrespondingSourceObject: {fileID: 6998843224335310597, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2789838740491640114}
+    - targetCorrespondingSourceObject: {fileID: 6998843224335310597, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1103997191219390097}
   m_SourcePrefab: {fileID: 100100000, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
 --- !u!1 &1424040386643733165 stripped
 GameObject:
@@ -3033,6 +3172,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.2, y: 0.4, z: 0.2}
   m_Center: {x: 0, y: 0.16, z: 0}
+--- !u!114 &2789838740491640114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7612842792896342534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101a0f1d446275b4babd62498690857a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Electrical.SparkElectricalSafetyLimits
+  enableOvercurrentDetection: 1
+  maximumSafeCurrent: 2
+  resetHysteresis: 0.1
+  overcurrentActive: 0
+--- !u!114 &1103997191219390097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7612842792896342534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b261b6e48f3f9d4ab8d09d956dc5ca7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Electrical.SparkComponentCurrentFeedback
+  hasReading: 1
+  signedCurrentAmps: 0
+  changeThresholdAmps: 0.0001
 --- !u!1001 &1429257330403198889
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3182,13 +3352,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 806335049870719041}
-    - targetCorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8450842448348574474}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
 --- !u!23 &1187269359735779567 stripped
 MeshRenderer:
@@ -3200,61 +3364,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
   m_PrefabInstance: {fileID: 1463451496373616500}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6927661512578329684 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-  m_PrefabInstance: {fileID: 1463451496373616500}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &806335049870719041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6927661512578329684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
-  owner: {fileID: 6872019685539112111}
-  kind: 0
-  polarity: 0
-  runtimePolarityThreshold: 0.05
-  runtimePolarity: 0
-  acceptsInput: 1
-  providesOutput: 1
-  connectionKind: 0
-  maxConnections: 1
---- !u!114 &8450842448348574474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6927661512578329684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e3c933c4839e14488f8ae6953b862fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminalIndicator
-  indicatorRenderer: {fileID: 1187269359735779567}
-  intensityProperty: _Intensity
-  indicatorMode: 2
-  detectionMode: 2
-  minimumVoltage: 0.05
-  minimumCurrent: 0.001
-  offIntensity: 0
-  lowIntensity: 0.5
-  highIntensity: 3
-  highVoltageThreshold: 3
-  highCurrentThreshold: 0.02
-  blinkSpeed: 2
-  smoothBlink: 1
-  useUnscaledTime: 0
-  showRuntimeValues: 0
-  isActive: 0
-  currentIntensity: 0
 --- !u!23 &6992775010065253832 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8449996119470504636, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
@@ -3569,6 +3678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminalIndicator
   indicatorRenderer: {fileID: 6434930981683290678}
   intensityProperty: _Intensity
+  updateElectricalShaderProperties: 1
   indicatorMode: 2
   detectionMode: 2
   minimumVoltage: 0.05
@@ -3578,12 +3688,37 @@ MonoBehaviour:
   highIntensity: 3
   highVoltageThreshold: 3
   highCurrentThreshold: 0.02
+  smoothIntensity: 1
+  intensityRiseSpeed: 12
+  intensityFallSpeed: 6
+  enablePowerOnBurst: 1
+  burstIntensity: 2
+  burstDuration: 0.35
   blinkSpeed: 2
   smoothBlink: 1
   useUnscaledTime: 0
+  shortCircuitActive: 0
+  shortCircuitFlashSpeed: 12
+  shortCircuitFlashIntensity: 5
+  enableVoltagePopup: 1
+  popupPrefab: {fileID: 1559556390102783751, guid: 339359c7dedc87049a8e9fb38a567e3e, type: 3}
+  popupDisplayMode: 0
+  popupVoltageThreshold: 0.01
+  popupCooldown: 0
+  popupOnInitialVoltage: 0
+  reusePopup: 1
+  useIndicatorMeshPosition: 1
+  popupOffset: {x: 0, y: 0.2, z: 0}
+  offsetUsesLocalSpace: 1
+  positiveVoltageColor: {r: 0.25, g: 1, b: 0.55, a: 1}
+  negativeVoltageColor: {r: 0.35, g: 0.7, b: 1, a: 1}
+  voltageDecreaseColor: {r: 1, g: 0.7, b: 0.2, a: 1}
+  zeroVoltageColor: {r: 0.75, g: 0.8, b: 0.9, a: 1}
   showRuntimeValues: 0
   isActive: 0
   currentIntensity: 0
+  voltage: 0
+  current: 0
 --- !u!23 &8608063915982523719 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 7071182760956848314, guid: 534d54ea3f6d3ac4181b57a293317424, type: 3}
@@ -3664,13 +3799,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5394565477829452124}
-    - targetCorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5572704743837756271}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
 --- !u!23 &3601909114524567189 stripped
 MeshRenderer:
@@ -3682,61 +3811,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
   m_PrefabInstance: {fileID: 3875825841684859150}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4730315627806022190 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-  m_PrefabInstance: {fileID: 3875825841684859150}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5394565477829452124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4730315627806022190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
-  owner: {fileID: 6872019685539112111}
-  kind: 0
-  polarity: 0
-  runtimePolarityThreshold: 0.05
-  runtimePolarity: 0
-  acceptsInput: 1
-  providesOutput: 1
-  connectionKind: 0
-  maxConnections: 1
---- !u!114 &5572704743837756271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4730315627806022190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e3c933c4839e14488f8ae6953b862fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminalIndicator
-  indicatorRenderer: {fileID: 3601909114524567189}
-  intensityProperty: _Intensity
-  indicatorMode: 2
-  detectionMode: 2
-  minimumVoltage: 0.05
-  minimumCurrent: 0.001
-  offIntensity: 0
-  lowIntensity: 0.5
-  highIntensity: 3
-  highVoltageThreshold: 3
-  highCurrentThreshold: 0.02
-  blinkSpeed: 2
-  smoothBlink: 1
-  useUnscaledTime: 0
-  showRuntimeValues: 0
-  isActive: 0
-  currentIntensity: 0
 --- !u!1001 &4284259293425734029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3812,13 +3886,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3562440353264056392}
-    - targetCorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2483868949866180373}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
 --- !u!4 &4394957285562250854 stripped
 Transform:
@@ -3830,61 +3898,6 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 303217067205414811, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
   m_PrefabInstance: {fileID: 4284259293425734029}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5699438583965942445 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-  m_PrefabInstance: {fileID: 4284259293425734029}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3562440353264056392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5699438583965942445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
-  owner: {fileID: 6872019685539112111}
-  kind: 0
-  polarity: 0
-  runtimePolarityThreshold: 0.05
-  runtimePolarity: 0
-  acceptsInput: 1
-  providesOutput: 1
-  connectionKind: 0
-  maxConnections: 1
---- !u!114 &2483868949866180373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5699438583965942445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e3c933c4839e14488f8ae6953b862fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminalIndicator
-  indicatorRenderer: {fileID: 4558066616764718614}
-  intensityProperty: _Intensity
-  indicatorMode: 2
-  detectionMode: 2
-  minimumVoltage: 0.05
-  minimumCurrent: 0.001
-  offIntensity: 0
-  lowIntensity: 0.5
-  highIntensity: 3
-  highVoltageThreshold: 3
-  highCurrentThreshold: 0.02
-  blinkSpeed: 2
-  smoothBlink: 1
-  useUnscaledTime: 0
-  showRuntimeValues: 0
-  isActive: 0
-  currentIntensity: 0
 --- !u!1001 &4744349486198709813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4371,74 +4384,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8895489796695253345}
-    - targetCorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8760679293964905510}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
 --- !u!23 &3898732649060775564 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8449996119470504636, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
   m_PrefabInstance: {fileID: 4854737475803532336}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &3977725285045329680 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-  m_PrefabInstance: {fileID: 4854737475803532336}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8895489796695253345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3977725285045329680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
-  owner: {fileID: 6872019685539112111}
-  kind: 0
-  polarity: 0
-  runtimePolarityThreshold: 0.05
-  runtimePolarity: 0
-  acceptsInput: 1
-  providesOutput: 1
-  connectionKind: 0
-  maxConnections: 1
---- !u!114 &8760679293964905510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3977725285045329680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e3c933c4839e14488f8ae6953b862fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminalIndicator
-  indicatorRenderer: {fileID: 5145996252396553131}
-  intensityProperty: _Intensity
-  indicatorMode: 2
-  detectionMode: 2
-  minimumVoltage: 0.05
-  minimumCurrent: 0.001
-  offIntensity: 0
-  lowIntensity: 0.5
-  highIntensity: 3
-  highVoltageThreshold: 3
-  highCurrentThreshold: 0.02
-  blinkSpeed: 2
-  smoothBlink: 1
-  useUnscaledTime: 0
-  showRuntimeValues: 0
-  isActive: 0
-  currentIntensity: 0
 --- !u!4 &4960089909633657819 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
@@ -4746,6 +4698,9 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -2577548232221058511, guid: 534d54ea3f6d3ac4181b57a293317424, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1300067229988821543}
+    - targetCorrespondingSourceObject: {fileID: -2577548232221058511, guid: 534d54ea3f6d3ac4181b57a293317424, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 4960089909633657819}
     - targetCorrespondingSourceObject: {fileID: -2484921068739079471, guid: 534d54ea3f6d3ac4181b57a293317424, type: 3}
       insertIndex: -1
@@ -4900,6 +4855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminalIndicator
   indicatorRenderer: {fileID: 1187269359735779567}
   intensityProperty: _Intensity
+  updateElectricalShaderProperties: 1
   indicatorMode: 1
   detectionMode: 2
   minimumVoltage: 0.05
@@ -4909,12 +4865,37 @@ MonoBehaviour:
   highIntensity: 3
   highVoltageThreshold: 3
   highCurrentThreshold: 0.02
+  smoothIntensity: 1
+  intensityRiseSpeed: 12
+  intensityFallSpeed: 6
+  enablePowerOnBurst: 1
+  burstIntensity: 2
+  burstDuration: 0.35
   blinkSpeed: 2
   smoothBlink: 1
   useUnscaledTime: 0
+  shortCircuitActive: 0
+  shortCircuitFlashSpeed: 12
+  shortCircuitFlashIntensity: 5
+  enableVoltagePopup: 1
+  popupPrefab: {fileID: 1559556390102783751, guid: 339359c7dedc87049a8e9fb38a567e3e, type: 3}
+  popupDisplayMode: 0
+  popupVoltageThreshold: 0.01
+  popupCooldown: 0
+  popupOnInitialVoltage: 0
+  reusePopup: 1
+  useIndicatorMeshPosition: 1
+  popupOffset: {x: 0, y: 0.2, z: 0}
+  offsetUsesLocalSpace: 1
+  positiveVoltageColor: {r: 0.25, g: 1, b: 0.55, a: 1}
+  negativeVoltageColor: {r: 0.35, g: 0.7, b: 1, a: 1}
+  voltageDecreaseColor: {r: 1, g: 0.7, b: 0.2, a: 1}
+  zeroVoltageColor: {r: 0.75, g: 0.8, b: 0.9, a: 1}
   showRuntimeValues: 0
   isActive: 0
   currentIntensity: 0
+  voltage: 0
+  current: 0
 --- !u!4 &6695488305793945599 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 534d54ea3f6d3ac4181b57a293317424, type: 3}
@@ -5028,6 +5009,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminalIndicator
   indicatorRenderer: {fileID: 5145996252396553131}
   intensityProperty: _Intensity
+  updateElectricalShaderProperties: 1
   indicatorMode: 2
   detectionMode: 2
   minimumVoltage: 0.05
@@ -5037,12 +5019,37 @@ MonoBehaviour:
   highIntensity: 3
   highVoltageThreshold: 3
   highCurrentThreshold: 0.02
+  smoothIntensity: 1
+  intensityRiseSpeed: 12
+  intensityFallSpeed: 6
+  enablePowerOnBurst: 1
+  burstIntensity: 2
+  burstDuration: 0.35
   blinkSpeed: 2
   smoothBlink: 1
   useUnscaledTime: 0
+  shortCircuitActive: 0
+  shortCircuitFlashSpeed: 12
+  shortCircuitFlashIntensity: 5
+  enableVoltagePopup: 1
+  popupPrefab: {fileID: 1559556390102783751, guid: 339359c7dedc87049a8e9fb38a567e3e, type: 3}
+  popupDisplayMode: 0
+  popupVoltageThreshold: 0.01
+  popupCooldown: 0
+  popupOnInitialVoltage: 0
+  reusePopup: 1
+  useIndicatorMeshPosition: 1
+  popupOffset: {x: 0, y: 0.2, z: 0}
+  offsetUsesLocalSpace: 1
+  positiveVoltageColor: {r: 0.25, g: 1, b: 0.55, a: 1}
+  negativeVoltageColor: {r: 0.35, g: 0.7, b: 1, a: 1}
+  voltageDecreaseColor: {r: 1, g: 0.7, b: 0.2, a: 1}
+  zeroVoltageColor: {r: 0.75, g: 0.8, b: 0.9, a: 1}
   showRuntimeValues: 0
   isActive: 0
   currentIntensity: 0
+  voltage: 0
+  current: 0
 --- !u!1001 &6735214549583932845
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5118,69 +5125,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 300748449714792137}
-    - targetCorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1321553018354275563}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
---- !u!1 &2960149062889946765 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-  m_PrefabInstance: {fileID: 6735214549583932845}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &300748449714792137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2960149062889946765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
-  owner: {fileID: 6872019685539112111}
-  kind: 0
-  polarity: 0
-  runtimePolarityThreshold: 0.05
-  runtimePolarity: 0
-  acceptsInput: 1
-  providesOutput: 1
-  connectionKind: 0
-  maxConnections: 1
---- !u!114 &1321553018354275563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2960149062889946765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e3c933c4839e14488f8ae6953b862fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminalIndicator
-  indicatorRenderer: {fileID: 6434930981683290678}
-  intensityProperty: _Intensity
-  indicatorMode: 2
-  detectionMode: 2
-  minimumVoltage: 0.05
-  minimumCurrent: 0.001
-  offIntensity: 0
-  lowIntensity: 0.5
-  highIntensity: 3
-  highVoltageThreshold: 3
-  highCurrentThreshold: 0.02
-  blinkSpeed: 2
-  smoothBlink: 1
-  useUnscaledTime: 0
-  showRuntimeValues: 0
-  isActive: 0
-  currentIntensity: 0
 --- !u!23 &6434930981683290678 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 303217067205414811, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
@@ -5332,69 +5278,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1480069736750527956}
-    - targetCorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2218555585772668284}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
---- !u!1 &1697478640394073847 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8389297982842639136, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
-  m_PrefabInstance: {fileID: 7197422654448264663}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1480069736750527956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697478640394073847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
-  owner: {fileID: 6872019685539112111}
-  kind: 0
-  polarity: 0
-  runtimePolarityThreshold: 0.05
-  runtimePolarity: 0
-  acceptsInput: 1
-  providesOutput: 1
-  connectionKind: 0
-  maxConnections: 1
---- !u!114 &2218555585772668284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697478640394073847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e3c933c4839e14488f8ae6953b862fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminalIndicator
-  indicatorRenderer: {fileID: 7482554402207803980}
-  intensityProperty: _Intensity
-  indicatorMode: 2
-  detectionMode: 2
-  minimumVoltage: 0.05
-  minimumCurrent: 0.001
-  offIntensity: 0
-  lowIntensity: 0.5
-  highIntensity: 3
-  highVoltageThreshold: 3
-  highCurrentThreshold: 0.02
-  blinkSpeed: 2
-  smoothBlink: 1
-  useUnscaledTime: 0
-  showRuntimeValues: 0
-  isActive: 0
-  currentIntensity: 0
 --- !u!4 &7235271087062352444 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}

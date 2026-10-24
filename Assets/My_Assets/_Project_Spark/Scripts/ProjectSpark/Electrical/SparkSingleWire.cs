@@ -336,17 +336,18 @@ public float Power => ElectricalState.Power;
         // UNITY
         // ============================================================
 
-        protected override void Awake()
-        {
-            base.Awake();          
+      protected override void Awake()
+{
+    base.Awake();
 
-            ResolveCircuitSystem();
+    propertyBlock = new MaterialPropertyBlock();
 
-            Subscribe();
+    ResolveCircuitSystem();
 
-            RefreshVisuals();
-             propertyBlock = new MaterialPropertyBlock();
-        }
+    Subscribe();
+
+    RefreshVisuals();
+}
         
 
 
@@ -545,14 +546,20 @@ public void RemovePhysicalContact()
                     HandleTerminalElectricalStateChanged;
             }
 
-            if (circuitSystem != null)
-            {
-                circuitSystem.ElectricalFlowVisualsChanged -=
-                    HandleElectricalFlowVisualsChanged;
+           if (circuitSystem != null)
+{
+    circuitSystem.ElectricalFlowVisualsChanged -=
+        HandleElectricalFlowVisualsChanged;
 
-                circuitSystem.ElectricalFlowVisualsChanged +=
-                    HandleElectricalFlowVisualsChanged;
-            }
+    circuitSystem.ElectricalFlowVisualsChanged +=
+        HandleElectricalFlowVisualsChanged;
+
+    circuitSystem.ConnectionRemoved -=
+        HandleConnectionRemoved;
+
+    circuitSystem.ConnectionRemoved +=
+        HandleConnectionRemoved;
+}
         }
 
 
@@ -570,12 +577,46 @@ public void RemovePhysicalContact()
                     HandleTerminalElectricalStateChanged;
             }
 
-            if (circuitSystem != null)
-            {
-                circuitSystem.ElectricalFlowVisualsChanged -=
-                    HandleElectricalFlowVisualsChanged;
-            }
+           if (circuitSystem != null)
+{
+    circuitSystem.ElectricalFlowVisualsChanged -=
+        HandleElectricalFlowVisualsChanged;
+
+    circuitSystem.ConnectionRemoved -=
+        HandleConnectionRemoved;
+}
         }
+        
+private void HandleConnectionRemoved(
+    SparkCircuitConnection connection)
+{
+    if (connection == null)
+    {
+        return;
+    }
+
+    bool changed = false;
+
+    if (hasTerminalAConnection &&
+        terminalAConnectionId == connection.Id)
+    {
+        ClearContactA();
+        changed = true;
+    }
+
+    if (hasTerminalBConnection &&
+        terminalBConnectionId == connection.Id)
+    {
+        ClearContactB();
+        changed = true;
+    }
+
+    if (changed)
+    {
+        RefreshVisuals();
+    }
+}
+
 
 
         private void HandleTerminalElectricalStateChanged(

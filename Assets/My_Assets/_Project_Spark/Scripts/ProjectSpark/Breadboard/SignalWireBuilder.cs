@@ -233,82 +233,123 @@ public void EndWire(Vector2 screenPosition)
 /// successfully registers the connection.
 /// </summary>
 
+
 public bool TryEndWire(Vector2 screenPosition)
 {
     if (!drawing)
         return false;
 
-    // Find the destination terminal.
+    // =========================================================
+    // 1. RESOLVE DESTINATION TERMINAL
+    // =========================================================
+
     SparkTerminal endTerminal =
         FindTerminalAtScreenPosition(screenPosition);
 
-    bool connected = false;
-
-    // Register the actual electrical connection.
-    if (startTerminal != null && endTerminal != null)
-    {
-        connected = TryCommitElectricalConnection(
-            startTerminal,
-            endTerminal);
-    }
-
-    if (connected)
-    {
-        // -------------------------------------------------
-        // COMMIT FINAL CABLE ENDPOINT
-        // -------------------------------------------------
-
-        if (currentPath != null)
-        {
-            // Remove the temporary mouse preview.
-            currentPath.ClearPreview();
-
-            // Extend the physical cable to the exact
-            // destination terminal attachment position.
-            currentPath.AddPoint(
-                endTerminal.transform.position);
-
-            // Rebuild the completed 3D cable geometry.
-            Rebuild();
-        }
-
-        if (logWireOperations)
-        {
-            Debug.Log(
-                $"[WIRE] CONNECTED: " +
-                $"{startTerminal.name} ↔ {endTerminal.name}",
-                this);
-        }
-
-        // Preserve the completed visual cable.
-        CompleteVisualWire();
-    }
-    else
+    if (startTerminal == null ||
+        endTerminal == null ||
+        currentPath == null)
     {
         if (logWireOperations)
         {
             Debug.LogWarning(
-                "[WIRE] Connection rejected. " +
-                "Removing unfinished visual cable.",
+                "[WIRE] Connection cancelled: " +
+                "Missing start terminal, end terminal, " +
+                "or visual path.",
                 this);
         }
 
-        // Remove the uncommitted cable preview.
         DiscardVisualWire();
+        return false;
     }
 
-    return connected;
+    // =========================================================
+    // 2. VALIDATE AND COMMIT ELECTRICAL CONNECTION
+    // =========================================================
+
+    bool connected = TryCommitElectricalConnection(
+        startTerminal,
+        endTerminal);
+
+    if (!connected)
+    {
+        if (logWireOperations)
+        {
+            Debug.LogWarning(
+                $"[WIRE] Connection rejected: " +
+                $"{startTerminal.name} -> {endTerminal.name}",
+                this);
+        }
+
+        DiscardVisualWire();
+        return false;
+    }
+
+    // =========================================================
+    // 3. COMMIT PHYSICAL CABLE ENDPOINT
+    // =========================================================
+
+    // The temporary preview must not become a permanent
+    // routing point.
+    currentPath.ClearPreview();
+
+    // Add the exact destination terminal position.
+    currentPath.AddPoint(
+        endTerminal.transform.position);
+
+    // Generate the final rounded cable mesh.
+    Rebuild();
+
+    // =========================================================
+    // 4. REPORT SUCCESS
+    // =========================================================
+
+    if (logWireOperations)
+    {
+        Debug.Log(
+            $"[WIRE] CONNECTED\n" +
+            $"Start: {startTerminal.name}\n" +
+            $"End: {endTerminal.name}\n" +
+            $"Path Points: {currentPath.PointCount}\n" +
+            $"Circuit Connections: " +
+            $"{(circuit != null ? circuit.ConnectionCount : 0)}",
+            this);
+    }
+
+    // =========================================================
+    // 5. PRESERVE FINISHED CABLE
+    // =========================================================
+
+    // This must release the builder's active state,
+    // NOT delete the completed cable.
+    CompleteVisualWire();
+
+    return true;
 }
+
+
 
 private void CompleteVisualWire()
 {
     if (currentPath != null)
     {
         currentPath.ClearPreview();
+        Rebuild();
     }
 
-    Rebuild();
-    ResetWireState();
+    if (pathManager != null)
+    {
+        pathManager.FinishCurrentPath();
+    }
+
+    drawing = false;
+    currentPath = null;
+    startTerminal = null;
+
+    lastColumn = -1;
+    lastRow = -1;
+
+    currentEnd = Vector3.zero;
 }
 
 private void DiscardVisualWire()

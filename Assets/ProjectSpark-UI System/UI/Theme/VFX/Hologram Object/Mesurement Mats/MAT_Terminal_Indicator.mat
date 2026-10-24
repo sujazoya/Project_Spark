@@ -21,18 +21,17 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MAT_Terminal_Indicator
-  m_Shader: {fileID: -6465566751694194690, guid: 62de71662147ece458fb5c3b09ab30c7, type: 3}
+  m_Shader: {fileID: 4800000, guid: 68814187efb8cfd40a864beef82a6991, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - _SURFACE_TYPE_TRANSPARENT
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap:
-    RenderType: Transparent
+  stringTagMap: {}
   disabledShaderPasses:
   - DepthOnly
   - MOTIONVECTORS
@@ -58,20 +57,41 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 0
     - _CastShadows: 1
+    - _CoreStrength: 0.6
     - _Cull: 0
     - _DstBlend: 10
     - _DstBlendAlpha: 10
+    - _FlickerAmount: 0.08
+    - _FlickerSpeed: 13
+    - _FlowScale: 12
+    - _FlowSpeed: 2.5
+    - _FlowStrength: 0.4
     - _Intensity: 2.98
+    - _Opacity: 1
+    - _Polarity: 0
+    - _PulseAmount: 0.15
+    - _PulseSpeed: 2
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _RimPower: 3
+    - _RimStrength: 1.5
+    - _ShortCircuit: 0
     - _SrcBlend: 5
     - _SrcBlendAlpha: 1
     - _Surface: 1
+    - _Voltage: 0
+    - _VoltageForFullGlow: 5
+    - _WarningFlashSpeed: 14
     - _XRMotionVectorsPass: 1
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 2
     m_Colors:
+    - _BaseColor: {r: 0.025, g: 0.089999996, b: 0.13999996, a: 1}
     - _Color: {r: 0, g: 0.90434813, b: 1, a: 1}
+    - _NegativeColor: {r: 0.04, g: 0.39999998, b: 1, a: 1}
+    - _NeutralColor: {r: 0.04, g: 0.8, b: 0.95, a: 1}
+    - _PositiveColor: {r: 1, g: 0.070539415, b: 0, a: 1}
+    - _WarningColor: {r: 1, g: 0.30440828, b: 0.011764705, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

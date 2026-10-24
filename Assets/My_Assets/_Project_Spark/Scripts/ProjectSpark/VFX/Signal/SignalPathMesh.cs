@@ -88,20 +88,12 @@ private void BuildCurve(Vector3[] points)
     if (points == null || points.Length < 2)
         return;
 
-    // =========================================================
-    // 1. REMOVE DUPLICATE POINTS
-    // =========================================================
+    List<Vector3> controls = new List<Vector3>();
 
-    List<Vector3> controls =
-        new List<Vector3>(points.Length);
-
-    for (int i = 0; i < points.Length; i++)
+    foreach (Vector3 point in points)
     {
-        Vector3 point = points[i];
-
         if (controls.Count == 0 ||
-            (controls[controls.Count - 1] - point)
-                .sqrMagnitude > Epsilon)
+            (controls[controls.Count - 1] - point).sqrMagnitude > Epsilon)
         {
             controls.Add(point);
         }
@@ -110,135 +102,82 @@ private void BuildCurve(Vector3[] points)
     if (controls.Count < 2)
         return;
 
-    // =========================================================
-    // 2. AUTOMATIC PHYSICAL CABLE ARCH
-    // =========================================================
-    // When there are only two endpoints, insert one gentle
-    // elevated control point.
-    //
-    // This produces a natural cable shape without creating
-    // unwanted zigzags.
-    // =========================================================
-
-    if (smoothCurve &&
-        controls.Count == 2 &&
-        cableArchHeight > 0f)
+    // Smooth, elevated cable between two terminals.
+    if (smoothCurve && controls.Count == 2)
     {
         Vector3 start = controls[0];
         Vector3 end = controls[1];
 
-        Vector3 midpoint =
-            (start + end) * 0.5f;
+        float length = Vector3.Distance(start, end);
 
-        midpoint += Vector3.up * cableArchHeight;
+        float height = Mathf.Min(
+            cableArchHeight,
+            length * 0.25f
+        );
 
-        controls.Insert(1, midpoint);
-    }
+        Vector3 p1 = Vector3.Lerp(start, end, 0.33f)
+                     + Vector3.up * height;
 
-    // =========================================================
-    // 3. GENERATE SMOOTH CURVE
-    // =========================================================
+        Vector3 p2 = Vector3.Lerp(start, end, 0.67f)
+                     + Vector3.up * height;
 
-    int steps = smoothCurve
-        ? Mathf.Max(2, subdivisionsPerSegment)
-        : 1;
+        int steps = Mathf.Max(12, subdivisionsPerSegment * 3);
 
-    for (int segment = 0;
-         segment < controls.Count - 1;
-         segment++)
-    {
-        Vector3 p0 =
-            controls[Mathf.Max(0, segment - 1)];
-
-        Vector3 p1 =
-            controls[segment];
-
-        Vector3 p2 =
-            controls[segment + 1];
-
-        Vector3 p3 =
-            controls[Mathf.Min(
-                controls.Count - 1,
-                segment + 2)];
-
-        for (int step = 0; step < steps; step++)
+        for (int i = 0; i <= steps; i++)
         {
-            float t = (float)step / steps;
+            float t = i / (float)steps;
+            float inv = 1f - t;
 
-            Vector3 position;
+            Vector3 position =
+                inv * inv * inv * start +
+                3f * inv * inv * t * p1 +
+                3f * inv * t * t * p2 +
+                t * t * t * end;
 
-            if (smoothCurve)
+            curve.Add(position);
+        }
+    }
+    else
+    {
+        // Preserve deliberate routing waypoints.
+        for (int segment = 0; segment < controls.Count - 1; segment++)
+        {
+            Vector3 start = controls[segment];
+            Vector3 end = controls[segment + 1];
+
+            int steps = smoothCurve
+                ? Mathf.Max(2, subdivisionsPerSegment)
+                : 1;
+
+            for (int i = 0; i < steps; i++)
             {
-                position = CatmullRom(
-                    p0,
-                    p1,
-                    p2,
-                    p3,
-                    t);
-            }
-            else
-            {
-                position = Vector3.Lerp(
-                    p1,
-                    p2,
-                    t);
-            }
+                float t = i / (float)steps;
 
-            // Optional sag.
-            // Keep at zero for a clean elevated cable.
-            if (sag > 0f)
-            {
-                float sagFactor =
-                    Mathf.Sin(t * Mathf.PI);
+                Vector3 position = smoothCurve
+                    ? CatmullRom(
+                        controls[Mathf.Max(0, segment - 1)],
+                        start,
+                        end,
+                        controls[Mathf.Min(controls.Count - 1, segment + 2)],
+                        t)
+                    : Vector3.Lerp(start, end, t);
 
-                position += Vector3.down *
-                    sag * sagFactor;
-            }
-
-            if (curve.Count == 0 ||
-                (curve[curve.Count - 1] - position)
-                    .sqrMagnitude > Epsilon)
-            {
                 curve.Add(position);
             }
         }
+
+        curve.Add(controls[controls.Count - 1]);
     }
 
-    // =========================================================
-    // 4. PRESERVE EXACT ENDPOINT
-    // =========================================================
-
-    Vector3 finalPoint =
-        controls[controls.Count - 1];
-
-    if (curve.Count == 0 ||
-        (curve[curve.Count - 1] - finalPoint)
-            .sqrMagnitude > Epsilon)
-    {
-        curve.Add(finalPoint);
-    }
-
-    // =========================================================
-    // 5. CALCULATE ACTUAL CABLE LENGTH
-    // =========================================================
-
-    if (curve.Count == 0)
-        return;
-
-    float totalDistance = 0f;
-
+    float total = 0f;
     distances.Add(0f);
 
     for (int i = 1; i < curve.Count; i++)
     {
-        totalDistance += Vector3.Distance(
-            curve[i - 1],
-            curve[i]);
-
-        distances.Add(totalDistance);
+        total += Vector3.Distance(curve[i - 1], curve[i]);
+        distances.Add(total);
     }
 }
-
 
         private Vector3 CatmullRom(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
         {
@@ -298,7 +237,16 @@ private void BuildCurve(Vector3[] points)
         Vector3.up * 0.08f +
         radial * radius);
                     normals[index] = transform.InverseTransformDirection(radial).normalized;
-                    uv[index] = new Vector2(distances[i] / uvMetersPerTile, v);
+                    float totalLength =
+    Mathf.Max(
+        distances[distances.Count - 1],
+        0.0001f
+    );
+
+uv[index] = new Vector2(
+    distances[i] / totalLength,
+    v
+);
                 }
                 prevTangent = tangent;
             }           
