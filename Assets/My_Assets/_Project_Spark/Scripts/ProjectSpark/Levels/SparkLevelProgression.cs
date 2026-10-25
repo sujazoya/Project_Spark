@@ -311,7 +311,14 @@ public event Action ProgressChanged;
 
         public bool CanPlayLevel(int index)
         {
-            return IsUnlocked(index);
+            if (!IsValidIndex(index)) return false;
+            if (IsUnlocked(index)) return true;
+
+            // Optional chapter-entry access; existing levels remain unchanged.
+            SparkChapterAccessController chapterAccess =
+                GetComponent<SparkChapterAccessController>();
+            if (chapterAccess == null || levelManager == null) return false;
+            return chapterAccess.CanEnterLevel(levelManager.GetLevel(index));
         }
 
         public int GetFirstUnlockedLevel()
