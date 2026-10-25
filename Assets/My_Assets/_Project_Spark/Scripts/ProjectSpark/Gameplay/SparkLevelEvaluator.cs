@@ -1244,6 +1244,18 @@ TraverseWireNetwork(
 
                     break;
 
+                    case SparkLevelTarget.TargetType.VoltageRange:
+                    result = EvaluateMeasurementRange(target);
+                    break;
+
+                case SparkLevelTarget.TargetType.CurrentRange:
+                    result = EvaluateMeasurementRange(target);
+                    break;
+
+                case SparkLevelTarget.TargetType.PowerRange:
+                    result = EvaluateMeasurementRange(target);
+                    break;
+
                 default:
 
                     result = false;
@@ -1256,6 +1268,131 @@ TraverseWireNetwork(
 
             return result;
         }
+        private bool EvaluateMeasurementRange(SparkLevelTarget target)
+{
+    if (target == null)
+        return false;
+
+    if (!target.IsConfigured() ||
+        !target.IsPolarityConfigurationValid())
+        return false;
+
+    float value;
+    float minimum;
+    float maximum;
+    bool useMaximum;
+
+    if (target.Type == SparkLevelTarget.TargetType.VoltageRange)
+    {
+        if (!TryReadVoltage(target, out value))
+            return false;
+
+        minimum = target.MinimumVoltage;
+        maximum = target.MaximumVoltage;
+        useMaximum = target.UseMaximumVoltage;
+    }
+    else
+    {
+        if (!TryResolveTargetComponent(
+                target,
+                out SparkElectricalComponent component))
+            return false;
+
+        if (target.RequireElectricalEnabled &&
+            !component.ElectricalEnabled)
+            return false;
+
+        if (target.RequireConduction &&
+            component.ElectricalState.Conduction !=
+                SparkConductionState.Conducting)
+            return false;
+
+        if (target.Type == SparkLevelTarget.TargetType.CurrentRange)
+        {
+            value = Mathf.Abs(component.ElectricalState.Current);
+            minimum = target.MinimumCurrent;
+            maximum = target.MaximumCurrent;
+            useMaximum = target.UseMaximumCurrent;
+        }
+        else
+        {
+            value = Mathf.Abs(component.ElectricalState.Power);
+            minimum = target.MinimumPower;
+            maximum = target.MaximumPower;
+            useMaximum = target.UseMaximumPower;
+        }
+    }
+
+    if (float.IsNaN(value) || float.IsInfinity(value))
+        return false;
+
+    if (value < minimum)
+        return false;
+
+    if (useMaximum && value > maximum)
+        return false;
+
+    return true;
+}
+
+private bool TryReadVoltage(
+    SparkLevelTarget target,
+    out float voltage)
+{
+    voltage = 0f;
+
+    if (target.HasRequiredConnectionPair)
+    {
+        if (!TryResolveTargetTerminalPair(
+                target,
+                out SparkTerminal positive,
+                out SparkTerminal negative))
+            return false;
+
+        if (target.RequireElectricalEnabled &&
+            (!positive.IsElectricalEnabled ||
+             !negative.IsElectricalEnabled))
+            return false;
+
+        voltage = Mathf.Abs(
+            positive.ElectricalState.Voltage -
+            negative.ElectricalState.Voltage);
+
+        return true;
+    }
+
+    if (!string.IsNullOrWhiteSpace(target.TargetComponentId))
+    {
+        if (!TryResolveTargetComponent(
+                target,
+                out SparkElectricalComponent component))
+            return false;
+
+        if (target.RequireElectricalEnabled &&
+            !component.ElectricalEnabled)
+            return false;
+
+        if (target.RequireConduction &&
+            component.ElectricalState.Conduction !=
+                SparkConductionState.Conducting)
+            return false;
+
+        voltage = Mathf.Abs(component.ElectricalState.Voltage);
+        return true;
+    }
+
+    if (!TryResolveTargetTerminal(
+            target,
+            out SparkTerminal terminal))
+        return false;
+
+    if (target.RequireElectricalEnabled &&
+        !terminal.IsElectricalEnabled)
+        return false;
+
+    voltage = Mathf.Abs(terminal.ElectricalState.Voltage);
+    return true;
+}
 
         // ================================================================
         // TERMINAL POWERED

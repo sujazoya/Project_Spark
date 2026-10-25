@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: Level_03
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
   levelId: LEVEL_03
-  displayName: Current Limiting Resistor
-  description: POWER SSUPPLY POSETIVE TO LED ANODE. AND POWER SUPPLY NEGATIVE TO
-    LED CATHHODE. LIGHT SHOULD BE ON
+  displayName: The Current Limiter
+  description: Build a circuit with a current-limiting resistor LIGHT SHOULD BE ON
   completionMode: 0
-  requiredTargetCount: 1
+  requiredTargetCount: 2
   requireClosedReturn: 1
   rejectShortCircuit: 1
   rejectTargetShort: 1
@@ -32,7 +31,7 @@ MonoBehaviour:
     nominalVoltage: 5
   targets:
   - targetId: led
-    displayName: LED
+    displayName: LED operates
     description: 'LED BULB
 
 '
@@ -47,6 +46,34 @@ MonoBehaviour:
     requireElectricalEnabled: 1
     requireConduction: 0
     inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: led
+    displayName: Safe current
+    description: 'LED BULB
+
+'
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: LED_Anode
+    requiredNegativeTerminalId: LED_Cathode
+    targetComponentId: led
+    minimumVoltage: 0
+    minimumCurrent: 0.015
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.025
+    useMaximumPower: 0
+    maximumPower: 0
   failureMode: 1
   successOutputIds: []
   failureOutputIds: []

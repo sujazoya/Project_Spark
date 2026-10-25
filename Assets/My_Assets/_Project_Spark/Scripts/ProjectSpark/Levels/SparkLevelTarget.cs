@@ -19,15 +19,18 @@ namespace ProjectSpark.Gameplay
         // ================================================================
         // TARGET TYPE
         // ================================================================
+public enum TargetType
+{
+    TerminalPowered = 0,
+    VoltagePresent = 1,
+    ComponentPowered = 2,
+    LEDOn = 3,
+    ComponentConducting = 4,
 
-        public enum TargetType
-        {
-            TerminalPowered = 0,
-            VoltagePresent = 1,
-            ComponentPowered = 2,
-            LEDOn = 3,
-            ComponentConducting = 4
-        }
+    VoltageRange = 5,
+    CurrentRange = 6,
+    PowerRange = 7
+}
 
         // ================================================================
         // IDENTITY
@@ -117,6 +120,37 @@ namespace ProjectSpark.Gameplay
 
         [SerializeField]
         private bool inverted;
+
+        [Header("Optional Maximum Limits")]
+
+        [SerializeField]
+        private bool useMaximumVoltage;
+
+        [Min(0f)]
+        [SerializeField]
+        private float maximumVoltage;
+
+        [SerializeField]
+        private bool useMaximumCurrent;
+
+        [Min(0f)]
+        [SerializeField]
+        private float maximumCurrent;
+
+        [SerializeField]
+        private bool useMaximumPower;
+
+        [Min(0f)]
+        [SerializeField]
+        private float maximumPower;
+
+        public bool UseMaximumVoltage => useMaximumVoltage;
+        public bool UseMaximumCurrent => useMaximumCurrent;
+        public bool UseMaximumPower => useMaximumPower;
+
+        public float MaximumVoltage => Mathf.Max(0f, maximumVoltage);
+        public float MaximumCurrent => Mathf.Max(0f, maximumCurrent);
+        public float MaximumPower => Mathf.Max(0f, maximumPower);
 
         // ================================================================
         // PUBLIC PROPERTIES
@@ -263,6 +297,12 @@ namespace ProjectSpark.Gameplay
                 case TargetType.LEDOn:
                 case TargetType.ComponentConducting:
                     return hasComponent;
+                    case TargetType.VoltageRange:
+               return hasTerminal || hasComponent;
+
+            case TargetType.CurrentRange:
+            case TargetType.PowerRange:
+                return hasComponent;
 
                 default:
                     return hasTerminal || hasComponent;
@@ -318,6 +358,9 @@ namespace ProjectSpark.Gameplay
 
             targetComponentId =
                 NormalizeId(targetComponentId);
+            maximumVoltage = Mathf.Max(0f, maximumVoltage);
+            maximumCurrent = Mathf.Max(0f, maximumCurrent);
+            maximumPower = Mathf.Max(0f, maximumPower);
         }
 
         // ================================================================
