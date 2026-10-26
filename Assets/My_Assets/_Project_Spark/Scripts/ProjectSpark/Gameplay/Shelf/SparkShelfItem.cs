@@ -73,6 +73,15 @@ namespace ProjectSpark.Gameplay.Shelf
         // PUBLIC PROPERTIES
         // ============================================================
 
+        [Header("Storage Display")]
+[Tooltip("Value displayed on this item's storage slot.")]
+[SerializeField] private string storageLabel = "220 Ω";
+
+public string StorageLabel =>
+    string.IsNullOrWhiteSpace(storageLabel)
+        ? ItemId
+        : storageLabel;
+
         public string ItemId =>
             string.IsNullOrWhiteSpace(itemId) ? name : itemId;
 

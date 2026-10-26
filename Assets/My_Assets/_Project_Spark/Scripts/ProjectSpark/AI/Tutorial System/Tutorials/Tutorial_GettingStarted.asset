@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f73fecfc74277694c85e74139e346573, type: 3}
+  m_Name: Tutorial_GettingStarted
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialDefinition
+  tutorialId: project_spark_first_circuit
+  displayName: Build Your First Circuit
+  resumeFromCheckpoint: 1
+  steps:
+  - id: welcome
+    title: Meet your AI lab instructor
+    explanation: Welcome to ProjectSpark. I'll guide you through the tools, explain
+      what the components do, and let you build the circuit yourself.
+    hint: You can repeat explanations with F2 and request help with F1.
+    conceptId: 
+    advance: 0
+    requiredSignal: 
+    focus: 0
+    worldTarget: {fileID: 0}
+    screenTarget: {fileID: 0}
+    locatorKey: 
+    worldOffset: {x: 0, y: 0.05, z: 0}
+    autoHintAfterSeconds: 16
+    speak: 1
+    allowSkip: 1
+  - id: resistor_intro
+    title: What is a resistor?
+    explanation: A resistor limits electric current. Its resistance is measured in
+      ohms. A 220-ohm resistor usually passes less current than a 100-ohm resistor
+      at the same voltage.
+    hint: The colored bands help identify its resistance.
+    conceptId: 
+    advance: 0
+    requiredSignal: 
+    focus: 1
+    worldTarget: {fileID: 0}
+    screenTarget: {fileID: 0}
+    locatorKey: shelf.resistor
+    worldOffset: {x: 0, y: 0.05, z: 0}
+    autoHintAfterSeconds: 16
+    speak: 1
+    allowSkip: 1
+  - id: select
+    title: Pick a component
+    explanation: Click a resistor in your storage shelf to select it. You can also
+      drag it to the workstation.
+    hint: Choose an available resistor from the shelf.
+    conceptId: 
+    advance: 1
+    requiredSignal: shelf.item_selected
+    focus: 1
+    worldTarget: {fileID: 0}
+    screenTarget: {fileID: 0}
+    locatorKey: shelf.resistor
+    worldOffset: {x: 0, y: 0.05, z: 0}
+    autoHintAfterSeconds: 16
+    speak: 1
+    allowSkip: 1
+  - id: workstation
+    title: Place it on the workstation
+    explanation: Place the selected resistor into the resistor workstation slot.
+      The shelf manager will verify that the slot is compatible and available.
+    hint: Click the empty resistor slot, or drag the resistor over it and release.
+    conceptId: 
+    advance: 1
+    requiredSignal: shelf.item_placed
+    focus: 1
+    worldTarget: {fileID: 0}
+    screenTarget: {fileID: 0}
+    locatorKey: workstation.resistor
+    worldOffset: {x: 0, y: 0.05, z: 0}
+    autoHintAfterSeconds: 16
+    speak: 1
+    allowSkip: 1
+  - id: replace
+    title: Move or replace parts
+    explanation: To change a resistor, disconnect attached wires first. Drag the
+      resistor back to storage, then place a different value in the empty slot.
+    hint: Powered or connected parts may be protected from unsafe moves.
+    conceptId: 
+    advance: 0
+    requiredSignal: 
+    focus: 1
+    worldTarget: {fileID: 0}
+    screenTarget: {fileID: 0}
+    locatorKey: workstation.resistor
+    worldOffset: {x: 0, y: 0.05, z: 0}
+    autoHintAfterSeconds: 16
+    speak: 1
+    allowSkip: 1
+  - id: switch
+    title: How a switch works
+    explanation: A switch opens or closes a conductive path. A closed switch can
+      allow current through a complete circuit. An open switch interrupts that path.
+    hint: A switch alone doesn't make a circuit work; the full path must be complete.
+    conceptId: 
+    advance: 0
+    requiredSignal: 
+    focus: 1
+    worldTarget: {fileID: 0}
+    screenTarget: {fileID: 0}
+    locatorKey: device.switch
+    worldOffset: {x: 0, y: 0.05, z: 0}
+    autoHintAfterSeconds: 16
+    speak: 1
+    allowSkip: 1
+  - id: wire
+    title: Connect the circuit
+    explanation: Click one terminal, then the destination terminal, to create a wire.
+      Follow the terminals highlighted by your level instructions.
+    hint: Only valid terminal combinations will connect.
+    conceptId: 
+    advance: 1
+    requiredSignal: circuit.connection_created
+    focus: 1
+    worldTarget: {fileID: 0}
+    screenTarget: {fileID: 0}
+    locatorKey: terminal.start
+    worldOffset: {x: 0, y: 0.05, z: 0}
+    autoHintAfterSeconds: 16
+    speak: 1
+    allowSkip: 1
+  - id: current
+    title: Voltage, current and power
+    explanation: Voltage is electrical potential difference. Current is charge flow.
+      For an ideal resistor, I equals V divided by R, and dissipated power is I squared
+      times R.
+    hint: Too much dissipated power can overheat and damage a resistor.
+    conceptId: 
+    advance: 0
+    requiredSignal: 
+    focus: 0
+    worldTarget: {fileID: 0}
+    screenTarget: {fileID: 0}
+    locatorKey: 
+    worldOffset: {x: 0, y: 0.05, z: 0}
+    autoHintAfterSeconds: 16
+    speak: 1
+    allowSkip: 1
+  - id: finish
+    title: You're ready to experiment
+    explanation: You know how to select, place and replace parts, what resistors
+      and switches do, and how to begin wiring. Try the level objective. Ask the
+      AI instructor for help whenever needed.
+    hint: You can revisit this tutorial from your Help menu.
+    conceptId: 
+    advance: 0
+    requiredSignal: 
+    focus: 0
+    worldTarget: {fileID: 0}
+    screenTarget: {fileID: 0}
+    locatorKey: 
+    worldOffset: {x: 0, y: 0.05, z: 0}
+    autoHintAfterSeconds: 16
+    speak: 1
+    allowSkip: 1
