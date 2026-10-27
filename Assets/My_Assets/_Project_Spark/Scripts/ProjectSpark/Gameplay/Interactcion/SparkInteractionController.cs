@@ -54,6 +54,14 @@ namespace ProjectSpark.Gameplay
         [SerializeField]
         private bool cancelShelfSelectionOnEmptyClick = false;
 
+        [Header("Spark AI Component Memory")]
+        [SerializeField]
+        private ProjectSpark.AI.Tutorial.SparkAIUnifiedAssistant
+            askSpark;
+
+        [SerializeField]
+        private bool rememberComponentsAutomatically = true;
+
         [Header("Settings")]
         [SerializeField]
         private bool interactionEnabled = true;        
@@ -126,12 +134,16 @@ namespace ProjectSpark.Gameplay
                     TryInteract();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.I))
+           if (Input.GetKeyDown(KeyCode.I))
             {
-                if (componentInspector != null &&
-                    currentTarget != null)
+                if (currentTarget != null)
                 {
-                    componentInspector.Inspect(currentTarget);
+                    if (componentInspector != null)
+                    {
+                        componentInspector.Inspect(currentTarget);
+                    }
+
+                    RememberForSparkAI(currentTarget.gameObject);
                 }
             }
         }
@@ -160,6 +172,12 @@ namespace ProjectSpark.Gameplay
             {
                 shelfDragHandler =
                     GetComponent<SparkShelfDragHandler>();
+            }
+            if (askSpark == null)
+            {
+                askSpark =
+                    FindFirstObjectByType<
+                        ProjectSpark.AI.Tutorial.SparkAIUnifiedAssistant>();
             }
         }
 
@@ -307,6 +325,37 @@ namespace ProjectSpark.Gameplay
             return interactable;
         }
 
+        
+private void RememberForSparkAI(GameObject selectedObject)
+{
+    if (!rememberComponentsAutomatically ||
+        selectedObject == null)
+    {
+        return;
+    }
+
+    if (askSpark == null)
+    {
+        askSpark =
+            FindFirstObjectByType<
+                ProjectSpark.AI.Tutorial.SparkAIUnifiedAssistant>();
+    }
+
+    if (askSpark == null)
+        return;
+
+    askSpark.RememberComponent(selectedObject);
+
+    if (logPlacementResults)
+    {
+        Debug.Log(
+            "[SparkInteraction] Spark AI remembered: " +
+            selectedObject.name,
+            selectedObject);
+    }
+}
+
+
         // ============================================================
         // INTERACTION
         // ============================================================
@@ -367,31 +416,33 @@ private void TryInteract()
     // SparkInteractable.IsShelfItem flag is incorrect.
     SparkShelfItem shelfItem = FindShelfItem(target);
 
-    if (shelfItem != null)
+    
+if (shelfItem != null)
+{
+    // A component already on the workbench can
+    // still be inspected and remembered by Spark AI.
+    if (shelfItem.IsAtWorkbench)
     {
-        // --------------------------------------------
-        // COMPONENT ALREADY ON WORKSTATION
-        // --------------------------------------------
+        RememberForSparkAI(shelfItem.gameObject);
 
-        if (shelfItem.IsAtWorkbench)
-        {
-            // Do not return on single-click.
-            // SparkShelfDragHandler handles dragging
-            // the component back to storage.
-            return;
-        }
-
-        // --------------------------------------------
-        // COMPONENT IN STORAGE
-        // --------------------------------------------
-
-        // Single-click selects the component.
-        // Dragging is handled separately by
-        // SparkShelfDragHandler.
-        target.Interact();
-
+        // Preserve existing drag-and-drop behavior.
         return;
     }
+
+    // The normal interaction system performs the
+    // real shelf selection and its validation.
+    target.Interact();
+
+    // Remember the component only when the
+    // manual shelf system confirms its selection.
+    if (manualPlacement != null &&
+        manualPlacement.SelectedItem == shelfItem)
+    {
+        RememberForSparkAI(shelfItem.gameObject);
+    }
+
+    return;
+}
 
     // ========================================================
     // PRIORITY 3: VISIBILITY PANEL
@@ -474,6 +525,10 @@ private SparkShelfItem FindShelfItem(SparkInteractable target)
 
             bool success =
                 manualPlacement.TryPlaceAt(slot);
+                if (success && selected != null)
+                {
+                    RememberForSparkAI(selected.gameObject);
+                }
 
             if (logPlacementResults)
             {

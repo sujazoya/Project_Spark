@@ -33728,7 +33728,7 @@ GameObject:
   - component: {fileID: 716651077}
   - component: {fileID: 716651078}
   - component: {fileID: 716651079}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ShelfSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70038,8 +70038,11 @@ MonoBehaviour:
   manualPlacement: {fileID: 716651078}
   cancelShelfSelectionOnEscape: 1
   cancelShelfSelectionOnEmptyClick: 0
+  askSpark: {fileID: 1610167681}
+  rememberComponentsAutomatically: 1
   interactionEnabled: 1
-  shelfDragHandler: {fileID: 0}
+  shelfDragHandler: {fileID: 1360671983}
+  componentInspector: {fileID: 1610167679}
   highlightTarget: 1
   logRaycastHits: 1
   logPlacementResults: 1
@@ -85526,6 +85529,11 @@ GameObject:
   - component: {fileID: 1610167675}
   - component: {fileID: 1610167676}
   - component: {fileID: 1610167677}
+  - component: {fileID: 1610167679}
+  - component: {fileID: 1610167678}
+  - component: {fileID: 1610167680}
+  - component: {fileID: 1610167681}
+  - component: {fileID: 1610167682}
   m_Layer: 0
   m_Name: AI_TutorialSystem
   m_TagString: Untagged
@@ -85787,6 +85795,121 @@ MonoBehaviour:
   panelSize: {x: 490, y: 170}
   bottomRightOffset: {x: 24, y: 195}
   sortingOrder: 540
+--- !u!114 &1610167678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610167667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8047e19c405a0554cae133e518e4f005, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAICircuitDiagnosis
+  levelManager: {fileID: 8565763376412791690}
+  sceneCamera: {fileID: 1360671976}
+  diagnoseKey: 286
+  openWhenLevelFails: 0
+  closeOnLevelChange: 1
+  refreshSeconds: 0.35
+  logDiagnosis: 0
+  panelSize: {x: 560, y: 240}
+  rightCenterInset: {x: 24, y: 0}
+  sortingOrder: 565
+  markUnsatisfiedObjective: 1
+  markerColor: {r: 0.98, g: 0.66, b: 0.16, a: 1}
+--- !u!114 &1610167679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610167667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b8c92d1761b5140b43614d43106843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAIComponentInspector
+  closeOnEscape: 1
+  closeKey: 27
+  sortingOrder: 575
+  panelSize: {x: 540, y: 250}
+  topRightInset: {x: 24, y: 100}
+  logInspections: 0
+--- !u!114 &1610167680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610167667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c9e887d9fa5a04a9659e59f902d403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAIAdaptiveTroubleshooter
+  levelManager: {fileID: 8565763376412791690}
+  resistorWorkstationSlot: {fileID: 0}
+  resistorSlotId: Register_Slot
+  toggleKey: 287
+  resetHintLadderWhenStateChanges: 1
+  logChanges: 0
+  panelSize: {x: 540, y: 210}
+  topLeftOffset: {x: 24, y: -85}
+  sortingOrder: 580
+--- !u!114 &1610167681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610167667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88cb31923b9a7dd45a8f76a70a4767d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAIUnifiedAssistant
+  levelManager: {fileID: 8565763376412791690}
+  tutorial: {fileID: 1610167671}
+  troubleshooter: {fileID: 1610167680}
+  voice: {fileID: 872869767}
+  sceneCamera: {fileID: 1360671976}
+  toggleKey: 288
+  speakReplies: 1
+  logActions: 1
+  inspectDistance: 25
+  inspectLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  routeQuestionsToExternalBrain: 0
+  externalAnswerTimeout: 15
+  panelSize: {x: 535, y: 330}
+  sortingOrder: 650
+  rememberedComponent: {fileID: 0}
+--- !u!114 &1610167682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610167667}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7c4e8dfaea9f14fad10c96db252da2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAIConversation
+  levelManager: {fileID: 8565763376412791690}
+  sceneCamera: {fileID: 1360671976}
+  toggleKey: 289
+  openOnStart: 0
+  inspectDistance: 25
+  inspectLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  routeToExternalBrain: 0
+  externalAnswerTimeout: 15
+  sortingOrder: 720
 --- !u!1 &1614856173
 GameObject:
   m_ObjectHideFlags: 0
@@ -102899,7 +103022,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1959975701}
   - component: {fileID: 1959975702}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Chapter-Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112931,7 +113054,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5074915612404328480}
   - component: {fileID: 3470468783078399871}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SparkMeasurementSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112948,7 +113071,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6564835994864119963}
   - component: {fileID: 6826698107348781713}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ScannerReconstruction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113265,7 +113388,7 @@ GameObject:
   - component: {fileID: 1572512503741361319}
   - component: {fileID: 8570788760503519887}
   - component: {fileID: 7873225967119922758}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ProjectSparkGameplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113710,7 +113833,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2014812919833958594}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Systems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113953,7 +114076,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3805943726509944018}
   - component: {fileID: 6711020126917705460}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: AngleArmLineA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113969,7 +114092,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5612382158628080162}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: CalloutAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114380,7 +114503,7 @@ GameObject:
   - component: {fileID: 2416330577088149809}
   - component: {fileID: 1752262641196308814}
   - component: {fileID: 3113249980410070890}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: portable_generator (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115764,7 +115887,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2449211327775277583}
   - component: {fileID: 2456440909417132170}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ScannerCircuitTraceController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115819,10 +115942,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5206340029869012844, guid: 7ed976bf4beae7b459a4b53d49c8499b, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: -5140532234272814633, guid: 7ed976bf4beae7b459a4b53d49c8499b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 0d946a6e5ddea8e4f833a4ab8acc3a1c, type: 2}
+    - target: {fileID: -4813247623027326815, guid: 7ed976bf4beae7b459a4b53d49c8499b, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: -3556171240289312724, guid: 7ed976bf4beae7b459a4b53d49c8499b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -115830,6 +115961,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 7ed976bf4beae7b459a4b53d49c8499b, type: 3}
       propertyPath: m_Name
       value: portable_generator_4k
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7ed976bf4beae7b459a4b53d49c8499b, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7ed976bf4beae7b459a4b53d49c8499b, type: 3}
       propertyPath: m_IsActive
@@ -115851,6 +115986,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
       objectReference: {fileID: 2100000, guid: 42f6c86d84fcfb743899e42312e88efc, type: 2}
+    - target: {fileID: 1923835860528316134, guid: 7ed976bf4beae7b459a4b53d49c8499b, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3994145634935661701, guid: 7ed976bf4beae7b459a4b53d49c8499b, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.316
@@ -115859,6 +115998,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 0d946a6e5ddea8e4f833a4ab8acc3a1c, type: 2}
+    - target: {fileID: 7821854616158756547, guid: 7ed976bf4beae7b459a4b53d49c8499b, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -116014,7 +116157,7 @@ GameObject:
   - component: {fileID: 6553275396139871708}
   - component: {fileID: 4593319231532883695}
   - component: {fileID: 3261896995727101920}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: DC-MOTOR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116097,7 +116240,7 @@ GameObject:
   - component: {fileID: 5513949467262877360}
   - component: {fileID: 5441214585508098509}
   - component: {fileID: 254682219727774990}
-  m_Layer: 5
+  m_Layer: 15
   m_Name: marker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116116,7 +116259,7 @@ GameObject:
   - component: {fileID: 4738224728333532868}
   - component: {fileID: 2639687928164455796}
   - component: {fileID: 5046693359540918356}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116574,7 +116717,7 @@ GameObject:
   - component: {fileID: 5634405722754665796}
   - component: {fileID: 4871775207901933864}
   - component: {fileID: 8565763376412791690}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: LevelGamePlayManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116590,7 +116733,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7667851687512944521}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: internal-arts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116638,7 +116781,7 @@ GameObject:
   - component: {fileID: 4154273564638070902}
   - component: {fileID: 4630495715546090735}
   - component: {fileID: 4208418481447041181}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ScannerFaultLocalization
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116915,7 +117058,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 975017122774782568}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: HologramPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117032,7 +117175,7 @@ GameObject:
   - component: {fileID: 1829204033582543038}
   - component: {fileID: 5261477019412335645}
   - component: {fileID: 2618797555636692836}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ScannerHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117358,7 +117501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8775771547323582431}
   - component: {fileID: 1331790556669575546}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SparkRotationGizmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117670,7 +117813,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5389392339701459316}
   - component: {fileID: 9206619693345824640}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: DimensionLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119684,7 +119827,7 @@ GameObject:
   - component: {fileID: 5157166091621887360}
   - component: {fileID: 221295219948078412}
   - component: {fileID: 6956287020720973404}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SG_ScannerSignalPulse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120626,7 +120769,7 @@ GameObject:
   - component: {fileID: 2667258701420337430}
   - component: {fileID: 6852457441461277429}
   - component: {fileID: 7391061360621028056}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: PlatformBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120894,7 +121037,7 @@ GameObject:
   - component: {fileID: 9174241927121877901}
   - component: {fileID: 365277048646803299}
   - component: {fileID: 8818872279890850591}
-  m_Layer: 5
+  m_Layer: 15
   m_Name: marker (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121168,7 +121311,7 @@ GameObject:
   - component: {fileID: 885569121266365315}
   - component: {fileID: 5597782270962223712}
   - component: {fileID: 2633679122932495068}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ScannerCircuitFlowController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121528,7 +121671,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2137447389561281718}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Tools
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123087,7 +123230,7 @@ GameObject:
   - component: {fileID: 3268583132867734383}
   - component: {fileID: 7361035684425787501}
   - component: {fileID: 4994948721394119651}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ScannerFaultEnergy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123368,7 +123511,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2036503848314914228}
   - component: {fileID: 7430815966687207874}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: DiameterLineA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123706,7 +123849,7 @@ GameObject:
   - component: {fileID: 3047618778282348801}
   - component: {fileID: 9071652744162714778}
   - component: {fileID: 5359474814798542838}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ScannerScanBounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124108,7 +124251,7 @@ GameObject:
   - component: {fileID: 3861969679257228143}
   - component: {fileID: 7395597281329809323}
   - component: {fileID: 1620602924107418078}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: PlatformBase (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124340,7 +124483,7 @@ GameObject:
   - component: {fileID: 124579047792680266}
   - component: {fileID: 7320686482518564303}
   - component: {fileID: 3784041884801866252}
-  m_Layer: 5
+  m_Layer: 15
   m_Name: marker (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124359,7 +124502,7 @@ GameObject:
   - component: {fileID: 677699022985533330}
   - component: {fileID: 6149791423879491330}
   - component: {fileID: 7839755504933365252}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ScannerVoltage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124467,7 +124610,7 @@ GameObject:
   - component: {fileID: 7951157106687460134}
   - component: {fileID: 7951157106687460135}
   - component: {fileID: 7951157106687460136}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SparkElectronicSystems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124558,6 +124701,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: arrow
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4c2802f8149a8a741ad4e55a032c201e, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -124645,7 +124792,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6092441333301337745}
   - component: {fileID: 7559451562833661869}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: ExtensionLineA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124759,7 +124906,7 @@ GameObject:
   - component: {fileID: 1471627726367035821}
   - component: {fileID: 850142095242250594}
   - component: {fileID: 1902107394692017169}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ScannerTopologyController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124776,7 +124923,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2907430100002525689}
   - component: {fileID: 6971342239217980139}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SparkScanTool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124857,7 +125004,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5941432039918405230}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: ArrowB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125888,7 +126035,7 @@ GameObject:
   - component: {fileID: 4149652867489128704}
   - component: {fileID: 198989382063282191}
   - component: {fileID: 8595762911381279877}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: VFX_ScannerReconstruction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125949,7 +126096,7 @@ GameObject:
   - component: {fileID: 5229745730342703236}
   - component: {fileID: 6050019054733511572}
   - component: {fileID: 2341600782189481578}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: Rotor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126062,7 +126209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8239681777112224889}
   - component: {fileID: 5751171926310706474}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SparkMeasureTool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126190,7 +126337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6814483845117799091}
   - component: {fileID: 5692086206829241375}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: CircularFeature_Shaft (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126230,7 +126377,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7984887348836401541}
   - component: {fileID: 6227844289493780018}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: DiameteExtension
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127127,7 +127274,7 @@ GameObject:
   - component: {fileID: 4650687991651980536}
   - component: {fileID: 1643165799700721040}
   - component: {fileID: 392728791595278867}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: FrontHousing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127464,7 +127611,7 @@ GameObject:
   - component: {fileID: 7274651884416070838}
   - component: {fileID: 6575342892578557166}
   - component: {fileID: 8746607879948199752}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ScannerReconstruction_wire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128533,7 +128680,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1796870688083160701}
   - component: {fileID: 86594928622823889}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: CircularFeature_Shaft (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128709,7 +128856,7 @@ GameObject:
   - component: {fileID: 4537033438429333682}
   - component: {fileID: 2026459742989503300}
   - component: {fileID: 1374207653359125900}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129317,7 +129464,7 @@ GameObject:
   - component: {fileID: 6591859132612405074}
   - component: {fileID: 5228002754300819412}
   - component: {fileID: 1520774146840952721}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ScannerScanPlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129401,7 +129548,7 @@ GameObject:
   - component: {fileID: 5285024954257320061}
   - component: {fileID: 1096088684358260486}
   - component: {fileID: 4505951614414117986}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: Coil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129742,7 +129889,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6794463472200189039}
   - component: {fileID: 5781391605892093360}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: Holographic_Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130099,7 +130246,7 @@ GameObject:
   - component: {fileID: 2162332208983452501}
   - component: {fileID: 5270961791442590153}
   - component: {fileID: 5467684471920922804}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: Shaft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130270,7 +130417,7 @@ GameObject:
   - component: {fileID: 9112345324849664441}
   - component: {fileID: 8089107045121368863}
   - component: {fileID: 7173792700838865778}
-  m_Layer: 14
+  m_Layer: 15
   m_Name: PointA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131415,7 +131562,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2759629846364972268}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: ExplodedParts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131553,7 +131700,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8335718424513274794}
   - component: {fileID: 315861437321491100}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ScannerComponentScanController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131666,7 +131813,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2082011388603350747}
   - component: {fileID: 4151270913813887113}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: CircularFeature_Shaft (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131824,6 +131971,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: platform
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 90995b2db31993c45b54621b695777a0, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -131849,7 +132000,7 @@ GameObject:
   - component: {fileID: 5487703777736296564}
   - component: {fileID: 7517706066544705244}
   - component: {fileID: 2030490207267333340}
-  m_Layer: 14
+  m_Layer: 15
   m_Name: PointB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132775,7 +132926,7 @@ GameObject:
   - component: {fileID: 2992544294061974249}
   - component: {fileID: 1756188007632046000}
   - component: {fileID: 8271414728963534229}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: PlatformRing_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132792,7 +132943,7 @@ GameObject:
   m_Component:
   - component: {fileID: 881262718725489819}
   - component: {fileID: 4663596005660566696}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Scanner3DHoverController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132860,7 +133011,7 @@ GameObject:
   - component: {fileID: 3325290993378525122}
   - component: {fileID: 7806563302166439883}
   - component: {fileID: 665684715266366370}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: object-wire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133145,7 +133296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3163399192366854600}
   - component: {fileID: 6290947712833962751}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: AngleArmLineB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133887,7 +134038,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7564920648540367688}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: InspectionCallout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134447,7 +134598,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6723835380971944936}
   - component: {fileID: 4607273383564142517}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: MeasurementSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134781,7 +134932,7 @@ GameObject:
   m_Component:
   - component: {fileID: 458522904444432508}
   - component: {fileID: 7944544329635536630}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SparkMoveTool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135020,7 +135171,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8934239214633303960}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: ArrowA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135053,7 +135204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 745114617680783177}
   - component: {fileID: 458155523063956215}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: RadiusLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135330,7 +135481,7 @@ GameObject:
   - component: {fileID: 7871760591361630631}
   - component: {fileID: 3280481867401255837}
   - component: {fileID: 7214343381775165048}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: Sphere (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135897,6 +136048,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4c2802f8149a8a741ad4e55a032c201e, type: 3}
       propertyPath: m_Name
       value: arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4c2802f8149a8a741ad4e55a032c201e, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -136687,7 +136842,7 @@ GameObject:
   m_Component:
   - component: {fileID: 198827696355745070}
   - component: {fileID: 8004321097657193986}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SparkSelectTool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137228,7 +137383,7 @@ GameObject:
   - component: {fileID: 8857307053586334154}
   - component: {fileID: 210647942080569592}
   - component: {fileID: 482955307660826454}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: Projection_beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138063,7 +138218,7 @@ GameObject:
   - component: {fileID: 8865468132119678532}
   - component: {fileID: 1654738282056769874}
   - component: {fileID: 2710918343898814743}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138319,7 +138474,7 @@ GameObject:
   - component: {fileID: 1889882431511870379}
   - component: {fileID: 5839970876541595784}
   - component: {fileID: 501201641293061178}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: BearingFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138538,7 +138693,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3797028279452068569}
   - component: {fileID: 501011178966682123}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: AngleArmLineC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138596,7 +138751,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7312552672941815165}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: Holographic-Object-Viewer & mesurement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138629,7 +138784,7 @@ GameObject:
   - component: {fileID: 8807940746870252338}
   - component: {fileID: 517686531701387214}
   - component: {fileID: 3340444839304048248}
-  m_Layer: 5
+  m_Layer: 15
   m_Name: marker (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138789,7 +138944,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8987693030520654528}
   - component: {fileID: 3609326853796876998}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: CircularFeature_Shaft (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138960,7 +139115,7 @@ GameObject:
   - component: {fileID: 313907756062160413}
   - component: {fileID: 4778877252821105938}
   - component: {fileID: 4396530869439406587}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: RearHousing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139299,7 +139454,7 @@ GameObject:
   - component: {fileID: 5809603556868393464}
   - component: {fileID: 4347788142508611948}
   - component: {fileID: 3150808419711226061}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ScannerSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139331,7 +139486,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5181855855190928363}
   - component: {fileID: 4165496059721733547}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: CircularFeature_Shaft (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139442,7 +139597,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5217108012882577536}
   - component: {fileID: 4033720668202575766}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SparkInspectTool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140633,7 +140788,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3125995490772034057}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: CalloutLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141024,7 +141179,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6841303477069389447}
   - component: {fileID: 1819553577139065182}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: ExtensionLineB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141363,7 +141518,7 @@ GameObject:
   - component: {fileID: 8983795964985796376}
   - component: {fileID: 1606994810331388571}
   - component: {fileID: 4937287299423819036}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: PlatformRing_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141989,7 +142144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 140068717606585433}
   - component: {fileID: 989407616001601138}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: CircularFeature_Shaft (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142321,7 +142476,7 @@ GameObject:
   - component: {fileID: 7536478749754449772}
   - component: {fileID: 5511872117960131008}
   - component: {fileID: 9142534642821101518}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: PlatformRing_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143228,7 +143383,7 @@ GameObject:
   m_Component:
   - component: {fileID: 890889902935050342}
   - component: {fileID: 3297258040220195626}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SparkRotateTool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143266,7 +143421,7 @@ GameObject:
   - component: {fileID: 9057651337145864353}
   - component: {fileID: 5685998958916205758}
   - component: {fileID: 6385751997237888225}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: HolographicObjectController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143367,7 +143522,7 @@ GameObject:
   - component: {fileID: 1130181733187239418}
   - component: {fileID: 6313894505555350305}
   - component: {fileID: 1285656223523886395}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: BearingRear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143548,7 +143703,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4718713329312416403}
   - component: {fileID: 8377064506879297082}
-  m_Layer: 13
+  m_Layer: 15
   m_Name: CircularFeature_Shaft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143849,7 +144004,7 @@ GameObject:
   - component: {fileID: 8372410988831445519}
   - component: {fileID: 2337466159694115220}
   - component: {fileID: 6827410332774679076}
-  m_Layer: 14
+  m_Layer: 15
   m_Name: PointC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144491,7 +144646,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4238617643447005353}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: ProjectionBeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145665,7 +145820,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1615384976004134575}
   - component: {fileID: 676313170011442815}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SparkWireTool
   m_TagString: Untagged
   m_Icon: {fileID: 0}

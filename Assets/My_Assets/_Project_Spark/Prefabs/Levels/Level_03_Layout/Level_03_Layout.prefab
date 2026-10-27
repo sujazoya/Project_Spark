@@ -3182,11 +3182,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1965143751620353966, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3354036650861197438, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3323d3cfd1a38674c9bbf0222fa0642f, type: 2}
     - target: {fileID: 4741779853804420670, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
       propertyPath: m_Layer
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741779853804420670, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5001071280941481071, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
       propertyPath: m_Layer
@@ -3301,15 +3309,79 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6998843224335310597, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2470386681105407126}
+    - targetCorrespondingSourceObject: {fileID: 1965143751620353966, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2690066009364163686}
   m_SourcePrefab: {fileID: 100100000, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
 --- !u!1 &1424040386643733165 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1965143751620353966, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
   m_PrefabInstance: {fileID: 614357599183009027}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2690066009364163686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424040386643733165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c75ba754a859cd43ac119ebf7c3dd55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLEDHelixGlow
+  helixRenderer: {fileID: 2741931770623921533}
+  glowLight: {fileID: 3839987453804741135}
+  nominalVoltage: 3
+  nominalCurrentAmps: 0.02
+  minimumGlowVoltage: 0.5
+  minimumGlowCurrentAmps: 0.0001
+  heatResponse:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  heatUpSeconds: 0.28
+  coolDownSeconds: 0.65
+  maximumEmission: 8
+  maximumLightIntensity: 1.5
+  lightColor: {r: 1, g: 0.66, b: 0.3, a: 1}
+  logStateChanges: 0
+  solvedVoltage: 0
+  solvedCurrent: 0
+  filamentHeat: 0
 --- !u!23 &1653967207299364353 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2194010110490329858, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
+  m_PrefabInstance: {fileID: 614357599183009027}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2741931770623921533 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3354036650861197438, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
+  m_PrefabInstance: {fileID: 614357599183009027}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &3839987453804741135 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 4453148283960850188, guid: 39c8c690b3c28ba45ab33cfa1add9013, type: 3}
   m_PrefabInstance: {fileID: 614357599183009027}
   m_PrefabAsset: {fileID: 0}
 --- !u!23 &7033149680475390779 stripped

@@ -1076,7 +1076,29 @@ private void SetOutput(
             // own those flags.
             // --------------------------------------------------------
 
+          
             targetResults.Clear();
+
+            if (evaluator != null &&
+                level != null &&
+                level.Targets != null)
+            {
+                foreach (SparkLevelTarget target in level.Targets)
+                {
+                    if (target == null)
+                        continue;
+
+                    bool satisfied =
+                        evaluator.IsTargetSatisfiedForDiagnostics(target);
+
+                    targetResults.Add(
+                        new TargetRuntimeResult(
+                            target.TargetId,
+                            target.DisplayName,
+                            satisfied));
+                }
+            }
+
 
             SparkLevelValidationState validationState =
                 ConvertValidationState(

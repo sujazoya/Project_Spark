@@ -50,6 +50,25 @@ namespace ProjectSpark.Electrical
 
        
 
+private static void UpdateHelixGlow(
+    SparkLED led,
+    float voltage,
+    float current)
+{
+    if (led == null)
+        return;
+
+    // The helix component should be attached to the
+    // LED itself or one of its child GameObjects.
+    SparkLEDHelixGlow glow =
+        led.GetComponentInChildren<SparkLEDHelixGlow>(true);
+
+    if (glow == null)
+        return;
+
+    glow.SetSolvedElectricalState(voltage, current);
+}
+
 public override void Stamp(
     SparkElectricalComponent component,
     SparkElectricalSolveContext context)
@@ -125,22 +144,43 @@ public override void Stamp(
 
 
 
-      public override void ApplySolvedState(
+      
+public override void ApplySolvedState(
     SparkElectricalComponent component,
     SparkElectricalSolveResult result)
 {
     if (!(component is SparkLED led))
         return;
 
+    // =====================================================
+    // NO SOLVE RESULT
+    // =====================================================
+
     if (result == null)
+    {
+        led.ApplyElectricalState(
+            new SparkElectricalState());
+
+        UpdateHelixGlow(led, 0f, 0f);
         return;
-        
+    }
+
+    // =====================================================
+    // LED ELECTRICALLY DISABLED
+    // =====================================================
 
     if (!led.ElectricalEnabled)
     {
-        led.ApplyElectricalState(new SparkElectricalState());
+        led.ApplyElectricalState(
+            new SparkElectricalState());
+
+        UpdateHelixGlow(led, 0f, 0f);
         return;
     }
+
+    // =====================================================
+    // RESOLVE ANODE AND CATHODE
+    // =====================================================
 
     if (!TryGetTerminals(
             led,
@@ -148,64 +188,75 @@ public override void Stamp(
             out SparkTerminal anodeTerminal,
             out SparkTerminal cathodeTerminal))
     {
-        Debug.LogError(
-            $"[LED SOLVE] Terminals unavailable for {led.name}.",
+        Debug.LogWarning(
+            "[LED SOLVE] Terminals unavailable for " +
+            led.name,
             led);
 
-        led.ApplyElectricalState(new SparkElectricalState());
+        led.ApplyElectricalState(
+            new SparkElectricalState());
+
+        UpdateHelixGlow(led, 0f, 0f);
         return;
     }
-if (!result.TryGetVoltage(
-        anodeTerminal,
-        cathodeTerminal,
-        out float voltage))
-{
-    Debug.LogError(
-        $"[LED SOLVE] Could not read solved voltage for {led.name}.",
-        led);
 
-    led.ApplyElectricalState(new SparkElectricalState());
-    return;
-}
+    // =====================================================
+    // READ ACTUAL LED VOLTAGE
+    // =====================================================
 
-       /*Debug.Log(
-    "[LED CIRCUIT DIAGNOSTIC] " +
-    "LED=" + led.name +
-    " | AnodeID=" + anodeTerminal.GetInstanceID() +
-    " | AnodeVoltage=" +
-        result.GetTerminalVoltage(anodeTerminal).ToString("F4") + " V" +
-    " | CathodeID=" + cathodeTerminal.GetInstanceID() +
-    " | CathodeVoltage=" +
-        result.GetTerminalVoltage(cathodeTerminal).ToString("F4") + " V" +
-    " | LEDVoltage=" + voltage.ToString("F4") + " V",
-    led);*/
+    if (!result.TryGetVoltage(
+            anodeTerminal,
+            cathodeTerminal,
+            out float voltage))
+    {
+        Debug.LogWarning(
+            "[LED SOLVE] Could not read solved " +
+            "voltage for " + led.name,
+            led);
 
-    bool conducting = result.GetNonlinearState(led);
-   
-/*Debug.Log(
-    "[LED FINAL STATE CHECK] " +
-    "LED=" + led.name +
-    " | FinalVoltage=" + voltage.ToString("F6") + " V" +
-    " | ForwardThreshold=" +
-        led.ForwardVoltage.ToString("F6") + " V" +
-    " | NonlinearConducting=" + conducting,
-    led);*/
+        led.ApplyElectricalState(
+            new SparkElectricalState());
+
+        UpdateHelixGlow(led, 0f, 0f);
+        return;
+    }
+
+    // =====================================================
+    // READ NONLINEAR CONDUCTION STATE
+    // =====================================================
+
+    bool conducting =
+        result.GetNonlinearState(led);
 
     float current = 0f;
 
     if (conducting)
     {
-        float effectiveVoltage = voltage - led.ForwardVoltage;
+        float effectiveVoltage =
+            voltage - led.ForwardVoltage;
 
-        float resistance = Mathf.Max(
-            minimumResistance,
-            led.OnResistance);
+        float resistance =
+            Mathf.Max(
+                minimumResistance,
+                led.OnResistance);
 
-        current = Mathf.Max(0f, effectiveVoltage / resistance);
+        current =
+            Mathf.Max(
+                0f,
+                effectiveVoltage / resistance);
 
         if (led.MaximumForwardCurrent > 0f)
-            current = Mathf.Min(current, led.MaximumForwardCurrent);
+        {
+            current =
+                Mathf.Min(
+                    current,
+                    led.MaximumForwardCurrent);
+        }
     }
+
+    // =====================================================
+    // CALCULATE POWER AND CONDUCTION
+    // =====================================================
 
     float power = voltage * current;
 
@@ -214,18 +265,9 @@ if (!result.TryGetVoltage(
             ? SparkConductionState.Conducting
             : SparkConductionState.NonConducting;
 
-/*    Debug.Log(
-        $"[LED SOLVE RESULT] LED={led.name} | " +
-        $"AnodeID={anodeTerminal.GetInstanceID()} | " +
-        $"CathodeID={cathodeTerminal.GetInstanceID()} | " +
-        $"Voltage={voltage:F4} V | " +
-        $"NonlinearConducting={conducting} | " +
-        $"ForwardVoltage={led.ForwardVoltage:F4} V | " +
-        $"Current={current:F6} A | " +
-        $"Conduction={conduction}",
-        led);
-*/
-        
+    // =====================================================
+    // APPLY AUTHORITATIVE ELECTRICAL STATE
+    // =====================================================
 
     led.ApplyElectricalState(
         new SparkElectricalState(
@@ -234,17 +276,16 @@ if (!result.TryGetVoltage(
             power,
             conduction));
 
+    // =====================================================
+    // UPDATE HELIX USING THE SAME SOLVED VALUES
+    // =====================================================
 
-           /* Debug.Log(
-    "[LED APPLIED STATE] " +
-    "LED=" + led.name +
-    " | Voltage=" + voltage.ToString("F6") + " V" +
-    " | Current=" + current.ToString("F6") + " A" +
-    " | Power=" + power.ToString("F6") + " W" +
-    " | Conduction=" + conduction +
-    " | IsOn=" + led.IsOn,
-    led);*/
+    UpdateHelixGlow(
+        led,
+        voltage,
+        current);
 }
+
 
 
        public override bool TryCalculateCurrent(

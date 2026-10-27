@@ -1885,35 +1885,47 @@ private void GetTargetElectricalState(
         // TERMINAL DEBUG NAME
         // ================================================================
 
-private string GetTerminalDebugName(
-    SparkTerminal terminal)
-{
-    if (terminal == null)
-    {
-        return "NULL";
-    }
-
-    string ownerName = "NoOwner";
-    string ownerObjectName = "NoOwnerObject";
-
-    if (terminal.Owner != null)
-    {
-        ownerName =
-            terminal.Owner.GetType().Name;
-
-        if (terminal.Owner is Component ownerComponent)
+        private string GetTerminalDebugName(
+            SparkTerminal terminal)
         {
-            ownerObjectName =
-                ownerComponent.gameObject.name;
-        }
-    }
+            if (terminal == null)
+            {
+                return "NULL";
+            }
 
-    return
-        $"{terminal.name}" +
-        $" [ID={terminal.GetInstanceID()}]" +
-        $" [Owner={ownerName}]" +
-        $" [GO={ownerObjectName}]" +
-        $" [TerminalGO={terminal.gameObject.name}]";
-}
+            string ownerName = "NoOwner";
+            string ownerObjectName = "NoOwnerObject";
+
+            if (terminal.Owner != null)
+            {
+                ownerName =
+                    terminal.Owner.GetType().Name;
+
+                if (terminal.Owner is Component ownerComponent)
+                {
+                    ownerObjectName =
+                        ownerComponent.gameObject.name;
+                }
+            }
+
+            return
+                $"{terminal.name}" +
+                $" [ID={terminal.GetInstanceID()}]" +
+                $" [Owner={ownerName}]" +
+                $" [GO={ownerObjectName}]" +
+                $" [TerminalGO={terminal.gameObject.name}]";
+        }
+
+        public bool IsTargetSatisfiedForDiagnostics(
+            SparkLevelTarget target)
+        {
+            if (target == null)
+                return false;
+
+            // Reuse the same target logic used by
+            // the authoritative level evaluation.
+            return EvaluateTarget(target);
+        }
+
     }
 }
