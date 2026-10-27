@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using ProjectSpark.Gameplay;
-
+using ProjectSpark.AI.Tutorial;
 namespace ProjectSpark.Circuit
 {
     [DisallowMultipleComponent]
@@ -26,6 +26,26 @@ namespace ProjectSpark.Circuit
         [SerializeField]
         private bool logRejectedConnections;
 
+        
+        // =========================================================
+        // AI TUTORIAL — CONNECTION MISTAKES
+        // =========================================================
+
+        [Header("AI Tutorial")]
+        [SerializeField]
+        private SparkTutorialMistakeCoach tutorialCoach;
+
+        [SerializeField]
+        private bool reportInvalidConnectionsToAI = true;
+
+        /// <summary>
+        /// Raised only when a real wire connection attempt fails.
+        /// Allows a separate AI bridge to observe rejections.
+        /// </summary>
+        public event Action<
+            SparkTerminal,
+            SparkTerminal,
+    string> ConnectionRejected;
         // =========================================================
         // ELECTRIC FLOW VISUALS
         // =========================================================
@@ -1092,23 +1112,58 @@ private int ClearConnections(bool notify)
         // DIAGNOSTICS
         // =========================================================
 
+            
         private void LogRejected(
             SparkTerminal a,
             SparkTerminal b,
             string reason)
         {
-            if (!logRejectedConnections)
+            // =====================================================
+            // CONSOLE DIAGNOSTICS
+            // =====================================================
+
+            if (logRejectedConnections)
             {
-                return;
+                Debug.LogWarning(
+                    "[SPARK CIRCUIT] Connection rejected.\n" +
+                    "A: " + (a != null ? a.name : "NULL") + "\n" +
+                    "B: " + (b != null ? b.name : "NULL") + "\n" +
+                    "Reason: " + reason,
+                    this);
             }
 
-            Debug.LogWarning(
-                $"[SPARK CIRCUIT] Connection rejected.\n" +
-                $"A: {a?.name ?? "null"}\n" +
-                $"B: {b?.name ?? "null"}\n" +
-                $"Reason: {reason}",
-                this);
+            // =====================================================
+            // NOTIFY EXTERNAL LISTENERS
+            // =====================================================
+
+            ConnectionRejected?.Invoke(
+                a,
+                b,
+                reason);
+
+            // =====================================================
+            // AI MISTAKE REPORTING
+            // =====================================================
+
+            if (!reportInvalidConnectionsToAI)
+                return;
+
+            if (tutorialCoach == null)
+            {
+                tutorialCoach =
+                    FindFirstObjectByType<
+                        SparkTutorialMistakeCoach>();
+            }
+
+            if (tutorialCoach == null)
+                return;
+
+            // Report only an actual rejected connection attempt.
+            tutorialCoach.Report(
+                SparkTutorialMistakeCoach.Mistake.InvalidWire,
+                reason);
         }
+
 
         // =========================================================
         // EDITOR VALIDATION

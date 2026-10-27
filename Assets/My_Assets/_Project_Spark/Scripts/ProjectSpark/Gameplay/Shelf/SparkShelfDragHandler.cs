@@ -368,82 +368,103 @@ namespace ProjectSpark.Gameplay
                 storageDropRadiusPixels;
         }
 
-        private void CreatePreview()
+       
+private void CreatePreview()
+{
+    if (pressedItem == null)
+        return;
+
+    if (preview != null)
+        Destroy(preview);
+
+    // Root object contains visual meshes only.
+    preview = new GameObject(
+        "Spark_Drag_Hologram");
+
+    preview.transform.position =
+        pressedItem.transform.position;
+
+    preview.transform.rotation =
+        pressedItem.transform.rotation;
+
+    preview.transform.localScale =
+        pressedItem.transform.lossyScale;
+
+    // Find mesh renderers in the actual component.
+    MeshFilter[] meshFilters =
+        pressedItem.GetComponentsInChildren<MeshFilter>(true);
+
+    foreach (MeshFilter sourceFilter in meshFilters)
+    {
+        if (sourceFilter == null ||
+            sourceFilter.sharedMesh == null)
+            continue;
+
+        MeshRenderer sourceRenderer =
+            sourceFilter.GetComponent<MeshRenderer>();
+
+        if (sourceRenderer == null ||
+            !sourceRenderer.enabled)
+            continue;
+
+        GameObject meshCopy =
+            new GameObject(
+                sourceFilter.gameObject.name +
+                "_Preview");
+
+        meshCopy.transform.SetParent(
+            preview.transform,
+            false);
+
+        // Preserve relative position/rotation.
+        meshCopy.transform.position =
+            sourceFilter.transform.position;
+
+        meshCopy.transform.rotation =
+            sourceFilter.transform.rotation;
+
+        meshCopy.transform.localScale =
+            sourceFilter.transform.lossyScale;
+
+        MeshFilter newFilter =
+            meshCopy.AddComponent<MeshFilter>();
+
+        newFilter.sharedMesh =
+            sourceFilter.sharedMesh;
+
+        MeshRenderer newRenderer =
+            meshCopy.AddComponent<MeshRenderer>();
+
+        Shader shader =
+            Shader.Find(
+                "Universal Render Pipeline/Unlit");
+
+        if (shader == null)
         {
-            if (pressedItem == null)
-                return;
-
-            // A visual-only primitive avoids cloning
-            // SparkResistor, SparkTerminal, or other
-            // live electrical MonoBehaviours.
-            preview = GameObject.CreatePrimitive(
-                PrimitiveType.Cube);
-
-            preview.name = "Spark_Drag_Hologram";
-
-            Collider collider =
-                preview.GetComponent<Collider>();
-
-            if (collider != null)
-                Destroy(collider);
-
-            Vector3 size =
-                new Vector3(0.25f, 0.1f, 0.12f);
-
-            Renderer[] renderers =
-                pressedItem.GetComponentsInChildren<
-                    Renderer>();
-
-            bool hasBounds = false;
-            Bounds bounds = default;
-
-            foreach (Renderer renderer in renderers)
-            {
-                if (renderer == null ||
-                    !renderer.enabled)
-                    continue;
-
-                if (!hasBounds)
-                {
-                    bounds = renderer.bounds;
-                    hasBounds = true;
-                }
-                else
-                {
-                    bounds.Encapsulate(renderer.bounds);
-                }
-            }
-
-            if (hasBounds)
-            {
-                size = bounds.size;
-            }
-
-            preview.transform.localScale =
-                new Vector3(
-                    Mathf.Max(0.08f, size.x),
-                    Mathf.Max(0.04f, size.y),
-                    Mathf.Max(0.08f, size.z));
-
-            previewRenderer =
-                preview.GetComponent<Renderer>();
-
-            Shader shader =
-                Shader.Find("Sprites/Default");
-
-            if (shader != null &&
-                previewRenderer != null)
-            {
-                Material material =
-                    new Material(shader);
-
-                material.color = previewColor;
-
-                previewRenderer.material = material;
-            }
-
-            UpdatePreviewPosition();
+            shader = Shader.Find(
+                "Sprites/Default");
         }
+
+        Material hologramMaterial =
+            new Material(shader);
+
+        hologramMaterial.color =
+            new Color(
+                0f,
+                0.85f,
+                1f,
+                0.25f);
+
+        newRenderer.sharedMaterial =
+            hologramMaterial;
+    }
+
+    Debug.Log(
+        "[ShelfDrag] Created mesh hologram for " +
+        pressedItem.ItemId,
+        pressedItem);
+}
+
 
         private void UpdatePreviewPosition()
         {

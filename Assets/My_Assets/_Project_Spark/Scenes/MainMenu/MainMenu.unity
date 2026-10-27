@@ -33763,8 +33763,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.Shelf.SparkManualShelfPlacement
   shelf: {fileID: 1705866837}
-  clickPlacedItemToReturn: 1
+  tutorialCoach: {fileID: 1610167674}
+  clickPlacedItemToReturn: 0
   logSelection: 1
+  logPlacementFailures: 1
+  logPlacementSuccess: 1
+  logPlacementDetails: 1
 --- !u!114 &716651079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85518,6 +85522,10 @@ GameObject:
   - component: {fileID: 1610167671}
   - component: {fileID: 1610167672}
   - component: {fileID: 1610167673}
+  - component: {fileID: 1610167674}
+  - component: {fileID: 1610167675}
+  - component: {fileID: 1610167676}
+  - component: {fileID: 1610167677}
   m_Layer: 0
   m_Name: AI_TutorialSystem
   m_TagString: Untagged
@@ -85533,8 +85541,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610167667}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.084190734, y: -0.014301538, z: 0.0017099256, w: -0.9963456}
+  m_LocalPosition: {x: 406.80292, y: 917.07886, z: -1598.0385}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -85591,6 +85599,7 @@ MonoBehaviour:
   accent: {r: 0.03, g: 0.9, b: 0.95, a: 1}
   panelColor: {r: 0.035, g: 0.07, b: 0.12, a: 0.95}
   enableHotkeys: 1
+  stopTutorialWhenLevelWon: 1
 --- !u!114 &1610167672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85605,7 +85614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialCinematicGuide
   director: {fileID: 1610167671}
   sceneCamera: {fileID: 1360671976}
-  showPointer: 1
+  showPointer: 0
   pointerColor: {r: 0.02, g: 0.9, b: 1, a: 0.95}
   pointerSize: 54
   pointerOffset: {x: 0, y: 65}
@@ -85681,6 +85690,103 @@ MonoBehaviour:
   targetResolveTimeout: 8
   replayHotkeyF3: 1
   logDemonstrations: 1
+--- !u!114 &1610167674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610167667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34080f91445ba5b43bc2a0a7ce14c334, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialMistakeCoach
+  director: {fileID: 1610167671}
+  voice: {fileID: 872869767}
+  ghost: {fileID: 1610167673}
+  speakCorrections: 1
+  replayGhostAfterRepeatedMistakes: 1
+  replayAfterCount: 3
+  minSecondsBetweenMessages: 1
+  showSeconds: 6
+  logMistakes: 1
+  coachOutsideTutorial: 1
+  filterMistakesByStep: 1
+  alwaysExplainUnavailableComponents: 1
+  clearOnStepChange: 1
+  resetCooldownOnStepChange: 1
+  sortingOrder: 550
+  panelColor: {r: 0.025, g: 0.055, b: 0.09, a: 0.94}
+  accentColor: {r: 1, g: 0.68, b: 0.21, a: 1}
+  panelWidth: 650
+  panelHeight: 130
+  panelBottomRightOffset: {x: -24, y: 24}
+--- !u!114 &1610167675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610167667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b87568c65d110245a46ebe4d1b3b7a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialLevelBridge
+  levelManager: {fileID: 8565763376412791690}
+  director: {fileID: 1610167671}
+  automaticallyStartTutorial: 0
+  skipTutorialForPreviouslyWonLevels: 1
+  resumeExistingTutorialProgress: 1
+  logEvents: 1
+--- !u!114 &1610167676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610167667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 904ba6d8760f4394ba64cb9bd7744df5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialResistorStateBridge
+  director: {fileID: 1610167671}
+  levelManager: {fileID: 8565763376412791690}
+  voice: {fileID: 872869767}
+  resistorSlotId: Register_Slot
+  explicitWorkstationSlot: {fileID: 0}
+  completePlacementStepFromState: 1
+  updateTutorialHint: 1
+  narrateStageChanges: 0
+  requireClosedReturnForConducting: 1
+  refreshInterval: 0.25
+  meaningfulCurrentAmps: 0.0001
+  speechCooldownSeconds: 8
+  diagnostics: 0
+--- !u!114 &1610167677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610167667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88bf8f62a66facb42abe16586a9a4d22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialCircuitAwareness
+  levelManager: {fileID: 8565763376412791690}
+  showOnMeaningfulStateChange: 1
+  showOnLevelStart: 1
+  refreshSeconds: 0.4
+  messageDurationSeconds: 7
+  recallKey: 285
+  logChanges: 0
+  panelSize: {x: 490, y: 170}
+  bottomRightOffset: {x: 24, y: 195}
+  sortingOrder: 540
 --- !u!1 &1614856173
 GameObject:
   m_ObjectHideFlags: 0
@@ -117275,6 +117381,8 @@ MonoBehaviour:
   automaticallyRebuildTopology: 1
   logConnectionChanges: 0
   logRejectedConnections: 0
+  tutorialCoach: {fileID: 1610167674}
+  reportInvalidConnectionsToAI: 1
   neutralWireMaterial: {fileID: 2100000, guid: 35b9aa3fbe6c40d4392d6bd8680baf46, type: 2}
   positiveVoltageMaterial: {fileID: 2100000, guid: cf6ac813ad15cbc44940831bc4ba936b, type: 2}
   negativeVoltageMaterial: {fileID: 2100000, guid: 855a3536c4f5f754387a7399449ee056, type: 2}

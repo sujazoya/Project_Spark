@@ -61,7 +61,10 @@ namespace ProjectSpark.Gameplay
         [SerializeField]
         private SparkShelfDragHandler shelfDragHandler;
 
-        private SparkInteractable lastClickedInteractable;        
+        private SparkInteractable lastClickedInteractable;
+        [SerializeField]
+        private ProjectSpark.AI.Tutorial.SparkAIComponentInspector
+        componentInspector;        
 
         [SerializeField]
         private bool highlightTarget = true;
@@ -121,6 +124,14 @@ namespace ProjectSpark.Gameplay
                     !shelfDragHandler.ConsumeInteractionClick())
                 {
                     TryInteract();
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                if (componentInspector != null &&
+                    currentTarget != null)
+                {
+                    componentInspector.Inspect(currentTarget);
                 }
             }
         }

@@ -28,6 +28,13 @@ namespace ProjectSpark.AI.Tutorial
         [SerializeField] private Color panelColor = new Color(0.035f, 0.07f, 0.12f, 0.95f);
         [SerializeField] private bool enableHotkeys = true;
 
+        [Header("Level State Synchronization")]
+        [SerializeField]
+        private bool stopTutorialWhenLevelWon = true;
+
+        private bool activeLevelWon;
+        private string activeLevelId;
+
         private Image[] focusBorders;
         private const float FocusBorderThickness = 3f;
 
@@ -79,7 +86,20 @@ namespace ProjectSpark.AI.Tutorial
             AnimateAndPosition();
         }
 
-        public void BeginDefault() { if (defaultTutorial != null) Begin(defaultTutorial); }
+        public void BeginDefault() 
+        {
+            if (!CanStartGameplayTutorial())
+        {
+            Debug.Log(
+                "[Tutorial] Not starting: active level " +
+                "has already been won.",
+                this);
+
+            return;
+        }
+            
+             if (defaultTutorial != null) Begin(defaultTutorial); 
+             }
         public void Begin(SparkTutorialDefinition definition)
         {
             if (definition == null || definition.steps == null || definition.steps.Count == 0)
@@ -201,6 +221,12 @@ private void Next()
        
 private void EnterStep()
 {
+
+    if (activeLevelWon)
+{
+    Close();
+    return;
+}
     // ========================================================
     // VALIDATE TUTORIAL STATE
     // ========================================================
@@ -585,50 +611,281 @@ private void AnimateAndPosition()
             if (canvas != null) canvas.gameObject.SetActive(visible);
         }
 
-        private void BuildUI()
-        {
-            if (uiBuilt) return;
-            uiBuilt = true;
-            font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-            GameObject root = new GameObject("Spark_AI_Tutorial_Overlay", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster), typeof(CanvasGroup));
-            root.transform.SetParent(transform, false);
-            canvas = root.GetComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.sortingOrder = overlaySortingOrder;
-            root.GetComponent<CanvasScaler>().uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            root.GetComponent<CanvasScaler>().referenceResolution = new Vector2(1920f, 1080f);
-            group = root.GetComponent<CanvasGroup>();
+       
+private void BuildUI()
+{
+    if (uiBuilt)
+        return;
 
-            frame = Rect("Focus_Pulse", root.transform, new Vector2(135f, 90f));
-            frameImage = frame.gameObject.AddComponent<Image>();
-            frameImage.color = new Color(accent.r, accent.g, accent.b, 0.17f);
-            frameImage.raycastTarget = false;
-            var outline = frame.gameObject.AddComponent<Outline>();
-            outline.effectColor = accent;
-            outline.effectDistance = new Vector2(3f, 3f);
+    uiBuilt = true;
 
-            panel = Rect("Teacher_Panel", root.transform, new Vector2(880f, 250f));
-            panel.anchorMin = new Vector2(0.5f, 0f);
-            panel.anchorMax = new Vector2(0.5f, 0f);
-            panel.pivot = new Vector2(0.5f, 0f);
-            panel.anchoredPosition = new Vector2(0f, 30f);
-            Image bg = panel.gameObject.AddComponent<Image>();
-            bg.color = panelColor;
-            bg.raycastTarget = false;
-            Outline border = panel.gameObject.AddComponent<Outline>();
-            border.effectColor = accent;
-            border.effectDistance = new Vector2(2, 2);
+    font = Resources.GetBuiltinResource<Font>(
+        "LegacyRuntime.ttf");
 
-            heading = Label("Title", panel, new Vector2(810, 34), new Vector2(0, 192), 27, FontStyle.Bold, TextAnchor.MiddleLeft);
-            body = Label("Explanation", panel, new Vector2(810, 95), new Vector2(0, 95), 22, FontStyle.Normal, TextAnchor.UpperLeft);
-            tip = Label("Hint", panel, new Vector2(810, 40), new Vector2(0, 48), 17, FontStyle.Italic, TextAnchor.MiddleLeft);
-            counter = Label("Progress", panel, new Vector2(420, 30), new Vector2(-192, 12), 16, FontStyle.Normal, TextAnchor.MiddleLeft);
+    // =====================================================
+    // ROOT CANVAS
+    // =====================================================
 
-            nextButton = Button("Continue", panel, new Vector2(150, 38), new Vector2(318, 15), Continue, out nextLabel);
-            Text dummy;
-            hintButton = Button("Hint", panel, new Vector2(96, 38), new Vector2(126, 15), ShowHint, out dummy);
-            skipButton = Button("Skip", panel, new Vector2(85, 38), new Vector2(224, 15), SkipStep, out dummy);
-        }
+    GameObject root = new GameObject(
+        "Spark_AI_Tutorial_Overlay",
+        typeof(RectTransform),
+        typeof(Canvas),
+        typeof(CanvasScaler),
+        typeof(GraphicRaycaster),
+        typeof(CanvasGroup));
+
+    root.transform.SetParent(transform, false);
+
+    canvas = root.GetComponent<Canvas>();
+    canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+    canvas.sortingOrder = overlaySortingOrder;
+
+    CanvasScaler scaler =
+        root.GetComponent<CanvasScaler>();
+
+    scaler.uiScaleMode =
+        CanvasScaler.ScaleMode.ScaleWithScreenSize;
+
+    scaler.referenceResolution =
+        new Vector2(1920f, 1080f);
+
+    scaler.screenMatchMode =
+        CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+
+    scaler.matchWidthOrHeight = 0.5f;
+
+    group = root.GetComponent<CanvasGroup>();
+    group.alpha = 1f;
+    group.interactable = true;
+    group.blocksRaycasts = true;
+
+    // =====================================================
+    // TARGET FOCUS — TRANSPARENT CENTER
+    // =====================================================
+
+    frame = Rect(
+        "Focus_Pulse",
+        root.transform,
+        new Vector2(135f, 90f));
+
+    frameImage = frame.gameObject.AddComponent<Image>();
+
+    // Never obscure the target with a cyan rectangle.
+    frameImage.color = Color.clear;
+    frameImage.raycastTarget = false;
+
+    // Your existing UpdateFocusBorders() method
+    // draws the visible cyan border lines.
+
+    // =====================================================
+    // MAIN PANEL — BOTTOM LEFT
+    // =====================================================
+
+    panel = Rect(
+        "Teacher_Panel",
+        root.transform,
+        new Vector2(620f, 250f));
+
+    panel.anchorMin = new Vector2(0f, 0f);
+    panel.anchorMax = new Vector2(0f, 0f);
+    panel.pivot = new Vector2(0f, 0f);
+
+    panel.anchoredPosition =
+        new Vector2(28f, 28f);
+
+    Image background =
+        panel.gameObject.AddComponent<Image>();
+
+    background.color =
+        new Color(
+            panelColor.r,
+            panelColor.g,
+            panelColor.b,
+            0.96f);
+
+    // Background must not block gameplay.
+    background.raycastTarget = false;
+
+    // =====================================================
+    // LEFT ACCENT BAR
+    // =====================================================
+
+    RectTransform accentBar = Rect(
+        "AccentBar",
+        panel,
+        new Vector2(5f, 214f));
+
+    accentBar.anchoredPosition =
+        new Vector2(-303f, 0f);
+
+    Image accentImage =
+        accentBar.gameObject.AddComponent<Image>();
+
+    accentImage.color = accent;
+    accentImage.raycastTarget = false;
+
+    // =====================================================
+    // SMALL AI HEADER
+    // =====================================================
+
+    Text aiHeader = Label(
+        "AI_Header",
+        panel,
+        new Vector2(350f, 24f),
+        new Vector2(-105f, 105f),
+        15,
+        FontStyle.Bold,
+        TextAnchor.MiddleLeft);
+
+    aiHeader.text = "PROJECTSPARK  /  AI INSTRUCTOR";
+    aiHeader.color = accent;
+
+    // =====================================================
+    // LESSON TITLE
+    // =====================================================
+
+    heading = Label(
+        "Title",
+        panel,
+        new Vector2(550f, 38f),
+        new Vector2(0f, 70f),
+        28,
+        FontStyle.Bold,
+        TextAnchor.MiddleLeft);
+
+    heading.color = Color.white;
+    heading.resizeTextForBestFit = true;
+    heading.resizeTextMinSize = 20;
+    heading.resizeTextMaxSize = 28;
+
+    // =====================================================
+    // EXPLANATION
+    // =====================================================
+
+    body = Label(
+        "Explanation",
+        panel,
+        new Vector2(550f, 86f),
+        new Vector2(0f, 6f),
+        20,
+        FontStyle.Normal,
+        TextAnchor.UpperLeft);
+
+    body.color =
+        new Color(0.86f, 0.93f, 0.97f, 1f);
+
+    body.horizontalOverflow =
+        HorizontalWrapMode.Wrap;
+
+    body.verticalOverflow =
+        VerticalWrapMode.Truncate;
+
+    body.resizeTextForBestFit = true;
+    body.resizeTextMinSize = 15;
+    body.resizeTextMaxSize = 20;
+
+    // =====================================================
+    // HINT / INSTRUCTION
+    // =====================================================
+
+    tip = Label(
+        "Hint",
+        panel,
+        new Vector2(550f, 34f),
+        new Vector2(0f, -54f),
+        16,
+        FontStyle.Italic,
+        TextAnchor.MiddleLeft);
+
+    tip.color =
+        new Color(0.58f, 0.94f, 1f, 1f);
+
+    tip.horizontalOverflow =
+        HorizontalWrapMode.Wrap;
+
+    tip.resizeTextForBestFit = true;
+    tip.resizeTextMinSize = 13;
+    tip.resizeTextMaxSize = 16;
+
+    // =====================================================
+    // LESSON PROGRESS
+    // =====================================================
+
+    counter = Label(
+        "Progress",
+        panel,
+        new Vector2(215f, 30f),
+        new Vector2(-170f, -101f),
+        15,
+        FontStyle.Normal,
+        TextAnchor.MiddleLeft);
+
+    counter.color =
+        new Color(0.62f, 0.76f, 0.82f, 1f);
+
+    // =====================================================
+    // BUTTONS
+    // =====================================================
+
+    Text hintLabel;
+    Text skipLabel;
+
+    hintButton = Button(
+        "Hint",
+        panel,
+        new Vector2(90f, 38f),
+        new Vector2(54f, -101f),
+        ShowHint,
+        out hintLabel);
+
+    skipButton = Button(
+        "Skip",
+        panel,
+        new Vector2(90f, 38f),
+        new Vector2(150f, -101f),
+        SkipStep,
+        out skipLabel);
+
+    nextButton = Button(
+        "Continue",
+        panel,
+        new Vector2(125f, 38f),
+        new Vector2(247f, -101f),
+        Continue,
+        out nextLabel);
+
+    // Buttons may receive pointer clicks.
+    hintButton.targetGraphic.raycastTarget = true;
+    skipButton.targetGraphic.raycastTarget = true;
+    nextButton.targetGraphic.raycastTarget = true;
+
+    // =====================================================
+    // THIN PROGRESS TRACK
+    // =====================================================
+
+    RectTransform progressTrack = Rect(
+        "Lesson_Progress_Track",
+        panel,
+        new Vector2(565f, 3f));
+
+    progressTrack.anchoredPosition =
+        new Vector2(0f, -124f);
+
+    Image trackImage =
+        progressTrack.gameObject.AddComponent<Image>();
+
+    trackImage.color =
+        new Color(0.1f, 0.28f, 0.34f, 1f);
+
+    trackImage.raycastTarget = false;
+
+    // =====================================================
+    // INITIAL VISIBILITY
+    // =====================================================
+
+    root.SetActive(false);
+}
+
 
         private static RectTransform Rect(string name, Transform parent, Vector2 size)
         {
@@ -654,18 +911,68 @@ private void AnimateAndPosition()
             return t;
         }
 
-        private Button Button(string name, RectTransform parent, Vector2 size, Vector2 pos, UnityEngine.Events.UnityAction callback, out Text caption)
-        {
-            RectTransform rt = Rect(name, parent, size);
-            rt.anchoredPosition = pos;
-            Image image = rt.gameObject.AddComponent<Image>();
-            image.color = new Color(0.025f, 0.25f, 0.32f, 0.98f);
-            Button button = rt.gameObject.AddComponent<Button>();
-            button.onClick.AddListener(callback);
-            caption = Label("Label", rt, size, Vector2.zero, 16, FontStyle.Bold, TextAnchor.MiddleCenter);
-            caption.text = name.ToUpperInvariant();
-            return button;
-        }
+       
+private Button Button(
+    string name,
+    RectTransform parent,
+    Vector2 size,
+    Vector2 pos,
+    UnityEngine.Events.UnityAction callback,
+    out Text caption)
+{
+    RectTransform rt = Rect(
+        name,
+        parent,
+        size);
+
+    rt.anchoredPosition = pos;
+
+    Image image =
+        rt.gameObject.AddComponent<Image>();
+
+    bool isPrimary =
+        name == "Continue";
+
+    image.color = isPrimary
+        ? new Color(0.015f, 0.55f, 0.63f, 1f)
+        : new Color(0.08f, 0.19f, 0.25f, 1f);
+
+    image.raycastTarget = true;
+
+    Button button =
+        rt.gameObject.AddComponent<Button>();
+
+    button.onClick.AddListener(callback);
+
+    ColorBlock colors = button.colors;
+
+    colors.normalColor = Color.white;
+
+    colors.highlightedColor =
+        new Color(0.75f, 1f, 1f, 1f);
+
+    colors.pressedColor =
+        new Color(0.55f, 0.9f, 1f, 1f);
+
+    colors.selectedColor = Color.white;
+
+    button.colors = colors;
+
+    caption = Label(
+        "Label",
+        rt,
+        size,
+        Vector2.zero,
+        16,
+        FontStyle.Bold,
+        TextAnchor.MiddleCenter);
+
+    caption.text = name.ToUpperInvariant();
+    caption.color = Color.white;
+
+    return button;
+}
+
 
         
 private void EnsureFocusBorders()
@@ -777,6 +1084,81 @@ private void UpdateFocusBorders()
             image.color = color;
     }
 }
+
+       public void SetActiveLevel(string levelId)
+{
+    if (string.IsNullOrWhiteSpace(levelId))
+        return;
+
+    // Do not return early when the IDs match.
+    // Restarting the same level is a new gameplay run.
+    activeLevelId = levelId;
+    activeLevelWon = false;
+
+    Debug.Log(
+        "[Tutorial] Active gameplay run: " + levelId,
+        this);
+}
+        /// <summary>
+        /// Call ONLY when the authoritative level objective
+        /// system confirms that the player won the level.
+        /// </summary>
+        public void NotifyLevelWon(string levelId)
+        {
+            if (string.IsNullOrWhiteSpace(levelId))
+                return;
+
+            activeLevelId = levelId;
+            activeLevelWon = true;
+
+            Debug.Log(
+                "[Tutorial] Level victory confirmed: " +
+                levelId,
+                this);
+
+            if (!stopTutorialWhenLevelWon)
+                return;
+
+            // Stop the currently active tutorial and
+            // hide its instructional panel.
+            if (IsRunning)
+            {
+                Close();
+            }
+        }
+
+        public bool CanStartGameplayTutorial()
+        {
+            return !activeLevelWon;
+        }
+
+        public void SetLiveElectricalNote(string note)
+        {
+            if (!IsRunning ||
+                tip == null ||
+                string.IsNullOrWhiteSpace(note))
+            {
+                return;
+            }
+
+            SparkTutorialStep step = CurrentStep;
+
+            if (step == null)
+                return;
+
+            string id = step.id;
+
+            if (id != "workstation" &&
+                id != "replace" &&
+                id != "wire" &&
+                id != "current")
+            {
+                return;
+            }
+
+            tip.text = note;
+        }
+
 
     }
 }
