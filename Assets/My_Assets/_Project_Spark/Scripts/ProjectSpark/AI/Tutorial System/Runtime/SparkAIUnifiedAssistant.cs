@@ -4,6 +4,10 @@ using UnityEngine.UI;
 using ProjectSpark.Gameplay;
 using ProjectSpark.AI;
 using ProjectSpark.Gameplay.Shelf;
+using TMPro;
+using UnityEngine.EventSystems;
+using ProjectSpark.Circuit;
+using ProjectSpark.Electrical;
 
 namespace ProjectSpark.AI.Tutorial
 {
@@ -20,17 +24,25 @@ namespace ProjectSpark.AI.Tutorial
         [SerializeField] private SparkAIAdaptiveTroubleshooter troubleshooter;
         [SerializeField] private SparkAIVoiceController voice;
         [SerializeField] private Camera sceneCamera;
+        private SparkAIWorldContext worldContext;
+
+        private GameObject lastHoveredInspectable;
+
+        private readonly SparkAILocalBrain localBrain =
+    new SparkAILocalBrain();
 
         [Header("Controls")]
         [SerializeField] private KeyCode toggleKey = KeyCode.F7;
         [SerializeField] private bool speakReplies = false;
         [SerializeField] private bool logActions = true;
         [SerializeField, Min(1f)] private float inspectDistance = 25f;
-        [SerializeField] private LayerMask inspectLayers = ~0;
+        [SerializeField] private LayerMask inspectLayers = ~0;        
 
         [Header("Chat / Optional External Brain")]
         [SerializeField] private bool routeQuestionsToExternalBrain = false;
         [SerializeField, Min(4f)] private float externalAnswerTimeout = 15f;
+
+
 
         // Subscribe from your own SparkAIBrain adapter (Unity main thread).
         // No brain API names or fabricated measurements are assumed.
@@ -41,24 +53,142 @@ namespace ProjectSpark.AI.Tutorial
         [SerializeField] private Vector2 panelSize = new Vector2(535f, 445f);
         [SerializeField] private int sortingOrder = 650;
 
-        private ScrollRect answerScroll;
+        
+        [Header("Ask Spark UI - Assigned in Inspector")]
+        [SerializeField] private Canvas canvas;
+        [SerializeField] private TextMeshProUGUI heading;
+        [SerializeField] private TextMeshProUGUI status;
+        [SerializeField] private TextMeshProUGUI answer;
+       [SerializeField] private TMP_InputField questionInput;
+        [SerializeField] private ScrollRect answerScroll;
 
-        private Canvas canvas;
-        private InputField questionInput;
+        [Header("Ask Spark Buttons")]
+        [SerializeField] private Button inspectButton;
+        [SerializeField] private Button explainButton;
+        [SerializeField] private Button hintButton;
+        [SerializeField] private Button tutorialButton;
+        [SerializeField] private Button askButton;
+        [SerializeField] private Button closeButton;
+
+
+       
         private string pendingQuestion;
         private float pendingUntil;
-        private Text heading;
-        private Text answer;
-        private Text status;
+       
         private int hintStage;
         private string lastStateSignature = string.Empty;
         private LevelGamePlayManager subscribed;
 
-        private void Awake()
-        {
-            Resolve();
-            BuildUI();
-        }
+       
+private void Awake()
+{
+    Resolve();
+    BindButtons();
+}
+
+private void OnDestroy()
+{
+    UnbindButtons();
+    Unsubscribe();
+}
+
+[ContextMenu("Ask Spark / Toggle")]
+public void Toggle()
+{
+    if (canvas == null)
+    {
+        Debug.LogWarning(
+            "[Ask Spark] Canvas reference is missing.",
+            this);
+        return;
+    }
+
+    if (canvas.gameObject.activeSelf)
+        Hide();
+    else
+        Show();
+}
+
+
+private void BindButtons()
+{
+    if (inspectButton != null)
+    {
+        inspectButton.onClick.RemoveListener(
+            InspectUnderCursor);
+
+        inspectButton.onClick.AddListener(
+            InspectUnderCursor);
+    }
+
+    if (explainButton != null)
+    {
+        explainButton.onClick.RemoveListener(
+            ExplainCircuit);
+
+        explainButton.onClick.AddListener(
+            ExplainCircuit);
+    }
+
+    if (hintButton != null)
+    {
+        hintButton.onClick.RemoveListener(
+            GiveHint);
+
+        hintButton.onClick.AddListener(
+            GiveHint);
+    }
+
+    if (tutorialButton != null)
+    {
+        tutorialButton.onClick.RemoveListener(
+            OpenTutorial);
+
+        tutorialButton.onClick.AddListener(
+            OpenTutorial);
+    }
+
+    if (askButton != null)
+    {
+        askButton.onClick.RemoveListener(
+            AskFromInput);
+
+        askButton.onClick.AddListener(
+            AskFromInput);
+    }
+
+    if (closeButton != null)
+    {
+        closeButton.onClick.RemoveListener(
+            Hide);
+
+        closeButton.onClick.AddListener(
+            Hide);
+    }
+}
+
+
+[ContextMenu("Ask Spark / Show")]
+public void Show()
+{
+    if (canvas == null)
+        return;
+
+    canvas.gameObject.SetActive(true);
+
+    RefreshStatus();
+
+    SetAnswer(
+        "ASK SPARK",
+        "Ask about the current level, objectives, " +
+        "components, current, voltage, or wiring.");
+}
+
+public void Hide()
+{
+    if (canvas != null)
+        canvas.gameObject.SetActive(false);
+}
 
         private void OnEnable()
         {
@@ -76,16 +206,11 @@ namespace ProjectSpark.AI.Tutorial
         {
             Unsubscribe();
             Hide();
-        }
-
-        private void OnDestroy()
-        {
-            Unsubscribe();
-            if (canvas != null) Destroy(canvas.gameObject);
-        }
+        }        
 
         private void Update()
         {
+            TrackInspectableUnderCursor();
             if (Input.GetKeyDown(toggleKey) &&
                 (questionInput == null || !questionInput.isFocused)) Toggle();
 
@@ -104,6 +229,77 @@ namespace ProjectSpark.AI.Tutorial
                 fallback);
             }
         }
+        
+private void TrackInspectableUnderCursor()
+{
+    if (sceneCamera == null)
+        return;
+
+    // Keep the previous world selection while the
+    // player moves the cursor over a UI button.
+    if (EventSystem.current != null &&
+        EventSystem.current.IsPointerOverGameObject())
+    {
+        return;
+    }
+
+    Ray ray = sceneCamera.ScreenPointToRay(
+        Input.mousePosition);
+
+    if (TryFindInspectable(ray, out GameObject found))
+    {
+        lastHoveredInspectable = found;
+    }
+}
+
+private bool TryFindInspectable(
+    Ray ray,
+    out GameObject found)
+{
+    found = null;
+
+    RaycastHit[] hits = Physics.RaycastAll(
+        ray,
+        inspectDistance,
+        inspectLayers,
+        QueryTriggerInteraction.Ignore);
+
+    Array.Sort(
+        hits,
+        (a, b) => a.distance.CompareTo(b.distance));
+
+    foreach (RaycastHit hit in hits)
+    {
+        if (hit.collider == null)
+            continue;
+
+        GameObject candidate =
+            hit.collider.gameObject;
+
+        if (IsInspectable(candidate))
+        {
+            found = candidate;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+private static bool IsInspectable(
+    GameObject obj)
+{
+    if (obj == null)
+        return false;
+
+    return
+        obj.GetComponentInParent<SparkResistor>() != null ||
+        obj.GetComponentInParent<SparkLED>() != null ||
+        obj.GetComponentInParent<SparkSwitch>() != null ||
+        obj.GetComponentInParent<SparkPowerSupply>() != null ||
+        obj.GetComponentInParent<SparkElectricalComponent>() != null;
+}
+
 
         private void Resolve()
         {
@@ -112,6 +308,17 @@ namespace ProjectSpark.AI.Tutorial
             if (troubleshooter == null) troubleshooter = FindFirstObjectByType<SparkAIAdaptiveTroubleshooter>();
             if (voice == null) voice = FindFirstObjectByType<SparkAIVoiceController>();
             if (sceneCamera == null) sceneCamera = Camera.main;
+            if (worldContext == null)
+                {
+                    worldContext =
+                        GetComponent<SparkAIWorldContext>();
+
+                    if (worldContext == null)
+                    {
+                        worldContext =
+                            FindFirstObjectByType<SparkAIWorldContext>();
+                    }
+                }
         }
 
       
@@ -151,11 +358,29 @@ private void Unsubscribe()
 }
 
 
-        private void OnLevelReloaded(SparkLevelDefinition level)
-        {
-            ClearRememberedComponent();
-            RefreshStatus();
-        }
+        
+private void OnLevelReloaded(
+    SparkLevelDefinition level)
+{
+    // Forget conversations about the previous
+    // circuit configuration or level attempt.
+    localBrain.Clear();
+    lastHoveredInspectable = null;
+
+    // A selected component may have been destroyed
+    // or replaced by the level layout loader.
+    ClearRememberedComponent();
+
+    // Reset progressive hint history.
+    hintStage = 0;
+    lastStateSignature = string.Empty;
+
+    // Discard any pending external response.
+    pendingQuestion = null;
+    
+
+    RefreshStatus();
+}
 
         
 private string ExplainRememberedResistor()
@@ -257,26 +482,7 @@ private string ExplainRememberedResistor()
         private void OnLevelFailed(SparkLevelDefinition _, string __) => RefreshStatus();
 
         [ContextMenu("Ask Spark / Toggle")]
-        public void Toggle()
-        {
-            if (canvas == null) BuildUI();
-            if (canvas.gameObject.activeSelf) Hide();
-            else Show();
-        }
-
-        [ContextMenu("Ask Spark / Show")]
-        public void Show()
-        {
-            if (canvas == null) BuildUI();
-            canvas.gameObject.SetActive(true);
-            RefreshStatus();
-            SetAnswer("ASK SPARK", "Ask about your resistor, current, voltage, LED, or wiring. Or use Inspect, Explain, Hint, and Tutorial.");
-        }
-
-        public void Hide()
-        {
-            if (canvas != null) canvas.gameObject.SetActive(false);
-        }
+       
 
         /// <summary>One chat endpoint used by both the Ask button and other gameplay scripts.</summary>
         public void Ask(string question)
@@ -312,27 +518,181 @@ private string ExplainRememberedResistor()
             AnswerReady?.Invoke(question, reply);
         }
 
-        public string BuildVerifiedContext()
+       
+        
+public string BuildVerifiedContext()
+{
+    Resolve();
+
+    // =====================================================
+    // 1. GET GLOBAL AI WORLD CONTEXT
+    // =====================================================
+
+    if (worldContext == null)
+    {
+        worldContext =
+            GetComponent<SparkAIWorldContext>();
+
+        if (worldContext == null)
         {
-            Resolve();
-            var m = levelManager;
-            if (m == null || m.ActiveLevel == null)
-                return "No active level; solver readings unavailable.";
-            return "Level: " + m.ActiveLevel.LevelId +
-                "\nCompleted: " + m.IsCompleted +
-                "\nFailed: " + m.IsFailed +
-                "\nValid source: " + m.HasValidPowerSource +
-                "\nClosed return: " + m.ClosedReturn +
-                "\nSource short: " + m.SourceShorted +
-                "\nTarget short: " + m.TargetShorted +
-                "\nOverloaded: " + m.Overloaded +
-                "\nWrong connection: " + m.WrongConnection +
-                "\nObjectives: " + m.SatisfiedTargetCount + "/" + m.ActiveTargetCount +
-                "\nTarget voltage: " + m.TargetVoltage.ToString("F4") + " V" +
-                "\nTarget current: " + m.TargetCurrent.ToString("F6") + " A" +
-                "\nTarget power: " + m.TargetPower.ToString("F5") + " W" +
-                "\nNOTE: Target readings are not necessarily readings across a specific resistor.";
+            worldContext =
+                FindFirstObjectByType<SparkAIWorldContext>();
         }
+    }
+
+    if (worldContext == null)
+    {
+        return
+            "Spark AI World Context is unavailable. " +
+            "Add SparkAIWorldContext to the persistent " +
+            "AI_TutorialSystem GameObject.";
+    }
+
+    // =====================================================
+    // 2. BUILD AUTHORITATIVE GLOBAL SNAPSHOT
+    // =====================================================
+
+    System.Text.StringBuilder sb =
+        new System.Text.StringBuilder();
+
+    sb.AppendLine(worldContext.BuildSnapshot());
+
+    // =====================================================
+    // 3. CONVERSATIONAL COMPONENT MEMORY
+    // =====================================================
+
+    SparkShelfItem rememberedItem =
+        GetRememberedShelfItem();
+
+    SparkResistor rememberedResistor =
+        GetRememberedResistor();
+
+    sb.AppendLine();
+    sb.AppendLine("CURRENT CONVERSATION CONTEXT");
+
+    if (rememberedComponent == null)
+    {
+        sb.AppendLine(
+            "No component is currently selected " +
+            "in AI memory.");
+    }
+    else
+    {
+        sb.AppendLine(
+            "Remembered object: " +
+            rememberedComponent.name);
+
+        if (rememberedItem != null)
+        {
+            sb.AppendLine(
+                "Shelf item ID: " +
+                rememberedItem.ItemId);
+
+            bool registered =
+                rememberedItem.IsAtWorkbench &&
+                rememberedItem.CurrentSlot != null &&
+                rememberedItem.CurrentSlot.Occupant ==
+                    rememberedItem;
+
+            sb.AppendLine(
+                "Registered on workstation: " +
+                registered);
+
+            if (registered)
+            {
+                sb.AppendLine(
+                    "Current slot: " +
+                    rememberedItem.CurrentSlot.SlotId);
+            }
+        }
+
+        if (rememberedResistor != null)
+        {
+            sb.AppendLine(
+                "Remembered component type: Resistor");
+
+            sb.AppendLine(
+                "Resistance: " +
+                rememberedResistor.ResistanceOhms
+                    .ToString("F2") +
+                " ohms");
+
+            bool canUseCircuitReadings =
+                rememberedItem != null &&
+                rememberedItem.IsAtWorkbench &&
+                rememberedItem.CurrentSlot != null &&
+                rememberedItem.CurrentSlot.Occupant ==
+                    rememberedItem;
+
+            if (canUseCircuitReadings)
+            {
+                sb.AppendLine(
+                    "Solver voltage: " +
+                    rememberedResistor.Voltage
+                        .ToString("F4") + " V");
+
+                sb.AppendLine(
+                    "Solver current: " +
+                    (rememberedResistor.Current * 1000f)
+                        .ToString("F3") + " mA");
+
+                sb.AppendLine(
+                    "Solver power: " +
+                    (rememberedResistor.PowerWatts * 1000f)
+                        .ToString("F3") + " mW");
+
+                sb.AppendLine(
+                    "Conducting: " +
+                    rememberedResistor.IsConducting);
+
+                sb.AppendLine(
+                    "Burned: " +
+                    rememberedResistor.IsBurned);
+            }
+            else
+            {
+                sb.AppendLine(
+                    "The remembered resistor is not " +
+                    "verified as installed. Do not " +
+                    "attribute circuit current to it.");
+            }
+        }
+    }
+
+    // =====================================================
+    // 4. GLOBAL REASONING RULES
+    // =====================================================
+
+    sb.AppendLine();
+    sb.AppendLine("SPARK AI REASONING RULES");
+
+    sb.AppendLine(
+        "Use the active level definition for " +
+        "objective requirements.");
+
+    sb.AppendLine(
+        "Use the level manager for progression " +
+        "and official completion status.");
+
+    sb.AppendLine(
+        "Use solved electrical component state " +
+        "for individual measurements.");
+
+    sb.AppendLine(
+        "Never assume the remembered component " +
+        "is the objective-bound component.");
+
+    sb.AppendLine(
+        "Never infer a specific component binding " +
+        "from its name or workstation slot.");
+
+    sb.AppendLine(
+        "Report unknown or unresolved measurements " +
+        "instead of inventing values.");
+
+    return sb.ToString();
+}
+
 
         
 private string ExplainPendingObjectives()
@@ -364,23 +724,7 @@ private string ExplainPendingObjectives()
                     ? target.targetId
                     : target.displayName;
 
-            sb.AppendLine("[PENDING] " + name);
-
-            // Specific explanation for the known
-            // Level 03 current-safety objective.
-            if (name.IndexOf("safe current",
-                    StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                sb.AppendLine(
-                    "The evaluator has not confirmed " +
-                    "that the circuit current meets " +
-                    "the required safety condition.");
-
-                sb.AppendLine(
-                    "Check the resistor value, current " +
-                    "through the circuit, and the level's " +
-                    "configured current limit.");
-            }
+            sb.AppendLine("[PENDING] " + name);           
         }
     }
 
@@ -912,6 +1256,61 @@ private string ExplainCurrentObjectivePhase22()
 }
 
 
+private static bool IsAskingCurrentLevel(string question)
+{
+    if (string.IsNullOrWhiteSpace(question))
+        return false;
+
+    string q = question.Trim().ToLowerInvariant();
+
+    // Normalize punctuation and extra spaces.
+    q = q.Replace("?", " ")
+         .Replace("!", " ")
+         .Replace(".", " ")
+         .Replace(",", " ")
+         .Replace("'", " ");
+
+    q = string.Join(
+        " ",
+        q.Split(
+            new[] { ' ' },
+            StringSplitOptions.RemoveEmptyEntries));
+
+    // Avoid confusing a progression report request
+    // with a request for the current level.
+    if (ContainsAny(q,
+        "next level",
+        "previous level",
+        "all levels",
+        "level progression",
+        "unlocked levels",
+        "locked levels",
+        "how many levels"))
+    {
+        return false;
+    }
+
+    bool mentionsLevel = q.Contains("level");
+
+    bool asksCurrent =
+        ContainsAny(q,
+            "what level",
+            "which level",
+            "current level",
+            "level am i",
+            "level i am",
+            "level im",
+            "level i'm",
+            "level are we",
+            "level is this",
+            "level now",
+            "my level",
+            "playing now",
+            "currently playing");
+
+    return mentionsLevel && asksCurrent;
+}
+
        
 public string LocalAnswer(string question)
 {
@@ -920,49 +1319,168 @@ public string LocalAnswer(string question)
     if (string.IsNullOrWhiteSpace(question))
         return "Ask Spark a question about your circuit.";
 
+        
+string diagnosticQuestion =
+    question.Trim().ToLowerInvariant();
+
+if (ContainsAny(
+    diagnosticQuestion,
+    "troubleshoot",
+    "diagnose my circuit",
+    "diagnose circuit",
+    "why is my circuit not working",
+    "why is this circuit not working",
+    "why haven't i won",
+    "why have i not won",
+    "why is the led glowing but",
+    "what is blocking completion",
+    "what should i fix next"))
+{
+    return SparkAILiveTroubleshooter.Diagnose(
+        levelManager);
+}
+
+
+        if (localBrain.TryAnswer(
+        question,
+        levelManager,
+        out string advancedAnswer))
+{
+    return advancedAnswer;
+}
+
     
 string q = question.Trim().ToLowerInvariant();
 
 
-if (ContainsAny(q,
-    "why is safe current failing",
-    "why safe current",
-    "safe current still pending",
-    "diagnose current objective",
-    "current objective details",
-    "show current requirements"))
+if (IsAskingCurrentLevel(q))
 {
-    return ExplainCurrentObjectivePhase22();
+    return ExplainCurrentLevelBriefly();
 }
 
 
 if (ContainsAny(q,
+    "what level am i on",
+    "which level am i on",
+    "what is my current level",
+    "which level is this",
+    "current level name"))
+{
+    return ExplainCurrentLevelBriefly();
+}
+
+if (ContainsAny(q,
+    "show level progression",
+    "level progression",
+    "show all levels",
+    "which levels are unlocked",
+    "locked levels",
+    "can i play the next level",
+    "what is the next level",
+    "how many levels"))
+{
+    return SparkAIProgressionReasoner.Explain(
+        levelManager);
+}
+
+
+if (ContainsAny(q,
+    "next level",
+    "level progression",
+    "which level is unlocked",
+    "which levels are unlocked",
+    "locked levels",
+    "what level am i on",
+    "how many levels",
+    "can i play the next level"))
+{
+    return SparkAIProgressionReasoner.Explain(
+        levelManager);
+}
+
+
+if (ContainsAny(q,
+    "audit bindings",
+    "check runtime bindings",
+    "binding audit",
+    "wrong component binding",
+    "stale binding",
+    "why is my component not detected",
+    "why is the resistor not detected"))
+{
+    return SparkAIRuntimeBindingAudit.BuildReport(
+        levelManager);
+}
+
+
+
+if (ContainsAny(q,
+    "diagnose level",
+    "analyze level",
+    "analyze my circuit",
+    "why is the level not complete",
+    "why is my level incomplete",
+    "why is the objective failing",
+    "why is safe current failing",
+    "diagnose current objective",
+    "current objective details",
+    "measure safe current",
+    "exact current",
+    "bound current",
+    "diagnose target",
+    "show objective evidence"))
+{
+    return SparkAIObjectiveReasoner.Diagnose(
+        levelManager);
+}
+
+if (ContainsAny(q,
+    "diagnose pending",
+    "explain pending objectives",
+    "why are targets pending"))
+{
+    return SparkAIObjectiveReasoner.Diagnose(
+        levelManager,
+        pendingOnly: true);
+}
+
+
+if (ContainsAny(q,
+    "give me a hint",
+    "i need a hint",
+    "help me solve",
+    "what should i check next",
+    "next hint"))
+{
+    return BuildGlobalObjectiveHint(2);
+}
+
+
+
+if (ContainsAny(q,
+    "diagnose objective",
+    "diagnose target",
+    "why is this objective failing",
+    "why is the objective failing",
+    "current objective",
+    "voltage objective",
+    "power objective",
+    "safe current",
+    "current limit",
+    "current requirement",
+    "voltage requirement",
+    "power requirement",
     "which resistor",
     "recommend resistor",
     "suggest resistor",
-    "should i change resistor",
-    "higher resistance",
-    "lower resistance",
     "how to reduce current",
-    "how to increase current"))
+    "how to increase current",
+    "which component should i use",
+    "what should i change"))
 {
-    return RecommendResistorForSafeCurrent();
+    return ExplainActiveLevelTargetsGlobal();
 }
 
-
-if (ContainsAny(q,
-    "safe current",
-    "current safety",
-    "safe current failing",
-    "current too high",
-    "current limit",
-    "reduce current",
-    "higher resistance",
-    "lower resistance",
-    "resistor overloaded"))
-{
-    return ExplainSafeCurrentObjective();
-}
 
 
 
@@ -1614,106 +2132,424 @@ private string ExplainLevelObjectives()
             return false;
         }
 
-        public void ExplainCircuit()
+       
+public void ExplainCircuit()
+{
+    Resolve();
+
+    if (levelManager == null ||
+        levelManager.ActiveLevel == null)
+    {
+        SetAnswer(
+            "CIRCUIT STATUS",
+            "Start a level to inspect and diagnose its circuit.");
+
+        return;
+    }
+
+    // Read-only diagnosis based on:
+    // - Active level
+    // - Authoritative evaluator results
+    // - Runtime scene bindings
+    // - Solved component electrical states
+    string diagnosis =
+        SparkAILiveTroubleshooter.Diagnose(
+            levelManager);
+
+    SetAnswer(
+        "SPARK AI · LIVE CIRCUIT",
+        diagnosis);
+}
+
+
+       
+public void InspectUnderCursor()
+{
+    Resolve();
+
+    if (sceneCamera == null)
+    {
+        SetAnswer(
+            "INSPECT",
+            "Assign the scene camera in the Inspector.");
+
+        return;
+    }
+
+    GameObject target = null;
+
+    bool pointerOverUI =
+        EventSystem.current != null &&
+        EventSystem.current.IsPointerOverGameObject();
+
+    // If INSPECT was triggered while looking at
+    // the 3D world, use the object under the cursor.
+    if (!pointerOverUI)
+    {
+        Ray ray = sceneCamera.ScreenPointToRay(
+            Input.mousePosition);
+
+        TryFindInspectable(ray, out target);
+    }
+
+    // Clicking the UI button moves the mouse away
+    // from the world object. Use our last valid hover.
+    if (target == null)
+        target = lastHoveredInspectable;
+
+    if (target == null)
+    {
+        SetAnswer(
+            "INSPECT",
+            "Point at an electrical component, " +
+            "then click INSPECT.");
+
+        return;
+    }
+
+    // Ensure the remembered object tracks the
+    // selected component for later questions.
+    RememberComponent(target);
+
+    string explanation =
+        BuildUniversalComponentInspection(target);
+
+    SetAnswer(
+        "COMPONENT INSPECTOR",
+        explanation);
+}
+
+private string BuildUniversalComponentInspection(
+    GameObject target)
+{
+    if (target == null)
+    {
+        return "The selected object is unavailable.";
+    }
+
+    SparkResistor resistor =
+        target.GetComponentInParent<SparkResistor>();
+
+    if (resistor != null)
+    {
+        string text =
+            "RESISTOR: " + resistor.name + "\n\n" +
+            "Resistance: " +
+            resistor.ResistanceOhms.ToString("F2") +
+            " ohms\n" +
+            "Voltage: " +
+            resistor.Voltage.ToString("F3") +
+            " V\n" +
+            "Current: " +
+            (resistor.Current * 1000f).ToString("F3") +
+            " mA\n" +
+            "Power: " +
+            (resistor.PowerWatts * 1000f)
+                .ToString("F3") +
+            " mW\n" +
+            "Maximum rated power: " +
+            resistor.MaximumPowerWatts.ToString("F3") +
+            " W\n" +
+            "Conducting: " + resistor.IsConducting +
+            "\nBurned: " + resistor.IsBurned;
+
+        SparkShelfItem shelfItem =
+            resistor.GetComponentInParent<SparkShelfItem>();
+
+        if (shelfItem != null)
         {
-            Resolve();
-            if (levelManager == null || levelManager.ActiveLevel == null)
+            bool installed =
+                shelfItem.IsAtWorkbench &&
+                shelfItem.CurrentSlot != null &&
+                shelfItem.CurrentSlot.Occupant ==
+                    shelfItem;
+
+            text += "\nInstalled: " + installed;
+
+            if (!installed)
             {
-                SetAnswer("CIRCUIT STATUS", "There is no active level to evaluate.");
-                return;
+                text +=
+                    "\nNote: This shelf item is not " +
+                    "registered as installed. Do not " +
+                    "interpret its readings as current " +
+                    "flowing through the active circuit.";
             }
-
-            var m = levelManager;
-            string text;
-            if (m.IsCompleted)
-                text = "The level evaluator has confirmed victory. All required objectives are satisfied.";
-            else if (m.IsFailed)
-                text = "The level has failed. " + (string.IsNullOrEmpty(m.LastFailureReason) ? "Review the circuit configuration." : m.LastFailureReason);
-            else if (m.SourceShorted || m.TargetShorted)
-                text = "The level evaluator detects a short circuit. Check connections that bypass a component or connect supply terminals incorrectly.";
-            else if (m.Overloaded)
-                text = "An overload is reported. Check component power ratings and the circuit configuration.";
-            else if (!m.HasValidPowerSource)
-                text = "The evaluator does not recognize a valid active power source. Inspect the source and its terminal connections.";
-            else if (!m.ClosedReturn)
-                text = "A valid source is detected, but the return path is open. Inspect wire endpoints and the switch.";
-            else if (m.WrongConnection)
-                text = "The level evaluator reports an invalid connection. Inspect the terminal connections.";
-            else
-                text = "A return path is detected, but some objectives remain incomplete. Check the pending targets.";
-
-            text += string.Format("\n\nObjectives {0}/{1}  |  Target V {2:F3} V  |  I {3:F5} A  |  P {4:F4} W",
-                m.SatisfiedTargetCount, m.ActiveTargetCount, m.TargetVoltage, m.TargetCurrent, m.TargetPower);
-            SetAnswer("LIVE CIRCUIT", text);
         }
 
-        public void InspectUnderCursor()
-        {
-            Resolve();
-            if (sceneCamera == null)
-            {
-                SetAnswer("INSPECT", "Assign a scene camera in the Inspector.");
-                return;
-            }
+        return text;
+    }
 
-            Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit[] hits = Physics.RaycastAll(ray, inspectDistance, inspectLayers, QueryTriggerInteraction.Ignore);
-            Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
-            foreach (RaycastHit hit in hits)
-            {
-                SparkResistor resistor = hit.collider.GetComponentInParent<SparkResistor>();
-                if (resistor == null) continue;
-                RememberComponent(resistor.gameObject);
-                string text = string.Format("{0}: {1:F1} Ω.\nSolver voltage: {2:F3} V\nSolver current: {3:F6} A\nDissipated power: {4:F4} W\nRated power: {5:F3} W.",
-                    resistor.name, resistor.ResistanceOhms, resistor.Voltage,
-                    resistor.Current, resistor.PowerWatts, resistor.MaximumPowerWatts);
-                if (resistor.IsBurned) text += "\nThe resistor has failed and should behave as an open circuit when the solver honors its failure state.";
-                else if (!resistor.IsConducting) text += "\nThe resistor is not currently reported as conducting.";
-                else text += "\nCurrent is flowing according to its solved electrical state.";
-                SetAnswer("RESISTOR INSPECTOR", text);
-                return;
-            }
-            SetAnswer("INSPECT", "Point at a resistor, then choose Inspect. This version supports accurate live resistor readings; other component types will be integrated separately.");
+    SparkLED led =
+        target.GetComponentInParent<SparkLED>();
+
+    if (led != null)
+    {
+        SparkElectricalState state =
+            led.ElectricalState;
+
+        return
+            "LED: " + led.name + "\n\n" +
+            "Light on: " + led.IsOn + "\n" +
+            "Electrical enabled: " +
+            led.ElectricalEnabled + "\n" +
+            "Conducting: " +
+            (state.Conduction ==
+                SparkConductionState.Conducting) +
+            "\nVoltage: " +
+            state.Voltage.ToString("F3") +
+            " V\nCurrent: " +
+            (state.Current * 1000f).ToString("F3") +
+            " mA\nPower: " +
+            (state.Power * 1000f).ToString("F3") +
+            " mW\n\n" +
+            "The level evaluator determines whether " +
+            "the LED objective has passed.";
+    }
+
+    SparkSwitch sparkSwitch =
+        target.GetComponentInParent<SparkSwitch>();
+
+    if (sparkSwitch != null)
+    {
+        return
+            "SWITCH: " + sparkSwitch.name + "\n\n" +
+            "Conducting: " +
+            sparkSwitch.IsConducting + "\n" +
+            "Input terminal: " +
+            (sparkSwitch.InputTerminal != null
+                ? sparkSwitch.InputTerminal.name
+                : "Unassigned") +
+            "\nOutput terminal: " +
+            (sparkSwitch.OutputTerminal != null
+                ? sparkSwitch.OutputTerminal.name
+                : "Unassigned") +
+            "\n\n" +
+            (sparkSwitch.IsConducting
+                ? "The switch currently permits " +
+                  "conduction according to its state."
+                : "The switch is not currently " +
+                  "conducting.");
+    }
+
+    SparkPowerSupply supply =
+        target.GetComponentInParent<SparkPowerSupply>();
+
+    if (supply != null)
+    {
+        SparkElectricalState state =
+            supply.ElectricalState;
+
+        return
+            "POWER SUPPLY: " + supply.name + "\n\n" +
+            "Electrical enabled: " +
+            supply.ElectricalEnabled + "\n" +
+            "Output active: " +
+            supply.IsOutputActive + "\n" +
+            "Overloaded: " +
+            supply.IsOverloaded + "\n" +
+            "Solved voltage: " +
+            state.Voltage.ToString("F3") +
+            " V\nSolved current: " +
+            (state.Current * 1000f).ToString("F3") +
+            " mA\n\n" +
+            "These are solved component readings, " +
+            "not assumed nominal supply settings.";
+    }
+
+    SparkElectricalComponent component =
+        target.GetComponentInParent<
+            SparkElectricalComponent>();
+
+    if (component != null)
+    {
+        SparkElectricalState state =
+            component.ElectricalState;
+
+        return
+            "ELECTRICAL COMPONENT: " +
+            component.name + "\n\n" +
+            "Type: " +
+            component.GetType().Name + "\n" +
+            "Electrical enabled: " +
+            component.ElectricalEnabled + "\n" +
+            "Conducting: " +
+            (state.Conduction ==
+                SparkConductionState.Conducting) +
+            "\nVoltage: " +
+            state.Voltage.ToString("F3") +
+            " V\nCurrent: " +
+            (state.Current * 1000f).ToString("F3") +
+            " mA\nPower: " +
+            (state.Power * 1000f).ToString("F3") +
+            " mW";
+    }
+
+    return
+        "This object has no supported " +
+        "electrical component.";
+}
+
+
+
+private string FormatCompactAnswer(string source)
+{
+    if (string.IsNullOrWhiteSpace(source))
+        return string.Empty;
+
+    // If the TextMeshPro reference is missing,
+    // preserve the original answer.
+    if (answer == null)
+        return source;
+
+    string[] lines = source
+        .Replace("\r\n", "\n")
+        .Replace('\r', '\n')
+        .Split('\n');
+
+    System.Text.StringBuilder output =
+        new System.Text.StringBuilder(source.Length);
+
+    string pendingValue = null;
+
+    // Use the real width of the existing
+    // Inspector-created explanation text.
+    float usableWidth =
+        answer.rectTransform.rect.width -
+        answer.margin.x -
+        answer.margin.z -
+        8f;
+
+    // If layout has not established a valid
+    // width, keep the original formatting.
+    if (usableWidth <= 40f)
+        return source;
+
+    void FlushPending()
+    {
+        if (pendingValue == null)
+            return;
+
+        output.AppendLine(pendingValue);
+        pendingValue = null;
+    }
+
+    foreach (string rawLine in lines)
+    {
+        string line = rawLine.Trim();
+
+        if (line.Length == 0)
+        {
+            FlushPending();
+
+            if (output.Length > 0)
+                output.AppendLine();
+
+            continue;
         }
 
-        public void GiveHint()
+        // Section titles remain on their own line.
+        bool isHeading =
+            line.Length <= 50 &&
+            !line.Contains(":") &&
+            line == line.ToUpperInvariant();
+
+        // Only combine short key:value entries.
+        // Longer advice and explanations remain
+        // separate to preserve readability.
+        bool isCompactValue =
+            line.Contains(":") &&
+            line.Length <= 48 &&
+            !line.StartsWith(
+                "NEXT:",
+                StringComparison.OrdinalIgnoreCase) &&
+            !line.StartsWith(
+                "WARNING:",
+                StringComparison.OrdinalIgnoreCase) &&
+            !line.StartsWith(
+                "FAILED REQUIREMENT:",
+                StringComparison.OrdinalIgnoreCase);
+
+        if (isHeading || !isCompactValue)
         {
-            Resolve();
-            string signature = GetStateSignature();
-            if (signature != lastStateSignature)
-            {
-                lastStateSignature = signature;
-                hintStage = 0;
-            }
-            hintStage = Mathf.Min(3, hintStage + 1);
-            if (levelManager == null || levelManager.ActiveLevel == null)
-            {
-                SetAnswer("HINT", "Start a level before requesting circuit guidance.");
-                return;
-            }
-            if (levelManager.IsCompleted)
-            {
-                SetAnswer("LEVEL COMPLETE", "This level is already won. Use Inspect to learn from the working circuit.");
-                return;
-            }
-            string message;
-            if (hintStage == 1)
-                message = "Check the level objectives and identify which electrical condition is still missing.";
-            else if (hintStage == 2)
-                message = !levelManager.HasValidPowerSource ? "Check the power source and its connections. The evaluator sees no valid active source."
-                    : !levelManager.ClosedReturn ? "Examine the switch and the return wire. The evaluator reports an open return path."
-                    : levelManager.SourceShorted || levelManager.TargetShorted ? "Trace any wire that might bypass a component or short supply terminals."
-                    : "Review the unsatisfied objective targets and the solver's measurements.";
-            else
-                message = "Current authoritative status:\n" +
-                    "Source detected: " + levelManager.HasValidPowerSource +
-                    "\nClosed return: " + levelManager.ClosedReturn +
-                    "\nSource short: " + levelManager.SourceShorted +
-                    "\nTarget short: " + levelManager.TargetShorted +
-                    "\nOverloaded: " + levelManager.Overloaded +
-                    string.Format("\nObjectives: {0}/{1}", levelManager.SatisfiedTargetCount, levelManager.ActiveTargetCount);
-            SetAnswer("HINT " + hintStage + " / 3", message);
+            FlushPending();
+            output.AppendLine(line);
+            continue;
         }
+
+        if (pendingValue == null)
+        {
+            pendingValue = line;
+            continue;
+        }
+
+        string combined =
+            pendingValue + "   |   " + line;
+
+        // Measure the proposed line using the
+        // actual TextMeshPro font and font size.
+        float preferredWidth =
+            answer.GetPreferredValues(
+                combined,
+                Mathf.Infinity,
+                Mathf.Infinity).x;
+
+        if (preferredWidth <= usableWidth)
+        {
+            output.AppendLine(combined);
+            pendingValue = null;
+        }
+        else
+        {
+            FlushPending();
+            pendingValue = line;
+        }
+    }
+
+    FlushPending();
+
+    return output.ToString().TrimEnd();
+}
+
+        
+
+public void GiveHint()
+{
+    Resolve();
+
+    if (levelManager == null ||
+        levelManager.ActiveLevel == null)
+    {
+        SetAnswer(
+            "SPARK AI · HINT",
+            "Start a level to receive circuit-specific hints.");
+
+        return;
+    }
+
+    string currentSignature =
+        GetStateSignature();
+
+    // If the player changed the circuit, begin a
+    // fresh hint sequence using the new evidence.
+    if (currentSignature != lastStateSignature)
+    {
+        lastStateSignature = currentSignature;
+        hintStage = 0;
+    }
+
+    hintStage = Mathf.Clamp(
+        hintStage + 1,
+        1,
+        3);
+
+    string response =
+        BuildGlobalObjectiveHint(hintStage);
+
+    SetAnswer(
+        "SPARK AI · HINT " + hintStage + "/3",
+        response);
+}
+
 
         public void OpenTutorial()
         {
@@ -1744,14 +2580,209 @@ private string ExplainLevelObjectives()
             SetAnswer("DETAILED HELP", "The existing adaptive troubleshooting panel is open. Close it with F6 when finished.");
         }
 
-        private string GetStateSignature()
+       
+private string GetStateSignature()
+{
+    Resolve();
+
+    if (levelManager == null ||
+        levelManager.ActiveLevel == null)
+    {
+        return "no-active-level";
+    }
+
+    var manager = levelManager;
+
+    System.Text.StringBuilder sb =
+        new System.Text.StringBuilder(512);
+
+    // ==================================================
+    // 1. ACTIVE LEVEL AND GAMEPLAY STATE
+    // ==================================================
+
+    sb.Append(manager.ActiveLevel.LevelId);
+    sb.Append('|').Append(manager.RuntimeState);
+    sb.Append('|').Append(manager.HasValidPowerSource);
+    sb.Append('|').Append(manager.ClosedReturn);
+    sb.Append('|').Append(manager.SourceShorted);
+    sb.Append('|').Append(manager.TargetShorted);
+    sb.Append('|').Append(manager.Overloaded);
+    sb.Append('|').Append(manager.WrongConnection);
+
+    sb.Append('|').Append(manager.SatisfiedTargetCount);
+    sb.Append('/').Append(manager.ActiveTargetCount);
+
+    // ==================================================
+    // 2. ACTIVE RUNTIME LAYOUT IDENTITY
+    // ==================================================
+
+    var bindings = manager.SceneBindings;
+
+    if (bindings != null)
+    {
+        sb.Append("|layout=");
+        sb.Append(bindings.GetInstanceID());
+    }
+
+    // ==================================================
+    // 3. AUTHORITATIVE OBJECTIVE RESULTS
+    // ==================================================
+
+    if (manager.TargetResults != null)
+    {
+        foreach (var result in manager.TargetResults)
         {
-            if (levelManager == null || levelManager.ActiveLevel == null) return "no-level";
-            var m = levelManager;
-            return m.ActiveLevel.LevelId + ":" + m.RuntimeState + ":" + m.HasValidPowerSource +
-                ":" + m.ClosedReturn + ":" + m.SourceShorted + ":" + m.TargetShorted +
-                ":" + m.Overloaded + ":" + m.SatisfiedTargetCount;
+            sb.Append("|target=");
+            sb.Append(result.targetId);
+            sb.Append(':');
+            sb.Append(result.satisfied ? '1' : '0');
         }
+    }
+
+    // ==================================================
+    // 4. SOLVED OBJECTIVE-BOUND COMPONENTS
+    // ==================================================
+
+    if (bindings != null &&
+        manager.ActiveLevel.Targets != null)
+    {
+        foreach (SparkLevelTarget target
+                 in manager.ActiveLevel.Targets)
+        {
+            if (target == null ||
+                string.IsNullOrWhiteSpace(
+                    target.TargetComponentId))
+            {
+                continue;
+            }
+
+            sb.Append("|binding=");
+            sb.Append(target.TargetId);
+            sb.Append(':');
+            sb.Append(target.TargetComponentId);
+
+            if (!bindings.TryGetComponent(
+                    target.TargetComponentId,
+                    out var component) ||
+                component == null)
+            {
+                sb.Append(":unresolved");
+                continue;
+            }
+
+            var state = component.ElectricalState;
+
+            sb.Append(":object=");
+            sb.Append(component.GetInstanceID());
+
+            sb.Append(":enabled=");
+            sb.Append(component.ElectricalEnabled);
+
+            sb.Append(":conduction=");
+            sb.Append(state.Conduction);
+
+            // Rounded signatures avoid resetting hints
+            // for insignificant solver fluctuations.
+            sb.Append(":v=");
+            sb.Append(
+                state.Voltage.ToString(
+                    "F3",
+                    System.Globalization.CultureInfo
+                        .InvariantCulture));
+
+            sb.Append(":i=");
+            sb.Append(
+                state.Current.ToString(
+                    "F5",
+                    System.Globalization.CultureInfo
+                        .InvariantCulture));
+
+            sb.Append(":p=");
+            sb.Append(
+                state.Power.ToString(
+                    "F4",
+                    System.Globalization.CultureInfo
+                        .InvariantCulture));
+        }
+    }
+
+    // ==================================================
+    // 5. INSTALLED SHELF COMPONENTS
+    // ==================================================
+
+    if (worldContext != null)
+    {
+        SparkShelfItem[] installed =
+            worldContext.GetPlacedComponents();
+
+        System.Collections.Generic.List<string> items =
+            new System.Collections.Generic.List<string>();
+
+        foreach (SparkShelfItem item in installed)
+        {
+            if (item == null)
+                continue;
+
+            if (!item.IsAtWorkbench ||
+                item.CurrentSlot == null ||
+                item.CurrentSlot.Occupant != item)
+            {
+                continue;
+            }
+
+            System.Text.StringBuilder itemKey =
+                new System.Text.StringBuilder();
+
+            itemKey.Append(item.ItemId);
+            itemKey.Append('@');
+            itemKey.Append(item.CurrentSlot.SlotId);
+            itemKey.Append('#');
+            itemKey.Append(item.GetInstanceID());
+
+            SparkResistor resistor =
+                item.GetComponent<SparkResistor>();
+
+            if (resistor == null)
+            {
+                resistor =
+                    item.GetComponentInChildren<
+                        SparkResistor>(true);
+            }
+
+            if (resistor != null)
+            {
+                itemKey.Append(":r=");
+                itemKey.Append(
+                    resistor.ResistanceOhms.ToString(
+                        "F2",
+                        System.Globalization.CultureInfo
+                            .InvariantCulture));
+
+                itemKey.Append(":burned=");
+                itemKey.Append(resistor.IsBurned);
+
+                itemKey.Append(":conducting=");
+                itemKey.Append(resistor.IsConducting);
+            }
+
+            items.Add(itemKey.ToString());
+        }
+
+        // FindObjectsByType does not guarantee order.
+        // Sorting prevents false changes when discovery
+        // returns the same items in a different order.
+        items.Sort(System.StringComparer.Ordinal);
+
+        foreach (string itemKey in items)
+        {
+            sb.Append("|shelf=");
+            sb.Append(itemKey);
+        }
+    }
+
+    return sb.ToString();
+}
+
 
         private void RefreshStatus()
         {
@@ -1767,68 +2798,77 @@ private string ExplainLevelObjectives()
         }
 
         
+
+
 private void SetAnswer(string title, string text)
 {
-    // =====================================================
-    // ENSURE AI PANEL EXISTS
-    // =====================================================
-
     if (canvas == null)
-        BuildUI();
+    {
+        Debug.LogWarning(
+            "[Ask Spark] Assign Canvas_AskSpark " +
+            "in the Inspector.",
+            this);
 
-    if (canvas == null)
         return;
+    }
 
+    // Show the existing UI.
+    // Do not create any runtime UI objects.
     if (!canvas.gameObject.activeSelf)
+    {
         canvas.gameObject.SetActive(true);
+    }
 
-    // =====================================================
-    // UPDATE AI RESPONSE
-    // =====================================================
-
+    // Update the existing title.
     if (heading != null)
-        heading.text = title;
+    {
+        heading.text = title ?? string.Empty;
+    }
 
-    if (answer != null)
-        answer.text = text ?? string.Empty;
-
+    // Update the current level and objective status.
     RefreshStatus();
 
-    // =====================================================
-    // RESET ANSWER SCROLL TO TOP
-    // =====================================================
+    // Ensure existing RectTransforms have their
+    // correct dimensions before measuring text.
+    Canvas.ForceUpdateCanvases();
 
-    if (answerScroll != null && answer != null)
+    // Format and display the explanation.
+    if (answer != null)
     {
-        // Stop scrolling inertia from the previous reply.
+        answer.textWrappingMode =
+            TextWrappingModes.Normal;
+
+        // Combine short values horizontally only
+        // when they fit inside the available width.
+        answer.text = FormatCompactAnswer(text);
+
+        // Refresh TextMeshPro's existing text geometry.
+        answer.ForceMeshUpdate();
+    }
+
+    // Update the existing ScrollRect and move
+    // to the beginning of the new explanation.
+    if (answerScroll != null)
+    {
         answerScroll.StopMovement();
-
-        // Update text height before repositioning.
-        Canvas.ForceUpdateCanvases();
-
-        LayoutRebuilder.ForceRebuildLayoutImmediate(
-            answer.GetComponent<RectTransform>());
 
         Canvas.ForceUpdateCanvases();
 
         answerScroll.verticalNormalizedPosition = 1f;
     }
 
-    // =====================================================
-    // DEBUG LOG
-    // =====================================================
-
+    // Optional diagnostic logging.
     if (logActions)
     {
         Debug.Log(
-            "[AskSpark] " + title + ": " + text,
+            "[AskSpark] " +
+            (title ?? "ANSWER") +
+            ": " +
+            (text ?? string.Empty),
             this);
     }
 
-    // =====================================================
-    // OPTIONAL AI VOICE
-    // =====================================================
-
+    // Optional voice output.
     if (speakReplies &&
         voice != null &&
         !string.IsNullOrWhiteSpace(text))
@@ -1837,236 +2877,69 @@ private void SetAnswer(string title, string text)
     }
 }
 
+public void AskFromInput()
+{
+    if (questionInput == null)
+        return;
 
-        private void BuildUI()
-        {
-            if (canvas != null) return;
-            GameObject root = new GameObject("AskSpark_UnifiedUI", typeof(RectTransform), typeof(Canvas),
-                typeof(CanvasScaler), typeof(GraphicRaycaster), typeof(CanvasGroup));
-            root.transform.SetParent(transform, false);
-            canvas = root.GetComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.sortingOrder = sortingOrder;
-            CanvasScaler scaler = root.GetComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(1920f, 1080f);
-            root.GetComponent<CanvasGroup>().blocksRaycasts = true;
+    Ask(questionInput.text);
+}
 
-            GameObject panel = new GameObject("AskSparkPanel", typeof(RectTransform), typeof(Image));
-            panel.transform.SetParent(root.transform, false);
-            RectTransform rect = panel.GetComponent<RectTransform>();
-            rect.anchorMin = rect.anchorMax = new Vector2(1f, 0f);
-            rect.pivot = new Vector2(1f, 0f);
-            rect.sizeDelta = panelSize;
-            rect.anchoredPosition = new Vector2(-24f, 24f);
-            Image bg = panel.GetComponent<Image>();
-            bg.color = new Color(.025f, .055f, .09f, .95f);
-            bg.raycastTarget = false;
+private void UnbindButtons()
+{
+    if (inspectButton != null)
+        inspectButton.onClick.RemoveListener(InspectUnderCursor);
 
-            heading = MakeText("Heading", panel.transform, new Vector2(0f, 186f),
-                new Vector2(panelSize.x - 40f, 32f), 22, Color.cyan, FontStyle.Bold);
-            status = MakeText("LevelStatus", panel.transform, new Vector2(0f, 154f),
-                new Vector2(panelSize.x - 40f, 30f), 15, new Color(.68f, .82f, .89f), FontStyle.Normal);
-            
-GameObject scrollObject = new GameObject(
-    "ExplanationScroll",
-    typeof(RectTransform),
-    typeof(ScrollRect));
+    if (explainButton != null)
+        explainButton.onClick.RemoveListener(ExplainCircuit);
 
-scrollObject.transform.SetParent(
-    panel.transform, false);
+    if (hintButton != null)
+        hintButton.onClick.RemoveListener(GiveHint);
 
-RectTransform scrollRect =
-    scrollObject.GetComponent<RectTransform>();
+    if (tutorialButton != null)
+        tutorialButton.onClick.RemoveListener(OpenTutorial);
 
-scrollRect.anchorMin = new Vector2(0.5f, 0.5f);
-scrollRect.anchorMax = new Vector2(0.5f, 0.5f);
-scrollRect.pivot = new Vector2(0.5f, 0.5f);
-scrollRect.sizeDelta =
-    new Vector2(panelSize.x - 44f, 208f);
-scrollRect.anchoredPosition =
-    new Vector2(0f, 27f);
+    if (askButton != null)
+        askButton.onClick.RemoveListener(AskFromInput);
 
-GameObject viewport = new GameObject(
-    "Viewport",
-    typeof(RectTransform),
-    typeof(RectMask2D));
-
-viewport.transform.SetParent(
-    scrollObject.transform, false);
-
-RectTransform viewportRect =
-    viewport.GetComponent<RectTransform>();
-
-viewportRect.anchorMin = Vector2.zero;
-viewportRect.anchorMax = Vector2.one;
-viewportRect.offsetMin = Vector2.zero;
-viewportRect.offsetMax = Vector2.zero;
-
-
- // =====================================================
- // SCROLLABLE AI EXPLANATION CONTENT
- // =====================================================
-
-GameObject content = new GameObject(
-    "Content",
-    typeof(RectTransform));
-
-content.transform.SetParent(
-    viewport.transform, false);
-
-RectTransform contentRect =
-    content.GetComponent<RectTransform>();
-
-contentRect.anchorMin = new Vector2(0f, 1f);
-contentRect.anchorMax = new Vector2(1f, 1f);
-contentRect.pivot = new Vector2(0.5f, 1f);
-contentRect.anchoredPosition = Vector2.zero;
-contentRect.sizeDelta = Vector2.zero;
-
-// =====================================================
-// AI ANSWER TEXT
-// =====================================================
-
-answer = MakeText(
-    "Explanation",
-    content.transform,
-    Vector2.zero,
-    new Vector2(panelSize.x - 54f, 0f),
-    17,
-    Color.white,
-    FontStyle.Normal);
-
-RectTransform answerRect =
-    answer.GetComponent<RectTransform>();
-
-answerRect.anchorMin = new Vector2(0f, 1f);
-answerRect.anchorMax = new Vector2(1f, 1f);
-answerRect.pivot = new Vector2(0.5f, 1f);
-
-answerRect.anchoredPosition = Vector2.zero;
-answerRect.sizeDelta = new Vector2(-10f, 0f);
-
-answer.alignment = TextAnchor.UpperLeft;
-answer.horizontalOverflow =
-    HorizontalWrapMode.Wrap;
-
-answer.verticalOverflow =
-    VerticalWrapMode.Overflow;
-
-answer.resizeTextForBestFit = false;
-
-// =====================================================
-// DYNAMIC TEXT HEIGHT
-// =====================================================
-
-ContentSizeFitter fitter =
-    answer.gameObject.AddComponent<ContentSizeFitter>();
-
-fitter.horizontalFit =
-    ContentSizeFitter.FitMode.Unconstrained;
-
-fitter.verticalFit =
-    ContentSizeFitter.FitMode.PreferredSize;
-
-// =====================================================
-// SCROLL RECT CONFIGURATION
-// =====================================================
-
-ScrollRect scrolling =
-    scrollObject.GetComponent<ScrollRect>();
-
-scrolling.viewport = viewportRect;
-
-// Scroll the dynamically sized Text directly.
-scrolling.content = answerRect;
-
-scrolling.horizontal = false;
-scrolling.vertical = true;
-
-scrolling.scrollSensitivity = 30f;
-
-scrolling.movementType =
-    ScrollRect.MovementType.Clamped;
-
-// Save reference for resetting scroll position.
-answerScroll = scrolling;
+    if (closeButton != null)
+        closeButton.onClick.RemoveListener(Hide);
+}
 
 
 
-            float buttonY = -130f;
-            float w = (panelSize.x - 50f) / 4f;
-            float left = -panelSize.x * .5f + 25f + w * .5f;
-            MakeButton("INSPECT", panel.transform, new Vector2(left, buttonY), new Vector2(w - 6f, 38f), InspectUnderCursor);
-            MakeButton("EXPLAIN", panel.transform, new Vector2(left + w, buttonY), new Vector2(w - 6f, 38f), ExplainCircuit);
-            MakeButton("HINT", panel.transform, new Vector2(left + 2f * w, buttonY), new Vector2(w - 6f, 38f), GiveHint);
-            MakeButton("TUTORIAL", panel.transform, new Vector2(left + 3f * w, buttonY), new Vector2(w - 6f, 38f), OpenTutorial);
-            // A single chat entry replaces the old F8 conversation overlay.
-            GameObject entry = new GameObject("QuestionInput", typeof(RectTransform), typeof(Image), typeof(InputField));
-            entry.transform.SetParent(panel.transform, false);
-            RectTransform inputRect = entry.GetComponent<RectTransform>();
-            inputRect.anchorMin = inputRect.anchorMax = new Vector2(.5f, .5f);
-            inputRect.sizeDelta = new Vector2(panelSize.x - 139f, 43f);
-            inputRect.anchoredPosition = new Vector2(-47f, -184f);
-            entry.GetComponent<Image>().color = new Color(.10f, .18f, .24f, 1f);
-            questionInput = entry.GetComponent<InputField>();
-            Text inputText = MakeText("TypedQuestion", entry.transform, Vector2.zero,
-                new Vector2(panelSize.x - 158f, 39f), 17, Color.white, FontStyle.Normal);
-            questionInput.textComponent = inputText;
-            Text placeholder = MakeText("Placeholder", entry.transform, Vector2.zero,
-                new Vector2(panelSize.x - 158f, 39f), 16, Color.gray, FontStyle.Italic);
-            placeholder.text = "Why is the current zero?";
-            questionInput.placeholder = placeholder;
-            questionInput.lineType = InputField.LineType.SingleLine;
-            questionInput.onEndEdit.AddListener(s =>
-            {
-                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)) Ask(s);
-            });
-            MakeButton("ASK", panel.transform, new Vector2(panelSize.x * .5f - 58f, -184f),
-                new Vector2(86f, 43f), () => Ask(questionInput.text));
-            MakeButton("×", panel.transform, new Vector2(panelSize.x * .5f - 20f, panelSize.y * .5f - 19f),
-                new Vector2(30f, 30f), Hide);
-            root.SetActive(false);
-        }
 
-        private static Text MakeText(string name, Transform parent, Vector2 position, Vector2 size,
-            int sizePx, Color color, FontStyle style)
-        {
-            GameObject go = new GameObject(name, typeof(RectTransform), typeof(Text));
-            go.transform.SetParent(parent, false);
-            RectTransform rt = go.GetComponent<RectTransform>();
-            rt.anchorMin = rt.anchorMax = new Vector2(.5f, .5f);
-            rt.sizeDelta = size;
-            rt.anchoredPosition = position;
-            Text text = go.GetComponent<Text>();
-            text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-            text.fontSize = sizePx;
-            text.fontStyle = style;
-            text.color = color;
-            text.alignment = TextAnchor.MiddleLeft;
-            text.horizontalOverflow = HorizontalWrapMode.Wrap;
-            text.raycastTarget = false;
-            return text;
-        }
+private string ExplainCurrentLevelBriefly()
+{
+    Resolve();
 
-        private static void MakeButton(string caption, Transform parent, Vector2 at,
-            Vector2 size, UnityEngine.Events.UnityAction clicked)
-        {
-            GameObject go = new GameObject("Button_" + caption, typeof(RectTransform), typeof(Image), typeof(Button));
-            go.transform.SetParent(parent, false);
-            RectTransform rt = go.GetComponent<RectTransform>();
-            rt.anchorMin = rt.anchorMax = new Vector2(.5f, .5f);
-            rt.anchoredPosition = at;
-            rt.sizeDelta = size;
-            go.GetComponent<Image>().color = new Color(.05f, .35f, .43f, 1f);
-            go.GetComponent<Button>().onClick.AddListener(clicked);
-            Text text = MakeText("Label", go.transform, Vector2.zero, size, 15, Color.white, FontStyle.Bold);
-            text.alignment = TextAnchor.MiddleCenter;
-            text.text = caption;
-        }
+    if (levelManager == null ||
+        levelManager.ActiveLevel == null)
+    {
+        return "No level is currently active.";
+    }
 
+    int number = levelManager.ActiveLevelIndex + 1;
+    int total = levelManager.LevelCount;
 
+    string response =
+        "You are currently playing Level " +
+        number + " of " + total + ".\n\n" +
+        levelManager.ActiveLevel.DisplayName +
+        "\n\nStatus: " +
+        levelManager.RuntimeState +
+        "\nObjectives: " +
+        levelManager.SatisfiedTargetCount + "/" +
+        levelManager.ActiveTargetCount;
 
+    if (levelManager.IsCompleted)
+        response += "\n\nThis level is complete.";
+
+    if (levelManager.IsFailed)
+        response += "\n\nThis level has failed.";
+
+    return response;
+}
 
 
         
@@ -2167,6 +3040,623 @@ answerScroll = scrolling;
 
             return item;
         }
+        
+private string ExplainActiveLevelTargetsGlobal()
+{
+    Resolve();
+
+    if (levelManager == null ||
+        levelManager.ActiveLevel == null)
+    {
+        return "Start a level to inspect its objectives.";
+    }
+
+    var manager = levelManager;
+
+    System.Text.StringBuilder sb =
+        new System.Text.StringBuilder();
+
+    sb.AppendLine("SPARK AI - ACTIVE LEVEL ANALYSIS");
+    sb.AppendLine();
+
+    sb.AppendLine(
+        "Level: " + manager.ActiveLevel.DisplayName);
+
+    sb.AppendLine(
+        "Progress: " +
+        manager.SatisfiedTargetCount + "/" +
+        manager.ActiveTargetCount);
+
+    sb.AppendLine(
+        "State: " + manager.RuntimeState);
+
+    if (manager.ActiveLevel.Targets == null)
+    {
+        sb.AppendLine("No target definitions are available.");
+        return sb.ToString();
+    }
+
+    foreach (SparkLevelTarget target
+             in manager.ActiveLevel.Targets)
+    {
+        if (target == null)
+            continue;
+
+        bool? passed = null;
+
+        if (manager.TargetResults != null)
+        {
+            foreach (var result in manager.TargetResults)
+            {
+                if (result.targetId == target.TargetId)
+                {
+                    passed = result.satisfied;
+                    break;
+                }
+            }
+        }
+
+        sb.AppendLine();
+
+        sb.AppendLine(
+            (passed.HasValue
+                ? passed.Value ? "[PASS] " : "[PENDING] "
+                : "[UNKNOWN] ") +
+            (string.IsNullOrWhiteSpace(target.DisplayName)
+                ? target.TargetId
+                : target.DisplayName));
+
+        sb.AppendLine("Type: " + target.Type);
+
+        if (!string.IsNullOrWhiteSpace(
+                target.Description))
+        {
+            sb.AppendLine(
+                "Goal: " + target.Description);
+        }
+
+        switch (target.Type)
+        {
+            case SparkLevelTarget.TargetType.CurrentRange:
+                sb.AppendLine(
+                    "Minimum current: " +
+                    (target.MinimumCurrent * 1000f)
+                        .ToString("F3") + " mA");
+
+                if (target.UseMaximumCurrent)
+                {
+                    sb.AppendLine(
+                        "Maximum current: " +
+                        (target.MaximumCurrent * 1000f)
+                            .ToString("F3") + " mA");
+                }
+                break;
+
+            case SparkLevelTarget.TargetType.VoltageRange:
+                sb.AppendLine(
+                    "Minimum voltage: " +
+                    target.MinimumVoltage.ToString("F3") +
+                    " V");
+
+                if (target.UseMaximumVoltage)
+                {
+                    sb.AppendLine(
+                        "Maximum voltage: " +
+                        target.MaximumVoltage.ToString("F3") +
+                        " V");
+                }
+                break;
+
+            case SparkLevelTarget.TargetType.PowerRange:
+                sb.AppendLine(
+                    "Minimum power: " +
+                    (target.MinimumPower * 1000f)
+                        .ToString("F3") + " mW");
+
+                if (target.UseMaximumPower)
+                {
+                    sb.AppendLine(
+                        "Maximum power: " +
+                        (target.MaximumPower * 1000f)
+                            .ToString("F3") + " mW");
+                }
+                break;
+        }
+
+        if (!string.IsNullOrWhiteSpace(
+                target.TargetComponentId))
+        {
+            sb.AppendLine(
+                "Component binding ID: " +
+                target.TargetComponentId);
+        }
+
+        if (target.RequireConduction)
+        {
+            sb.AppendLine(
+                "Conduction is required.");
+        }
+
+        if (target.RequireElectricalEnabled)
+        {
+            sb.AppendLine(
+                "Electrical enabled state is required.");
+        }
+
+        if (target.Inverted)
+        {
+            sb.AppendLine(
+                "This objective uses inverted evaluation.");
+        }
+
+        if (!target.IsConfigured())
+        {
+            sb.AppendLine(
+                "Warning: Objective configuration incomplete.");
+        }
+    }
+
+    sb.AppendLine();
+    sb.AppendLine("RUNTIME WORKSTATION COMPONENTS");
+
+    if (worldContext == null)
+    {
+        sb.AppendLine(
+            "Global world context is unavailable.");
+    }
+    else
+    {
+        SparkShelfItem[] installed =
+            worldContext.GetPlacedComponents();
+
+        sb.AppendLine(
+            "Installed items: " + installed.Length);
+
+        foreach (SparkShelfItem item in installed)
+        {
+            if (item == null)
+                continue;
+
+            sb.AppendLine();
+            sb.AppendLine(
+                "Item: " + item.ItemId);
+
+            if (item.CurrentSlot != null)
+            {
+                sb.AppendLine(
+                    "Slot: " +
+                    item.CurrentSlot.SlotId);
+            }
+
+            SparkResistor resistor =
+                item.GetComponent<SparkResistor>();
+
+            if (resistor == null)
+            {
+                resistor =
+                    item.GetComponentInChildren<SparkResistor>(true);
+            }
+
+            if (resistor != null)
+            {
+                sb.AppendLine(
+                    "Resistance: " +
+                    resistor.ResistanceOhms.ToString("F1") +
+                    " ohms");
+
+                sb.AppendLine(
+                    "Solver current: " +
+                    (Mathf.Abs(resistor.Current) * 1000f)
+                        .ToString("F3") + " mA");
+
+                sb.AppendLine(
+                    "Solver voltage: " +
+                    Mathf.Abs(resistor.Voltage)
+                        .ToString("F3") + " V");
+
+                sb.AppendLine(
+                    "Conducting: " +
+                    resistor.IsConducting);
+            }
+        }
+    }
+
+    sb.AppendLine();
+    sb.AppendLine(
+        "The evaluator determines objective results. " +
+        "Installed components are listed independently; " +
+        "their readings are not automatically bound " +
+        "to a particular objective.");
+
+    return sb.ToString();
+}
+
+private string BuildGlobalObjectiveHint(int stage)
+{
+    Resolve();
+
+    if (levelManager == null ||
+        levelManager.ActiveLevel == null)
+    {
+        return "Start a level to receive circuit-specific hints.";
+    }
+
+    var manager = levelManager;
+
+    if (manager.IsCompleted)
+    {
+        return
+            "The evaluator confirms this level is complete. " +
+            "All required objectives have been satisfied.";
+    }
+
+    System.Text.StringBuilder sb =
+        new System.Text.StringBuilder();
+
+    sb.AppendLine(
+        "SPARK AI - LEVEL " +
+        manager.ActiveLevel.DisplayName);
+
+    sb.AppendLine(
+        "Progress: " +
+        manager.SatisfiedTargetCount + "/" +
+        manager.ActiveTargetCount);
+
+    sb.AppendLine();
+
+    // =====================================================
+    // 1. CRITICAL CIRCUIT CONDITIONS COME FIRST
+    // =====================================================
+
+    if (manager.IsFailed)
+    {
+        sb.AppendLine("LEVEL FAILED");
+
+        sb.AppendLine(
+            string.IsNullOrWhiteSpace(manager.LastFailureReason)
+                ? "The manager reports level failure."
+                : manager.LastFailureReason);
+
+        return sb.ToString();
+    }
+
+    if (manager.SourceShorted || manager.TargetShorted)
+    {
+        sb.AppendLine("SHORT CIRCUIT DETECTED");
+
+        sb.AppendLine(
+            stage == 1
+                ? "Check the circuit connections."
+                : stage == 2
+                    ? "Look for wires that bypass an " +
+                      "electrical component."
+                    : "The evaluator reports a short. " +
+                      "Trace the connections between the " +
+                      "power source, components, and return path.");
+
+        return sb.ToString();
+    }
+
+    if (manager.Overloaded)
+    {
+        sb.AppendLine("OVERLOAD DETECTED");
+
+        sb.AppendLine(
+            stage == 1
+                ? "Check the circuit's electrical load."
+                : stage == 2
+                    ? "Inspect component power ratings " +
+                      "and the current through them."
+                    : "The evaluator reports an overload. " +
+                      "Compare component solver readings " +
+                      "against their operating limits.");
+
+        return sb.ToString();
+    }
+
+    if (!manager.HasValidPowerSource)
+    {
+        sb.AppendLine("POWER SOURCE NOT VALID");
+
+        sb.AppendLine(
+            stage == 1
+                ? "Begin by checking the power supply."
+                : stage == 2
+                    ? "Check the source terminals and " +
+                      "the connections leading to the circuit."
+                    : "The level manager does not currently " +
+                      "recognize a valid active power source. " +
+                      "Inspect the source configuration and wiring.");
+
+        return sb.ToString();
+    }
+
+    if (!manager.ClosedReturn)
+    {
+        sb.AppendLine("RETURN PATH OPEN");
+
+        sb.AppendLine(
+            stage == 1
+                ? "The circuit needs a complete return path."
+                : stage == 2
+                    ? "Check the switch and wire endpoints " +
+                      "along the return path."
+                    : "The evaluator reports an open return " +
+                      "path. Trace the circuit from source " +
+                      "through the components and back.");
+
+        return sb.ToString();
+    }
+
+    if (manager.WrongConnection)
+    {
+        sb.AppendLine("CONNECTION ISSUE DETECTED");
+
+        sb.AppendLine(
+            stage == 1
+                ? "Review the component connections."
+                : stage == 2
+                    ? "Check whether wires are connected " +
+                      "to the intended terminals."
+                    : "The evaluator reports a wrong " +
+                      "connection. Inspect terminal endpoints " +
+                      "and any required polarity.");
+
+        return sb.ToString();
+    }
+
+    // =====================================================
+    // 2. FIND THE FIRST EVALUATOR-CONFIRMED
+    //    PENDING OBJECTIVE
+    // =====================================================
+
+    SparkLevelTarget pendingTarget = null;
+
+    if (manager.ActiveLevel.Targets != null &&
+        manager.TargetResults != null)
+    {
+        foreach (SparkLevelTarget target
+                 in manager.ActiveLevel.Targets)
+        {
+            if (target == null)
+                continue;
+
+            foreach (var result in manager.TargetResults)
+            {
+                if (result.targetId != target.TargetId)
+                    continue;
+
+                if (!result.satisfied)
+                {
+                    pendingTarget = target;
+                }
+
+                break;
+            }
+
+            if (pendingTarget != null)
+                break;
+        }
+    }
+
+    if (pendingTarget == null)
+    {
+        sb.AppendLine(
+            "No pending objective could be matched " +
+            "to the current evaluator results.");
+
+        sb.AppendLine(
+            "The manager still controls completion. " +
+            "Check the current level state.");
+
+        return sb.ToString();
+    }
+
+    string name =
+        string.IsNullOrWhiteSpace(pendingTarget.DisplayName)
+            ? pendingTarget.TargetId
+            : pendingTarget.DisplayName;
+
+    sb.AppendLine("PENDING OBJECTIVE: " + name);
+
+    // =====================================================
+    // HINT 1: GOAL
+    // =====================================================
+
+    if (stage <= 1)
+    {
+        if (!string.IsNullOrWhiteSpace(
+                pendingTarget.Description))
+        {
+            sb.AppendLine(pendingTarget.Description);
+        }
+        else
+        {
+            sb.AppendLine(
+                "This objective has not passed yet. " +
+                "Inspect its required electrical condition.");
+        }
+
+        sb.AppendLine();
+        sb.AppendLine(
+            "Press HINT again for its exact requirements.");
+
+        return sb.ToString();
+    }
+
+    // =====================================================
+    // HINT 2: CONFIGURED REQUIREMENTS
+    // =====================================================
+
+    sb.AppendLine(
+        "Objective type: " + pendingTarget.Type);
+
+    switch (pendingTarget.Type)
+    {
+        case SparkLevelTarget.TargetType.CurrentRange:
+
+            sb.AppendLine(
+                "Required current: at least " +
+                (pendingTarget.MinimumCurrent * 1000f)
+                    .ToString("F3") + " mA");
+
+            if (pendingTarget.UseMaximumCurrent)
+            {
+                sb.AppendLine(
+                    "Maximum allowed: " +
+                    (pendingTarget.MaximumCurrent * 1000f)
+                        .ToString("F3") + " mA");
+            }
+
+            sb.AppendLine(
+                "Check the current at the component " +
+                "used by this objective.");
+            break;
+
+        case SparkLevelTarget.TargetType.VoltageRange:
+
+            sb.AppendLine(
+                "Required voltage: at least " +
+                pendingTarget.MinimumVoltage
+                    .ToString("F3") + " V");
+
+            if (pendingTarget.UseMaximumVoltage)
+            {
+                sb.AppendLine(
+                    "Maximum allowed: " +
+                    pendingTarget.MaximumVoltage
+                        .ToString("F3") + " V");
+            }
+
+            sb.AppendLine(
+                "Check the voltage measurement " +
+                "associated with this objective.");
+            break;
+
+        case SparkLevelTarget.TargetType.PowerRange:
+
+            sb.AppendLine(
+                "Required power: at least " +
+                (pendingTarget.MinimumPower * 1000f)
+                    .ToString("F3") + " mW");
+
+            if (pendingTarget.UseMaximumPower)
+            {
+                sb.AppendLine(
+                    "Maximum allowed: " +
+                    (pendingTarget.MaximumPower * 1000f)
+                        .ToString("F3") + " mW");
+            }
+
+            sb.AppendLine(
+                "Check the power measurement " +
+                "associated with this objective.");
+            break;
+
+        case SparkLevelTarget.TargetType.LEDOn:
+
+            sb.AppendLine(
+                "The evaluator requires the specified " +
+                "LED to be on.");
+
+            sb.AppendLine(
+                "Check its polarity and electrical path.");
+            break;
+
+        case SparkLevelTarget.TargetType.ComponentConducting:
+
+            sb.AppendLine(
+                "The specified component must satisfy " +
+                "the evaluator's conduction condition.");
+            break;
+
+        case SparkLevelTarget.TargetType.ComponentPowered:
+
+            sb.AppendLine(
+                "The specified component must satisfy " +
+                "the evaluator's powered condition.");
+            break;
+
+        case SparkLevelTarget.TargetType.VoltagePresent:
+
+            sb.AppendLine(
+                "The specified terminal or component " +
+                "must satisfy the voltage-present condition.");
+            break;
+
+        case SparkLevelTarget.TargetType.TerminalPowered:
+
+            sb.AppendLine(
+                "The specified terminal must satisfy " +
+                "the evaluator's powered condition.");
+            break;
+
+        default:
+
+            sb.AppendLine(
+                "Inspect this objective's configured " +
+                "electrical requirements.");
+            break;
+    }
+
+    if (pendingTarget.RequireConduction)
+    {
+        sb.AppendLine(
+            "Additional requirement: conduction.");
+    }
+
+    if (pendingTarget.RequireElectricalEnabled)
+    {
+        sb.AppendLine(
+            "Additional requirement: electrical enabled.");
+    }
+
+    if (pendingTarget.Inverted)
+    {
+        sb.AppendLine(
+            "Warning: this objective uses inverted evaluation.");
+    }
+
+    if (!pendingTarget.IsConfigured())
+    {
+        sb.AppendLine(
+            "Warning: objective configuration is incomplete.");
+    }
+
+    if (stage == 2)
+    {
+        sb.AppendLine();
+        sb.AppendLine(
+            "Press HINT again to inspect runtime components.");
+
+        return sb.ToString();
+    }
+
+   
+// =====================================================
+// HINT 3: AUTHORITATIVE RUNTIME EVIDENCE
+// =====================================================
+
+sb.AppendLine();
+sb.AppendLine("LIVE OBJECTIVE DIAGNOSIS");
+sb.AppendLine();
+
+sb.AppendLine(
+    SparkAIObjectiveReasoner.Diagnose(
+        manager,
+        pendingOnly: true));
+
+sb.AppendLine();
+sb.AppendLine(
+    "Measurements come from the active level's " +
+    "runtime scene bindings. Objective pass/fail " +
+    "comes from the official level evaluator.");
+
+return sb.ToString();
+
+}
+
+
 
 
     }

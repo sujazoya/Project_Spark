@@ -978,8 +978,7 @@ private void SetOutput(
 
                 if (evaluation.IsCompleted)
                 {
-                    CompleteCurrentLevel(
-                        evaluation);
+                    CompleteCurrentLevel(evaluation);
                 }
                 else if (evaluation.IsFailed)
                 {
@@ -987,6 +986,16 @@ private void SetOutput(
                         evaluation.Message,
                         evaluation);
                 }
+                else
+                {
+                    // Notify observers after an ordinary
+                    // incomplete evaluation as well.
+                    //
+                    // Completion and failure methods already
+                    // send their own evaluation events.
+                    LevelEvaluationChanged?.Invoke(level);
+                }
+
             }
                     finally
             {

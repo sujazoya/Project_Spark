@@ -53,6 +53,11 @@ namespace ProjectSpark.Gameplay
             public SparkElectronicObject ElectronicObject => electronicObject;
         }
 
+        private readonly Dictionary<string, SparkElectricalComponent>
+    runtimeComponentOverrides =
+        new Dictionary<string, SparkElectricalComponent>(
+            StringComparer.Ordinal);
+
         // ============================================================
         // GAMEOBJECT OUTPUT BINDING
         // ============================================================
@@ -358,21 +363,35 @@ namespace ProjectSpark.Gameplay
         // Existing API preserved
         // ============================================================
 
-        public bool TryGetComponent(
-            string id,
-            out SparkElectricalComponent component)
-        {
-            EnsureLookupCache();
+       
+public bool TryGetComponent(
+    string id,
+    out SparkElectricalComponent component)
+{
+    EnsureLookupCache();
 
-            component = null;
+    component = null;
 
-            if (string.IsNullOrWhiteSpace(id))
-                return false;
+    if (string.IsNullOrWhiteSpace(id))
+        return false;
 
-            return componentLookup.TryGetValue(
-                id,
-                out component);
-        }
+    // A runtime binding can intentionally be null
+    // when its workstation slot is empty.
+    // Do not fall back to an old serialized object.
+    if (runtimeComponentOverrides.TryGetValue(
+            id,
+            out SparkElectricalComponent runtimeComponent))
+    {
+        component = runtimeComponent;
+        return component != null;
+    }
+
+    return componentLookup.TryGetValue(
+        id,
+        out component) &&
+        component != null;
+}
+
 
         public bool HasComponent(string id)
         {
@@ -777,5 +796,67 @@ namespace ProjectSpark.Gameplay
                     : 0;
             }
         }
+        
+        public bool RegisterRuntimeComponent(
+            string bindingId,
+            SparkElectricalComponent component)
+        {
+            if (string.IsNullOrWhiteSpace(bindingId) ||
+                component == null)
+            {
+                return false;
+            }
+
+            EnsureLookupCache();
+
+            // A runtime replacement must correspond to a
+            // declared binding. Never invent a new target ID.
+            if (!componentLookup.ContainsKey(bindingId))
+            {
+                Debug.LogWarning(
+                    "[SceneBindings] Runtime registration rejected. " +
+                    "Unknown component binding ID: " + bindingId,
+                    this);
+
+                return false;
+            }
+
+            runtimeComponentOverrides[bindingId] = component;
+
+            return true;
+        }
+
+        public bool UnregisterRuntimeComponent(
+            string bindingId,
+            SparkElectricalComponent expectedComponent)
+        {
+            if (string.IsNullOrWhiteSpace(bindingId))
+                return false;
+
+            if (!runtimeComponentOverrides.TryGetValue(
+                    bindingId,
+                    out SparkElectricalComponent current))
+            {
+                return false;
+            }
+
+            // Prevent a delayed removal event from deleting
+            // a newer replacement component.
+            if (current != expectedComponent)
+                return false;
+
+        runtimeComponentOverrides[bindingId] = null;
+        return true;
+        }
+
+        public void ClearRuntimeComponentOverrides()
+        {
+            runtimeComponentOverrides.Clear();
+        }
+        private void OnDestroy()
+        {
+            runtimeComponentOverrides.Clear();
+        }
+
     }
 }

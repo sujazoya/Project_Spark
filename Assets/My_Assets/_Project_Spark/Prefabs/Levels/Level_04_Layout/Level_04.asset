@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_04
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_04
+  displayName: The Power Challenge
+  description: Light the LED while controlling current and resistor power.
+  completionMode: 0
+  requiredTargetCount: 2
+  requireClosedReturn: 1
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 1
+  minimumVoltage: 0.01
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: PowerSupply_01
+    positiveTerminalId: Battery_positive
+    negativeTerminalId: Battery_negative
+    nominalVoltage: 5
+  targets:
+  - targetId: led_operates
+    displayName: LED operates
+    description: 'LED BULB
+
+'
+    targetType: 3
+    targetTerminalId: 
+    requiredPositiveTerminalId: LED_Anode
+    requiredNegativeTerminalId: LED_Cathode
+    targetComponentId: led
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: controlled_current
+    displayName: controlled current
+    description: 'Register
+
+'
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: LED_Anode
+    requiredNegativeTerminalId: LED_Cathode
+    targetComponentId: led
+    minimumVoltage: 0
+    minimumCurrent: 0.006
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.015
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: safe_resistor_power
+    displayName: Safe resistor power
+    description: 'LED BULB
+
+'
+    targetType: 7
+    targetTerminalId: 
+    requiredPositiveTerminalId: LED_Anode
+    requiredNegativeTerminalId: LED_Cathode
+    targetComponentId: led
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.04
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 1
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 1
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0
