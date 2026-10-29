@@ -2227,57 +2227,205 @@ private string BuildUniversalComponentInspection(
         return "The selected object is unavailable.";
     }
 
-    SparkResistor resistor =
-        target.GetComponentInParent<SparkResistor>();
+   
+SparkResistor resistor =
+    target.GetComponentInParent<SparkResistor>();
 
-    if (resistor != null)
+if (resistor != null)
+{
+    System.Text.StringBuilder sb =
+        new System.Text.StringBuilder(512);
+
+    sb.AppendLine("RESISTOR: " + resistor.name);
+    sb.AppendLine();
+
+    // =========================================
+    // ELECTRICAL MEASUREMENTS
+    // =========================================
+
+    sb.AppendLine("ELECTRICAL MEASUREMENTS");
+
+    sb.AppendLine(
+        "Resistance: " +
+        resistor.ResistanceOhms.ToString("F2") +
+        " Ω");
+
+    sb.AppendLine(
+        "Voltage: " +
+        resistor.Voltage.ToString("F3") +
+        " V");
+
+    sb.AppendLine(
+        "Current: " +
+        (resistor.Current * 1000f).ToString("F3") +
+        " mA");
+
+    sb.AppendLine(
+        "Power: " +
+        (resistor.PowerWatts * 1000f).ToString("F3") +
+        " mW");
+
+    sb.AppendLine(
+        "Maximum rated power: " +
+        (resistor.MaximumPowerWatts * 1000f)
+            .ToString("F2") +
+        " mW");
+
+    sb.AppendLine(
+        "Conducting: " + resistor.IsConducting);
+
+    // =========================================
+    // BURN SYSTEM
+    // =========================================
+
+    SparkResistorBurn burn = resistor.BurnSystem;
+
+    if (burn != null)
     {
-        string text =
-            "RESISTOR: " + resistor.name + "\n\n" +
-            "Resistance: " +
-            resistor.ResistanceOhms.ToString("F2") +
-            " ohms\n" +
-            "Voltage: " +
-            resistor.Voltage.ToString("F3") +
-            " V\n" +
-            "Current: " +
-            (resistor.Current * 1000f).ToString("F3") +
-            " mA\n" +
-            "Power: " +
-            (resistor.PowerWatts * 1000f)
-                .ToString("F3") +
-            " mW\n" +
-            "Maximum rated power: " +
-            resistor.MaximumPowerWatts.ToString("F3") +
-            " W\n" +
-            "Conducting: " + resistor.IsConducting +
-            "\nBurned: " + resistor.IsBurned;
+        sb.AppendLine();
+        sb.AppendLine("THERMAL / BURN STATUS");
 
-        SparkShelfItem shelfItem =
-            resistor.GetComponentInParent<SparkShelfItem>();
+        sb.AppendLine(
+            "Temperature: " +
+            burn.TemperatureC.ToString("F1") +
+            " °C");
 
-        if (shelfItem != null)
+        sb.AppendLine(
+            "Thermal power: " +
+            (burn.PowerWatts * 1000f).ToString("F2") +
+            " mW");
+
+        sb.AppendLine(
+            "Burn rating: " +
+            (burn.RatedWatts * 1000f).ToString("F2") +
+            " mW");
+
+        sb.AppendLine(
+            "Thermal state: " + burn.State);
+
+        sb.AppendLine(
+            "Mesh damage: " +
+            (burn.MeshBurnProgress * 100f)
+                .ToString("F0") +
+            "%");
+
+        if (burn.IsFailed)
         {
-            bool installed =
-                shelfItem.IsAtWorkbench &&
-                shelfItem.CurrentSlot != null &&
-                shelfItem.CurrentSlot.Occupant ==
-                    shelfItem;
+            sb.AppendLine();
+            sb.AppendLine("DIAGNOSIS");
 
-            text += "\nInstalled: " + installed;
+            sb.AppendLine(
+                "The resistor has burned and failed.");
 
-            if (!installed)
+            if (burn.ElectricalFailureMode ==
+                SparkResistorBurn.FailureMode.OpenCircuit)
             {
-                text +=
-                    "\nNote: This shelf item is not " +
-                    "registered as installed. Do not " +
-                    "interpret its readings as current " +
-                    "flowing through the active circuit.";
+                sb.AppendLine(
+                    "Failure mode: Open circuit.");
+
+                sb.AppendLine(
+                    "Current can no longer pass " +
+                    "through this resistor.");
+            }
+            else
+            {
+                sb.AppendLine(
+                    "Short-circuit failure is configured.");
+
+                sb.AppendLine(
+                    "Verify that the electrical solver " +
+                    "supports this failure mode.");
+            }
+
+            sb.AppendLine(
+                "NEXT: Replace or repair the resistor.");
+        }
+        else
+        {
+            if (burn.PowerWatts > burn.RatedWatts)
+            {
+                float overload =
+                    burn.PowerWatts /
+                    Mathf.Max(burn.RatedWatts, 0.000001f);
+
+                sb.AppendLine(
+                    "Power overload: " +
+                    overload.ToString("F2") +
+                    "x rating");
+            }
+
+            if (burn.State ==
+                SparkResistorBurn.BurnState.Smoking)
+            {
+                sb.AppendLine();
+                sb.AppendLine(
+                    "WARNING: The resistor is smoking.");
+
+                sb.AppendLine(
+                    "NEXT: Reduce dissipated power " +
+                    "before thermal failure.");
+            }
+            else if (burn.State ==
+                     SparkResistorBurn.BurnState.Hot)
+            {
+                sb.AppendLine();
+                sb.AppendLine(
+                    "WARNING: The resistor is overheating.");
+
+                sb.AppendLine(
+                    "NEXT: Check its current, " +
+                    "resistance and power rating.");
+            }
+            else
+            {
+                sb.AppendLine(
+                    "No thermal failure detected.");
             }
         }
-
-        return text;
     }
+    else
+    {
+        sb.AppendLine();
+        sb.AppendLine(
+            "Thermal monitoring: Unavailable");
+    }
+
+    // =========================================
+    // SHELF INSTALLATION STATUS
+    // =========================================
+
+    SparkShelfItem shelfItem =
+        resistor.GetComponentInParent<SparkShelfItem>();
+
+    if (shelfItem != null)
+    {
+        bool installed =
+            shelfItem.IsAtWorkbench &&
+            shelfItem.CurrentSlot != null &&
+            shelfItem.CurrentSlot.Occupant ==
+                shelfItem;
+
+        sb.AppendLine();
+        sb.AppendLine("PLACEMENT");
+
+        sb.AppendLine(
+            "Installed: " + installed);
+
+        if (!installed)
+        {
+            sb.AppendLine(
+                "NOTE: This resistor is not installed " +
+                "at the workbench.");
+
+            sb.AppendLine(
+                "Its electrical readings should not " +
+                "be treated as active circuit current.");
+        }
+    }
+
+    return sb.ToString();
+}
+
 
     SparkLED led =
         target.GetComponentInParent<SparkLED>();
@@ -2875,6 +3023,134 @@ private void SetAnswer(string title, string text)
     {
         voice.SpeakText(text);
     }
+}
+
+
+private static string BuildResistorBurnDiagnosis(
+    SparkResistor resistor)
+{
+    if (resistor == null)
+        return "No resistor selected.";
+
+    System.Text.StringBuilder sb =
+        new System.Text.StringBuilder();
+
+    sb.AppendLine("RESISTOR DIAGNOSTICS");
+
+    sb.AppendLine(
+        "Resistance: " +
+        resistor.ResistanceOhms.ToString("F1") +
+        " Ω");
+
+    sb.AppendLine(
+        "Voltage: " +
+        Mathf.Abs(resistor.Voltage).ToString("F3") +
+        " V");
+
+    sb.AppendLine(
+        "Current: " +
+        (Mathf.Abs(resistor.Current) * 1000f)
+            .ToString("F3") +
+        " mA");
+
+    SparkResistorBurn burn = resistor.BurnSystem;
+
+    if (burn == null)
+    {
+        sb.AppendLine(
+            "Thermal monitoring: Unavailable");
+
+        return sb.ToString();
+    }
+
+    sb.AppendLine(
+        "Temperature: " +
+        burn.TemperatureC.ToString("F1") +
+        " °C");
+
+    sb.AppendLine(
+        "Power: " +
+        (burn.PowerWatts * 1000f).ToString("F2") +
+        " mW");
+
+    sb.AppendLine(
+        "Rating: " +
+        (burn.RatedWatts * 1000f).ToString("F2") +
+        " mW");
+
+    sb.AppendLine(
+        "Thermal state: " + burn.State);
+
+    if (burn.IsFailed)
+    {
+        sb.AppendLine(
+            "Mesh damage: " +
+            (burn.MeshBurnProgress * 100f)
+                .ToString("F0") +
+            "%");
+
+        sb.AppendLine(
+            "DIAGNOSIS: The resistor has failed.");
+
+        sb.AppendLine(
+            burn.ElectricalFailureMode ==
+                SparkResistorBurn.FailureMode.OpenCircuit
+                ? "The resistor is now an open circuit. " +
+                  "Current cannot flow through it."
+                : "Short-circuit failure is configured, " +
+                  "but verify that the electrical solver " +
+                  "supports this failure mode.");
+
+        sb.AppendLine(
+            "NEXT: Replace or repair the resistor.");
+
+        return sb.ToString();
+    }
+
+    float rating = burn.RatedWatts;
+
+    if (burn.PowerWatts > rating)
+    {
+        float overload =
+            burn.PowerWatts / rating;
+
+        sb.AppendLine(
+            "Power overload: " +
+            overload.ToString("F2") +
+            "x rated power");
+    }
+
+    switch (burn.State)
+    {
+        case SparkResistorBurn.BurnState.Hot:
+
+            sb.AppendLine(
+                "DIAGNOSIS: The resistor is heating up.");
+
+            sb.AppendLine(
+                "NEXT: Check its power dissipation " +
+                "and resistor rating.");
+            break;
+
+        case SparkResistorBurn.BurnState.Smoking:
+
+            sb.AppendLine(
+                "DIAGNOSIS: The resistor has reached " +
+                "the smoking temperature.");
+
+            sb.AppendLine(
+                "NEXT: Reduce the electrical load " +
+                "before it fails.");
+            break;
+
+        default:
+
+            sb.AppendLine(
+                "DIAGNOSIS: No thermal failure detected.");
+            break;
+    }
+
+    return sb.ToString();
 }
 
 public void AskFromInput()

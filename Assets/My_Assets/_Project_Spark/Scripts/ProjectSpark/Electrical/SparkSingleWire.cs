@@ -160,6 +160,8 @@ namespace ProjectSpark.Gameplay
         private bool flowDirectionPositive = true;
 
 
+            private float nextCircuitLookupTime;
+
         // ============================================================
         // ENUM
         // ============================================================
@@ -357,25 +359,56 @@ public float Power => ElectricalState.Power;
             ResolveCircuitSystem();
         }
 
-
-        private void OnEnable()
-        {
-            Subscribe();
-        }
-
-private void OnDisable()
+private void OnEnable()
 {
-    RemoveAllPhysicalContacts();
-    Unsubscribe();
+    ResolveCircuitSystem();
+    Subscribe();
 }
 
+private void Start()
+{
+    if (circuitSystem == null)
+    {
+        ResolveCircuitSystem();
+        Subscribe();
+    }
+}
 
-        private void OnDestroy()
+        private void OnDisable()
         {
-            RemovePhysicalContact();
-
+            RemoveAllPhysicalContacts();
             Unsubscribe();
         }
+
+
+                private void OnDestroy()
+                {
+                    RemovePhysicalContact();
+
+                    Unsubscribe();
+                }
+
+                
+        private void Update()
+        {
+            if (circuitSystem != null)
+                return;
+
+            if (Time.unscaledTime < nextCircuitLookupTime)
+                return;
+
+            nextCircuitLookupTime =
+                Time.unscaledTime + 0.5f;
+
+            ResolveCircuitSystem();
+
+            if (circuitSystem != null)
+            {
+                Subscribe();
+                RefreshVisuals();
+            }
+        }
+
 public bool RemovePhysicalContact(
     SparkTerminal target)
 {
@@ -495,31 +528,41 @@ public void RemovePhysicalContact()
         // CIRCUIT SYSTEM
         // ============================================================
 
-        private void ResolveCircuitSystem()
-        {
-            if (circuitSystem != null)
-                return;
+       
+private void ResolveCircuitSystem()
+{
+    // Keep an existing valid reference.
+    if (circuitSystem != null)
+        return;
 
-            circuitSystem =
-                FindCircuitSystem();
-        }
+    // Prefer the circuit manager belonging
+    // to this wire's hierarchy.
+    circuitSystem =
+        GetComponentInParent<SparkCircuitSystem>();
 
+    // Fallback: find an active circuit manager
+    // anywhere in the loaded scene.
+    if (circuitSystem == null)
+    {
+        circuitSystem =
+            FindFirstObjectByType<SparkCircuitSystem>();
+    }
 
-        private SparkCircuitSystem FindCircuitSystem()
-        {
-            SparkCircuitSystem[] systems =
-                FindObjectsByType<SparkCircuitSystem>(
-                    FindObjectsInactive.Exclude,
-                    FindObjectsSortMode.None);
+    if (circuitSystem != null)
+    {
+        Debug.Log(
+            "[SparkSingleWire] Auto-assigned Circuit System: " +
+            circuitSystem.name,
+            this);
+    }
+}
 
-            if (systems == null ||
-                systems.Length == 0)
-            {
-                return null;
-            }
+private SparkCircuitSystem FindCircuitSystem()
+{
+    ResolveCircuitSystem();
+    return circuitSystem;
+}
 
-            return systems[0];
-        }
 
 
         // ============================================================

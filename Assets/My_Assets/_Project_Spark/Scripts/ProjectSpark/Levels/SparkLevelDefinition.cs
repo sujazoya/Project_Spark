@@ -124,6 +124,32 @@ namespace ProjectSpark.Gameplay
         private LevelFailureMode failureMode =
             LevelFailureMode.None;
 
+            
+        // ================================================================
+        // LEVEL 6 — FAULT DETECTIVE RULES
+        // ================================================================
+
+        [Header("Fault Detective Rules")]
+
+        [Tooltip(
+            "Scene component binding IDs for resistors " +
+            "that must be healthy at level completion. " +
+            "Leave empty for levels without this rule.")]
+        [SerializeField]
+        private string[] requiredHealthyResistorIds =
+            Array.Empty<string>();
+
+
+        [Tooltip(
+            "If enabled, burned resistors currently installed " +
+            "at the workbench prevent level completion. " +
+            "Automatically supports replacing shelf resistors.")]
+        [SerializeField]
+        private bool requireHealthyInstalledResistors;
+
+        public bool RequireHealthyInstalledResistors =>
+            requireHealthyInstalledResistors;
+
         // ================================================================
         // VISUAL OUTPUT IDs
         // ================================================================
@@ -229,6 +255,8 @@ private bool autoAdvanceOnCompletion;
 
         public LevelFailureMode FailureMode =>
             failureMode;
+            public string[] RequiredHealthyResistorIds =>
+    requiredHealthyResistorIds;
 
         public string[] SuccessOutputIds =>
             successOutputIds;
@@ -440,7 +468,53 @@ private bool autoAdvanceOnCompletion;
                 }
             }
 
-            return true;
+           if (completionMode ==
+    CompletionMode.RequiredTargetCount)
+{
+    if (requiredTargetCount < 1)
+    {
+        error =
+            $"Level '{levelId}' requires at least " +
+            $"one required target.";
+
+        return false;
+    }
+
+    if (requiredTargetCount > targets.Length)
+    {
+        error =
+            $"Level '{levelId}' requires " +
+            $"{requiredTargetCount} targets, but only " +
+            $"{targets.Length} are configured.";
+
+        return false;
+    }
+    
+            // ============================================================
+            // VALIDATE REQUIRED HEALTHY RESISTOR IDS
+            // ============================================================
+
+            if (requiredHealthyResistorIds != null)
+            {
+                for (int i = 0;
+                     i < requiredHealthyResistorIds.Length;
+                     i++)
+                {
+                    if (string.IsNullOrWhiteSpace(
+                            requiredHealthyResistorIds[i]))
+                    {
+                        error =
+                            $"Level '{levelId}' has an empty " +
+                            $"healthy-resistor ID at index {i}.";
+
+                        return false;
+                    }
+                }
+            }
+
+}
+
+return true;
         }
 
         // ================================================================
@@ -478,6 +552,10 @@ private bool autoAdvanceOnCompletion;
 
             if (failureOutputIds == null)
                 failureOutputIds = Array.Empty<string>();
+
+                if (requiredHealthyResistorIds == null)
+            requiredHealthyResistorIds =
+                Array.Empty<string>();
 
             if (powerSources != null)
             {

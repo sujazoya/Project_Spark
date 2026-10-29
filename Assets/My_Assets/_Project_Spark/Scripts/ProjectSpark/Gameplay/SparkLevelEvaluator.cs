@@ -3,6 +3,7 @@ using UnityEngine;
 using ProjectSpark.Circuit;
 using ProjectSpark.Electrical;
 using ProjectSpark.Measurement;
+using ProjectSpark.Gameplay.Shelf;
 
 namespace ProjectSpark.Gameplay
 {
@@ -384,6 +385,23 @@ namespace ProjectSpark.Gameplay
                     SparkLevelFailureReason.InvalidTarget,
                     "Required level targets are not satisfied.");
             }
+
+            
+            // ------------------------------------------------------------
+            // LEVEL 6 — REQUIRED RESISTORS MUST BE HEALTHY
+            // ------------------------------------------------------------
+
+            if (!AreRequiredResistorsHealthy(
+                    level,
+                    out string resistorFaultMessage))
+            {
+                return CreateFinalEvaluation(
+                    evaluation,
+                    SparkLevelEvaluationStatus.Incomplete,
+                    SparkLevelFailureReason.InvalidTarget,
+                    resistorFaultMessage);
+            }
+
 
             // ------------------------------------------------------------
             // COMPLETED
@@ -778,12 +796,11 @@ private void BuildReachability(
                     }
                 }
 
+             
                 // --------------------------------------------------------
                 // RESISTOR CONTINUITY (NEVER A WIRE-ONLY SHORT)
                 // --------------------------------------------------------
-                // A resistor connects its two terminals electrically, but
-                // it is a load and must not count as a direct bypass.
-                // Only the closed-return reachability pass enables this.
+
                 if (traverseResistors && !bypassOnly)
                 {
                     SparkResistor resistor =
@@ -795,22 +812,30 @@ private void BuildReachability(
                         resistor = ownerResistor;
                     }
 
-                    if (resistor != null && resistor.ElectricalEnabled)
+                    if (resistor != null)
                     {
-                        SparkTerminal resistorOpposite = null;
+                        SparkTerminal opposites = null;
 
                         if (current == resistor.TerminalA)
-                            resistorOpposite = resistor.TerminalB;
-                        else if (current == resistor.TerminalB)
-                            resistorOpposite = resistor.TerminalA;
-
-                        if (resistorOpposite != null &&
-                            visitedTerminals.Add(resistorOpposite))
                         {
-                            traversalQueue.Enqueue(resistorOpposite);
+                            opposites = resistor.TerminalB;
+                        }
+                        else if (current == resistor.TerminalB)
+                        {
+                            opposites = resistor.TerminalA;
+                        }
+
+                        if (opposites != null &&
+                            resistor.CanConductBetween(
+                                current,
+                                opposites) &&
+                            visitedTerminals.Add(opposites))
+                        {
+                            traversalQueue.Enqueue(opposites);
                         }
                     }
                 }
+
                 
                 // --------------------------------------------------------
                 // INLINE MULTIMETER SHUNT
@@ -1159,6 +1184,143 @@ TraverseWireNetwork(
                 supply != null &&
                 supply.IsOverloaded;
         }
+
+        
+        // ================================================================
+        // LEVEL 6 — REQUIRED RESISTOR HEALTH CHECK
+        // ================================================================
+
+       
+private bool AreRequiredResistorsHealthy(
+    SparkLevelDefinition level,
+    out string message)
+{
+    message = string.Empty;
+
+    if (level == null || sceneBindings == null)
+    {
+        message = "Level bindings are unavailable.";
+        return false;
+    }
+
+    // =====================================================
+    // PART 1: FIXED RESISTOR BINDING IDS
+    // =====================================================
+    // Suitable for permanent, nonreplaceable resistors.
+
+    string[] resistorIds =
+        level.RequiredHealthyResistorIds;
+
+    if (resistorIds != null)
+    {
+        for (int i = 0; i < resistorIds.Length; i++)
+        {
+            string resistorId = resistorIds[i];
+
+            if (!sceneBindings.TryGetComponent(
+                    resistorId,
+                    out SparkElectricalComponent component))
+            {
+                message =
+                    "Required resistor binding not found: " +
+                    resistorId;
+                return false;
+            }
+
+            SparkResistor resistor =
+                component as SparkResistor;
+
+            if (resistor == null)
+            {
+                message =
+                    "Binding is not a resistor: " +
+                    resistorId;
+                return false;
+            }
+
+            if (!resistor.ElectricalEnabled)
+            {
+                message =
+                    "Required resistor is disabled: " +
+                    resistor.name;
+                return false;
+            }
+
+            if (resistor.IsBurned)
+            {
+                message =
+                    "Resistor is burned: " +
+                    resistor.name;
+                return false;
+            }
+        }
+    }
+
+    // =====================================================
+    // PART 2: INSTALLED REPLACEABLE RESISTORS
+    // =====================================================
+    // Finds current resistor objects rather than relying
+    // on a binding to the original 100-ohm component.
+
+    if (level.RequireHealthyInstalledResistors)
+    {
+        SparkResistor[] resistors =
+            UnityEngine.Object.FindObjectsByType<
+                SparkResistor>(
+                FindObjectsSortMode.None);
+
+        for (int i = 0; i < resistors.Length; i++)
+        {
+            SparkResistor resistor = resistors[i];
+
+            if (resistor == null)
+                continue;
+
+            SparkShelfItem shelfItem =
+                resistor.GetComponentInParent<
+                    SparkShelfItem>();
+
+            // This rule checks replaceable shelf items.
+            // Permanently installed objects can still
+            // be checked by fixed binding IDs above.
+            if (shelfItem == null)
+                continue;
+
+            bool installed =
+                shelfItem.IsAtWorkbench &&
+                shelfItem.CurrentSlot != null &&
+                shelfItem.CurrentSlot.Occupant ==
+                    shelfItem;
+
+            if (!installed)
+                continue;
+
+            if (resistor.IsBurned)
+            {
+                message =
+                    "Installed resistor " +
+                    resistor.name +
+                    " is burned. Replace or repair it.";
+
+                return false;
+            }
+
+            if (!resistor.ElectricalEnabled)
+            {
+                message =
+                    "Installed resistor " +
+                    resistor.name +
+                    " is electrically disabled.";
+
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+
 
         // ================================================================
         // TARGET EVALUATION
