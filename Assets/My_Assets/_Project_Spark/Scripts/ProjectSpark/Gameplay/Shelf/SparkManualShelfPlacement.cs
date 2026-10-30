@@ -222,6 +222,7 @@ namespace ProjectSpark.Gameplay.Shelf
         public bool SelectItem(SparkShelfItem item)
         {
             ResolveReferences();
+            
 
             // ---------------------------------------------
             // VALIDATE SHELF

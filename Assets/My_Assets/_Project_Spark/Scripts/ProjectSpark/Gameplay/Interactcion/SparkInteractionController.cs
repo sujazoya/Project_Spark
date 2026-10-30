@@ -282,6 +282,8 @@ namespace ProjectSpark.Gameplay
                 SparkInteractable target =
                     FindInteractable(hitCollider);
 
+                    
+
                 if (target != null)
                 {
                     interactable = target;
@@ -431,7 +433,20 @@ if (shelfItem != null)
 
     // The normal interaction system performs the
     // real shelf selection and its validation.
-    target.Interact();
+  
+target.Interact();
+
+// Fallback when the normal interaction did not
+// select the shelf component.
+if (manualPlacement != null &&
+    manualPlacement.SelectedItem != shelfItem &&
+    shelfItem != null &&
+    shelfItem.isActiveAndEnabled &&
+    !shelfItem.IsAtWorkbench)
+{
+    manualPlacement.SelectItem(shelfItem);
+}
+
 
     // Remember the component only when the
     // manual shelf system confirms its selection.

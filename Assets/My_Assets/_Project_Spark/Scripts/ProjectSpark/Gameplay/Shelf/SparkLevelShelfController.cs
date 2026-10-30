@@ -131,6 +131,9 @@ namespace ProjectSpark.Gameplay
         private readonly HashSet<SparkShelfSlot> runtimeSlots =
             new HashSet<SparkShelfSlot>();
 
+            private readonly HashSet<SparkShelfItem> purchasedItems =
+    new HashSet<SparkShelfItem>();
+
         private Coroutine applying;
 
         private int generation;
@@ -361,6 +364,14 @@ namespace ProjectSpark.Gameplay
                     if (visual != null)
                         desiredVisuals.Add(visual);
                 }
+            }
+                        // Keep delivered purchased components available
+            // when switching or restarting levels.
+            purchasedItems.RemoveWhere(item => item == null);
+
+            foreach (SparkShelfItem item in purchasedItems)
+            {
+                desiredItems.Add(item);
             }
 
             HashSet<SparkShelfItem> activeItems =
@@ -752,9 +763,44 @@ namespace ProjectSpark.Gameplay
             SparkShelfSlot[] activeSlots =
                 CollectAllowedSlots(config);
 
-            manualPlacement.Configure(
-                config.availableItems,
-                activeSlots);
+           
+List<SparkShelfItem> allowedItems =
+    new List<SparkShelfItem>();
+
+// Keep all original level components.
+if (config.availableItems != null)
+{
+    foreach (SparkShelfItem item in config.availableItems)
+    {
+        if (item != null && !allowedItems.Contains(item))
+            allowedItems.Add(item);
+    }
+}
+
+// Include delivered purchased components.
+purchasedItems.RemoveWhere(item => item == null);
+
+foreach (SparkShelfItem item in purchasedItems)
+{
+    if (!allowedItems.Contains(item))
+        allowedItems.Add(item);
+}
+
+// Preserve existing workstation slots and filters.
+manualPlacement.Configure(
+    allowedItems.ToArray(),
+    activeSlots);
+
+    foreach (SparkShelfItem purchased in purchasedItems)
+{
+    Debug.Log(
+        $"[LevelShelf DEBUG] " +
+        $"Item={purchased.name} | " +
+        $"Included={allowedItems.Contains(purchased)} | " +
+        $"Active={purchased.isActiveAndEnabled} | " +
+        $"TouchAllowed={purchased.AllowTouch}",
+        purchased);
+}
 
             if (logChanges)
             {
@@ -781,6 +827,77 @@ namespace ProjectSpark.Gameplay
                 }
             }
         }
+
+        
+
+public void RegisterPurchasedItem(SparkShelfItem item)
+{
+    if (item == null)
+        return;
+
+    ResolveReferences();
+
+    if (objectShelf == null ||
+        objectShelf.RegisteredItems == null)
+        return;
+
+    bool registered = false;
+
+    foreach (SparkShelfItem existing in objectShelf.RegisteredItems)
+    {
+        if (existing == item)
+        {
+            registered = true;
+            break;
+        }
+    }
+
+    if (!registered)
+    {
+        Debug.LogWarning(
+            "[LevelShelf] Purchased item not registered " +
+            "with SparkObjectShelf.",
+            item);
+        return;
+    }
+
+    purchasedItems.Add(item);
+    knownItems.Add(item);
+    
+
+    item.gameObject.SetActive(true);
+    item.SetTouchEnabled(true);
+
+    // Add to the active level's runtime configuration.
+    LevelShelfConfiguration config =
+        FindConfiguration(levelManager != null
+            ? levelManager.ActiveLevel
+            : configuredLevel);
+
+    if (config != null)
+    {
+        List<SparkShelfItem> items =
+            new List<SparkShelfItem>(
+                config.availableItems ??
+                Array.Empty<SparkShelfItem>());
+
+        if (!items.Contains(item))
+        {
+            items.Add(item);
+            config.availableItems = items.ToArray();
+        }
+    }
+
+    // Refresh the manual placement whitelist.
+    if (inventoryReady)
+        RefreshRuntimeWorkstationSlots();
+
+    Debug.Log(
+        "[LevelShelf] Purchased item added to " +
+        "active level: " + item.ItemId,
+        item);
+}
+
 
         // ============================================================
         // REGISTER INDIVIDUAL RUNTIME SLOT
@@ -874,5 +991,43 @@ namespace ProjectSpark.Gameplay
                 }
             }
         }
+        
+                public void UnregisterPurchasedItem(SparkShelfItem item)
+                {
+                    if (item == null)
+                        return;
+
+                    purchasedItems.Remove(item);
+                    knownItems.Remove(item);
+
+                    // Remove from runtime level configurations.
+                    if (configurations != null)
+                    {
+                        foreach (LevelShelfConfiguration config in configurations)
+                        {
+                            if (config == null || config.availableItems == null)
+                                continue;
+
+                            List<SparkShelfItem> updated =
+                                new List<SparkShelfItem>(config.availableItems);
+
+                            if (updated.Remove(item))
+                                config.availableItems = updated.ToArray();
+                        }
+                    }
+
+                    // Refresh manual placement permissions.
+                    if (inventoryReady)
+                        RefreshRuntimeWorkstationSlots();
+
+                    if (logChanges)
+                    {
+                        Debug.Log(
+                            "[LevelShelf] Purchased item unregistered: " +
+                            item.ItemId,
+                            this);
+                    }
+                }
+
     }
 }

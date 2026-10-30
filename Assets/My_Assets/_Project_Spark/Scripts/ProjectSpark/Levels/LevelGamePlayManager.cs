@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ProjectSpark.Circuit;
 using ProjectSpark.Electrical;
+using ProjectSpark.Gameplay.Shelf;
 
 namespace ProjectSpark.Gameplay
 {
@@ -84,6 +85,10 @@ namespace ProjectSpark.Gameplay
         private SparkLevelLayoutLoader layoutLoader;
 
         private bool pendingAutoAdvance;
+
+        [Header("Runtime Shelf Registration")]
+[SerializeField]
+private SparkObjectShelf objectShelf;
 
         // ============================================================
         // RUNTIME SETTINGS
@@ -386,6 +391,8 @@ public bool StartLevel(int index)
 
         return false;
     }
+    // Register workstation/storage slots from the new level.
+        RegisterLoadedLevelSlots();
 
     activeLevelIndex = index;
 
@@ -1424,7 +1431,25 @@ private void SetOutput(
         
        
 
-       
+       // ============================================================
+// RUNTIME SHELF SLOT REGISTRATION
+// ============================================================
+
+private void RegisterLoadedLevelSlots()
+{
+    if (objectShelf == null)
+        objectShelf = FindFirstObjectByType<SparkObjectShelf>();
+
+    if (objectShelf == null || layoutLoader == null)
+        return;
+
+    if (layoutLoader.ActiveLayout == null)
+        return;
+
+    objectShelf.RegisterRuntimeSlots(
+        layoutLoader.ActiveLayout.transform
+    );
+}
 
 private bool PrepareLevelLayout(
     SparkLevelDefinition level,
@@ -1474,7 +1499,9 @@ private bool PrepareLevelLayout(
                 this);
 
             return false;
-        }      
+        } 
+        // Register workstation/storage slots from the new level.
+            RegisterLoadedLevelSlots();     
 
         // Clear cached electrical results and refresh
         // component discovery for the new layout.
@@ -1652,7 +1679,7 @@ private bool PrepareLevelLayout(
         public void OnPreviousLevelButtonClicked()
         {
             PreviousLevel();
-        }
+        }       
 
     }
 }

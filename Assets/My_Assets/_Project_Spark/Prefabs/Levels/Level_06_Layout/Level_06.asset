@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
   levelId: level_06
   displayName: Circuit Fault Detective
-  description: Power two LEDs in parallel while controlling branch and total current.
+  description: A parallel LED circuit has two faults. One branch has a missing connection,
+    and the other contains an unsuitable resistor. Inspect the circuit, repair the
+    connection, select the correct resistor, and bring both LEDs into their safe
+    operating ranges.
   completionMode: 0
   requiredTargetCount: 4
   requireClosedReturn: 1
@@ -74,9 +77,9 @@ MonoBehaviour:
     maximumCurrent: 0.015
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: branch_1_current
-    displayName: Branch 1 Current
-    description: Branch 1 Current
+  - targetId: safe_branch_1_current
+    displayName: Safe Branch 1 current
+    description: Safe Branch 1 current
     targetType: 6
     targetTerminalId: 
     requiredPositiveTerminalId: 
@@ -94,11 +97,9 @@ MonoBehaviour:
     maximumCurrent: 0.015
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: branch_2_current
-    displayName: Branch 2 Current
-    description: 'Branch 2 Current
-
-'
+  - targetId: safe_branch_2_current
+    displayName: Safe Branch 2 current
+    description: Safe Branch 2 current
     targetType: 6
     targetTerminalId: 
     requiredPositiveTerminalId: 
@@ -116,9 +117,9 @@ MonoBehaviour:
     maximumCurrent: 0.015
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: total_supply_current
-    displayName: Total Supply Current
-    description: Total Supply Current
+  - targetId: safe_total_current
+    displayName: Safe total current
+    description: Safe total current
     targetType: 6
     targetTerminalId: 
     requiredPositiveTerminalId: 
@@ -137,6 +138,8 @@ MonoBehaviour:
     useMaximumPower: 0
     maximumPower: 0
   failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 0
   successOutputIds: []
   failureOutputIds: []
   unlockNextLevelOnCompletion: 1
