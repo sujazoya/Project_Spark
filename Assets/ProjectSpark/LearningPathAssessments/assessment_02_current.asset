@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1afca256a50ee6842b710a96a363159c, type: 3}
+  m_Name: assessment_02_current
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkAIAssessmentBank
+  bankId: assessment_02_current
+  courseId: path_02_current
+  displayName: 02 / Resistance & Current Exam
+  description: Calculate ideal resistor values and verify an objective-bound current
+    range in the actual game.
+  passingPercent: 70
+  items:
+  - itemId: r1
+    title: Ohm's law
+    prompt: "An ideal resistor has 12 V across 1,000 \u03A9. What is the current
+      in mA? Enter only the number."
+    kind: 1
+    choices: []
+    correctChoice: 0
+    expectedNumber: 12
+    numericTolerance: 0.05
+    numericUnit: mA
+    requiredTargetType: 0
+    hint: I = V / R; multiply amperes by 1000 for mA.
+    explanation: "12 V / 1000 \u03A9 = 0.012 A = 12 mA."
+  - itemId: r2
+    title: Resistance and current
+    prompt: With the same voltage across an ideal resistor, what happens if resistance
+      increases?
+    kind: 0
+    choices:
+    - Current decreases
+    - Current increases
+    - Current stays identical
+    - Voltage automatically becomes zero
+    correctChoice: 0
+    expectedNumber: 0
+    numericTolerance: 0.01
+    numericUnit: 
+    requiredTargetType: 0
+    hint: Use I = V / R.
+    explanation: At constant voltage, greater resistance results in smaller current.
+  - itemId: r3
+    title: Milliamp calculation
+    prompt: "An ideal 150 \u03A9 resistor has 3 V across it. What current flows in
+      mA? Enter only the number."
+    kind: 1
+    choices: []
+    correctChoice: 0
+    expectedNumber: 20
+    numericTolerance: 0.05
+    numericUnit: mA
+    requiredTargetType: 0
+    hint: "3 \xF7 150 = 0.02 A."
+    explanation: 0.02 A is 20 mA.
+  - itemId: r4
+    title: Color bands
+    prompt: What nominal resistance and tolerance do brown-black-red-gold bands indicate?
+    kind: 0
+    choices:
+    - "100 \u03A9 \xB110%"
+    - "1,000 \u03A9 \xB15%"
+    - "10 k\u03A9 \xB11%"
+    - "100 k\u03A9 \xB15%"
+    correctChoice: 1
+    expectedNumber: 0
+    numericTolerance: 0.01
+    numericUnit: 
+    requiredTargetType: 0
+    hint: "Brown=1, black=0, red multiplier \xD7100, gold tolerance \xB15%."
+    explanation: "10 \xD7 100 = 1000 \u03A9, with \xB15% tolerance."
+  - itemId: r5
+    title: 'Practical: Current range'
+    prompt: In a level with a pending CurrentRange objective, achieve a new evaluator-confirmed
+      PASS.
+    kind: 2
+    choices: []
+    correctChoice: 0
+    expectedNumber: 0
+    numericTolerance: 0.01
+    numericUnit: 
+    requiredTargetType: 6
+    hint: Compare the configured target's current limits with its bound-component
+      readings.
+    explanation: The configured current-range objective passed after the attempt
+      began.

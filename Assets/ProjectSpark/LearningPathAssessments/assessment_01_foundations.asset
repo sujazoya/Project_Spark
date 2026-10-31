@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1afca256a50ee6842b710a96a363159c, type: 3}
+  m_Name: assessment_01_foundations
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkAIAssessmentBank
+  bankId: assessment_01_foundations
+  courseId: path_01_foundations
+  displayName: 01 / Circuit Foundations Exam
+  description: Understand source, LED, switch and current path. Final question requires
+    a new verified LED-on objective.
+  passingPercent: 70
+  items:
+  - itemId: f1
+    title: Open circuit
+    prompt: What happens to current in an ideal series circuit when its only switch
+      is open?
+    kind: 0
+    choices:
+    - Current in that path is zero
+    - Current becomes unlimited
+    - Current stays unchanged
+    - The source doubles its voltage
+    correctChoice: 0
+    expectedNumber: 0
+    numericTolerance: 0.01
+    numericUnit: 
+    requiredTargetType: 0
+    hint: An open series switch breaks the return path.
+    explanation: An ideal open circuit has no conduction through that series path.
+  - itemId: f2
+    title: LED polarity
+    prompt: For a standard LED in forward operation, how should its anode be connected
+      relative to its cathode?
+    kind: 0
+    choices:
+    - Anode must be lower
+    - Anode generally higher
+    - Both terminals always equal
+    - Polarity never matters
+    correctChoice: 1
+    expectedNumber: 0
+    numericTolerance: 0.01
+    numericUnit: 
+    requiredTargetType: 0
+    hint: Forward bias means the anode is at a higher potential (within ratings).
+    explanation: Correct forward bias still requires suitable current limiting.
+  - itemId: f3
+    title: Series resistor
+    prompt: Why is a resistor commonly placed in series with a simple LED circuit?
+    kind: 0
+    choices:
+    - To create infinite voltage
+    - To short the supply
+    - To help limit current
+    - To remove the return path
+    correctChoice: 2
+    expectedNumber: 0
+    numericTolerance: 0.01
+    numericUnit: 
+    requiredTargetType: 0
+    hint: Think about what limits the current through the LED.
+    explanation: A series resistor can help establish safe current; its value depends
+      on the supply and device behavior.
+  - itemId: f4
+    title: 'Practical: LED operation'
+    prompt: In a suitable gameplay level, begin while an LEDOn objective is PENDING,
+      then satisfy it.
+    kind: 2
+    choices: []
+    correctChoice: 0
+    expectedNumber: 0
+    numericTolerance: 0.01
+    numericUnit: 
+    requiredTargetType: 3
+    hint: Check the source, wiring, polarity, and series current limit.
+    explanation: The official level evaluator confirmed the LED-on target after the
+      practical began.

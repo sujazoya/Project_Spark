@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1afca256a50ee6842b710a96a363159c, type: 3}
+  m_Name: assessment_03_safety
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkAIAssessmentBank
+  bankId: assessment_03_safety
+  courseId: path_03_diagnostics
+  displayName: 03 / Safety & Diagnosis Exam
+  description: Test resistance heating, power, short-circuit concepts, solver reference
+    signs and verified safe operation.
+  passingPercent: 70
+  items:
+  - itemId: s1
+    title: Power rating
+    prompt: A resistor dissipates 0.50 W and is rated for 0.25 W. By what factor
+      is it over its rated power?
+    kind: 1
+    choices: []
+    correctChoice: 0
+    expectedNumber: 2
+    numericTolerance: 0.01
+    numericUnit: "\xD7"
+    requiredTargetType: 0
+    hint: Divide the dissipated power by the rated power.
+    explanation: 0.50 / 0.25 = 2 times its rating.
+  - itemId: s2
+    title: Short-circuit concept
+    prompt: Why can a wire that bypasses an intended load be dangerous?
+    kind: 0
+    choices:
+    - It guarantees safe current
+    - It may create excessive current
+    - It always increases load resistance
+    - It proves the load is operating
+    correctChoice: 1
+    expectedNumber: 0
+    numericTolerance: 0.01
+    numericUnit: 
+    requiredTargetType: 0
+    hint: Think about the effective resistance seen by the source.
+    explanation: A low-resistance bypass may cause excessive current, depending on
+      the actual source and circuit.
+  - itemId: s3
+    title: Signed current
+    prompt: What does a negative current reading generally indicate in a circuit
+      solver?
+    kind: 0
+    choices:
+    - A burned circuit
+    - Zero current
+    - Flow opposite reference direction
+    - Incorrect units
+    correctChoice: 2
+    expectedNumber: 0
+    numericTolerance: 0.01
+    numericUnit: 
+    requiredTargetType: 0
+    hint: A simulator chooses a reference direction.
+    explanation: Negative current indicates flow opposite the solver's selected positive
+      reference, not necessarily an electrical fault.
+  - itemId: s4
+    title: Resistor power
+    prompt: "An ideal 100 \u03A9 resistor has 5 V across it. What power is dissipated
+      in watts? Enter only the number."
+    kind: 1
+    choices: []
+    correctChoice: 0
+    expectedNumber: 0.25
+    numericTolerance: 0.005
+    numericUnit: W
+    requiredTargetType: 0
+    hint: "P = V\xB2/R = 25/100."
+    explanation: "P = 5\xB2/100 = 0.25 W."
+  - itemId: s5
+    title: 'Practical: Power range'
+    prompt: In a level with a pending PowerRange target, satisfy it and obtain a
+      new evaluator PASS.
+    kind: 2
+    choices: []
+    correctChoice: 0
+    expectedNumber: 0
+    numericTolerance: 0.01
+    numericUnit: 
+    requiredTargetType: 7
+    hint: Check the objective binding and its configured minimum and maximum power.
+    explanation: The official level evaluator passed the bound power-range objective
+      after this attempt began.
