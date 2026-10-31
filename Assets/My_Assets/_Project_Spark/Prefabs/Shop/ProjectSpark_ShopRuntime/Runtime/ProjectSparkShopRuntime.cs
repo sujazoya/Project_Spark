@@ -24,6 +24,18 @@ namespace ProjectSpark.UI
         [SerializeField] private bool requireConfirmation = true;
         [SerializeField, Min(1)] private int confirmAboveQuantity = 1;
         [SerializeField] private bool alwaysConfirmDiamonds = true;
+        [Header("Shop Navigation")]
+        [SerializeField]
+        private ProjectSparkInventoryPanel inventoryPanel;
+        [Header("Panel Visibility")]
+        [SerializeField] private GameObject backdrop;       
+        [Header("Purchase Success")]
+        [SerializeField] private GameObject purchaseSuccessPanel;
+
+        [SerializeField] private TMP_Text successProductName;
+        [SerializeField] private TMP_Text successQuantity;
+        [SerializeField] private TMP_Text successBalance;
+        [SerializeField] private Image successProductIcon;
 
         private GameObject confirmationPanel;
         private TMP_Text confirmationText;
@@ -53,8 +65,15 @@ namespace ProjectSpark.UI
         private bool subscribed;
         private string lastMessage = "";
 
+
         private void Awake()
         {
+            if (backdrop == null)
+            {
+                Transform t = transform.Find("Backdrop");
+                if (t != null)
+                    backdrop = t.gameObject;
+            }
             // The generated builder creates one Canvas at the root.
             Transform window = transform.Find("Backdrop/ShopWindow");
             if (window == null) { Debug.LogError("[Shop] Generated ShopWindow hierarchy not found.", this); return; }
@@ -89,8 +108,12 @@ namespace ProjectSpark.UI
             Hook(details, "DecreaseQuantity", () => ChangeQuantity(-1));
             Hook(details, "IncreaseQuantity", () => ChangeQuantity(+1));
             Hook(details, "BuyButton", () => BuySelected(false));
-            BuildDiamondButton();
+          BuildDiamondButton();
             BuildSearchAndSort(body);
+
+                // Bind Editor-created confirmation UI.
+                BindConfirmationPanel();
+
             Hook(header, "CloseButton", Hide);
             if (categories != null)
             {
@@ -106,23 +129,35 @@ namespace ProjectSpark.UI
             // Existing generated cards are visual examples only. Use the first as a template.
             if (content.childCount > 0) cardTemplate = content.GetChild(0).gameObject;
             for (int i = 0; i < content.childCount; i++) content.GetChild(i).gameObject.SetActive(false);
-            initialized = true;
+          initialized = true;
+
+            // Keep the root Canvas active.
+            // Only control the UI backdrop.
+            if (backdrop != null)
+                backdrop.SetActive(startVisible);
+
+            // Success modal starts hidden.
+            if (purchaseSuccessPanel != null)
+            purchaseSuccessPanel.SetActive(false);
         }
 
-        private void Start()
+            private void Start()
         {
             BindEconomy();
-            if (!initialized) return;
+
+            if (!initialized)
+                return;
+
             BuildCards();
             Refresh();
-            if (!startVisible) gameObject.SetActive(false);
         }
-
         private void OnEnable()
         {
             BindEconomy();
             if (initialized) Refresh();
         }
+
+
 
         private void OnDisable() { UnbindEconomy(); }
 
@@ -172,7 +207,16 @@ namespace ProjectSpark.UI
 
         public void BuildCards()
         {
-            if (!initialized || cardTemplate == null) return;
+                    if (!initialized)
+                return;
+
+            if (cardTemplate == null)
+            {
+                Debug.LogError(
+                    "[Shop] Product card template is missing.",
+                    this);
+                return;
+            }
             foreach (GameObject go in runtimeCards) if (go != null) Destroy(go);
             runtimeCards.Clear(); cardsById.Clear();
             if (economy == null || economy.Catalog == null)
@@ -255,7 +299,15 @@ namespace ProjectSpark.UI
             foreach (SparkEconomyCatalog.Item item in economy.Catalog.Items)
             {
                 if (item == null || !cardsById.TryGetValue(item.id, out GameObject card) || card == null) continue;
-                bool categoryOk = categoryFilter == "ALL" || DetermineCategory(item.displayName) == categoryFilter;
+              bool categoryOk =
+    string.Equals(
+        categoryFilter,
+        "ALL",
+        StringComparison.OrdinalIgnoreCase) ||
+    string.Equals(
+        DetermineCategory(item.displayName),
+        categoryFilter,
+        StringComparison.OrdinalIgnoreCase);
                 bool searchOk = string.IsNullOrWhiteSpace(searchText) ||
                     (!string.IsNullOrEmpty(item.displayName) && item.displayName.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
                     (!string.IsNullOrEmpty(item.id) && item.id.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0);
@@ -288,8 +340,53 @@ namespace ProjectSpark.UI
         {
             RequestPurchase(useDiamonds, quantity);
         }
+        
+private void BindConfirmationPanel()
+{
+    Transform modal = transform.Find(
+        "Backdrop/ShopWindow/PurchaseConfirmation_Runtime");
+
+    if (modal == null)
+    {
+        Debug.LogWarning(
+            "[Shop] Editor confirmation panel not found.",
+            this);
+        return;
+    }
+
+    confirmationPanel = modal.gameObject;
+
+    Transform card = modal.Find("ConfirmationCard");
+    if (card == null) return;
+
+    confirmationText =
+        card.Find("PriceBreakdown/TotalPrice")
+            ?.GetComponent<TMP_Text>();
+
+    Button confirm =
+        card.Find("ConfirmButton")?.GetComponent<Button>();
+
+    Button cancel =
+        card.Find("CancelButton")?.GetComponent<Button>();
+
+    if (confirm != null)
+    {
+        confirm.onClick.RemoveAllListeners();
+        confirm.onClick.AddListener(ConfirmPurchase);
+    }
+
+    if (cancel != null)
+    {
+        cancel.onClick.RemoveAllListeners();
+        cancel.onClick.AddListener(CancelPurchase);
+    }
+
+    confirmationPanel.SetActive(false);
+}
+
 
       
+
 private void PurchaseQuantity(
     bool useDiamonds,
     int count)
@@ -329,8 +426,20 @@ private void PurchaseQuantity(
         ? "SUCCESS! " + message
         : message;
 
+    // Update balances and owned quantities.
     Refresh();
+
+    // Display purchase-success panel only
+    // after a successful transaction.
+    if (success)
+    {
+        ShowPurchaseSuccess(
+            item,
+            count,
+            useDiamonds);
+    }
 }
+
 
 private void UpdateCardOwnedCounts()
 {
@@ -558,79 +667,115 @@ private void CancelPurchase()
                         confirmationPanel.SetActive(false);
         }
 
-        private void ShowPurchaseConfirmation(
-            SparkEconomyCatalog.Item item,
-            bool useDiamonds,
-            int count)
+        
+    private void ShowPurchaseConfirmation(
+        SparkEconomyCatalog.Item item,
+        bool useDiamonds,
+        int count)
+    {
+        if (confirmationPanel == null)
+            BindConfirmationPanel();
+
+        if (confirmationPanel == null || item == null)
+            return;
+
+        Transform card = confirmationPanel.transform
+            .Find("ConfirmationCard");
+
+        if (card == null) return;
+
+        string currency = useDiamonds
+            ? "DIAMONDS"
+            : "COINS";
+
+        int unitPrice = useDiamonds
+            ? item.diamondPrice
+            : item.coinPrice;
+
+        long total = (long)unitPrice * count;
+
+        SetModalText(
+            card, "ProductName", item.displayName);
+
+        SetModalText(
+            card, "ProductCategory",
+            DetermineCategory(item.displayName));
+
+        SetModalText(
+            card, "QuantityText",
+            "Quantity: " + count);
+
+        SetModalText(
+            card, "PriceBreakdown/UnitPrice",
+            "Unit price: " + unitPrice + " " + currency);
+
+        SetModalText(
+            card, "PriceBreakdown/PriceQuantity",
+            "Quantity: " + count);
+
+        SetModalText(
+            card, "PriceBreakdown/TotalPrice",
+            "TOTAL: " + total.ToString("N0") +
+            " " + currency);
+
+        Image icon = card.Find("ProductPreview/ProductIcon")
+            ?.GetComponent<Image>();
+
+        if (icon != null)
         {
-            if (confirmationPanel == null)
-            {
-                Transform window =
-                    transform.Find("Backdrop/ShopWindow");
-
-                if (window == null)
-                    return;
-
-                confirmationPanel = new GameObject(
-                    "PurchaseConfirmation_Runtime",
-                    typeof(RectTransform),
-                    typeof(Image));
-
-                confirmationPanel.transform.SetParent(
-                    window, false);
-
-                RectTransform panelRect =
-                    confirmationPanel.GetComponent<RectTransform>();
-
-                panelRect.anchorMin = new Vector2(.25f, .3f);
-                panelRect.anchorMax = new Vector2(.75f, .7f);
-                panelRect.offsetMin = Vector2.zero;
-                panelRect.offsetMax = Vector2.zero;
-
-                Image background =
-                    confirmationPanel.GetComponent<Image>();
-
-                background.color =
-                    new Color(.025f, .075f, .14f, .98f);
-
-                confirmationText =
-                    CreateConfirmationText(
-                        confirmationPanel.transform,
-                        "ConfirmationText",
-                        new Vector2(.08f, .3f),
-                        new Vector2(.92f, .9f));
-
-                CreateConfirmationButton(
-                    confirmationPanel.transform,
-                    "ConfirmButton",
-                    "CONFIRM",
-                    new Vector2(.08f, .08f),
-                    new Vector2(.47f, .27f),
-                    ConfirmPurchase);
-
-                CreateConfirmationButton(
-                    confirmationPanel.transform,
-                    "CancelButton",
-                    "CANCEL",
-                    new Vector2(.53f, .08f),
-                    new Vector2(.92f, .27f),
-                    CancelPurchase);
-            }
-
-            long total = (long)(
-                useDiamonds ? item.diamondPrice : item.coinPrice
-            ) * count;
-
-            confirmationText.text =
-                "CONFIRM PURCHASE\n\n" +
-                item.displayName + "\n" +
-                "Quantity: " + count + "\n" +
-                "Total: " + total.ToString("N0") +
-                (useDiamonds ? " Diamonds" : " Coins");
-
-            confirmationPanel.SetActive(true);
-            confirmationPanel.transform.SetAsLastSibling();
+            icon.sprite = item.icon;
+            icon.enabled = item.icon != null;
         }
+
+        confirmationPanel.SetActive(true);
+        confirmationPanel.transform.SetAsLastSibling();
+    }
+
+    private static void SetModalText(
+        Transform root,
+        string path,
+        string value)
+    {
+        Transform target = root.Find(path);
+
+        if (target != null &&
+            target.TryGetComponent(out TMP_Text text))
+        {
+            text.text = value;
+        }
+    }
+
+    public void OpenInventory()
+    {
+        if (inventoryPanel == null)
+        {
+            inventoryPanel =
+                FindFirstObjectByType<ProjectSparkInventoryPanel>(
+                    FindObjectsInactive.Include);
+        }
+
+        if (inventoryPanel == null)
+        {
+            Debug.LogWarning(
+                "[Shop] Inventory panel not found.",
+                this);
+            return;
+        }
+
+        // Close confirmation and shop.
+        CancelPurchase();
+        Hide();
+
+        // Open inventory.
+        inventoryPanel.Show();
+    }
+
+    public void ContinueShopping()
+    {
+        CancelPurchase();
+        Show();
+    }
+
 
         private TMP_Text CreateConfirmationText(
             Transform parent,
@@ -705,10 +850,111 @@ private void CancelPurchase()
 
 
 
-        public void Show() { gameObject.SetActive(true); BindEconomy(); Refresh(); }
-        public void Hide() {
-            CancelPurchase();
-             gameObject.SetActive(false); }
-        public void Toggle() { if (gameObject.activeSelf) Hide(); else Show(); }
+public void Show()
+{
+    if (backdrop == null)
+        backdrop = transform.Find("Backdrop")?.gameObject;
+
+    if (backdrop == null)
+        return;
+
+    // Hide Inventory before opening Shop.
+    if (inventoryPanel == null)
+    {
+        inventoryPanel =
+            FindFirstObjectByType<ProjectSparkInventoryPanel>(
+                FindObjectsInactive.Include);
+    }
+
+    if (inventoryPanel != null)
+        inventoryPanel.Hide();
+
+    BindEconomy();
+
+    backdrop.SetActive(true);
+    Refresh();
+
+    // Retract the vertical quick-access HUD.
+    ProjectSparkShopHUDDrawer drawer =
+        FindFirstObjectByType<ProjectSparkShopHUDDrawer>(
+            FindObjectsInactive.Include);
+
+    if (drawer != null)
+        drawer.Close();
+}
+
+public void Hide()
+{
+    CancelPurchase();
+    ClosePurchaseSuccess();
+
+    if (backdrop != null)
+        backdrop.SetActive(false);
+}
+
+public void Toggle()
+{
+    if (backdrop == null)
+        backdrop = transform.Find("Backdrop")?.gameObject;
+
+    if (backdrop == null)
+        return;
+
+    if (backdrop.activeSelf)
+        Hide();
+    else
+        Show();
+}
+
+        private void ShowPurchaseSuccess(
+            SparkEconomyCatalog.Item item,
+            int purchasedQuantity,
+            bool usedDiamonds)
+        {
+            if (purchaseSuccessPanel == null || item == null)
+                return;
+
+            if (successProductName != null)
+                successProductName.text = item.displayName;
+
+            if (successQuantity != null)
+                successQuantity.text =
+                    "Quantity purchased: " + purchasedQuantity;
+
+            if (successProductIcon != null)
+            {
+                successProductIcon.sprite = item.icon;
+                successProductIcon.enabled = item.icon != null;
+            }
+
+            if (successBalance != null)
+            {
+                int balance = usedDiamonds
+                    ? economy.Diamonds
+                    : economy.Coins;
+
+                successBalance.text =
+                    "Remaining: " + balance.ToString("N0") +
+                    (usedDiamonds ? " Diamonds" : " Coins");
+            }
+
+            purchaseSuccessPanel.SetActive(true);
+            purchaseSuccessPanel.transform.SetAsLastSibling();
+        }
+
+        public void ClosePurchaseSuccess()
+        {
+            if (purchaseSuccessPanel != null)
+                purchaseSuccessPanel.SetActive(false);
+        }
+
+        public void SuccessOpenInventory()
+        {
+            ClosePurchaseSuccess();
+            OpenInventory();
+        }
+
+       
+
     }
 }

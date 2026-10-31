@@ -12,8 +12,15 @@ namespace ProjectSpark.UI
     {
         [SerializeField] private SparkEconomyService economy;
         [SerializeField] private SparkPurchasedComponentSpawner spawner;
+        [Header("HUD Drawer")]
+        [SerializeField] private ProjectSparkShopHUDDrawer hudDrawer;
         [SerializeField] private bool startVisible = false;
         [SerializeField] private bool showUnowned = false;
+        [Header("Panel Visibility")]
+        [SerializeField] private GameObject backdrop;
+        [Header("Panel Navigation")]
+[SerializeField]
+private ProjectSparkShopRuntime shopPanel;
 
         private TMP_Text coinBalance, diamondBalance, selectedName, selectedCount, status;
         private Image selectedIcon;
@@ -28,6 +35,12 @@ namespace ProjectSpark.UI
 
         private void Awake()
         {
+                    if (backdrop == null)
+        {
+            Transform t = transform.Find("Backdrop");
+            if (t != null)
+                backdrop = t.gameObject;
+        }
             Transform window = transform.Find("Backdrop/InventoryWindow");
             if (window == null) { Debug.LogError("[Inventory] Generated hierarchy missing.", this); return; }
             Transform header = window.Find("Header");
@@ -51,7 +64,8 @@ namespace ProjectSpark.UI
             Button close = header.Find("CloseButton")?.GetComponent<Button>();
             if (close != null) close.onClick.AddListener(Hide);
             ready = true;
-            if (!startVisible) gameObject.SetActive(false);
+           if (backdrop != null)
+            backdrop.SetActive(startVisible);
         }
 
         private void OnEnable() { ResolveAndBind(); Refresh(); }
@@ -75,9 +89,52 @@ namespace ProjectSpark.UI
             subscribed = null;
         }
 
-        public void Show() { gameObject.SetActive(true); ResolveAndBind(); Refresh(); }
-        public void Hide() { gameObject.SetActive(false); }
-        public void Toggle() { if (gameObject.activeSelf) Hide(); else Show(); }
+       
+
+public void Show()
+{
+    if (backdrop == null)
+        backdrop = transform.Find("Backdrop")?.gameObject;
+
+    if (backdrop == null)
+        return;
+
+    // Hide Shop before opening Inventory.
+    if (shopPanel == null)
+    {
+        shopPanel =
+            FindFirstObjectByType<ProjectSparkShopRuntime>(
+                FindObjectsInactive.Include);
+    }
+
+    if (shopPanel != null)
+        shopPanel.Hide();
+
+    ResolveAndBind();
+
+    backdrop.SetActive(true);
+    Refresh();
+
+    CloseHUDDrawer();
+}
+
+
+public void Hide()
+{
+    if (backdrop != null)
+        backdrop.SetActive(false);
+}
+
+public void Toggle()
+{
+    if (backdrop == null)
+        return;
+
+    if (backdrop.activeSelf)
+        Hide();
+    else
+        Show();
+}
 
         public void Refresh()
         {
@@ -152,5 +209,38 @@ namespace ProjectSpark.UI
 
         private void SetStatus(string value) { if (status != null) status.text = value; }
         private static TMP_Text FindText(Transform parent, string path) => parent.Find(path)?.GetComponent<TMP_Text>();
+
+         public void OpenShop()
+        {
+            if (shopPanel == null)
+            {
+                shopPanel =
+                    FindFirstObjectByType<ProjectSparkShopRuntime>(
+                        FindObjectsInactive.Include);
+            }
+
+            if (shopPanel == null)
+            {
+                Debug.LogWarning(
+                    "[Inventory] Shop panel not found.", this);
+                return;
+            }
+
+            Hide();
+            shopPanel.Show();
+            CloseHUDDrawer();
+        }
+        private void CloseHUDDrawer()
+        {
+            if (hudDrawer == null)
+            {
+                hudDrawer =
+                    FindFirstObjectByType<ProjectSparkShopHUDDrawer>(
+                        FindObjectsInactive.Include);
+            }
+
+            if (hudDrawer != null)
+                hudDrawer.Close();
+        }
     }
 }

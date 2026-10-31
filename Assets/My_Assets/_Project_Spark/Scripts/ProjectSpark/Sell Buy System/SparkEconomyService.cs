@@ -18,8 +18,8 @@ namespace ProjectSpark.Gameplay
         }
 
         [SerializeField] private SparkEconomyCatalog catalog;
-        [SerializeField, Min(0)] private int startingCoins = 250;
-        [SerializeField, Min(0)] private int startingDiamonds = 5;
+        [SerializeField, Min(0)] private int startingCoins = 5000;
+        [SerializeField, Min(0)] private int startingDiamonds = 500;
         [SerializeField] private bool persistAcrossScenes = true;
         [SerializeField] private string saveKey = "ProjectSpark.Economy.v1";
 
@@ -36,6 +36,7 @@ namespace ProjectSpark.Gameplay
             Instance = this;
             if (persistAcrossScenes) DontDestroyOnLoad(gameObject);
             Load();
+           // PlayerPrefs.DeleteAll();
         }
 
         private void OnDestroy() { if (Instance == this) Instance = null; }
@@ -63,12 +64,28 @@ namespace ProjectSpark.Gameplay
             Changed?.Invoke();
         }
 
-        public int GetItemCount(string itemId)
-        {
-            foreach (Entry entry in data.inventory)
-                if (entry.id == itemId) return entry.count;
-            return 0;
-        }
+        
+public int GetItemCount(string itemId)
+{
+    if (string.IsNullOrWhiteSpace(itemId))
+        return 0;
+
+    // Economy may not have initialized yet.
+    if (data == null || data.inventory == null)
+        return 0;
+
+    foreach (Entry entry in data.inventory)
+    {
+        if (entry == null)
+            continue;
+
+        if (entry.id == itemId)
+            return Mathf.Max(0, entry.count);
+    }
+
+    return 0;
+}
+
 
         private Entry GetOrCreateEntry(string id)
         {
