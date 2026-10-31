@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: 08_short_circuits
+  m_EditorClassIdentifier: Assembly-CSharp:ProjectSpark.UI.VisualTeaching:SparkVisualLesson
+  lessonId: 08_short_circuits
+  title: Short Circuit Diagnosis
+  goal: Recognize evaluator-confirmed short-circuit conditions.
+  steps:
+  - title: Read the evaluator
+    instruction: First check whether the official level evaluator reports a source
+      or target short.
+    hint: This is an authored educational example. Compare it to verified measurements
+      in your current level.
+    requiredVerifiedActionId: 
+    advanceWhenVerified: 0
+    annotations: []
+    schematic:
+      caption: CONCEPTUAL / Short Circuit Diagnosis (not live solver data)
+      parts:
+      - id: 08_short_circuits_symbol_0
+        kind: 0
+        position: {x: 0.33333334, y: 0.56}
+        label: Source
+        color: {r: 0.3, g: 0.88, b: 1, a: 1}
+      - id: 08_short_circuits_symbol_1
+        kind: 1
+        position: {x: 0.6666667, y: 0.56}
+        label: Load
+        color: {r: 0.3, g: 0.88, b: 1, a: 1}
+      wires: []
+  - title: Inspect the path
+    instruction: Inspect actual connections for unwanted low-resistance bypass paths.
+      These symbols do not identify a faulty wire.
+    hint: This is an authored educational example. Compare it to verified measurements
+      in your current level.
+    requiredVerifiedActionId: 
+    advanceWhenVerified: 0
+    annotations: []
+    schematic:
+      caption: CONCEPTUAL / Short Circuit Diagnosis (not live solver data)
+      parts:
+      - id: 08_short_circuits_symbol_0
+        kind: 0
+        position: {x: 0.33333334, y: 0.56}
+        label: Source
+        color: {r: 0.3, g: 0.88, b: 1, a: 1}
+      - id: 08_short_circuits_symbol_1
+        kind: 1
+        position: {x: 0.6666667, y: 0.56}
+        label: Load
+        color: {r: 0.3, g: 0.88, b: 1, a: 1}
+      wires: []
+  - title: Re-evaluate
+    instruction: After correcting wiring with the game's normal controls, obtain
+      fresh solver and evaluator results to verify the repair.
+    hint: This is an authored educational example. Compare it to verified measurements
+      in your current level.
+    requiredVerifiedActionId: 
+    advanceWhenVerified: 0
+    annotations: []
+    schematic:
+      caption: CONCEPTUAL / Short Circuit Diagnosis (not live solver data)
+      parts:
+      - id: 08_short_circuits_symbol_0
+        kind: 0
+        position: {x: 0.33333334, y: 0.56}
+        label: Source
+        color: {r: 0.3, g: 0.88, b: 1, a: 1}
+      - id: 08_short_circuits_symbol_1
+        kind: 1
+        position: {x: 0.6666667, y: 0.56}
+        label: Load
+        color: {r: 0.3, g: 0.88, b: 1, a: 1}
+      wires: []

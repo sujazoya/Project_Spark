@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de1065d91e67d1f4e8e2b61372d20887, type: 3}
+  m_Name: path_03_diagnostics
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkGuidedLearningPathAsset
+  pathId: path_03_diagnostics
+  title: 03 / Safety & Fault Diagnosis
+  description: Study thermal power and troubleshooting, then verify an objective
+    that measures dissipated power.
+  stages:
+  - id: 01_heat
+    title: Resistor Power & Heat
+    description: Study rated power, heating and the game's verified burn state.
+    kind: 0
+    lesson: {fileID: 11400000, guid: 0de2525cbe650c24184cea5c866ce729, type: 2}
+    requiredTargetType: 0
+  - id: 02_shorts
+    title: Investigate Short Circuits
+    description: Use authoritative short flags, not invented wire paths.
+    kind: 0
+    lesson: {fileID: 11400000, guid: f823516699b03d842b40bffed0f5d396, type: 2}
+    requiredTargetType: 0
+  - id: 03_diagnosis
+    title: Systematic Troubleshooting
+    description: Follow source, return path, component and evaluator evidence.
+    kind: 0
+    lesson: {fileID: 11400000, guid: 6709ae36d53fa3a4eb056192b8cab1a3, type: 2}
+    requiredTargetType: 0
+  - id: 04_practice
+    title: Verify a Power Objective
+    description: Complete a power-range objective in a suitable level; change the
+      target type in this course asset if needed.
+    kind: 1
+    lesson: {fileID: 0}
+    requiredTargetType: 7

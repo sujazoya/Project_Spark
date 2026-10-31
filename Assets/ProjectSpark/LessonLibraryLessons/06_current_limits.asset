@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: 06_current_limits
+  m_EditorClassIdentifier: Assembly-CSharp:ProjectSpark.UI.VisualTeaching:SparkVisualLesson
+  lessonId: 06_current_limits
+  title: Designing for Safe Current
+  goal: Compare a verified current reading with a configured current-range objective.
+  steps:
+  - title: Read the target
+    instruction: Find the configured minimum and optional maximum current for the
+      level objective.
+    hint: This is an authored educational example. Compare it to verified measurements
+      in your current level.
+    requiredVerifiedActionId: 
+    advanceWhenVerified: 0
+    annotations: []
+    schematic:
+      caption: CONCEPTUAL / Designing for Safe Current (not live solver data)
+      parts:
+      - id: 06_current_limits_symbol_0
+        kind: 0
+        position: {x: 0.25, y: 0.56}
+        label: Source
+        color: {r: 0.3, g: 0.88, b: 1, a: 1}
+      - id: 06_current_limits_symbol_1
+        kind: 1
+        position: {x: 0.5, y: 0.56}
+        label: Resistor
+        color: {r: 0.3, g: 0.88, b: 1, a: 1}
+      - id: 06_current_limits_symbol_2
+        kind: 2
+        position: {x: 0.75, y: 0.56}
+        label: Load
+        color: {r: 0.3, g: 0.88, b: 1, a: 1}
+      wires: []
+  - title: Read the bound component
+    instruction: Read the solver's measurement at the objective-bound component,
+      not an unrelated selected resistor.
+    hint: This is an authored educational example. Compare it to verified measurements
+      in your current level.
+    requiredVerifiedActionId: 
+    advanceWhenVerified: 0
+    annotations: []
+    schematic:
+      caption: CONCEPTUAL / Designing for Safe Current (not live solver data)
+      parts:
+      - id: 06_current_limits_symbol_0
+        kind: 0
+        position: {x: 0.25, y: 0.56}
+        label: Source
+        color: {r: 0.3, g: 0.88, b: 1, a: 1}
+      - id: 06_current_limits_symbol_1
+        kind: 1
+        position: {x: 0.5, y: 0.56}
+        label: Resistor
+        color: {r: 0.3, g: 0.88, b: 1, a: 1}
+      - id: 06_current_limits_symbol_2
+        kind: 2
+        position: {x: 0.75, y: 0.56}
+        label: Load
+        color: {r: 0.3, g: 0.88, b: 1, a: 1}
+      wires: []
+  - title: Compare limits
+    instruction: Compare the measured magnitude and the evaluator's additional requirements.
+      Only the official evaluator determines whether the objective passes.
+    hint: This is an authored educational example. Compare it to verified measurements
+      in your current level.
+    requiredVerifiedActionId: 
+    advanceWhenVerified: 0
+    annotations: []
+    schematic:
+      caption: CONCEPTUAL / Designing for Safe Current (not live solver data)
+      parts:
+      - id: 06_current_limits_symbol_0
+        kind: 0
+        position: {x: 0.25, y: 0.56}
+        label: Source
+        color: {r: 0.3, g: 0.88, b: 1, a: 1}
+      - id: 06_current_limits_symbol_1
+        kind: 1
+        position: {x: 0.5, y: 0.56}
+        label: Resistor
+        color: {r: 0.3, g: 0.88, b: 1, a: 1}
+      - id: 06_current_limits_symbol_2
+        kind: 2
+        position: {x: 0.75, y: 0.56}
+        label: Load
+        color: {r: 0.3, g: 0.88, b: 1, a: 1}
+      wires: []

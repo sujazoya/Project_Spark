@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de1065d91e67d1f4e8e2b61372d20887, type: 3}
+  m_Name: path_02_current
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkGuidedLearningPathAsset
+  pathId: path_02_current
+  title: 02 / Resistance & Current
+  description: Read resistance and electrical measurements, then verify a current-range
+    objective.
+  stages:
+  - id: 01_ohms
+    title: Ohm's Law
+    description: Study the relationship I = V/R under appropriate conditions.
+    kind: 0
+    lesson: {fileID: 11400000, guid: 65a1002b01c4bc447850901434bf7624, type: 2}
+    requiredTargetType: 0
+  - id: 02_bands
+    title: Read Resistor Color Bands
+    description: Practice reading four-band resistance codes.
+    kind: 0
+    lesson: {fileID: 11400000, guid: 54133fbd892966748b0079d264fd90f3, type: 2}
+    requiredTargetType: 0
+  - id: 03_current
+    title: Understand Current Limits
+    description: Compare configured limits to solver measurements of the bound component.
+    kind: 0
+    lesson: {fileID: 11400000, guid: 3ff4d28986d0c9746ae6028627eaeac9, type: 2}
+    requiredTargetType: 0
+  - id: 04_practice
+    title: Verify Safe Current
+    description: Complete a configured current-range challenge using verified evaluator
+      evidence.
+    kind: 1
+    lesson: {fileID: 0}
+    requiredTargetType: 6
