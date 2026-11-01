@@ -989,6 +989,10 @@ MonoBehaviour:
   interactable: 1
   requirePlayerLookingAtObject: 0
   switchLeverController: {fileID: 7508156215837910583}
+  shelfItem: {fileID: 0}
+  objectShelf: {fileID: 0}
+  manualPlacement: {fileID: 0}
+  operateSwitchWhenPlaced: 1
   highlightOnHover: 1
   highlightRenderer: {fileID: 2782803459573881137}
   highlightColor: {r: 0.15, g: 0.7, b: 1, a: 1}
@@ -1277,6 +1281,7 @@ GameObject:
   - component: {fileID: 667135647102576074}
   - component: {fileID: 2038157003630778804}
   - component: {fileID: 7880976280607396935}
+  - component: {fileID: 6412454323350078995}
   m_Layer: 15
   m_Name: Resistor_1K
   m_TagString: Untagged
@@ -1374,6 +1379,8 @@ MonoBehaviour:
   terminalB: {fileID: 7526252595554342347}
   resistance: 150
   maximumPowerWatts: 0.25
+  burnSystem: {fileID: 0}
+  circuitSystem: {fileID: 0}
 --- !u!114 &2187198711512459366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1538,6 +1545,93 @@ MonoBehaviour:
   hasReading: 1
   signedCurrentAmps: 0
   changeThresholdAmps: 0.0001
+--- !u!114 &6412454323350078995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6139390918296780920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eca6d37a69b88724f9d125857c1438b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkResistorBurn
+  burnedMaterial: {fileID: 0}
+  swapMaterialOnFailure: 1
+  finalBurnColor: {r: 0.045, g: 0.035, b: 0.032, a: 1}
+  meshBurnDuration: 3
+  initialBurnAmount: 0.1
+  meshBurnCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ratedWatts: 0.25
+  thermalCapacityJPerC: 0.06
+  coolingWattsPerC: 0.002
+  ambientC: 25
+  hotC: 85
+  smokeC: 120
+  flameC: 170
+  failureC: 225
+  failureExposureSeconds: 0.3
+  failureMode: 0
+  heatedRenderers: []
+  hotTint: {r: 1, g: 0.35, b: 0.06, a: 1}
+  charTint: {r: 0.075, g: 0.055, b: 0.045, a: 1}
+  charAtFailure: 1
+  heatLight: {fileID: 0}
+  maximumHeatLightIntensity: 1.5
+  flameVfx: {fileID: 0}
+  flameRateProperty: FireRate
+  flameHeatProperty: Heat
+  maximumFlameRate: 32
+  maximumFlameHeat: 1
+  smokeParticles: {fileID: 0}
+  emberParticles: {fileID: 0}
+  sparkParticles: {fileID: 0}
+  flashParticles: {fileID: 0}
+  debrisParticles: {fileID: 0}
+  maximumSmokeRate: 30
+  maximumEmberRate: 8
+  failureSparkCount: 45
+  failureSmokeCount: 24
+  failureDebrisCount: 14
+  smokeVfx: {fileID: 0}
+  failureVfx: {fileID: 0}
+  smokeRateProperty: SmokeRate
+  heatProperty: Heat
+  burstEventName: OnBurn
+  maximumGraphSmokeRate: 48
+  failureFlameSeconds: 1.3
+  failureSmokeSeconds: 4
+  failureFlashLight: {fileID: 0}
+  failureFlashIntensity: 7
+  failureFlashSeconds: 0.17
+  failureAudio: {fileID: 0}
+  onFailed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6693301870698393321
 GameObject:
   m_ObjectHideFlags: 0
@@ -2120,6 +2214,7 @@ GameObject:
   - component: {fileID: 3785213125350140080}
   - component: {fileID: 6204671045673096171}
   - component: {fileID: 3731282917219852650}
+  - component: {fileID: 7296308171259310988}
   m_Layer: 15
   m_Name: LED_Cathode
   m_TagString: Untagged
@@ -2318,6 +2413,21 @@ MonoBehaviour:
   currentIntensity: 0
   voltage: 0
   current: 0
+--- !u!114 &7296308171259310988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7639202061966348477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 973158fb31ea3d046a52df12b69d2486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkMeterProbeTerminal
+  terminalId: LED_Cathode
+  componentAnchorId: 
+  referenceEnd: 0
 --- !u!1 &7797074354711334716
 GameObject:
   m_ObjectHideFlags: 0
@@ -2581,6 +2691,7 @@ GameObject:
   - component: {fileID: 2252020417731565548}
   - component: {fileID: 6611749108570430833}
   - component: {fileID: 4162553152815710890}
+  - component: {fileID: 7879116244822012645}
   m_Layer: 15
   m_Name: LED_Anode
   m_TagString: Untagged
@@ -2779,6 +2890,21 @@ MonoBehaviour:
   currentIntensity: 0
   voltage: 0
   current: 0
+--- !u!114 &7879116244822012645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9091575356834298557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 973158fb31ea3d046a52df12b69d2486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkMeterProbeTerminal
+  terminalId: LED_Anode
+  componentAnchorId: 
+  referenceEnd: 0
 --- !u!1001 &614357599183009027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4901,6 +5027,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -5568371526223589888, guid: 534d54ea3f6d3ac4181b57a293317424, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2038088567506982999}
+    - targetCorrespondingSourceObject: {fileID: -5568371526223589888, guid: 534d54ea3f6d3ac4181b57a293317424, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4524220385799278724}
     - targetCorrespondingSourceObject: {fileID: 8513859187771203891, guid: 534d54ea3f6d3ac4181b57a293317424, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5233439970644099012}
@@ -4916,6 +5045,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8513859187771203891, guid: 534d54ea3f6d3ac4181b57a293317424, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4447226978011123427}
+    - targetCorrespondingSourceObject: {fileID: 8513859187771203891, guid: 534d54ea3f6d3ac4181b57a293317424, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 493985608142054830}
   m_SourcePrefab: {fileID: 100100000, guid: 534d54ea3f6d3ac4181b57a293317424, type: 3}
 --- !u!4 &496054749228989125 stripped
 Transform:
@@ -5076,6 +5208,21 @@ MonoBehaviour:
   currentIntensity: 0
   voltage: 0
   current: 0
+--- !u!114 &493985608142054830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3262527578406144295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 973158fb31ea3d046a52df12b69d2486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkMeterProbeTerminal
+  terminalId: Battery_negative
+  componentAnchorId: 
+  referenceEnd: 0
 --- !u!4 &6695488305793945599 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 534d54ea3f6d3ac4181b57a293317424, type: 3}
@@ -5230,6 +5377,21 @@ MonoBehaviour:
   currentIntensity: 0
   voltage: 0
   current: 0
+--- !u!114 &4524220385799278724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7627045838947558932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 973158fb31ea3d046a52df12b69d2486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkMeterProbeTerminal
+  terminalId: Battery_positive
+  componentAnchorId: 
+  referenceEnd: 0
 --- !u!1001 &6735214549583932845
 PrefabInstance:
   m_ObjectHideFlags: 0

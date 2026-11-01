@@ -1,0 +1,587 @@
+Source,Public declaration (first line)
+Runtime.zip/Explainer/ISparkAIExplanationTransport.cs,public interface ISparkAIExplanationTransport
+Runtime.zip/Explainer/SparkAIExplanationAssistantConnector.cs,public sealed class SparkAIExplanationAssistantConnector : MonoBehaviour
+Runtime.zip/Explainer/SparkAIExplanationAssistantConnector.cs,public bool SetTransport(MonoBehaviour component)
+Runtime.zip/Explainer/SparkAIExplanationAssistantConnector.cs,public void Rebind()
+Runtime.zip/Explainer/SparkAIUnityEventExplanationTransport.cs,"public sealed class SparkAIUnityEventExplanationTransport : MonoBehaviour, ISparkAIExplanationTransport"
+Runtime.zip/Explainer/SparkAIUnityEventExplanationTransport.cs,public PromptEvent SendPrompt => sendPrompt;
+Runtime.zip/Explainer/SparkAIUnityEventExplanationTransport.cs,"public bool TrySendExplanation(string requestId, string prompt,"
+Runtime.zip/Explainer/SparkAIUnityEventExplanationTransport.cs,public void ReceiveAssistantJson(string json)
+Runtime.zip/Explainer/SparkAIUnityEventExplanationTransport.cs,"public void ReceivePlainText(string requestId, string answer)"
+Runtime.zip/Explainer/SparkAIUnityEventExplanationTransport.cs,public string requestId;
+Runtime.zip/Explainer/SparkAIUnityEventExplanationTransport.cs,public string answer;
+Runtime.zip/Explainer/SparkAIUnityEventExplanationTransport.cs,public string reasoning;
+Runtime.zip/Explainer/SparkAIUnityEventExplanationTransport.cs,public string nextCheck;
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public sealed class SparkAIAnimatedAnswerPlayer : MonoBehaviour
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public string requestId;
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public string answer;
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public string reasoning;
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public string nextCheck;
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public string title;
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public string body;
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public string anchorId;
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public bool verifiedFault;
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public bool isRoute;
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public void Show()
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public void Hide()
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public void Toggle() { if (card != null && card.activeSelf) Hide(); else Show(); }
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public void NextStep()
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public void PreviousStep()
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public void Play()
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public void PauseOrResume()
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public void Show3D()
+Runtime.zip/SparkAIAnimatedAnswerPlayer.cs,public void ShowRouteBoard()
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public sealed class SparkAIComponentVisualLessonPlayer : MonoBehaviour
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public Topic topic;
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public string anchorId;
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public string headline;
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public string evidence;
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public string action;
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public SparkSchematicKind symbol;
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public Color tint;
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public string sourceKey;
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public string title;
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public string body;
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public string worldLabel;
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public int CaseCount => cases.Count;
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,"public string CurrentTopic => cases.Count > 0 ? cases[selectedCase].headline : ""No verified lesson"";"
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public bool SubmitVerifiedFrame(SparkVerifiedElectricalFrame frame)
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public void Show() { if (card != null) card.SetActive(true); Refresh(); }
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public void Hide() { if (card != null) card.SetActive(false); StopLesson(); ClearOwnAnnotations(); }
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public void Toggle() { if (card != null && card.activeSelf) Hide(); else Show(); }
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public void NextCase() => SelectCase(selectedCase + 1);
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public void PreviousCase() => SelectCase(selectedCase - 1);
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public void NextStep()
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public void PreviousStep()
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public void Play()
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public void PauseOrResume()
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public void Show3D()
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public void ShowBoard()
+Runtime.zip/SparkAIComponentVisualLessonPlayer.cs,public void ResetForLevel()
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public sealed class SparkAIExplanationPromptEvent : UnityEvent<string> { }
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public sealed class SparkAIExplanationRequestBridge : MonoBehaviour
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public string requestId;
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public string answer;
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public string reasoning;
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public string nextCheck;
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public SparkAIExplanationPromptEvent PromptReady => promptReady;
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public string LastPrompt => lastPrompt;
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public string PendingRequestId => waiting ? requestId : null;
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public bool HasPendingRequest => waiting;
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public void Show()
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public void Hide()
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public void Toggle()
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public void RequestExplanation() { AskAI(); }
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public bool AskAI()
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public bool ReceiveAssistantReplyJson(string json)
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public void PreviewVerifiedCue()
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public void CopyLastPrompt()
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public void ShowVerifiedComponent()
+Runtime.zip/SparkAIExplanationRequestBridge.cs,public void ShowVerifiedRoute()
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public sealed class SparkAIGuidedRepairMissions : MonoBehaviour
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public Kind kind;
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public string anchorId;
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public string key;
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public string title;
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public string evidence;
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public string repairHint;
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public bool MissionActive => mission != null && phase != Phase.Completed;
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public bool MissionCompleted => mission != null && phase == Phase.Completed;
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public int AvailableFaultCount => candidates.Count;
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public bool SubmitVerifiedFrame(SparkVerifiedElectricalFrame frame)
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public void BeginMission()
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public void AcknowledgeInspection()
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public void NextHint()
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public void VerifyRepair()
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public void FocusFault()
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public void CancelMission()
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public void PreviousFault() { if (mission == null && candidates.Count > 0) { selected = (selected + candidates.Count - 1) % candidates.Count; Refresh(); } }
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public void NextFault() { if (mission == null && candidates.Count > 0) { selected = (selected + 1) % candidates.Count; Refresh(); } }
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public void Show() { if (panel != null) panel.SetActive(true); Refresh(); }
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public void Hide() { if (panel != null) panel.SetActive(false); ClearOwnCues(); }
+Runtime.zip/SparkAIGuidedRepairMissions.cs,public void Toggle() { if (panel != null && panel.activeSelf) Hide(); else Show(); }
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public sealed class SparkAIInteractiveTrainingChallenges : MonoBehaviour
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public string id;
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public string name;
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public SparkLevelTarget target;
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public Tier tier;
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public bool HasActiveChallenge => !string.IsNullOrEmpty(activeChallengeId);
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public int ChallengeCount => challenges.Count;
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public bool RequireFreshSolverFrame { get => requireFreshSolverFrame; set => requireFreshSolverFrame = value; }
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public bool SubmitVerifiedFrame(SparkVerifiedElectricalFrame frame)
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public void BeginChallenge()
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public void AcknowledgeStudy()
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public void NextHint()
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public void AskSpark()
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public void VerifyChallenge()
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public void CancelChallenge()
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public void PreviousChallenge()
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public void NextChallenge()
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public void FocusComponent()
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public void Show() { if (panel != null) panel.SetActive(true); Refresh(); }
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public void Hide() { if (panel != null) panel.SetActive(false); ClearOwnedCues(); }
+Runtime.zip/SparkAIInteractiveTrainingChallenges.cs,public void Toggle() { if (panel != null && panel.activeSelf) Hide(); else Show(); }
+Runtime.zip/SparkAILearningCoach.cs,public sealed class SparkAILearningCoach : MonoBehaviour
+Runtime.zip/SparkAILearningCoach.cs,public SparkLevelTarget target;
+Runtime.zip/SparkAILearningCoach.cs,public string id;
+Runtime.zip/SparkAILearningCoach.cs,public string title;
+Runtime.zip/SparkAILearningCoach.cs,public int tier;
+Runtime.zip/SparkAILearningCoach.cs,public int pendingSessions;
+Runtime.zip/SparkAILearningCoach.cs,public int verifiedSessions;
+Runtime.zip/SparkAILearningCoach.cs,public bool trainingAwarded;
+Runtime.zip/SparkAILearningCoach.cs,public bool? evaluatorPassed;
+Runtime.zip/SparkAILearningCoach.cs,public int priority;
+Runtime.zip/SparkAILearningCoach.cs,public string levelId;
+Runtime.zip/SparkAILearningCoach.cs,public string targetId;
+Runtime.zip/SparkAILearningCoach.cs,public int observedVerifiedPractices;
+Runtime.zip/SparkAILearningCoach.cs,public string lastVerifiedUtc;
+Runtime.zip/SparkAILearningCoach.cs,public int schema = 1;
+Runtime.zip/SparkAILearningCoach.cs,public List<HistoryEntry> entries = new List<HistoryEntry>();
+Runtime.zip/SparkAILearningCoach.cs,public string levelId;
+Runtime.zip/SparkAILearningCoach.cs,public string targetId;
+Runtime.zip/SparkAILearningCoach.cs,public int observedPendingSessions;
+Runtime.zip/SparkAILearningCoach.cs,public int observedPassingSessions;
+Runtime.zip/SparkAILearningCoach.cs,public int schema;
+Runtime.zip/SparkAILearningCoach.cs,public List<AnalyticsEntry> records;
+Runtime.zip/SparkAILearningCoach.cs,public int RecommendedCount => plan.Count;
+Runtime.zip/SparkAILearningCoach.cs,public bool HasActivePractice => !string.IsNullOrEmpty(sessionTargetId);
+Runtime.zip/SparkAILearningCoach.cs,public void RefreshPlan()
+Runtime.zip/SparkAILearningCoach.cs,"public void Previous() { if (HasActivePractice) CancelPracticeInternal(""Practice cancelled when selection changed.""); if (plan.Count > 0) selection = (selection - 1 + plan.Count) % plan.Count; Render(); }"
+Runtime.zip/SparkAILearningCoach.cs,"public void Next() { if (HasActivePractice) CancelPracticeInternal(""Practice cancelled when selection changed.""); if (plan.Count > 0) selection = (selection + 1) % plan.Count; Render(); }"
+Runtime.zip/SparkAILearningCoach.cs,public void MarkStudied()
+Runtime.zip/SparkAILearningCoach.cs,public void StartPractice()
+Runtime.zip/SparkAILearningCoach.cs,public void CheckMastery()
+Runtime.zip/SparkAILearningCoach.cs,"public void CancelPractice() { CancelPracticeInternal(""Current practice check cancelled.""); Render(); }"
+Runtime.zip/SparkAILearningCoach.cs,"public void NextHint() { hintStage = Mathf.Min(3, hintStage + 1); Render(); }"
+Runtime.zip/SparkAILearningCoach.cs,public void AskSpark()
+Runtime.zip/SparkAILearningCoach.cs,public void OpenTraining()
+Runtime.zip/SparkAILearningCoach.cs,public void OpenTutorial()
+Runtime.zip/SparkAILearningCoach.cs,public void RefreshCoach() { RefreshPlan(); }
+Runtime.zip/SparkAILearningCoach.cs,public void Show() { RefreshPlan(); if (card != null) card.SetActive(true); }
+Runtime.zip/SparkAILearningCoach.cs,public void Hide() { if (card != null) card.SetActive(false); }
+Runtime.zip/SparkAILearningCoach.cs,public void Toggle() { if (card != null && card.activeSelf) Hide(); else Show(); }
+Runtime.zip/SparkAIStudentProgressCenter.cs,public sealed class SparkAIStudentProgressCenter : MonoBehaviour
+Runtime.zip/SparkAIStudentProgressCenter.cs,public void Refresh()
+Runtime.zip/SparkAIStudentProgressCenter.cs,public void Show()
+Runtime.zip/SparkAIStudentProgressCenter.cs,public void Hide()
+Runtime.zip/SparkAIStudentProgressCenter.cs,public void Toggle()
+Runtime.zip/SparkAIStudentProgressCenter.cs,public void OpenTraining()
+Runtime.zip/SparkAIStudentProgressCenter.cs,public void OpenDashboard()
+Runtime.zip/SparkAIStudentProgressCenter.cs,public void OpenAnalytics()
+Runtime.zip/SparkAIStudentProgressCenter.cs,public void OpenCoach()
+Runtime.zip/SparkAIStudentProgressCenter.cs,public void OpenRepairs()
+Runtime.zip/SparkAIStudentProgressCenter.cs,public void ExportAnalytics()
+Runtime.zip/SparkAIStudentProgressCenter.cs,public void AskSpark()
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public sealed class SparkAITeachingSessionSaveResume : MonoBehaviour
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public string utc;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public string description;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public string sessionId;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public string startedUtc;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public string updatedUtc;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public string levelId;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public string levelName;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public string circuitId;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public string lastQuestion;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public string lastAnswer;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public int lastStepIndex = -1;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public int lastStepCount;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public string lessonView;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public string lastObservedEvaluatorProgress;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public List<StudyEvent> events = new List<StudyEvent>();
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public int schemaVersion = 1;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public StudySession active;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public StudySession previous;
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public List<StudySession> archive = new List<StudySession>();
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public void SaveNow()
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public void ResumeNotes()
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public void LiveNotes()
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public void ShowHistory()
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public void DeleteSavedNotes()
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public void OpenSession()
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public void Show()
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public void Hide() { if (card != null) card.SetActive(false); }
+Runtime.zip/SparkAITeachingSessionSaveResume.cs,public void Toggle() { if (card != null && card.activeSelf) Hide(); else Show(); }
+Runtime.zip/SparkAITrainingAnalytics.cs,public sealed class SparkAITrainingAnalytics : MonoBehaviour
+Runtime.zip/SparkAITrainingAnalytics.cs,"public string levelId, levelTitle, targetId, targetTitle;"
+Runtime.zip/SparkAITrainingAnalytics.cs,public int tier;
+Runtime.zip/SparkAITrainingAnalytics.cs,public bool completed;
+Runtime.zip/SparkAITrainingAnalytics.cs,"public string levelId, targetId, title, observedUtc;"
+Runtime.zip/SparkAITrainingAnalytics.cs,public bool imported;
+Runtime.zip/SparkAITrainingAnalytics.cs,public int schema;
+Runtime.zip/SparkAITrainingAnalytics.cs,public List<DashboardObjective> objectives;
+Runtime.zip/SparkAITrainingAnalytics.cs,public List<DashboardEvent> history;
+Runtime.zip/SparkAITrainingAnalytics.cs,"public string levelId, targetId, displayName;"
+Runtime.zip/SparkAITrainingAnalytics.cs,public int tier;
+Runtime.zip/SparkAITrainingAnalytics.cs,public int observedPendingSessions;
+Runtime.zip/SparkAITrainingAnalytics.cs,public int observedPassingSessions;
+Runtime.zip/SparkAITrainingAnalytics.cs,public int pendingToPassTransitions;
+Runtime.zip/SparkAITrainingAnalytics.cs,"public string lastObservedUtc, lastState;"
+Runtime.zip/SparkAITrainingAnalytics.cs,public int schema = 1;
+Runtime.zip/SparkAITrainingAnalytics.cs,public List<AttemptRecord> records = new List<AttemptRecord>();
+Runtime.zip/SparkAITrainingAnalytics.cs,public string dateUtc;
+Runtime.zip/SparkAITrainingAnalytics.cs,public int observedAchievementChanges;
+Runtime.zip/SparkAITrainingAnalytics.cs,"public string levelId, targetId, title, reason;"
+Runtime.zip/SparkAITrainingAnalytics.cs,"public int tier, pendingSessions, passingSessions;"
+Runtime.zip/SparkAITrainingAnalytics.cs,public bool recordedComplete;
+Runtime.zip/SparkAITrainingAnalytics.cs,"public string schema = ""ProjectSpark.TrainingAnalytics.v1"";"
+Runtime.zip/SparkAITrainingAnalytics.cs,public string generatedUtc;
+Runtime.zip/SparkAITrainingAnalytics.cs,"public string title = ""Spark AI - Training Progress Report"";"
+Runtime.zip/SparkAITrainingAnalytics.cs,"public int observedObjectives, recordedComplete, recordedIncomplete;"
+Runtime.zip/SparkAITrainingAnalytics.cs,"public int[] objectivesPerTier, completedPerTier;"
+Runtime.zip/SparkAITrainingAnalytics.cs,public int observedAchievementChangesLast7Days;
+Runtime.zip/SparkAITrainingAnalytics.cs,public List<DayTrend> trend;
+Runtime.zip/SparkAITrainingAnalytics.cs,public List<PracticeItem> recommendedPractice;
+Runtime.zip/SparkAITrainingAnalytics.cs,public List<PracticeItem> recurringPendingObservations;
+Runtime.zip/SparkAITrainingAnalytics.cs,public string[] limitations;
+Runtime.zip/SparkAITrainingAnalytics.cs,public void RefreshAnalytics()
+Runtime.zip/SparkAITrainingAnalytics.cs,public void Show()
+Runtime.zip/SparkAITrainingAnalytics.cs,public void Hide() { if (card != null) card.SetActive(false); }
+Runtime.zip/SparkAITrainingAnalytics.cs,public void Toggle() { if (card != null && card.activeSelf) Hide(); else Show(); }
+Runtime.zip/SparkAITrainingAnalytics.cs,public void OpenTraining()
+Runtime.zip/SparkAITrainingAnalytics.cs,public void AskSpark()
+Runtime.zip/SparkAITrainingAnalytics.cs,public void ExportReport()
+Runtime.zip/SparkAITrainingDashboard.cs,public sealed class SparkAITrainingDashboard : MonoBehaviour
+Runtime.zip/SparkAITrainingDashboard.cs,public string levelId;
+Runtime.zip/SparkAITrainingDashboard.cs,public string levelTitle;
+Runtime.zip/SparkAITrainingDashboard.cs,public string targetId;
+Runtime.zip/SparkAITrainingDashboard.cs,public string targetTitle;
+Runtime.zip/SparkAITrainingDashboard.cs,public int tier;
+Runtime.zip/SparkAITrainingDashboard.cs,public bool completed;
+Runtime.zip/SparkAITrainingDashboard.cs,public string levelId;
+Runtime.zip/SparkAITrainingDashboard.cs,public string targetId;
+Runtime.zip/SparkAITrainingDashboard.cs,public string title;
+Runtime.zip/SparkAITrainingDashboard.cs,public string observedUtc;
+Runtime.zip/SparkAITrainingDashboard.cs,public bool imported;
+Runtime.zip/SparkAITrainingDashboard.cs,public int schema = 1;
+Runtime.zip/SparkAITrainingDashboard.cs,public List<ObjectiveRecord> objectives = new List<ObjectiveRecord>();
+Runtime.zip/SparkAITrainingDashboard.cs,public List<LearningEvent> history = new List<LearningEvent>();
+Runtime.zip/SparkAITrainingDashboard.cs,public int ObservedObjectiveCount => store != null && store.objectives != null
+Runtime.zip/SparkAITrainingDashboard.cs,public void RefreshDashboard()
+Runtime.zip/SparkAITrainingDashboard.cs,public void Show()
+Runtime.zip/SparkAITrainingDashboard.cs,public void Hide() { if (card != null) card.SetActive(false); }
+Runtime.zip/SparkAITrainingDashboard.cs,public void Toggle() { if (card != null && card.activeSelf) Hide(); else Show(); }
+Runtime.zip/SparkAITrainingDashboard.cs,public void OpenTraining()
+Runtime.zip/SparkAITrainingDashboard.cs,public void AskSpark()
+Runtime.zip/SparkAIUnifiedAssistantTransport.cs,"public sealed class SparkAIUnifiedAssistantTransport : MonoBehaviour, ISparkAIExplanationTransport"
+Runtime.zip/SparkAIUnifiedAssistantTransport.cs,public string requestId;
+Runtime.zip/SparkAIUnifiedAssistantTransport.cs,public string answer;
+Runtime.zip/SparkAIUnifiedAssistantTransport.cs,public string reasoning;
+Runtime.zip/SparkAIUnifiedAssistantTransport.cs,public string nextCheck;
+Runtime.zip/SparkAIUnifiedAssistantTransport.cs,public bool TrySendExplanation(
+Runtime.zip/SparkAIUnifiedTutorialHub.cs,public sealed class SparkAIUnifiedTutorialHub : MonoBehaviour
+Runtime.zip/SparkAIUnifiedTutorialHub.cs,public void Refresh()
+Runtime.zip/SparkAIUnifiedTutorialHub.cs,public void Show()
+Runtime.zip/SparkAIUnifiedTutorialHub.cs,public void Hide()
+Runtime.zip/SparkAIUnifiedTutorialHub.cs,public void Toggle()
+Runtime.zip/SparkAIUnifiedTutorialHub.cs,public void OpenWhiteboard()
+Runtime.zip/SparkAIUnifiedTutorialHub.cs,public void OpenBothViews()
+Runtime.zip/SparkAIUnifiedTutorialHub.cs,public void OpenWorldView()
+Runtime.zip/SparkAIUnifiedTutorialHub.cs,public void OpenAnimatedAnswers()
+Runtime.zip/SparkAIUnifiedTutorialHub.cs,public void OpenComponentLessons()
+Runtime.zip/SparkAIUnifiedTutorialHub.cs,public void OpenStudentProgress()
+Runtime.zip/SparkAIUnifiedTutorialHub.cs,public void PreviousTeachingStep()
+Runtime.zip/SparkAIUnifiedTutorialHub.cs,public void NextTeachingStep()
+Runtime.zip/SparkAIUnifiedTutorialHub.cs,public void ReplayTeachingStep()
+Runtime.zip/SparkAIUnifiedTutorialHub.cs,public void OpenAskSpark()
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,"public enum SparkAdaptiveSeverity { Information, Warning, Critical }"
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public sealed class SparkAdaptiveCue
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public string anchorId;
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public string title;
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public string explanation;
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public string nextAction;
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public SparkAdaptiveSeverity severity;
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public bool hasWorldTarget;
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public sealed class SparkAdaptiveExplanationEngine : MonoBehaviour
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public event Action Changed;
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public SparkVerifiedElectricalFrame CurrentFrame => current;
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public int CueCount => cues.Count;
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public int SelectedIndex => selectedIndex;
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public SparkAdaptiveCue SelectedCue => selectedIndex >= 0 && selectedIndex < cues.Count ? cues[selectedIndex] : null;
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public string LastError { get; private set; }
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public bool SubmitVerifiedFrame(SparkVerifiedElectricalFrame frame)
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public void SelectNext()
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public void SelectPrevious()
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,"public bool SelectByAnchor(string anchorId, bool notify = true)"
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public bool HasVerifiedCurrentPath => current != null && current.hasVerifiedRoute &&
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationEngine.cs,public void ResetForCircuit(string newCircuitId = null)
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationPanel.cs,public sealed class SparkAdaptiveExplanationPanel : MonoBehaviour
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationPanel.cs,public void ShowCard()
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationPanel.cs,public void CloseCard()
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationPanel.cs,public void ToggleCard()
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationPanel.cs,public void NextCue()
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationPanel.cs,public void PreviousCue()
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationPanel.cs,public void Refresh()
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationPanel.cs,public void ShowCurrentInWorld()
+Runtime.zip/SparkAdaptiveExplanationEngine/SparkAdaptiveExplanationPanel.cs,public void ShowVerifiedRouteWhiteboard()
+Runtime.zip/SparkElectricalTelemetryBridge.cs,public enum SparkElectricalCondition
+Runtime.zip/SparkElectricalTelemetryBridge.cs,public sealed class SparkElectricalTelemetryBridge : MonoBehaviour
+Runtime.zip/SparkElectricalTelemetryBridge.cs,public string id;
+Runtime.zip/SparkElectricalTelemetryBridge.cs,"public float volts, amps, ohms;"
+Runtime.zip/SparkElectricalTelemetryBridge.cs,public SparkElectricalCondition condition;
+Runtime.zip/SparkElectricalTelemetryBridge.cs,public string note;
+Runtime.zip/SparkElectricalTelemetryBridge.cs,public float timestamp;
+Runtime.zip/SparkElectricalTelemetryBridge.cs,public bool demo;
+Runtime.zip/SparkElectricalTelemetryBridge.cs,"public bool ReportVerifiedReading(string anchorId, float volts, float amps,"
+Runtime.zip/SparkElectricalTelemetryBridge.cs,public void RunIllustrativeDemo()
+Runtime.zip/SparkElectricalTelemetryBridge.cs,"public bool SetVerifiedCurrentRoute(string[] orderedAnchorIds, bool energized)"
+Runtime.zip/SparkElectricalTelemetryBridge.cs,public void SelectComponent(string anchorId)
+Runtime.zip/SparkElectricalTelemetryBridge.cs,public void ShowSelectedInWorld()
+Runtime.zip/SparkElectricalTelemetryBridge.cs,public void HideWorldCues()
+Runtime.zip/SparkElectricalTelemetryBridge.cs,public void ClearTelemetry()
+Runtime.zip/SparkSchematicRenderer.cs,"public sealed class SparkSchematicRenderer : MonoBehaviour, IScrollHandler, IDragHandler"
+Runtime.zip/SparkSchematicRenderer.cs,public void Display(SparkSchematicData schematic)
+Runtime.zip/SparkSchematicRenderer.cs,public void Clear()
+Runtime.zip/SparkSchematicRenderer.cs,public void ZoomIn() => SetZoom(zoom + .2f);
+Runtime.zip/SparkSchematicRenderer.cs,public void ZoomOut() => SetZoom(zoom - .2f);
+Runtime.zip/SparkSchematicRenderer.cs,public void ResetView()
+Runtime.zip/SparkSchematicRenderer.cs,public void SetZoom(float value)
+Runtime.zip/SparkSchematicRenderer.cs,public void OnScroll(PointerEventData eventData)
+Runtime.zip/SparkSchematicRenderer.cs,public void OnDrag(PointerEventData eventData)
+Runtime.zip/SparkSchematicRenderer.cs,public void Rebuild()
+Runtime.zip/SparkSolverTelemetrySync.cs,public sealed class SparkSolverTelemetrySync : MonoBehaviour
+Runtime.zip/SparkSolverTelemetrySync.cs,public int AppliedFrameCount { get; private set; }
+Runtime.zip/SparkSolverTelemetrySync.cs,public string LastError { get; private set; }
+Runtime.zip/SparkSolverTelemetrySync.cs,public string CurrentCircuitId => currentCircuitId;
+Runtime.zip/SparkSolverTelemetrySync.cs,public bool SubmitVerifiedFrame(SparkVerifiedElectricalFrame verifiedFrame)
+Runtime.zip/SparkSolverTelemetrySync.cs,public void OnLevelUnloaded() => ResetForCircuit(null);
+Runtime.zip/SparkSolverTelemetrySync.cs,public void ResetForCircuit(string newCircuitId)
+Runtime.zip/SparkTeachingAnchor.cs,public sealed class SparkTeachingAnchor : MonoBehaviour
+Runtime.zip/SparkTeachingAnchor.cs,public string AnchorId => anchorId;
+Runtime.zip/SparkTeachingAnchor.cs,public Vector3 WorldPosition => (target != null ? target : transform).TransformPoint(worldOffset);
+Runtime.zip/SparkTeachingAnchor.cs,"public static bool TryFind(string id, out SparkTeachingAnchor anchor)"
+Runtime.zip/SparkTeachingIntegrationAdapter.cs,public sealed class SparkTeachingIntegrationAdapter : MonoBehaviour
+Runtime.zip/SparkTeachingIntegrationAdapter.cs,"public bool ExplainComponent(string anchorId, string explanation)"
+Runtime.zip/SparkTeachingIntegrationAdapter.cs,"public bool HighlightVerifiedFault(string anchorId, string verifiedDiagnosis)"
+Runtime.zip/SparkTeachingIntegrationAdapter.cs,"public bool GuideConnection(string sourceAnchorId, string targetAnchorId, string instruction)"
+Runtime.zip/SparkTeachingIntegrationAdapter.cs,"public bool DrawVerifiedCurrentRoute(string[] orderedAnchorIds, string verifiedExplanation)"
+Runtime.zip/SparkTeachingIntegrationAdapter.cs,"public bool ShowVerifiedCircuitSnapshot(SparkSchematicData schematic, string explanation)"
+Runtime.zip/SparkTeachingIntegrationAdapter.cs,public bool SignalVerifiedTutorialAction(string actionId)
+Runtime.zip/SparkTeachingIntegrationAdapter.cs,public void ShowDemo() { if (teachingManager != null) teachingManager.PlayDemoLesson(); }
+Runtime.zip/SparkTeachingModels.cs,"public enum SparkVisualShape { Line, Arrow, Ring, Rectangle, Label, Wait, Clear }"
+Runtime.zip/SparkTeachingModels.cs,"public enum SparkPointSpace { NormalizedScreen, WorldAnchor }"
+Runtime.zip/SparkTeachingModels.cs,"public enum SparkSchematicKind { Battery, Resistor, LED, Diode, Capacitor, Switch, Ground, Motor, Meter, Generic }"
+Runtime.zip/SparkTeachingModels.cs,"public enum SparkTeachingView { Both, WhiteboardOnly, WorldOnly }"
+Runtime.zip/SparkTeachingModels.cs,public class SparkVisualPoint
+Runtime.zip/SparkTeachingModels.cs,public SparkPointSpace space = SparkPointSpace.NormalizedScreen;
+Runtime.zip/SparkTeachingModels.cs,"public Vector2 normalized = new Vector2(.5f, .5f);"
+Runtime.zip/SparkTeachingModels.cs,"public string anchorId = """";"
+Runtime.zip/SparkTeachingModels.cs,public Vector2 pixelOffset = Vector2.zero;
+Runtime.zip/SparkTeachingModels.cs,public class SparkVisualCommand
+Runtime.zip/SparkTeachingModels.cs,public SparkVisualShape shape = SparkVisualShape.Arrow;
+Runtime.zip/SparkTeachingModels.cs,public SparkVisualPoint from = new SparkVisualPoint();
+Runtime.zip/SparkTeachingModels.cs,"public SparkVisualPoint to = new SparkVisualPoint { normalized = new Vector2(.7f, .5f) };"
+Runtime.zip/SparkTeachingModels.cs,"public Vector2 normalizedSize = new Vector2(.12f, .1f);"
+Runtime.zip/SparkTeachingModels.cs,"public Color color = new Color(.12f, .82f, 1f, 1f);"
+Runtime.zip/SparkTeachingModels.cs,"public string text = """";"
+Runtime.zip/SparkTeachingModels.cs,public bool persistent = true;
+Runtime.zip/SparkTeachingModels.cs,public class SparkSchematicPart
+Runtime.zip/SparkTeachingModels.cs,public string id;
+Runtime.zip/SparkTeachingModels.cs,public SparkSchematicKind kind;
+Runtime.zip/SparkTeachingModels.cs,"public Vector2 position = new Vector2(.5f, .5f);"
+Runtime.zip/SparkTeachingModels.cs,public string label;
+Runtime.zip/SparkTeachingModels.cs,"public Color color = new Color(.25f, .85f, 1f, 1f);"
+Runtime.zip/SparkTeachingModels.cs,public class SparkSchematicWire
+Runtime.zip/SparkTeachingModels.cs,public Vector2[] points = Array.Empty<Vector2>();
+Runtime.zip/SparkTeachingModels.cs,public bool energized;
+Runtime.zip/SparkTeachingModels.cs,"public Color color = new Color(.45f, .77f, .97f, 1f);"
+Runtime.zip/SparkTeachingModels.cs,public class SparkSchematicData
+Runtime.zip/SparkTeachingModels.cs,"public string caption = ""Circuit schematic"";"
+Runtime.zip/SparkTeachingModels.cs,public SparkSchematicPart[] parts = Array.Empty<SparkSchematicPart>();
+Runtime.zip/SparkTeachingModels.cs,public SparkSchematicWire[] wires = Array.Empty<SparkSchematicWire>();
+Runtime.zip/SparkTeachingModels.cs,public class SparkTeachingStep
+Runtime.zip/SparkTeachingModels.cs,"public string title = ""Step"";"
+Runtime.zip/SparkTeachingModels.cs,"public string requiredVerifiedActionId = """";"
+Runtime.zip/SparkTeachingModels.cs,public bool advanceWhenVerified = true;
+Runtime.zip/SparkTeachingModels.cs,public SparkVisualCommand[] annotations = Array.Empty<SparkVisualCommand>();
+Runtime.zip/SparkTeachingModels.cs,public SparkSchematicData schematic = new SparkSchematicData();
+Runtime.zip/SparkTeachingModels.cs,public sealed class SparkVisualLesson : ScriptableObject
+Runtime.zip/SparkTeachingModels.cs,"public string lessonId = ""tutorial"";"
+Runtime.zip/SparkTeachingModels.cs,"public string title = ""Circuit Tutorial"";"
+Runtime.zip/SparkTeachingModels.cs,"public string goal = ""Learn the circuit"";"
+Runtime.zip/SparkTeachingModels.cs,public SparkTeachingStep[] steps = Array.Empty<SparkTeachingStep>();
+Runtime.zip/SparkTeachingModels.cs,public class SparkVisualTeachingPlan
+Runtime.zip/SparkTeachingModels.cs,"public string title = ""AI explanation"";"
+Runtime.zip/SparkTeachingModels.cs,"public string explanation = """";"
+Runtime.zip/SparkTeachingModels.cs,public SparkVisualCommand[] annotations = Array.Empty<SparkVisualCommand>();
+Runtime.zip/SparkTeachingModels.cs,public SparkSchematicData schematic = new SparkSchematicData();
+Runtime.zip/SparkTeachingValidator.cs,public static class SparkTeachingValidator
+Runtime.zip/SparkTeachingValidator.cs,"public static bool Validate(SparkVisualTeachingPlan plan, out string reason)"
+Runtime.zip/SparkTeachingValidator.cs,"public static bool Validate(SparkVisualCommand c, out string reason)"
+Runtime.zip/SparkTeachingValidator.cs,"public static bool Validate(SparkSchematicData data, out string reason)"
+Runtime.zip/SparkTeachingVectorGraphic.cs,public sealed class SparkVisualStroke
+Runtime.zip/SparkTeachingVectorGraphic.cs,public Vector2[] points;
+Runtime.zip/SparkTeachingVectorGraphic.cs,public Color color = Color.cyan;
+Runtime.zip/SparkTeachingVectorGraphic.cs,public float width = 4f;
+Runtime.zip/SparkTeachingVectorGraphic.cs,public float progress = 1f;
+Runtime.zip/SparkTeachingVectorGraphic.cs,public bool arrow;
+Runtime.zip/SparkTeachingVectorGraphic.cs,public bool closed;
+Runtime.zip/SparkTeachingVectorGraphic.cs,public sealed class SparkTeachingVectorGraphic : MaskableGraphic
+Runtime.zip/SparkTeachingVectorGraphic.cs,public override Texture mainTexture => Texture2D.whiteTexture;
+Runtime.zip/SparkTeachingVectorGraphic.cs,public void SetStrokes(List<SparkVisualStroke> source)
+Runtime.zip/SparkTeachingVectorGraphic.cs,public void Clear()
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public sealed class SparkVerifiedElectricalReading
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public string anchorId;
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public float voltageVolts;
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public float currentAmps;
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public float resistanceOhms;
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public SparkElectricalCondition condition = SparkElectricalCondition.Unknown;
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public string explanation;
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public SparkVerifiedElectricalReading Copy() => (SparkVerifiedElectricalReading)MemberwiseClone();
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public sealed class SparkVerifiedElectricalFrame
+Runtime.zip/SparkVerifiedElectricalFrame.cs,"public string circuitId = """";"
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public int revision;
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public List<SparkVerifiedElectricalReading> readings = new List<SparkVerifiedElectricalReading>();
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public string focusAnchorId;
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public bool hasVerifiedRoute;
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public bool routeEnergized;
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public string[] orderedRouteAnchors = Array.Empty<string>();
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public bool hasVerifiedFault;
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public string faultAnchorId;
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public string verifiedFaultExplanation;
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public string verifiedActionId;
+Runtime.zip/SparkVerifiedElectricalFrame.cs,public SparkVerifiedElectricalFrame Copy()
+Runtime.zip/SparkVerifiedElectricalPublisher.cs,public sealed class SparkVerifiedElectricalPublisher : MonoBehaviour
+Runtime.zip/SparkVerifiedElectricalPublisher.cs,public event Action<SparkVerifiedElectricalFrame> FramePublished;
+Runtime.zip/SparkVerifiedElectricalPublisher.cs,public int PublishedCount { get; private set; }
+Runtime.zip/SparkVerifiedElectricalPublisher.cs,public void PublishVerifiedFrame(SparkVerifiedElectricalFrame completedFrame)
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,public sealed class SparkVisualTeachingLiveBridge : MonoBehaviour
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,public sealed class LevelLessonBinding
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,public string levelId;
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,public SparkVisualLesson lesson;
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,public sealed class VerifiedFaultPreset
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,public string eventId;
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,public string anchorId;
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,public bool OnLevelLoaded(string levelId)
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,public void OnLevelUnloaded()
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,"public bool ReportVerifiedFault(string anchorId, string verifiedExplanation)"
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,public bool ReportVerifiedFaultPreset(string eventId)
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,"public bool ExplainKnownComponent(string anchorId, string explanation)"
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,"public bool GuideVerifiedConnection(string sourceAnchorId, string targetAnchorId, string instruction)"
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,public bool SignalVerifiedAction(string requiredActionId)
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,public void StartLesson(SparkVisualLesson lesson)
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,public void OpenTeachingBoard()
+Runtime.zip/SparkVisualTeachingLiveBridge.cs,public void ClearMyCues()
+Runtime.zip/SparkVisualTeachingManager.cs,public sealed class SparkVisualTeachingManager : MonoBehaviour
+Runtime.zip/SparkVisualTeachingManager.cs,public UnityEvent onLessonFinished;
+Runtime.zip/SparkVisualTeachingManager.cs,public UnityEvent onVerifiedAction;
+Runtime.zip/SparkVisualTeachingManager.cs,"public event Action<int, int> StepChanged;"
+Runtime.zip/SparkVisualTeachingManager.cs,public SparkTeachingView View { get; private set; }
+Runtime.zip/SparkVisualTeachingManager.cs,public bool Paused { get; private set; }
+Runtime.zip/SparkVisualTeachingManager.cs,public bool PanelOpen { get; private set; }
+Runtime.zip/SparkVisualTeachingManager.cs,public int CurrentStepIndex => currentStepIndex;
+Runtime.zip/SparkVisualTeachingManager.cs,public int StepCount => steps != null ? steps.Length : 0;
+Runtime.zip/SparkVisualTeachingManager.cs,public void SetPanelOpen(bool isOpen)
+Runtime.zip/SparkVisualTeachingManager.cs,public void OpenPanel() => SetPanelOpen(true);
+Runtime.zip/SparkVisualTeachingManager.cs,public void OpenTeachingBoard() { SetView(SparkTeachingView.Both); SetPanelOpen(true); }
+Runtime.zip/SparkVisualTeachingManager.cs,public void ClosePanel() => SetPanelOpen(false);
+Runtime.zip/SparkVisualTeachingManager.cs,public void TogglePanel() => SetPanelOpen(!PanelOpen);
+Runtime.zip/SparkVisualTeachingManager.cs,public void SetView(SparkTeachingView mode)
+Runtime.zip/SparkVisualTeachingManager.cs,public void ViewBoth() => SetView(SparkTeachingView.Both);
+Runtime.zip/SparkVisualTeachingManager.cs,public void ViewWhiteboard() => SetView(SparkTeachingView.WhiteboardOnly);
+Runtime.zip/SparkVisualTeachingManager.cs,public void ViewWorld() => SetView(SparkTeachingView.WorldOnly);
+Runtime.zip/SparkVisualTeachingManager.cs,public void StartLesson(SparkVisualLesson lesson)
+Runtime.zip/SparkVisualTeachingManager.cs,public void NextStep()
+Runtime.zip/SparkVisualTeachingManager.cs,public void PreviousStep()
+Runtime.zip/SparkVisualTeachingManager.cs,public void ReplayStep()
+Runtime.zip/SparkVisualTeachingManager.cs,public void ResetLesson()
+Runtime.zip/SparkVisualTeachingManager.cs,public bool ReportVerifiedAction(string actionId)
+Runtime.zip/SparkVisualTeachingManager.cs,public void Pause() { Paused = true; UpdateUI(); }
+Runtime.zip/SparkVisualTeachingManager.cs,public void Resume() { Paused = false; UpdateUI(); }
+Runtime.zip/SparkVisualTeachingManager.cs,public void TogglePause() { Paused = !Paused; UpdateUI(); }
+Runtime.zip/SparkVisualTeachingManager.cs,"public void SetPlaybackSpeed(float speed) { playbackSpeed = Mathf.Clamp(speed, .25f, 3f); }"
+Runtime.zip/SparkVisualTeachingManager.cs,public void ClearAnnotations()
+Runtime.zip/SparkVisualTeachingManager.cs,public void ClearEverything()
+Runtime.zip/SparkVisualTeachingManager.cs,public bool PresentPlanJson(string json)
+Runtime.zip/SparkVisualTeachingManager.cs,public bool PresentValidatedPlan(SparkVisualTeachingPlan plan)
+Runtime.zip/SparkVisualTeachingManager.cs,public void PlayDemoLesson()
+Runtime.zip/SparkWorldAnnotationRenderer.cs,public sealed class SparkWorldAnnotationRenderer : MonoBehaviour
+Runtime.zip/SparkWorldAnnotationRenderer.cs,public sealed class Annotation
+Runtime.zip/SparkWorldAnnotationRenderer.cs,public Annotation Add(SparkVisualCommand command)
+Runtime.zip/SparkWorldAnnotationRenderer.cs,"public void SetProgress(Annotation annotation, float progress)"
+Runtime.zip/SparkWorldAnnotationRenderer.cs,public void Remove(Annotation annotation)
+Runtime.zip/SparkWorldAnnotationRenderer.cs,public void ClearAll()
+Supplemental/SparkCircuitExperimentLab.cs,public sealed class SparkCircuitExperimentLab : MonoBehaviour
+Supplemental/SparkCircuitExperimentLab.cs,public string id;
+Supplemental/SparkCircuitExperimentLab.cs,public bool passed;
+Supplemental/SparkCircuitExperimentLab.cs,public string takenUtc;
+Supplemental/SparkCircuitExperimentLab.cs,public string circuitId;
+Supplemental/SparkCircuitExperimentLab.cs,public int frameRevision;
+Supplemental/SparkCircuitExperimentLab.cs,public int frameSerial;
+Supplemental/SparkCircuitExperimentLab.cs,public int evaluationSerial;
+Supplemental/SparkCircuitExperimentLab.cs,public bool evaluatorCurrent;
+Supplemental/SparkCircuitExperimentLab.cs,public int satisfied;
+Supplemental/SparkCircuitExperimentLab.cs,public int total;
+Supplemental/SparkCircuitExperimentLab.cs,public List<TargetObservation> targets = new List<TargetObservation>();
+Supplemental/SparkCircuitExperimentLab.cs,public SparkVerifiedElectricalFrame frame;
+Supplemental/SparkCircuitExperimentLab.cs,public string componentId;
+Supplemental/SparkCircuitExperimentLab.cs,public string state;
+Supplemental/SparkCircuitExperimentLab.cs,public float beforeVoltage;
+Supplemental/SparkCircuitExperimentLab.cs,public float afterVoltage;
+Supplemental/SparkCircuitExperimentLab.cs,public float beforeCurrent;
+Supplemental/SparkCircuitExperimentLab.cs,public float afterCurrent;
+Supplemental/SparkCircuitExperimentLab.cs,public float beforeResistance;
+Supplemental/SparkCircuitExperimentLab.cs,public float afterResistance;
+Supplemental/SparkCircuitExperimentLab.cs,public string beforeCondition;
+Supplemental/SparkCircuitExperimentLab.cs,public string afterCondition;
+Supplemental/SparkCircuitExperimentLab.cs,public bool matched;
+Supplemental/SparkCircuitExperimentLab.cs,public string capturedUtc;
+Supplemental/SparkCircuitExperimentLab.cs,public string circuitId;
+Supplemental/SparkCircuitExperimentLab.cs,public int beforeRevision;
+Supplemental/SparkCircuitExperimentLab.cs,public int afterRevision;
+Supplemental/SparkCircuitExperimentLab.cs,public bool afterEvaluatorCurrent;
+Supplemental/SparkCircuitExperimentLab.cs,public int beforePassed;
+Supplemental/SparkCircuitExperimentLab.cs,public int afterPassed;
+Supplemental/SparkCircuitExperimentLab.cs,public int objectiveCount;
+Supplemental/SparkCircuitExperimentLab.cs,public List<ComparisonRow> rows = new List<ComparisonRow>();
+Supplemental/SparkCircuitExperimentLab.cs,"public string format = ""ProjectSpark.CircuitExperiment.v1"";"
+Supplemental/SparkCircuitExperimentLab.cs,public string exportedUtc;
+Supplemental/SparkCircuitExperimentLab.cs,public List<ExperimentRecord> experiments = new List<ExperimentRecord>();
+Supplemental/SparkCircuitExperimentLab.cs,public bool HasBaseline => before != null;
+Supplemental/SparkCircuitExperimentLab.cs,public bool HasComparison => result != null;
+Supplemental/SparkCircuitExperimentLab.cs,public int HistoryCount => history.Count;
+Supplemental/SparkCircuitExperimentLab.cs,public string CurrentCircuitId => currentCircuitId;
+Supplemental/SparkCircuitExperimentLab.cs,public void CaptureBefore()
+Supplemental/SparkCircuitExperimentLab.cs,public void CaptureAfter()
+Supplemental/SparkCircuitExperimentLab.cs,public void ResetExperiment()
+Supplemental/SparkCircuitExperimentLab.cs,public void Show()
+Supplemental/SparkCircuitExperimentLab.cs,public void Hide()
+Supplemental/SparkCircuitExperimentLab.cs,public void Toggle()
+Supplemental/SparkCircuitExperimentLab.cs,public void ExportExperiments()
+Supplemental/SparkMeterProbeTerminal.cs,"public enum SparkMeterTerminalEnd { Unspecified, PositiveReference, NegativeReference }"
+Supplemental/SparkMeterProbeTerminal.cs,public sealed class SparkMeterProbeTerminal : MonoBehaviour
+Supplemental/SparkMeterProbeTerminal.cs,public string TerminalId => terminalId;
+Supplemental/SparkMeterProbeTerminal.cs,public string ComponentAnchorId => componentAnchorId;
+Supplemental/SparkMeterProbeTerminal.cs,public SparkMeterTerminalEnd ReferenceEnd => referenceEnd;
+Supplemental/SparkMeterVerifiedNodeFeed.cs,public sealed class SparkMeterVerifiedNode
+Supplemental/SparkMeterVerifiedNodeFeed.cs,public string terminalId;
+Supplemental/SparkMeterVerifiedNodeFeed.cs,public float potentialVolts;
+Supplemental/SparkMeterVerifiedNodeFeed.cs,public sealed class SparkMeterVerifiedNodeFrame
+Supplemental/SparkMeterVerifiedNodeFeed.cs,public string circuitId;
+Supplemental/SparkMeterVerifiedNodeFeed.cs,public int revision;
+Supplemental/SparkMeterVerifiedNodeFeed.cs,public List<SparkMeterVerifiedNode> nodes = new List<SparkMeterVerifiedNode>();
+Supplemental/SparkMeterVerifiedNodeFeed.cs,public SparkMeterVerifiedNodeFrame Copy()
+Supplemental/SparkMeterVerifiedNodeFeed.cs,public sealed class SparkMeterVerifiedNodeFeed : MonoBehaviour
+Supplemental/SparkMeterVerifiedNodeFeed.cs,public event Action<SparkMeterVerifiedNodeFrame> FramePublished;
+Supplemental/SparkMeterVerifiedNodeFeed.cs,public bool PublishVerifiedNodes(SparkMeterVerifiedNodeFrame frame)
+Supplemental/SparkVirtualMultimeter.cs,public sealed class SparkVirtualMultimeter : MonoBehaviour
+Supplemental/SparkVirtualMultimeter.cs,"public enum MeterMode { Volts, ComponentAmps, ModelOhms }"
+Supplemental/SparkVirtualMultimeter.cs,public MeterMode mode;
+Supplemental/SparkVirtualMultimeter.cs,public string circuitId;
+Supplemental/SparkVirtualMultimeter.cs,public string redId;
+Supplemental/SparkVirtualMultimeter.cs,public string blackId;
+Supplemental/SparkVirtualMultimeter.cs,public int serial;
+Supplemental/SparkVirtualMultimeter.cs,public float value;
+Supplemental/SparkVirtualMultimeter.cs,public string unit;
+Supplemental/SparkVirtualMultimeter.cs,public string origin;
+Supplemental/SparkVirtualMultimeter.cs,public void Show() { if (panel != null) panel.SetActive(true); Refresh(); }
+Supplemental/SparkVirtualMultimeter.cs,public void Hide() { selecting = ProbeSelection.None; if (panel != null) panel.SetActive(false); }
+Supplemental/SparkVirtualMultimeter.cs,public void Toggle() { if (panel != null && panel.activeSelf) Hide(); else Show(); }
+Supplemental/SparkVirtualMultimeter.cs,public void SetVolts() { SwitchMode(MeterMode.Volts); }
+Supplemental/SparkVirtualMultimeter.cs,public void SetAmps() { SwitchMode(MeterMode.ComponentAmps); }
+Supplemental/SparkVirtualMultimeter.cs,public void SetOhms() { SwitchMode(MeterMode.ModelOhms); }
+Supplemental/SparkVirtualMultimeter.cs,public void ArmRedProbe()
+Supplemental/SparkVirtualMultimeter.cs,public void ArmBlackProbe()
+Supplemental/SparkVirtualMultimeter.cs,public void ClearProbes()
+Supplemental/SparkVirtualMultimeter.cs,public void ToggleHold()
+Supplemental/SparkVirtualMultimeter.cs,public void CaptureA()
+Supplemental/SparkVirtualMultimeter.cs,public void CaptureB()

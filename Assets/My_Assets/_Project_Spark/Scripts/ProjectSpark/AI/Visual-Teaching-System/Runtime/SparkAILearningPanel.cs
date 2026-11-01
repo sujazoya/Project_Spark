@@ -123,7 +123,10 @@ namespace ProjectSpark.UI
         [SerializeField] private DrawerMode initialMode = DrawerMode.Hidden;
         [SerializeField] private bool rememberMode = true;
         [SerializeField] private bool animateTransitions = true;
-        [SerializeField, Range(0.05f, 0.45f)] private float animationSeconds = 0.17f;
+        [SerializeField, Range(0.26f, 0.65f)] private float animationSeconds = 0.34f;
+        [SerializeField, Range(0.5f, 1.7f)] private float slideDistanceMultiplier = 1f;
+        [SerializeField, Range(0f, 0.08f)] private float enterDelayFraction = 0.035f;
+        [SerializeField] private bool subtleScaleAnimation = true;
         [SerializeField] private bool collapseToIconsAfterAction = false;
         [SerializeField, Range(1f, 20f)] private float availabilityRefreshSeconds = 5f;
 
@@ -137,6 +140,24 @@ namespace ProjectSpark.UI
         private DrawerMode currentMode;
         private Coroutine animation;
         private float nextRefresh;
+
+        // Rest positions are captured once from the already-generated scene.
+        // No UI builder changes or panel recreation are required.
+        private readonly RectTransform[] drawerRects = new RectTransform[3];
+        private readonly Vector2[] restingPositions = new Vector2[3];
+        private readonly Vector3[] restingScales = new Vector3[3];
+        private bool motionInitialized;
+
+        private struct DrawerTween
+        {
+            public GameObject panel;
+            public RectTransform rect;
+            public CanvasGroup group;
+            public Vector2 startPosition;
+            public Vector3 startScale;
+            public float startAlpha;
+            public bool animate;
+        }
 
         public DrawerMode CurrentMode => currentMode;
 
@@ -165,6 +186,7 @@ namespace ProjectSpark.UI
             int modeNumber = rememberMode && PlayerPrefs.HasKey(ModeKey)
                 ? PlayerPrefs.GetInt(ModeKey, (int)initialMode) : (int)initialMode;
             currentMode = (DrawerMode)Mathf.Clamp(modeNumber, 0, 2);
+            CaptureRestPositions();
             SetModeImmediate(currentMode);
             RefreshAvailability();
         }
@@ -199,42 +221,224 @@ namespace ProjectSpark.UI
         public void ChangeMode(DrawerMode mode)
         {
             mode = (DrawerMode)Mathf.Clamp((int)mode, 0, 2);
-            if (animation != null) { StopCoroutine(animation); animation = null; }
+            if (mode == currentMode && motionInitialized) return;
+
+            // Stop without resetting transforms: the replacement tween begins from
+            // wherever the previous transition actually reached, with no jump.
+            if (animation != null)
+            {
+                StopCoroutine(animation);
+                animation = null;
+            }
+
             currentMode = mode;
             if (rememberMode) PlayerPrefs.SetInt(ModeKey, (int)mode);
-            SetModeImmediate(mode);
-            if (animateTransitions && isActiveAndEnabled && Application.isPlaying)
-            {
-                CanvasGroup group = mode == DrawerMode.Hidden ? hiddenGroup :
-                    mode == DrawerMode.Icons ? iconsGroup : detailedGroup;
-                if (group != null) animation = StartCoroutine(FadeIn(group));
-            }
+            if (!motionInitialized) CaptureRestPositions();
+            if (iconTooltip != null) iconTooltip.SetActive(false);
+
+            bool canAnimate = animateTransitions && isActiveAndEnabled &&
+                              Application.isPlaying && HasValidDrawer(mode);
+            if (canAnimate)
+                animation = StartCoroutine(AnimateToMode(mode));
+            else
+                SetModeImmediate(mode);
+
             if (mode != DrawerMode.Hidden) RefreshAvailability();
+        }
+
+        private GameObject PanelAt(int index)
+        {
+            switch (index)
+            {
+                case 0: return hiddenTab;
+                case 1: return iconRail;
+                default: return detailedDrawer;
+            }
+        }
+
+        private CanvasGroup GroupAt(int index)
+        {
+            switch (index)
+            {
+                case 0: return hiddenGroup;
+                case 1: return iconsGroup;
+                default: return detailedGroup;
+            }
+        }
+
+        private void CaptureRestPositions()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                GameObject panel = PanelAt(i);
+                RectTransform rect = panel != null ? panel.GetComponent<RectTransform>() : null;
+                drawerRects[i] = rect;
+                restingPositions[i] = rect != null ? rect.anchoredPosition : Vector2.zero;
+                restingScales[i] = rect != null ? rect.localScale : Vector3.one;
+            }
+            motionInitialized = true;
+        }
+
+        private bool HasValidDrawer(DrawerMode mode)
+        {
+            int index = (int)mode;
+            return PanelAt(index) != null && GroupAt(index) != null &&
+                   drawerRects[index] != null;
         }
 
         private void SetModeImmediate(DrawerMode mode)
         {
-            if (hiddenTab != null) hiddenTab.SetActive(mode == DrawerMode.Hidden);
-            if (iconRail != null) iconRail.SetActive(mode == DrawerMode.Icons);
-            if (detailedDrawer != null) detailedDrawer.SetActive(mode == DrawerMode.Detailed);
+            if (!motionInitialized) CaptureRestPositions();
+            for (int i = 0; i < 3; i++)
+            {
+                GameObject panel = PanelAt(i);
+                CanvasGroup group = GroupAt(i);
+                RectTransform rect = drawerRects[i];
+                bool active = i == (int)mode;
+                if (rect != null)
+                {
+                    rect.anchoredPosition = restingPositions[i];
+                    rect.localScale = restingScales[i];
+                }
+                if (group != null)
+                {
+                    group.alpha = active ? 1f : 0f;
+                    group.interactable = active;
+                    group.blocksRaycasts = active;
+                }
+                if (panel != null) panel.SetActive(active);
+            }
             if (iconTooltip != null) iconTooltip.SetActive(false);
-            if (hiddenGroup != null) hiddenGroup.alpha = 1f;
-            if (iconsGroup != null) iconsGroup.alpha = 1f;
-            if (detailedGroup != null) detailedGroup.alpha = 1f;
         }
 
-        private IEnumerator FadeIn(CanvasGroup group)
+        // Distance is proportional to each drawer's width. The compact tab
+        // travels much less than the expanded panel and never zooms across the screen.
+        private float EnterDistance(int index)
         {
-            group.alpha = 0f;
-            float start = Time.unscaledTime;
-            while (group != null && Time.unscaledTime - start < animationSeconds)
+            float width = drawerRects[index] != null ? drawerRects[index].rect.width : 100f;
+            float amount = index == 0 ? 25f : index == 1 ? 83f : 164f;
+            return Mathf.Min(amount, Mathf.Max(30f, width * 0.52f)) *
+                   Mathf.Clamp(slideDistanceMultiplier, 0.5f, 1.7f);
+        }
+
+        private IEnumerator AnimateToMode(DrawerMode mode)
+        {
+            int target = (int)mode;
+            var tracks = new DrawerTween[3];
+
+            // Only the active outgoing drawer and the incoming drawer are
+            // displayed. Previously inactive drawers do not flash for one frame.
+            for (int i = 0; i < 3; i++)
             {
-                float t = (Time.unscaledTime - start) / Mathf.Max(0.01f, animationSeconds);
-                group.alpha = t * t * (3f - 2f * t);
+                GameObject panel = PanelAt(i);
+                RectTransform rect = drawerRects[i];
+                CanvasGroup group = GroupAt(i);
+                if (panel == null || rect == null || group == null) continue;
+
+                bool alreadyVisible = panel.activeSelf;
+                bool animateThis = alreadyVisible || i == target;
+                if (!animateThis) continue;
+
+                if (!alreadyVisible)
+                {
+                    rect.anchoredPosition = restingPositions[i] +
+                                            Vector2.right * EnterDistance(i);
+                    rect.localScale = subtleScaleAnimation
+                        ? restingScales[i] * 0.981f : restingScales[i];
+                    group.alpha = 0f;
+                    panel.SetActive(true);
+                }
+
+                tracks[i] = new DrawerTween
+                {
+                    panel = panel,
+                    rect = rect,
+                    group = group,
+                    startPosition = rect.anchoredPosition,
+                    startScale = rect.localScale,
+                    startAlpha = group.alpha,
+                    animate = true
+                };
+
+                // The incoming drawer absorbs pointer hits while transitioning
+                // but its controls cannot fire until it has settled.
+                group.interactable = false;
+                group.blocksRaycasts = i == target;
+            }
+
+            float duration = Mathf.Max(0.26f, animationSeconds);
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                // Unscaled time works correctly while the player's game is paused.
+                elapsed += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                float enterTime = Mathf.Clamp01((t - enterDelayFraction) /
+                                                Mathf.Max(0.01f, 1f - enterDelayFraction));
+                float enterMove = EaseOutQuint(enterTime);
+                float enterAlpha = Smooth01(Mathf.Clamp01(enterTime / 0.83f));
+                float exitMove = EaseInCubic(t);
+                float exitAlpha = Smooth01(Mathf.Clamp01(t / 0.77f));
+
+                for (int i = 0; i < 3; i++)
+                {
+                    DrawerTween state = tracks[i];
+                    if (!state.animate || state.rect == null || state.group == null) continue;
+
+                    if (i == target)
+                    {
+                        state.rect.anchoredPosition = Vector2.LerpUnclamped(
+                            state.startPosition, restingPositions[i], enterMove);
+                        state.group.alpha = Mathf.Lerp(state.startAlpha, 1f, enterAlpha);
+                        state.rect.localScale = Vector3.LerpUnclamped(
+                            state.startScale, restingScales[i], enterMove);
+                    }
+                    else
+                    {
+                        Vector2 exitPosition = restingPositions[i] +
+                            Vector2.right * (EnterDistance(i) * 0.46f);
+                        state.rect.anchoredPosition = Vector2.LerpUnclamped(
+                            state.startPosition, exitPosition, exitMove);
+                        state.group.alpha = Mathf.Lerp(state.startAlpha, 0f, exitAlpha);
+                        state.rect.localScale = Vector3.LerpUnclamped(
+                            state.startScale,
+                            subtleScaleAnimation ? restingScales[i] * 0.989f : restingScales[i],
+                            exitMove);
+                    }
+                }
                 yield return null;
             }
-            if (group != null) group.alpha = 1f;
+
+            SetModeImmediate(mode);
             animation = null;
+        }
+
+        private static float Smooth01(float t)
+        {
+            t = Mathf.Clamp01(t);
+            return t * t * (3f - 2f * t);
+        }
+
+        private static float EaseOutQuint(float t)
+        {
+            t = 1f - Mathf.Clamp01(t);
+            return 1f - t * t * t * t * t;
+        }
+
+        private static float EaseInCubic(float t)
+        {
+            t = Mathf.Clamp01(t);
+            return t * t * t;
+        }
+
+        private void OnDisable()
+        {
+            if (animation != null)
+            {
+                StopCoroutine(animation);
+                animation = null;
+            }
+            if (motionInitialized) SetModeImmediate(currentMode);
         }
 
         public void RefreshAvailability()
@@ -289,7 +493,8 @@ namespace ProjectSpark.UI
 
         public void ShowIconHint(string actionId, RectTransform source)
         {
-            if (currentMode != DrawerMode.Icons || iconTooltip == null || source == null) return;
+            if (currentMode != DrawerMode.Icons || animation != null ||
+                iconTooltip == null || source == null) return;
             foreach (ActionSpec spec in Catalog)
             {
                 if (spec.id != actionId) continue;
