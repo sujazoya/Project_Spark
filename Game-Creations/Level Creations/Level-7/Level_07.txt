@@ -1,0 +1,170 @@
+============================================================
+PROJECT SPARK — SCRIPTABLEOBJECT EXPORT
+============================================================
+
+ASSET INFORMATION
+-----------------
+Asset Name: Level_07
+Asset Type: ProjectSpark.Gameplay.SparkLevelDefinition
+Unity Asset Path: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_07_Layout/Level_07.asset
+Export Date: 2026-11-02 02:05:11
+
+SERIALIZED DATA
+---------------
+
+Level Id: 
+level_07
+Display Name: 
+Voltage Divider Challenge
+Description: 
+Calibrate a 3.00 V output from a 5 V supply by selecting the correct upper resistor.
+Completion Mode: All Targets
+Required Target Count: 4
+Require Closed Return: True
+Reject Short Circuit: True
+Reject Target Short: True
+Allow Intermediate Connections: True
+Require Minimum Voltage: False
+Minimum Voltage: 0.00999999977648258
+Allow Any Configured Power Source: True
+Power Sources:
+  [0]
+    PowerSupply_01:
+      Source Name: 
+PowerSupply_01
+      Positive Terminal Id: 
+Battery_positive
+      Negative Terminal Id: 
+Battery_negative
+      Nominal Voltage: 5
+Targets:
+  [0]
+    complete_voltage_civider_circuit:
+      Target Id: 
+complete_voltage_civider_circuit
+      Display Name: 
+Complete Voltage Divider Circuit
+      Description: 
+Complete Voltage Divider Circuit
+
+      Target Type: Component Conducting
+      Target Terminal Id: (Empty)
+      Required Positive Terminal Id: 
+Register_Input
+      Required Negative Terminal Id: 
+Register_Output
+      Target Component Id: 
+Resistor_330_Ω
+      Minimum Voltage: 0
+      Minimum Current: 0
+      Minimum Power: 0
+      Require Electrical Enabled: True
+      Require Conduction: True
+      Inverted: False
+      Use Maximum Voltage: False
+      Maximum Voltage: 0
+      Use Maximum Current: False
+      Maximum Current: 0
+      Use Maximum Power: False
+      Maximum Power: 0
+  [1]
+    calibrate_output_voltage:
+      Target Id: 
+calibrate_output_voltage
+      Display Name: 
+Calibrate Output Voltage
+      Description: 
+Calibrate Output Voltage
+      Target Type: Voltage Range
+      Target Terminal Id: (Empty)
+      Required Positive Terminal Id: 
+Register_Input
+      Required Negative Terminal Id: 
+Register_Output
+      Target Component Id: 
+Resistor_330_Ω
+      Minimum Voltage: 2.90000009536743
+      Minimum Current: 0
+      Minimum Power: 0
+      Require Electrical Enabled: True
+      Require Conduction: True
+      Inverted: False
+      Use Maximum Voltage: True
+      Maximum Voltage: 3.09999990463257
+      Use Maximum Current: True
+      Maximum Current: 0
+      Use Maximum Power: False
+      Maximum Power: 0
+  [2]
+    safe_divider_current:
+      Target Id: 
+safe_divider_current
+      Display Name: 
+Safe Divider Current
+      Description: 
+Safe Divider Current
+      Target Type: Current Range
+      Target Terminal Id: (Empty)
+      Required Positive Terminal Id: 
+Register_Input
+      Required Negative Terminal Id: 
+Register_Output
+      Target Component Id: 
+Resistor_330_Ω
+      Minimum Voltage: 0
+      Minimum Current: 0.00800000037997961
+      Minimum Power: 0
+      Require Electrical Enabled: True
+      Require Conduction: True
+      Inverted: False
+      Use Maximum Voltage: False
+      Maximum Voltage: 0
+      Use Maximum Current: True
+      Maximum Current: 0.00999999977648258
+      Use Maximum Power: False
+      Maximum Power: 0
+  [3]
+    correct_source_current:
+      Target Id: 
+correct_source_current
+      Display Name: 
+Correct Source Current
+      Description: 
+Correct Source Current
+
+      Target Type: Current Range
+      Target Terminal Id: (Empty)
+      Required Positive Terminal Id: 
+Battery_positive
+      Required Negative Terminal Id: 
+Battery_negative
+      Target Component Id: 
+PowerSupply_01
+      Minimum Voltage: 0
+      Minimum Current: 0.00800000037997961
+      Minimum Power: 0
+      Require Electrical Enabled: True
+      Require Conduction: True
+      Inverted: False
+      Use Maximum Voltage: False
+      Maximum Voltage: 0
+      Use Maximum Current: True
+      Maximum Current: 0.00999999977648258
+      Use Maximum Power: False
+      Maximum Power: 0
+Failure Mode: None
+Required Healthy Resistor Ids:
+  (Empty)
+Require Healthy Installed Resistors: False
+Success Output Ids:
+  (Empty)
+Failure Output Ids:
+  (Empty)
+Unlock Next Level On Completion: True
+Unlocked By Default: True
+Auto Unlock Next Level: True
+Auto Advance On Completion: False
+
+============================================================
+END OF EXPORT
+============================================================

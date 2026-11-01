@@ -10,14 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
-  m_Name: Level_06
+  m_Name: Level_08
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
-  levelId: level_06
-  displayName: Circuit Fault Detective
-  description: A parallel LED circuit has two faults. One branch has a missing connection,
-    and the other contains an unsuitable resistor. Inspect the circuit, repair the
-    connection, select the correct resistor, and bring both LEDs into their safe
-    operating ranges.
+  levelId: level_07
+  displayName: Voltage Divider Challenge
+  description: Calibrate a 3.00 V output from a 5 V supply by selecting the correct
+    upper resistor.
   completionMode: 0
   requiredTargetCount: 4
   requireClosedReturn: 1
@@ -33,16 +31,16 @@ MonoBehaviour:
     negativeTerminalId: Battery_negative
     nominalVoltage: 5
   targets:
-  - targetId: led_1_on
-    displayName: LED 1 On
-    description: 'LED BULB
+  - targetId: complete_voltage_civider_circuit
+    displayName: Complete Voltage Divider Circuit
+    description: 'Complete Voltage Divider Circuit
 
 '
-    targetType: 3
+    targetType: 4
     targetTerminalId: 
-    requiredPositiveTerminalId: LED_Anode
-    requiredNegativeTerminalId: LED_Cathode
-    targetComponentId: led
+    requiredPositiveTerminalId: Register_Input
+    requiredNegativeTerminalId: Register_Output
+    targetComponentId: "Resistor_330_\u03A9"
     minimumVoltage: 0
     minimumCurrent: 0
     minimumPower: 0
@@ -55,86 +53,66 @@ MonoBehaviour:
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: led_2_on
-    displayName: LED 2 On
-    description: 'Register
-
-'
-    targetType: 3
+  - targetId: calibrate_output_voltage
+    displayName: Calibrate Output Voltage
+    description: Calibrate Output Voltage
+    targetType: 5
     targetTerminalId: 
-    requiredPositiveTerminalId: LED2_Anode
-    requiredNegativeTerminalId: LED2_Cathode
-    targetComponentId: led
-    minimumVoltage: 0
-    minimumCurrent: 0.006
-    minimumPower: 0
-    requireElectricalEnabled: 1
-    requireConduction: 1
-    inverted: 0
-    useMaximumVoltage: 0
-    maximumVoltage: 0
-    useMaximumCurrent: 1
-    maximumCurrent: 0.015
-    useMaximumPower: 0
-    maximumPower: 0
-  - targetId: safe_branch_1_current
-    displayName: Safe Branch 1 current
-    description: Safe Branch 1 current
-    targetType: 6
-    targetTerminalId: 
-    requiredPositiveTerminalId: 
-    requiredNegativeTerminalId: 
-    targetComponentId: led
-    minimumVoltage: 0
-    minimumCurrent: 0.006
-    minimumPower: 0
-    requireElectricalEnabled: 1
-    requireConduction: 1
-    inverted: 0
-    useMaximumVoltage: 0
-    maximumVoltage: 0
-    useMaximumCurrent: 1
-    maximumCurrent: 0.015
-    useMaximumPower: 0
-    maximumPower: 0
-  - targetId: safe_branch_2_current
-    displayName: Safe Branch 2 current
-    description: Safe Branch 2 current
-    targetType: 6
-    targetTerminalId: 
-    requiredPositiveTerminalId: 
-    requiredNegativeTerminalId: 
-    targetComponentId: led
-    minimumVoltage: 0
-    minimumCurrent: 0.006
-    minimumPower: 0
-    requireElectricalEnabled: 1
-    requireConduction: 1
-    inverted: 0
-    useMaximumVoltage: 0
-    maximumVoltage: 0
-    useMaximumCurrent: 1
-    maximumCurrent: 0.015
-    useMaximumPower: 0
-    maximumPower: 0
-  - targetId: safe_total_current
-    displayName: Safe total current
-    description: Safe total current
-    targetType: 6
-    targetTerminalId: 
-    requiredPositiveTerminalId: 
-    requiredNegativeTerminalId: 
-    targetComponentId: led
-    minimumVoltage: 0
+    requiredPositiveTerminalId: Register_Input
+    requiredNegativeTerminalId: Register_Output
+    targetComponentId: "Resistor_330_\u03A9"
+    minimumVoltage: 2.9
     minimumCurrent: 0
     minimumPower: 0
     requireElectricalEnabled: 1
     requireConduction: 1
     inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 3.1
+    useMaximumCurrent: 1
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: safe_divider_current
+    displayName: Safe Divider Current
+    description: Safe Divider Current
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: Register_Input
+    requiredNegativeTerminalId: Register_Output
+    targetComponentId: "Resistor_330_\u03A9"
+    minimumVoltage: 0
+    minimumCurrent: 0.008
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
     useMaximumVoltage: 0
     maximumVoltage: 0
     useMaximumCurrent: 1
-    maximumCurrent: 0.03
+    maximumCurrent: 0.01
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: correct_source_current
+    displayName: Correct Source Current
+    description: 'Correct Source Current
+
+'
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: Battery_positive
+    requiredNegativeTerminalId: Battery_negative
+    targetComponentId: PowerSupply_01
+    minimumVoltage: 0
+    minimumCurrent: 0.008
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.01
     useMaximumPower: 0
     maximumPower: 0
   failureMode: 0

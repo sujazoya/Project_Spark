@@ -163,6 +163,26 @@ namespace ProjectSpark.UI.VisualTeaching
                     Add(new [] {p + new Vector2(-13,-7),p + new Vector2(13,-7)}, c);
                     Add(new [] {p + new Vector2(-6,-14),p + new Vector2(6,-14)}, c);
                     break;
+                case SparkSchematicKind.Meter:
+                    // Compact LCD body with two sensing terminals, A and B.
+                    Add(new [] {p + new Vector2(-34,-23),p + new Vector2(34,-23),
+                        p + new Vector2(34,23),p + new Vector2(-34,23)}, c, 3, true);
+                    Add(new [] {p + new Vector2(-26,-14),p + new Vector2(26,-14),
+                        p + new Vector2(26,14),p + new Vector2(-26,14)}, c, 1.7f, true);
+                    MakeLabel("LCD", p + new Vector2(0,0), c, 56, 13);
+                    MakeLabel("A+", p + new Vector2(-48,10), c, 34, 12);
+                    MakeLabel("B-", p + new Vector2(48,-10), c, 34, 12);
+                    break;
+                case SparkSchematicKind.Generic:
+                    // Junction dots are small rather than large obstructive rings.
+                    Vector2[] dot = new Vector2[20];
+                    for (int i = 0; i < dot.Length; i++)
+                    {
+                        float a = i * Mathf.PI * 2f / dot.Length;
+                        dot[i] = p + new Vector2(Mathf.Cos(a)*5f, Mathf.Sin(a)*5f);
+                    }
+                    Add(dot, c, 3f, true);
+                    break;
                 default:
                     Vector2[] ring = new Vector2[32];
                     for (int i = 0; i < ring.Length; i++)
@@ -173,28 +193,33 @@ namespace ProjectSpark.UI.VisualTeaching
                     Add(ring, c, 3, true);
                     break;
             }
-            MakeLabel(part.label, p + new Vector2(0, -45), c);
+            if (!string.IsNullOrWhiteSpace(part.label))
+            {
+                float labelOffset = part.kind == SparkSchematicKind.Meter ? -47f : -40f;
+                MakeLabel(part.label, p + new Vector2(0,labelOffset), c, 116, 14);
+            }
         }
 
-        private void MakeLabel(string content, Vector2 at, Color color)
+        private void MakeLabel(string content, Vector2 at, Color color, float width, int fontSize)
         {
             if (string.IsNullOrWhiteSpace(content)) return;
             GameObject go = new GameObject("Symbol Label", typeof(RectTransform), typeof(TextMeshProUGUI));
             go.transform.SetParent(diagramContent, false);
             RectTransform rt = go.GetComponent<RectTransform>();
             rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(.5f,.5f);
-            rt.sizeDelta = new Vector2(175, 30);
+            rt.sizeDelta = new Vector2(width, 25f);
             rt.anchoredPosition = at;
             TextMeshProUGUI text = go.GetComponent<TextMeshProUGUI>();
             text.text = content;
-            text.fontSize = 17;
+            text.fontSize = fontSize;
             text.enableAutoSizing = true;
-            text.fontSizeMin = 11;
-            text.fontSizeMax = 17;
+            text.fontSizeMin = 10;
+            text.fontSizeMax = fontSize;
             text.alignment = TextAlignmentOptions.Center;
             text.color = color;
             text.raycastTarget = false;
             labels.Add(go);
         }
+
     }
 }
