@@ -1,0 +1,392 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_05_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_05
+  levelTitle: Level 5 - Parallel Paths (Starter)
+  initialPage: 0
+  pages:
+  - title: LEVEL 05 | Overview
+    explanation: "STARTER EXAMPLE: Confirm against the actual Level definition/layout;
+      exact terminal IDs, parts and objectives are not supplied. Parallel Paths:
+      two LED/resistor branches share source nodes. Author drawing only \u2014 NOT
+      verified live circuit topology or measured results."
+    caption: PAGE 1/4 | Level 5 - Parallel Paths (Starter)
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.11, y: 0.5}
+      label: 5 V
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.81}
+      label: SWITCH
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: bus
+      kind: 9
+      position: {x: 0.4, y: 0.81}
+      label: 
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.55, y: 0.65}
+      label: R1 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.55, y: 0.38}
+      label: R2 (branch)
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: led1
+      kind: 9
+      position: {x: 0.7, y: 0.65}
+      label: LED 1
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: led2
+      kind: 9
+      position: {x: 0.7, y: 0.38}
+      label: LED 2
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.79, y: 0.17}
+      label: GND
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.11, y: 0.64}
+      - {x: 0.11, y: 0.81}
+      - {x: 0.21, y: 0.81}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.33, y: 0.81}
+      - {x: 0.4, y: 0.81}
+      - {x: 0.4, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.65}
+      - {x: 0.49, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.38}
+      - {x: 0.49, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.65}
+      - {x: 0.64, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.38}
+      - {x: 0.64, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.76, y: 0.65}
+      - {x: 0.79, y: 0.65}
+      - {x: 0.79, y: 0.17}
+      - {x: 0.11, y: 0.17}
+      - {x: 0.11, y: 0.36}
+      energized: 0
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.76, y: 0.38}
+      - {x: 0.79, y: 0.38}
+      energized: 0
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+  - title: LEVEL 05 | Connection Guide
+    explanation: "STARTER EXAMPLE: Confirm against the actual Level definition/layout;
+      exact terminal IDs, parts and objectives are not supplied. Illustrative: SwitchOutput
+      to BOTH branch resistors; each goes to its own LED; both cathodes return to
+      Battery_negative. Author drawing only \u2014 NOT verified live circuit topology
+      or measured results."
+    caption: PAGE 2/4 | Level 5 - Parallel Paths (Starter)
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.11, y: 0.5}
+      label: 5 V
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.81}
+      label: SWITCH
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: bus
+      kind: 9
+      position: {x: 0.4, y: 0.81}
+      label: 
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.55, y: 0.65}
+      label: R1 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.55, y: 0.38}
+      label: R2 (branch)
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: led1
+      kind: 9
+      position: {x: 0.7, y: 0.65}
+      label: LED 1
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: led2
+      kind: 9
+      position: {x: 0.7, y: 0.38}
+      label: LED 2
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.79, y: 0.17}
+      label: GND
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.11, y: 0.64}
+      - {x: 0.11, y: 0.81}
+      - {x: 0.21, y: 0.81}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.33, y: 0.81}
+      - {x: 0.4, y: 0.81}
+      - {x: 0.4, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.65}
+      - {x: 0.49, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.38}
+      - {x: 0.49, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.65}
+      - {x: 0.64, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.38}
+      - {x: 0.64, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.76, y: 0.65}
+      - {x: 0.79, y: 0.65}
+      - {x: 0.79, y: 0.17}
+      - {x: 0.11, y: 0.17}
+      - {x: 0.11, y: 0.36}
+      energized: 0
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.76, y: 0.38}
+      - {x: 0.79, y: 0.38}
+      energized: 0
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+  - title: LEVEL 05 | Measurements
+    explanation: "STARTER EXAMPLE: Confirm against the actual Level definition/layout;
+      exact terminal IDs, parts and objectives are not supplied. Each branch has
+      a source-voltage reference; sum branch currents for total when there are no
+      other loads. Author drawing only \u2014 NOT verified live circuit topology
+      or measured results."
+    caption: PAGE 3/4 | Level 5 - Parallel Paths (Starter)
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.11, y: 0.5}
+      label: 5 V
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.81}
+      label: SWITCH
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: bus
+      kind: 9
+      position: {x: 0.4, y: 0.81}
+      label: 
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.55, y: 0.65}
+      label: R1 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.55, y: 0.38}
+      label: R2 (branch)
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: led1
+      kind: 9
+      position: {x: 0.7, y: 0.65}
+      label: LED 1
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: led2
+      kind: 9
+      position: {x: 0.7, y: 0.38}
+      label: LED 2
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.79, y: 0.17}
+      label: GND
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.11, y: 0.64}
+      - {x: 0.11, y: 0.81}
+      - {x: 0.21, y: 0.81}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.33, y: 0.81}
+      - {x: 0.4, y: 0.81}
+      - {x: 0.4, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.65}
+      - {x: 0.49, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.38}
+      - {x: 0.49, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.65}
+      - {x: 0.64, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.38}
+      - {x: 0.64, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.76, y: 0.65}
+      - {x: 0.79, y: 0.65}
+      - {x: 0.79, y: 0.17}
+      - {x: 0.11, y: 0.17}
+      - {x: 0.11, y: 0.36}
+      energized: 0
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.76, y: 0.38}
+      - {x: 0.79, y: 0.38}
+      energized: 0
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+  - title: LEVEL 05 | Solution & Checks
+    explanation: "STARTER EXAMPLE: Confirm against the actual Level definition/layout;
+      exact terminal IDs, parts and objectives are not supplied. Check each branch
+      independently, returns, LED polarity, objectives and source current. Author
+      drawing only \u2014 NOT verified live circuit topology or measured results."
+    caption: PAGE 4/4 | Level 5 - Parallel Paths (Starter)
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.11, y: 0.5}
+      label: 5 V
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.81}
+      label: SWITCH
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: bus
+      kind: 9
+      position: {x: 0.4, y: 0.81}
+      label: 
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.55, y: 0.65}
+      label: R1 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.55, y: 0.38}
+      label: R2 (branch)
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: led1
+      kind: 9
+      position: {x: 0.7, y: 0.65}
+      label: LED 1
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: led2
+      kind: 9
+      position: {x: 0.7, y: 0.38}
+      label: LED 2
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.79, y: 0.17}
+      label: GND
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.11, y: 0.64}
+      - {x: 0.11, y: 0.81}
+      - {x: 0.21, y: 0.81}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.33, y: 0.81}
+      - {x: 0.4, y: 0.81}
+      - {x: 0.4, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.65}
+      - {x: 0.49, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.38}
+      - {x: 0.49, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.65}
+      - {x: 0.64, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.38}
+      - {x: 0.64, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.76, y: 0.65}
+      - {x: 0.79, y: 0.65}
+      - {x: 0.79, y: 0.17}
+      - {x: 0.11, y: 0.17}
+      - {x: 0.11, y: 0.36}
+      energized: 0
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.76, y: 0.38}
+      - {x: 0.79, y: 0.38}
+      energized: 0
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}

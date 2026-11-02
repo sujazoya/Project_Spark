@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_11
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_10
+  displayName: Bridge Balance Challenge
+  description: "Balance two voltage dividers on a 5 V supply. Replace the upper-right
+    resistor with 100 \u03A9 until the LCD measures approximately 0.00 V between
+    their midpoint nodes."
+  completionMode: 0
+  requiredTargetCount: 4
+  requireClosedReturn: 1
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 0
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: PowerSupply_01
+    positiveTerminalId: Battery_positive
+    negativeTerminalId: Battery_negative
+    nominalVoltage: 5
+  targets:
+  - targetId: bridge_r1_conducting
+    displayName: R1 Conducting
+    description: Fixed upper-left 220 ohm resistor must conduct.
+    targetType: 4
+    targetTerminalId: 
+    requiredPositiveTerminalId: Resistor_220_Input
+    requiredNegativeTerminalId: Resistor_220_Output
+    targetComponentId: "Resistor_220_\u03A9"
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: bridge_r4_voltage
+    displayName: Right Midpoint Voltage
+    description: R4 lower-right voltage must be 2.90 to 3.10 V.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: Resistor_150_Input
+    requiredNegativeTerminalId: Resistor_150_Output
+    targetComponentId: "Resistor_150\u03A9"
+    minimumVoltage: 2.9
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 3.1
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: bridge_r4_current
+    displayName: Right Branch Current
+    description: R4 current must be 19 to 21 mA.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: Resistor_150_Input
+    requiredNegativeTerminalId: Resistor_150_Output
+    targetComponentId: "Resistor_150\u03A9"
+    minimumVoltage: 0
+    minimumCurrent: 0.019
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.021
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: bridge_source_current
+    displayName: Total Bridge Current
+    description: Power source current must be 28 to 30 mA.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: Battery_positive
+    requiredNegativeTerminalId: Battery_negative
+    targetComponentId: PowerSupply_01
+    minimumVoltage: 0
+    minimumCurrent: 0.028
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.03
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 0
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 1
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

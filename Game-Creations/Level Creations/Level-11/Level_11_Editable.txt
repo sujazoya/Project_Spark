@@ -1,0 +1,138 @@
+PROJECT_SPARK_EDITABLE_SO_TXT_V1
+# Readable/editable Unity serialized data. Modify values in the JSON section.
+# Keep field names, object-reference structures, and section markers unchanged.
+# The import requires selecting the ORIGINAL asset in Unity.
+Asset Name: Level_11
+Asset Type: ProjectSpark.Gameplay.SparkLevelDefinition, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+Asset Path: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_11_Layout/Level_11.asset
+Asset GUID: 75dca85951b518543a34f15d67e5654f
+Export Date: 2026-11-03 00:49:03
+----- BEGIN UNITY EDITOR JSON -----
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "Level_11",
+        "m_EditorClassIdentifier": "Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition",
+        "levelId": "level_11",
+        "displayName": "Power Distribution Challenge",
+        "description": "Restore a safe 5 V three-branch parallel power network. Replace the overloaded 100 ohm R2 with 220 ohm; verify approximately 22.73 mA through R2, 5.00 V across R2, and 48.52 mA total source current. Turn the switch off before replacing resistors.",
+        "completionMode": 0,
+        "requiredTargetCount": 4,
+        "requireClosedReturn": true,
+        "rejectShortCircuit": true,
+        "rejectTargetShort": true,
+        "allowIntermediateConnections": true,
+        "requireMinimumVoltage": false,
+        "minimumVoltage": 0.0,
+        "allowAnyConfiguredPowerSource": true,
+        "powerSources": [
+            {
+                "sourceName": "PowerSupply_01",
+                "positiveTerminalId": "Battery_positive",
+                "negativeTerminalId": "Battery_negative",
+                "nominalVoltage": 5.0
+            }
+        ],
+        "targets": [
+            {
+                "targetId": "distribution_r1_conducting",
+                "displayName": "R1 Branch Conducting",
+                "description": "Fixed 330 ohm R1 branch must conduct.",
+                "targetType": 4,
+                "requiredPositiveTerminalId": "R1_330_INPUT_TERMINAL_ID",
+                "requiredNegativeTerminalId": "R1_330_OUTPUT_TERMINAL_ID",
+                "targetComponentId": "R1_330_COMPONENT_ID",
+                "targetTerminalId": "",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "distribution_r2_current",
+                "displayName": "R2 Current Controlled",
+                "description": "Replace 100 ohm R2 with 220 ohm so branch current is 21-24 mA.",
+                "targetType": 6,
+                "requiredPositiveTerminalId": "R2_INPUT_TERMINAL_ID",
+                "requiredNegativeTerminalId": "R2_OUTPUT_TERMINAL_ID",
+                "targetComponentId": "R2_REPLACEABLE_COMPONENT_ID",
+                "targetTerminalId": "",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.021,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.024,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "distribution_r2_voltage",
+                "displayName": "R2 Supply Voltage",
+                "description": "R2 has 4.90-5.10 V across it.",
+                "targetType": 5,
+                "requiredPositiveTerminalId": "R2_INPUT_TERMINAL_ID",
+                "requiredNegativeTerminalId": "R2_OUTPUT_TERMINAL_ID",
+                "targetComponentId": "R2_REPLACEABLE_COMPONENT_ID",
+                "targetTerminalId": "",
+                "minimumVoltage": 4.9,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": true,
+                "maximumVoltage": 5.1,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "distribution_source_current",
+                "displayName": "Total Current Safe",
+                "description": "Source current should be 47-50 mA with 330, 220 and 470 ohm parallel branches.",
+                "targetType": 6,
+                "requiredPositiveTerminalId": "Battery_positive",
+                "requiredNegativeTerminalId": "Battery_negative",
+                "targetComponentId": "PowerSupply_01",
+                "targetTerminalId": "",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.047,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.05,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            }
+        ],
+        "failureMode": 0,
+        "requiredHealthyResistorIds": [],
+        "requireHealthyInstalledResistors": false,
+        "successOutputIds": [],
+        "failureOutputIds": [],
+        "unlockNextLevelOnCompletion": true,
+        "unlockedByDefault": true,
+        "autoUnlockNextLevel": true,
+        "autoAdvanceOnCompletion": false
+    }
+}
+----- END UNITY EDITOR JSON -----

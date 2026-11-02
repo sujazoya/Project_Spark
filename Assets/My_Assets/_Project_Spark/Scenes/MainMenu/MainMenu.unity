@@ -1067,8 +1067,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -518.9, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -784.9, y: 75}
+  m_SizeDelta: {x: 29.8917, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8548567
 MonoBehaviour:
@@ -1115,9 +1115,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1445614107}
-        m_TargetAssemblyTypeName: ProjectSpark.UI.VisualTeaching.SparkLevel78WiringTeaching,
+        m_TargetAssemblyTypeName: ProjectSpark.UI.VisualTeaching.SparkDrawCurrentLevel,
           Assembly-CSharp
-        m_MethodName: ShowLevel7
+        m_MethodName: DrawCurrentLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6917,6 +6917,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 739807cd34ef5144d8338a890189ffe3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1705866838}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 739807cd34ef5144d8338a890189ffe3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1705866839}
     - targetCorrespondingSourceObject: {fileID: 293199965811261780, guid: 739807cd34ef5144d8338a890189ffe3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1621264843}
@@ -18245,6 +18248,17 @@ RectTransform:
   m_AnchoredPosition: {x: 20, y: -196}
   m_SizeDelta: {x: 385, y: 22}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &143470924 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5176490262583455851, guid: eb93f0d176ec4104ebf0981dfc6e2213, type: 3}
+  m_PrefabInstance: {fileID: 71209929}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
 --- !u!1 &144040377
 GameObject:
   m_ObjectHideFlags: 0
@@ -56110,8 +56124,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: OBJECT 01
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -64193,6 +64207,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 515372784}
   m_CullTransparentMesh: 1
+--- !u!114 &515589794 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8883798328325600570, guid: c0b11206f9f2dcb44b971bf28c7c96a9, type: 3}
+  m_PrefabInstance: {fileID: 1845677546}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
 --- !u!1 &517730055
 GameObject:
   m_ObjectHideFlags: 0
@@ -64639,6 +64664,243 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &518869384
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 518869385}
+  - component: {fileID: 518869389}
+  - component: {fileID: 518869388}
+  - component: {fileID: 518869387}
+  - component: {fileID: 518869386}
+  m_Layer: 15
+  m_Name: RecycleBin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &518869385
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518869384}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2014812919833958594}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &518869386
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518869384}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: e1e2ffbb3953dee41b448b900a27a11d, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &518869387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518869384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c08c82e68daccc46907fc23b6a8950e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkBurnedResistorRecyclePrompt
+  shelf: {fileID: 1705866837}
+  recycleBin: {fileID: 518869388}
+  viewingCamera: {fileID: 1360671976}
+  worldOffset: {x: 0, y: 0.25, z: 0}
+  worldScale: 0.0025
+  refreshSeconds: 0.3
+  buttonText: RECYCLE BURNED
+  backgroundColor: {r: 0.75, g: 0.2, b: 0.08, a: 0.95}
+  textColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &518869388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518869384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 031e0d4b516c65b41a64c8eb89d86f48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkRecycleBin
+  economy: {fileID: 77651404}
+  shelf: {fileID: 1705866837}
+  circuitSystem: {fileID: 1496923326559127032}
+  levelShelfController: {fileID: 716651079}
+  startActive: 1
+  disableTriggerWhenInactive: 1
+  onActivated:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  coinReward: 5
+  recycleOnTriggerEnter: 1
+  recycleBurnedOnStoragePlacement: 0
+  successSound: {fileID: 518869386}
+  successParticles: {fileID: 0}
+  onAccepted:
+    m_PersistentCalls:
+      m_Calls: []
+  onRejected:
+    m_PersistentCalls:
+      m_Calls: []
+  dustbinDropPoint: {fileID: 930951224804458637}
+  flyDuration: 0.75
+  arcHeight: 0.45
+  flyEase:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  autoDisconnectBurnedResistor: 1
+--- !u!135 &518869389
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518869384}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &519856513
 GameObject:
   m_ObjectHideFlags: 0
@@ -82672,7 +82934,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 64.6001, y: 390.7}
+  m_AnchoredPosition: {x: 806.5, y: 505.2}
   m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &660296782
@@ -89627,6 +89889,50 @@ MonoBehaviour:
     - {fileID: 1845677548}
     workstationSlots: []
   - level: {fileID: 11400000, guid: 7f8591594dc74ab45a14ecd6fdf4cc5d, type: 2}
+    shelfVisuals: []
+    availableItems:
+    - {fileID: 4725873340435380209}
+    - {fileID: 1665841655541099309}
+    - {fileID: 4683368160802190920}
+    - {fileID: 5687084618679419891}
+    - {fileID: 71209931}
+    - {fileID: 3071598253141819465}
+    - {fileID: 1845677548}
+    workstationSlots: []
+  - level: {fileID: 11400000, guid: 53f2e48aabcb06d409bbdf086c3dad9d, type: 2}
+    shelfVisuals: []
+    availableItems:
+    - {fileID: 4725873340435380209}
+    - {fileID: 1665841655541099309}
+    - {fileID: 4683368160802190920}
+    - {fileID: 5687084618679419891}
+    - {fileID: 71209931}
+    - {fileID: 3071598253141819465}
+    - {fileID: 1845677548}
+    workstationSlots: []
+  - level: {fileID: 11400000, guid: c079580d6a66e3b43ab755f0798075dd, type: 2}
+    shelfVisuals: []
+    availableItems:
+    - {fileID: 4725873340435380209}
+    - {fileID: 1665841655541099309}
+    - {fileID: 4683368160802190920}
+    - {fileID: 5687084618679419891}
+    - {fileID: 71209931}
+    - {fileID: 3071598253141819465}
+    - {fileID: 1845677548}
+    workstationSlots: []
+  - level: {fileID: 11400000, guid: 794004c63cb1b9643b5389bd22d9a311, type: 2}
+    shelfVisuals: []
+    availableItems:
+    - {fileID: 4725873340435380209}
+    - {fileID: 1665841655541099309}
+    - {fileID: 4683368160802190920}
+    - {fileID: 5687084618679419891}
+    - {fileID: 71209931}
+    - {fileID: 3071598253141819465}
+    - {fileID: 1845677548}
+    workstationSlots: []
+  - level: {fileID: 11400000, guid: 75dca85951b518543a34f15d67e5654f, type: 2}
     shelfVisuals: []
     availableItems:
     - {fileID: 4725873340435380209}
@@ -108543,6 +108849,143 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 866709142}
+  m_CullTransparentMesh: 1
+--- !u!1 &867240987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 867240988}
+  - component: {fileID: 867240990}
+  - component: {fileID: 867240989}
+  m_Layer: 16
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &867240988
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867240987}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1772144182}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &867240989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867240987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: LEVEL
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 5
+  m_fontSizeBase: 5
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 74.392876, y: 17.074587, z: 104.814674, w: 20.72091}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &867240990
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867240987}
   m_CullTransparentMesh: 1
 --- !u!1 &867748484
 GameObject:
@@ -140813,9 +141256,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 945b4d7d8a3dbe8468f719cf03edd6a7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1728192466}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 945b4d7d8a3dbe8468f719cf03edd6a7, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1728192467}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 945b4d7d8a3dbe8468f719cf03edd6a7, type: 3}
       insertIndex: -1
@@ -141906,7 +142346,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: 7
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -164469,8 +164909,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: OBJECT 01
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -173507,6 +173947,17 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
+--- !u!114 &1342964027 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3231942878787483842, guid: eb93f0d176ec4104ebf0981dfc6e2213, type: 3}
+  m_PrefabInstance: {fileID: 71209929}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937440cd7f931b644b50a25edf026463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkResistor
 --- !u!1 &1345384267
 GameObject:
   m_ObjectHideFlags: 0
@@ -186618,11 +187069,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1445614095}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19e7bd8237d68a047814545df35dbf9c, type: 3}
+  m_Script: {fileID: 11500000, guid: ebf5134044e9eae498d304d53aafa34f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevel78WiringTeaching
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkDrawCurrentLevel
+  levelGameplayManager: {fileID: 8565763376412791690}
+  levelLoader: {fileID: 0}
   teachingManager: {fileID: 1445614098}
+  drawings:
+  - {fileID: 11400000, guid: 8dcc2acae4400f541a4dccf262235330, type: 2}
+  - {fileID: 11400000, guid: 6fbd9cb026c9e5c4c8b889d8783a8fa0, type: 2}
+  - {fileID: 11400000, guid: 655e0ed21fd457e45b9b2ed5f171d47a, type: 2}
+  - {fileID: 11400000, guid: 815833667224f1043ad84836dc31f060, type: 2}
+  - {fileID: 11400000, guid: 5fde416d67150ee4eae37e40fe655a25, type: 2}
+  - {fileID: 11400000, guid: 11ee5e81790b3a945a7345146fffd05f, type: 2}
+  - {fileID: 11400000, guid: 4bf7894a8f328fc47ad96546015a5f34, type: 2}
+  - {fileID: 11400000, guid: 9829c12e6a3f2b345a7fd1949f69cba9, type: 2}
+  - {fileID: 11400000, guid: cde55e53e37a0fd41847a39e2721c904, type: 2}
+  - {fileID: 11400000, guid: cde55e53e37a0fd41847a39e2721c904, type: 2}
+  - {fileID: 11400000, guid: cde55e53e37a0fd41847a39e2721c904, type: 2}
   openWhiteboard: 1
+  logMissingDrawing: 1
+  redrawOnActiveLevelChange: 1
+  drawOnFirstLevel: 0
+  checkIntervalSeconds: 0.25
+  currentPage: 0
 --- !u!1 &1446298210
 GameObject:
   m_ObjectHideFlags: 0
@@ -219632,7 +220102,7 @@ Transform:
   m_GameObject: {fileID: 1674588417}
   serializedVersion: 2
   m_LocalRotation: {x: 0.70710737, y: -0, z: -0, w: -0.7071063}
-  m_LocalPosition: {x: -4.0871, y: 0.194, z: -0.0109}
+  m_LocalPosition: {x: -4.238, y: -0.507, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -220160,6 +220630,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1679747557 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4154959546327780691, guid: c9f891c5f24262c478b64cb7ae69e898, type: 3}
+  m_PrefabInstance: {fileID: 6862522509661559087}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937440cd7f931b644b50a25edf026463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkResistor
 --- !u!1 &1682265765
 GameObject:
   m_ObjectHideFlags: 0
@@ -223557,9 +224038,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelSceneBindings
   terminals:
   - id: Register_Output
-    terminal: {fileID: 0}
+    terminal: {fileID: 1960525629}
   - id: Register_Input
-    terminal: {fileID: 0}
+    terminal: {fileID: 143470924}
   - id: Register_Output_02
     terminal: {fileID: 1561177227}
   - id: Register_Input_02
@@ -223568,18 +224049,22 @@ MonoBehaviour:
     terminal: {fileID: 907027816}
   - id: Register_Input_03
     terminal: {fileID: 237414085}
-  - id: Register_Output_04
+  - id: Resistor_220_Output
     terminal: {fileID: 2048801550}
-  - id: Register_Input_04
+  - id: Resistor_220_Input
     terminal: {fileID: 1293548989}
-  - id: Register_Output_05
+  - id: Register_Output_04
     terminal: {fileID: 1282754475}
-  - id: Register_Input_05
+  - id: Register_Input_04
     terminal: {fileID: 859840261}
-  - id: Register_Output_06
+  - id: Register_Output_05
     terminal: {fileID: 2603261440477925697}
-  - id: Register_Input_06
+  - id: Register_Input_05
     terminal: {fileID: 4868652883950032918}
+  - id: Register_Output_06
+    terminal: {fileID: 2054032914}
+  - id: Register_Input_06
+    terminal: {fileID: 515589794}
   - id: Register_Output_07
     terminal: {fileID: 1928249331}
   - id: Register_Input_07
@@ -223588,9 +224073,68 @@ MonoBehaviour:
     terminal: {fileID: 2091257060}
   - id: Register_Input_08
     terminal: {fileID: 1192627891}
-  components: []
-  electronicObjects: []
+  components:
+  - id: "Resistor_1k_\u03A9"
+    component: {fileID: 1342964027}
+  - id: "Resistor_470_\u03A9"
+    component: {fileID: 5687084618679419913}
+  - id: "Resistor_330_\u03A9"
+    component: {fileID: 3071598253141819487}
+  - id: "Resistor_220_\u03A9"
+    component: {fileID: 4683368160802190941}
+  - id: "Resistor_150_\u03A9"
+    component: {fileID: 1665841655541099332}
+  - id: "Resistor_100_\u03A9"
+    component: {fileID: 8411635184686459250}
+  - id: "Resistor_330_\u03A9_02"
+    component: {fileID: 1845677549}
+  - id: "Resistor_4_7k_\u03A9"
+    component: {fileID: 1679747557}
+  - id: "Resistor_10k_\u03A9"
+    component: {fileID: 3706090356010284497}
+  electronicObjects:
+  - id: "Resistor_1k_\u03A9"
+    electronicObject: {fileID: 1342964027}
+  - id: "Resistor_470_\u03A9"
+    electronicObject: {fileID: 5687084618679419913}
+  - id: "Resistor_330_\u03A9"
+    electronicObject: {fileID: 3071598253141819487}
+  - id: "Resistor_220_\u03A9"
+    electronicObject: {fileID: 4683368160802190941}
+  - id: "Resistor_150_\u03A9"
+    electronicObject: {fileID: 1665841655541099332}
+  - id: "Resistor_100_\u03A9"
+    electronicObject: {fileID: 8411635184686459250}
+  - id: "Resistor_330_\u03A9_02"
+    electronicObject: {fileID: 1845677549}
+  - id: "Resistor_4_7k_\u03A9"
+    electronicObject: {fileID: 1679747557}
+  - id: "Resistor_10k_\u03A9"
+    electronicObject: {fileID: 3706090356010284497}
   outputs: []
+--- !u!114 &1705866839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705866836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c0e440e5e1f8bf49a93df9cdc5f2b47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkShelfLevelBindingBridge
+  shelf: {fileID: 1705866837}
+  gameplay: {fileID: 8565763376412791690}
+  layoutLoader: {fileID: 350401877}
+  levelId: level_11
+  workstationSlotId: R2_Workstation
+  componentBindingId: "Resistor_220_\u03A9"
+  inputTerminalBindingId: Resistor_220_Input
+  outputTerminalBindingId: Resistor_220_Output
+  inputTerminalName: Register_100_Input
+  outputTerminalName: Register_100_Output
+  logTransitions: 1
 --- !u!1 &1706769954
 GameObject:
   m_ObjectHideFlags: 0
@@ -225099,8 +225643,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: OBJECT 01
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -227305,18 +227849,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 945b4d7d8a3dbe8468f719cf03edd6a7, type: 3}
   m_PrefabInstance: {fileID: 1092024366}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1728192466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1236492806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e90dfa45e437e94dbdc287506ecb18c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Circuit.BreadboardGrid
 --- !u!65 &1728192467
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -227336,7 +227868,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 5, y: 2.0000005, z: 0.100000046}
+  m_Size: {x: 5, y: 3.35, z: 0.100000046}
   m_Center: {x: -1.7423483, y: 1.0002253, z: -0.01734418}
 --- !u!64 &1728192470
 MeshCollider:
@@ -227373,9 +227905,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Circuit.BreadboardGrid
   gridOrigin: {fileID: 1674588418}
-  spacing: 0.1
-  columns: 64
-  rows: 32
+  spacing: 0.15
+  columns: 35
+  rows: 21
+  showHoleGizmos: 0
+  drawOnlyWhenSelected: 0
+  holeColor: {r: 0.1, g: 0.85, b: 1, a: 0.85}
+  holeRadius: 0.012
+  drawAsWireSpheres: 0
+  showGridBounds: 0
+  boundsColor: {r: 0.1, g: 0.85, b: 1, a: 0.35}
 --- !u!1 &1728712516
 GameObject:
   m_ObjectHideFlags: 0
@@ -234115,12 +234654,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 867240988}
   m_Father: {fileID: 1565662869}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -37.80005, y: 204}
+  m_AnchoredPosition: {x: -967.1, y: 500}
   m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1772144183
@@ -242842,6 +243382,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 128423d5e512296468804636c7f15960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.Shelf.SparkShelfItem
+--- !u!114 &1845677549 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6744809755939493735, guid: c0b11206f9f2dcb44b971bf28c7c96a9, type: 3}
+  m_PrefabInstance: {fileID: 1845677546}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937440cd7f931b644b50a25edf026463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkResistor
 --- !u!1 &1846115725
 GameObject:
   m_ObjectHideFlags: 0
@@ -256727,6 +257278,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960510280}
   m_CullTransparentMesh: 1
+--- !u!114 &1960525629 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2114963464135071783, guid: eb93f0d176ec4104ebf0981dfc6e2213, type: 3}
+  m_PrefabInstance: {fileID: 71209929}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
 --- !u!1 &1960729346
 GameObject:
   m_ObjectHideFlags: 0
@@ -266343,6 +266905,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2053965376}
   m_CullTransparentMesh: 1
+--- !u!114 &2054032914 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671375981152543620, guid: c0b11206f9f2dcb44b971bf28c7c96a9, type: 3}
+  m_PrefabInstance: {fileID: 1845677546}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
 --- !u!1 &2054187935
 GameObject:
   m_ObjectHideFlags: 0
@@ -285553,6 +286126,17 @@ MonoBehaviour:
   key: shelf.resistor
   worldAnchor: {fileID: 0}
   screenRect: {fileID: 0}
+--- !u!114 &1665841655541099332 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8504612262776871359, guid: f77354c1e18c5314fa1f5009a783271c, type: 3}
+  m_PrefabInstance: {fileID: 1665841655541099307}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665841655541099308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937440cd7f931b644b50a25edf026463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkResistor
 --- !u!23 &1668026096481707198
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -286802,6 +287386,7 @@ Transform:
   - {fileID: 6723835380971944936}
   - {fileID: 1959975701}
   - {fileID: 932214473}
+  - {fileID: 518869385}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2021401156597934266
@@ -290484,6 +291069,17 @@ MonoBehaviour:
   key: shelf.resistor
   worldAnchor: {fileID: 0}
   screenRect: {fileID: 0}
+--- !u!114 &3071598253141819487 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6744809755939493735, guid: c0b11206f9f2dcb44b971bf28c7c96a9, type: 3}
+  m_PrefabInstance: {fileID: 3071598253141819462}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3071598253141819463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937440cd7f931b644b50a25edf026463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkResistor
 --- !u!4 &3091375702154222732
 Transform:
   m_ObjectHideFlags: 0
@@ -292799,6 +293395,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2846582025998425719, guid: 8e9359e0bf54fee428ea42fb7b22343e, type: 3}
   m_PrefabInstance: {fileID: 3706090356010284495}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3706090356010284497 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6765580164316886681, guid: 8e9359e0bf54fee428ea42fb7b22343e, type: 3}
+  m_PrefabInstance: {fileID: 3706090356010284495}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937440cd7f931b644b50a25edf026463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkResistor
 --- !u!1 &3706413366734588014
 GameObject:
   m_ObjectHideFlags: 0
@@ -295966,9 +296573,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 62012990}
     m_Modifications:
+    - target: {fileID: 2317763196151152647, guid: d102726e40c09134e9f61b6a57dcf8f1, type: 3}
+      propertyPath: m_Name
+      value: Resistor_220_Input
+      objectReference: {fileID: 0}
     - target: {fileID: 3641746303294776961, guid: d102726e40c09134e9f61b6a57dcf8f1, type: 3}
       propertyPath: m_Name
-      value: "Resistor_220 \u03A9"
+      value: "Resistor_220_\u03A9"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5579605410617104825, guid: d102726e40c09134e9f61b6a57dcf8f1, type: 3}
+      propertyPath: m_Name
+      value: Resistor_220_Output
       objectReference: {fileID: 0}
     - target: {fileID: 5836856181998623174, guid: d102726e40c09134e9f61b6a57dcf8f1, type: 3}
       propertyPath: visualState
@@ -296288,6 +296903,17 @@ MonoBehaviour:
   key: shelf.resistor
   worldAnchor: {fileID: 0}
   screenRect: {fileID: 0}
+--- !u!114 &4683368160802190941 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7284850075556311179, guid: d102726e40c09134e9f61b6a57dcf8f1, type: 3}
+  m_PrefabInstance: {fileID: 4683368160802190916}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4683368160802190917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937440cd7f931b644b50a25edf026463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkResistor
 --- !u!23 &4687627976887364825
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -299803,6 +300429,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1543949646}
     m_Modifications:
+    - target: {fileID: 2114963464135071783, guid: 89984b580d3f0674999bff309196791c, type: 3}
+      propertyPath: maxConnections
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3231942878787483842, guid: 89984b580d3f0674999bff309196791c, type: 3}
       propertyPath: burnSystem
       value: 
@@ -299818,6 +300448,10 @@ PrefabInstance:
     - target: {fileID: 4584467588188462818, guid: 89984b580d3f0674999bff309196791c, type: 3}
       propertyPath: visualState
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5176490262583455851, guid: 89984b580d3f0674999bff309196791c, type: 3}
+      propertyPath: maxConnections
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5522722802295720775, guid: 89984b580d3f0674999bff309196791c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -300117,6 +300751,17 @@ MonoBehaviour:
   key: shelf.resistor
   worldAnchor: {fileID: 0}
   screenRect: {fileID: 0}
+--- !u!114 &5687084618679419913 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3231942878787483842, guid: 89984b580d3f0674999bff309196791c, type: 3}
+  m_PrefabInstance: {fileID: 5687084618679419888}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5687084618679419889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937440cd7f931b644b50a25edf026463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkResistor
 --- !u!114 &5692086206829241375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300604,6 +301249,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelLayout
   levelDefinition: {fileID: 11400000, guid: 64a97c3041cca0b4eb8e078632d99a80, type: 2}
   sceneBindings: {fileID: 8542436149794548854}
+  additionalSceneBindings: []
+  fetchOnEnable: 1
+  includeInactiveObjects: 1
+  includeSceneBindings: 1
+  logDiscovery: 0
 --- !u!1 &5846931094655411760
 GameObject:
   m_ObjectHideFlags: 0
@@ -310583,7 +311233,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: de819af5483f27d47a49466238e08428, type: 2}
   - {fileID: 11400000, guid: 49d903f6d8ca9a44abfbd0e34dde1942, type: 2}
   - {fileID: 11400000, guid: 7f8591594dc74ab45a14ecd6fdf4cc5d, type: 2}
-  activeLevelIndex: 6
+  - {fileID: 11400000, guid: 53f2e48aabcb06d409bbdf086c3dad9d, type: 2}
+  - {fileID: 11400000, guid: c079580d6a66e3b43ab755f0798075dd, type: 2}
+  - {fileID: 11400000, guid: 794004c63cb1b9643b5389bd22d9a311, type: 2}
+  - {fileID: 11400000, guid: 75dca85951b518543a34f15d67e5654f, type: 2}
+  activeLevelIndex: 10
   layoutLoader: {fileID: 350401877}
   objectShelf: {fileID: 0}
   runtimeState: 0

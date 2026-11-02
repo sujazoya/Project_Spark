@@ -482,6 +482,44 @@ Debug.Log(
                 Debug.Log("[SparkShelf] Unregistered item: " + item.ItemId, item);
             return true;
         }
+        // ADD THIS METHOD INSIDE your existing SparkObjectShelf class, near TryUnregisterItem().
+// Do NOT import this .txt as a separate C# class.
+
+/// <summary>
+/// Removes a burned resistor from a registered workstation OR storage slot.
+/// Requires that all its circuit wires are already disconnected.
+/// The caller owns visual disposal and Destroy() after success.
+/// </summary>
+public bool TryUnregisterBurnedItemForRecycling(SparkShelfItem item)
+{
+    Initialize();
+    if (!IsRegistered(item) || item == null || item.IsMoving ||
+        motions.ContainsKey(item) || destinations.ContainsKey(item))
+        return false;
+
+    SparkResistor resistor = item.GetComponentInChildren<SparkResistor>(true);
+    if (resistor == null || !resistor.IsBurned) return false;
+    if (!IsElectricallyDisconnected(item)) return false;
+
+    SparkShelfSlot current = item.CurrentSlot;
+    if (current != null && current.Occupant != item) return false;
+
+    // Release the workstation immediately so a new resistor can be installed.
+    current?.Release(item);
+    item.CurrentSlot = null;
+    item.IsMoving = false;
+
+    List<SparkShelfItem> updated = new List<SparkShelfItem>(items);
+    updated.Remove(item);
+    items = updated.ToArray();
+    motions.Remove(item);
+    destinations.Remove(item);
+    physics.Remove(item);
+    originalParents.Remove(item);
+    if (logTransitions)
+        Debug.Log("[SparkShelf] Burned resistor unregistered: " + item.ItemId, item);
+    return true;
+}
 
         private void OnDisable()
         {
@@ -585,6 +623,7 @@ public void UnregisterRuntimeSlots(Transform levelRoot)
 
     slots = remaining.ToArray();
 }
+
 
 
     }

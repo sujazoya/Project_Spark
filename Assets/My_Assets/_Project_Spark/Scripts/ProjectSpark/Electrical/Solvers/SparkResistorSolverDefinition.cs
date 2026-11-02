@@ -199,14 +199,14 @@ public override void ApplySolvedState(
             power,
             conduction));
 
-    Debug.Log(
+/*    Debug.Log(
         $"[RESISTOR SOLVED] {resistor.name} | " +
         $"A={terminalA.name} | B={terminalB.name} | " +
         $"Resistance={resistance:F3} Ohm | " +
         $"Voltage={voltage:F6} V | " +
         $"Current={current:F6} A | " +
         $"Power={power:F6} W",
-        resistor);
+        resistor);*/
 }
 
 

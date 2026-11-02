@@ -93,6 +93,13 @@ namespace ProjectSpark.Gameplay
         [SerializeField]
         private GameObjectBinding[] outputs = Array.Empty<GameObjectBinding>();
 
+        
+
+        private readonly HashSet<string> retiredTerminalIds =
+            new HashSet<string>(StringComparer.Ordinal);
+        private readonly HashSet<string> retiredComponentIds =
+            new HashSet<string>(StringComparer.Ordinal);
+
         // ============================================================
         // LOOKUP CACHE
         // ============================================================
@@ -105,6 +112,9 @@ namespace ProjectSpark.Gameplay
             electronicObjectLookup;
 
         private Dictionary<string, GameObject> outputLookup;
+
+                private readonly Dictionary<string, SparkTerminal> runtimeTerminalOverrides =
+            new Dictionary<string, SparkTerminal>(StringComparer.Ordinal);
 
         private bool lookupCacheBuilt;
 
@@ -315,6 +325,43 @@ namespace ProjectSpark.Gameplay
             lookupCacheBuilt = true;
         }
 
+        public void RetireRuntimeBindingsOwnedBy(Transform objectRoot)
+{
+    if (objectRoot == null) return;
+    EnsureLookupCache();
+    int retired = 0;
+    if (terminals != null)
+    {
+        foreach (var entry in terminals)
+        {
+            if (entry == null || string.IsNullOrWhiteSpace(entry.Id)) continue;
+            SparkTerminal reference = entry.Terminal;
+            if (reference == null ||
+                (reference.transform != objectRoot &&
+                 !reference.transform.IsChildOf(objectRoot))) continue;
+            retiredTerminalIds.Add(entry.Id);
+            runtimeTerminalOverrides[entry.Id] = null;
+            retired++;
+        }
+    }
+    if (components != null)
+    {
+        foreach (var entry in components)
+        {
+            if (entry == null || string.IsNullOrWhiteSpace(entry.Id)) continue;
+            SparkElectricalComponent reference = entry.Component;
+            if (reference == null ||
+                (reference.transform != objectRoot &&
+                 !reference.transform.IsChildOf(objectRoot))) continue;
+            retiredComponentIds.Add(entry.Id);
+            runtimeComponentOverrides[entry.Id] = null;
+            retired++;
+        }
+    }
+    if (retired > 0)
+        Debug.Log($"[SceneBindings] Retired {retired} recycled-object references from '{objectRoot.name}'.", this);
+}
+
         // ============================================================
         // CACHE VALIDATION
         // ============================================================
@@ -335,21 +382,51 @@ namespace ProjectSpark.Gameplay
         // TERMINAL API
         // ============================================================
 
-        public bool TryGetTerminal(
-            string id,
-            out SparkTerminal terminal)
-        {
-            EnsureLookupCache();
+       public bool TryGetTerminal(
+    string id,
+    out SparkTerminal terminal)
+{
+    EnsureLookupCache();
 
-            terminal = null;
+    terminal = null;
 
-            if (string.IsNullOrWhiteSpace(id))
-                return false;
+    if (string.IsNullOrWhiteSpace(id))
+        return false;
 
-            return terminalLookup.TryGetValue(
-                id,
-                out terminal);
-        }
+    // Runtime overrides take priority.
+    // A null override means the workstation slot is empty.
+    // Do not fall back to the original resistor terminal.
+    if (runtimeTerminalOverrides.TryGetValue(
+            id,
+            out SparkTerminal runtimeTerminal))
+    {
+        terminal = runtimeTerminal;
+        return terminal != null;
+    }
+
+    // Existing serialized bindings remain supported.
+    return terminalLookup.TryGetValue(
+        id,
+        out terminal) &&
+        terminal != null;
+}
+        public bool SetRuntimeTerminal(string id, SparkTerminal terminal)
+{
+    EnsureLookupCache();
+    if (string.IsNullOrWhiteSpace(id) || !terminalLookup.ContainsKey(id))
+        return false;
+    runtimeTerminalOverrides[id] = terminal; // null masks serialized fallback
+    return true;
+}
+
+public bool ClearRuntimeComponentBinding(string id)
+{
+    EnsureLookupCache();
+    if (string.IsNullOrWhiteSpace(id) || !componentLookup.ContainsKey(id))
+        return false;
+    runtimeComponentOverrides[id] = null; // masks serialized fallback
+    return true;
+}
 
         public bool HasTerminal(string id)
         {
@@ -482,62 +559,68 @@ public bool TryGetComponent(
         // TERMINAL VALIDATION
         // ============================================================
 
-        private bool ValidateTerminalBindings(
-            out string error)
+        private bool ValidateTerminalBindings(out string error)
+{
+    error = string.Empty;
+
+    if (terminals == null)
+        return true;
+
+    HashSet<string> ids =
+        new HashSet<string>(StringComparer.Ordinal);
+
+    for (int i = 0; i < terminals.Length; i++)
+    {
+        TerminalBinding binding = terminals[i];
+
+        if (binding == null)
         {
-            error = string.Empty;
+            error =
+                $"Terminal binding at index {i} is null.";
 
-            if (terminals == null)
-                return true;
-
-            HashSet<string> ids =
-                new HashSet<string>(
-                    StringComparer.Ordinal);
-
-            for (int i = 0; i < terminals.Length; i++)
-            {
-                TerminalBinding binding = terminals[i];
-
-                if (binding == null)
-                {
-                    error =
-                        $"Terminal binding at index {i} is null.";
-
-                    return false;
-                }
-
-                string id = binding.Id;
-
-                if (string.IsNullOrWhiteSpace(id))
-                {
-                    error =
-                        $"Terminal binding at index {i} " +
-                        $"has an empty ID.";
-
-                    return false;
-                }
-
-                if (binding.Terminal == null)
-                {
-                    error =
-                        $"Terminal binding '{id}' " +
-                        $"has no SparkTerminal assigned.";
-
-                    return false;
-                }
-
-                if (!ids.Add(id))
-                {
-                    error =
-                        $"Duplicate terminal binding ID '{id}'.";
-
-                    return false;
-                }
-            }
-
-            return true;
+            return false;
         }
 
+        string id = binding.Id;
+
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            error =
+                $"Terminal binding at index {i} has an empty ID.";
+
+            return false;
+        }
+
+        // Duplicate IDs remain invalid, even after recycling.
+        if (!ids.Add(id))
+        {
+            error =
+                $"Duplicate terminal binding ID '{id}'.";
+
+            return false;
+        }
+
+        // A legitimately recycled component can retire its
+        // physical terminal binding at runtime.
+        //
+        // Do not skip validation for unrelated missing terminals.
+        if (retiredTerminalIds.Contains(id))
+        {
+            continue;
+        }
+
+        if (binding.Terminal == null)
+        {
+            error =
+                $"Terminal binding '{id}' " +
+                "has no SparkTerminal assigned.";
+
+            return false;
+        }
+    }
+
+    return true;
+}
         // ============================================================
         // ELECTRICAL COMPONENT VALIDATION
         // Existing validation preserved

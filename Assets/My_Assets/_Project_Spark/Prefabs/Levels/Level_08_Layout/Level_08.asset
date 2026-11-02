@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
   m_Name: Level_08
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
-  levelId: level_07
+  levelId: level_08
   displayName: Voltage Divider Challenge
   description: Calibrate a 3.00 V output from a 5 V supply by selecting the correct
     upper resistor.
@@ -61,14 +61,14 @@ MonoBehaviour:
     requiredPositiveTerminalId: Register_Input
     requiredNegativeTerminalId: Register_Output
     targetComponentId: "Resistor_330_\u03A9"
-    minimumVoltage: 2.9
+    minimumVoltage: 4.9
     minimumCurrent: 0
     minimumPower: 0
     requireElectricalEnabled: 1
     requireConduction: 1
     inverted: 0
     useMaximumVoltage: 1
-    maximumVoltage: 3.1
+    maximumVoltage: 5.1
     useMaximumCurrent: 1
     maximumCurrent: 0
     useMaximumPower: 0
@@ -82,7 +82,7 @@ MonoBehaviour:
     requiredNegativeTerminalId: Register_Output
     targetComponentId: "Resistor_330_\u03A9"
     minimumVoltage: 0
-    minimumCurrent: 0.008
+    minimumCurrent: 0.014
     minimumPower: 0
     requireElectricalEnabled: 1
     requireConduction: 1
@@ -90,7 +90,7 @@ MonoBehaviour:
     useMaximumVoltage: 0
     maximumVoltage: 0
     useMaximumCurrent: 1
-    maximumCurrent: 0.01
+    maximumCurrent: 0.016
     useMaximumPower: 0
     maximumPower: 0
   - targetId: correct_source_current
@@ -104,7 +104,7 @@ MonoBehaviour:
     requiredNegativeTerminalId: Battery_negative
     targetComponentId: PowerSupply_01
     minimumVoltage: 0
-    minimumCurrent: 0.008
+    minimumCurrent: 0.025
     minimumPower: 0
     requireElectricalEnabled: 1
     requireConduction: 1
@@ -112,7 +112,7 @@ MonoBehaviour:
     useMaximumVoltage: 0
     maximumVoltage: 0
     useMaximumCurrent: 1
-    maximumCurrent: 0.01
+    maximumCurrent: 0.027
     useMaximumPower: 0
     maximumPower: 0
   failureMode: 0

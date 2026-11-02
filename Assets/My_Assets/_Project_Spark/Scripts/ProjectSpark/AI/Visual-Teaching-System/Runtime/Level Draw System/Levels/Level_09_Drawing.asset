@@ -1,0 +1,489 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_09_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_09
+  levelTitle: Series-Parallel Circuit Master
+  initialPage: 0
+  pages:
+  - title: LEVEL 9 | Series-Parallel Circuit | Overview
+    explanation: 'ILLUSTRATIVE / NOT LIVE VERIFIED. Fixed R1 = 220 Ohm is in series
+      with two parallel return branches: fixed R2 = 330 Ohm and replaceable R3. Start
+      R3 at unsuitable 220 Ohm; correct R3 is 470 Ohm. LCD is high-impedance across
+      VOUT and Battery_negative, not a current return.'
+    caption: PAGE 1/4 | R1 SERIES WITH (R2 PARALLEL R3) | 5 V
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.11, y: 0.53}
+      label: 5 V
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.83}
+      label: SWITCH
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.46, y: 0.83}
+      label: R1 220 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: vout
+      kind: 9
+      position: {x: 0.61, y: 0.83}
+      label: 
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.7, y: 0.64}
+      label: R2 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: r3
+      kind: 1
+      position: {x: 0.7, y: 0.38}
+      label: R3 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.84, y: 0.38}
+      label: 
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.42, y: 0.39}
+      label: LCD A+ B-
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - id: gnd
+      kind: 6
+      position: {x: 0.6, y: 0.14}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.11, y: 0.67}
+      - {x: 0.11, y: 0.83}
+      - {x: 0.21, y: 0.83}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.83}
+      - {x: 0.4, y: 0.83}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.52, y: 0.83}
+      - {x: 0.61, y: 0.83}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.61, y: 0.83}
+      - {x: 0.61, y: 0.64}
+      - {x: 0.64, y: 0.64}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.61, y: 0.64}
+      - {x: 0.61, y: 0.38}
+      - {x: 0.64, y: 0.38}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.76, y: 0.64}
+      - {x: 0.84, y: 0.64}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.76, y: 0.38}
+      - {x: 0.84, y: 0.38}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.84, y: 0.64}
+      - {x: 0.84, y: 0.14}
+      - {x: 0.6, y: 0.14}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.6, y: 0.14}
+      - {x: 0.11, y: 0.14}
+      - {x: 0.11, y: 0.39}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.61, y: 0.83}
+      - {x: 0.57, y: 0.83}
+      - {x: 0.57, y: 0.5}
+      - {x: 0.42, y: 0.5}
+      - {x: 0.42, y: 0.45}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.42, y: 0.33}
+      - {x: 0.42, y: 0.14}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+  - title: LEVEL 9 | Exact Seven Wiring Connections
+    explanation: ILLUSTRATIVE / NOT LIVE VERIFIED. 1 SwitchOutput -> R1 Register_Input.
+      2 R1 Register_Output -> R2 Register_Input. 3 R1 Register_Output -> R3 Register_Input.
+      4 R2 Register_Output -> Battery_negative. 5 R3 Register_Output -> Battery_negative.
+      6 LCD_Terminal_A -> R1 Register_Output (VOUT). 7 LCD_Terminal_B -> Battery_negative.
+      Battery_positive -> switch input is assumed prewired. VOUT is a shared node;
+      ensure connection capacity and actual SparkCircuitSystem wires.
+    caption: PAGE 2/4 | SEVEN WIRES AFTER BATTERY+ TO SWITCH INPUT
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.11, y: 0.53}
+      label: 5 V
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.83}
+      label: SWITCH
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.46, y: 0.83}
+      label: R1 220 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: vout
+      kind: 9
+      position: {x: 0.61, y: 0.83}
+      label: 
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.7, y: 0.64}
+      label: R2 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: r3
+      kind: 1
+      position: {x: 0.7, y: 0.38}
+      label: R3 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.84, y: 0.38}
+      label: 
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.42, y: 0.39}
+      label: LCD A+ B-
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - id: gnd
+      kind: 6
+      position: {x: 0.6, y: 0.14}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.11, y: 0.67}
+      - {x: 0.11, y: 0.83}
+      - {x: 0.21, y: 0.83}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.83}
+      - {x: 0.4, y: 0.83}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.52, y: 0.83}
+      - {x: 0.61, y: 0.83}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.61, y: 0.83}
+      - {x: 0.61, y: 0.64}
+      - {x: 0.64, y: 0.64}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.61, y: 0.64}
+      - {x: 0.61, y: 0.38}
+      - {x: 0.64, y: 0.38}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.76, y: 0.64}
+      - {x: 0.84, y: 0.64}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.76, y: 0.38}
+      - {x: 0.84, y: 0.38}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.84, y: 0.64}
+      - {x: 0.84, y: 0.14}
+      - {x: 0.6, y: 0.14}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.6, y: 0.14}
+      - {x: 0.11, y: 0.14}
+      - {x: 0.11, y: 0.39}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.61, y: 0.83}
+      - {x: 0.57, y: 0.83}
+      - {x: 0.57, y: 0.5}
+      - {x: 0.42, y: 0.5}
+      - {x: 0.42, y: 0.45}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.42, y: 0.33}
+      - {x: 0.42, y: 0.14}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+  - title: LEVEL 9 | Voltage & Current Measurements
+    explanation: 'NOMINAL DESIGN VALUES / NOT LIVE READINGS. At 5 V, R1 220 Ohm and
+      (R2 330 Ohm || R3 470 Ohm): parallel equivalent = 193.875 Ohm, total resistance
+      = 413.875 Ohm; total / R1 current = 12.081 mA. VOUT / R2 / R3 voltage = 2.342
+      V; R1 drop = 2.658 V. R2 current = 7.098 mA, R3 current = 4.983 mA. LCD AutoVoltageAndComponentCurrent
+      displays A-B voltage and the current of whichever fixed component is assigned
+      in SparkLCDMeterDisplay; it does not automatically report total current.'
+    caption: PAGE 3/4 | VOUT 2.342 V | TOTAL 12.081 mA
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.11, y: 0.53}
+      label: 5 V
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.83}
+      label: SWITCH
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.46, y: 0.83}
+      label: R1 220 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: vout
+      kind: 9
+      position: {x: 0.61, y: 0.83}
+      label: 
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.7, y: 0.64}
+      label: R2 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: r3
+      kind: 1
+      position: {x: 0.7, y: 0.38}
+      label: R3 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.84, y: 0.38}
+      label: 
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.42, y: 0.39}
+      label: LCD A+ B-
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - id: gnd
+      kind: 6
+      position: {x: 0.6, y: 0.14}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.11, y: 0.67}
+      - {x: 0.11, y: 0.83}
+      - {x: 0.21, y: 0.83}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.83}
+      - {x: 0.4, y: 0.83}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.52, y: 0.83}
+      - {x: 0.61, y: 0.83}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.61, y: 0.83}
+      - {x: 0.61, y: 0.64}
+      - {x: 0.64, y: 0.64}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.61, y: 0.64}
+      - {x: 0.61, y: 0.38}
+      - {x: 0.64, y: 0.38}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.76, y: 0.64}
+      - {x: 0.84, y: 0.64}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.76, y: 0.38}
+      - {x: 0.84, y: 0.38}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.84, y: 0.64}
+      - {x: 0.84, y: 0.14}
+      - {x: 0.6, y: 0.14}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.6, y: 0.14}
+      - {x: 0.11, y: 0.14}
+      - {x: 0.11, y: 0.39}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.61, y: 0.83}
+      - {x: 0.57, y: 0.83}
+      - {x: 0.57, y: 0.5}
+      - {x: 0.42, y: 0.5}
+      - {x: 0.42, y: 0.45}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.42, y: 0.33}
+      - {x: 0.42, y: 0.14}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+  - title: LEVEL 9 | Correct Circuit & Completion
+    explanation: 'ILLUSTRATIVE / NOT LIVE VERIFIED. Replace shelf R3 220 Ohm with
+      R3 470 Ohm. R1 220 and R2 330 stay fixed. Targets: R1 conducting; fixed R2
+      voltage between 2.25 and 2.45 V; fixed R2 current between 6.7 and 7.5 mA; supply
+      current between 11.8 and 12.4 mA. Confirm both R2 and R3 have their own direct
+      electrical return to Battery_negative, valid source-current polarity, no shorts,
+      and healthy installed resistors. Only the existing SparkLevelEvaluator awards
+      4/4 and unlocks Level 10.'
+    caption: PAGE 4/4 | R3 470 Ohm | 2.342 V | 12.081 mA | 4 TARGETS
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.11, y: 0.53}
+      label: 5 V
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.83}
+      label: SWITCH
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.46, y: 0.83}
+      label: R1 220 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: vout
+      kind: 9
+      position: {x: 0.61, y: 0.83}
+      label: 
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.7, y: 0.64}
+      label: R2 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: r3
+      kind: 1
+      position: {x: 0.7, y: 0.38}
+      label: R3 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.84, y: 0.38}
+      label: 
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.42, y: 0.39}
+      label: LCD A+ B-
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - id: gnd
+      kind: 6
+      position: {x: 0.6, y: 0.14}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.11, y: 0.67}
+      - {x: 0.11, y: 0.83}
+      - {x: 0.21, y: 0.83}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.83}
+      - {x: 0.4, y: 0.83}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.52, y: 0.83}
+      - {x: 0.61, y: 0.83}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.61, y: 0.83}
+      - {x: 0.61, y: 0.64}
+      - {x: 0.64, y: 0.64}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.61, y: 0.64}
+      - {x: 0.61, y: 0.38}
+      - {x: 0.64, y: 0.38}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.76, y: 0.64}
+      - {x: 0.84, y: 0.64}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.76, y: 0.38}
+      - {x: 0.84, y: 0.38}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.84, y: 0.64}
+      - {x: 0.84, y: 0.14}
+      - {x: 0.6, y: 0.14}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.6, y: 0.14}
+      - {x: 0.11, y: 0.14}
+      - {x: 0.11, y: 0.39}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.61, y: 0.83}
+      - {x: 0.57, y: 0.83}
+      - {x: 0.57, y: 0.5}
+      - {x: 0.42, y: 0.5}
+      - {x: 0.42, y: 0.45}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.42, y: 0.33}
+      - {x: 0.42, y: 0.14}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}

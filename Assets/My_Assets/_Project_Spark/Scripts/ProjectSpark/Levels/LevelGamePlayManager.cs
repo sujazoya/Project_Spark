@@ -956,13 +956,33 @@ private void SetOutput(
                 // ApplyEvaluation DOES NOT own completion/failure
                 // flags.
                 // ----------------------------------------------------
+ApplyEvaluation(
+    evaluation,
+    level);
 
-                ApplyEvaluation(
-                    evaluation,
-                    level);
+// ============================================================
+// LEVEL TARGET DIAGNOSTIC — TEMPORARY
+// ============================================================
 
-                LogVerbose(
-                    $"EVALUATION | " +
+if (level.LevelId == "level_09")
+{
+    foreach (TargetRuntimeResult result in targetResults)
+    {
+        Debug.Log(
+            "[LEVEL 09 TARGET] " +
+            "ID=" + result.targetId +
+            " | Name=" + result.displayName +
+            " | Satisfied=" + result.satisfied,
+            this);
+    }
+}
+
+// ============================================================
+// EXISTING CODE — DO NOT CHANGE
+// ============================================================
+
+LogVerbose(
+    $"EVALUATION | " +
                     $"Status={evaluation.Status} | " +
                     $"Reason={evaluation.FailureReason} | " +
                     $"Targets=" +

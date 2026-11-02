@@ -1,0 +1,370 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_06_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_06
+  levelTitle: Level 6 - Circuit Fault Detective
+  initialPage: 0
+  pages:
+  - title: LEVEL 06 | Overview
+    explanation: "AUTHOR LEVEL 6 DESIGN: circuit illustrates initial faults, not
+      live wiring. Circuit Fault Detective: R1 330 Ohm/LED1 working branch; R2 100
+      Ohm/LED2 fault branch with missing return. Author drawing only \u2014 NOT verified
+      live circuit topology or measured results."
+    caption: PAGE 1/4 | Level 6 - Circuit Fault Detective
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.11, y: 0.5}
+      label: 5 V
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.81}
+      label: SWITCH
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: bus
+      kind: 9
+      position: {x: 0.4, y: 0.81}
+      label: 
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.55, y: 0.65}
+      label: R1 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.55, y: 0.38}
+      label: R2 100 Ohm
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: led1
+      kind: 9
+      position: {x: 0.7, y: 0.65}
+      label: LED 1
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: led2
+      kind: 9
+      position: {x: 0.7, y: 0.38}
+      label: LED 2
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.79, y: 0.17}
+      label: GND
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.11, y: 0.64}
+      - {x: 0.11, y: 0.81}
+      - {x: 0.21, y: 0.81}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.33, y: 0.81}
+      - {x: 0.4, y: 0.81}
+      - {x: 0.4, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.65}
+      - {x: 0.49, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.38}
+      - {x: 0.49, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.65}
+      - {x: 0.64, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.38}
+      - {x: 0.64, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.76, y: 0.65}
+      - {x: 0.79, y: 0.65}
+      - {x: 0.79, y: 0.17}
+      - {x: 0.11, y: 0.17}
+      - {x: 0.11, y: 0.36}
+      energized: 0
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+  - title: LEVEL 06 | Connection Guide
+    explanation: "AUTHOR LEVEL 6 DESIGN: circuit illustrates initial faults, not
+      live wiring. Fault-start: SwitchOutput -> R1 -> LED1 -> ground. SwitchOutput
+      -> R2 100 Ohm -> LED2 -> OPEN RETURN. Repair missing return then replace R2.
+      Author drawing only \u2014 NOT verified live circuit topology or measured results."
+    caption: PAGE 2/4 | Level 6 - Circuit Fault Detective
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.11, y: 0.5}
+      label: 5 V
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.81}
+      label: SWITCH
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: bus
+      kind: 9
+      position: {x: 0.4, y: 0.81}
+      label: 
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.55, y: 0.65}
+      label: R1 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.55, y: 0.38}
+      label: R2 100 Ohm
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: led1
+      kind: 9
+      position: {x: 0.7, y: 0.65}
+      label: LED 1
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: led2
+      kind: 9
+      position: {x: 0.7, y: 0.38}
+      label: LED 2
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.79, y: 0.17}
+      label: GND
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.11, y: 0.64}
+      - {x: 0.11, y: 0.81}
+      - {x: 0.21, y: 0.81}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.33, y: 0.81}
+      - {x: 0.4, y: 0.81}
+      - {x: 0.4, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.65}
+      - {x: 0.49, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.38}
+      - {x: 0.49, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.65}
+      - {x: 0.64, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.38}
+      - {x: 0.64, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.76, y: 0.65}
+      - {x: 0.79, y: 0.65}
+      - {x: 0.79, y: 0.17}
+      - {x: 0.11, y: 0.17}
+      - {x: 0.11, y: 0.36}
+      energized: 0
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+  - title: LEVEL 06 | Measurements
+    explanation: "AUTHOR LEVEL 6 DESIGN: circuit illustrates initial faults, not
+      live wiring. At 5 V and nominal 2 V LED: R1 about 9.1 mA, R2 at 100 Ohm about
+      30 mA after return repair; 220 Ohm about 13.6 mA. Author drawing only \u2014
+      NOT verified live circuit topology or measured results."
+    caption: PAGE 3/4 | Level 6 - Circuit Fault Detective
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.11, y: 0.5}
+      label: 5 V
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.81}
+      label: SWITCH
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: bus
+      kind: 9
+      position: {x: 0.4, y: 0.81}
+      label: 
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.55, y: 0.65}
+      label: R1 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.55, y: 0.38}
+      label: R2 100 Ohm
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: led1
+      kind: 9
+      position: {x: 0.7, y: 0.65}
+      label: LED 1
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: led2
+      kind: 9
+      position: {x: 0.7, y: 0.38}
+      label: LED 2
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.79, y: 0.17}
+      label: GND
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.11, y: 0.64}
+      - {x: 0.11, y: 0.81}
+      - {x: 0.21, y: 0.81}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.33, y: 0.81}
+      - {x: 0.4, y: 0.81}
+      - {x: 0.4, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.65}
+      - {x: 0.49, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.38}
+      - {x: 0.49, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.65}
+      - {x: 0.64, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.38}
+      - {x: 0.64, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.76, y: 0.65}
+      - {x: 0.79, y: 0.65}
+      - {x: 0.79, y: 0.17}
+      - {x: 0.11, y: 0.17}
+      - {x: 0.11, y: 0.36}
+      energized: 0
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+  - title: LEVEL 06 | Solution & Checks
+    explanation: "AUTHOR LEVEL 6 DESIGN: circuit illustrates initial faults, not
+      live wiring. To pass: both LEDs on, branch currents 6-15 mA, source current
+      12-30 mA, installed resistors healthy. 470 Ohm can also meet branch target.
+      Author drawing only \u2014 NOT verified live circuit topology or measured results."
+    caption: PAGE 4/4 | Level 6 - Circuit Fault Detective
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.11, y: 0.5}
+      label: 5 V
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.81}
+      label: SWITCH
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: bus
+      kind: 9
+      position: {x: 0.4, y: 0.81}
+      label: 
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.55, y: 0.65}
+      label: R1 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.55, y: 0.38}
+      label: R2 100 Ohm
+      color: {r: 1, g: 0.79, b: 0.3, a: 1}
+    - id: led1
+      kind: 9
+      position: {x: 0.7, y: 0.65}
+      label: LED 1
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: led2
+      kind: 9
+      position: {x: 0.7, y: 0.38}
+      label: LED 2
+      color: {r: 0.23, g: 0.98, b: 0.82, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.79, y: 0.17}
+      label: GND
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.11, y: 0.64}
+      - {x: 0.11, y: 0.81}
+      - {x: 0.21, y: 0.81}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.33, y: 0.81}
+      - {x: 0.4, y: 0.81}
+      - {x: 0.4, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.65}
+      - {x: 0.49, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.4, y: 0.38}
+      - {x: 0.49, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.65}
+      - {x: 0.64, y: 0.65}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.61, y: 0.38}
+      - {x: 0.64, y: 0.38}
+      energized: 0
+      color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
+    - points:
+      - {x: 0.76, y: 0.65}
+      - {x: 0.79, y: 0.65}
+      - {x: 0.79, y: 0.17}
+      - {x: 0.11, y: 0.17}
+      - {x: 0.11, y: 0.36}
+      energized: 0
+      color: {r: 0.22, g: 0.69, b: 1, a: 1}
