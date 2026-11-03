@@ -40,6 +40,10 @@ namespace ProjectSpark.Gameplay.Editor
         private SerializedProperty componentsProperty;
         private SerializedProperty electronicObjectsProperty;
         private SerializedProperty outputsProperty;
+        private SerializedProperty runtimeTerminalIdsProperty;
+        private SerializedProperty runtimeComponentIdsProperty;
+        private SerializedProperty runtimeElectronicObjectIdsProperty;
+        private bool showRuntimeIds = true;
 
         // ============================================================
         // REORDERABLE LISTS
@@ -107,9 +111,10 @@ namespace ProjectSpark.Gameplay.Editor
 
             outputsProperty =
                 serializedObject.FindProperty("outputs");
-
+                 runtimeTerminalIdsProperty = serializedObject.FindProperty("runtimeTerminalIds");
+            runtimeComponentIdsProperty = serializedObject.FindProperty("runtimeComponentIds");
+            runtimeElectronicObjectIdsProperty = serializedObject.FindProperty("runtimeElectronicObjectIds");
             CreateLists();
-
             validationPerformed = false;
         }
 
@@ -135,15 +140,226 @@ namespace ProjectSpark.Gameplay.Editor
 
             DrawElectronicObjectSection();
 
-            EditorGUILayout.Space(4f);
+            EditorGUILayout.Space(4f);           
 
             DrawOutputSection();
+             EditorGUILayout.Space(4f);
+            DrawRuntimeBindingsSection();
 
             EditorGUILayout.Space(4f);
 
             DrawTools();
 
             serializedObject.ApplyModifiedProperties();
+        }
+
+         private void DrawRuntimeBindingsSection()
+        {
+            showRuntimeIds = EditorGUILayout.Foldout(
+                showRuntimeIds,
+                "Runtime Binding IDs — Replaceable Workstations",
+                true,
+                EditorStyles.foldoutHeader);
+
+            if (!showRuntimeIds)
+                return;
+
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+
+            EditorGUILayout.HelpBox(
+                "These are ID declarations, not scene references. " +
+                "The workstation bridge assigns actual installed components " +
+                "and terminals at runtime. Configure and save on the ORIGINAL " +
+                "level-layout prefab. Never insert R2 aliases into fixed binding lists.",
+                MessageType.Info);
+
+            if (runtimeTerminalIdsProperty == null ||
+                runtimeComponentIdsProperty == null ||
+                runtimeElectronicObjectIdsProperty == null)
+            {
+                EditorGUILayout.HelpBox(
+                    "Runtime ID fields were not found on SparkLevelSceneBindings. " +
+                    "Verify you are using the universal runtime-ID version of that class.",
+                    MessageType.Error);
+                EditorGUILayout.EndVertical();
+                return;
+            }
+
+            EditorGUILayout.PropertyField(runtimeTerminalIdsProperty,
+                new GUIContent("Runtime Terminal IDs"), true);
+            EditorGUILayout.PropertyField(runtimeComponentIdsProperty,
+                new GUIContent("Runtime Component IDs"), true);
+            EditorGUILayout.PropertyField(runtimeElectronicObjectIdsProperty,
+                new GUIContent("Runtime Electronic Object IDs"), true);
+
+            EditorGUILayout.Space(5f);
+            using (new EditorGUI.DisabledScope(Application.isPlaying || targets.Length != 1))
+            {
+                if (GUILayout.Button("IMPORT DECLARED IDS FROM WORKSTATION BRIDGE", GUILayout.Height(28f)))
+                    ImportRuntimeIdsFromBridge();
+            }
+            if (Application.isPlaying)
+                EditorGUILayout.HelpBox("Play Mode is read-only for prefab declarations. Exit Play Mode to save IDs.", MessageType.Warning);
+
+            DrawRuntimeIdIssues();
+            EditorGUILayout.EndVertical();
+        }
+
+        private void DrawRuntimeIdIssues()
+        {
+            var problems = new List<string>();
+            CheckRuntimeIds(runtimeTerminalIdsProperty, terminalsProperty, "Terminal", problems);
+            CheckRuntimeIds(runtimeComponentIdsProperty, componentsProperty, "Electrical component", problems);
+            CheckRuntimeIds(runtimeElectronicObjectIdsProperty, electronicObjectsProperty, "Electronic object", problems);
+
+            if (problems.Count == 0)
+            {
+                EditorGUILayout.HelpBox("Runtime IDs are unique and do not conflict with fixed IDs.", MessageType.Info);
+                return;
+            }
+
+            foreach (string message in problems)
+                EditorGUILayout.HelpBox(message, MessageType.Error);
+        }
+
+        private static void CheckRuntimeIds(
+            SerializedProperty runtimeArray,
+            SerializedProperty fixedArray,
+            string label,
+            List<string> problems)
+        {
+            if (runtimeArray == null || fixedArray == null)
+                return;
+
+            var known = new HashSet<string>(StringComparer.Ordinal);
+            for (int i = 0; i < fixedArray.arraySize; i++)
+            {
+                var id = fixedArray.GetArrayElementAtIndex(i).FindPropertyRelative("id");
+                if (id != null && !string.IsNullOrWhiteSpace(id.stringValue))
+                    known.Add(id.stringValue);
+            }
+
+            for (int i = 0; i < runtimeArray.arraySize; i++)
+            {
+                string id = runtimeArray.GetArrayElementAtIndex(i).stringValue;
+                if (string.IsNullOrWhiteSpace(id))
+                {
+                    problems.Add(label + " runtime ID at index " + i + " is empty.");
+                    continue;
+                }
+                if (!string.Equals(id, id.Trim(), StringComparison.Ordinal))
+                    problems.Add(label + " runtime ID '" + id + "' has leading/trailing spaces.");
+                if (!known.Add(id))
+                    problems.Add(label + " runtime ID '" + id + "' duplicates a fixed or runtime ID.");
+            }
+        }
+
+        private void ImportRuntimeIdsFromBridge()
+        {
+            if (Application.isPlaying)
+                return;
+
+            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+
+            var bindings = (SparkLevelSceneBindings)target;
+            var layout = bindings.GetComponentInParent<SparkLevelLayout>(true);
+            if (layout == null)
+            {
+                Debug.LogWarning("[Runtime IDs] This binding is not under a SparkLevelLayout prefab root.", bindings);
+                return;
+            }
+
+            // Only the layout's own bridge(s), never the persistent shelf.
+            var bridges = layout.GetComponentsInChildren<SparkLevelWorkstationBindingBridge>(true);
+            if (bridges.Length == 0)
+            {
+                Debug.LogWarning("[Runtime IDs] No workstation bridge found within this level layout.", bindings);
+                return;
+            }
+
+            int added = 0;
+            var problems = new List<string>();
+            foreach (var bridge in bridges)
+            {
+                var bridgeData = new SerializedObject(bridge);
+                bridgeData.Update();
+                var rules = bridgeData.FindProperty("workstations");
+                if (rules == null)
+                {
+                    problems.Add("Bridge '" + bridge.name + "' has no 'workstations' array.");
+                    continue;
+                }
+
+                for (int i = 0; i < rules.arraySize; i++)
+                {
+                    var rule = rules.GetArrayElementAtIndex(i);
+                    AddDeclaredId(runtimeComponentIdsProperty, componentsProperty,
+                        RuleId(rule, "componentBindingId"), "Component", problems, ref added);
+                    AddDeclaredId(runtimeTerminalIdsProperty, terminalsProperty,
+                        RuleId(rule, "inputTerminalBindingId"), "Terminal", problems, ref added);
+                    AddDeclaredId(runtimeTerminalIdsProperty, terminalsProperty,
+                        RuleId(rule, "outputTerminalBindingId"), "Terminal", problems, ref added);
+                    AddDeclaredId(runtimeElectronicObjectIdsProperty, electronicObjectsProperty,
+                        RuleId(rule, "electronicObjectBindingId"), "Electronic object", problems, ref added);
+                }
+            }
+
+            if (added > 0)
+            {
+                serializedObject.ApplyModifiedProperties();
+                EditorUtility.SetDirty(bindings);
+                if (PrefabUtility.IsPartOfPrefabInstance(bindings))
+                    PrefabUtility.RecordPrefabInstancePropertyModifications(bindings);
+                validationPerformed = false;
+            }
+
+            string summary = "[Runtime IDs] Layout '" + layout.name + "': added " + added + " declaration(s).";
+            if (problems.Count > 0)
+                Debug.LogWarning(summary + "\n" + string.Join("\n", problems), bindings);
+            else
+                Debug.Log(summary, bindings);
+            Repaint();
+        }
+
+        private static string RuleId(SerializedProperty rule, string field)
+        {
+            var p = rule.FindPropertyRelative(field);
+            return p == null ? string.Empty : p.stringValue;
+        }
+
+        private static void AddDeclaredId(
+            SerializedProperty runtimeArray,
+            SerializedProperty fixedArray,
+            string rawId,
+            string label,
+            List<string> problems,
+            ref int added)
+        {
+            if (string.IsNullOrWhiteSpace(rawId)) return;
+            string id = rawId.Trim();
+            if (runtimeArray == null || fixedArray == null)
+            {
+                problems.Add("Missing runtime or fixed property for " + label + ".");
+                return;
+            }
+            for (int i = 0; i < fixedArray.arraySize; i++)
+            {
+                var p = fixedArray.GetArrayElementAtIndex(i).FindPropertyRelative("id");
+                if (p != null && string.Equals(p.stringValue, id, StringComparison.Ordinal))
+                {
+                    problems.Add(label + " ID '" + id + "' already exists in fixed bindings; cannot also declare it as runtime.");
+                    return;
+                }
+            }
+            for (int i = 0; i < runtimeArray.arraySize; i++)
+                if (string.Equals(runtimeArray.GetArrayElementAtIndex(i).stringValue, id, StringComparison.Ordinal))
+                    return;
+
+            int index = runtimeArray.arraySize;
+            runtimeArray.InsertArrayElementAtIndex(index);
+            runtimeArray.GetArrayElementAtIndex(index).stringValue = id;
+            added++;
         }
 
         // ============================================================

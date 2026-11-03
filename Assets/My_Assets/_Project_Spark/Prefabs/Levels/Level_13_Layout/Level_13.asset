@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_13
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_13
+  displayName: Loaded Voltage Divider Challenge
+  description: 'Build a loaded 5 V voltage divider: a fixed 220 ohm R1 in series
+    with a parallel load formed by replaceable R2 and fixed 470 ohm R3. Replace the
+    incorrect 150 ohm R2 with 330 ohm. Measure 2.34 V at Vout, verify approximately
+    7.10 mA in R2 and 12.08 mA total source current. Switch power off before replacing
+    components.'
+  completionMode: 0
+  requiredTargetCount: 4
+  requireClosedReturn: 1
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 0
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: PowerSupply_01
+    positiveTerminalId: Battery_positive
+    negativeTerminalId: Battery_negative
+    nominalVoltage: 5
+  targets:
+  - targetId: loaded_divider_r1_conducting
+    displayName: R1 Series Resistor Conducting
+    description: Fixed 220 ohm series resistor R1 must conduct.
+    targetType: 4
+    targetTerminalId: 
+    requiredPositiveTerminalId: Resistor_220_Input
+    requiredNegativeTerminalId: Resistor_220_Output
+    targetComponentId: "Resistor_220_\u03A9"
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: loaded_divider_r2_current
+    displayName: Correct Load Current
+    description: Replace 150 ohm R2 with 330 ohm so its current is 6.8-7.4 mA.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: R2_Input
+    requiredNegativeTerminalId: R2_Output
+    targetComponentId: R2_Component
+    minimumVoltage: 0
+    minimumCurrent: 0.0068
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.0074
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: loaded_divider_output_voltage
+    displayName: Loaded Divider Output
+    description: Voltage at Vout across parallel R2 and R3 is 2.25-2.45 V.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: R2_Input
+    requiredNegativeTerminalId: R2_Output
+    targetComponentId: R2_Component
+    minimumVoltage: 2.25
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 2.45
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: loaded_divider_source_current
+    displayName: Safe Source Current
+    description: The 5 V supply current must be 11.8-12.4 mA.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: Battery_positive
+    requiredNegativeTerminalId: Battery_negative
+    targetComponentId: PowerSupply_01
+    minimumVoltage: 0
+    minimumCurrent: 0.0118
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.0124
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 0
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 1
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

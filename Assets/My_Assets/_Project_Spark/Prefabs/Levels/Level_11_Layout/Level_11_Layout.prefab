@@ -438,6 +438,7 @@ GameObject:
   - component: {fileID: 2176329651325675665}
   - component: {fileID: 8861480467021309645}
   - component: {fileID: 6732499601226506667}
+  - component: {fileID: -3760239757822387011}
   m_Layer: 15
   m_Name: Level_11_Layout
   m_TagString: Untagged
@@ -560,6 +561,39 @@ MonoBehaviour:
   - id: Wire_1
     electronicObject: {fileID: 8855029861828751895}
   outputs: []
+  runtimeTerminalIds:
+  - R2_Input
+  - R2_Output
+  runtimeComponentIds:
+  - R2_Component
+  runtimeElectronicObjectIds: []
+--- !u!114 &-3760239757822387011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594169684395624188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f69e97fbd6cc6694d942357b2c544aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelWorkstationBindingBridge
+  layoutLoader: {fileID: 0}
+  shelf: {fileID: 0}
+  workstations:
+  - slotId: Register_Slot_2
+    componentBindingId: R2_Component
+    inputTerminalBindingId: R2_Input
+    outputTerminalBindingId: R2_Output
+    electronicObjectBindingId: 
+    electricalTypeName: SparkResistor
+    electronicTypeName: 
+    inputTerminalName: _Input
+    outputTerminalName: _Output
+    exactTerminalNames: 0
+  resyncSeconds: 0.25
+  logChanges: 1
 --- !u!1 &665577739494700857
 GameObject:
   m_ObjectHideFlags: 0
@@ -28272,8 +28306,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 937440cd7f931b644b50a25edf026463, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkResistor
-  objectId: resistor_330
-  displayName: "Resistor_330 \u03A9"
+  objectId: resistor_470
+  displayName: "Resistor_470 \u03A9"
   interactionsEnabled: 1
   operationalState: 1
   componentFamily: Generic
@@ -28281,7 +28315,7 @@ MonoBehaviour:
   electricalEnabled: 1
   terminalA: {fileID: 2102118140516075744}
   terminalB: {fileID: 1750906816731682827}
-  resistance: 330
+  resistance: 470
   maximumPowerWatts: 0.25
   burnSystem: {fileID: 3453011391260952091}
   circuitSystem: {fileID: 0}

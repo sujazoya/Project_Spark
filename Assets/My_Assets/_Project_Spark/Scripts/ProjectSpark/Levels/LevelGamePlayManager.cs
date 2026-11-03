@@ -960,17 +960,19 @@ ApplyEvaluation(
     evaluation,
     level);
 
-// ============================================================
-// LEVEL TARGET DIAGNOSTIC — TEMPORARY
+/// ============================================================
+// UNIVERSAL LEVEL TARGET DIAGNOSTIC
+// Supports Level 1 through Level 200+
 // ============================================================
 
-if (level.LevelId == "level_09")
+if (debugLogging && verboseLogging)
 {
     foreach (TargetRuntimeResult result in targetResults)
     {
         Debug.Log(
-            "[LEVEL 09 TARGET] " +
-            "ID=" + result.targetId +
+            "[LEVEL TARGET] " +
+            "Level=" + level.LevelId +
+            " | ID=" + result.targetId +
             " | Name=" + result.displayName +
             " | Satisfied=" + result.satisfied,
             this);

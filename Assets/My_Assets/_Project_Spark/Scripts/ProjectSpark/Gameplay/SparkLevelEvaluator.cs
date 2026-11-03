@@ -1326,36 +1326,94 @@ private bool AreRequiredResistorsHealthy(
         // TARGET EVALUATION
         // ================================================================
 
-        private int EvaluateTargets(
-            SparkLevelDefinition level)
+        private int EvaluateTargets(SparkLevelDefinition level)
+{
+    if (level == null || level.Targets == null)
+        return 0;
+
+    int satisfiedCount = 0;
+
+    foreach (SparkLevelTarget target in level.Targets)
+    {
+        if (target == null)
+            continue;
+
+        bool passed = EvaluateTarget(target);
+
+        if (passed)
+            satisfiedCount++;
+
+        // Diagnostic: explain the actual target state.
+        Debug.Log(
+            "[SPARK TARGET] " +
+            "Level=" + level.LevelId +
+            " | Target=" + target.TargetId +
+            " | Type=" + target.Type +
+            " | Passed=" + passed +
+            " | Configured=" + target.IsConfigured() +
+            " | PolarityValid=" + target.IsPolarityConfigurationValid() +
+            " | ComponentID=" + target.TargetComponentId);
+
+        if (!string.IsNullOrWhiteSpace(target.TargetComponentId))
         {
-            if (level == null ||
-                level.Targets == null)
+            if (sceneBindings.TryGetComponent(
+                    target.TargetComponentId,
+                    out SparkElectricalComponent component))
             {
-                return 0;
+                SparkElectricalState state =
+                    component.ElectricalState;
+
+                Debug.Log(
+                    "[SPARK TARGET COMPONENT] " +
+                    "Target=" + target.TargetId +
+                    " | Object=" + component.name +
+                    " | Type=" + component.GetType().Name +
+                    " | Enabled=" + component.ElectricalEnabled +
+                    " | Conduction=" + state.Conduction +
+                    " | V=" + state.Voltage.ToString("F6") +
+                    " | I=" + state.Current.ToString("F6") +
+                    " | P=" + state.Power.ToString("F6"));
             }
-
-            int satisfiedCount = 0;
-
-            SparkLevelTarget[] targets =
-                level.Targets;
-
-            for (int i = 0; i < targets.Length; i++)
+            else
             {
-                SparkLevelTarget target =
-                    targets[i];
-
-                if (target == null)
-                    continue;
-
-                if (EvaluateTarget(target))
-                {
-                    satisfiedCount++;
-                }
+                Debug.LogWarning(
+                    "[SPARK TARGET COMPONENT] " +
+                    "UNRESOLVED: " + target.TargetComponentId);
             }
-
-            return satisfiedCount;
         }
+
+        if (target.HasRequiredConnectionPair)
+        {
+            if (TryResolveTargetTerminalPair(
+                    target,
+                    out SparkTerminal positive,
+                    out SparkTerminal negative))
+            {
+                float voltage = Mathf.Abs(
+                    positive.ElectricalState.Voltage -
+                    negative.ElectricalState.Voltage);
+
+                Debug.Log(
+                    "[SPARK TARGET TERMINALS] " +
+                    "Target=" + target.TargetId +
+                    " | Positive=" + positive.name +
+                    " | Negative=" + negative.name +
+                    " | VoltageMagnitude=" + voltage.ToString("F6"));
+            }
+            else
+            {
+                Debug.LogWarning(
+                    "[SPARK TARGET TERMINALS] " +
+                    "UNRESOLVED PAIR: " +
+                    target.RequiredPositiveTerminalId +
+                    " / " +
+                    target.RequiredNegativeTerminalId);
+            }
+        }
+    }
+
+    return satisfiedCount;
+}
 
         // ================================================================
         // SINGLE TARGET EVALUATION
@@ -1472,6 +1530,22 @@ private bool AreRequiredResistorsHealthy(
         if (target.Type == SparkLevelTarget.TargetType.CurrentRange)
         {
             value = Mathf.Abs(component.ElectricalState.Current);
+            if (component is SparkPowerSupply)
+{
+    Debug.Log(
+        "[SPARK SOURCE CURRENT] " +
+        "Target=" + target.TargetId +
+        " | Source=" + component.name +
+        " | Current=" +
+        component.ElectricalState.Current.ToString("F6") +
+        " A | Magnitude=" + value.ToString("F6") +
+        " A | Min=" + target.MinimumCurrent.ToString("F6") +
+        " A | Max=" + target.MaximumCurrent.ToString("F6") +
+        " A | Conduction=" +
+        component.ElectricalState.Conduction +
+        " | Enabled=" + component.ElectricalEnabled,
+        component);
+}
             minimum = target.MinimumCurrent;
             maximum = target.MaximumCurrent;
             useMaximum = target.UseMaximumCurrent;

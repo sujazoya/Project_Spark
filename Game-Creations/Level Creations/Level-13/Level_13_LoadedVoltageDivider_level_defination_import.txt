@@ -1,0 +1,138 @@
+PROJECT_SPARK_EDITABLE_SO_TXT_V1
+# Readable/editable Unity serialized data. Modify values in the JSON section.
+# Keep field names, object-reference structures, and section markers unchanged.
+# The import requires selecting the ORIGINAL asset in Unity.
+Asset Name: Level_13
+Asset Type: ProjectSpark.Gameplay.SparkLevelDefinition, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+Asset Path: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_13_Layout/Level_13.asset
+Asset GUID: dbdd5c7e9d81df049b1f7abde04561fe
+Export Date: 2026-11-04 00:22:08
+----- BEGIN UNITY EDITOR JSON -----
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "Level_13",
+        "m_EditorClassIdentifier": "Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition",
+        "levelId": "level_13",
+        "displayName": "Loaded Voltage Divider Challenge",
+        "description": "Build a loaded 5 V voltage divider: a fixed 220 ohm R1 in series with a parallel load formed by replaceable R2 and fixed 470 ohm R3. Replace the incorrect 150 ohm R2 with 330 ohm. Measure 2.34 V at Vout, verify approximately 7.10 mA in R2 and 12.08 mA total source current. Switch power off before replacing components.",
+        "completionMode": 0,
+        "requiredTargetCount": 4,
+        "requireClosedReturn": true,
+        "rejectShortCircuit": true,
+        "rejectTargetShort": true,
+        "allowIntermediateConnections": true,
+        "requireMinimumVoltage": false,
+        "minimumVoltage": 0.0,
+        "allowAnyConfiguredPowerSource": true,
+        "powerSources": [
+            {
+                "sourceName": "PowerSupply_01",
+                "positiveTerminalId": "Battery_positive",
+                "negativeTerminalId": "Battery_negative",
+                "nominalVoltage": 5.0
+            }
+        ],
+        "targets": [
+            {
+                "targetId": "loaded_divider_r1_conducting",
+                "displayName": "R1 Series Resistor Conducting",
+                "description": "Fixed 220 ohm series resistor R1 must conduct.",
+                "targetType": 4,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "Resistor_220_Input",
+                "requiredNegativeTerminalId": "Resistor_220_Output",
+                "targetComponentId": "Resistor_220_Ω",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "loaded_divider_r2_current",
+                "displayName": "Correct Load Current",
+                "description": "Replace 150 ohm R2 with 330 ohm so its current is 6.8-7.4 mA.",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R2_Input",
+                "requiredNegativeTerminalId": "R2_Output",
+                "targetComponentId": "R2_Component",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.0068,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.0074,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "loaded_divider_output_voltage",
+                "displayName": "Loaded Divider Output",
+                "description": "Voltage at Vout across parallel R2 and R3 is 2.25-2.45 V.",
+                "targetType": 5,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R2_Input",
+                "requiredNegativeTerminalId": "R2_Output",
+                "targetComponentId": "R2_Component",
+                "minimumVoltage": 2.25,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": true,
+                "maximumVoltage": 2.45,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "loaded_divider_source_current",
+                "displayName": "Safe Source Current",
+                "description": "The 5 V supply current must be 11.8-12.4 mA.",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "Battery_positive",
+                "requiredNegativeTerminalId": "Battery_negative",
+                "targetComponentId": "PowerSupply_01",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.0118,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.0124,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            }
+        ],
+        "failureMode": 0,
+        "requiredHealthyResistorIds": [],
+        "requireHealthyInstalledResistors": false,
+        "successOutputIds": [],
+        "failureOutputIds": [],
+        "unlockNextLevelOnCompletion": true,
+        "unlockedByDefault": true,
+        "autoUnlockNextLevel": true,
+        "autoAdvanceOnCompletion": false
+    }
+}
+----- END UNITY EDITOR JSON -----

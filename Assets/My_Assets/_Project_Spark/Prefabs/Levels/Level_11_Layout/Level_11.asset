@@ -58,9 +58,9 @@ MonoBehaviour:
     description: Replace 100 ohm R2 with 220 ohm so branch current is 21-24 mA.
     targetType: 6
     targetTerminalId: 
-    requiredPositiveTerminalId: Resistor_220_Input
-    requiredNegativeTerminalId: Resistor_220_Output
-    targetComponentId: "Resistor_220_\u03A9"
+    requiredPositiveTerminalId: R2_Input
+    requiredNegativeTerminalId: R2_Output
+    targetComponentId: R2_Component
     minimumVoltage: 0
     minimumCurrent: 0.021
     minimumPower: 0
@@ -78,9 +78,9 @@ MonoBehaviour:
     description: R2 has 4.90-5.10 V across it.
     targetType: 5
     targetTerminalId: 
-    requiredPositiveTerminalId: Resistor_220_Input
-    requiredNegativeTerminalId: Resistor_220_Output
-    targetComponentId: "Resistor_220_\u03A9"
+    requiredPositiveTerminalId: R2_Input
+    requiredNegativeTerminalId: R2_Output
+    targetComponentId: R2_Component
     minimumVoltage: 4.9
     minimumCurrent: 0
     minimumPower: 0
@@ -106,7 +106,7 @@ MonoBehaviour:
     minimumCurrent: 0.047
     minimumPower: 0
     requireElectricalEnabled: 1
-    requireConduction: 1
+    requireConduction: 0
     inverted: 0
     useMaximumVoltage: 0
     maximumVoltage: 0

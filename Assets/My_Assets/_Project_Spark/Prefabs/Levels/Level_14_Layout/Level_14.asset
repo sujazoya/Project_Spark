@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_14
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_14
+  displayName: LED Protection & Current Limiting
+  description: Build a 5 V parallel circuit. Branch A has a replaceable resistor
+    in series with a correctly oriented red LED; branch B has a fixed 470 ohm resistor.
+    Replace the incorrect 150 ohm resistor with 330 ohm to limit LED-branch current
+    to about 9.09 mA (assuming LED forward voltage 2.0 V). Verify about 3.0 V across
+    the resistor and 19.73 mA total source current. Switch power off before replacing
+    components.
+  completionMode: 0
+  requiredTargetCount: 4
+  requireClosedReturn: 1
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 0
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: PowerSupply_01
+    positiveTerminalId: Battery_positive
+    negativeTerminalId: Battery_negative
+    nominalVoltage: 5
+  targets:
+  - targetId: led14_led_conducting
+    displayName: LED Conducting
+    description: LED1 must be forward biased and conducting; visual illumination
+      must also be checked in the scene.
+    targetType: 4
+    targetTerminalId: 
+    requiredPositiveTerminalId: LED1_Anode
+    requiredNegativeTerminalId: LED1_Cathode
+    targetComponentId: LED1
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: led14_limit_current
+    displayName: Protected LED Branch Current
+    description: Install 330 ohm R_LIMIT so LED branch current is 8.0-10.5 mA.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_LIMIT_Input
+    requiredNegativeTerminalId: R_LIMIT_Output
+    targetComponentId: R_LIMIT_Component
+    minimumVoltage: 0
+    minimumCurrent: 0.008
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.0105
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: led14_limit_voltage
+    displayName: Correct Resistor Voltage
+    description: Measure 2.7-3.3 V across current-limiting resistor R_LIMIT.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_LIMIT_Input
+    requiredNegativeTerminalId: R_LIMIT_Output
+    targetComponentId: R_LIMIT_Component
+    minimumVoltage: 2.7
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 3.3
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: led14_source_current
+    displayName: Safe Total Consumption
+    description: Total supply current must be 18.0-21.0 mA for the LED and 470 ohm
+      branches.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: Battery_positive
+    requiredNegativeTerminalId: Battery_negative
+    targetComponentId: PowerSupply_01
+    minimumVoltage: 0
+    minimumCurrent: 0.018
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.021
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 0
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 1
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0
