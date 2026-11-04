@@ -20,6 +20,13 @@ namespace ProjectSpark.Gameplay.Shelf
         [SerializeField] private SparkShelfSlot[] slots;
         [SerializeField] private SparkShelfItem[] items;
         [SerializeField] private bool autoFindChildren = true;
+        // Tracks items by the level instance they belong to.
+        // Important because shelf items may be reparented to slot anchors.
+        private readonly Dictionary<Transform, HashSet<SparkShelfItem>>
+            levelItems = new Dictionary<Transform, HashSet<SparkShelfItem>>();
+
+        public event Action<SparkShelfItem, SparkShelfSlot> ItemRecycled;
+
 
         [SerializeField]
         private SparkShelfSlot[] additionalStorageSlots;
@@ -113,6 +120,459 @@ namespace ProjectSpark.Gameplay.Shelf
                 }
             }
         }
+
+        
+
+
+/// <summary>
+/// Register every SparkShelfItem carrying SparkSceneBinding
+/// inside an instantiated level layout.
+/// Call after RegisterRuntimeSlots(levelRoot).
+/// </summary>
+
+
+public void RegisterLevelItems(Transform levelRoot)
+{
+    Initialize();
+
+    if (levelRoot == null)
+        return;
+
+    if (!levelItems.TryGetValue(
+        levelRoot, out HashSet<SparkShelfItem> tracked))
+    {
+        tracked = new HashSet<SparkShelfItem>();
+        levelItems.Add(levelRoot, tracked);
+    }
+
+    SparkShelfItem[] found =
+        levelRoot.GetComponentsInChildren<SparkShelfItem>(true);
+
+    int registered = 0;
+    int repaired = 0;
+    int failed = 0;
+
+    foreach (SparkShelfItem item in found)
+    {
+        if (item == null)
+            continue;
+
+        if (item.IsMoving)
+        {
+            failed++;
+            Debug.LogWarning(
+                "[Shelf] Level item is moving: " +
+                item.ItemId, item);
+            continue;
+        }
+
+        // Determine actual level workstation ownership.
+        SparkShelfSlot target =
+            item.GetComponentInParent<SparkShelfSlot>();
+
+        if (target == null ||
+            !IsKnownSlot(target) ||
+            target.Kind != SparkShelfSlotKind.Workstation)
+        {
+            target = item.PreferredWorkstationSlot;
+        }
+
+        if (target == null ||
+            !IsKnownSlot(target) ||
+            !target.isActiveAndEnabled ||
+            target.Kind != SparkShelfSlotKind.Workstation)
+        {
+            failed++;
+            Debug.LogWarning(
+                "[Shelf] No registered workstation for " +
+                item.ItemId, item);
+            continue;
+        }
+
+        if (!target.CanAccept(item))
+        {
+            failed++;
+            Debug.LogWarning(
+                "[Shelf] Workstation unavailable: " +
+                target.SlotId + " for " + item.ItemId,
+                item);
+            continue;
+        }
+
+        SparkShelfSlot previous = item.CurrentSlot;
+        bool needsRepair =
+            previous != target ||
+            target.Occupant != item;
+
+        if (needsRepair)
+        {
+            // Establish destination occupancy first.
+            if (!target.TryReserve(item))
+            {
+                failed++;
+                continue;
+            }
+
+            // Remove the old reservation only if
+            // it actually belongs to this item.
+            if (previous != null &&
+                previous != target &&
+                previous.Occupant == item)
+            {
+                previous.Release(item);
+            }
+
+            item.CurrentSlot = target;
+            item.IsMoving = false;
+
+            repaired++;
+        }
+
+        CacheItemState(item);
+
+        if (!IsRegistered(item))
+        {
+            int count = items.Length;
+            Array.Resize(ref items, count + 1);
+            items[count] = item;
+            registered++;
+        }
+
+        tracked.Add(item);
+
+        // No Snap(): preserve the authored level position.
+        // The bridge can now read target.InstalledItem.
+        target.RefreshSmartBinding();
+
+        Debug.Log(
+            "[Shelf] Level item ready: " + item.ItemId +
+            " | Slot=" + target.SlotId +
+            " | Installed=" +
+            (target.InstalledItem == item),
+            item);
+    }
+
+    Debug.Log(
+        "[Shelf] Level registration finished. " +
+        "New=" + registered +
+        " | Repaired=" + repaired +
+        " | Failed=" + failed,
+        this);
+}
+
+
+/// <summary>
+/// Unregister every item owned by this level instance.
+/// Run after circuit connections have been cleared,
+/// before destroying the level layout.
+/// </summary>
+
+    
+public void UnregisterLevelItems(Transform levelRoot)
+{
+    if (levelRoot == null)
+        return;
+
+    if (!levelItems.TryGetValue(
+        levelRoot, out HashSet<SparkShelfItem> tracked))
+        return;
+
+    int removed = 0;
+
+    List<SparkShelfItem> remaining =
+        new List<SparkShelfItem>(items);
+
+    foreach (SparkShelfItem item in tracked)
+    {
+        if (item == null)
+            continue;
+
+        // Stop movement before releasing occupied slots.
+        if (motions.TryGetValue(
+            item, out Coroutine motion))
+        {
+            if (motion != null)
+                StopCoroutine(motion);
+        }
+
+        motions.Remove(item);
+
+        if (destinations.TryGetValue(
+            item, out SparkShelfSlot destination))
+        {
+            if (destination != null &&
+                destination.Occupant == item)
+            {
+                destination.Release(item);
+                destination.RefreshSmartBinding();
+            }
+        }
+
+        destinations.Remove(item);
+
+        SparkShelfSlot current = item.CurrentSlot;
+
+        if (current != null &&
+            current.Occupant == item)
+        {
+            current.Release(item);
+            current.RefreshSmartBinding();
+        }
+
+        item.CurrentSlot = null;
+        item.IsMoving = false;
+
+        physics.Remove(item);
+        originalParents.Remove(item);
+
+        if (remaining.Remove(item))
+            removed++;
+
+        // If this level item was reparented outside
+        // the layout, the loader would otherwise leave
+        // it alive after destroying the level root.
+        bool outsideLayout =
+            item.transform != levelRoot &&
+            !item.transform.IsChildOf(levelRoot);
+
+        if (outsideLayout)
+        {
+            if (Application.isPlaying)
+                Destroy(item.gameObject);
+            else
+                DestroyImmediate(item.gameObject);
+        }
+    }
+
+    items = remaining.ToArray();
+
+    tracked.Clear();
+    levelItems.Remove(levelRoot);
+
+    Debug.Log(
+        "[SparkShelf] Level unregistered. Removed=" +
+        removed + " | RemainingShelfItems=" +
+        items.Length,
+        this);
+}
+
+
+
+public bool TryPrepareLevelUnload(
+    Transform levelRoot,
+    out string reason)
+{
+    Initialize();
+    reason = string.Empty;
+
+    if (levelRoot == null)
+    {
+        reason = "Level root is missing.";
+        return false;
+    }
+
+    // Only items registered from this level are level-owned.
+    levelItems.TryGetValue(
+        levelRoot,
+        out HashSet<SparkShelfItem> ownedByLevel);
+
+    // Map each persistent item to its new storage slot.
+    var transfers =
+        new List<KeyValuePair<SparkShelfItem, SparkShelfSlot>>();
+
+    // Prevent multiple items choosing the same destination.
+    var reservedTargets = new HashSet<SparkShelfSlot>();
+
+    // =====================================================
+    // PHASE 1: VALIDATE EVERY PURCHASED/PERSISTENT ITEM
+    // =====================================================
+
+    foreach (SparkShelfItem item in items)
+    {
+        if (item == null)
+            continue;
+
+        if (ownedByLevel != null &&
+            ownedByLevel.Contains(item))
+            continue;
+
+        SparkShelfSlot current = item.CurrentSlot;
+
+        bool currentSlotBelongsToLevel =
+            current != null &&
+            (current.transform == levelRoot ||
+             current.transform.IsChildOf(levelRoot));
+
+        bool itemInsideLevel =
+            item.transform == levelRoot ||
+            item.transform.IsChildOf(levelRoot);
+
+        if (!currentSlotBelongsToLevel &&
+            !itemInsideLevel)
+            continue;
+
+        if (item.IsMoving ||
+            motions.ContainsKey(item) ||
+            destinations.ContainsKey(item))
+        {
+            reason = "Item is moving: " + item.ItemId;
+            return false;
+        }
+
+        if (!IsElectricallyDisconnected(item))
+        {
+            reason = "Disconnect purchased item: " +
+                     item.ItemId;
+            return false;
+        }
+
+        if (current != null &&
+            current.Occupant != item)
+        {
+            reason = "Invalid slot occupancy for " +
+                     item.ItemId;
+            return false;
+        }
+
+        SparkShelfSlot target = null;
+
+        // Find a compatible persistent STORAGE slot.
+        foreach (SparkShelfSlot slot in slots)
+        {
+            if (slot == null ||
+                !slot.isActiveAndEnabled ||
+                slot.Kind != SparkShelfSlotKind.Storage)
+                continue;
+
+            // Never move into a slot being destroyed.
+            if (slot.transform == levelRoot ||
+                slot.transform.IsChildOf(levelRoot))
+                continue;
+
+            if (reservedTargets.Contains(slot))
+                continue;
+
+            if (!slot.CanAccept(item))
+                continue;
+
+            target = slot;
+            break;
+        }
+
+        if (target == null)
+        {
+            reason =
+                "No free persistent storage for " +
+                item.ItemId;
+            return false;
+        }
+
+        reservedTargets.Add(target);
+
+        transfers.Add(
+            new KeyValuePair<SparkShelfItem, SparkShelfSlot>(
+                item, target));
+    }
+
+    // =====================================================
+    // PHASE 2: RESERVE ALL DESTINATIONS FIRST
+    // =====================================================
+
+    var successfullyReserved =
+        new List<KeyValuePair<SparkShelfItem, SparkShelfSlot>>();
+
+    foreach (var transfer in transfers)
+    {
+        SparkShelfItem item = transfer.Key;
+        SparkShelfSlot target = transfer.Value;
+
+        if (!target.TryReserve(item))
+        {
+            // Roll back reservations made by this operation.
+            foreach (var previous in successfullyReserved)
+            {
+                previous.Value.Release(previous.Key);
+            }
+
+            reason =
+                "Storage reservation failed for " +
+                item.ItemId;
+
+            return false;
+        }
+
+        successfullyReserved.Add(transfer);
+    }
+
+    // =====================================================
+    // PHASE 3: IMMEDIATE COMMIT
+    // =====================================================
+
+    foreach (var transfer in successfullyReserved)
+    {
+        SparkShelfItem item = transfer.Key;
+        SparkShelfSlot target = transfer.Value;
+
+        SparkShelfSlot previous = item.CurrentSlot;
+
+        CacheItemState(item);
+
+        // Release old workstation/level slot.
+        if (previous != null && previous != target)
+        {
+            previous.Release(item);
+        }
+
+        item.CurrentSlot = target;
+        item.IsMoving = false;
+
+        // No coroutine: old level is about to be destroyed.
+        Freeze(item);
+
+        item.transform.SetPositionAndRotation(
+            target.Anchor.position,
+            target.Anchor.rotation);
+
+        // Always use a persistent parent during unload.
+        // Even when parentToSlot == false.
+        item.transform.SetParent(target.Anchor, true);
+
+        // Prevent future Snap() calls from restoring
+        // a parent belonging to a destroyed level.
+        originalParents[item] = target.Anchor;
+
+        if (previous != null && previous != target)
+            previous.RefreshSmartBinding();
+
+        target.RefreshSmartBinding();
+
+        item.NotifyPlaced(target);
+        ItemPlaced?.Invoke(item, target);
+
+        if (logTransitions)
+        {
+            Debug.Log(
+                "[SparkShelf] Preserved " +
+                item.ItemId +
+                " -> " + target.SlotId,
+                item);
+        }
+    }
+
+    if (logTransitions)
+    {
+        Debug.Log(
+            "[SparkShelf] Level unload prepared. " +
+            "Purchased items relocated: " +
+            successfullyReserved.Count,
+            this);
+    }
+
+    return true;
+}
+
+
+
 
         private void CacheItemState(SparkShelfItem item)
         {
@@ -332,6 +792,7 @@ Debug.Log(
             Snap(item, target);
             previous?.Release(item);
             item.CurrentSlot = target;
+            target.RefreshSmartBinding();
             item.IsMoving = false;
             destinations.Remove(item);
             motions.Remove(item);
@@ -623,6 +1084,71 @@ public void UnregisterRuntimeSlots(Transform levelRoot)
 
     slots = remaining.ToArray();
 }
+public bool TryRecycleItem(SparkShelfItem item, out string reason)
+{
+    Initialize();
+    reason = null;
+
+    if (item == null || !IsRegistered(item))
+    {
+        reason = "Item is not registered with this shelf.";
+        return false;
+    }
+    if (!item.isActiveAndEnabled || !item.gameObject.activeInHierarchy ||
+        !item.AllowTouch || item.IsMoving || motions.ContainsKey(item) ||
+        destinations.ContainsKey(item))
+    {
+        reason = "Item is unavailable, locked, or still moving.";
+        return false;
+    }
+    if (CanMoveItem != null && !CanMoveItem(item))
+    {
+        reason = "Level rules currently prevent moving this item.";
+        return false;
+    }
+
+    SparkShelfSlot previous = item.CurrentSlot;
+    if (previous == null || previous.Occupant != item)
+    {
+        reason = "Item/slot occupancy does not agree. Check initial registration.";
+        return false;
+    }
+    if (previous.Kind != SparkShelfSlotKind.Workstation &&
+        previous.Kind != SparkShelfSlotKind.Storage)
+    {
+        reason = "This slot cannot be recycled from.";
+        return false;
+    }
+
+    // Mandatory even when preventMovementWhileConnected == false.
+    if (!IsElectricallyDisconnected(item))
+    {
+        reason = "Disconnect ALL wires from the item before recycling.";
+        return false;
+    }
+
+    previous.Release(item);
+    item.CurrentSlot = null;
+    item.IsMoving = false;
+
+    List<SparkShelfItem> remaining = new List<SparkShelfItem>(items);
+    remaining.Remove(item);
+    items = remaining.ToArray();
+    motions.Remove(item);
+    destinations.Remove(item);
+    physics.Remove(item);
+    originalParents.Remove(item);
+
+    // Notify smart-slot listeners; old binding points must be masked.
+    previous.RefreshSmartBinding();
+    ItemRecycled?.Invoke(item, previous);
+
+    if (logTransitions)
+        Debug.Log("[SparkShelf] Recycled " + item.ItemId +
+                  " from " + previous.SlotId, this);
+    return true;
+}
+
 
 
 

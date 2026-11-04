@@ -1,0 +1,70 @@
+PROJECT SPARK — LEVEL 17 CREATION GUIDE
+=======================================
+LEVEL: Series–Parallel LED Network (5 V)
+
+IMPORTANT: The uploaded Level_17 asset still had levelId=level_16 and
+the old Level 16 series-LED targets. The accompanying import TXT corrects these.
+
+CIRCUIT TO BUILD
+  Battery +5V
+      |
+  Power Switch
+      |
+  R_LIMIT (replaceable: initially 220 Ω; player installs 100 Ω)
+      |
+      +---- R_RED 330 Ω ---- Red LED anode -> cathode ----+
+      |                                                 |
+      +---- R_GREEN 470 Ω -- Green LED anode -> cathode --+
+                                                        |
+                                                   Battery −
+
+IMPORTANT: These are TWO PARALLEL LED BRANCHES after a COMMON series resistor.
+Do not put the two LEDs in series. Do not connect the parallel resistors directly
+to ground without their LEDs.
+
+LEVEL PREFAB SETUP
+1. Create or edit ORIGINAL Level_17_Layout prefab, not its Play Mode clone.
+2. Keep the existing power supply, switch, LEDs, and their fixed binding IDs:
+   led, led_2, PowerSupply_01.
+3. Place two additional fixed resistors: 330 Ω (red branch) and 470 Ω
+   (green branch). Bind them to R_RED_Component and R_GREEN_Component.
+4. Bind their terminals:
+   R_RED_Input / R_RED_Output
+   R_GREEN_Input / R_GREEN_Output
+5. Keep the runtime workstation slot Register_Slot_2 for the replaceable
+   100 Ω series resistor. The initial wrong resistor is 220 Ω.
+6. Configure SparkLevelWorkstationBindingBridge for Register_Slot_2
+   and runtime component ID R_LIMIT_Component with terminal IDs
+   R_LIMIT_Input / R_LIMIT_Output. Declare these IDs in the ORIGINAL
+   prefab's SparkLevelSceneBindings runtime arrays.
+7. Verify the original SparkLevelSceneBindings includes the four fixed
+   branch resistor terminal IDs and the two fixed component IDs.
+8. Import Level_17_SeriesParallel_Import.txt onto the ORIGINAL Level_17
+   SparkLevelDefinition asset using your existing TXT importer.
+9. Test after the 100 Ω replacement with switch ON and closed return.
+10. Run source-current audit; calibrate target current ranges to measured
+    SparkLED values before publishing.
+
+NOMINAL ESTIMATES (assuming each LED ~2.0 V)
+   Node after 100 Ω: ~4.03 V
+   Red 330 Ω branch: ~6.16 mA
+   Green 470 Ω branch: ~4.33 mA
+   Source: ~10.49 mA
+   Common resistor drop: ~1.05 V
+
+The SparkLED nonlinear solver may differ. Do NOT rely on the earlier
+concept image's 15 mA estimate; it is not consistent with this topology
+and a ~2 V drop on each LED.
+
+TARGETS (5)
+- Red LED conducting: led
+- Green LED conducting: led_2
+- Red 330 Ω branch current: R_RED_Component, 4.5–7.5 mA
+- Green 470 Ω branch current: R_GREEN_Component, 3.0–5.5 mA
+- Total source current: PowerSupply_01, 8–12 mA
+
+NOTES
+- Target component IDs are binding aliases, not GameObject names.
+- The TXT importer updates the level definition, not the scene prefab.
+- Ensure branch resistor IDs and terminal IDs are declared/bound before
+  testing; otherwise targets can remain false even with a working circuit.

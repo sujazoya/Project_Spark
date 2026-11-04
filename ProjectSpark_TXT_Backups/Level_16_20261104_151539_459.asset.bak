@@ -1,0 +1,154 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_16
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_15
+  displayName: Dual LED Parallel Circuit Challenge
+  description: 'Build two independent LED branches in parallel from a switched 5
+    V supply. Branch A uses a replaceable resistor: replace the incorrect 150 ohm
+    with 330 ohm in Register_Slot_2, then connect the red LED in series. Branch B
+    uses a fixed 470 ohm resistor in series with a green LED; correct its polarity.
+    Both LED cathodes return to supply negative. Verify both LEDs conduct, each branch
+    current is within its target range, and total source current is correct. Switch
+    power off before changing parts. Green LED targets depend on its configured forward-voltage
+    model.'
+  completionMode: 0
+  requiredTargetCount: 5
+  requireClosedReturn: 1
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 0
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: PowerSupply_01
+    positiveTerminalId: Battery_positive
+    negativeTerminalId: Battery_negative
+    nominalVoltage: 5
+  targets:
+  - targetId: level15_red_led_conducting
+    displayName: Red LED Conducting
+    description: Red LED must be correctly oriented and conducting. Fixed ID led
+      is reused from the uploaded Level 14 definition; verify the actual Level 15
+      scene binding.
+    targetType: 4
+    targetTerminalId: 
+    requiredPositiveTerminalId: LED_Anode
+    requiredNegativeTerminalId: LED_Cathode
+    targetComponentId: led
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level15_green_led_conducting
+    displayName: Green LED Conducting
+    description: Green LED must be forward biased and conducting. Assign fixed ID
+      LED2 to its SparkLED component.
+    targetType: 4
+    targetTerminalId: 
+    requiredPositiveTerminalId: led_2_Anode
+    requiredNegativeTerminalId: led_2_Cathode
+    targetComponentId: led_2
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level15_red_branch_current
+    displayName: Red Branch Current Safe
+    description: Replace the 150 ohm workstation resistor with 330 ohm. Target 8.0
+      to 10.5 mA in the red LED branch.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: R1_Input
+    requiredNegativeTerminalId: R1_Output
+    targetComponentId: R1_Component
+    minimumVoltage: 0
+    minimumCurrent: 0.008
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.0105
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level15_green_branch_current
+    displayName: Green Branch Current Safe
+    description: 470 ohm fixed resistor must conduct approximately 5.5 to 7.0 mA
+      with green LED forward-biased. Calibrate after measuring actual SparkLED model.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: Resistor_470_Input
+    requiredNegativeTerminalId: Resistor_470_Output
+    targetComponentId: "Resistor_470_\u03A9"
+    minimumVoltage: 0
+    minimumCurrent: 0.0055
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.007
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level15_total_source_current
+    displayName: Correct Total Source Current
+    description: Total 5 V source current should be 14.0 to 17.0 mA once both branches
+      conduct. Calibrate if the green LED forward voltage differs.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: Battery_positive
+    requiredNegativeTerminalId: Battery_negative
+    targetComponentId: PowerSupply_01
+    minimumVoltage: 0
+    minimumCurrent: 0.014
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.017
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 0
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 1
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

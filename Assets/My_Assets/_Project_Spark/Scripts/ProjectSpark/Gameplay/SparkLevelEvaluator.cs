@@ -586,92 +586,73 @@ namespace ProjectSpark.Gameplay
         // BUILD REACHABILITY
         // ================================================================
 
+
 private void BuildReachability(
     SparkLevelDefinition level,
     SparkTerminal sourcePositive,
     SparkTerminal sourceNegative,
     out bool closedReturn)
 {
+    closedReturn = false;
+
     positiveReachable.Clear();
     negativeReachable.Clear();
-
-    closedReturn = false;
 
     if (level == null ||
         sourcePositive == null ||
         sourceNegative == null)
     {
         Debug.LogWarning(
-            "[LEVEL REACHABILITY] Missing level or source terminal.");
+            "[LEVEL REACHABILITY] " +
+            "Missing level or power supply terminals.");
+
         return;
     }
 
+    // =====================================================
+    // SOURCE POSITIVE NETWORK
+    // =====================================================
+
+    // Traverse actual wires, closed switches,
+    // conducting LEDs, healthy conductive resistors,
+    // single wires and current-mode multimeters.
     TraverseWireNetwork(
         sourcePositive,
         positiveReachable,
+        traverseConductingLeds: true,
+        bypassOnly: false,
         traverseResistors: true);
+
+    // =====================================================
+    // SOURCE NEGATIVE NETWORK
+    // =====================================================
 
     TraverseWireNetwork(
         sourceNegative,
         negativeReachable,
+        traverseConductingLeds: true,
+        bypassOnly: false,
         traverseResistors: true);
 
-    SparkLevelTarget target = GetPrimaryTarget(level);
+    // =====================================================
+    // CLOSED RETURN DETECTION
+    // =====================================================
 
-    if (target == null)
-    {
-        Debug.LogWarning(
-            "[LEVEL REACHABILITY] No primary target found.");
-        return;
-    }
-
-    if (!TryResolveTargetTerminalPair(
-            target,
-            out SparkTerminal targetPositive,
-            out SparkTerminal targetNegative))
-    {
-        Debug.LogWarning(
-            $"[LEVEL TARGET PAIR] Failed to resolve terminal pair. " +
-            $"Target={target.TargetComponentId} | " +
-            $"PositiveID={target.RequiredPositiveTerminalId} | " +
-            $"NegativeID={target.RequiredNegativeTerminalId}");
-
-        return;
-    }
-
-    Debug.Log(
-        "[LEVEL TARGET PAIR] " +
-        $"Target={target.TargetComponentId} | " +
-        $"Positive={GetTerminalDebugName(targetPositive)} | " +
-        $"Negative={GetTerminalDebugName(targetNegative)}");
-
-    bool positiveHasTargetPositive =
-        positiveReachable.Contains(targetPositive);
-
-    bool negativeHasTargetNegative =
-        negativeReachable.Contains(targetNegative);
-
-    bool positiveHasTargetNegative =
-        positiveReachable.Contains(targetNegative);
-
-    bool negativeHasTargetPositive =
-        negativeReachable.Contains(targetPositive);
-
-    Debug.Log(
-        "[LEVEL REACHABILITY RESULT] " +
-        $"PositiveHasTargetPositive={positiveHasTargetPositive} | " +
-        $"NegativeHasTargetNegative={negativeHasTargetNegative} | " +
-        $"PositiveHasTargetNegative={positiveHasTargetNegative} | " +
-        $"NegativeHasTargetPositive={negativeHasTargetPositive} | " +
-        $"PositiveCount={positiveReachable.Count} | " +
-        $"NegativeCount={negativeReachable.Count}");
-
+    // A closed return exists when the positive supply
+    // terminal can reach the negative supply terminal
+    // through the external conducting network.
+    //
+    // No dependency on the primary target or its IDs.
     closedReturn =
-        positiveHasTargetPositive &&
-        negativeHasTargetNegative;
+        positiveReachable.Contains(sourceNegative);
 
     Debug.Log(
-        $"[LEVEL CLOSED RETURN] ClosedReturn={closedReturn}");
+        "[LEVEL CLOSED RETURN] " +
+        "Positive=" + GetTerminalDebugName(sourcePositive) +
+        " | Negative=" + GetTerminalDebugName(sourceNegative) +
+        " | PositiveReachable=" + positiveReachable.Count +
+        " | NegativeReachable=" + negativeReachable.Count +
+        " | ClosedReturn=" + closedReturn);
 }
 
 
@@ -737,9 +718,10 @@ private void BuildReachability(
 
                     // Probe connections are measurements, not conductive wires.
                     // A bypass search must never treat them as shorting links.
-                    if (bypassOnly &&
-                        connection.Kind == SparkConnectionKind.Probe)
-                        continue;
+                   // Measurement probes do not create conducting
+// circuit connections during topology traversal.
+if (connection.Kind == SparkConnectionKind.Probe)
+    continue;
 
                     SparkTerminal other =
                         connection.GetOther(current);
@@ -757,44 +739,56 @@ private void BuildReachability(
                         traversalQueue.Enqueue(other);
                     }
                 }
-                // --------------------------------------------------------
-                // CONDUCTING LED
-                // --------------------------------------------------------
+              
+// ========================================================
+// CONDUCTING LED — GRAPH CONTINUITY
+// ========================================================
 
-                SparkLED led =
-                    current.GetComponentInParent<SparkLED>();
+SparkLED led =
+    current.GetComponentInParent<SparkLED>();
 
-                if (led == null &&
-                    current.Owner is SparkLED ownerLed)
-                {
-                    led = ownerLed;
-                }
+if (led == null &&
+    current.Owner is SparkLED ownerLed)
+{
+    led = ownerLed;
+}
 
-                if (traverseConductingLeds &&
-                    led != null &&
-                    led.ElectricalEnabled &&
-                    led.ElectricalState.Conduction ==
-                        SparkConductionState.Conducting)
-                {
-                    SparkTerminal anode =
-                        led.AnodeTerminal;
+if (traverseConductingLeds &&
+    !bypassOnly &&
+    led != null &&
+    led.ElectricalEnabled &&
+    led.ElectricalState.Conduction ==
+        SparkConductionState.Conducting)
+{
+    SparkTerminal anode =
+        led.AnodeTerminal;
 
-                    SparkTerminal cathode =
-                        led.CathodeTerminal;
+    SparkTerminal cathode =
+        led.CathodeTerminal;
 
-                    SparkTerminal ledOpposite = null;
+    SparkTerminal opposites = null;
 
-                    if (led.CanConductBetween(current, anode))
-                    {
-                        ledOpposite = cathode;
-                    }
+    // An LED that is already conducting represents
+    // continuity between its two terminals.
+    //
+    // Graph traversal must be bidirectional.
+    // Actual diode direction is still determined
+    // by the electrical solver.
+    if (current == anode)
+    {
+        opposites = cathode;
+    }
+    else if (current == cathode)
+    {
+        opposites = anode;
+    }
 
-                    if (ledOpposite != null &&
-                        visitedTerminals.Add(ledOpposite))
-                    {
-                        traversalQueue.Enqueue(ledOpposite);
-                    }
-                }
+    if (opposites != null &&
+        visitedTerminals.Add(opposites))
+    {
+        traversalQueue.Enqueue(opposites);
+    }
+}
 
              
                 // --------------------------------------------------------
@@ -1344,7 +1338,7 @@ private bool AreRequiredResistorsHealthy(
             satisfiedCount++;
 
         // Diagnostic: explain the actual target state.
-        Debug.Log(
+/*        Debug.Log(
             "[SPARK TARGET] " +
             "Level=" + level.LevelId +
             " | Target=" + target.TargetId +
@@ -1352,7 +1346,7 @@ private bool AreRequiredResistorsHealthy(
             " | Passed=" + passed +
             " | Configured=" + target.IsConfigured() +
             " | PolarityValid=" + target.IsPolarityConfigurationValid() +
-            " | ComponentID=" + target.TargetComponentId);
+            " | ComponentID=" + target.TargetComponentId);*/
 
         if (!string.IsNullOrWhiteSpace(target.TargetComponentId))
         {
@@ -1363,7 +1357,7 @@ private bool AreRequiredResistorsHealthy(
                 SparkElectricalState state =
                     component.ElectricalState;
 
-                Debug.Log(
+               /* Debug.Log(
                     "[SPARK TARGET COMPONENT] " +
                     "Target=" + target.TargetId +
                     " | Object=" + component.name +
@@ -1372,7 +1366,7 @@ private bool AreRequiredResistorsHealthy(
                     " | Conduction=" + state.Conduction +
                     " | V=" + state.Voltage.ToString("F6") +
                     " | I=" + state.Current.ToString("F6") +
-                    " | P=" + state.Power.ToString("F6"));
+                    " | P=" + state.Power.ToString("F6"));*/
             }
             else
             {
@@ -1393,21 +1387,21 @@ private bool AreRequiredResistorsHealthy(
                     positive.ElectricalState.Voltage -
                     negative.ElectricalState.Voltage);
 
-                Debug.Log(
+               /* Debug.Log(
                     "[SPARK TARGET TERMINALS] " +
                     "Target=" + target.TargetId +
                     " | Positive=" + positive.name +
                     " | Negative=" + negative.name +
-                    " | VoltageMagnitude=" + voltage.ToString("F6"));
+                    " | VoltageMagnitude=" + voltage.ToString("F6"));*/
             }
             else
             {
-                Debug.LogWarning(
+              /*  Debug.LogWarning(
                     "[SPARK TARGET TERMINALS] " +
                     "UNRESOLVED PAIR: " +
                     target.RequiredPositiveTerminalId +
                     " / " +
-                    target.RequiredNegativeTerminalId);
+                    target.RequiredNegativeTerminalId);*/
             }
         }
     }
@@ -1532,7 +1526,7 @@ private bool AreRequiredResistorsHealthy(
             value = Mathf.Abs(component.ElectricalState.Current);
             if (component is SparkPowerSupply)
 {
-    Debug.Log(
+   /* Debug.Log(
         "[SPARK SOURCE CURRENT] " +
         "Target=" + target.TargetId +
         " | Source=" + component.name +
@@ -1544,7 +1538,7 @@ private bool AreRequiredResistorsHealthy(
         " A | Conduction=" +
         component.ElectricalState.Conduction +
         " | Enabled=" + component.ElectricalEnabled,
-        component);
+        component);*/
 }
             minimum = target.MinimumCurrent;
             maximum = target.MaximumCurrent;

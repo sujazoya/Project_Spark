@@ -1,0 +1,25 @@
+PROJECT SPARK | LEVEL 16 - EXACT WIRING
+
+5 V + -> Power_Switch input
+Power_Switch output -> R_LIMIT_Input (100 ohm replaceable resistor)
+R_LIMIT_Output -> LED_Anode (red LED)
+LED_Cathode (red) -> led_2_Anode (green LED)
+led_2_Cathode (green) -> Battery_negative
+
+Meter (optional): LCD positive -> R_LIMIT_Input; LCD negative -> R_LIMIT_Output.
+Do NOT connect LEDs in parallel and do NOT add fixed 470 ohm branch from Level 15.
+
+RUNTIME BRIDGE:
+Slot: Register_Slot_2
+Component: R_LIMIT_Component
+Input terminal: R_LIMIT_Input
+Output terminal: R_LIMIT_Output
+Type: SparkResistor; suffixes _Input, _Output.
+
+PRIMARY BINDINGS:
+Runtime component IDs: R_LIMIT_Component
+Runtime terminal IDs: R_LIMIT_Input, R_LIMIT_Output
+Fixed components: led, led_2, PowerSupply_01
+Fixed LED terminal IDs: LED_Anode, LED_Cathode, led_2_Anode, led_2_Cathode
+
+All identifiers must match actual prefab scene bindings.

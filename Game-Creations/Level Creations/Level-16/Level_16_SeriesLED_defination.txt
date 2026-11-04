@@ -1,0 +1,160 @@
+PROJECT_SPARK_EDITABLE_SO_TXT_V1
+# Readable/editable Unity serialized data. Modify values in the JSON section.
+# Keep field names, object-reference structures, and section markers unchanged.
+# The import requires selecting the ORIGINAL asset in Unity.
+Asset Name: Level_16
+Asset Type: ProjectSpark.Gameplay.SparkLevelDefinition, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+Asset Path: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_16_Layout/Level_16.asset
+Asset GUID: c6e74415442d6994ea9cdc11fd6168fb
+Export Date: 2026-11-04 15:07:35
+----- BEGIN UNITY EDITOR JSON -----
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "Level_16",
+        "m_EditorClassIdentifier": "Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition",
+        "levelId": "level_16",
+        "displayName": "Series LED Current Challenge",
+        "description": "Build a single series path from a switched 5 V source through replaceable 100 ohm resistor, red LED and green LED, then back to ground. Replace the incorrect 330 ohm resistor with 100 ohm in Register_Slot_2. Observe that both LEDs carry the same current and their forward voltage drops add. Verify both LEDs conduct, resistor current and voltage, and supply current. Power off before replacing parts. Nominal ranges assume approximately 2 V forward drop for each LED; calibrate with actual SparkLED model.",
+        "completionMode": 0,
+        "requiredTargetCount": 5,
+        "requireClosedReturn": true,
+        "rejectShortCircuit": true,
+        "rejectTargetShort": true,
+        "allowIntermediateConnections": true,
+        "requireMinimumVoltage": false,
+        "minimumVoltage": 0.0,
+        "allowAnyConfiguredPowerSource": true,
+        "powerSources": [
+            {
+                "sourceName": "PowerSupply_01",
+                "positiveTerminalId": "Battery_positive",
+                "negativeTerminalId": "Battery_negative",
+                "nominalVoltage": 5.0
+            }
+        ],
+        "targets": [
+            {
+                "targetId": "level16_red_led_conducting",
+                "displayName": "Red LED Conducting",
+                "description": "Red SparkLED must be forward biased and conducting; fixed binding ID led.",
+                "targetType": 4,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "LED_Anode",
+                "requiredNegativeTerminalId": "LED_Cathode",
+                "targetComponentId": "led",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level16_green_led_conducting",
+                "displayName": "Green LED Conducting",
+                "description": "Green SparkLED must be forward biased and conducting; fixed binding ID led_2.",
+                "targetType": 4,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "led_2_Anode",
+                "requiredNegativeTerminalId": "led_2_Cathode",
+                "targetComponentId": "led_2",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level16_series_current",
+                "displayName": "Correct Series Current",
+                "description": "Install 100 ohm R_LIMIT; expect 8-12 mA through both LEDs in series (nominal).",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_LIMIT_Input",
+                "requiredNegativeTerminalId": "R_LIMIT_Output",
+                "targetComponentId": "R_LIMIT_Component",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.008,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.012,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level16_limit_voltage",
+                "displayName": "Correct Resistor Voltage",
+                "description": "Voltage across 100 ohm current limiter should be 0.8-1.2 V (nominal).",
+                "targetType": 5,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_LIMIT_Input",
+                "requiredNegativeTerminalId": "R_LIMIT_Output",
+                "targetComponentId": "R_LIMIT_Component",
+                "minimumVoltage": 0.8,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": true,
+                "maximumVoltage": 1.2,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level16_source_current",
+                "displayName": "Correct Supply Current",
+                "description": "Single series-loop source current should be 8-12 mA (nominal).",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "Battery_positive",
+                "requiredNegativeTerminalId": "Battery_negative",
+                "targetComponentId": "PowerSupply_01",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.008,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.012,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            }
+        ],
+        "failureMode": 0,
+        "requiredHealthyResistorIds": [],
+        "requireHealthyInstalledResistors": false,
+        "successOutputIds": [],
+        "failureOutputIds": [],
+        "unlockNextLevelOnCompletion": true,
+        "unlockedByDefault": true,
+        "autoUnlockNextLevel": true,
+        "autoAdvanceOnCompletion": false
+    }
+}
+----- END UNITY EDITOR JSON -----

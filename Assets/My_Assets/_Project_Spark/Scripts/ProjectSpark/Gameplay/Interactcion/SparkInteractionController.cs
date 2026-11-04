@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using ProjectSpark.Gameplay.Shelf;
@@ -6,18 +7,15 @@ using ProjectSpark.Gameplay.Shelf;
 namespace ProjectSpark.Gameplay
 {
     /// <summary>
-    /// Central ProjectSpark interaction controller.
+    /// Central Project Spark interaction controller.
     ///
-    /// Supports:
-    /// - Normal SparkInteractable interactions
-    /// - Switch controls
-    /// - Visibility panels
-    /// - Two-click manual shelf placement
-    /// - Level-specific workstation slots
-    /// - Hover highlighting
+    /// One raycast determines:
+    /// 1. Shelf item
+    /// 2. Workstation slot
+    /// 3. Normal interactable
     ///
-    /// Uses RaycastAll to detect valid interactions
-    /// behind non-interactive decorative colliders.
+    /// Recycle selection works independently of
+    /// SparkInteractable.CanInteract().
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkInteractionController : MonoBehaviour
@@ -54,6 +52,14 @@ namespace ProjectSpark.Gameplay
         [SerializeField]
         private bool cancelShelfSelectionOnEmptyClick = false;
 
+        [Header("Recycle Icon")]
+        [SerializeField]
+        private SparkShelfRemovePrompt removePrompt;
+
+        [Header("Drag And Drop")]
+        [SerializeField]
+        private SparkShelfDragHandler shelfDragHandler;
+
         [Header("Spark AI Component Memory")]
         [SerializeField]
         private ProjectSpark.AI.Tutorial.SparkAIUnifiedAssistant
@@ -62,17 +68,14 @@ namespace ProjectSpark.Gameplay
         [SerializeField]
         private bool rememberComponentsAutomatically = true;
 
-        [Header("Settings")]
-        [SerializeField]
-        private bool interactionEnabled = true;        
-        [Header("Drag And Drop")]
-        [SerializeField]
-        private SparkShelfDragHandler shelfDragHandler;
-
-        private SparkInteractable lastClickedInteractable;
+        [Header("Component Inspector")]
         [SerializeField]
         private ProjectSpark.AI.Tutorial.SparkAIComponentInspector
-        componentInspector;        
+            componentInspector;
+
+        [Header("Settings")]
+        [SerializeField]
+        private bool interactionEnabled = true;
 
         [SerializeField]
         private bool highlightTarget = true;
@@ -92,12 +95,15 @@ namespace ProjectSpark.Gameplay
         private SparkInteractable previousTarget;
 
         private SparkShelfSlotClickTarget currentSlotTarget;
+        private SparkShelfItem currentShelfItem;
 
         public SparkInteractable CurrentTarget => currentTarget;
-
         public bool HasTarget => currentTarget != null;
-
         public bool InteractionEnabled => interactionEnabled;
+
+        // =====================================================
+        // UNITY
+        // =====================================================
 
         private void Awake()
         {
@@ -108,6 +114,7 @@ namespace ProjectSpark.Gameplay
         {
             if (!interactionEnabled)
             {
+                removePrompt?.ClearSelection();
                 ClearTarget();
                 return;
             }
@@ -116,46 +123,81 @@ namespace ProjectSpark.Gameplay
                 Input.GetKeyDown(KeyCode.Escape))
             {
                 manualPlacement?.CancelSelection();
+                removePrompt?.ClearSelection();
             }
 
+            // Unity UI owns pointer interactions.
+            // This prevents clicking the recycle button
+            // from also interacting with objects behind it.
             if (IsPointerOverUI())
             {
                 ClearTarget();
                 return;
             }
+
+            // Preserve existing dragging.
             shelfDragHandler?.Tick();
 
+            // Exactly one physics query for target detection.
             UpdateTarget();
-            if (Input.GetKeyDown(interactKey))
-            {
-                if (shelfDragHandler == null ||
-                    !shelfDragHandler.ConsumeInteractionClick())
-                {
-                    TryInteract();
-                }
-            }
-           if (Input.GetKeyDown(KeyCode.I))
+
+           
+if (Input.GetKeyDown(interactKey))
+{
+    // Select the recycle target BEFORE the drag handler
+    // gets a chance to consume the mouse click.
+    if (currentShelfItem != null)
+    {
+        if (removePrompt == null)
+            ResolveReferences();
+
+        removePrompt?.SelectItem(currentShelfItem);
+
+        Debug.Log(
+            "[ShelfRemove] Click routed: " +
+            currentShelfItem.name,
+            currentShelfItem);
+    }
+    else
+    {
+        removePrompt?.ClearSelection();
+    }
+
+    bool consumed =
+        shelfDragHandler != null &&
+        shelfDragHandler.ConsumeInteractionClick();
+
+    if (!consumed)
+        HandleInteractionClick();
+}
+
+
+            if (Input.GetKeyDown(KeyCode.I))
             {
                 if (currentTarget != null)
                 {
-                    if (componentInspector != null)
-                    {
-                        componentInspector.Inspect(currentTarget);
-                    }
+                    componentInspector?.Inspect(currentTarget);
 
-                    RememberForSparkAI(currentTarget.gameObject);
+                    RememberForSparkAI(
+                        currentTarget.gameObject);
+                }
+                else if (currentShelfItem != null)
+                {
+                    RememberForSparkAI(
+                        currentShelfItem.gameObject);
                 }
             }
         }
 
         private void OnDisable()
         {
+            removePrompt?.ClearSelection();
             ClearTarget();
         }
 
-        // ============================================================
+        // =====================================================
         // REFERENCES
-        // ============================================================
+        // =====================================================
 
         private void ResolveReferences()
         {
@@ -168,33 +210,45 @@ namespace ProjectSpark.Gameplay
                     FindFirstObjectByType<
                         SparkManualShelfPlacement>();
             }
+
             if (shelfDragHandler == null)
             {
                 shelfDragHandler =
                     GetComponent<SparkShelfDragHandler>();
             }
+
+            if (removePrompt == null)
+            {
+                removePrompt =
+                    FindFirstObjectByType<
+                        SparkShelfRemovePrompt>();
+            }
+
             if (askSpark == null)
             {
                 askSpark =
                     FindFirstObjectByType<
-                        ProjectSpark.AI.Tutorial.SparkAIUnifiedAssistant>();
+                        ProjectSpark.AI.Tutorial
+                        .SparkAIUnifiedAssistant>();
             }
         }
 
-        // ============================================================
-        // RAYCAST TARGET DETECTION
-        // ============================================================
+        // =====================================================
+        // TARGET DETECTION
+        // =====================================================
 
         private void UpdateTarget()
         {
-            SparkInteractable detectedInteractable = null;
-            SparkShelfSlotClickTarget detectedSlot = null;
-
             FindTargets(
-                out detectedInteractable,
-                out detectedSlot);
+                out SparkShelfItem detectedItem,
+                out SparkInteractable detectedInteractable,
+                out SparkShelfSlotClickTarget detectedSlot);
 
-            currentSlotTarget = detectedSlot;
+            currentShelfItem = detectedItem;
+
+            // An item has priority over the slot behind it.
+            currentSlotTarget =
+                detectedItem != null ? null : detectedSlot;
 
             if (detectedInteractable == currentTarget)
                 return;
@@ -206,9 +260,11 @@ namespace ProjectSpark.Gameplay
         }
 
         private void FindTargets(
+            out SparkShelfItem shelfItem,
             out SparkInteractable interactable,
             out SparkShelfSlotClickTarget slotTarget)
         {
+            shelfItem = null;
             interactable = null;
             slotTarget = null;
 
@@ -227,44 +283,84 @@ namespace ProjectSpark.Gameplay
                 interactionLayers,
                 triggerInteraction);
 
-            if (hits == null || hits.Length == 0)
-                return;
-
-            // RaycastAll is not distance-sorted.
-            System.Array.Sort(
+            Array.Sort(
                 hits,
-                (a, b) => a.distance.CompareTo(b.distance));
+                (a, b) =>
+                    a.distance.CompareTo(b.distance));
 
-            bool shouldLog =
-                logRaycastHits &&
-                Input.GetKeyDown(interactKey);
+            // ---------------------------------------------
+            // PASS 1: SHELF ITEMS
+            // Do not require SparkInteractable.
+            // ---------------------------------------------
 
             foreach (RaycastHit hit in hits)
             {
-                Collider hitCollider = hit.collider;
+                Collider collider = hit.collider;
 
-                if (hitCollider == null)
+                if (collider == null)
                     continue;
 
-                if (shouldLog)
+                if (logRaycastHits &&
+                    Input.GetKeyDown(interactKey))
                 {
                     Debug.Log(
                         "[SparkInteraction] Raycast hit: " +
-                        hitCollider.name +
+                        collider.name +
                         " | Distance: " +
                         hit.distance.ToString("F2") +
                         " | Layer: " +
                         LayerMask.LayerToName(
-                            hitCollider.gameObject.layer),
-                        hitCollider);
+                            collider.gameObject.layer),
+                        collider);
                 }
 
-                // --------------------------------------------
-                // WORKSTATION SLOT
-                // --------------------------------------------
+                SparkShelfItem item =
+                    collider.GetComponentInParent<
+                        SparkShelfItem>();
+
+                if (item == null ||
+                    !item.isActiveAndEnabled ||
+                    !item.gameObject.activeInHierarchy)
+                {
+                    continue;
+                }
+
+                shelfItem = item;
+
+                // Resolve the item's actual interactable,
+                // not an unrelated interactable on the slot.
+                interactable =
+                    item.GetComponent<SparkInteractable>();
+
+                if (interactable == null)
+                {
+                    interactable =
+                        item.GetComponentInChildren<
+                            SparkInteractable>(true);
+                }
+
+                if (interactable != null &&
+                    !interactable.CanInteract())
+                {
+                    interactable = null;
+                }
+
+                return;
+            }
+
+            // ---------------------------------------------
+            // PASS 2: SLOT / NORMAL INTERACTABLE
+            // ---------------------------------------------
+
+            foreach (RaycastHit hit in hits)
+            {
+                Collider collider = hit.collider;
+
+                if (collider == null)
+                    continue;
 
                 SparkShelfSlotClickTarget slot =
-                    hitCollider.GetComponentInParent<
+                    collider.GetComponentInParent<
                         SparkShelfSlotClickTarget>();
 
                 if (slot != null &&
@@ -275,23 +371,14 @@ namespace ProjectSpark.Gameplay
                     return;
                 }
 
-                // --------------------------------------------
-                // NORMAL INTERACTABLE
-                // --------------------------------------------
-
                 SparkInteractable target =
-                    FindInteractable(hitCollider);
-
-                    
+                    FindInteractable(collider);
 
                 if (target != null)
                 {
                     interactable = target;
                     return;
                 }
-
-                // Non-interactive decorative colliders
-                // are skipped.
             }
         }
 
@@ -319,6 +406,7 @@ namespace ProjectSpark.Gameplay
             }
 
             if (interactable == null ||
+                !interactable.isActiveAndEnabled ||
                 !interactable.CanInteract())
             {
                 return null;
@@ -327,174 +415,162 @@ namespace ProjectSpark.Gameplay
             return interactable;
         }
 
-        
-private void RememberForSparkAI(GameObject selectedObject)
-{
-    if (!rememberComponentsAutomatically ||
-        selectedObject == null)
-    {
-        return;
-    }
+        // =====================================================
+        // SINGLE CLICK ROUTER
+        // =====================================================
 
-    if (askSpark == null)
-    {
-        askSpark =
-            FindFirstObjectByType<
-                ProjectSpark.AI.Tutorial.SparkAIUnifiedAssistant>();
-    }
-
-    if (askSpark == null)
-        return;
-
-    askSpark.RememberComponent(selectedObject);
-
-    if (logPlacementResults)
-    {
-        Debug.Log(
-            "[SparkInteraction] Spark AI remembered: " +
-            selectedObject.name,
-            selectedObject);
-    }
-}
-
-
-        // ============================================================
-        // INTERACTION
-        // ============================================================
-
-        
-
-private void TryInteract()
-{
-    // ========================================================
-    // PRIORITY 1: WORKSTATION SLOT
-    // ========================================================
-
-    if (currentSlotTarget != null)
-    {
-        // Single-click an empty workstation slot
-        // to place the currently selected shelf item.
-        if (manualPlacement != null &&
-            manualPlacement.HasSelection)
+        private void HandleInteractionClick()
         {
-            TryPlaceAtSlot(currentSlotTarget);
+            // ---------------------------------------------
+            // PRIORITY 1: SHELF ITEM
+            // ---------------------------------------------
+
+            if (currentShelfItem != null)
+            {
+                SparkShelfItem item = currentShelfItem;
+
+                // Exactly one recycle selection call.
+               /* if (removePrompt == null)
+                    ResolveReferences();
+
+                removePrompt?.SelectItem(item);*/
+
+                if (logPlacementResults)
+                {
+                    Debug.Log(
+                        "[SparkInteraction] Shelf clicked: " +
+                        item.name +
+                        " | Workbench=" +
+                        item.IsAtWorkbench +
+                        " | Prompt=" +
+                        (removePrompt != null
+                            ? "FOUND"
+                            : "MISSING"),
+                        item);
+                }
+
+                // Installed components:
+                // Show recycle icon without triggering
+                // placement or movement.
+                if (item.IsAtWorkbench)
+                {
+                    RememberForSparkAI(item.gameObject);
+                    return;
+                }
+
+                // Storage components:
+                // Preserve normal shelf interaction.
+                InteractWithShelfItem(item);
+                return;
+            }
+
+            // ---------------------------------------------
+            // PRIORITY 2: OTHER WORLD OBJECTS
+            // ---------------------------------------------
+
+            // Only clear when no shelf item was clicked.
+            removePrompt?.ClearSelection();
+
+            TryInteract();
         }
 
-        return;
-    }
+        // =====================================================
+        // STORAGE ITEM INTERACTION
+        // =====================================================
 
-    // ========================================================
-    // GET CURRENT INTERACTABLE
-    // ========================================================
-
-    SparkInteractable target = currentTarget;
-
-    // ========================================================
-    // NO TARGET
-    // ========================================================
-
-    if (target == null)
-    {
-        if (cancelShelfSelectionOnEmptyClick)
+        private void InteractWithShelfItem(
+            SparkShelfItem item)
         {
-            manualPlacement?.CancelSelection();
+            if (item == null)
+                return;
+
+            SparkInteractable target = currentTarget;
+
+            if (target != null && target.CanInteract())
+            {
+                target.Interact();
+            }
+
+            // Preserve manual selection fallback.
+            if (manualPlacement != null &&
+                manualPlacement.SelectedItem != item &&
+                item.isActiveAndEnabled &&
+                !item.IsAtWorkbench)
+            {
+                manualPlacement.SelectItem(item);
+            }
+
+            if (manualPlacement != null &&
+                manualPlacement.SelectedItem == item)
+            {
+                RememberForSparkAI(item.gameObject);
+            }
         }
 
-        return;
-    }
+        // =====================================================
+        // NORMAL WORLD INTERACTION
+        // =====================================================
 
-    // ========================================================
-    // VALIDATE INTERACTION
-    // ========================================================
+        private void TryInteract()
+        {
+            // ---------------------------------------------
+            // WORKSTATION SLOT
+            // ---------------------------------------------
 
-    if (!target.CanInteract())
-        return;
+            if (currentSlotTarget != null)
+            {
+                if (manualPlacement != null &&
+                    manualPlacement.HasSelection)
+                {
+                    TryPlaceAtSlot(currentSlotTarget);
+                }
 
-    // ========================================================
-    // PRIORITY 2: SHELF COMPONENT
-    // ========================================================
+                return;
+            }
 
-    // Detect actual shelf items even when the
-    // SparkInteractable.IsShelfItem flag is incorrect.
-    SparkShelfItem shelfItem = FindShelfItem(target);
+            // ---------------------------------------------
+            // INTERACTABLE
+            // ---------------------------------------------
 
-    
-if (shelfItem != null)
-{
-    // A component already on the workbench can
-    // still be inspected and remembered by Spark AI.
-    if (shelfItem.IsAtWorkbench)
-    {
-        RememberForSparkAI(shelfItem.gameObject);
+            SparkInteractable target = currentTarget;
 
-        // Preserve existing drag-and-drop behavior.
-        return;
-    }
+            if (target == null)
+            {
+                if (cancelShelfSelectionOnEmptyClick)
+                {
+                    manualPlacement?.CancelSelection();
+                }
 
-    // The normal interaction system performs the
-    // real shelf selection and its validation.
-  
-target.Interact();
+                return;
+            }
 
-// Fallback when the normal interaction did not
-// select the shelf component.
-if (manualPlacement != null &&
-    manualPlacement.SelectedItem != shelfItem &&
-    shelfItem != null &&
-    shelfItem.isActiveAndEnabled &&
-    !shelfItem.IsAtWorkbench)
-{
-    manualPlacement.SelectItem(shelfItem);
-}
+            if (!target.CanInteract())
+                return;
 
+            // ---------------------------------------------
+            // VISIBILITY PANEL
+            // ---------------------------------------------
 
-    // Remember the component only when the
-    // manual shelf system confirms its selection.
-    if (manualPlacement != null &&
-        manualPlacement.SelectedItem == shelfItem)
-    {
-        RememberForSparkAI(shelfItem.gameObject);
-    }
+            SparkObjectVisibilityController visibility =
+                FindVisibilityController(target);
 
-    return;
-}
+            if (visibility != null)
+            {
+                visibility.OpenPanel();
+                return;
+            }
 
-    // ========================================================
-    // PRIORITY 3: VISIBILITY PANEL
-    // ========================================================
+            // ---------------------------------------------
+            // NORMAL INTERACTION
+            // ---------------------------------------------
 
-    SparkObjectVisibilityController visibility =
-        FindVisibilityController(target);
+            target.Interact();
+        }
 
-    if (visibility != null)
-    {
-        visibility.OpenPanel();
-        return;
-    }
+        // =====================================================
+        // SLOT PLACEMENT
+        // =====================================================
 
-    // ========================================================
-    // PRIORITY 4: NORMAL INTERACTION
-    // ========================================================
-
-    target.Interact();
-}
-
-private SparkShelfItem FindShelfItem(SparkInteractable target)
-{
-    if (target == null)
-        return null;
-
-    SparkShelfItem item =
-        target.GetComponent<SparkShelfItem>();
-
-    if (item == null)
-        item = target.GetComponentInParent<SparkShelfItem>();
-
-    if (item == null)
-        item = target.GetComponentInChildren<SparkShelfItem>(true);
-
-    return item;
-}
         private void TryPlaceAtSlot(
             SparkShelfSlotClickTarget clickTarget)
         {
@@ -507,7 +583,7 @@ private SparkShelfItem FindShelfItem(SparkInteractable target)
             if (manualPlacement == null)
             {
                 Debug.LogWarning(
-                    "[ManualShelf] Manual placement controller missing.",
+                    "[ManualShelf] Placement controller missing.",
                     this);
                 return;
             }
@@ -517,8 +593,7 @@ private SparkShelfItem FindShelfItem(SparkInteractable target)
                 if (logPlacementResults)
                 {
                     Debug.Log(
-                        "[ManualShelf] Slot clicked, " +
-                        "but no shelf item is selected.",
+                        "[ManualShelf] No item selected.",
                         clickTarget);
                 }
 
@@ -530,7 +605,7 @@ private SparkShelfItem FindShelfItem(SparkInteractable target)
             if (slot == null)
             {
                 Debug.LogWarning(
-                    "[ManualShelf] Click target has no assigned slot.",
+                    "[ManualShelf] Click target has no slot.",
                     clickTarget);
                 return;
             }
@@ -540,28 +615,29 @@ private SparkShelfItem FindShelfItem(SparkInteractable target)
 
             bool success =
                 manualPlacement.TryPlaceAt(slot);
-                if (success && selected != null)
-                {
-                    RememberForSparkAI(selected.gameObject);
-                }
+
+            if (success && selected != null)
+            {
+                RememberForSparkAI(selected.gameObject);
+            }
 
             if (logPlacementResults)
             {
                 Debug.Log(
-                    "[ManualShelf] Item: " +
+                    "[ManualShelf] Item=" +
                     (selected != null
                         ? selected.ItemId
                         : "None") +
-                    " | Slot: " + slot.SlotId +
-                    " | Placement: " +
+                    " | Slot=" + slot.SlotId +
+                    " | Result=" +
                     (success ? "SUCCESS" : "REJECTED"),
                     slot);
             }
         }
 
-        // ============================================================
-        // VISIBILITY
-        // ============================================================
+        // =====================================================
+        // VISIBILITY PANELS
+        // =====================================================
 
         private SparkObjectVisibilityController
             FindVisibilityController(
@@ -588,9 +664,44 @@ private SparkShelfItem FindShelfItem(SparkInteractable target)
                 SparkObjectVisibilityController>(true);
         }
 
-        // ============================================================
+        // =====================================================
+        // SPARK AI
+        // =====================================================
+
+        private void RememberForSparkAI(
+            GameObject selectedObject)
+        {
+            if (!rememberComponentsAutomatically ||
+                selectedObject == null)
+            {
+                return;
+            }
+
+            if (askSpark == null)
+            {
+                askSpark =
+                    FindFirstObjectByType<
+                        ProjectSpark.AI.Tutorial
+                        .SparkAIUnifiedAssistant>();
+            }
+
+            if (askSpark == null)
+                return;
+
+            askSpark.RememberComponent(selectedObject);
+
+            if (logPlacementResults)
+            {
+                Debug.Log(
+                    "[SparkInteraction] Spark AI remembered: " +
+                    selectedObject.name,
+                    selectedObject);
+            }
+        }
+
+        // =====================================================
         // HIGHLIGHT
-        // ============================================================
+        // =====================================================
 
         private void UpdateHighlightState()
         {
@@ -618,11 +729,12 @@ private SparkShelfItem FindShelfItem(SparkInteractable target)
             currentTarget = null;
             previousTarget = null;
             currentSlotTarget = null;
+            currentShelfItem = null;
         }
 
-        // ============================================================
+        // =====================================================
         // UI
-        // ============================================================
+        // =====================================================
 
         private bool IsPointerOverUI()
         {
@@ -633,21 +745,25 @@ private SparkShelfItem FindShelfItem(SparkInteractable target)
                    EventSystem.current.IsPointerOverGameObject();
         }
 
-        // ============================================================
+        // =====================================================
         // PUBLIC API
-        // ============================================================
+        // =====================================================
 
         public void SetInteractionEnabled(bool enabled)
         {
             interactionEnabled = enabled;
 
             if (!enabled)
+            {
+                removePrompt?.ClearSelection();
                 ClearTarget();
+            }
         }
 
         public void SetInteractionDistance(float distance)
         {
-            interactionDistance = Mathf.Max(0.1f, distance);
+            interactionDistance =
+                Mathf.Max(0.1f, distance);
         }
 
         public void SetCamera(Camera camera)
@@ -665,8 +781,7 @@ private SparkShelfItem FindShelfItem(SparkInteractable target)
         private void TestClearTarget()
         {
             ClearTarget();
+            removePrompt?.ClearSelection();
         }
-
     }
-
 }

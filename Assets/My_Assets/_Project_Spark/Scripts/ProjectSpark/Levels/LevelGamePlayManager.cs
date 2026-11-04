@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using ProjectSpark.Circuit;
 using ProjectSpark.Electrical;
-using ProjectSpark.Gameplay.Shelf;
-
 namespace ProjectSpark.Gameplay
 {
+
+
     [DisallowMultipleComponent]
     public sealed class LevelGamePlayManager : MonoBehaviour
     {
@@ -84,11 +84,7 @@ namespace ProjectSpark.Gameplay
         [SerializeField]
         private SparkLevelLayoutLoader layoutLoader;
 
-        private bool pendingAutoAdvance;
-
-        [Header("Runtime Shelf Registration")]
-[SerializeField]
-private SparkObjectShelf objectShelf;
+        private bool pendingAutoAdvance;       
 
         // ============================================================
         // RUNTIME SETTINGS
@@ -392,7 +388,7 @@ public bool StartLevel(int index)
         return false;
     }
     // Register workstation/storage slots from the new level.
-        RegisterLoadedLevelSlots();
+       // RegisterLoadedLevelSlots();
 
     activeLevelIndex = index;
 
@@ -1449,34 +1445,15 @@ LogVerbose(
                 layoutLoader =
                     FindFirstObjectByType<SparkLevelLayoutLoader>();
             }
-        }
-        
+        }     
        
 
-       // ============================================================
-// RUNTIME SHELF SLOT REGISTRATION
-// ============================================================
-
-private void RegisterLoadedLevelSlots()
-{
-    if (objectShelf == null)
-        objectShelf = FindFirstObjectByType<SparkObjectShelf>();
-
-    if (objectShelf == null || layoutLoader == null)
-        return;
-
-    if (layoutLoader.ActiveLayout == null)
-        return;
-
-    objectShelf.RegisterRuntimeSlots(
-        layoutLoader.ActiveLayout.transform
-    );
-}
+      
 
 private bool PrepareLevelLayout(
     SparkLevelDefinition level,
     bool forceReload = false)
-    {
+{
     if (level == null ||
         layoutLoader == null ||
         circuitSystem == null ||
@@ -1484,25 +1461,21 @@ private bool PrepareLevelLayout(
     {
         Debug.LogError(
             "[LevelGamePlayManager] Cannot prepare layout. " +
-            "Missing level, layout loader, circuit system, " +
-            "or electrical solver.",
+            "Missing required system.",
             this);
 
         return false;
     }
 
-   bool needsNewLayout =
-    forceReload ||
-    layoutLoader.ActiveLayout == null ||
-    layoutLoader.ActiveLayout.LevelDefinition != level;
+    bool needsNewLayout =
+        forceReload ||
+        layoutLoader.ActiveLayout == null ||
+        layoutLoader.ActiveLayout.LevelDefinition != level;
 
     if (needsNewLayout)
     {
-        // Validate the requested layout before replacing
-        // the currently active level.
-        if (!layoutLoader.CanLoadLevel(
-                level,
-                out string error))
+        // Validate before replacing the active level.
+        if (!layoutLoader.CanLoadLevel(level, out string error))
         {
             Debug.LogError(
                 "[LevelGamePlayManager] " + error,
@@ -1510,9 +1483,14 @@ private bool PrepareLevelLayout(
 
             return false;
         }
-      
 
-        // Load and validate the new layout.
+        // Loader owns:
+        // - Old circuit cleanup
+        // - Old shelf item unregistration
+        // - Old slot unregistration
+        // - Level prefab instantiation
+        // - New slot registration
+        // - New item registration
         if (!layoutLoader.LoadLevel(level))
         {
             Debug.LogError(
@@ -1521,12 +1499,9 @@ private bool PrepareLevelLayout(
                 this);
 
             return false;
-        } 
-        // Register workstation/storage slots from the new level.
-            RegisterLoadedLevelSlots();     
+        }
 
-        // Clear cached electrical results and refresh
-        // component discovery for the new layout.
+        // Refresh solver after the new layout is loaded.
         electricalSolver.NotifyLevelLayoutChanged();
     }
 
@@ -1543,18 +1518,15 @@ private bool PrepareLevelLayout(
         return false;
     }
 
-    // Use the scene bindings from the active layout.
     sceneBindings = newBindings;
 
-    // Rebuild the evaluator for the active level.
+    // Rebuild evaluator using the current layout.
     evaluator = new SparkLevelEvaluator(
         circuitSystem,
         sceneBindings);
 
     return true;
 }
-
-
 
 
         private void EnsureEvaluator()

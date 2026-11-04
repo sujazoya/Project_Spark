@@ -239,28 +239,49 @@ namespace ProjectSpark.Gameplay
             UpdateShaderProperties(currentIntensity);
         }
 
-        private void OnDisable()
+     
+private void OnDisable()
+{
+    if (terminal != null)
+    {
+        terminal.ElectricalStateChanged -=
+            OnElectricalStateChanged;
+    }
+
+    if (activePopup != null)
+    {
+        GameObject popupObject = activePopup.gameObject;
+
+        activePopup = null;
+
+        if (popupObject != null)
         {
-            if (terminal != null)
+            // Hide immediately so the popup cannot update
+            // or remain visually active during shutdown.
+            popupObject.SetActive(false);
+
+            if (Application.isPlaying)
             {
-                terminal.ElectricalStateChanged -=
-                    OnElectricalStateChanged;
+                Destroy(popupObject);
             }
-
-            if (activePopup != null)
+            else
             {
-                Destroy(activePopup.gameObject);
-                activePopup = null;
+#if UNITY_EDITOR
+                DestroyImmediate(popupObject);
+#endif
             }
-
-            hasPreviousVoltage = false;
-            burstRemaining = 0f;
-            isActive = false;
-            targetIntensity = offIntensity;
-            currentIntensity = offIntensity;
-
-            UpdateShaderProperties(offIntensity);
         }
+    }
+
+    hasPreviousVoltage = false;
+    burstRemaining = 0f;
+    isActive = false;
+    targetIntensity = offIntensity;
+    currentIntensity = offIntensity;
+
+    UpdateShaderProperties(offIntensity);
+}
+
 
         private void OnValidate()
         {
@@ -504,44 +525,55 @@ namespace ProjectSpark.Gameplay
             ShowVoltagePopup(oldVoltage, newVoltage);
         }
 
-        private void ShowVoltagePopup(
-            float oldVoltage,
-            float newVoltage)
-        {
-            if (!enableVoltagePopup || popupPrefab == null)
-                return;
+      
+private void ShowVoltagePopup(
+    float oldVoltage,
+    float newVoltage)
+{
+    if (!enableVoltagePopup ||
+        popupPrefab == null ||
+        !isActive ||
+        !isActiveAndEnabled)
+        return;
 
-            float now = Time.unscaledTime;
+    float now = Time.unscaledTime;
 
-            if (now - lastPopupTime < popupCooldown)
-                return;
+    if (now - lastPopupTime < popupCooldown)
+        return;
 
-            lastPopupTime = now;
+    lastPopupTime = now;
 
-            Vector3 spawnPosition =
-                GetPopupSpawnPosition();
+    Vector3 spawnPosition =
+        GetPopupSpawnPosition();
 
-            Color popupColor =
-                GetPopupColor(oldVoltage, newVoltage);
+    Color popupColor =
+        GetPopupColor(oldVoltage, newVoltage);
 
-            if (!reusePopup)
-                activePopup = null;
+    if (!reusePopup)
+    {
+        // Previous popup can finish its animation naturally.
+        // It remains a child of this indicator, so scene
+        // unloading will clean it up automatically.
+        activePopup = null;
+    }
 
-            if (activePopup == null)
-            {
-                activePopup = Instantiate(
-                    popupPrefab,
-                    spawnPosition,
-                    Quaternion.identity);
-            }
+    if (activePopup == null)
+    {
+        activePopup = Instantiate(
+            popupPrefab,
+            spawnPosition,
+            Quaternion.identity,
+            transform);
+    }
 
-            activePopup.Play(
-                oldVoltage,
-                newVoltage,
-                popupColor,
-                popupDisplayMode,
-                spawnPosition);
-        }
+    activePopup.Play(
+        oldVoltage,
+        newVoltage,
+        popupColor,
+        popupDisplayMode,
+        spawnPosition);
+}
+
 
         private Color GetPopupColor(
             float oldVoltage,

@@ -1,0 +1,23 @@
+PROJECT SPARK - LEVEL 15: DUAL LED PARALLEL CIRCUIT
+
++5 V -> Power_Switch.Input
+Power_Switch.Output -> R1_Input (workstation 330 ohm after replacement)
+R1_Output -> LED_Anode (red LED)
+LED_Cathode -> Battery_negative
+Power_Switch.Output -> Resistor_470_Input (fixed 470 ohm)
+Resistor_470_Output -> LED2_Anode (green LED)
+LED2_Cathode -> Battery_negative
+
+Optional LCD measurement:
+LCD_Terminal_A -> R1_Input
+LCD_Terminal_B -> R1_Output
+
+R1 workstation aliases: R1_Component, R1_Input, R1_Output. Slot ID Register_Slot_2.
+Red LED fixed component ID: led (copied from uploaded Level 14 definition, verify).
+Green LED fixed component ID: LED2 (new).
+Green LED terminals: LED2_Anode and LED2_Cathode (new).
+Fixed 470 ohm component ID: Resistor_470_Ω (verify exact in prefab).
+
+Expected with both LED forward voltages ~2.0 V:
+Red branch about 9.09 mA; green branch about 6.38 mA; total about 15.47 mA.
+Actual output depends on SparkLED model, contact drops and wire resistance.

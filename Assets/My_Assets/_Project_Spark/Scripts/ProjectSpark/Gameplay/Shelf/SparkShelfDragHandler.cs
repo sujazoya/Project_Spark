@@ -12,6 +12,9 @@ namespace ProjectSpark.Gameplay
         [SerializeField] private Camera targetCamera;
         [SerializeField] private SparkManualShelfPlacement manualPlacement;
         [SerializeField] private SparkObjectShelf objectShelf;
+        [SerializeField] private SparkThrowSystem throwSystem;
+
+
 
         [Header("Drag Settings")]
         [SerializeField, Min(1f)]
@@ -100,6 +103,10 @@ namespace ProjectSpark.Gameplay
                 objectShelf =
                     FindFirstObjectByType<SparkObjectShelf>();
             }
+            if (throwSystem == null)
+            throwSystem = FindFirstObjectByType<SparkThrowSystem>();
+
+
         }
 
         private void BeginPress()
@@ -176,6 +183,18 @@ namespace ProjectSpark.Gameplay
 
             SparkShelfItem item = pressedItem;
 
+            SparkRecycleBinTarget recycleBin = FindRecycleBinUnderPointer();
+if (recycleBin != null)
+{
+    if (throwSystem != null)
+        throwSystem.TryThrow(item, recycleBin);
+    else
+        Debug.LogWarning("[ShelfDrag] SparkThrowSystem missing.", this);
+    Cleanup();
+    return;
+}
+
+
             // A placed item may be returned to its
             // original storage slot.
             if (item.IsAtWorkbench &&
@@ -207,6 +226,21 @@ namespace ProjectSpark.Gameplay
 
             Cleanup();
         }
+        private SparkRecycleBinTarget FindRecycleBinUnderPointer()
+{
+    // Uses the same sorted RaycastAll as ordinary workstation drops.
+    foreach (RaycastHit hit in GetPointerHits())
+    {
+        if (hit.collider == null) continue;
+        SparkRecycleBinTarget bin =
+            hit.collider.GetComponentInParent<SparkRecycleBinTarget>();
+        if (bin != null && bin.isActiveAndEnabled &&
+            bin.gameObject.activeInHierarchy)
+            return bin;
+    }
+    return null;
+}
+
 
         private void TryPlace(
             SparkShelfItem item,

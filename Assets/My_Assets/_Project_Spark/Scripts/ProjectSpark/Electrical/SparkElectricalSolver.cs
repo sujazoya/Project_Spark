@@ -950,11 +950,11 @@ public void MarkDirty()
                         true);
 
 
-                        Debug.Log(
+                      /*  Debug.Log(
     $"[COMPONENT DISCOVERY] Root={root.name} | " +
     $"RootPath={GetHierarchyPath(root)} | " +
     $"Discovered={discovered.Length}",
-    this);
+    this);*/
 
 for (int i = 0; i < discovered.Length; i++)
 {
@@ -963,13 +963,13 @@ for (int i = 0; i < discovered.Length; i++)
     if (component == null)
         continue;
 
-    Debug.Log(
+   /* Debug.Log(
         $"[COMPONENT DISCOVERY ITEM] " +
         $"Type={component.GetType().FullName} | " +
         $"Name={component.name} | " +
         $"InstanceID={component.GetInstanceID()} | " +
         $"Path={GetHierarchyPath(component.transform)}",
-        component);
+        component);*/
 }
 
             if (discovered == null)

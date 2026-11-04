@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_16
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_16
+  displayName: Series LED Current Challenge
+  description: Build a single series path from a switched 5 V source through replaceable
+    100 ohm resistor, red LED and green LED, then back to ground. Replace the incorrect
+    330 ohm resistor with 100 ohm in Register_Slot_2. Observe that both LEDs carry
+    the same current and their forward voltage drops add. Verify both LEDs conduct,
+    resistor current and voltage, and supply current. Power off before replacing
+    parts. Nominal ranges assume approximately 2 V forward drop for each LED; calibrate
+    with actual SparkLED model.
+  completionMode: 0
+  requiredTargetCount: 5
+  requireClosedReturn: 1
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 0
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: PowerSupply_01
+    positiveTerminalId: Battery_positive
+    negativeTerminalId: Battery_negative
+    nominalVoltage: 5
+  targets:
+  - targetId: level16_red_led_conducting
+    displayName: Red LED Conducting
+    description: Red SparkLED must be forward biased and conducting; fixed binding
+      ID led.
+    targetType: 4
+    targetTerminalId: 
+    requiredPositiveTerminalId: LED_Anode
+    requiredNegativeTerminalId: LED_Cathode
+    targetComponentId: led
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level16_green_led_conducting
+    displayName: Green LED Conducting
+    description: Green SparkLED must be forward biased and conducting; fixed binding
+      ID led_2.
+    targetType: 4
+    targetTerminalId: 
+    requiredPositiveTerminalId: led_2_Anode
+    requiredNegativeTerminalId: led_2_Cathode
+    targetComponentId: led_2
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level16_series_current
+    displayName: Correct Series Current
+    description: Install 100 ohm R_LIMIT; expect 8-12 mA through both LEDs in series
+      (nominal).
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: Register_100_Input
+    requiredNegativeTerminalId: Register_100_Output
+    targetComponentId: "Resistor_100_\u03A9"
+    minimumVoltage: 0
+    minimumCurrent: 0.008
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.012
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level16_limit_voltage
+    displayName: Correct Resistor Voltage
+    description: Voltage across 100 ohm current limiter should be 0.8-1.2 V (nominal).
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: Register_100_Input
+    requiredNegativeTerminalId: Register_100_Output
+    targetComponentId: "Resistor_100_\u03A9"
+    minimumVoltage: 0.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 1.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level16_source_current
+    displayName: Correct Supply Current
+    description: Single series-loop source current should be 8-12 mA (nominal).
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: Battery_positive
+    requiredNegativeTerminalId: Battery_negative
+    targetComponentId: PowerSupply_01
+    minimumVoltage: 0
+    minimumCurrent: 0.008
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.012
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 0
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 1
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

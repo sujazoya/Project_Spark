@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using ProjectSpark.Circuit;
+using ProjectSpark.Gameplay.Shelf;
 
 namespace ProjectSpark.Gameplay
 {
@@ -22,7 +23,7 @@ namespace ProjectSpark.Gameplay
 
         [Header("Circuit Cleanup")]
         [SerializeField]
-        private SparkCircuitSystem circuitSystem;
+        private SparkCircuitSystem circuitSystem;      
 
         [Header("Debug")]
         [SerializeField]
@@ -185,14 +186,45 @@ namespace ProjectSpark.Gameplay
 
                         return false;
                     }
+                    ResolveShelf();
 
-                    SparkLevelLayout previous =
-                        activeLayout;
+                                    
+                    SparkLevelLayout previous = activeLayout;
 
-                    // Remove the previous layout while
-                    // its terminals are still accessible.
                     if (previous != null)
                     {
+                        ResolveShelf();
+
+                        if (objectShelf == null)
+                        {
+                            Debug.LogError(
+                                "[LayoutLoader] Cannot replace level: " +
+                                "SparkObjectShelf is missing.",
+                                this);
+
+                            DestroyLayoutSafely(candidate);
+                            return false;
+                        }
+
+                        // Preserve purchased items before destroying
+                        // workstation and storage slots in the old layout.
+                        if (!objectShelf.TryPrepareLevelUnload(
+                                previous.transform,
+                                out string unloadReason))
+                        {
+                            Debug.LogWarning(
+                                "[LayoutLoader] Level replacement blocked: " +
+                                unloadReason,
+                                this);
+
+                            // This candidate was never activated or registered.
+                            // Destroying it leaves the old level untouched.
+                            DestroyLayoutSafely(candidate);
+                            return false;
+                        }
+
+                        // Old electrical connections, shelf registrations
+                        // and level-owned objects are cleaned up here.
                         DestroyLayoutSafely(previous);
                     }
 
@@ -202,26 +234,35 @@ namespace ProjectSpark.Gameplay
                         parent,
                         false);
 
+                  
                     activeLayout = candidate;
 
-                    // Activate the replacement only after
-                    // old connections have been removed.
-                    candidate.gameObject.SetActive(
-                        prefabWasActive);
+                    candidate.gameObject.SetActive(prefabWasActive);
 
-                    LayoutLoaded?.Invoke(
-                        activeLayout);
+                    if (!RegisterLayoutShelfContent(candidate))
+                    {
+                        Debug.LogError(
+                            "[SparkLevelLayoutLoader] Shelf registration failed: " +
+                            level.LevelId,
+                            this);
+
+                        activeLayout = null;
+                        DestroyLayoutSafely(candidate);
+                        return false;
+                    }
+
+                    LayoutLoaded?.Invoke(candidate);
 
                     if (debugLogging)
                     {
                         Debug.Log(
-                            "[SparkLevelLayoutLoader] " +
-                            "Loaded " +
+                            "[SparkLevelLayoutLoader] Loaded " +
                             level.LevelId,
                             this);
                     }
 
                     return true;
+
                 }
                 finally
                 {
@@ -257,67 +298,94 @@ namespace ProjectSpark.Gameplay
         // UNLOAD LEVEL
         // =========================================================
 
-        public void UnloadLevel()
-        {
-            if (activeLayout == null)
-            {
-                return;
-            }
+        
+public void UnloadLevel()
+{
+    if (activeLayout == null)
+        return;
 
-            SparkLevelLayout previous =
-                activeLayout;
+    ResolveShelf();
 
-            activeLayout = null;
+    if (objectShelf == null)
+    {
+        Debug.LogError(
+            "[LayoutLoader] Cannot unload: " +
+            "SparkObjectShelf is missing.",
+            this);
+        return;
+    }
 
-            DestroyLayoutSafely(previous);
+    SparkLevelLayout previous = activeLayout;
 
-            LayoutUnloaded?.Invoke();
+    if (!objectShelf.TryPrepareLevelUnload(
+            previous.transform,
+            out string reason))
+    {
+        Debug.LogWarning(
+            "[LayoutLoader] Unload blocked: " + reason,
+            this);
+        return;
+    }
 
-            if (debugLogging)
-            {
-                Debug.Log(
-                    "[SparkLevelLayoutLoader] " +
-                    "Active layout unloaded.",
-                    this);
-            }
-        }
+    activeLayout = null;
+
+    DestroyLayoutSafely(previous);
+
+    LayoutUnloaded?.Invoke();
+
+    if (debugLogging)
+    {
+        Debug.Log(
+            "[LayoutLoader] Active level unloaded safely.",
+            this);
+    }
+}
+
 
         // =========================================================
         // SAFE LAYOUT DESTRUCTION
         // =========================================================
 
-        private void DestroyLayoutSafely(
-            SparkLevelLayout layout)
-        {
-            if (layout == null)
-            {
-                return;
-            }
+       
+       
 
-            // Remove registered connections before
-            // destroying their terminal components.
-            if (circuitSystem != null)
-            {
-                circuitSystem.RemoveConnectionsForLayout(
-                    layout.transform);
-            }
+private void DestroyLayoutSafely(SparkLevelLayout layout)
+{
+    if (layout == null)
+        return;
 
-            layout.gameObject.SetActive(false);
+    // 1. Remove electrical connections belonging
+    // to the layout before deleting terminals.
+    if (circuitSystem != null)
+    {
+        circuitSystem.RemoveConnectionsForLayout(
+            layout.transform);
+    }
+
+    // 2. Release level-owned items and slots.
+    // This is safe to call for an unregistered candidate:
+    // the shelf checks its tracked level ownership.
+    UnregisterLayoutShelfContent(layout);
+
+    // 3. Deactivate layout.
+    layout.gameObject.SetActive(false);
 
 #if UNITY_EDITOR
-            ClearSelectionBeforeDestroy(
-                layout.gameObject);
+    ClearSelectionBeforeDestroy(layout.gameObject);
 #endif
 
-            if (Application.isPlaying)
-            {
-                Destroy(layout.gameObject);
-            }
-            else
-            {
-                DestroyImmediate(layout.gameObject);
-            }
-        }
+    // 4. Destroy GameObject.
+    if (Application.isPlaying)
+    {
+        Destroy(layout.gameObject);
+    }
+    else
+    {
+        DestroyImmediate(layout.gameObject);
+    }
+}
+
+
 
         // =========================================================
         // EDITOR SELECTION SAFETY
@@ -378,6 +446,80 @@ namespace ProjectSpark.Gameplay
             }
         }
 #endif
+[Header("Shelf Registration")]
+[SerializeField]
+private SparkObjectShelf objectShelf;
+
+private void ResolveShelf()
+{
+    if (objectShelf == null)
+        objectShelf = FindFirstObjectByType<SparkObjectShelf>();
+}
+
+
+
+private bool RegisterLayoutShelfContent(
+    SparkLevelLayout layout)
+{
+    if (layout == null)
+        return false;
+
+    ResolveShelf();
+
+    if (objectShelf == null)
+    {
+        Debug.LogError(
+            "[LayoutLoader] SparkObjectShelf is missing.",
+            this);
+
+        return false;
+    }
+
+    Transform root = layout.transform;
+
+    objectShelf.RegisterRuntimeSlots(root);
+    objectShelf.RegisterLevelItems(root);
+
+    if (debugLogging)
+    {
+        Debug.Log(
+            "[LayoutLoader] Registered shelf content: " +
+            layout.name,
+            this);
+    }
+
+    return true;
+}
+
+
+private void UnregisterLayoutShelfContent(SparkLevelLayout layout)
+{
+    if (layout == null)
+        return;
+
+    ResolveShelf();
+
+    if (objectShelf == null)
+        return;
+
+    Transform root = layout.transform;
+
+    // Remove items first because their current slots
+    // must still be available for releasing occupancy.
+    objectShelf.UnregisterLevelItems(root);
+
+    // Remove the level's runtime slots afterward.
+    objectShelf.UnregisterRuntimeSlots(root);
+
+    if (debugLogging)
+    {
+        Debug.Log(
+            "[LayoutLoader] Unregistered shelf content: " +
+            layout.name,
+            this);
+    }
+}
+
 
         // =========================================================
         // UNITY LIFECYCLE
@@ -385,7 +527,17 @@ namespace ProjectSpark.Gameplay
 
         private void OnDestroy()
         {
-            UnloadLevel();
+            if (activeLayout == null)
+                return;
+
+            SparkLevelLayout previous = activeLayout;
+            activeLayout = null;
+
+            // Application/scene teardown cannot always be blocked.
+            // Clean up the level-owned registrations even if
+            // purchased-item relocation is no longer possible.
+            DestroyLayoutSafely(previous);
         }
+
     }
 }
