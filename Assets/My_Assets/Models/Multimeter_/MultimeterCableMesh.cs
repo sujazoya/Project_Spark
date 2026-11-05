@@ -80,6 +80,12 @@ namespace ProjectSpark.Gameplay
             Custom
         }
 
+        public enum CableRouteMode
+        {
+            Up,
+            Straight,
+            Low
+        }
         // ============================================================
         // CONNECTION
         // ============================================================
@@ -153,22 +159,30 @@ namespace ProjectSpark.Gameplay
       // ============================================================
 // CABLE ARCH
 // ============================================================
+// ============================================================
+// CABLE ROUTING
+// ============================================================
 
-[Header("Cable Arch")]
+[Header("Cable Route")]
 
-[Tooltip("Controls how high the cable arches between endpoints.")]
-[Min(0f)]
 [SerializeField]
-private float archAmount = 0.12f;
+private CableRouteMode cableRoute = CableRouteMode.Up;
 
-[Tooltip("Direction of the cable arch.")]
+[Tooltip("Height of an upward cable arch.")]
+[SerializeField, Min(0f)]
+private float upHeight = 0.25f;
+
+[Tooltip("Depth of a downward cable curve.")]
+[SerializeField, Min(0f)]
+private float lowDepth = 0.15f;
+
+[Tooltip("Controls how concentrated the curve is near the middle.")]
+[SerializeField, Range(0.1f, 4f)]
+private float archPower = 1.5f;
+
+[Tooltip("World-space direction for the raised or lowered cable.")]
 [SerializeField]
 private Vector3 archDirection = Vector3.up;
-
-[Tooltip("Controls how concentrated the arch is toward the middle.")]
-[Range(0.1f, 4f)]
-[SerializeField]
-private float archPower = 1.5f;
 
         // ============================================================
         // ENDPOINT DIRECTIONS
@@ -903,73 +917,82 @@ rebuildRequested = false;
         // PATH EVALUATION
         // ============================================================
 
-        private Vector3 EvaluateCablePoint(
-            Vector3 start,
-            Vector3 end,
-            Vector3 startTangent,
-            Vector3 endTangent,
-            float t)
-        {
-            float smooth =
-                Mathf.SmoothStep(
-                    0f,
-                    1f,
-                    Mathf.Clamp01(t));
+       
+private Vector3 EvaluateCablePoint(
+    Vector3 start,
+    Vector3 end,
+    Vector3 startTangent,
+    Vector3 endTangent,
+    float t)
+{
+    t = Mathf.Clamp01(t);
 
-            float distance =
-                Vector3.Distance(
-                    start,
-                    end);
+    // ========================================================
+    // STRAIGHT ROUTE
+    // ========================================================
 
-            float handleLength =
-                Mathf.Max(
-                    distance *
-                    Mathf.Lerp(
-                        0.15f,
-                        0.5f,
-                        curveSmoothness),
-                    0.001f);
+    if (cableRoute == CableRouteMode.Straight)
+    {
+        return Vector3.Lerp(start, end, t);
+    }
 
-            Vector3 controlA =
-                start +
-                startTangent *
-                handleLength *
-                endpointDirectionInfluence;
+    // ========================================================
+    // ORIGINAL SMOOTH CABLE PATH
+    // ========================================================
 
-            Vector3 controlB =
-                end +
-                endTangent *
-                handleLength *
-                endpointDirectionInfluence;
+    float smooth = Mathf.SmoothStep(0f, 1f, t);
 
-            Vector3 point =
-                CubicBezier(
-                    start,
-                    controlA,
-                    controlB,
-                    end,
-                    smooth);
+    float distance = Vector3.Distance(start, end);
 
-                float archFactor =
-            Mathf.Sin(
-                t * Mathf.PI);
+    float handleLength = Mathf.Max(
+        distance * Mathf.Lerp(
+            0.15f,
+            0.5f,
+            curveSmoothness),
+        0.001f);
 
-        archFactor =
-            Mathf.Pow(
-                Mathf.Clamp01(archFactor),
-                archPower);
+    Vector3 controlA =
+        start +
+        startTangent *
+        handleLength *
+        endpointDirectionInfluence;
 
-        Vector3 arch =
-            NormalizeSafe(
-                archDirection,
-                Vector3.up)
-            *
-            archAmount
-            *
-            archFactor;
+    Vector3 controlB =
+        end +
+        endTangent *
+        handleLength *
+        endpointDirectionInfluence;
 
-        return point + arch;
-        }
+    Vector3 point = CubicBezier(
+        start,
+        controlA,
+        controlB,
+        end,
+        smooth);
+
+    // ========================================================
+    // UP / LOW ROUTING
+    // ========================================================
+
+    float archFactor = Mathf.Sin(t * Mathf.PI);
+
+    archFactor = Mathf.Pow(
+        Mathf.Clamp01(archFactor),
+        archPower);
+
+    float height = cableRoute == CableRouteMode.Up
+        ? upHeight
+        : -lowDepth;
+
+    Vector3 direction = NormalizeSafe(
+        archDirection,
+        Vector3.up);
+
+    point += direction * height * archFactor;
+
+    return point;
+}
+
 
         private Vector3 EvaluateCableTangent(
             Vector3 start,
@@ -1659,11 +1682,9 @@ rebuildRequested = false;
                 Mathf.Max(
                     0.01f,
                     endRadiusMultiplier);
-
-            archAmount =
-    Mathf.Max(
-        0f,
-        archAmount);
+upHeight = Mathf.Max(0f, upHeight);
+lowDepth = Mathf.Max(0f, lowDepth);
+archPower = Mathf.Clamp(archPower, 0.1f, 4f);
 
 archPower =
     Mathf.Max(
@@ -1681,6 +1702,40 @@ archPower =
                     0.001f,
                     uvTiling);
         }
+
+        public void SetCableRoute(CableRouteMode mode)
+{
+    if (cableRoute == mode)
+        return;
+
+    cableRoute = mode;
+    GenerateCable();
+}
+
+public void SetRouteUp()
+{
+    SetCableRoute(CableRouteMode.Up);
+}
+
+public void SetRouteStraight()
+{
+    SetCableRoute(CableRouteMode.Straight);
+}
+
+public void SetRouteLow()
+{
+    SetCableRoute(CableRouteMode.Low);
+}
+
+public void SetRouteHeight(float height)
+{
+    if (cableRoute == CableRouteMode.Low)
+        lowDepth = Mathf.Max(0f, height);
+    else
+        upHeight = Mathf.Max(0f, height);
+
+    GenerateCable();
+}
 
         // ============================================================
         // RENDERER

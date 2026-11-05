@@ -50655,9 +50655,11 @@ MonoBehaviour:
   endRadiusMultiplier: 1
   curveSmoothness: 0.5
   sagAmount: 0.15
-  archAmount: 0.12
-  archDirection: {x: 0, y: 1, z: 0}
+  cableRoute: 0
+  upHeight: 0.25
+  lowDepth: 0.15
   archPower: 1.5
+  archDirection: {x: 0, y: 1, z: 0}
   startDirectionMode: 1
   endDirectionMode: 1
   customStartDirection: {x: 0, y: 0, z: 1}
@@ -90371,6 +90373,28 @@ MonoBehaviour:
     - {fileID: 3071598253141819465}
     - {fileID: 1845677548}
     workstationSlots: []
+  - level: {fileID: 11400000, guid: a67073b969181e143bc30359baadb0e3, type: 2}
+    shelfVisuals: []
+    availableItems:
+    - {fileID: 4725873340435380209}
+    - {fileID: 1665841655541099309}
+    - {fileID: 4683368160802190920}
+    - {fileID: 5687084618679419891}
+    - {fileID: 71209931}
+    - {fileID: 3071598253141819465}
+    - {fileID: 1845677548}
+    workstationSlots: []
+  - level: {fileID: 11400000, guid: da56e283820aca043a09387e293bbabb, type: 2}
+    shelfVisuals: []
+    availableItems:
+    - {fileID: 4725873340435380209}
+    - {fileID: 1665841655541099309}
+    - {fileID: 4683368160802190920}
+    - {fileID: 5687084618679419891}
+    - {fileID: 71209931}
+    - {fileID: 3071598253141819465}
+    - {fileID: 1845677548}
+    workstationSlots: []
   autoDiscoverRuntimeSlots: 1
   workstationSlotRoot: {fileID: 1037112642}
   includeInactiveRuntimeSlots: 1
@@ -103298,9 +103322,11 @@ MonoBehaviour:
   endRadiusMultiplier: 1
   curveSmoothness: 0.5
   sagAmount: 0.15
-  archAmount: 0.12
-  archDirection: {x: 0, y: 1, z: 0}
+  cableRoute: 0
+  upHeight: 0.25
+  lowDepth: 0.15
   archPower: 1.5
+  archDirection: {x: 0, y: 1, z: 0}
   startDirectionMode: 1
   endDirectionMode: 1
   customStartDirection: {x: 0, y: 0, z: 1}
@@ -140145,9 +140171,11 @@ MonoBehaviour:
   endRadiusMultiplier: 1
   curveSmoothness: 0.5
   sagAmount: 0.15
-  archAmount: 0.12
-  archDirection: {x: 0, y: 1, z: 0}
+  cableRoute: 0
+  upHeight: 0.25
+  lowDepth: 0.15
   archPower: 1.5
+  archDirection: {x: 0, y: 1, z: 0}
   startDirectionMode: 1
   endDirectionMode: 1
   customStartDirection: {x: 0, y: 0, z: 1}
@@ -146191,7 +146219,7 @@ GameObject:
   - component: {fileID: 1130325797}
   - component: {fileID: 1130325798}
   m_Layer: 0
-  m_Name: SparkAI
+  m_Name: Spark AI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -172872,9 +172900,11 @@ MonoBehaviour:
   endRadiusMultiplier: 1
   curveSmoothness: 0.5
   sagAmount: 0.15
-  archAmount: 0.12
-  archDirection: {x: 0, y: 1, z: 0}
+  cableRoute: 0
+  upHeight: 0.25
+  lowDepth: 0.15
   archPower: 1.5
+  archDirection: {x: 0, y: 1, z: 0}
   startDirectionMode: 1
   endDirectionMode: 1
   customStartDirection: {x: 0, y: 0, z: 1}
@@ -187627,7 +187657,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkDrawCurrentLevel
   levelGameplayManager: {fileID: 8565763376412791690}
-  levelLoader: {fileID: 0}
+  levelLoader: {fileID: 350401877}
   teachingManager: {fileID: 1445614098}
   drawings:
   - {fileID: 11400000, guid: 8dcc2acae4400f541a4dccf262235330, type: 2}
@@ -187639,8 +187669,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4bf7894a8f328fc47ad96546015a5f34, type: 2}
   - {fileID: 11400000, guid: 9829c12e6a3f2b345a7fd1949f69cba9, type: 2}
   - {fileID: 11400000, guid: cde55e53e37a0fd41847a39e2721c904, type: 2}
-  - {fileID: 11400000, guid: cde55e53e37a0fd41847a39e2721c904, type: 2}
-  - {fileID: 11400000, guid: cde55e53e37a0fd41847a39e2721c904, type: 2}
+  - {fileID: 11400000, guid: a82739ffdfc8cca4bb229f1ffd102dd4, type: 2}
+  - {fileID: 11400000, guid: e44731b1396c95b42b622404713a0b08, type: 2}
+  - {fileID: 11400000, guid: eed008dc4e49b7241ba69ab53dda3974, type: 2}
+  - {fileID: 11400000, guid: dc7fbc95db327964484018cfd473b2ab, type: 2}
+  - {fileID: 11400000, guid: dd7137ee3ea4dd544ae8de44ebe2a8b9, type: 2}
+  - {fileID: 11400000, guid: 990b364f839a8c247bae2e40e8f52d2f, type: 2}
+  - {fileID: 11400000, guid: 3ccaee3767262da48980e8ab3553b37e, type: 2}
+  - {fileID: 11400000, guid: 81fc1deda32935f46b427e2c4b79fbea, type: 2}
+  - {fileID: 11400000, guid: ed52216e2bd6e17428452b067113d6e6, type: 2}
+  - {fileID: 11400000, guid: af2a68f35dc7a9740b08362c31a2a912, type: 2}
+  - {fileID: 11400000, guid: ab6aa8ac64676104aafe971efab40c3e, type: 2}
   openWhiteboard: 1
   logMissingDrawing: 1
   redrawOnActiveLevelChange: 1
@@ -199545,9 +199584,11 @@ MonoBehaviour:
   endRadiusMultiplier: 1
   curveSmoothness: 0.5
   sagAmount: 0.15
-  archAmount: 0.12
-  archDirection: {x: 0, y: 1, z: 0}
+  cableRoute: 0
+  upHeight: 0.25
+  lowDepth: 0.15
   archPower: 1.5
+  archDirection: {x: 0, y: 1, z: 0}
   startDirectionMode: 1
   endDirectionMode: 1
   customStartDirection: {x: 0, y: 0, z: 1}
@@ -201133,9 +201174,11 @@ MonoBehaviour:
   endRadiusMultiplier: 1
   curveSmoothness: 0.5
   sagAmount: 0.15
-  archAmount: 0.12
-  archDirection: {x: 0, y: 1, z: 0}
+  cableRoute: 0
+  upHeight: 0.25
+  lowDepth: 0.15
   archPower: 1.5
+  archDirection: {x: 0, y: 1, z: 0}
   startDirectionMode: 1
   endDirectionMode: 1
   customStartDirection: {x: 0, y: 0, z: 1}
@@ -238995,9 +239038,11 @@ MonoBehaviour:
   endRadiusMultiplier: 1
   curveSmoothness: 0.5
   sagAmount: 0.15
-  archAmount: 0.12
-  archDirection: {x: 0, y: 1, z: 0}
+  cableRoute: 0
+  upHeight: 0.25
+  lowDepth: 0.15
   archPower: 1.5
+  archDirection: {x: 0, y: 1, z: 0}
   startDirectionMode: 1
   endDirectionMode: 1
   customStartDirection: {x: 0, y: 0, z: 1}
@@ -267286,9 +267331,11 @@ MonoBehaviour:
   endRadiusMultiplier: 0.5
   curveSmoothness: 0.253
   sagAmount: 0.15
-  archAmount: 0.12
-  archDirection: {x: 0, y: 1, z: 0}
+  cableRoute: 0
+  upHeight: 0.25
+  lowDepth: 0.15
   archPower: 1.5
+  archDirection: {x: 0, y: 1, z: 0}
   startDirectionMode: 0
   endDirectionMode: 0
   customStartDirection: {x: 0, y: 0, z: 1}
@@ -306310,9 +306357,11 @@ MonoBehaviour:
   endRadiusMultiplier: 0.5
   curveSmoothness: 0.253
   sagAmount: 0.15
-  archAmount: 0.12
-  archDirection: {x: 0, y: 1, z: 0}
+  cableRoute: 0
+  upHeight: 0.25
+  lowDepth: 0.15
   archPower: 1.5
+  archDirection: {x: 0, y: 1, z: 0}
   startDirectionMode: 0
   endDirectionMode: 0
   customStartDirection: {x: 0, y: 0, z: 1}
@@ -308135,7 +308184,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6284c7018244ffb4a842917d2c9049f8, type: 2}
   - {fileID: 11400000, guid: c6e74415442d6994ea9cdc11fd6168fb, type: 2}
   - {fileID: 11400000, guid: 56317e55910cbab478e1fe12eb7b6314, type: 2}
-  activeLevelIndex: 16
+  - {fileID: 11400000, guid: a67073b969181e143bc30359baadb0e3, type: 2}
+  - {fileID: 11400000, guid: da56e283820aca043a09387e293bbabb, type: 2}
+  activeLevelIndex: 18
   layoutLoader: {fileID: 350401877}
   runtimeState: 0
   autoStartFirstLevel: 1
@@ -308332,9 +308383,11 @@ MonoBehaviour:
   endRadiusMultiplier: 1
   curveSmoothness: 0.777
   sagAmount: 0.3
-  archAmount: 0.12
-  archDirection: {x: 0, y: 1, z: 0}
+  cableRoute: 0
+  upHeight: 0.25
+  lowDepth: 0.15
   archPower: 1.5
+  archDirection: {x: 0, y: 1, z: 0}
   startDirectionMode: 1
   endDirectionMode: 1
   customStartDirection: {x: 0, y: 0, z: 1}

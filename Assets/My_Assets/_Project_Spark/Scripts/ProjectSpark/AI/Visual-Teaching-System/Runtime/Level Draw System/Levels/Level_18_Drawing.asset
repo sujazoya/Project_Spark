@@ -1,0 +1,387 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_18_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_18
+  levelTitle: Precision Voltage Divider
+  initialPage: 0
+  pages:
+  - title: LEVEL 18 | Circuit Overview
+    explanation: 'Two resistors in series: 330 Ohm TOP and 470 Ohm BOTTOM; VOUT is
+      between them. LCD reads VOUT to supply negative.'
+    caption: PAGE 1/4 | CIRCUIT TOPOLOGY
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: top
+      kind: 1
+      position: {x: 0.53, y: 0.82}
+      label: R_TOP 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: vout
+      kind: 9
+      position: {x: 0.68, y: 0.82}
+      label: VOUT
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: bottom
+      kind: 1
+      position: {x: 0.75, y: 0.52}
+      label: R_BOTTOM 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.5, y: 0.32}
+      label: LCD A/B
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.47, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.59, y: 0.82}
+      - {x: 0.68, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.68, y: 0.82}
+      - {x: 0.68, y: 0.52}
+      - {x: 0.69, y: 0.52}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.81, y: 0.52}
+      - {x: 0.84, y: 0.52}
+      - {x: 0.84, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.68, y: 0.82}
+      - {x: 0.6, y: 0.82}
+      - {x: 0.6, y: 0.38}
+      - {x: 0.5, y: 0.38}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}
+    - points:
+      - {x: 0.5, y: 0.26}
+      - {x: 0.5, y: 0.15}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}
+  - title: LEVEL 18 | Wiring Guide
+    explanation: Battery+ -> switch -> R_TOP 330 -> VOUT -> R_BOTTOM 470 -> Battery_negative.
+      LCD A -> VOUT, LCD B -> negative; meter is high impedance.
+    caption: PAGE 2/4 | STEP-BY-STEP CONNECTIONS
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: top
+      kind: 1
+      position: {x: 0.53, y: 0.82}
+      label: R_TOP 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: vout
+      kind: 9
+      position: {x: 0.68, y: 0.82}
+      label: VOUT
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: bottom
+      kind: 1
+      position: {x: 0.75, y: 0.52}
+      label: R_BOTTOM 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.5, y: 0.32}
+      label: LCD A/B
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.47, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.59, y: 0.82}
+      - {x: 0.68, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.68, y: 0.82}
+      - {x: 0.68, y: 0.52}
+      - {x: 0.69, y: 0.52}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.81, y: 0.52}
+      - {x: 0.84, y: 0.52}
+      - {x: 0.84, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.68, y: 0.82}
+      - {x: 0.6, y: 0.82}
+      - {x: 0.6, y: 0.38}
+      - {x: 0.5, y: 0.38}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}
+    - points:
+      - {x: 0.5, y: 0.26}
+      - {x: 0.5, y: 0.15}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}
+  - title: LEVEL 18 | Electrical Concept
+    explanation: Nominal VOUT = 5*(470/800)=2.9375 V. Current through both resistors
+      = 5/800=6.25 mA. The tested Spark solver yielded about 2.937 V and 6.249 mA.
+    caption: PAGE 3/4 | NOMINAL ELECTRICAL RESULTS
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: top
+      kind: 1
+      position: {x: 0.53, y: 0.82}
+      label: R_TOP 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: vout
+      kind: 9
+      position: {x: 0.68, y: 0.82}
+      label: VOUT
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: bottom
+      kind: 1
+      position: {x: 0.75, y: 0.52}
+      label: R_BOTTOM 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.5, y: 0.32}
+      label: LCD A/B
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.47, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.59, y: 0.82}
+      - {x: 0.68, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.68, y: 0.82}
+      - {x: 0.68, y: 0.52}
+      - {x: 0.69, y: 0.52}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.81, y: 0.52}
+      - {x: 0.84, y: 0.52}
+      - {x: 0.84, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.68, y: 0.82}
+      - {x: 0.6, y: 0.82}
+      - {x: 0.6, y: 0.38}
+      - {x: 0.5, y: 0.38}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}
+    - points:
+      - {x: 0.5, y: 0.26}
+      - {x: 0.5, y: 0.15}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}
+  - title: LEVEL 18 | Correct Solution
+    explanation: Correct binding IDs R_TOP_Component and R_BOTTOM_Component; level
+      completes at five targets when the runtime workstation bridge resolves both
+      components and terminals.
+    caption: PAGE 4/4 | CHECK & VERIFY
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: top
+      kind: 1
+      position: {x: 0.53, y: 0.82}
+      label: R_TOP 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: vout
+      kind: 9
+      position: {x: 0.68, y: 0.82}
+      label: VOUT
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: bottom
+      kind: 1
+      position: {x: 0.75, y: 0.52}
+      label: R_BOTTOM 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.5, y: 0.32}
+      label: LCD A/B
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.47, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.59, y: 0.82}
+      - {x: 0.68, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.68, y: 0.82}
+      - {x: 0.68, y: 0.52}
+      - {x: 0.69, y: 0.52}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.81, y: 0.52}
+      - {x: 0.84, y: 0.52}
+      - {x: 0.84, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.68, y: 0.82}
+      - {x: 0.6, y: 0.82}
+      - {x: 0.6, y: 0.38}
+      - {x: 0.5, y: 0.38}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}
+    - points:
+      - {x: 0.5, y: 0.26}
+      - {x: 0.5, y: 0.15}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}

@@ -1,0 +1,160 @@
+PROJECT_SPARK_EDITABLE_SO_TXT_V1
+# Readable/editable Unity serialized data. Modify values in the JSON section.
+# Keep field names, object-reference structures, and section markers unchanged.
+# The import requires selecting the ORIGINAL asset in Unity.
+Asset Name: Level_18
+Asset Type: ProjectSpark.Gameplay.SparkLevelDefinition, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+Asset Path: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_18_Layout/Level_18.asset
+Asset GUID: a67073b969181e143bc30359baadb0e3
+Export Date: 2026-11-05 12:23:39
+----- BEGIN UNITY EDITOR JSON -----
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "Level_18",
+        "m_EditorClassIdentifier": "Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition",
+        "levelId": "level_18",
+        "displayName": "Precision Voltage Divider",
+        "description": "From a 5 V switched DC source, build a series voltage divider with a 330 ohm TOP resistor and a 470 ohm BOTTOM resistor. Connect supply positive through the switch and TOP resistor to VOUT, then through the BOTTOM resistor to supply negative. Measure VOUT relative to negative (~2.94 V), confirm the voltage across each resistor, and confirm equal series currents (~6.25 mA). Power off before changing components. Nominal thresholds should be verified with the Project Spark solver.",
+        "completionMode": 0,
+        "requiredTargetCount": 5,
+        "requireClosedReturn": true,
+        "rejectShortCircuit": true,
+        "rejectTargetShort": true,
+        "allowIntermediateConnections": true,
+        "requireMinimumVoltage": false,
+        "minimumVoltage": 0.0,
+        "allowAnyConfiguredPowerSource": true,
+        "powerSources": [
+            {
+                "sourceName": "PowerSupply_01",
+                "positiveTerminalId": "Battery_positive",
+                "negativeTerminalId": "Battery_negative",
+                "nominalVoltage": 5.0
+            }
+        ],
+        "targets": [
+            {
+                "targetId": "level18_output_voltage",
+                "displayName": "Output Voltage ~2.94 V",
+                "description": "Voltage across BOTTOM 470 ohm resistor; equivalent to VOUT versus supply negative when properly wired.",
+                "targetType": 5,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_BOTTOM_Input",
+                "requiredNegativeTerminalId": "R_BOTTOM_Output",
+                "targetComponentId": "R_BOTTOM_Component",
+                "minimumVoltage": 2.8,
+                "minimumCurrent": 0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": true,
+                "maximumVoltage": 3.1,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level18_top_voltage",
+                "displayName": "TOP Resistor Voltage ~2.06 V",
+                "description": "Voltage across TOP 330 ohm resistor.",
+                "targetType": 5,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_TOP_Input",
+                "requiredNegativeTerminalId": "R_TOP_Output",
+                "targetComponentId": "R_TOP_Component",
+                "minimumVoltage": 1.95,
+                "minimumCurrent": 0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": true,
+                "maximumVoltage": 2.2,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level18_top_current",
+                "displayName": "TOP Series Current ~6.25 mA",
+                "description": "Current through 330 ohm TOP resistor.",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_TOP_Input",
+                "requiredNegativeTerminalId": "R_TOP_Output",
+                "targetComponentId": "R_TOP_Component",
+                "minimumVoltage": 0,
+                "minimumCurrent": 0.0058,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.0067,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level18_bottom_current",
+                "displayName": "BOTTOM Series Current ~6.25 mA",
+                "description": "Current through 470 ohm BOTTOM resistor.",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_BOTTOM_Input",
+                "requiredNegativeTerminalId": "R_BOTTOM_Output",
+                "targetComponentId": "R_BOTTOM_Component",
+                "minimumVoltage": 0,
+                "minimumCurrent": 0.0058,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.0067,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level18_source_current",
+                "displayName": "Source Current ~6.25 mA",
+                "description": "Total DC source current while voltage divider is connected.",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "Battery_positive",
+                "requiredNegativeTerminalId": "Battery_negative",
+                "targetComponentId": "PowerSupply_01",
+                "minimumVoltage": 0,
+                "minimumCurrent": 0.0058,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.0067,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            }
+        ],
+        "failureMode": 0,
+        "requiredHealthyResistorIds": [],
+        "requireHealthyInstalledResistors": false,
+        "successOutputIds": [],
+        "failureOutputIds": [],
+        "unlockNextLevelOnCompletion": true,
+        "unlockedByDefault": true,
+        "autoUnlockNextLevel": true,
+        "autoAdvanceOnCompletion": false
+    }
+}
+----- END UNITY EDITOR JSON -----

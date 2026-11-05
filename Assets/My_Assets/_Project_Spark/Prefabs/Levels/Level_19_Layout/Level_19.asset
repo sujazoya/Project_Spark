@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_19
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_19
+  displayName: The Loading Effect
+  description: 'From a switched 5 V DC supply, build a 330 ohm TOP resistor in series
+    with a parallel pair: a 470 ohm BOTTOM resistor and a 1 kohm LOAD resistor. Connect
+    supply positive through the switch and TOP resistor to VOUT. Connect both BOTTOM
+    and LOAD inputs to VOUT and both outputs to supply negative. Measure VOUT relative
+    to negative (nominal ~2.46 V), and verify TOP, BOTTOM, LOAD and source currents
+    (~7.70, ~5.24, ~2.46 and ~7.70 mA). Switch power off before changing connections.
+    Verify ranges against the Project Spark solver.'
+  completionMode: 0
+  requiredTargetCount: 5
+  requireClosedReturn: 1
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 0
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: PowerSupply_01
+    positiveTerminalId: Battery_positive
+    negativeTerminalId: Battery_negative
+    nominalVoltage: 5
+  targets:
+  - targetId: level19_loaded_output_voltage
+    displayName: Loaded Output Voltage ~2.46 V
+    description: Voltage across 470 ohm BOTTOM resistor, equivalent to VOUT versus
+      ground.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_BOTTOM_Input
+    requiredNegativeTerminalId: R_BOTTOM_Output
+    targetComponentId: R_BOTTOM_Component
+    minimumVoltage: 2.35
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 2.57
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level19_top_current
+    displayName: TOP Resistor Current ~7.70 mA
+    description: Total current through 330 ohm TOP resistor.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_TOP_Input
+    requiredNegativeTerminalId: R_TOP_Output
+    targetComponentId: R_TOP_Component
+    minimumVoltage: 0
+    minimumCurrent: 0.0072
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.0082
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level19_bottom_current
+    displayName: BOTTOM Resistor Current ~5.24 mA
+    description: Current through the 470 ohm BOTTOM branch.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_BOTTOM_Input
+    requiredNegativeTerminalId: R_BOTTOM_Output
+    targetComponentId: R_BOTTOM_Component
+    minimumVoltage: 0
+    minimumCurrent: 0.0049
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.0056
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level19_load_current
+    displayName: LOAD Resistor Current ~2.46 mA
+    description: Current through the 1 kohm LOAD branch in parallel with the BOTTOM
+      resistor.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_LOAD_Input
+    requiredNegativeTerminalId: R_LOAD_Output
+    targetComponentId: R_LOAD_Component
+    minimumVoltage: 0
+    minimumCurrent: 0.0022
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.0028
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level19_source_current
+    displayName: Total Source Current ~7.70 mA
+    description: Source current equals the TOP current, approximately the sum of
+      BOTTOM and LOAD branch currents.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: Battery_positive
+    requiredNegativeTerminalId: Battery_negative
+    targetComponentId: PowerSupply_01
+    minimumVoltage: 0
+    minimumCurrent: 0.0072
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.0082
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 0
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 1
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

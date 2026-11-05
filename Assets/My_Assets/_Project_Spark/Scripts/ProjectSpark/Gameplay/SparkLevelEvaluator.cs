@@ -1320,7 +1320,8 @@ private bool AreRequiredResistorsHealthy(
         // TARGET EVALUATION
         // ================================================================
 
-        private int EvaluateTargets(SparkLevelDefinition level)
+       
+private int EvaluateTargets(SparkLevelDefinition level)
 {
     if (level == null || level.Targets == null)
         return 0;
@@ -1337,44 +1338,35 @@ private bool AreRequiredResistorsHealthy(
         if (passed)
             satisfiedCount++;
 
-        // Diagnostic: explain the actual target state.
-/*        Debug.Log(
-            "[SPARK TARGET] " +
-            "Level=" + level.LevelId +
-            " | Target=" + target.TargetId +
-            " | Type=" + target.Type +
-            " | Passed=" + passed +
-            " | Configured=" + target.IsConfigured() +
-            " | PolarityValid=" + target.IsPolarityConfigurationValid() +
-            " | ComponentID=" + target.TargetComponentId);*/
+        string componentInfo = "NO COMPONENT ID";
 
-        if (!string.IsNullOrWhiteSpace(target.TargetComponentId))
+        if (!string.IsNullOrWhiteSpace(
+                target.TargetComponentId))
         {
-            if (sceneBindings.TryGetComponent(
-                    target.TargetComponentId,
+            if (TryResolveTargetComponent(
+                    target,
                     out SparkElectricalComponent component))
             {
                 SparkElectricalState state =
                     component.ElectricalState;
 
-               /* Debug.Log(
-                    "[SPARK TARGET COMPONENT] " +
-                    "Target=" + target.TargetId +
-                    " | Object=" + component.name +
+                componentInfo =
+                    "RESOLVED=" + component.name +
                     " | Type=" + component.GetType().Name +
                     " | Enabled=" + component.ElectricalEnabled +
                     " | Conduction=" + state.Conduction +
                     " | V=" + state.Voltage.ToString("F6") +
-                    " | I=" + state.Current.ToString("F6") +
-                    " | P=" + state.Power.ToString("F6"));*/
+                    " | I=" + state.Current.ToString("F6");
             }
             else
             {
-                Debug.LogWarning(
-                    "[SPARK TARGET COMPONENT] " +
-                    "UNRESOLVED: " + target.TargetComponentId);
+                componentInfo =
+                    "UNRESOLVED COMPONENT: " +
+                    target.TargetComponentId;
             }
         }
+
+        string terminalInfo = "NO TERMINAL PAIR";
 
         if (target.HasRequiredConnectionPair)
         {
@@ -1383,27 +1375,43 @@ private bool AreRequiredResistorsHealthy(
                     out SparkTerminal positive,
                     out SparkTerminal negative))
             {
-                float voltage = Mathf.Abs(
+                float delta =
                     positive.ElectricalState.Voltage -
-                    negative.ElectricalState.Voltage);
+                    negative.ElectricalState.Voltage;
 
-               /* Debug.Log(
-                    "[SPARK TARGET TERMINALS] " +
-                    "Target=" + target.TargetId +
-                    " | Positive=" + positive.name +
-                    " | Negative=" + negative.name +
-                    " | VoltageMagnitude=" + voltage.ToString("F6"));*/
+                terminalInfo =
+                    "PAIR RESOLVED" +
+                    " | A=" + positive.name +
+                    " (" +
+                    positive.ElectricalState.Voltage.ToString("F6") +
+                    " V)" +
+                    " | B=" + negative.name +
+                    " (" +
+                    negative.ElectricalState.Voltage.ToString("F6") +
+                    " V)" +
+                    " | DeltaMagnitude=" +
+                    Mathf.Abs(delta).ToString("F6") + " V";
             }
             else
             {
-              /*  Debug.LogWarning(
-                    "[SPARK TARGET TERMINALS] " +
+                terminalInfo =
                     "UNRESOLVED PAIR: " +
                     target.RequiredPositiveTerminalId +
                     " / " +
-                    target.RequiredNegativeTerminalId);*/
+                    target.RequiredNegativeTerminalId;
             }
         }
+
+        Debug.Log(
+            "[LEVEL TARGET RESULT] " +
+            "ID=" + target.TargetId +
+            " | Type=" + target.Type +
+            " | Passed=" + passed +
+            " | Configured=" + target.IsConfigured() +
+            " | PolarityConfigValid=" +
+                target.IsPolarityConfigurationValid() +
+            " | " + componentInfo +
+            " | " + terminalInfo);
     }
 
     return satisfiedCount;

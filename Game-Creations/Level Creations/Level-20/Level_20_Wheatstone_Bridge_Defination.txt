@@ -1,0 +1,160 @@
+PROJECT_SPARK_EDITABLE_SO_TXT_V1
+# Readable/editable Unity serialized data. Modify values in the JSON section.
+# Keep field names, object-reference structures, and section markers unchanged.
+# The import requires selecting the ORIGINAL asset in Unity.
+Asset Name: Level_20
+Asset Type: ProjectSpark.Gameplay.SparkLevelDefinition, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+Asset Path: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_20_Layout/Level_20.asset
+Asset GUID: 3e519535634e7db4fbda3ed1044e16f6
+Export Date: 2026-11-06 00:33:09
+----- BEGIN UNITY EDITOR JSON -----
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "Level_20",
+        "m_EditorClassIdentifier": "Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition",
+        "levelId": "level_20",
+        "displayName": "Wheatstone Bridge Balance",
+        "description": "From a switched 5 V supply, build two parallel voltage dividers: LEFT 330 ohm TOP and 470 ohm BOTTOM, RIGHT 330 ohm TOP and 470 ohm BOTTOM. The RIGHT TOP workstation initially has an incorrect 220 ohm resistor; power off, replace it with 330 ohm, and wire both branches to the common supply positive and negative. Measure the difference between MID A (left midpoint) and MID B (right midpoint) using LCD Terminals A and B, not a conducting wire. Balance requires near-zero midpoint difference, both midpoint voltages near 2.94 V, two branch currents near 6.25 mA, and total source current near 12.5 mA. Verify values against the Project Spark solver.",
+        "completionMode": 0,
+        "requiredTargetCount": 5,
+        "requireClosedReturn": true,
+        "rejectShortCircuit": true,
+        "rejectTargetShort": true,
+        "allowIntermediateConnections": true,
+        "requireMinimumVoltage": false,
+        "minimumVoltage": 0.0,
+        "allowAnyConfiguredPowerSource": true,
+        "powerSources": [
+            {
+                "sourceName": "PowerSupply_01",
+                "positiveTerminalId": "Battery_positive",
+                "negativeTerminalId": "Battery_negative",
+                "nominalVoltage": 5.0
+            }
+        ],
+        "targets": [
+            {
+                "targetId": "level20_bridge_balance",
+                "displayName": "Bridge Balance (MID A - MID B)",
+                "description": "Measure the magnitude of voltage between the two divider midpoints; keep below 0.05 V.",
+                "targetType": 5,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_LBOTTOM_Input",
+                "requiredNegativeTerminalId": "R_RBOTTOM_Input",
+                "targetComponentId": "R_LBOTTOM_Component",
+                "minimumVoltage": 0,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": true,
+                "maximumVoltage": 0.05,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level20_midpoint_voltage",
+                "displayName": "LEFT Midpoint Voltage ~2.94 V",
+                "description": "LEFT midpoint MID A relative to source negative; voltage across left lower 470 ohm resistor.",
+                "targetType": 5,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_LBOTTOM_Input",
+                "requiredNegativeTerminalId": "R_LBOTTOM_Output",
+                "targetComponentId": "R_LBOTTOM_Component",
+                "minimumVoltage": 2.8,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": true,
+                "maximumVoltage": 3.1,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level20_left_current",
+                "displayName": "LEFT Branch Current ~6.25 mA",
+                "description": "Current through left TOP 330 ohm resistor.",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_LTOP_Input",
+                "requiredNegativeTerminalId": "R_LTOP_Output",
+                "targetComponentId": "R_LTOP_Component",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.0058,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.0067,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level20_right_current",
+                "displayName": "RIGHT Branch Current ~6.25 mA",
+                "description": "Current through right TOP resistor; requires replacing the initial 220 ohm part.",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_RTOP_Input",
+                "requiredNegativeTerminalId": "R_RTOP_Output",
+                "targetComponentId": "R_RTOP_Component",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.0058,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.0067,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level20_source_current",
+                "displayName": "Source Current ~12.5 mA",
+                "description": "Total source current is the sum of the two divider branch currents.",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "Battery_positive",
+                "requiredNegativeTerminalId": "Battery_negative",
+                "targetComponentId": "PowerSupply_01",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.0118,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.0132,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            }
+        ],
+        "failureMode": 0,
+        "requiredHealthyResistorIds": [],
+        "requireHealthyInstalledResistors": false,
+        "successOutputIds": [],
+        "failureOutputIds": [],
+        "unlockNextLevelOnCompletion": true,
+        "unlockedByDefault": true,
+        "autoUnlockNextLevel": true,
+        "autoAdvanceOnCompletion": false
+    }
+}
+----- END UNITY EDITOR JSON -----

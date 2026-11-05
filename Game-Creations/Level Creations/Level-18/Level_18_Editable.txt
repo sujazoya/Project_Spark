@@ -1,0 +1,160 @@
+PROJECT_SPARK_EDITABLE_SO_TXT_V1
+# Readable/editable Unity serialized data. Modify values in the JSON section.
+# Keep field names, object-reference structures, and section markers unchanged.
+# The import requires selecting the ORIGINAL asset in Unity.
+Asset Name: Level_18
+Asset Type: ProjectSpark.Gameplay.SparkLevelDefinition, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+Asset Path: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_18_Layout/Level_18.asset
+Asset GUID: a67073b969181e143bc30359baadb0e3
+Export Date: 2026-11-05 12:23:39
+----- BEGIN UNITY EDITOR JSON -----
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "Level_18",
+        "m_EditorClassIdentifier": "Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition",
+        "levelId": "level_17",
+        "displayName": "Series–Parallel LED Network",
+        "description": "From a switched 5 V supply, install a 100 ohm series resistor in Register_Slot_2. After this resistor split into two parallel branches: 330 ohm + red LED, and 470 ohm + green LED. Reconnect both LED cathodes to supply negative. Check both LEDs, each branch current, and source current. Power off before replacing the initial 220 ohm resistor. Current thresholds are nominal and must be checked against the actual SparkLED solver.",
+        "completionMode": 0,
+        "requiredTargetCount": 5,
+        "requireClosedReturn": true,
+        "rejectShortCircuit": true,
+        "rejectTargetShort": true,
+        "allowIntermediateConnections": true,
+        "requireMinimumVoltage": false,
+        "minimumVoltage": 0.0,
+        "allowAnyConfiguredPowerSource": true,
+        "powerSources": [
+            {
+                "sourceName": "PowerSupply_01",
+                "positiveTerminalId": "Battery_positive",
+                "negativeTerminalId": "Battery_negative",
+                "nominalVoltage": 5.0
+            }
+        ],
+        "targets": [
+            {
+                "targetId": "level17_red_led_conducting",
+                "displayName": "Red LED Conducting",
+                "description": "Red LED in the 330 ohm branch conducts.",
+                "targetType": 3,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "LED_Anode",
+                "requiredNegativeTerminalId": "LED_Cathode",
+                "targetComponentId": "led",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level17_green_led_conducting",
+                "displayName": "Green LED Conducting",
+                "description": "Green LED in the 470 ohm branch conducts.",
+                "targetType": 3,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "led_2_Anode",
+                "requiredNegativeTerminalId": "led_2_Cathode",
+                "targetComponentId": "led_2",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level17_red_branch_current",
+                "displayName": "Red Branch Current",
+                "description": "Nominal 330 ohm branch current; tune to actual LED model.",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_RED_Input",
+                "requiredNegativeTerminalId": "R_RED_Output",
+                "targetComponentId": "R_RED_Component",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.0044999998062849049,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.007499999832361937,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level17_green_branch_current",
+                "displayName": "Green Branch Current",
+                "description": "Nominal 470 ohm branch current; tune to actual LED model.",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_GREEN_Input",
+                "requiredNegativeTerminalId": "R_GREEN_Output",
+                "targetComponentId": "R_GREEN_Component",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.003000000026077032,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": true,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.005499999970197678,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level17_source_current",
+                "displayName": "Total Source Current",
+                "description": "Nominal total source current; tune to actual LED model.",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "Battery_positive",
+                "requiredNegativeTerminalId": "Battery_negative",
+                "targetComponentId": "PowerSupply_01",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.00800000037997961,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.012000000104308129,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            }
+        ],
+        "failureMode": 0,
+        "requiredHealthyResistorIds": [],
+        "requireHealthyInstalledResistors": false,
+        "successOutputIds": [],
+        "failureOutputIds": [],
+        "unlockNextLevelOnCompletion": true,
+        "unlockedByDefault": true,
+        "autoUnlockNextLevel": true,
+        "autoAdvanceOnCompletion": false
+    }
+}
+----- END UNITY EDITOR JSON -----

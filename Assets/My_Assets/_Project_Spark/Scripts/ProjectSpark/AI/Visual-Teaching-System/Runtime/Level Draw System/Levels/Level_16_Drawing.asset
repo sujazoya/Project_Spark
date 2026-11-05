@@ -1,0 +1,316 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_16_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_16
+  levelTitle: Two LEDs in Series
+  initialPage: 0
+  pages:
+  - title: LEVEL 16 | Circuit Overview
+    explanation: Single series path through a 100-Ohm current limiter, a red LED,
+      and a green LED. Both diodes must have forward polarity.
+    caption: PAGE 1/4 | CIRCUIT TOPOLOGY
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: S1
+      kind: 1
+      position: {x: 0.49, y: 0.82}
+      label: R_LIMIT 100 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: S2
+      kind: 9
+      position: {x: 0.65, y: 0.82}
+      label: RED LED
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: S3
+      kind: 9
+      position: {x: 0.81, y: 0.82}
+      label: GREEN LED
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.55, y: 0.82}
+      - {x: 0.59, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.71, y: 0.82}
+      - {x: 0.75, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.87, y: 0.82}
+      - {x: 0.84, y: 0.82}
+      - {x: 0.84, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+  - title: LEVEL 16 | Wiring Guide
+    explanation: Battery+ -> switch -> 100-Ohm resistor -> RED LED anode -> RED cathode
+      to GREEN anode -> GREEN cathode -> Battery_negative. No bypass wires around
+      either LED.
+    caption: PAGE 2/4 | STEP-BY-STEP CONNECTIONS
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: S1
+      kind: 1
+      position: {x: 0.49, y: 0.82}
+      label: R_LIMIT 100 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: S2
+      kind: 9
+      position: {x: 0.65, y: 0.82}
+      label: RED LED
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: S3
+      kind: 9
+      position: {x: 0.81, y: 0.82}
+      label: GREEN LED
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.55, y: 0.82}
+      - {x: 0.59, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.71, y: 0.82}
+      - {x: 0.75, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.87, y: 0.82}
+      - {x: 0.84, y: 0.82}
+      - {x: 0.84, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+  - title: LEVEL 16 | Electrical Concept
+    explanation: The same current must flow through all three series components.
+      5-V supply must exceed both LED forward drops; resistor drop is the remaining
+      voltage.
+    caption: PAGE 3/4 | NOMINAL ELECTRICAL RESULTS
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: S1
+      kind: 1
+      position: {x: 0.49, y: 0.82}
+      label: R_LIMIT 100 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: S2
+      kind: 9
+      position: {x: 0.65, y: 0.82}
+      label: RED LED
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: S3
+      kind: 9
+      position: {x: 0.81, y: 0.82}
+      label: GREEN LED
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.55, y: 0.82}
+      - {x: 0.59, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.71, y: 0.82}
+      - {x: 0.75, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.87, y: 0.82}
+      - {x: 0.84, y: 0.82}
+      - {x: 0.84, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+  - title: LEVEL 16 | Correct Solution
+    explanation: Both LEDs should conduct and level-specific resistor/current conditions
+      must pass. Use the solver values rather than an assumed fixed LED drop.
+    caption: PAGE 4/4 | CHECK & VERIFY
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: S1
+      kind: 1
+      position: {x: 0.49, y: 0.82}
+      label: R_LIMIT 100 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: S2
+      kind: 9
+      position: {x: 0.65, y: 0.82}
+      label: RED LED
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: S3
+      kind: 9
+      position: {x: 0.81, y: 0.82}
+      label: GREEN LED
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.55, y: 0.82}
+      - {x: 0.59, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.71, y: 0.82}
+      - {x: 0.75, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.87, y: 0.82}
+      - {x: 0.84, y: 0.82}
+      - {x: 0.84, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}

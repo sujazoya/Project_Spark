@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_19
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_18
+  displayName: Precision Voltage Divider
+  description: From a 5 V switched DC source, build a series voltage divider with
+    a 330 ohm TOP resistor and a 470 ohm BOTTOM resistor. Connect supply positive
+    through the switch and TOP resistor to VOUT, then through the BOTTOM resistor
+    to supply negative. Measure VOUT relative to negative (~2.94 V), confirm the
+    voltage across each resistor, and confirm equal series currents (~6.25 mA). Power
+    off before changing components. Nominal thresholds should be verified with the
+    Project Spark solver.
+  completionMode: 0
+  requiredTargetCount: 5
+  requireClosedReturn: 1
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 0
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: PowerSupply_01
+    positiveTerminalId: Battery_positive
+    negativeTerminalId: Battery_negative
+    nominalVoltage: 5
+  targets:
+  - targetId: level18_output_voltage
+    displayName: Output Voltage ~2.94 V
+    description: Voltage across BOTTOM 470 ohm resistor; equivalent to VOUT versus
+      supply negative when properly wired.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_BOTTOM_Input
+    requiredNegativeTerminalId: R_BOTTOM_Output
+    targetComponentId: R_BOTTOM_Component
+    minimumVoltage: 2.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 3.1
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level18_top_voltage
+    displayName: TOP Resistor Voltage ~2.06 V
+    description: Voltage across TOP 330 ohm resistor.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_TOP_Input
+    requiredNegativeTerminalId: R_TOP_Output
+    targetComponentId: R_TOP_Component
+    minimumVoltage: 1.95
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 2.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level18_top_current
+    displayName: TOP Series Current ~6.25 mA
+    description: Current through 330 ohm TOP resistor.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_TOP_Input
+    requiredNegativeTerminalId: R_TOP_Output
+    targetComponentId: R_TOP_Component
+    minimumVoltage: 0
+    minimumCurrent: 0.0058
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.0067
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level18_bottom_current
+    displayName: BOTTOM Series Current ~6.25 mA
+    description: Current through 470 ohm BOTTOM resistor.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_BOTTOM_Input
+    requiredNegativeTerminalId: R_BOTTOM_Output
+    targetComponentId: R_BOTTOM_Component
+    minimumVoltage: 0
+    minimumCurrent: 0.0058
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.0067
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level18_source_current
+    displayName: Source Current ~6.25 mA
+    description: Total DC source current while voltage divider is connected.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: Battery_positive
+    requiredNegativeTerminalId: Battery_negative
+    targetComponentId: PowerSupply_01
+    minimumVoltage: 0
+    minimumCurrent: 0.0058
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.0067
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 0
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 1
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

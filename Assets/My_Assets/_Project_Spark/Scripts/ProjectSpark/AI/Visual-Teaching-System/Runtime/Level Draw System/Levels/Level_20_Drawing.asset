@@ -1,0 +1,561 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_20_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_20
+  levelTitle: Wheatstone Bridge Balance
+  initialPage: 0
+  pages:
+  - title: LEVEL 20 | Circuit Overview
+    explanation: Two 330/470-Ohm voltage dividers run in parallel across 5 V. Measure
+      the difference between MID A and MID B with high-impedance LCD leads.
+    caption: PAGE 1/4 | CIRCUIT TOPOLOGY
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: Ltop
+      kind: 1
+      position: {x: 0.56, y: 0.7}
+      label: L TOP 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: Lbottom
+      kind: 1
+      position: {x: 0.56, y: 0.37}
+      label: L BOTTOM 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: Rtop
+      kind: 1
+      position: {x: 0.78, y: 0.7}
+      label: R TOP 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: Rbottom
+      kind: 1
+      position: {x: 0.78, y: 0.37}
+      label: R BOTTOM 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: A
+      kind: 9
+      position: {x: 0.64, y: 0.54}
+      label: MID A
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: B
+      kind: 9
+      position: {x: 0.88, y: 0.54}
+      label: MID B
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.76, y: 0.23}
+      label: LCD A - B
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.5, y: 0.82}
+      - {x: 0.5, y: 0.7}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.72, y: 0.82}
+      - {x: 0.72, y: 0.7}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.62, y: 0.7}
+      - {x: 0.64, y: 0.7}
+      - {x: 0.64, y: 0.54}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.64, y: 0.54}
+      - {x: 0.5, y: 0.54}
+      - {x: 0.5, y: 0.37}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.84, y: 0.7}
+      - {x: 0.88, y: 0.7}
+      - {x: 0.88, y: 0.54}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.88, y: 0.54}
+      - {x: 0.72, y: 0.54}
+      - {x: 0.72, y: 0.37}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.62, y: 0.37}
+      - {x: 0.64, y: 0.37}
+      - {x: 0.64, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.84, y: 0.37}
+      - {x: 0.88, y: 0.37}
+      - {x: 0.88, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.64, y: 0.54}
+      - {x: 0.68, y: 0.54}
+      - {x: 0.68, y: 0.29}
+      - {x: 0.7, y: 0.29}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}
+    - points:
+      - {x: 0.88, y: 0.54}
+      - {x: 0.94, y: 0.54}
+      - {x: 0.94, y: 0.23}
+      - {x: 0.82, y: 0.23}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}
+  - title: LEVEL 20 | Wiring Guide
+    explanation: SwitchOutput feeds L_TOP 330 and R_TOP 330. L_TOP -> MID A -> L_BOTTOM
+      470 -> negative. R_TOP -> MID B -> R_BOTTOM 470 -> negative. LCD A -> MID A,
+      LCD B -> MID B. Do not hard-wire the midpoints together.
+    caption: PAGE 2/4 | STEP-BY-STEP CONNECTIONS
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: Ltop
+      kind: 1
+      position: {x: 0.56, y: 0.7}
+      label: L TOP 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: Lbottom
+      kind: 1
+      position: {x: 0.56, y: 0.37}
+      label: L BOTTOM 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: Rtop
+      kind: 1
+      position: {x: 0.78, y: 0.7}
+      label: R TOP 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: Rbottom
+      kind: 1
+      position: {x: 0.78, y: 0.37}
+      label: R BOTTOM 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: A
+      kind: 9
+      position: {x: 0.64, y: 0.54}
+      label: MID A
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: B
+      kind: 9
+      position: {x: 0.88, y: 0.54}
+      label: MID B
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.76, y: 0.23}
+      label: LCD A - B
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.5, y: 0.82}
+      - {x: 0.5, y: 0.7}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.72, y: 0.82}
+      - {x: 0.72, y: 0.7}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.62, y: 0.7}
+      - {x: 0.64, y: 0.7}
+      - {x: 0.64, y: 0.54}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.64, y: 0.54}
+      - {x: 0.5, y: 0.54}
+      - {x: 0.5, y: 0.37}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.84, y: 0.7}
+      - {x: 0.88, y: 0.7}
+      - {x: 0.88, y: 0.54}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.88, y: 0.54}
+      - {x: 0.72, y: 0.54}
+      - {x: 0.72, y: 0.37}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.62, y: 0.37}
+      - {x: 0.64, y: 0.37}
+      - {x: 0.64, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.84, y: 0.37}
+      - {x: 0.88, y: 0.37}
+      - {x: 0.88, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.64, y: 0.54}
+      - {x: 0.68, y: 0.54}
+      - {x: 0.68, y: 0.29}
+      - {x: 0.7, y: 0.29}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}
+    - points:
+      - {x: 0.88, y: 0.54}
+      - {x: 0.94, y: 0.54}
+      - {x: 0.94, y: 0.23}
+      - {x: 0.82, y: 0.23}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}
+  - title: LEVEL 20 | Electrical Concept
+    explanation: 'At balance: MID A ~2.9375 V, MID B ~2.9375 V, difference ~0 V,
+      each branch ~6.25 mA and source ~12.50 mA. Start R_TOP at 220 Ohm for the repair
+      challenge, replace with 330 Ohm.'
+    caption: PAGE 3/4 | NOMINAL ELECTRICAL RESULTS
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: Ltop
+      kind: 1
+      position: {x: 0.56, y: 0.7}
+      label: L TOP 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: Lbottom
+      kind: 1
+      position: {x: 0.56, y: 0.37}
+      label: L BOTTOM 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: Rtop
+      kind: 1
+      position: {x: 0.78, y: 0.7}
+      label: R TOP 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: Rbottom
+      kind: 1
+      position: {x: 0.78, y: 0.37}
+      label: R BOTTOM 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: A
+      kind: 9
+      position: {x: 0.64, y: 0.54}
+      label: MID A
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: B
+      kind: 9
+      position: {x: 0.88, y: 0.54}
+      label: MID B
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.76, y: 0.23}
+      label: LCD A - B
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.5, y: 0.82}
+      - {x: 0.5, y: 0.7}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.72, y: 0.82}
+      - {x: 0.72, y: 0.7}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.62, y: 0.7}
+      - {x: 0.64, y: 0.7}
+      - {x: 0.64, y: 0.54}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.64, y: 0.54}
+      - {x: 0.5, y: 0.54}
+      - {x: 0.5, y: 0.37}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.84, y: 0.7}
+      - {x: 0.88, y: 0.7}
+      - {x: 0.88, y: 0.54}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.88, y: 0.54}
+      - {x: 0.72, y: 0.54}
+      - {x: 0.72, y: 0.37}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.62, y: 0.37}
+      - {x: 0.64, y: 0.37}
+      - {x: 0.64, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.84, y: 0.37}
+      - {x: 0.88, y: 0.37}
+      - {x: 0.88, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.64, y: 0.54}
+      - {x: 0.68, y: 0.54}
+      - {x: 0.68, y: 0.29}
+      - {x: 0.7, y: 0.29}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}
+    - points:
+      - {x: 0.88, y: 0.54}
+      - {x: 0.94, y: 0.54}
+      - {x: 0.94, y: 0.23}
+      - {x: 0.82, y: 0.23}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}
+  - title: LEVEL 20 | Correct Solution
+    explanation: Use four unique slots and correct runtime declarations R_LTOP, R_LBOTTOM,
+      R_RTOP, R_RBOTTOM. Check voltage difference 0-0.05 V, midpoint voltage, two
+      branch currents, source current.
+    caption: PAGE 4/4 | CHECK & VERIFY
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: Ltop
+      kind: 1
+      position: {x: 0.56, y: 0.7}
+      label: L TOP 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: Lbottom
+      kind: 1
+      position: {x: 0.56, y: 0.37}
+      label: L BOTTOM 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: Rtop
+      kind: 1
+      position: {x: 0.78, y: 0.7}
+      label: R TOP 330 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: Rbottom
+      kind: 1
+      position: {x: 0.78, y: 0.37}
+      label: R BOTTOM 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: A
+      kind: 9
+      position: {x: 0.64, y: 0.54}
+      label: MID A
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: B
+      kind: 9
+      position: {x: 0.88, y: 0.54}
+      label: MID B
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.76, y: 0.23}
+      label: LCD A - B
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.5, y: 0.82}
+      - {x: 0.5, y: 0.7}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.72, y: 0.82}
+      - {x: 0.72, y: 0.7}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.62, y: 0.7}
+      - {x: 0.64, y: 0.7}
+      - {x: 0.64, y: 0.54}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.64, y: 0.54}
+      - {x: 0.5, y: 0.54}
+      - {x: 0.5, y: 0.37}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.84, y: 0.7}
+      - {x: 0.88, y: 0.7}
+      - {x: 0.88, y: 0.54}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.88, y: 0.54}
+      - {x: 0.72, y: 0.54}
+      - {x: 0.72, y: 0.37}
+      energized: 0
+      color: {r: 0.25, g: 0.99, b: 0.77, a: 1}
+    - points:
+      - {x: 0.62, y: 0.37}
+      - {x: 0.64, y: 0.37}
+      - {x: 0.64, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.84, y: 0.37}
+      - {x: 0.88, y: 0.37}
+      - {x: 0.88, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.64, y: 0.54}
+      - {x: 0.68, y: 0.54}
+      - {x: 0.68, y: 0.29}
+      - {x: 0.7, y: 0.29}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}
+    - points:
+      - {x: 0.88, y: 0.54}
+      - {x: 0.94, y: 0.54}
+      - {x: 0.94, y: 0.23}
+      - {x: 0.82, y: 0.23}
+      energized: 0
+      color: {r: 0.78, g: 0.53, b: 0.97, a: 1}

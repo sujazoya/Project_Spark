@@ -1,0 +1,320 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_21_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_21
+  levelTitle: Capacitor Charge - Store the Energy
+  initialPage: 0
+  pages:
+  - title: LEVEL 21 | Capacitor Charging | Overview
+    explanation: A capacitor stores energy in an electric field. With SW1 closed,
+      it charges through the 1 kOhm resistor. The LCD is only a high-impedance voltmeter
+      across capacitor terminals; it is not the return wire.
+    caption: PAGE 1/4 | 5 V | R 1 kOhm | C 1000 uF
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.12, y: 0.5}
+      label: 5 V
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.29, y: 0.8}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: resistor
+      kind: 1
+      position: {x: 0.49, y: 0.8}
+      label: R 1 kOhm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: capacitor
+      kind: 9
+      position: {x: 0.76, y: 0.55}
+      label: C 1000 uF
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.54, y: 0.36}
+      label: LCD Vcap
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.46, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.64}
+      - {x: 0.12, y: 0.8}
+      - {x: 0.23, y: 0.8}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.35, y: 0.8}
+      - {x: 0.43, y: 0.8}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.55, y: 0.8}
+      - {x: 0.76, y: 0.8}
+      - {x: 0.76, y: 0.62}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.76, y: 0.48}
+      - {x: 0.76, y: 0.15}
+      - {x: 0.46, y: 0.15}
+      - {x: 0.12, y: 0.15}
+      - {x: 0.12, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.76, y: 0.8}
+      - {x: 0.63, y: 0.8}
+      - {x: 0.63, y: 0.36}
+      - {x: 0.6, y: 0.36}
+      energized: 0
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - points:
+      - {x: 0.48, y: 0.36}
+      - {x: 0.46, y: 0.36}
+      - {x: 0.46, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+  - title: LEVEL 21 | Exact Wiring Guide
+    explanation: Wire battery positive to SW1 input; SW1 output to R_CHARGE_Input;
+      R_CHARGE_Output to C_STORE_Input; C_STORE_Output to battery negative. LCD A
+      to C_STORE_Input, LCD B to C_STORE_Output. Set C_STORE capacitance to 0.001
+      F (1000 uF), with voltage rating >= 5 V.
+    caption: PAGE 2/4 | SERIES RC + LCD ACROSS CAPACITOR
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.12, y: 0.5}
+      label: 5 V
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.29, y: 0.8}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: resistor
+      kind: 1
+      position: {x: 0.49, y: 0.8}
+      label: R 1 kOhm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: capacitor
+      kind: 9
+      position: {x: 0.76, y: 0.55}
+      label: C 1000 uF
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.54, y: 0.36}
+      label: LCD Vcap
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.46, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.64}
+      - {x: 0.12, y: 0.8}
+      - {x: 0.23, y: 0.8}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.35, y: 0.8}
+      - {x: 0.43, y: 0.8}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.55, y: 0.8}
+      - {x: 0.76, y: 0.8}
+      - {x: 0.76, y: 0.62}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.76, y: 0.48}
+      - {x: 0.76, y: 0.15}
+      - {x: 0.46, y: 0.15}
+      - {x: 0.12, y: 0.15}
+      - {x: 0.12, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.76, y: 0.8}
+      - {x: 0.63, y: 0.8}
+      - {x: 0.63, y: 0.36}
+      - {x: 0.6, y: 0.36}
+      energized: 0
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - points:
+      - {x: 0.48, y: 0.36}
+      - {x: 0.46, y: 0.36}
+      - {x: 0.46, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+  - title: LEVEL 21 | Voltage Rise & Charge Current
+    explanation: 'Ideal estimates, not live measurements: R=1000 Ohm, C=0.001 F,
+      tau=RC=1 s. Starting uncharged: Vcap(1 s)=3.16 V, Vcap(2 s)=4.32 V, Vcap(3
+      s)=4.75 V. Initial resistor current 5 mA decays toward zero.'
+    caption: PAGE 3/4 | TIME CONSTANT 1 SECOND
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.12, y: 0.5}
+      label: 5 V
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.29, y: 0.8}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: resistor
+      kind: 1
+      position: {x: 0.49, y: 0.8}
+      label: R 1 kOhm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: capacitor
+      kind: 9
+      position: {x: 0.76, y: 0.55}
+      label: C 1000 uF
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.54, y: 0.36}
+      label: LCD Vcap
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.46, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.64}
+      - {x: 0.12, y: 0.8}
+      - {x: 0.23, y: 0.8}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.35, y: 0.8}
+      - {x: 0.43, y: 0.8}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.55, y: 0.8}
+      - {x: 0.76, y: 0.8}
+      - {x: 0.76, y: 0.62}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.76, y: 0.48}
+      - {x: 0.76, y: 0.15}
+      - {x: 0.46, y: 0.15}
+      - {x: 0.12, y: 0.15}
+      - {x: 0.12, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.76, y: 0.8}
+      - {x: 0.63, y: 0.8}
+      - {x: 0.63, y: 0.36}
+      - {x: 0.6, y: 0.36}
+      energized: 0
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - points:
+      - {x: 0.48, y: 0.36}
+      - {x: 0.46, y: 0.36}
+      - {x: 0.46, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+  - title: LEVEL 21 | Correct Circuit & 3 Objectives
+    explanation: 'Three target windows: supply 4.8-5.2 V; capacitor 3.0-4.8 V; charging
+      resistor current 0.15-2.2 mA. All three overlap during the transient, so switch
+      the source ON and watch. Only SparkLevelEvaluator awards completion. If solver
+      updates do not satisfy targets together, adjust after live testing.'
+    caption: PAGE 4/4 | LIVE MEASUREMENT REQUIRED
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.12, y: 0.5}
+      label: 5 V
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.29, y: 0.8}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: resistor
+      kind: 1
+      position: {x: 0.49, y: 0.8}
+      label: R 1 kOhm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: capacitor
+      kind: 9
+      position: {x: 0.76, y: 0.55}
+      label: C 1000 uF
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - id: lcd
+      kind: 8
+      position: {x: 0.54, y: 0.36}
+      label: LCD Vcap
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.46, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.64}
+      - {x: 0.12, y: 0.8}
+      - {x: 0.23, y: 0.8}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.35, y: 0.8}
+      - {x: 0.43, y: 0.8}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.55, y: 0.8}
+      - {x: 0.76, y: 0.8}
+      - {x: 0.76, y: 0.62}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.76, y: 0.48}
+      - {x: 0.76, y: 0.15}
+      - {x: 0.46, y: 0.15}
+      - {x: 0.12, y: 0.15}
+      - {x: 0.12, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.76, y: 0.8}
+      - {x: 0.63, y: 0.8}
+      - {x: 0.63, y: 0.36}
+      - {x: 0.6, y: 0.36}
+      energized: 0
+      color: {r: 0.28, g: 0.95, b: 0.98, a: 1}
+    - points:
+      - {x: 0.48, y: 0.36}
+      - {x: 0.46, y: 0.36}
+      - {x: 0.46, y: 0.15}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}

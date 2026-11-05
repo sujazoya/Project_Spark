@@ -1,0 +1,374 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_14_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_14
+  levelTitle: Resistor-LED Branch and Resistor Branch
+  initialPage: 0
+  pages:
+  - title: LEVEL 14 | Circuit Overview
+    explanation: The reference game scene shows a red LED in series with a resistor
+      on the left branch and a separate 470-Ohm resistor on the right branch. Left
+      resistor value is not confirmed by the reference.
+    caption: PAGE 1/4 | CIRCUIT TOPOLOGY
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: R1
+      kind: 1
+      position: {x: 0.58, y: 0.65}
+      label: R1 + LED
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: LED1
+      kind: 9
+      position: {x: 0.76, y: 0.65}
+      label: RED LED
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: R2
+      kind: 1
+      position: {x: 0.64, y: 0.39}
+      label: R2 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.43, y: 0.39}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.84, y: 0.65}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.65}
+      - {x: 0.52, y: 0.65}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.64, y: 0.65}
+      - {x: 0.7, y: 0.65}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.82, y: 0.65}
+      - {x: 0.84, y: 0.65}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.39}
+      - {x: 0.58, y: 0.39}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.7, y: 0.39}
+      - {x: 0.84, y: 0.39}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+  - title: LEVEL 14 | Wiring Guide
+    explanation: 'SwitchOutput feeds both branches. LEFT: resistor -> red LED anode
+      -> LED cathode -> Battery_negative. RIGHT: 470-Ohm resistor -> Battery_negative.
+      Common return shared only at ground.'
+    caption: PAGE 2/4 | STEP-BY-STEP CONNECTIONS
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: R1
+      kind: 1
+      position: {x: 0.58, y: 0.65}
+      label: R1 + LED
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: LED1
+      kind: 9
+      position: {x: 0.76, y: 0.65}
+      label: RED LED
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: R2
+      kind: 1
+      position: {x: 0.64, y: 0.39}
+      label: R2 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.43, y: 0.39}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.84, y: 0.65}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.65}
+      - {x: 0.52, y: 0.65}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.64, y: 0.65}
+      - {x: 0.7, y: 0.65}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.82, y: 0.65}
+      - {x: 0.84, y: 0.65}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.39}
+      - {x: 0.58, y: 0.39}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.7, y: 0.39}
+      - {x: 0.84, y: 0.39}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+  - title: LEVEL 14 | Electrical Concept
+    explanation: Both branches are in parallel across the 5-V supply. LED branch
+      current depends on the forward drop and the series resistor; the right resistor
+      current is nominally 5/470 = 10.64 mA.
+    caption: PAGE 3/4 | NOMINAL ELECTRICAL RESULTS
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: R1
+      kind: 1
+      position: {x: 0.58, y: 0.65}
+      label: R1 + LED
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: LED1
+      kind: 9
+      position: {x: 0.76, y: 0.65}
+      label: RED LED
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: R2
+      kind: 1
+      position: {x: 0.64, y: 0.39}
+      label: R2 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.43, y: 0.39}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.84, y: 0.65}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.65}
+      - {x: 0.52, y: 0.65}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.64, y: 0.65}
+      - {x: 0.7, y: 0.65}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.82, y: 0.65}
+      - {x: 0.84, y: 0.65}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.39}
+      - {x: 0.58, y: 0.39}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.7, y: 0.39}
+      - {x: 0.84, y: 0.39}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+  - title: LEVEL 14 | Correct Solution
+    explanation: Ensure LED polarity and series limiting resistor are correct. Read
+      the precise resistor and target values from Level_14.asset before final course
+      publishing.
+    caption: PAGE 4/4 | CHECK & VERIFY
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.5}
+      label: 5 V DC
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.27, y: 0.82}
+      label: SW1
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.6, y: 0.15}
+      label: GND
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - id: R1
+      kind: 1
+      position: {x: 0.58, y: 0.65}
+      label: R1 + LED
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    - id: LED1
+      kind: 9
+      position: {x: 0.76, y: 0.65}
+      label: RED LED
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - id: R2
+      kind: 1
+      position: {x: 0.64, y: 0.39}
+      label: R2 470 Ohm
+      color: {r: 1, g: 0.79, b: 0.32, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.64}
+      - {x: 0.1, y: 0.82}
+      - {x: 0.21, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.33, y: 0.82}
+      - {x: 0.43, y: 0.82}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.1, y: 0.15}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.82}
+      - {x: 0.43, y: 0.39}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.84, y: 0.15}
+      - {x: 0.84, y: 0.65}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.65}
+      - {x: 0.52, y: 0.65}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.64, y: 0.65}
+      - {x: 0.7, y: 0.65}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.82, y: 0.65}
+      - {x: 0.84, y: 0.65}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.39}
+      - {x: 0.58, y: 0.39}
+      energized: 0
+      color: {r: 0.99, g: 0.3, b: 0.4, a: 1}
+    - points:
+      - {x: 0.7, y: 0.39}
+      - {x: 0.84, y: 0.39}
+      energized: 0
+      color: {r: 0.21, g: 0.7, b: 1, a: 1}
