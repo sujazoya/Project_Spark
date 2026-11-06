@@ -1,0 +1,300 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_22_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_22
+  levelTitle: One Way Only - Diode Direction
+  initialPage: 0
+  pages:
+  - title: LEVEL 22 | One Way Only | Circuit Overview
+    explanation: 'ILLUSTRATIVE / NOT LIVE VERIFIED. One series current path: Battery_positive
+      -> SW1 -> R1 330 Ohm -> D1 anode -> D1 banded cathode -> green LED anode ->
+      green LED cathode -> Battery_negative. The diode permits forward current and
+      blocks reverse current. No direct parallel bypass wire should connect across
+      the diode or LED.'
+    caption: PAGE 1/4 | 5 V | SWITCH | 330 OHM | DIODE | GREEN LED
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.52}
+      label: 5 V
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - id: sw1
+      kind: 5
+      position: {x: 0.27, y: 0.8}
+      label: SW1
+      color: {r: 1, g: 0.78, b: 0.28, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.45, y: 0.8}
+      label: R1 330 Ohm
+      color: {r: 1, g: 0.78, b: 0.28, a: 1}
+    - id: d1
+      kind: 3
+      position: {x: 0.64, y: 0.8}
+      label: D1 1N4007  A >| K
+      color: {r: 0.28, g: 0.93, b: 0.98, a: 1}
+    - id: led1
+      kind: 2
+      position: {x: 0.82, y: 0.8}
+      label: LED1 GREEN  A >| K
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: gnd
+      kind: 6
+      position: {x: 0.58, y: 0.17}
+      label: BATTERY NEGATIVE / GND
+      color: {r: 0.19, g: 0.74, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.66}
+      - {x: 0.1, y: 0.8}
+      - {x: 0.21, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.33, y: 0.8}
+      - {x: 0.39, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.51, y: 0.8}
+      - {x: 0.58, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.7, y: 0.8}
+      - {x: 0.76, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.88, y: 0.8}
+      - {x: 0.94, y: 0.8}
+      - {x: 0.94, y: 0.17}
+      - {x: 0.58, y: 0.17}
+      - {x: 0.1, y: 0.17}
+      - {x: 0.1, y: 0.38}
+      energized: 0
+      color: {r: 0.19, g: 0.74, b: 1, a: 1}
+  - title: LEVEL 22 | Exact Five Electrical Wires
+    explanation: 'CONNECT THESE FIVE WIRES: (1) Battery_positive -> Switch Input.
+      (2) Switch Output -> R_LIMIT_Input. (3) R_LIMIT_Output -> D_PROTECT_Anode.
+      (4) D_PROTECT_Cathode -> LED_INDICATOR_Anode. (5) LED_INDICATOR_Cathode ->
+      Battery_negative. These are runtime binding IDs; use the actual SparkTerminal
+      GameObjects when drawing wires. The banded diode cathode points toward the
+      LED anode. If Battery_positive -> switch is prewired, the player places only
+      the four remaining wires.'
+    caption: PAGE 2/4 | WIRE TERMINAL TO TERMINAL | DIODE BAND TOWARD LED
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.52}
+      label: 5 V
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - id: sw1
+      kind: 5
+      position: {x: 0.27, y: 0.8}
+      label: SW1
+      color: {r: 1, g: 0.78, b: 0.28, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.45, y: 0.8}
+      label: R1 330 Ohm
+      color: {r: 1, g: 0.78, b: 0.28, a: 1}
+    - id: d1
+      kind: 3
+      position: {x: 0.64, y: 0.8}
+      label: D1 1N4007  A >| K
+      color: {r: 0.28, g: 0.93, b: 0.98, a: 1}
+    - id: led1
+      kind: 2
+      position: {x: 0.82, y: 0.8}
+      label: LED1 GREEN  A >| K
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: gnd
+      kind: 6
+      position: {x: 0.58, y: 0.17}
+      label: BATTERY NEGATIVE / GND
+      color: {r: 0.19, g: 0.74, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.66}
+      - {x: 0.1, y: 0.8}
+      - {x: 0.21, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.33, y: 0.8}
+      - {x: 0.39, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.51, y: 0.8}
+      - {x: 0.58, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.7, y: 0.8}
+      - {x: 0.76, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.88, y: 0.8}
+      - {x: 0.94, y: 0.8}
+      - {x: 0.94, y: 0.17}
+      - {x: 0.58, y: 0.17}
+      - {x: 0.1, y: 0.17}
+      - {x: 0.1, y: 0.38}
+      energized: 0
+      color: {r: 0.19, g: 0.74, b: 1, a: 1}
+  - title: LEVEL 22 | Forward vs Reverse Bias
+    explanation: 'FORWARD TEST: D1 anode toward the 330 Ohm resistor and banded cathode
+      toward LED anode. With switch closed, conventional current flows and green
+      LED illuminates. REVERSE TEST: Power off before swapping D1 wires. Connect
+      resistor to D1 cathode and D1 anode to LED anode; current should be blocked
+      and LED should stay off. The schematic depicts the forward-bias SOLUTION; reverse
+      bias is an experiment, not an additional simultaneous electrical branch.'
+    caption: PAGE 3/4 | FORWARD = GREEN LED ON | REVERSE = OFF
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.52}
+      label: 5 V
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - id: sw1
+      kind: 5
+      position: {x: 0.27, y: 0.8}
+      label: SW1
+      color: {r: 1, g: 0.78, b: 0.28, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.45, y: 0.8}
+      label: R1 330 Ohm
+      color: {r: 1, g: 0.78, b: 0.28, a: 1}
+    - id: d1
+      kind: 3
+      position: {x: 0.64, y: 0.8}
+      label: D1 1N4007  A >| K
+      color: {r: 0.28, g: 0.93, b: 0.98, a: 1}
+    - id: led1
+      kind: 2
+      position: {x: 0.82, y: 0.8}
+      label: LED1 GREEN  A >| K
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: gnd
+      kind: 6
+      position: {x: 0.58, y: 0.17}
+      label: BATTERY NEGATIVE / GND
+      color: {r: 0.19, g: 0.74, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.66}
+      - {x: 0.1, y: 0.8}
+      - {x: 0.21, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.33, y: 0.8}
+      - {x: 0.39, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.51, y: 0.8}
+      - {x: 0.58, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.7, y: 0.8}
+      - {x: 0.76, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.88, y: 0.8}
+      - {x: 0.94, y: 0.8}
+      - {x: 0.94, y: 0.17}
+      - {x: 0.58, y: 0.17}
+      - {x: 0.1, y: 0.17}
+      - {x: 0.1, y: 0.38}
+      energized: 0
+      color: {r: 0.19, g: 0.74, b: 1, a: 1}
+  - title: LEVEL 22 | Correct Solution & Four Targets
+    explanation: 'DESIGN ESTIMATES / NOT LIVE SOLVER READINGS. With approximately
+      0.7 V diode drop, 2.1 V green LED drop and 330 Ohm resistor, series current
+      is approximately 6.67 mA. Targets: 5 V supply between 4.8 and 5.2 V; forward
+      diode drop 0.45 to 1.0 V; green LED ON; resistor current 5 to 8 mA. Required
+      runtime bindings: D_PROTECT_Component / D_PROTECT_Anode / D_PROTECT_Cathode;
+      R_LIMIT_Component / R_LIMIT_Input / R_LIMIT_Output; LED_INDICATOR_Component
+      / LED_INDICATOR_Anode / LED_INDICATOR_Cathode. Only SparkLevelEvaluator awards
+      4/4; verify actual currents with the electrical audit.'
+    caption: PAGE 4/4 | 5 V | DIODE 0.45-1.0 V | LED ON | 5-8 mA
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.1, y: 0.52}
+      label: 5 V
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - id: sw1
+      kind: 5
+      position: {x: 0.27, y: 0.8}
+      label: SW1
+      color: {r: 1, g: 0.78, b: 0.28, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.45, y: 0.8}
+      label: R1 330 Ohm
+      color: {r: 1, g: 0.78, b: 0.28, a: 1}
+    - id: d1
+      kind: 3
+      position: {x: 0.64, y: 0.8}
+      label: D1 1N4007  A >| K
+      color: {r: 0.28, g: 0.93, b: 0.98, a: 1}
+    - id: led1
+      kind: 2
+      position: {x: 0.82, y: 0.8}
+      label: LED1 GREEN  A >| K
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: gnd
+      kind: 6
+      position: {x: 0.58, y: 0.17}
+      label: BATTERY NEGATIVE / GND
+      color: {r: 0.19, g: 0.74, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.66}
+      - {x: 0.1, y: 0.8}
+      - {x: 0.21, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.33, y: 0.8}
+      - {x: 0.39, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.51, y: 0.8}
+      - {x: 0.58, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.7, y: 0.8}
+      - {x: 0.76, y: 0.8}
+      energized: 0
+      color: {r: 0.98, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.88, y: 0.8}
+      - {x: 0.94, y: 0.8}
+      - {x: 0.94, y: 0.17}
+      - {x: 0.58, y: 0.17}
+      - {x: 0.1, y: 0.17}
+      - {x: 0.1, y: 0.38}
+      energized: 0
+      color: {r: 0.19, g: 0.74, b: 1, a: 1}
