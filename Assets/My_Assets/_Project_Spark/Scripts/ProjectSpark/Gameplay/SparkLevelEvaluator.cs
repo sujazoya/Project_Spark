@@ -235,7 +235,7 @@ namespace ProjectSpark.Gameplay
                 SparkElectricalState state =
                     debugComponent.ElectricalState;
 
-                Debug.Log(
+               /* Debug.Log(
                     $"[LEVEL TARGET COMPONENT CHECK] " +
                     $"Component={debugComponent.name} | " +
                     $"Type={debugComponent.GetType().Name} | " +
@@ -243,7 +243,7 @@ namespace ProjectSpark.Gameplay
                     $"Current={state.Current:F6} A | " +
                     $"Power={state.Power:F6} W | " +
                     $"Conduction={state.Conduction} | " +
-                    $"Enabled={debugComponent.ElectricalEnabled}");
+                    $"Enabled={debugComponent.ElectricalEnabled}");*/
             }
             else
             {

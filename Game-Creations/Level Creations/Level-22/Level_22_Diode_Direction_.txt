@@ -1,0 +1,138 @@
+PROJECT_SPARK_EDITABLE_SO_TXT_V1
+# Readable/editable Unity serialized data. Modify values in the JSON section.
+# Keep field names, object-reference structures, and section markers unchanged.
+# The import requires selecting the ORIGINAL asset in Unity.
+Asset Name: Level_22
+Asset Type: ProjectSpark.Gameplay.SparkLevelDefinition, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+Asset Path: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_22_Layout/Level_22.asset
+Asset GUID: f8bef5aa235d0c54c862ca4d4861addb
+Export Date: 2026-11-07 03:02:21
+----- BEGIN UNITY EDITOR JSON -----
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "Level_22",
+        "m_EditorClassIdentifier": "Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition",
+        "levelId": "level_22",
+        "displayName": "One Way Only - Diode Direction",
+        "description": "Build a 5 V forward-biased diode and green LED indicator circuit. Identify anode and cathode, place the 1N4007 correctly, and confirm safe LED current.",
+        "completionMode": 0,
+        "requiredTargetCount": 4,
+        "requireClosedReturn": true,
+        "rejectShortCircuit": true,
+        "rejectTargetShort": true,
+        "allowIntermediateConnections": true,
+        "requireMinimumVoltage": false,
+        "minimumVoltage": 1.0,
+        "allowAnyConfiguredPowerSource": true,
+        "powerSources": [
+            {
+                "sourceName": "PowerSupply_01",
+                "positiveTerminalId": "Battery_positive",
+                "negativeTerminalId": "Battery_negative",
+                "nominalVoltage": 5.0
+            }
+        ],
+        "targets": [
+            {
+                "targetId": "level22_supply",
+                "displayName": "5 V Supply",
+                "description": "Verify the 5 V source.",
+                "targetType": 5,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "Battery_positive",
+                "requiredNegativeTerminalId": "Battery_negative",
+                "targetComponentId": "PowerSupply_01",
+                "minimumVoltage": 4.8,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": true,
+                "maximumVoltage": 5.2,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level22_diode_forward",
+                "displayName": "Forward Diode Voltage",
+                "description": "Verify a forward voltage drop across the 1N4007 diode. Confirm direction by also checking illuminated LED and current.",
+                "targetType": 5,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "D_PROTECT_Anode",
+                "requiredNegativeTerminalId": "D_PROTECT_Cathode",
+                "targetComponentId": "D_PROTECT_Component",
+                "minimumVoltage": 0.45,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": true,
+                "maximumVoltage": 1.0,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level22_led_on",
+                "displayName": "Green LED ON",
+                "description": "Verify that the green LED is illuminated in the forward-biased circuit.",
+                "targetType": 3,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "LED_INDICATOR_Anode",
+                "requiredNegativeTerminalId": "LED_INDICATOR_Cathode",
+                "targetComponentId": "LED_INDICATOR_Component",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level22_safe_current",
+                "displayName": "Safe Series Current",
+                "description": "Verify 5 to 8 mA through the 330 ohm resistor.",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_LIMIT_Input",
+                "requiredNegativeTerminalId": "R_LIMIT_Output",
+                "targetComponentId": "R_LIMIT_Component",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.005,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.008,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            }
+        ],
+        "failureMode": 0,
+        "requiredHealthyResistorIds": [],
+        "requireHealthyInstalledResistors": true,
+        "successOutputIds": [],
+        "failureOutputIds": [],
+        "unlockNextLevelOnCompletion": true,
+        "unlockedByDefault": false,
+        "autoUnlockNextLevel": true,
+        "autoAdvanceOnCompletion": false
+    }
+}
+----- END UNITY EDITOR JSON -----

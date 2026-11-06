@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="660" viewBox="0 0 1440 660">
+<rect width="1440" height="660" fill="#08121c"/>
+<rect x="28" y="26" width="1384" height="608" rx="22" fill="#0d1b27" stroke="#21536a" stroke-width="3"/>
+<text x="72" y="90" fill="#67e8f9" font-family="DejaVu Sans" font-weight="bold" font-size="36">PROJECT SPARK | LEVEL 22 — DIODE DIRECTION</text>
+<text x="72" y="131" fill="#cbd5e1" font-family="DejaVu Sans" font-size="23">Electrical netlist: all five components in ONE series path • 5 V DC</text>
+<!-- positive power rail and blocks -->
+<path d="M170 270H280 M420 270H520 M700 270H795 M942 270H1040 M1192 270H1270V482H170V367" stroke="#fb555a" stroke-width="11" stroke-linejoin="round" fill="none"/>
+<path d="M1270 370V482H170V367" stroke="#22c1ea" stroke-width="11" stroke-linejoin="round" fill="none"/>
+<rect x="88" y="254" width="164" height="142" rx="18" fill="#112b3d" stroke="#38bdf8" stroke-width="5"/>
+<text x="170" y="295" text-anchor="middle" fill="#ffffff" font-size="24" font-family="DejaVu Sans">SUPPLY</text>
+<text x="170" y="347" text-anchor="middle" fill="#f8fafc" font-weight="bold" font-size="46" font-family="DejaVu Sans">5 V</text>
+<text x="170" y="235" text-anchor="middle" fill="#fb7185" font-size="25" font-family="DejaVu Sans">Battery (+)</text>
+<text x="170" y="526" text-anchor="middle" fill="#38bdf8" font-size="25" font-family="DejaVu Sans">Battery (−)</text>
+<!-- switch -->
+<rect x="280" y="230" width="140" height="80" rx="13" fill="#0b1e2b" stroke="#d1d5db" stroke-width="5"/>
+<path d="M300 270H329L392 244" stroke="#ffffff" stroke-width="7" fill="none"/>
+<text x="350" y="215" fill="white" text-anchor="middle" font-family="DejaVu Sans" font-size="27">SW1</text>
+<text x="350" y="345" fill="#9fb8c8" text-anchor="middle" font-family="DejaVu Sans" font-size="19">IN → OUT</text>
+<!-- resistor -->
+<rect x="520" y="230" width="180" height="80" rx="13" fill="#a87b3d" stroke="#eab96b" stroke-width="5"/>
+<path d="M560 235V305 M590 235V305 M620 235V305 M650 235V305" stroke="#45301c" stroke-width="12"/>
+<text x="610" y="215" fill="white" text-anchor="middle" font-family="DejaVu Sans" font-size="27">R1: 330 Ω</text>
+<text x="610" y="345" fill="#9fb8c8" text-anchor="middle" font-family="DejaVu Sans" font-size="19">Input → Output</text>
+<!-- diode -->
+<rect x="795" y="230" width="147" height="80" rx="13" fill="#111827" stroke="#cbd5e1" stroke-width="5"/>
+<path d="M820 245L872 270L820 295Z" fill="none" stroke="#f1f5f9" stroke-width="5"/>
+<path d="M877 243V297" fill="none" stroke="#67e8f9" stroke-width="9"/>
+<text x="867" y="215" text-anchor="middle" fill="white" font-family="DejaVu Sans" font-size="27">D1: 1N4007</text>
+<text x="826" y="344" text-anchor="middle" fill="#fca5a5" font-family="DejaVu Sans" font-size="18">ANODE</text>
+<text x="912" y="344" text-anchor="middle" fill="#67e8f9" font-family="DejaVu Sans" font-size="18">CATHODE</text>
+<text x="870" y="384" text-anchor="middle" fill="#67e8f9" font-family="DejaVu Sans" font-size="20">band →</text>
+<!-- LED -->
+<rect x="1040" y="230" width="152" height="80" rx="13" fill="#113625" stroke="#50f0a3" stroke-width="5"/>
+<path d="M1071 245L1124 270L1071 295Z M1131 244V297" stroke="#71f5ae" stroke-width="5" fill="none"/>
+<path d="M1131 246L1158 218 M1128 263L1170 248" stroke="#71f5ae" stroke-width="4"/>
+<text x="1116" y="215" text-anchor="middle" fill="white" font-family="DejaVu Sans" font-size="27">LED1: GREEN</text>
+<text x="1074" y="344" text-anchor="middle" fill="#fca5a5" font-family="DejaVu Sans" font-size="18">ANODE</text>
+<text x="1155" y="344" text-anchor="middle" fill="#67e8f9" font-family="DejaVu Sans" font-size="18">CATHODE</text>
+<!-- returns and bottom legend -->
+<rect x="301" y="425" width="829" height="137" rx="15" fill="#082632" stroke="#23677f" stroke-width="2"/>
+<text x="325" y="462" fill="#f8fafc" font-family="DejaVu Sans" font-size="24">WIRE ORDER: Battery (+) → SW1 → R1 → D1 anode → D1 cathode</text>
+<text x="325" y="500" fill="#f8fafc" font-family="DejaVu Sans" font-size="24">→ LED anode → LED cathode → Battery (−)</text>
+<text x="325" y="536" fill="#9debc5" font-family="DejaVu Sans" font-size="20">Diode forward-biased: nominal current ≈ 6.7 mA; reversing D1 blocks current</text>
+</svg>

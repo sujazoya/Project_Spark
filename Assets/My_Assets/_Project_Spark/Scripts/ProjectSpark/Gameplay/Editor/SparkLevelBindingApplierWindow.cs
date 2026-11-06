@@ -21,6 +21,9 @@ namespace ProjectSpark.EditorTools
         private SparkLevelDefinition definition;
         private Vector2 scroll;
         private bool verbose = true;
+        // Editor-window selection only. Never destroys or disables a workstation.
+        private readonly HashSet<int> excludedSlotInstances = new HashSet<int>();
+        private SparkLevelWorkstationBindingBridge selectionOwner;
 
         // Change these two arrays if the serialized fields in
         // SparkLevelSceneBindings have different names in your codebase.
@@ -42,6 +45,7 @@ namespace ProjectSpark.EditorTools
         private sealed class Preview
         {
             public readonly List<SlotRule> rules = new List<SlotRule>();
+            public readonly List<SlotRule> available = new List<SlotRule>();
             public readonly List<string> ignored = new List<string>();
             public readonly List<string> errors = new List<string>();
             public readonly List<string> warnings = new List<string>();
@@ -64,7 +68,9 @@ namespace ProjectSpark.EditorTools
             var candidate = Selection.activeGameObject
                 .GetComponentInParent<SparkLevelWorkstationBindingBridge>();
             if (candidate == null) return;
+            if (bridge != candidate) excludedSlotInstances.Clear();
             bridge = candidate;
+            selectionOwner = candidate;
             Repaint();
         }
 
@@ -82,6 +88,11 @@ namespace ProjectSpark.EditorTools
                 "Level Definition (optional)", definition, typeof(SparkLevelDefinition), false);
             verbose = EditorGUILayout.Toggle("Console report", verbose);
 
+            if (bridge != selectionOwner)
+            {
+                excludedSlotInstances.Clear();
+                selectionOwner = bridge;
+            }
             if (bridge == null) return;
             if (EditorApplication.isPlayingOrWillChangePlaymode)
             {
@@ -98,16 +109,50 @@ namespace ProjectSpark.EditorTools
 
             Preview preview = BuildPreview();
             scroll = EditorGUILayout.BeginScrollView(scroll);
-            EditorGUILayout.LabelField("Eligible workstations: " + preview.rules.Count, EditorStyles.boldLabel);
-            foreach (SlotRule r in preview.rules)
+            EditorGUILayout.LabelField(
+                "Eligible workstations: " + preview.available.Count +
+                "  |  Included: " + preview.rules.Count, EditorStyles.boldLabel);
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("+ Include All", GUILayout.Height(27)))
             {
+                excludedSlotInstances.Clear();
+                Repaint();
+            }
+            if (GUILayout.Button("− Exclude All", GUILayout.Height(27)))
+            {
+                foreach (SlotRule r in preview.available)
+                    excludedSlotInstances.Add(r.slot.GetInstanceID());
+                Repaint();
+            }
+            EditorGUILayout.EndHorizontal();
+            foreach (SlotRule r in preview.available)
+            {
+                bool selected = !excludedSlotInstances.Contains(r.slot.GetInstanceID());
                 EditorGUILayout.BeginVertical("box");
+                EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField(r.slot.name + " [" + r.id + "]", EditorStyles.boldLabel);
+                using (new EditorGUI.DisabledScope(selected))
+                    if (GUILayout.Button("+", GUILayout.Width(34), GUILayout.Height(24)))
+                    {
+                        excludedSlotInstances.Remove(r.slot.GetInstanceID());
+                        Repaint();
+                    }
+                using (new EditorGUI.DisabledScope(!selected))
+                    if (GUILayout.Button("−", GUILayout.Width(34), GUILayout.Height(24)))
+                    {
+                        excludedSlotInstances.Add(r.slot.GetInstanceID());
+                        Repaint();
+                    }
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.LabelField("Status", selected ? "Included in Apply" : "Excluded from Apply");
                 EditorGUILayout.LabelField("Component", r.component);
                 EditorGUILayout.LabelField("Terminal A", r.a);
                 EditorGUILayout.LabelField("Terminal B", r.b);
                 EditorGUILayout.EndVertical();
             }
+            EditorGUILayout.HelpBox("Minus excludes this slot from generated bridge mappings. " +
+                "It does NOT delete the slot or remove existing runtime ID declarations. " +
+                "Apply replaces the bridge mapping array with only INCLUDED slots.", MessageType.None);
             if (preview.ignored.Count > 0)
                 EditorGUILayout.HelpBox("Skipped unconfigured slots:\n" +
                     string.Join("\n", preview.ignored), MessageType.Info);
@@ -137,7 +182,7 @@ namespace ProjectSpark.EditorTools
                     if (EditorUtility.DisplayDialog("Apply Level Bindings",
                         "Add " + (preview.addComponents.Count + preview.addTerminals.Count) +
                         " missing declarations and replace bridge mappings for this prefab? " +
-                        "Other level prefabs will not be changed.", "Apply", "Cancel"))
+                        "Other level prefabs will not be changed. Excluded slots will not have bridge mappings.", "Apply", "Cancel"))
                         Apply(preview);
                 }
             }
@@ -175,13 +220,16 @@ namespace ProjectSpark.EditorTools
                     p.ignored.Add(s.name + " (all IDs blank)");
                     continue;
                 }
+                string id = Trim(s.SlotId);
+                var rule = new SlotRule { slot=s, id=id, component=c, a=a, b=b };
+                p.available.Add(rule);
+                if (excludedSlotInstances.Contains(s.GetInstanceID())) continue;
                 if (!s.EnableSmartBinding)
                 {
                     p.errors.Add(s.name + ": contains runtime IDs, but Enable Smart Binding is OFF. " +
-                                 "Enable it or remove unused IDs from the slot.");
+                                 "Enable it or exclude this slot.");
                     continue;
                 }
-                string id = Trim(s.SlotId);
                 if (id.Length == 0 || !slotIds.Add(id))
                     p.errors.Add(s.name + ": blank or duplicate SlotId '" + id + "'.");
                 if (c.Length == 0 || a.Length == 0 || b.Length == 0)
@@ -194,10 +242,10 @@ namespace ProjectSpark.EditorTools
                     p.errors.Add(s.name + ": duplicate terminal alias '" + a + "'.");
                 if (b.Length > 0 && !aliases.Add("T:" + b))
                     p.errors.Add(s.name + ": duplicate terminal alias '" + b + "'.");
-                p.rules.Add(new SlotRule { slot=s, id=id, component=c, a=a, b=b });
+                p.rules.Add(rule);
             }
             if (p.rules.Count == 0)
-                p.errors.Add("No configured workstation slots found.");
+                p.errors.Add("No included workstation slots found. Use + to include at least one configured slot.");
 
             if (p.bindings != null)
             {
@@ -362,7 +410,7 @@ namespace ProjectSpark.EditorTools
         private void Report(Preview p)
         {
             string message = "[LevelBindingApplier] " + (p.CanApply ? "VALID" : "BLOCKED") +
-                " | Eligible=" + p.rules.Count + " | Ignored=" + p.ignored.Count +
+                " | Available=" + p.available.Count + " | Included=" + p.rules.Count + " | Ignored=" + p.ignored.Count +
                 " | AddComponents=" + p.addComponents.Count + " | AddTerminals=" + p.addTerminals.Count;
             if (p.errors.Count > 0) message += "\nERRORS:\n- " + string.Join("\n- ", p.errors);
             if (p.warnings.Count > 0) message += "\nWARNINGS:\n- " + string.Join("\n- ", p.warnings);

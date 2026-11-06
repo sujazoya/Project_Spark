@@ -1,0 +1,116 @@
+PROJECT_SPARK_EDITABLE_SO_TXT_V1
+# Readable/editable Unity serialized data. Modify values in the JSON section.
+# Keep field names, object-reference structures, and section markers unchanged.
+# The import requires selecting the ORIGINAL asset in Unity.
+Asset Name: Level_21
+Asset Type: ProjectSpark.Gameplay.SparkLevelDefinition, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+Asset Path: Assets/ProjectSparkGenerated/Level_21/Level_21.asset
+Asset GUID: c708ffba3a0f40b498e534c36a0b1e16
+Export Date: 2026-11-06 23:15:03
+----- BEGIN UNITY EDITOR JSON -----
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "Level_21",
+        "m_EditorClassIdentifier": "Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition",
+        "levelId": "level_21",
+        "displayName": "Capacitor Charge - Store the Energy",
+        "description": "Build a 5 V RC charging circuit. Observe the 1000 uF capacitor charging through a 1 kOhm resistor, and verify both capacitor voltage and charging current.",
+        "completionMode": 0,
+        "requiredTargetCount": 3,
+        "requireClosedReturn": true,
+        "rejectShortCircuit": true,
+        "rejectTargetShort": true,
+        "allowIntermediateConnections": true,
+        "requireMinimumVoltage": false,
+        "minimumVoltage": 1.0,
+        "allowAnyConfiguredPowerSource": true,
+        "powerSources": [
+            {
+                "sourceName": "PowerSupply_01",
+                "positiveTerminalId": "Battery_positive",
+                "negativeTerminalId": "Battery_negative",
+                "nominalVoltage": 5.0
+            }
+        ],
+        "targets": [
+            {
+                "targetId": "level21_supply",
+                "displayName": "5 V Supply",
+                "description": "Verify a healthy 5 V source.",
+                "targetType": 5,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "Battery_positive",
+                "requiredNegativeTerminalId": "Battery_negative",
+                "targetComponentId": "PowerSupply_01",
+                "minimumVoltage": 4.800000190734863,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": true,
+                "maximumVoltage": 5.199999809265137,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level21_capacitor_voltage",
+                "displayName": "Capacitor Charging Voltage",
+                "description": "Measure voltage rise across the 1000 uF capacitor (a transient, time-dependent target).",
+                "targetType": 5,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "C_STORE_Input",
+                "requiredNegativeTerminalId": "C_STORE_Output",
+                "targetComponentId": "C_STORE_Component",
+                "minimumVoltage": 3.0,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": true,
+                "maximumVoltage": 4.800000190734863,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level21_charge_current",
+                "displayName": "Safe Charge Current",
+                "description": "Observe nonzero current through the 1 kOhm charging resistor during charging.",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_CHARGE_Input",
+                "requiredNegativeTerminalId": "R_CHARGE_Output",
+                "targetComponentId": "R_CHARGE_Component",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.0001500000071246177,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.002199999988079071,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            }
+        ],
+        "failureMode": 0,
+        "requiredHealthyResistorIds": [],
+        "requireHealthyInstalledResistors": true,
+        "successOutputIds": [],
+        "failureOutputIds": [],
+        "unlockNextLevelOnCompletion": true,
+        "unlockedByDefault": false,
+        "autoUnlockNextLevel": true,
+        "autoAdvanceOnCompletion": false
+    }
+}
+----- END UNITY EDITOR JSON -----
