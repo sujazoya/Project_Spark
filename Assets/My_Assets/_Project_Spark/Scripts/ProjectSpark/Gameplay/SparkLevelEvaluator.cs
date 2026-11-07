@@ -220,12 +220,12 @@ namespace ProjectSpark.Gameplay
             SparkLevelTarget debugTarget =
                 GetPrimaryTarget(level);
 
-            Debug.Log(
+/*            Debug.Log(
                 $"[LEVEL TARGET DEBUG] " +
                 $"EvaluatedV={targetVoltage:F6} | " +
                 $"EvaluatedI={targetCurrent:F6} | " +
                 $"EvaluatedP={targetPower:F6} | " +
-                $"Targets={satisfiedTargetCount}/{totalTargetCount}");
+                $"Targets={satisfiedTargetCount}/{totalTargetCount}");*/
 
             if (debugTarget != null &&
                 TryResolveTargetComponent(
@@ -646,13 +646,13 @@ private void BuildReachability(
     closedReturn =
         positiveReachable.Contains(sourceNegative);
 
-    Debug.Log(
+/*    Debug.Log(
         "[LEVEL CLOSED RETURN] " +
         "Positive=" + GetTerminalDebugName(sourcePositive) +
         " | Negative=" + GetTerminalDebugName(sourceNegative) +
         " | PositiveReachable=" + positiveReachable.Count +
         " | NegativeReachable=" + negativeReachable.Count +
-        " | ClosedReturn=" + closedReturn);
+        " | ClosedReturn=" + closedReturn);*/
 }
 
 
@@ -739,6 +739,63 @@ if (connection.Kind == SparkConnectionKind.Probe)
                         traversalQueue.Enqueue(other);
                     }
                 }
+
+                
+                // ========================================================
+                // FORWARD-CONDUCTING DIODE — GRAPH CONTINUITY
+                // ========================================================
+                //
+                // Used only for normal conductive reachability.
+                // Never treats a diode as a wire-only short.
+                //
+                // The electrical solver determines forward conduction.
+                // Graph traversal is bidirectional through a diode
+                // already confirmed to be conducting.
+                //
+                // Existing Levels 1–21 remain unaffected unless
+                // they contain a forward-conducting SparkDiode.
+
+                if (traverseConductingLeds && !bypassOnly)
+                {
+                    SparkDiode diode =
+                        current.GetComponentInParent<SparkDiode>();
+
+                    if (diode == null &&
+                        current.Owner is SparkDiode ownerDiode)
+                    {
+                        diode = ownerDiode;
+                    }
+
+                    if (diode != null &&
+                        diode.isActiveAndEnabled &&
+                        diode.IsForwardConducting)
+                    {
+                        SparkTerminal anode =
+                            diode.AnodeTerminal;
+
+                        SparkTerminal cathode =
+                            diode.CathodeTerminal;
+
+                        SparkTerminal opposites = null;
+
+                        if (current == anode)
+                        {
+                            opposites = cathode;
+                        }
+                        else if (current == cathode)
+                        {
+                            opposites = anode;
+                        }
+
+                        if (opposites != null &&
+                            opposites.IsElectricalEnabled &&
+                            visitedTerminals.Add(opposites))
+                        {
+                            traversalQueue.Enqueue(opposites);
+                        }
+                    }
+                }
+
               
 // ========================================================
 // CONDUCTING LED — GRAPH CONTINUITY
@@ -1015,10 +1072,10 @@ if (traverseConductingLeds &&
     positiveReachable.Clear();
     negativeReachable.Clear();
 
-    Debug.Log(
+   /* Debug.Log(
     $"[LEVEL SOURCE TERMINALS] " +
     $"Positive={GetTerminalDebugName(sourcePositive)} | " +
-    $"Negative={GetTerminalDebugName(sourceNegative)}");
+    $"Negative={GetTerminalDebugName(sourceNegative)}");*/
 
 
    
@@ -1402,7 +1459,7 @@ private int EvaluateTargets(SparkLevelDefinition level)
             }
         }
 
-        Debug.Log(
+/*       Debug.Log(
             "[LEVEL TARGET RESULT] " +
             "ID=" + target.TargetId +
             " | Type=" + target.Type +
@@ -1411,7 +1468,7 @@ private int EvaluateTargets(SparkLevelDefinition level)
             " | PolarityConfigValid=" +
                 target.IsPolarityConfigurationValid() +
             " | " + componentInfo +
-            " | " + terminalInfo);
+            " | " + terminalInfo);*/
     }
 
     return satisfiedCount;

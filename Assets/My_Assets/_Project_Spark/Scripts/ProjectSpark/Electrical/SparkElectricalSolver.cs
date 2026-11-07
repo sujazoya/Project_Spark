@@ -262,59 +262,6 @@ private void OnDisable()
     UnbindElectricalComponentEvents();
 }
 
-
-/// <summary>
-/// Returns true when at least one active device needs
-/// continuous time-dependent electrical simulation.
-/// </summary>
-private bool HasActiveTransientDevices()
-{
-    if (!simulateTransientDevices ||
-        solverRegistry == null ||
-        electricalComponents == null)
-        return false;
-
-    for (int i = 0; i < electricalComponents.Length; i++)
-    {
-        SparkElectricalComponent component =
-            electricalComponents[i];
-
-        if (component == null ||
-            !component.isActiveAndEnabled ||
-            !component.ElectricalEnabled)
-            continue;
-
-        if (ShouldIgnoreComponent(component))
-            continue;
-
-        if (!TryGetSolverDefinition(
-                component,
-                out SparkElectricalSolverDefinition definition))
-            continue;
-
-        if (definition.RequiresContinuousSolve(component))
-            return true;
-    }
-
-    return false;
-}
-
-/// <summary>
-/// Advance active transient devices once per Unity physics tick.
-/// Ordinary DC-only circuits retain their cached behavior.
-/// </summary>
-private void FixedUpdate()
-{
-    if (!isActiveAndEnabled || solving)
-        return;
-
-    if (!HasActiveTransientDevices())
-        return;
-
-    SolveNow();
-}
-
-
 private void HandleCircuitTopologyChanged()
 {
     MarkTopologyDirty();
@@ -561,13 +508,13 @@ public void MarkDirty()
             {
                 int callId = ++solveCallSequence;
 
-/*                Debug.Log(
+                Debug.Log(
                     $"[SPARK SOLVER #{callId}] ENTER | " +
                     $"Solving={solving} | Dirty={dirty} | " +
                     $"HasResult={latestSolveResult != null} | " +
                     $"SolveOnDirty={solveOnDirty} | " +
                     $"TopologyVersion={topologyVersion}",
-                    this);*/
+                    this);
 
                
               if (solving)
@@ -593,15 +540,7 @@ public void MarkDirty()
                 }
 
                 // Reuse the cached result only when it is still valid.
-                          
-                bool requiresTransientStep =
-                    HasActiveTransientDevices();
-
-                // Reuse a cached result only for ordinary DC circuits.
-                // Transient devices must advance their electrical history
-                // even when the wiring topology has not changed.
-                if (solveOnDirty &&
-                    !requiresTransientStep &&
+                            if (solveOnDirty &&
                     !dirty &&
                     latestSolveResult != null &&
                     currentGraph != null &&
@@ -610,7 +549,6 @@ public void MarkDirty()
                 {
                     return true;
                 }
-
 
                 lastLiveCircuitSignature = liveSignature;
                 hasLiveCircuitSignature = true;
@@ -621,9 +559,9 @@ public void MarkDirty()
 
                 try
                 {
-                   /* Debug.Log(
+                    Debug.Log(
                         $"[SPARK SOLVER #{callId}] EXECUTING SolveInternal.",
-                        this);*/
+                        this);
 
                     solved = SolveInternal();
                 }
@@ -673,9 +611,9 @@ public void MarkDirty()
 
             if (solved)
             {
-                /*Debug.Log(
+                Debug.Log(
                     $"[SPARK SOLVER #{callId}] COMPLETED EVENT.",
-                    this);*/
+                    this);
 
                 InvokeSolveEventSafely(
                     SolveCompleted,
@@ -696,11 +634,11 @@ public void MarkDirty()
                     nameof(SolveFailed));
                 }
 
-              /*  Debug.Log(
+                Debug.Log(
                     $"[SPARK SOLVER #{callId}] EXIT | " +
                     $"Success={solved} | Dirty={dirty} | " +
                     $"HasResult={latestSolveResult != null}",
-                    this);*/
+                    this);
 
                 return solved;
             }
@@ -955,10 +893,10 @@ public void MarkDirty()
 
         dirty = false;
 
-       /* Debug.Log(
+        Debug.Log(
             $"[SOLVER TEST] Finished | Success={solved} | " +
             $"Dirty={dirty} | HasResult={latestSolveResult != null}",
-            this);*/
+            this);
 
 
                     return true;
@@ -1012,11 +950,11 @@ public void MarkDirty()
                         true);
 
 
-                      /*  Debug.Log(
+                        Debug.Log(
     $"[COMPONENT DISCOVERY] Root={root.name} | " +
     $"RootPath={GetHierarchyPath(root)} | " +
     $"Discovered={discovered.Length}",
-    this);*/
+    this);
 
 for (int i = 0; i < discovered.Length; i++)
 {
@@ -1025,13 +963,13 @@ for (int i = 0; i < discovered.Length; i++)
     if (component == null)
         continue;
 
-   /* Debug.Log(
+    Debug.Log(
         $"[COMPONENT DISCOVERY ITEM] " +
         $"Type={component.GetType().FullName} | " +
         $"Name={component.name} | " +
         $"InstanceID={component.GetInstanceID()} | " +
         $"Path={GetHierarchyPath(component.transform)}",
-        component);*/
+        component);
 }
 
             if (discovered == null)
@@ -1154,18 +1092,10 @@ for (int i = 0; i < discovered.Length; i++)
                 ClearTerminalsMissingFromGraph();
             }
 
-
-            // A transient step is necessary even when the
-            // circuit graph is unchanged and the solver is clean.
-            if (solveOnDirty &&
-                !dirty &&
-                !HasActiveTransientDevices())
-            {
+            if (solveOnDirty && !dirty)
                 return false;
-            }
 
             return true;
-
         }
 
 
@@ -1612,10 +1542,10 @@ private void ApplyAllDeviceStates(
         return;
     }
 
-   /* Debug.Log(
+    Debug.Log(
         $"[WIRE APPLY TRACE] Begin | " +
         $"ComponentCount={electricalComponents.Length}",
-        this);*/
+        this);
 
     for (int i = 0; i < electricalComponents.Length; i++)
     {
@@ -1633,12 +1563,12 @@ private void ApplyAllDeviceStates(
 
         if (isWire)
         {
-           /* Debug.Log(
+            Debug.Log(
                 $"[WIRE APPLY TRACE] Found wire | " +
                 $"Name={component.name} | " +
                 $"InstanceID={component.GetInstanceID()} | " +
                 $"Enabled={component.ElectricalEnabled}",
-                component);*/
+                component);
         }
 
         if (ShouldIgnoreComponent(component))
@@ -1665,11 +1595,11 @@ private void ApplyAllDeviceStates(
 
         if (isWire)
         {
-           /* Debug.Log(
+            Debug.Log(
                 $"[WIRE APPLY TRACE] Applying | " +
                 $"Wire={component.name} | " +
                 $"Definition={definition.GetType().Name}",
-                component);*/
+                component);
         }
 
         definition.ApplySolvedState(
@@ -1677,7 +1607,7 @@ private void ApplyAllDeviceStates(
             result);
     }
 
-   // Debug.Log("[WIRE APPLY TRACE] End.", this);
+    Debug.Log("[WIRE APPLY TRACE] End.", this);
 }
 
         // ---------------------------------------------------------------------

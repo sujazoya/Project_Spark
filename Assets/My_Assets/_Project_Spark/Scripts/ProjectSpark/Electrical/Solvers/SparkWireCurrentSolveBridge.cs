@@ -77,11 +77,11 @@ private void OnEnable()
 
         private void OnSolveCompleted()
         {
-            Debug.Log(
+/*            Debug.Log(
     "[WIRE BRIDGE] SolveCompleted received | " +
     $"HasResult={solver != null && solver.LatestSolveResult != null} | " +
     $"Dirty={solver != null && solver.IsDirty}",
-    this);
+    this);*/
             Invalidate();
             if (solver == null || circuit == null || solver.LatestSolveResult == null || solver.IsDirty)
                 return;
@@ -187,6 +187,30 @@ private void OnEnable()
                     if (supported) { AddInjection(a, amps); AddInjection(b, -amps); }
                 }
                 
+                else if (component is SparkDiode diode)
+                {
+                    a = diode.AnodeTerminal;
+                    b = diode.CathodeTerminal;
+
+                    // The diode solver reports positive current
+                    // flowing from anode to cathode.
+                    supported =
+                        a != null &&
+                        b != null &&
+                        solver.TryCalculateComponentCurrent(
+                            diode,
+                            out amps);
+
+                    if (supported)
+                    {
+                        // Positive current enters the diode at the anode
+                        // and exits at the cathode.
+                        AddInjection(a, -amps);
+                        AddInjection(b, +amps);
+                    }
+                }
+
+                
                 else if (component is SparkLED led)
                 {
                     a = led.AnodeTerminal;
@@ -262,24 +286,29 @@ private void OnEnable()
     return;
 }
             }
+                if (logDiagnostics)
+        {
             Debug.Log(
-    $"[WIRE BRIDGE] Starting resolver | " +
-    $"Connections={connections.Count} | " +
-    $"TerminalInjections={injections.Count}",
-    this);
-
+                $"[WIRE BRIDGE] Starting resolver | " +
+                $"Connections={connections.Count} | " +
+                $"TerminalInjections={injections.Count}",
+                this);
+        }
            bool resolved = resolver.TryResolve(
     circuit,
     injections,
     currents,
     out string diagnostic);
 
-Debug.Log(
-    "[WIRE BRIDGE RESOLVER] " +
-    $"Success={resolved} | " +
-    $"WireReadings={currents.Count} | " +
-    $"Diagnostic={diagnostic}",
-    this);
+        if (logDiagnostics)
+        {
+            Debug.Log(
+                "[WIRE BRIDGE RESOLVER] " +
+                $"Success={resolved} | " +
+                $"WireReadings={currents.Count} | " +
+                $"Diagnostic={diagnostic}",
+                this);
+        }
 
 if (!resolved)
 {

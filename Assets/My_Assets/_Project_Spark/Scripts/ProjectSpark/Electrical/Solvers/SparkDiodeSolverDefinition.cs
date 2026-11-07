@@ -48,171 +48,165 @@ namespace ProjectSpark.Electrical
             return true;
         }
 
-        public override void Stamp(
-            SparkElectricalComponent component,
-            SparkElectricalSolveContext context)
-        {
-            if (!(component is SparkDiode diode))
-            {
-                return;
-            }
+       
 
-            if (context == null ||
-                !diode.ElectricalEnabled)
-            {
-                return;
-            }
+public override void Stamp(
+    SparkElectricalComponent component,
+    SparkElectricalSolveContext context)
+{
+    if (!(component is SparkDiode diode) ||
+        context == null ||
+        context.Graph == null ||
+        !diode.isActiveAndEnabled ||
+        !diode.ElectricalEnabled)
+    {
+        return;
+    }
 
-            if (!TryGetTerminals(
-                    diode,
-                    context.Graph,
-                    out SparkTerminal anodeTerminal,
-                    out SparkTerminal cathodeTerminal))
-            {
-                return;
-            }
+    if (!TryGetTerminals(
+            diode,
+            context.Graph,
+            out SparkTerminal anode,
+            out SparkTerminal cathode))
+    {
+        return;
+    }
 
-            if (!context.Graph.TryGetNode(
-                    anodeTerminal,
-                    out int anodeNode))
-            {
-                return;
-            }
+    if (anode == null ||
+        cathode == null ||
+        anode == cathode ||
+        !context.Graph.TryGetNode(
+            anode, out int anodeNode) ||
+        !context.Graph.TryGetNode(
+            cathode, out int cathodeNode))
+    {
+        return;
+    }
 
-            if (!context.Graph.TryGetNode(
-                    cathodeTerminal,
-                    out int cathodeNode))
-            {
-                return;
-            }
+    float anodeVoltage =
+        context.GetIterationNodeVoltage(anodeNode);
 
-            float anodeVoltage =
-                context.GetIterationNodeVoltage(
-                    anodeNode);
+    float cathodeVoltage =
+        context.GetIterationNodeVoltage(cathodeNode);
 
-            float cathodeVoltage =
-                context.GetIterationNodeVoltage(
-                    cathodeNode);
+    float diodeVoltage =
+        anodeVoltage - cathodeVoltage;
 
-            float diodeVoltage =
-                anodeVoltage -
-                cathodeVoltage;
+    bool conducting =
+        diodeVoltage >= diode.ForwardVoltage;
 
-            bool conducting =
-                diodeVoltage >=
-                diode.ForwardVoltage;
+    context.SetNonlinearState(
+        diode,
+        conducting);
 
-            context.SetNonlinearState(
-                diode,
-                conducting);
+    if (!conducting)
+    {
+        return;
+    }
 
-            if (!conducting)
-            {
-                return;
-            }
+    // AddForwardDrop already stamps the conductance.
+    // Its final argument is RESISTANCE, not conductance.
+    double resistance = Math.Max(
+        minimumResistance,
+        diode.OnResistance);
 
-            float resistance =
-                Mathf.Max(
-                    minimumResistance,
-                    diode.OnResistance);
+    context.AddForwardDrop(
+        anode,
+        cathode,
+        diode.ForwardVoltage,
+        resistance);
+}
 
-            double conductance =
-                1.0 / resistance;
 
-            context.AddConductance(
-                anodeNode,
-                cathodeNode,
-                conductance);
 
-            context.AddForwardDrop(
-                anodeTerminal,
-                cathodeTerminal,
-                diode.ForwardVoltage,
-                conductance);
-        }
+      
+public override void ApplySolvedState(
+    SparkElectricalComponent component,
+    SparkElectricalSolveResult result)
+{
+    if (!(component is SparkDiode diode))
+        return;
 
-        public override void ApplySolvedState(
-            SparkElectricalComponent component,
-            SparkElectricalSolveResult result)
-        {
-            if (!(component is SparkDiode diode))
-            {
-                return;
-            }
+    if (result == null ||
+        result.Context == null ||
+        result.Context.Graph == null ||
+        !diode.isActiveAndEnabled ||
+        !diode.ElectricalEnabled)
+    {
+        diode.ApplyElectricalState(
+            new SparkElectricalState());
+        return;
+    }
 
-            if (result == null)
-            {
-                return;
-            }
+    if (!TryGetTerminals(
+            diode,
+            result.Context.Graph,
+            out SparkTerminal anode,
+            out SparkTerminal cathode))
+    {
+        diode.ApplyElectricalState(
+            new SparkElectricalState());
+        return;
+    }
 
-            if (!diode.ElectricalEnabled)
-            {
-                diode.ApplyElectricalState(
-                    new SparkElectricalState());
+    if (!result.TryGetVoltage(
+            anode,
+            cathode,
+            out float voltage) ||
+        float.IsNaN(voltage) ||
+        float.IsInfinity(voltage))
+    {
+        diode.ApplyElectricalState(
+            new SparkElectricalState());
+        return;
+    }
 
-                return;
-            }
+    bool conducting =
+        result.GetNonlinearState(diode);
 
-            if (!TryGetTerminals(
-                    diode,
-                    result.Context.Graph,
-                    out SparkTerminal anodeTerminal,
-                    out SparkTerminal cathodeTerminal))
-            {
-                diode.ApplyElectricalState(
-                    new SparkElectricalState());
+    float current = 0f;
 
-                return;
-            }
+    if (conducting)
+    {
+        float resistance = Mathf.Max(
+            minimumResistance,
+            diode.OnResistance);
 
-          if (!result.TryGetVoltage(
-        anodeTerminal,
-        cathodeTerminal,
-        out float voltage))
-            {
-            
-            }
-            bool conducting =
-                result.GetNonlinearState(
-                    diode);
+        current = Mathf.Max(
+            0f,
+            (voltage - diode.ForwardVoltage) /
+            resistance);
+    }
 
-            float current = 0f;
+    float power = voltage * current;
 
-            if (conducting)
-            {
-                float effectiveVoltage =
-                    voltage -
-                    diode.ForwardVoltage;
+    if (float.IsNaN(current) ||
+        float.IsInfinity(current) ||
+        float.IsNaN(power) ||
+        float.IsInfinity(power))
+    {
+        Debug.LogError(
+            "[DIODE] Invalid solved electrical state: " +
+            diode.name,
+            diode);
 
-                float resistance =
-                    Mathf.Max(
-                        minimumResistance,
-                        diode.OnResistance);
+        diode.ApplyElectricalState(
+            new SparkElectricalState());
+        return;
+    }
 
-                current =
-                    Mathf.Max(
-                        0f,
-                        effectiveVoltage / resistance);
-            }
+    SparkConductionState conduction =
+        current > 0.000001f
+            ? SparkConductionState.Conducting
+            : SparkConductionState.NonConducting;
 
-            float power =
-                voltage * current;
-
-            SparkConductionState conduction =
-                Mathf.Abs(current) > 0.000001f
-                    ? SparkConductionState.Conducting
-                    : SparkConductionState.NonConducting;
-
-            SparkElectricalState state =
-                new SparkElectricalState(
-                    voltage,
-                    current,
-                    power,
-                    conduction);
-
-            diode.ApplyElectricalState(
-                state);
-        }
+    diode.ApplyElectricalState(
+        new SparkElectricalState(
+            voltage,
+            current,
+            power,
+            conduction));
+}
 
         public override bool TryCalculateCurrent(
             SparkElectricalComponent component,
@@ -280,16 +274,14 @@ namespace ProjectSpark.Electrical
             return true;
         }
 
-        public override bool RequiresContinuousSolve(
-            SparkElectricalComponent component)
-        {
-            if (!(component is SparkDiode diode))
-            {
-                return false;
-            }
-
-            return diode.ElectricalEnabled;
-        }
+       
+public override bool RequiresContinuousSolve(
+    SparkElectricalComponent component)
+{
+    // Nonlinear DC diodes are solved by the solver's
+    // iterative matrix loop, not its transient scheduler.
+    return false;
+}
 
         protected override void OnValidate()
         {

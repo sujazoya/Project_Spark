@@ -285,14 +285,14 @@ public override void ApplySolvedState(
         voltage,
         current);
         #if UNITY_EDITOR
-Debug.Log(
+/*Debug.Log(
     $"[LED DIAGNOSTIC] {led.name} | " +
     $"Voltage={voltage:F4} V | " +
     $"Current={current * 1000f:F3} mA | " +
     $"Conducting={conducting} | " +
     $"GlowFound=" +
     $"{(led.GetComponentInChildren<SparkLEDHelixGlow>(true) != null)}",
-    led);
+    led);*/
 #endif
 }
 

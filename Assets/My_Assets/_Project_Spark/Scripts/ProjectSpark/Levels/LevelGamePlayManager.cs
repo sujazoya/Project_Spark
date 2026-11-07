@@ -924,20 +924,28 @@ private void SetOutput(
                 // SOLVE ELECTRICAL NETWORK
                 // ----------------------------------------------------
 
-                if (electricalSolver != null)
-{
-    electricalSolver.SolveNow();
+               
+            if (electricalSolver != null)
+            {
+                // A completed and clean solver result can be
+                // evaluated without solving the same circuit again.
+                bool needsSolve =
+                    electricalSolver.LatestSolveResult == null ||
+                    electricalSolver.IsDirty;
 
-    if (solverEvaluationFailed)
-    {
-        // A non-converged/incomplete electrical network is not
-        // automatically a gameplay failure.
-        //
-        // The level evaluator will determine whether the current
-        // circuit is incomplete, invalid, or actually completed.
-        solverEvaluationFailed = false;
-    }
-}
+                if (needsSolve)
+                {
+                    electricalSolver.SolveNow();
+                }
+
+                if (solverEvaluationFailed)
+                {
+                    // Preserve existing behavior: a numerical failure
+                    // is not automatically a gameplay failure.
+                    solverEvaluationFailed = false;
+                }
+            }
+
 
                 // ----------------------------------------------------
                 // AUTHORITATIVE LEVEL EVALUATION

@@ -119,14 +119,14 @@ public override void Stamp(
         terminalB,
         conductance);
 
-    Debug.Log(
+/*    Debug.Log(
         $"[RESISTOR STAMP] {resistor.name} | " +
         $"A={terminalA.name} GraphNode={nodeA} " +
         $"MatrixIndex={context.MapTerminal(terminalA)} | " +
         $"B={terminalB.name} GraphNode={nodeB} " +
         $"MatrixIndex={context.MapTerminal(terminalB)} | " +
         $"Resistance={resistance:F3} Ohm",
-        resistor);
+        resistor);*/
 }
 
 

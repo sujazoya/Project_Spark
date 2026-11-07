@@ -25301,6 +25301,7 @@ GameObject:
   - component: {fileID: 8005332905545897398}
   - component: {fileID: 5504841575301205550}
   - component: {fileID: 1886200828356261374}
+  - component: {fileID: -4813095422478191640}
   m_Layer: 15
   m_Name: Level_21_Layout
   m_TagString: Untagged
@@ -25503,6 +25504,28 @@ MonoBehaviour:
     exactTerminalNames: 0
   resyncSeconds: 0.25
   logChanges: 1
+--- !u!114 &-4813095422478191640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7443414985137653888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1d47363fb166cb43b0b2bd1cd657ac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevel21RCVisualSimulation
+  solver: {fileID: 0}
+  levelManager: {fileID: 0}
+  capacitor: {fileID: 1724198949790919239}
+  powerSwitch: {fileID: 7210292987224861824}
+  powerSupply: {fileID: 8332730328991508192}
+  solveIntervalSeconds: 0.05
+  stopWhenCharged: 1
+  settledFraction: 0.999
+  minimumTargetVoltage: 0.1
+  logStateChanges: 0
 --- !u!1 &7571517979402852760
 GameObject:
   m_ObjectHideFlags: 0
