@@ -92,8 +92,22 @@ public override void Stamp(
     float diodeVoltage =
         anodeVoltage - cathodeVoltage;
 
-    bool conducting =
-        diodeVoltage >= diode.ForwardVoltage;
+   
+bool wasConducting =
+    context.GetNonlinearState(diode);
+
+// Use a small voltage hysteresis to prevent
+// the diode switching OFF when the solved
+// voltage is numerically close to its
+// forward-voltage threshold.
+const float hysteresis = 0.005f;
+
+bool conducting = wasConducting
+    ? diodeVoltage >= diode.ForwardVoltage - hysteresis
+    : diodeVoltage >= diode.ForwardVoltage + hysteresis;
+
+context.SetNonlinearState(diode, conducting);
+
 
     context.SetNonlinearState(
         diode,

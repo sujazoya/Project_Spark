@@ -801,15 +801,95 @@ public void MarkDirty()
                  iteration < maxIterations;
                  iteration++)
             {
+               
                 context.SetIterationVoltages(
                     iterationVoltages);
+
+                // Record the conduction states before this iteration.
+                // Each diode has its own entry in the dictionary.
+                var statesBeforeStamp =
+                    new Dictionary<SparkElectricalComponent, bool>(
+                        nonlinearStates);
 
                 context.InitializeMatrix();
 
                 context.AddFloatingNodeLeaks();
 
-                StampAllDevices(
-                    context);
+                StampAllDevices(context);
+
+                
+#if UNITY_EDITOR
+if (currentGraph != null)
+{
+    int diodeCount = 0;
+
+    for (int d = 0; d < electricalComponents.Length; d++)
+    {
+        if (!(electricalComponents[d] is SparkDiode diode))
+            continue;
+
+        if (!diode.isActiveAndEnabled ||
+            !diode.ElectricalEnabled)
+            continue;
+
+        diodeCount++;
+
+        SparkTerminal anode = diode.AnodeTerminal;
+        SparkTerminal cathode = diode.CathodeTerminal;
+
+        bool anodeFound =
+            anode != null &&
+            currentGraph.TryGetNode(anode, out _);
+
+        bool cathodeFound =
+            cathode != null &&
+            currentGraph.TryGetNode(cathode, out _);
+
+        float voltage = context.GetIterationVoltage(
+            anode,
+            cathode);
+
+        Debug.Log(
+            "[LEVEL23 DIODE] " +
+            "Iteration=" + iteration +
+            " | Diode=" + diode.name +
+            " | ID=" + diode.GetInstanceID() +
+            " | AnodeFound=" + anodeFound +
+            " | CathodeFound=" + cathodeFound +
+            " | Voltage=" + voltage.ToString("F5") +
+            " | ON=" + context.GetNonlinearState(diode),
+            diode);
+    }
+
+    Debug.Log(
+        "[LEVEL23 DIODE SUMMARY] " +
+        "Iteration=" + iteration +
+        " | DiscoveredDiodes=" + diodeCount,
+        this);
+}
+#endif
+
+                
+
+                // Detect changes to nonlinear device states.
+                bool nonlinearStateChanged =
+                    statesBeforeStamp.Count != nonlinearStates.Count;
+
+                if (!nonlinearStateChanged)
+                {
+                    foreach (var pair in nonlinearStates)
+                    {
+                        if (!statesBeforeStamp.TryGetValue(
+                                pair.Key,
+                                out bool previousState) ||
+                            previousState != pair.Value)
+                        {
+                            nonlinearStateChanged = true;
+                            break;
+                        }
+                    }
+                }
+
 
                 if (!SolveMatrix(
                         context.Matrix,
@@ -834,11 +914,14 @@ public void MarkDirty()
                 solved =
                     true;
 
-                if (maximumDelta <= convergenceTolerance)
-                {
-                    converged = true;
-                    break;
-                }
+               
+            if (maximumDelta <= convergenceTolerance &&
+                !nonlinearStateChanged)
+            {
+                converged = true;
+                break;
+            }
+
 
                 Array.Copy(
                     nodeVoltages,

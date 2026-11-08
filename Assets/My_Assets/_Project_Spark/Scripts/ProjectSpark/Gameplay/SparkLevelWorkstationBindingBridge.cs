@@ -195,48 +195,109 @@ namespace ProjectSpark.Gameplay
             finally { syncing = false; }
         }
 
-        private List<Rule> BuildRules(IReadOnlyList<SparkShelfSlot> all)
+       
+private List<Rule> BuildRules(
+    IReadOnlyList<SparkShelfSlot> all)
+{
+    var result = new List<Rule>();
+
+    var smartIds =
+        new HashSet<string>(StringComparer.Ordinal);
+
+    // --------------------------------------------------
+    // SMART SLOTS
+    // --------------------------------------------------
+
+    if (useSmartSlots && all != null)
+    {
+        foreach (SparkShelfSlot slot in all)
         {
-            var result = new List<Rule>();
-            var smartIds = new HashSet<string>(StringComparer.Ordinal);
-            if (useSmartSlots && all != null)
+            if (slot == null ||
+                !slot.isActiveAndEnabled ||
+                !slot.transform.IsChildOf(layout.transform) ||
+                !slot.EnableSmartBinding)
             {
-                foreach (SparkShelfSlot slot in all)
-                {
-                    if (slot == null || !slot.isActiveAndEnabled ||
-                        !slot.transform.IsChildOf(layout.transform) || !slot.EnableSmartBinding) continue;
-                    result.Add(new Rule {
-                        slotId = slot.SlotId, slot = slot,
-                        componentId = slot.RuntimeComponentId,
-                        aId = slot.RuntimeTerminalAId, bId = slot.RuntimeTerminalBId,
-                        // No hardcoded part/color/instance naming. These are role suffixes.
-                        aMatch = slot.Category == SparkShelfCategory.LED ? "_Anode" : "_Input",
-                        bMatch = slot.Category == SparkShelfCategory.LED ? "_Cathode" : "_Output",
-                        electricalType = "", electronicType = "", exact = false
-                    });
-                    smartIds.Add(slot.SlotId);
-                }
+                continue;
             }
-            if (workstations != null)
+
+            bool usesAnodeCathode =
+                slot.Category == SparkShelfCategory.LED ||
+                slot.Category == SparkShelfCategory.Diode;
+
+            string inputMatch =
+                usesAnodeCathode
+                    ? "_Anode"
+                    : "_Input";
+
+            string outputMatch =
+                usesAnodeCathode
+                    ? "_Cathode"
+                    : "_Output";
+
+            result.Add(new Rule
             {
-                foreach (WorkstationBinding legacy in workstations)
-                {
-                    if (legacy == null || string.IsNullOrWhiteSpace(legacy.slotId) || smartIds.Contains(legacy.slotId)) continue;
-                    result.Add(new Rule {
-                        slotId = legacy.slotId,
-                        componentId = legacy.componentBindingId,
-                        aId = legacy.inputTerminalBindingId,
-                        bId = legacy.outputTerminalBindingId,
-                        electronicId = legacy.electronicObjectBindingId,
-                        electricalType = legacy.electricalTypeName,
-                        electronicType = legacy.electronicTypeName,
-                        aMatch = legacy.inputTerminalName, bMatch = legacy.outputTerminalName,
-                        exact = legacy.exactTerminalNames
-                    });
-                }
-            }
-            return result;
+                slotId = slot.SlotId,
+                slot = slot,
+
+                componentId = slot.RuntimeComponentId,
+                aId = slot.RuntimeTerminalAId,
+                bId = slot.RuntimeTerminalBId,
+
+                aMatch = inputMatch,
+                bMatch = outputMatch,
+
+                electricalType = "",
+                electronicType = "",
+                exact = false
+            });
+
+            smartIds.Add(slot.SlotId);
         }
+    }
+
+    // --------------------------------------------------
+    // LEGACY FALLBACK
+    // --------------------------------------------------
+
+    if (workstations != null)
+    {
+        foreach (WorkstationBinding legacy in workstations)
+        {
+            if (legacy == null ||
+                string.IsNullOrWhiteSpace(legacy.slotId) ||
+                smartIds.Contains(legacy.slotId))
+            {
+                continue;
+            }
+
+            result.Add(new Rule
+            {
+                slotId = legacy.slotId,
+
+                componentId = legacy.componentBindingId,
+                aId = legacy.inputTerminalBindingId,
+                bId = legacy.outputTerminalBindingId,
+
+                electronicId =
+                    legacy.electronicObjectBindingId,
+
+                electricalType =
+                    legacy.electricalTypeName,
+
+                electronicType =
+                    legacy.electronicTypeName,
+
+                aMatch = legacy.inputTerminalName,
+                bMatch = legacy.outputTerminalName,
+
+                exact = legacy.exactTerminalNames
+            });
+        }
+    }
+
+    return result;
+}
+
 
         private string Validate(Rule rule, SparkLevelSceneBindings bindings)
         {

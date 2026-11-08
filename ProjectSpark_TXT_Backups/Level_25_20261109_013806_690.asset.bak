@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_25
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_24
+  displayName: Opposite Directions - Diode Challenge
+  description: Build a 5 V circuit using a 330 ohm resistor and two antiparallel
+    1N4007 diodes. The forward diode must conduct, the reverse diode must block,
+    and the green LED must illuminate at safe current.
+  completionMode: 0
+  requiredTargetCount: 6
+  requireClosedReturn: 1
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 1
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: PowerSupply_01
+    positiveTerminalId: Battery_positive
+    negativeTerminalId: Battery_negative
+    nominalVoltage: 5
+  targets:
+  - targetId: level24_supply
+    displayName: 5 V Supply
+    description: Verify the 5 V source voltage.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: Battery_positive
+    requiredNegativeTerminalId: Battery_negative
+    targetComponentId: PowerSupply_01
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level24_d1_forward
+    displayName: D1 Forward Diode
+    description: Verify the forward-biased diode has a 0.45 to 1.0 V drop.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: D_FORWARD_Anode
+    requiredNegativeTerminalId: D_FORWARD_Cathode
+    targetComponentId: D_FORWARD_Component
+    minimumVoltage: 0.45
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 1
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level24_d2_blocked
+    displayName: D2 Reverse Diode Blocked
+    description: Confirm the reverse-biased diode blocks current (0 to 0.05 mA).
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: D_REVERSE_Anode
+    requiredNegativeTerminalId: D_REVERSE_Cathode
+    targetComponentId: D_REVERSE_Component
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.00005
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level24_led_on
+    displayName: Green LED ON
+    description: Verify the green LED is illuminated through the forward diode.
+    targetType: 3
+    targetTerminalId: 
+    requiredPositiveTerminalId: LED_Anode
+    requiredNegativeTerminalId: LED_Cathode
+    targetComponentId: led
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level24_safe_current
+    displayName: Safe Series Current
+    description: Verify 5 to 8 mA through the 330 ohm current-limiting resistor.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_LIMIT_Input
+    requiredNegativeTerminalId: R_LIMIT_Output
+    targetComponentId: R_LIMIT_Component
+    minimumVoltage: 0
+    minimumCurrent: 0.005
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.008
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level24_resistor_voltage
+    displayName: 330 Ohm Resistor Voltage
+    description: Verify a voltage drop between 2.0 and 2.6 V across the series resistor.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_LIMIT_Input
+    requiredNegativeTerminalId: R_LIMIT_Output
+    targetComponentId: R_LIMIT_Component
+    minimumVoltage: 2
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 2.6
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 1
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 0
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

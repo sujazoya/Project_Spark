@@ -1,0 +1,160 @@
+PROJECT_SPARK_EDITABLE_SO_TXT_V1
+# Readable/editable Unity serialized data. Modify values in the JSON section.
+# Keep field names, object-reference structures, and section markers unchanged.
+# The import requires selecting the ORIGINAL asset in Unity.
+Asset Name: Level_25
+Asset Type: ProjectSpark.Gameplay.SparkLevelDefinition, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+Asset Path: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_25_Layout/Level_25.asset
+Asset GUID: 76ab9d51a4e62a74ca59edfdddf98f50
+Export Date: 2026-11-09 01:30:02
+----- BEGIN UNITY EDITOR JSON -----
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "Level_25",
+        "m_EditorClassIdentifier": "Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition",
+        "levelId": "level_25",
+        "displayName": "Dual Path Power - Diode OR Gate",
+        "description": "Build a 5 V diode OR gate using two independently controlled switches, two forward-biased 1N4007 diodes, a common 330 ohm resistor, and a green LED. With switch A ON and switch B OFF, verify the forward path and safe current. Test the other switch states using the truth table.",
+        "completionMode": 0,
+        "requiredTargetCount": 5,
+        "requireClosedReturn": true,
+        "rejectShortCircuit": true,
+        "rejectTargetShort": true,
+        "allowIntermediateConnections": true,
+        "requireMinimumVoltage": false,
+        "minimumVoltage": 1.0,
+        "allowAnyConfiguredPowerSource": true,
+        "powerSources": [
+            {
+                "sourceName": "PowerSupply_01",
+                "positiveTerminalId": "Battery_positive",
+                "negativeTerminalId": "Battery_negative",
+                "nominalVoltage": 5.0
+            }
+        ],
+        "targets": [
+            {
+                "targetId": "level25_supply",
+                "displayName": "5 V Supply",
+                "description": "Verify the 5 V power source.",
+                "targetType": 5,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "Battery_positive",
+                "requiredNegativeTerminalId": "Battery_negative",
+                "targetComponentId": "PowerSupply_01",
+                "minimumVoltage": 4.800000190734863,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": true,
+                "maximumVoltage": 5.199999809265137,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level25_diode_a",
+                "displayName": "Path A Forward Diode",
+                "description": "With Switch A closed and Switch B open, verify D1 is forward biased.",
+                "targetType": 5,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "D_OR_A_Anode",
+                "requiredNegativeTerminalId": "D_OR_A_Cathode",
+                "targetComponentId": "D_OR_A_Component",
+                "minimumVoltage": 0.44999998807907104,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": true,
+                "maximumVoltage": 1.0,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level25_led_on",
+                "displayName": "Green LED ON",
+                "description": "Verify the common green LED is illuminated by active path A.",
+                "targetType": 3,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "LED_Anode",
+                "requiredNegativeTerminalId": "LED_Cathode",
+                "targetComponentId": "led",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level25_safe_current",
+                "displayName": "Safe OR Output Current",
+                "description": "Verify a safe 5 to 8 mA through the shared 330 ohm resistor.",
+                "targetType": 6,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_LIMIT_Input",
+                "requiredNegativeTerminalId": "R_LIMIT_Output",
+                "targetComponentId": "R_LIMIT_Component",
+                "minimumVoltage": 0.0,
+                "minimumCurrent": 0.004999999888241291,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": false,
+                "maximumVoltage": 0.0,
+                "useMaximumCurrent": true,
+                "maximumCurrent": 0.00800000037997961,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            },
+            {
+                "targetId": "level25_resistor_voltage",
+                "displayName": "330 Ohm Load Voltage",
+                "description": "Verify 2.0 to 2.6 V across the common current-limiting resistor.",
+                "targetType": 5,
+                "targetTerminalId": "",
+                "requiredPositiveTerminalId": "R_LIMIT_Input",
+                "requiredNegativeTerminalId": "R_LIMIT_Output",
+                "targetComponentId": "R_LIMIT_Component",
+                "minimumVoltage": 2.0,
+                "minimumCurrent": 0.0,
+                "minimumPower": 0.0,
+                "requireElectricalEnabled": true,
+                "requireConduction": false,
+                "inverted": false,
+                "useMaximumVoltage": true,
+                "maximumVoltage": 2.5999999046325684,
+                "useMaximumCurrent": false,
+                "maximumCurrent": 0.0,
+                "useMaximumPower": false,
+                "maximumPower": 0.0
+            }
+        ],
+        "failureMode": 0,
+        "requiredHealthyResistorIds": [],
+        "requireHealthyInstalledResistors": true,
+        "successOutputIds": [],
+        "failureOutputIds": [],
+        "unlockNextLevelOnCompletion": true,
+        "unlockedByDefault": false,
+        "autoUnlockNextLevel": true,
+        "autoAdvanceOnCompletion": false
+    }
+}
+----- END UNITY EDITOR JSON -----

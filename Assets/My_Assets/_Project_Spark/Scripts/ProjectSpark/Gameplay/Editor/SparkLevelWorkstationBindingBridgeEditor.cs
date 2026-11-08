@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using ProjectSpark.Gameplay.Shelf;
 
 namespace ProjectSpark.Gameplay.Editor
 {
@@ -58,78 +59,292 @@ namespace ProjectSpark.Gameplay.Editor
                 EditorGUILayout.TextField("Mode", "Edit Mode — prefab declarations");
         }
 
-        private void DeclareIds(bool showReport)
+      
+private void DeclareIds(bool showReport)
+{
+    if (Application.isPlaying)
+        return;
+
+    var bridge =
+        (SparkLevelWorkstationBindingBridge)target;
+
+    var issues = new List<string>();
+
+    SparkLevelSceneBindings bindings =
+        FindPrimaryBindings(bridge, issues);
+
+    if (bindings == null)
+    {
+        Report(showReport, bridge, 0, issues);
+        return;
+    }
+
+    SparkLevelLayout layout =
+        bridge.GetComponentInParent<SparkLevelLayout>(true);
+
+    if (layout == null)
+    {
+        issues.Add("Level layout not found.");
+        Report(showReport, bridge, 0, issues);
+        return;
+    }
+
+    var source = new SerializedObject(bridge);
+    source.Update();
+
+    var smartProperty =
+        source.FindProperty("useSmartSlots");
+
+    var legacyProperty =
+        source.FindProperty("workstations");
+
+    if (smartProperty == null ||
+        legacyProperty == null)
+    {
+        issues.Add("Bridge serialized fields not found.");
+        Report(showReport, bridge, 0, issues);
+        return;
+    }
+
+    // Each rule:
+    // SlotId, ComponentId, TerminalAId,
+    // TerminalBId, ElectronicObjectId
+    var rules = new List<string[]>();
+
+    var smartSlotIds =
+        new HashSet<string>(StringComparer.Ordinal);
+
+    var usedSlotIds =
+        new HashSet<string>(StringComparer.Ordinal);
+
+    int smartCount = 0;
+    int legacyCount = 0;
+
+    // --------------------------------------------------
+    // 1. READ SMART SLOTS FROM LEVEL PREFAB
+    // --------------------------------------------------
+
+    if (smartProperty.boolValue)
+    {
+        SparkShelfSlot[] slots =
+            layout.GetComponentsInChildren<SparkShelfSlot>(
+                true);
+
+        foreach (SparkShelfSlot slot in slots)
         {
-            if (Application.isPlaying) return;
-
-            var bridge = (SparkLevelWorkstationBindingBridge)target;
-            var issues = new List<string>();
-            SparkLevelSceneBindings bindings = FindPrimaryBindings(bridge, issues);
-            if (bindings == null)
+            if (slot == null ||
+                slot.Kind != SparkShelfSlotKind.Workstation ||
+                !slot.EnableSmartBinding)
             {
-                Report(showReport, bridge, 0, issues);
-                return;
+                continue;
             }
 
-            var source = new SerializedObject(bridge);
-            source.Update();
-            SerializedProperty rules = source.FindProperty("workstations");
-            if (rules == null)
+            string slotId = (slot.SlotId ?? "").Trim();
+
+            string componentId =
+                (slot.RuntimeComponentId ?? "").Trim();
+
+            string terminalA =
+                (slot.RuntimeTerminalAId ?? "").Trim();
+
+            string terminalB =
+                (slot.RuntimeTerminalBId ?? "").Trim();
+
+            if (string.IsNullOrEmpty(slotId))
             {
-                issues.Add("Cannot locate 'workstations' serialized array on the bridge.");
-                Report(showReport, bridge, 0, issues);
-                return;
+                issues.Add(
+                    slot.name + ": Missing Slot ID.");
+                continue;
             }
 
-            var destination = new SerializedObject(bindings);
-            destination.Update();
-
-            // Validate all owners before altering serialized data. Different slots must
-            // not claim the same logical binding ID in the same category.
-            var owners = new Dictionary<string, int>(StringComparer.Ordinal);
-            for (int i = 0; i < rules.arraySize; i++)
+            if (!usedSlotIds.Add(slotId))
             {
-                SerializedProperty rule = rules.GetArrayElementAtIndex(i);
-                string slot = GetString(rule, "slotId").Trim();
-                if (string.IsNullOrEmpty(slot))
-                {
-                    issues.Add("Rule " + i + ": Slot Id is empty.");
-                    continue;
-                }
-                Claim(owners, "C:", GetString(rule, "componentBindingId"), i, issues);
-                Claim(owners, "T:", GetString(rule, "inputTerminalBindingId"), i, issues);
-                Claim(owners, "T:", GetString(rule, "outputTerminalBindingId"), i, issues);
-                Claim(owners, "E:", GetString(rule, "electronicObjectBindingId"), i, issues);
-            }
-            if (issues.Count > 0)
-            {
-                Report(showReport, bridge, 0, issues);
-                return;
+                issues.Add(
+                    "Duplicate Smart Slot ID: " + slotId);
+                continue;
             }
 
-            int added = 0;
-            for (int i = 0; i < rules.arraySize; i++)
+            if (string.IsNullOrEmpty(componentId) ||
+                string.IsNullOrEmpty(terminalA) ||
+                string.IsNullOrEmpty(terminalB))
             {
-                SerializedProperty rule = rules.GetArrayElementAtIndex(i);
-                Add(destination, ComponentArray, "components", GetString(rule, "componentBindingId"), issues, ref added);
-                Add(destination, TerminalArray, "terminals", GetString(rule, "inputTerminalBindingId"), issues, ref added);
-                Add(destination, TerminalArray, "terminals", GetString(rule, "outputTerminalBindingId"), issues, ref added);
-                Add(destination, ElectronicArray, "electronicObjects", GetString(rule, "electronicObjectBindingId"), issues, ref added);
+                issues.Add(
+                    slotId + ": Missing runtime binding IDs.");
+                continue;
             }
 
-            // SerializedObject.ApplyModifiedProperties supplies Undo recording.
-            // No new prefab/scene copy and no forced prefab save.
-            bool applied = destination.ApplyModifiedProperties();
-            if (applied)
+            smartSlotIds.Add(slotId);
+
+            rules.Add(new string[]
             {
-                EditorUtility.SetDirty(bindings);
-                if (PrefabUtility.IsPartOfPrefabInstance(bindings))
-                    PrefabUtility.RecordPrefabInstancePropertyModifications(bindings);
-                if (bindings.gameObject.scene.IsValid() && bindings.gameObject.scene.isLoaded)
-                    EditorSceneManager.MarkSceneDirty(bindings.gameObject.scene);
-            }
-            Report(showReport, bridge, added, issues);
+                slotId,
+                componentId,
+                terminalA,
+                terminalB,
+                ""
+            });
+
+            smartCount++;
         }
+    }
+
+    // --------------------------------------------------
+    // 2. LEGACY RULES AS FALLBACK
+    // --------------------------------------------------
+
+    for (int i = 0; i < legacyProperty.arraySize; i++)
+    {
+        SerializedProperty rule =
+            legacyProperty.GetArrayElementAtIndex(i);
+
+        string slotId =
+            GetString(rule, "slotId").Trim();
+
+        if (string.IsNullOrEmpty(slotId))
+            continue;
+
+        // Smart Slot takes priority.
+        if (smartSlotIds.Contains(slotId))
+            continue;
+
+        if (!usedSlotIds.Add(slotId))
+        {
+            issues.Add(
+                "Duplicate workstation Slot ID: " + slotId);
+            continue;
+        }
+
+        rules.Add(new string[]
+        {
+            slotId,
+            GetString(rule, "componentBindingId").Trim(),
+            GetString(rule, "inputTerminalBindingId").Trim(),
+            GetString(rule, "outputTerminalBindingId").Trim(),
+            GetString(rule, "electronicObjectBindingId").Trim()
+        });
+
+        legacyCount++;
+    }
+
+    if (rules.Count == 0)
+    {
+        issues.Add(
+            "No configured Smart Slots or legacy rules found.");
+    }
+
+    // --------------------------------------------------
+    // 3. VALIDATE ALL LOGICAL IDS
+    // --------------------------------------------------
+
+    var owners =
+        new Dictionary<string, int>(StringComparer.Ordinal);
+
+    for (int i = 0; i < rules.Count; i++)
+    {
+        string[] rule = rules[i];
+
+        Claim(owners, "C:", rule[1], i, issues);
+        Claim(owners, "T:", rule[2], i, issues);
+        Claim(owners, "T:", rule[3], i, issues);
+        Claim(owners, "E:", rule[4], i, issues);
+    }
+
+    if (issues.Count > 0)
+    {
+        Report(showReport, bridge, 0, issues);
+        return;
+    }
+
+    // --------------------------------------------------
+    // 4. DECLARE RUNTIME IDS
+    // --------------------------------------------------
+
+    var destination = new SerializedObject(bindings);
+    destination.Update();
+
+    int added = 0;
+
+    foreach (string[] rule in rules)
+    {
+        Add(
+            destination,
+            ComponentArray,
+            "components",
+            rule[1],
+            issues,
+            ref added);
+
+        Add(
+            destination,
+            TerminalArray,
+            "terminals",
+            rule[2],
+            issues,
+            ref added);
+
+        Add(
+            destination,
+            TerminalArray,
+            "terminals",
+            rule[3],
+            issues,
+            ref added);
+
+        Add(
+            destination,
+            ElectronicArray,
+            "electronicObjects",
+            rule[4],
+            issues,
+            ref added);
+    }
+
+    // Abort without committing partial declarations.
+    if (issues.Count > 0)
+    {
+        Report(showReport, bridge, 0, issues);
+        return;
+    }
+
+    if (destination.ApplyModifiedProperties())
+    {
+        EditorUtility.SetDirty(bindings);
+
+        if (PrefabUtility.IsPartOfPrefabInstance(bindings))
+        {
+            PrefabUtility
+                .RecordPrefabInstancePropertyModifications(
+                    bindings);
+        }
+
+        if (bindings.gameObject.scene.IsValid() &&
+            bindings.gameObject.scene.isLoaded)
+        {
+            EditorSceneManager.MarkSceneDirty(
+                bindings.gameObject.scene);
+        }
+    }
+
+    string summary =
+        "Smart Slots: " + smartCount +
+        "\nLegacy Rules: " + legacyCount +
+        "\nTotal Rules: " + rules.Count +
+        "\nNew IDs: " + added +
+        "\n\nSmart Slots remain enabled.";
+
+    Debug.Log(
+        "[Workstation ID Authoring]\n" + summary,
+        bridge);
+
+    if (showReport)
+    {
+        EditorUtility.DisplayDialog(
+            "Project Spark - Binding IDs",
+            summary,
+            "OK");
+    }
+}
+
 
         private static SparkLevelSceneBindings FindPrimaryBindings(
             SparkLevelWorkstationBindingBridge bridge, List<string> issues)

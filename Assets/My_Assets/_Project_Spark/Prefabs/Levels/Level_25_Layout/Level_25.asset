@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_25
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_25
+  displayName: Dual Path Power - Diode OR Gate
+  description: Build a 5 V diode OR gate using two independently controlled switches,
+    two forward-biased 1N4007 diodes, a common 330 ohm resistor, and a green LED.
+    With switch A ON and switch B OFF, verify the forward path and safe current.
+    Test the other switch states using the truth table.
+  completionMode: 0
+  requiredTargetCount: 5
+  requireClosedReturn: 1
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 1
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: PowerSupply_01
+    positiveTerminalId: Battery_positive
+    negativeTerminalId: Battery_negative
+    nominalVoltage: 5
+  targets:
+  - targetId: level25_supply
+    displayName: 5 V Supply
+    description: Verify the 5 V power source.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: Battery_positive
+    requiredNegativeTerminalId: Battery_negative
+    targetComponentId: PowerSupply_01
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level25_diode_a
+    displayName: Path A Forward Diode
+    description: With Switch A closed and Switch B open, verify D1 is forward biased.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: D_OR_A_Anode
+    requiredNegativeTerminalId: D_OR_A_Cathode
+    targetComponentId: D_OR_A_Component
+    minimumVoltage: 0.45
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 1
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level25_led_on
+    displayName: Green LED ON
+    description: Verify the common green LED is illuminated by active path A.
+    targetType: 3
+    targetTerminalId: 
+    requiredPositiveTerminalId: LED_Anode
+    requiredNegativeTerminalId: LED_Cathode
+    targetComponentId: led
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level25_safe_current
+    displayName: Safe OR Output Current
+    description: Verify a safe 5 to 8 mA through the shared 330 ohm resistor.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_LIMIT_Input
+    requiredNegativeTerminalId: R_LIMIT_Output
+    targetComponentId: R_LIMIT_Component
+    minimumVoltage: 0
+    minimumCurrent: 0.005
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.008
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level25_resistor_voltage
+    displayName: 330 Ohm Load Voltage
+    description: Verify 2.0 to 2.6 V across the common current-limiting resistor.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_LIMIT_Input
+    requiredNegativeTerminalId: R_LIMIT_Output
+    targetComponentId: R_LIMIT_Component
+    minimumVoltage: 2
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 2.6
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 1
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 0
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

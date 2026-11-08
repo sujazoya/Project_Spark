@@ -255,73 +255,18 @@ namespace ProjectSpark.Gameplay.Editor
         }
 
         private void ImportRuntimeIdsFromBridge()
-        {
-            if (Application.isPlaying)
-                return;
+{
+    if (EditorApplication.isPlayingOrWillChangePlaymode)
+        return;
 
-            serializedObject.ApplyModifiedProperties();
-            serializedObject.Update();
-
-            var bindings = (SparkLevelSceneBindings)target;
-            var layout = bindings.GetComponentInParent<SparkLevelLayout>(true);
-            if (layout == null)
-            {
-                Debug.LogWarning("[Runtime IDs] This binding is not under a SparkLevelLayout prefab root.", bindings);
-                return;
-            }
-
-            // Only the layout's own bridge(s), never the persistent shelf.
-            var bridges = layout.GetComponentsInChildren<SparkLevelWorkstationBindingBridge>(true);
-            if (bridges.Length == 0)
-            {
-                Debug.LogWarning("[Runtime IDs] No workstation bridge found within this level layout.", bindings);
-                return;
-            }
-
-            int added = 0;
-            var problems = new List<string>();
-            foreach (var bridge in bridges)
-            {
-                var bridgeData = new SerializedObject(bridge);
-                bridgeData.Update();
-                var rules = bridgeData.FindProperty("workstations");
-                if (rules == null)
-                {
-                    problems.Add("Bridge '" + bridge.name + "' has no 'workstations' array.");
-                    continue;
-                }
-
-                for (int i = 0; i < rules.arraySize; i++)
-                {
-                    var rule = rules.GetArrayElementAtIndex(i);
-                    AddDeclaredId(runtimeComponentIdsProperty, componentsProperty,
-                        RuleId(rule, "componentBindingId"), "Component", problems, ref added);
-                    AddDeclaredId(runtimeTerminalIdsProperty, terminalsProperty,
-                        RuleId(rule, "inputTerminalBindingId"), "Terminal", problems, ref added);
-                    AddDeclaredId(runtimeTerminalIdsProperty, terminalsProperty,
-                        RuleId(rule, "outputTerminalBindingId"), "Terminal", problems, ref added);
-                    AddDeclaredId(runtimeElectronicObjectIdsProperty, electronicObjectsProperty,
-                        RuleId(rule, "electronicObjectBindingId"), "Electronic object", problems, ref added);
-                }
-            }
-
-            if (added > 0)
-            {
-                serializedObject.ApplyModifiedProperties();
-                EditorUtility.SetDirty(bindings);
-                if (PrefabUtility.IsPartOfPrefabInstance(bindings))
-                    PrefabUtility.RecordPrefabInstancePropertyModifications(bindings);
-                validationPerformed = false;
-            }
-
-            string summary = "[Runtime IDs] Layout '" + layout.name + "': added " + added + " declaration(s).";
-            if (problems.Count > 0)
-                Debug.LogWarning(summary + "\n" + string.Join("\n", problems), bindings);
-            else
-                Debug.Log(summary, bindings);
-            Repaint();
-        }
-
+    serializedObject.ApplyModifiedProperties();
+    var bindings = (SparkLevelSceneBindings)target;
+    var result = SparkLevelRuntimeIdImporter.Import(bindings);
+    SparkLevelRuntimeIdImporter.Report(result, bindings, true);
+    serializedObject.Update();
+    validationPerformed = false;
+    Repaint();
+}
         private static string RuleId(SerializedProperty rule, string field)
         {
             var p = rule.FindPropertyRelative(field);

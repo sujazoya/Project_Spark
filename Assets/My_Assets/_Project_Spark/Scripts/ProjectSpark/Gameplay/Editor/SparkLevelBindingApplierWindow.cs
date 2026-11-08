@@ -77,10 +77,13 @@ namespace ProjectSpark.EditorTools
         private void OnGUI()
         {
             EditorGUILayout.LabelField("Project Spark / Smart Level Binding Applier", EditorStyles.boldLabel);
-            EditorGUILayout.HelpBox(
-                "Preview first; then append missing runtime declarations and copy only configured " +
-                "workstation slots to the bridge. Smart precedence is disabled for the generated " +
-                "legacy mappings. Original prefab only; no runtime objects.", MessageType.Info);
+           EditorGUILayout.HelpBox(
+    "Preview and validate Smart Slot IDs. " +
+    "Apply declares missing runtime IDs in " +
+    "SparkLevelSceneBindings and enables Smart Slots. " +
+    "Existing legacy mappings are preserved. " +
+    "Original prefab only.",
+    MessageType.Info);
 
             bridge = (SparkLevelWorkstationBindingBridge)EditorGUILayout.ObjectField(
                 "Level Bridge", bridge, typeof(SparkLevelWorkstationBindingBridge), true);
@@ -167,8 +170,10 @@ namespace ProjectSpark.EditorTools
                     string.Join(", ", preview.addComponents) + "\n" +
                     "Will add terminal declarations: " + preview.addTerminals.Count + "\n" +
                     string.Join(", ", preview.addTerminals) + "\n" +
-                    "Will write bridge mappings: " + preview.rules.Count + "\n" +
-                    "Will set Use Smart Slots = false. Existing unrelated declarations stay intact.",
+                   "Smart Slots included: " + preview.rules.Count + "\n" +
+                    "Will set Use Smart Slots = true.\n" +
+                    "Existing legacy rules remain unchanged.\n" +
+                    "Existing unrelated runtime declarations stay intact.",
                     MessageType.Info);
             }
             EditorGUILayout.EndScrollView();
@@ -180,9 +185,11 @@ namespace ProjectSpark.EditorTools
                 if (GUILayout.Button("Declare Missing IDs + Apply Bridge", GUILayout.Height(38)))
                 {
                     if (EditorUtility.DisplayDialog("Apply Level Bindings",
-                        "Add " + (preview.addComponents.Count + preview.addTerminals.Count) +
-                        " missing declarations and replace bridge mappings for this prefab? " +
-                        "Other level prefabs will not be changed. Excluded slots will not have bridge mappings.", "Apply", "Cancel"))
+                        "Add " +
+                    (preview.addComponents.Count + preview.addTerminals.Count) +
+                    " missing runtime declarations and enable Smart Slots? " +
+                    "Existing legacy workstation mappings will be preserved.",
+                                            "Yes, Apply", "Cancel"))
                         Apply(preview);
                 }
             }
@@ -351,56 +358,111 @@ namespace ProjectSpark.EditorTools
             }
         }
 
-        private void Apply(Preview p)
-        {
-            // Rebuild immediately before mutation in case a slot changed after repaint.
-            p = BuildPreview();
-            if (!p.CanApply) { Report(p); return; }
-            var bindingObject = new SerializedObject(p.bindings);
-            var cp = bindingObject.FindProperty(p.componentProperty);
-            var tp = bindingObject.FindProperty(p.terminalProperty);
-            var bridgeObject = new SerializedObject(bridge);
-            var rulesProp = bridgeObject.FindProperty("workstations");
-            var smartProp = bridgeObject.FindProperty("useSmartSlots");
-            if (!IsStringArray(cp) || !IsStringArray(tp) || rulesProp == null || !rulesProp.isArray || smartProp == null)
-            {
-                Debug.LogError("[LevelBindingApplier] Schema changed; no changes applied.", bridge);
-                return;
-            }
-            int group = Undo.GetCurrentGroup();
-            Undo.SetCurrentGroupName("Project Spark: Declare and Apply Level Bindings");
-            Undo.RecordObjects(new UnityEngine.Object[] { p.bindings, bridge },
-                "Declare runtime IDs and apply bridge mappings");
-            AppendMissing(cp, p.addComponents);
-            AppendMissing(tp, p.addTerminals);
-            bindingObject.ApplyModifiedProperties();
+       
+private void Apply(Preview p)
+{
+    // Rebuild before changing any serialized data.
+    p = BuildPreview();
 
-            rulesProp.arraySize = p.rules.Count;
-            for (int i = 0; i < p.rules.Count; i++)
-            {
-                SlotRule r = p.rules[i];
-                SerializedProperty entry = rulesProp.GetArrayElementAtIndex(i);
-                Set(entry, "slotId", r.id);
-                Set(entry, "componentBindingId", r.component);
-                Set(entry, "inputTerminalBindingId", r.a);
-                Set(entry, "outputTerminalBindingId", r.b);
-                Set(entry, "electronicObjectBindingId", "");
-                Set(entry, "electricalTypeName", r.slot.Category == SparkShelfCategory.LED ? "SparkLED" : "SparkResistor");
-                Set(entry, "electronicTypeName", "");
-                Set(entry, "inputTerminalName", r.slot.Category == SparkShelfCategory.LED ? "_Anode" : "_Input");
-                Set(entry, "outputTerminalName", r.slot.Category == SparkShelfCategory.LED ? "_Cathode" : "_Output");
-                var exact = entry.FindPropertyRelative("exactTerminalNames");
-                if (exact != null) exact.boolValue = false;
-            }
-            smartProp.boolValue = false;
-            bridgeObject.ApplyModifiedProperties();
-            EditorUtility.SetDirty(p.bindings);
-            EditorUtility.SetDirty(bridge);
-            Undo.CollapseUndoOperations(group);
-            Debug.Log("[LevelBindingApplier] APPLIED: " + p.rules.Count + " workstation mappings, " +
-                      p.addComponents.Count + " component IDs, " + p.addTerminals.Count +
-                      " terminal IDs. Use Smart Slots = OFF. Save this prefab.", bridge);
-        }
+    if (!p.CanApply)
+    {
+        Report(p);
+        return;
+    }
+
+    if (bridge == null || p.bindings == null)
+    {
+        Debug.LogError(
+            "[LevelBindingApplier] Missing bridge or scene bindings.");
+        return;
+    }
+
+    if (!IsOriginalPrefabStage(bridge))
+    {
+        Debug.LogError(
+            "[LevelBindingApplier] Open the original prefab in Prefab Mode.",
+            bridge);
+        return;
+    }
+
+    SerializedObject bindingObject =
+        new SerializedObject(p.bindings);
+
+    SerializedProperty componentProp =
+        bindingObject.FindProperty(p.componentProperty);
+
+    SerializedProperty terminalProp =
+        bindingObject.FindProperty(p.terminalProperty);
+
+    SerializedObject bridgeObject =
+        new SerializedObject(bridge);
+
+    SerializedProperty smartProp =
+        bridgeObject.FindProperty("useSmartSlots");
+
+    if (!IsStringArray(componentProp) ||
+        !IsStringArray(terminalProp) ||
+        smartProp == null)
+    {
+        Debug.LogError(
+            "[LevelBindingApplier] Serialized schema mismatch. " +
+            "No changes applied.",
+            bridge);
+        return;
+    }
+
+    // Preserve Undo support for both components.
+    Undo.RegisterCompleteObjectUndo(
+        new UnityEngine.Object[]
+        {
+            p.bindings,
+            bridge
+        },
+        "Project Spark - Apply Smart Binding Declarations");
+
+    // Add missing runtime component IDs.
+    AppendMissing(
+        componentProp,
+        p.addComponents);
+
+    // Add missing runtime terminal IDs.
+    AppendMissing(
+        terminalProp,
+        p.addTerminals);
+
+    bindingObject.ApplyModifiedProperties();
+
+    // Smart slots are authoritative.
+    // Do not replace the legacy workstation array.
+    smartProp.boolValue = true;
+
+    bridgeObject.ApplyModifiedProperties();
+
+    EditorUtility.SetDirty(p.bindings);
+    EditorUtility.SetDirty(bridge);
+
+    PrefabStage stage =
+        PrefabStageUtility.GetCurrentPrefabStage();
+
+    if (stage != null &&
+        stage.prefabContentsRoot != null)
+    {
+        EditorSceneManager.MarkSceneDirty(
+            stage.scene);
+    }
+
+    Debug.Log(
+        "[LevelBindingApplier V2] SUCCESS\n" +
+        "Smart Slots: ENABLED\n" +
+        "Included Slots: " + p.rules.Count + "\n" +
+        "Component IDs Added: " +
+        p.addComponents.Count + "\n" +
+        "Terminal IDs Added: " +
+        p.addTerminals.Count + "\n" +
+        "Legacy Rules: PRESERVED\n" +
+        "Original prefab: " + bridge.name,
+        bridge);
+}
 
         private static void Set(SerializedProperty parent, string key, string value)
         {
