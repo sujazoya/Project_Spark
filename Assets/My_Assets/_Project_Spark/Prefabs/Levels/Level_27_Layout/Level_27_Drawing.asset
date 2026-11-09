@@ -1,0 +1,529 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_27_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_27
+  levelTitle: Bridge Defender - Four Diode Rectifier
+  initialPage: 0
+  pages:
+  - title: LEVEL 26 | ORIGINAL BENCH LAYOUT | BRIDGE
+    explanation: 'The four diodes make a diamond on the workbench. Junction A is
+      switch output, B is battery negative, P is load positive, N is load negative.
+      Red and blue lines show separate nets; crossings do not connect unless they
+      meet at a marked junction. The physical position of a diode is not its electrical
+      ID: read D_BRIDGE_1..4 from Smart Slot bindings.'
+    caption: PAGE 1/4 | SOURCE + SWITCH LEFT | FOUR DIODES CENTER | R + LED RIGHT
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.075, y: 0.53}
+      label: 5 V
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.22, y: 0.54}
+      label: POWER SWITCH
+      color: {r: 1, g: 0.78, b: 0.31, a: 1}
+    - id: d1
+      kind: 3
+      position: {x: 0.44, y: 0.69}
+      label: D1  A >| K  ON
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: d2
+      kind: 3
+      position: {x: 0.62, y: 0.69}
+      label: D2  K |< A  OFF
+      color: {r: 0.28, g: 0.9, b: 1, a: 1}
+    - id: d3
+      kind: 3
+      position: {x: 0.44, y: 0.36}
+      label: D3  K |< A  OFF
+      color: {r: 0.28, g: 0.9, b: 1, a: 1}
+    - id: d4
+      kind: 3
+      position: {x: 0.62, y: 0.36}
+      label: D4  A >| K  ON
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.85, y: 0.71}
+      label: R1  220 OHM
+      color: {r: 1, g: 0.78, b: 0.31, a: 1}
+    - id: led
+      kind: 2
+      position: {x: 0.86, y: 0.48}
+      label: LED GREEN
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: nodeA
+      kind: 9
+      position: {x: 0.345, y: 0.54}
+      label: A / DC INPUT +
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - id: nodeB
+      kind: 9
+      position: {x: 0.715, y: 0.54}
+      label: B / DC INPUT -
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - id: nodeP
+      kind: 9
+      position: {x: 0.53, y: 0.84}
+      label: P / LOAD +
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - id: nodeN
+      kind: 9
+      position: {x: 0.53, y: 0.19}
+      label: N / LOAD -
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.59}
+      - {x: 0.16, y: 0.59}
+      - {x: 0.16, y: 0.54}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.28, y: 0.54}
+      - {x: 0.345, y: 0.54}
+      - {x: 0.385, y: 0.64}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.345, y: 0.54}
+      - {x: 0.385, y: 0.4}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.075, y: 0.45}
+      - {x: 0.075, y: 0.11}
+      - {x: 0.715, y: 0.11}
+      - {x: 0.715, y: 0.54}
+      - {x: 0.675, y: 0.64}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - points:
+      - {x: 0.715, y: 0.54}
+      - {x: 0.675, y: 0.4}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - points:
+      - {x: 0.495, y: 0.74}
+      - {x: 0.53, y: 0.84}
+      - {x: 0.85, y: 0.84}
+      - {x: 0.85, y: 0.76}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.565, y: 0.74}
+      - {x: 0.53, y: 0.84}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.85, y: 0.65}
+      - {x: 0.86, y: 0.54}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.86, y: 0.42}
+      - {x: 0.86, y: 0.19}
+      - {x: 0.53, y: 0.19}
+      - {x: 0.385, y: 0.3}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - points:
+      - {x: 0.53, y: 0.19}
+      - {x: 0.565, y: 0.3}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+  - title: LEVEL 26 | NUMBERED WIRING | 10 CONNECTIONS
+    explanation: 1 Battery_positive -> SwitchInput; 2 SwitchOutput -> D_BRIDGE_1_Anode;
+      3 SwitchOutput -> D_BRIDGE_3_Cathode; 4 Battery_negative -> D_BRIDGE_2_Anode;
+      5 Battery_negative -> D_BRIDGE_4_Cathode; 6 D_BRIDGE_1_Cathode -> R_LIMIT_Input;
+      7 D_BRIDGE_2_Cathode -> R_LIMIT_Input; 8 R_LIMIT_Output -> LED_Anode; 9 LED_Cathode
+      -> D_BRIDGE_3_Anode; 10 LED_Cathode -> D_BRIDGE_4_Anode. In your last reported
+      layout D1=Slot_02, D3=Slot_03, D2=Slot_04, D4=Slot_05.
+    caption: PAGE 2/4 | FOLLOW TERMINAL NAMES, NOT VISUAL ORIENTATION
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.075, y: 0.53}
+      label: 5 V
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.22, y: 0.54}
+      label: POWER SWITCH
+      color: {r: 1, g: 0.78, b: 0.31, a: 1}
+    - id: d1
+      kind: 3
+      position: {x: 0.44, y: 0.69}
+      label: D1  A >| K  ON
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: d2
+      kind: 3
+      position: {x: 0.62, y: 0.69}
+      label: D2  K |< A  OFF
+      color: {r: 0.28, g: 0.9, b: 1, a: 1}
+    - id: d3
+      kind: 3
+      position: {x: 0.44, y: 0.36}
+      label: D3  K |< A  OFF
+      color: {r: 0.28, g: 0.9, b: 1, a: 1}
+    - id: d4
+      kind: 3
+      position: {x: 0.62, y: 0.36}
+      label: D4  A >| K  ON
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.85, y: 0.71}
+      label: R1  220 OHM
+      color: {r: 1, g: 0.78, b: 0.31, a: 1}
+    - id: led
+      kind: 2
+      position: {x: 0.86, y: 0.48}
+      label: LED GREEN
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: nodeA
+      kind: 9
+      position: {x: 0.345, y: 0.54}
+      label: A / DC INPUT +
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - id: nodeB
+      kind: 9
+      position: {x: 0.715, y: 0.54}
+      label: B / DC INPUT -
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - id: nodeP
+      kind: 9
+      position: {x: 0.53, y: 0.84}
+      label: P / LOAD +
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - id: nodeN
+      kind: 9
+      position: {x: 0.53, y: 0.19}
+      label: N / LOAD -
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.59}
+      - {x: 0.16, y: 0.59}
+      - {x: 0.16, y: 0.54}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.28, y: 0.54}
+      - {x: 0.345, y: 0.54}
+      - {x: 0.385, y: 0.64}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.345, y: 0.54}
+      - {x: 0.385, y: 0.4}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.075, y: 0.45}
+      - {x: 0.075, y: 0.11}
+      - {x: 0.715, y: 0.11}
+      - {x: 0.715, y: 0.54}
+      - {x: 0.675, y: 0.64}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - points:
+      - {x: 0.715, y: 0.54}
+      - {x: 0.675, y: 0.4}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - points:
+      - {x: 0.495, y: 0.74}
+      - {x: 0.53, y: 0.84}
+      - {x: 0.85, y: 0.84}
+      - {x: 0.85, y: 0.76}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.565, y: 0.74}
+      - {x: 0.53, y: 0.84}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.85, y: 0.65}
+      - {x: 0.86, y: 0.54}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.86, y: 0.42}
+      - {x: 0.86, y: 0.19}
+      - {x: 0.53, y: 0.19}
+      - {x: 0.385, y: 0.3}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - points:
+      - {x: 0.53, y: 0.19}
+      - {x: 0.565, y: 0.3}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+  - title: LEVEL 26 | CONDUCTING DIODES
+    explanation: 'Correct path: battery+ -> switch -> D1 -> 220 ohm resistor -> green
+      LED -> D4 -> battery-. D2 and D3 are reverse-biased. Do not directly wire battery-
+      to LED cathode or switch output to battery-. Those connections bypass the intended
+      bridge load.'
+    caption: PAGE 3/4 | NORMAL 5 V POLARITY | D1 AND D4 CONDUCT
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.075, y: 0.53}
+      label: 5 V
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.22, y: 0.54}
+      label: POWER SWITCH
+      color: {r: 1, g: 0.78, b: 0.31, a: 1}
+    - id: d1
+      kind: 3
+      position: {x: 0.44, y: 0.69}
+      label: D1  A >| K  ON
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: d2
+      kind: 3
+      position: {x: 0.62, y: 0.69}
+      label: D2  K |< A  OFF
+      color: {r: 0.28, g: 0.9, b: 1, a: 1}
+    - id: d3
+      kind: 3
+      position: {x: 0.44, y: 0.36}
+      label: D3  K |< A  OFF
+      color: {r: 0.28, g: 0.9, b: 1, a: 1}
+    - id: d4
+      kind: 3
+      position: {x: 0.62, y: 0.36}
+      label: D4  A >| K  ON
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.85, y: 0.71}
+      label: R1  220 OHM
+      color: {r: 1, g: 0.78, b: 0.31, a: 1}
+    - id: led
+      kind: 2
+      position: {x: 0.86, y: 0.48}
+      label: LED GREEN
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: nodeA
+      kind: 9
+      position: {x: 0.345, y: 0.54}
+      label: A / DC INPUT +
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - id: nodeB
+      kind: 9
+      position: {x: 0.715, y: 0.54}
+      label: B / DC INPUT -
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - id: nodeP
+      kind: 9
+      position: {x: 0.53, y: 0.84}
+      label: P / LOAD +
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - id: nodeN
+      kind: 9
+      position: {x: 0.53, y: 0.19}
+      label: N / LOAD -
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.59}
+      - {x: 0.16, y: 0.59}
+      - {x: 0.16, y: 0.54}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.28, y: 0.54}
+      - {x: 0.345, y: 0.54}
+      - {x: 0.385, y: 0.64}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.345, y: 0.54}
+      - {x: 0.385, y: 0.4}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.075, y: 0.45}
+      - {x: 0.075, y: 0.11}
+      - {x: 0.715, y: 0.11}
+      - {x: 0.715, y: 0.54}
+      - {x: 0.675, y: 0.64}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - points:
+      - {x: 0.715, y: 0.54}
+      - {x: 0.675, y: 0.4}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - points:
+      - {x: 0.495, y: 0.74}
+      - {x: 0.53, y: 0.84}
+      - {x: 0.85, y: 0.84}
+      - {x: 0.85, y: 0.76}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.565, y: 0.74}
+      - {x: 0.53, y: 0.84}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.85, y: 0.65}
+      - {x: 0.86, y: 0.54}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.86, y: 0.42}
+      - {x: 0.86, y: 0.19}
+      - {x: 0.53, y: 0.19}
+      - {x: 0.385, y: 0.3}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - points:
+      - {x: 0.53, y: 0.19}
+      - {x: 0.565, y: 0.3}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+  - title: LEVEL 26 | VERIFIED CIRCUIT MEASUREMENTS
+    explanation: 'Observed in your solved-source audit: R220 voltage 1.590594 V and
+      current 7.230 mA; LED 2.007230 V and 7.230 mA; D1 and D4 around 0.700723 V
+      and conducting; D2 and D3 reverse-blocking. The level evaluator alone decides
+      target completion.'
+    caption: PAGE 4/4 | SOURCE 5.000 V | CURRENT 7.230 mA | NO OVERLOAD
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.075, y: 0.53}
+      label: 5 V
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - id: switch
+      kind: 5
+      position: {x: 0.22, y: 0.54}
+      label: POWER SWITCH
+      color: {r: 1, g: 0.78, b: 0.31, a: 1}
+    - id: d1
+      kind: 3
+      position: {x: 0.44, y: 0.69}
+      label: D1  A >| K  ON
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: d2
+      kind: 3
+      position: {x: 0.62, y: 0.69}
+      label: D2  K |< A  OFF
+      color: {r: 0.28, g: 0.9, b: 1, a: 1}
+    - id: d3
+      kind: 3
+      position: {x: 0.44, y: 0.36}
+      label: D3  K |< A  OFF
+      color: {r: 0.28, g: 0.9, b: 1, a: 1}
+    - id: d4
+      kind: 3
+      position: {x: 0.62, y: 0.36}
+      label: D4  A >| K  ON
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.85, y: 0.71}
+      label: R1  220 OHM
+      color: {r: 1, g: 0.78, b: 0.31, a: 1}
+    - id: led
+      kind: 2
+      position: {x: 0.86, y: 0.48}
+      label: LED GREEN
+      color: {r: 0.3, g: 0.98, b: 0.59, a: 1}
+    - id: nodeA
+      kind: 9
+      position: {x: 0.345, y: 0.54}
+      label: A / DC INPUT +
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - id: nodeB
+      kind: 9
+      position: {x: 0.715, y: 0.54}
+      label: B / DC INPUT -
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - id: nodeP
+      kind: 9
+      position: {x: 0.53, y: 0.84}
+      label: P / LOAD +
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - id: nodeN
+      kind: 9
+      position: {x: 0.53, y: 0.19}
+      label: N / LOAD -
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.59}
+      - {x: 0.16, y: 0.59}
+      - {x: 0.16, y: 0.54}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.28, y: 0.54}
+      - {x: 0.345, y: 0.54}
+      - {x: 0.385, y: 0.64}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.345, y: 0.54}
+      - {x: 0.385, y: 0.4}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.075, y: 0.45}
+      - {x: 0.075, y: 0.11}
+      - {x: 0.715, y: 0.11}
+      - {x: 0.715, y: 0.54}
+      - {x: 0.675, y: 0.64}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - points:
+      - {x: 0.715, y: 0.54}
+      - {x: 0.675, y: 0.4}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - points:
+      - {x: 0.495, y: 0.74}
+      - {x: 0.53, y: 0.84}
+      - {x: 0.85, y: 0.84}
+      - {x: 0.85, y: 0.76}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.565, y: 0.74}
+      - {x: 0.53, y: 0.84}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.85, y: 0.65}
+      - {x: 0.86, y: 0.54}
+      energized: 0
+      color: {r: 0.98, g: 0.27, b: 0.31, a: 1}
+    - points:
+      - {x: 0.86, y: 0.42}
+      - {x: 0.86, y: 0.19}
+      - {x: 0.53, y: 0.19}
+      - {x: 0.385, y: 0.3}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}
+    - points:
+      - {x: 0.53, y: 0.19}
+      - {x: 0.565, y: 0.3}
+      energized: 0
+      color: {r: 0.21, g: 0.72, b: 1, a: 1}

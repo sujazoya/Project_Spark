@@ -1,0 +1,12 @@
+Wire,From terminal ID,To terminal ID,Description
+1,Battery_positive,SwitchInput,Main power feed
+2,SwitchOutput,D_PROTECT_Anode,Schottky diode input
+3,D_PROTECT_Cathode,R_CHARGE_Input,Diode into charge resistor
+4,R_CHARGE_Output,SPDT_A,Charge input (throw A)
+5,SPDT_COM,C_BACKUP_Positive,Selector common to capacitor +
+6,C_BACKUP_Negative,Battery_negative,Capacitor ground return
+7,SPDT_B,R_LED_Input,Backup LED branch
+8,R_LED_Output,LED_Anode,LED current-limiter output
+9,LED_Cathode,Battery_negative,LED ground return
+10,SPDT_B,R_BLEED_Input,Backup bleeder branch
+11,R_BLEED_Output,Battery_negative,Bleeder ground return

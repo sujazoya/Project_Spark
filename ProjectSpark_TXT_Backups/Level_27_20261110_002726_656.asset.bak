@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_27
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_27
+  displayName: Bridge Defender - Four Diode Rectifier
+  description: Build a 5 V DC four-diode bridge rectifier. Forward diodes D1 and
+    D4 deliver current through a 220 ohm resistor and green LED while D2 and D3 block.
+    Verify bridge polarity, safe series current and the illuminated LED.
+  completionMode: 0
+  requiredTargetCount: 6
+  requireClosedReturn: 1
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 1
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: PowerSupply_01
+    positiveTerminalId: Battery_positive
+    negativeTerminalId: Battery_negative
+    nominalVoltage: 5
+  targets:
+  - targetId: level26_supply
+    displayName: 5 V Bridge Supply
+    description: Verify the 5 V source before bridge rectification.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: Battery_positive
+    requiredNegativeTerminalId: Battery_negative
+    targetComponentId: PowerSupply_01
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level26_diode1_forward
+    displayName: D1 Forward Bridge Diode
+    description: Verify D1 has a forward voltage drop for normal DC input polarity.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: D_BRIDGE_1_Anode
+    requiredNegativeTerminalId: D_BRIDGE_1_Cathode
+    targetComponentId: D_BRIDGE_1_Component
+    minimumVoltage: 0.45
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 1
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level26_diode4_forward
+    displayName: D4 Forward Return Diode
+    description: Verify D4 conducts in the return path to the supply negative terminal.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: D_BRIDGE_4_Anode
+    requiredNegativeTerminalId: D_BRIDGE_4_Cathode
+    targetComponentId: D_BRIDGE_4_Component
+    minimumVoltage: 0.45
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 1
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level26_led_on
+    displayName: Bridge Output Green LED ON
+    description: Verify the LED illuminates with correct bridge output polarity.
+    targetType: 3
+    targetTerminalId: 
+    requiredPositiveTerminalId: LED_Anode
+    requiredNegativeTerminalId: LED_Cathode
+    targetComponentId: led
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level26_safe_current
+    displayName: Safe Bridge Load Current
+    description: Verify 6 to 9 mA through the 220 ohm load resistor.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_LIMIT_Input
+    requiredNegativeTerminalId: R_LIMIT_Output
+    targetComponentId: R_LIMIT_Component
+    minimumVoltage: 0
+    minimumCurrent: 0.006
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.009
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level26_resistor_voltage
+    displayName: 220 Ohm Resistor Voltage
+    description: Verify a drop of 1.3 to 1.9 V across the 220 ohm resistor.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_LIMIT_Input
+    requiredNegativeTerminalId: R_LIMIT_Output
+    targetComponentId: R_LIMIT_Component
+    minimumVoltage: 1.3
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 1.9
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 1
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 0
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

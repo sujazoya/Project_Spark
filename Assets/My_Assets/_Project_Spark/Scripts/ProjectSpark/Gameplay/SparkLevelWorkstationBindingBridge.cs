@@ -196,6 +196,7 @@ namespace ProjectSpark.Gameplay
         }
 
        
+
 private List<Rule> BuildRules(
     IReadOnlyList<SparkShelfSlot> all)
 {
@@ -208,46 +209,76 @@ private List<Rule> BuildRules(
     // SMART SLOTS
     // --------------------------------------------------
 
-    if (useSmartSlots && all != null)
+    if (useSmartSlots &&
+        all != null &&
+        layout != null)
     {
         foreach (SparkShelfSlot slot in all)
         {
             if (slot == null ||
                 !slot.isActiveAndEnabled ||
+                slot.Kind != SparkShelfSlotKind.Workstation ||
                 !slot.transform.IsChildOf(layout.transform) ||
                 !slot.EnableSmartBinding)
             {
                 continue;
             }
 
-            bool usesAnodeCathode =
-                slot.Category == SparkShelfCategory.LED ||
-                slot.Category == SparkShelfCategory.Diode;
+            // Determine the physical terminal naming
+            // convention for each component category.
+            //
+            // Resistor:  Register_Input / Register_Output
+            // Diode:     Diode_Anode / Diode_Cathode
+            // LED:       LED_Anode / LED_Cathode
+            // Capacitor: Capacitor_Positive / Capacitor_Negative
 
-            string inputMatch =
-                usesAnodeCathode
-                    ? "_Anode"
-                    : "_Input";
+            string category =
+                slot.Category.ToString();
 
-            string outputMatch =
-                usesAnodeCathode
-                    ? "_Cathode"
-                    : "_Output";
+            string terminalA;
+            string terminalB;
+
+            switch (category)
+            {
+                case "Diode":
+                case "LED":
+                    terminalA = "_Anode";
+                    terminalB = "_Cathode";
+                    break;
+
+                case "Capacitor":
+                    terminalA = "_Positive";
+                    terminalB = "_Negative";
+                    break;
+
+                default:
+                    terminalA = "_Input";
+                    terminalB = "_Output";
+                    break;
+            }
 
             result.Add(new Rule
             {
                 slotId = slot.SlotId,
                 slot = slot,
 
-                componentId = slot.RuntimeComponentId,
-                aId = slot.RuntimeTerminalAId,
-                bId = slot.RuntimeTerminalBId,
+                componentId =
+                    slot.RuntimeComponentId,
 
-                aMatch = inputMatch,
-                bMatch = outputMatch,
+                aId =
+                    slot.RuntimeTerminalAId,
 
+                bId =
+                    slot.RuntimeTerminalBId,
+
+                aMatch = terminalA,
+                bMatch = terminalB,
+
+                // Smart slots resolve the actual installed
+                // electrical component by its hierarchy.
                 electricalType = "",
                 electronicType = "",
+
                 exact = false
             });
 
@@ -274,9 +305,14 @@ private List<Rule> BuildRules(
             {
                 slotId = legacy.slotId,
 
-                componentId = legacy.componentBindingId,
-                aId = legacy.inputTerminalBindingId,
-                bId = legacy.outputTerminalBindingId,
+                componentId =
+                    legacy.componentBindingId,
+
+                aId =
+                    legacy.inputTerminalBindingId,
+
+                bId =
+                    legacy.outputTerminalBindingId,
 
                 electronicId =
                     legacy.electronicObjectBindingId,
@@ -287,10 +323,14 @@ private List<Rule> BuildRules(
                 electronicType =
                     legacy.electronicTypeName,
 
-                aMatch = legacy.inputTerminalName,
-                bMatch = legacy.outputTerminalName,
+                aMatch =
+                    legacy.inputTerminalName,
 
-                exact = legacy.exactTerminalNames
+                bMatch =
+                    legacy.outputTerminalName,
+
+                exact =
+                    legacy.exactTerminalNames
             });
         }
     }

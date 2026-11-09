@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
   m_Name: Level_26
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
-  levelId: level_25
-  displayName: Dual Path Power - Diode OR Gate
-  description: Build a 5 V diode OR gate using two independently controlled switches,
-    two forward-biased 1N4007 diodes, a common 330 ohm resistor, and a green LED.
-    With switch A ON and switch B OFF, verify the forward path and safe current.
-    Test the other switch states using the truth table.
+  levelId: level_26
+  displayName: Bridge Defender - Four Diode Rectifier
+  description: Build a 5 V DC four-diode bridge rectifier. Forward diodes D1 and
+    D4 deliver current through a 220 ohm resistor and green LED while D2 and D3 block.
+    Verify bridge polarity, safe series current and the illuminated LED.
   completionMode: 0
-  requiredTargetCount: 5
+  requiredTargetCount: 6
   requireClosedReturn: 1
   rejectShortCircuit: 1
   rejectTargetShort: 1
@@ -33,9 +32,9 @@ MonoBehaviour:
     negativeTerminalId: Battery_negative
     nominalVoltage: 5
   targets:
-  - targetId: level25_supply
-    displayName: 5 V Supply
-    description: Verify the 5 V power source.
+  - targetId: level26_supply
+    displayName: 5 V Bridge Supply
+    description: Verify the 5 V source before bridge rectification.
     targetType: 5
     targetTerminalId: 
     requiredPositiveTerminalId: Battery_positive
@@ -53,14 +52,14 @@ MonoBehaviour:
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level25_diode_a
-    displayName: Path A Forward Diode
-    description: With Switch A closed and Switch B open, verify D1 is forward biased.
+  - targetId: level26_diode1_forward
+    displayName: D1 Forward Bridge Diode
+    description: Verify D1 has a forward voltage drop for normal DC input polarity.
     targetType: 5
     targetTerminalId: 
-    requiredPositiveTerminalId: D_OR_A_Anode
-    requiredNegativeTerminalId: D_OR_A_Cathode
-    targetComponentId: D_OR_A_Component
+    requiredPositiveTerminalId: D_BRIDGE_1_Anode
+    requiredNegativeTerminalId: D_BRIDGE_1_Cathode
+    targetComponentId: D_BRIDGE_1_Component
     minimumVoltage: 0.45
     minimumCurrent: 0
     minimumPower: 0
@@ -73,9 +72,29 @@ MonoBehaviour:
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level25_led_on
-    displayName: Green LED ON
-    description: Verify the common green LED is illuminated by active path A.
+  - targetId: level26_diode4_forward
+    displayName: D4 Forward Return Diode
+    description: Verify D4 conducts in the return path to the supply negative terminal.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: D_BRIDGE_4_Anode
+    requiredNegativeTerminalId: D_BRIDGE_4_Cathode
+    targetComponentId: D_BRIDGE_4_Component
+    minimumVoltage: 0.45
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 1
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level26_led_on
+    displayName: Bridge Output Green LED ON
+    description: Verify the LED illuminates with correct bridge output polarity.
     targetType: 3
     targetTerminalId: 
     requiredPositiveTerminalId: LED_Anode
@@ -93,16 +112,16 @@ MonoBehaviour:
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level25_safe_current
-    displayName: Safe OR Output Current
-    description: Verify a safe 5 to 8 mA through the shared 330 ohm resistor.
+  - targetId: level26_safe_current
+    displayName: Safe Bridge Load Current
+    description: Verify 6 to 9 mA through the 220 ohm load resistor.
     targetType: 6
     targetTerminalId: 
     requiredPositiveTerminalId: R_LIMIT_Input
     requiredNegativeTerminalId: R_LIMIT_Output
     targetComponentId: R_LIMIT_Component
     minimumVoltage: 0
-    minimumCurrent: 0.005
+    minimumCurrent: 0.006
     minimumPower: 0
     requireElectricalEnabled: 1
     requireConduction: 0
@@ -110,25 +129,25 @@ MonoBehaviour:
     useMaximumVoltage: 0
     maximumVoltage: 0
     useMaximumCurrent: 1
-    maximumCurrent: 0.008
+    maximumCurrent: 0.009
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level25_resistor_voltage
-    displayName: 330 Ohm Load Voltage
-    description: Verify 2.0 to 2.6 V across the common current-limiting resistor.
+  - targetId: level26_resistor_voltage
+    displayName: 220 Ohm Resistor Voltage
+    description: Verify a drop of 1.3 to 1.9 V across the 220 ohm resistor.
     targetType: 5
     targetTerminalId: 
     requiredPositiveTerminalId: R_LIMIT_Input
     requiredNegativeTerminalId: R_LIMIT_Output
     targetComponentId: R_LIMIT_Component
-    minimumVoltage: 2
+    minimumVoltage: 1.3
     minimumCurrent: 0
     minimumPower: 0
     requireElectricalEnabled: 1
     requireConduction: 0
     inverted: 0
     useMaximumVoltage: 1
-    maximumVoltage: 2.6
+    maximumVoltage: 1.9
     useMaximumCurrent: 0
     maximumCurrent: 0
     useMaximumPower: 0

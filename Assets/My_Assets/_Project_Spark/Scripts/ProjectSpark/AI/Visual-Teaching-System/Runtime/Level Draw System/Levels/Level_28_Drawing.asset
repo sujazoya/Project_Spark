@@ -1,0 +1,502 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_28_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_28
+  levelTitle: Emergency Power Backup - Charge / Backup Selector
+  initialPage: 0
+  pages:
+  - title: LEVEL 28 | Emergency Power Backup
+    explanation: Slot_01 Schottky 1N5819; Slot_02 220 Ohm; Slot_03 4700 uF capacitor;
+      Slot_04 330 Ohm; Slot_05 1k bleed; Slot_06 SPDT. Fixed 5V, MAIN switch, green
+      LED. SPDT A charge, COM capacitor+, B backup loads. Wire IDs in Level28_Exact_Wiring.csv.
+    caption: PAGE 1/4 | SIX SLOTS | ELEVEN CONNECTIONS
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.09, y: 0.55}
+      label: 5 V DC
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - id: main
+      kind: 5
+      position: {x: 0.21, y: 0.62}
+      label: MAIN
+      color: {r: 0.32, g: 0.86, b: 0.94, a: 1}
+    - id: d_protect
+      kind: 3
+      position: {x: 0.33, y: 0.7}
+      label: S01 1N5819
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: r_charge
+      kind: 1
+      position: {x: 0.46, y: 0.7}
+      label: S02 220 OHM
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: selector
+      kind: 5
+      position: {x: 0.61, y: 0.67}
+      label: S06 SPDT A / COM / B
+      color: {r: 0.32, g: 0.86, b: 0.94, a: 1}
+    - id: cap
+      kind: 4
+      position: {x: 0.61, y: 0.32}
+      label: S03 4700 uF + / -
+      color: {r: 0.32, g: 0.86, b: 0.94, a: 1}
+    - id: r_led
+      kind: 1
+      position: {x: 0.8, y: 0.77}
+      label: S04 330 OHM
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: led
+      kind: 2
+      position: {x: 0.92, y: 0.77}
+      label: GREEN LED
+      color: {r: 0.35, g: 0.95, b: 0.52, a: 1}
+    - id: r_bleed
+      kind: 1
+      position: {x: 0.8, y: 0.4}
+      label: S05 1k OHM
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: gnd
+      kind: 6
+      position: {x: 0.5, y: 0.14}
+      label: BATTERY NEGATIVE
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.13, y: 0.6}
+      - {x: 0.17, y: 0.62}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.25, y: 0.62}
+      - {x: 0.29, y: 0.7}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.37, y: 0.7}
+      - {x: 0.42, y: 0.7}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.5, y: 0.7}
+      - {x: 0.555, y: 0.7}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.61, y: 0.58}
+      - {x: 0.61, y: 0.39}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.61, y: 0.25}
+      - {x: 0.61, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.67, y: 0.7}
+      - {x: 0.75, y: 0.77}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.84, y: 0.77}
+      - {x: 0.88, y: 0.77}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.95, y: 0.7}
+      - {x: 0.95, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.67, y: 0.7}
+      - {x: 0.72, y: 0.7}
+      - {x: 0.72, y: 0.4}
+      - {x: 0.75, y: 0.4}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.84, y: 0.4}
+      - {x: 0.84, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.09, y: 0.48}
+      - {x: 0.09, y: 0.14}
+      - {x: 0.95, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+  - title: LEVEL 28 | Charge the Capacitor
+    explanation: 5V -> MAIN -> 1N5819 anode/cathode -> 220 Ohm -> SPDT_A -> COM ->
+      capacitor positive. Capacitor negative returns to Battery_negative. SPDT_B
+      is open; the 330 Ohm LED load and 1k bleed are isolated. Charge to at least
+      approximately 4.4V, model dependent.
+    caption: PAGE 2/4 | MAIN ON | A-to-COM CLOSED
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.09, y: 0.55}
+      label: 5 V DC
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - id: main
+      kind: 5
+      position: {x: 0.21, y: 0.62}
+      label: MAIN
+      color: {r: 0.32, g: 0.86, b: 0.94, a: 1}
+    - id: d_protect
+      kind: 3
+      position: {x: 0.33, y: 0.7}
+      label: S01 1N5819
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: r_charge
+      kind: 1
+      position: {x: 0.46, y: 0.7}
+      label: S02 220 OHM
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: selector
+      kind: 5
+      position: {x: 0.61, y: 0.67}
+      label: S06 SPDT A / COM / B
+      color: {r: 0.32, g: 0.86, b: 0.94, a: 1}
+    - id: cap
+      kind: 4
+      position: {x: 0.61, y: 0.32}
+      label: S03 4700 uF + / -
+      color: {r: 0.32, g: 0.86, b: 0.94, a: 1}
+    - id: r_led
+      kind: 1
+      position: {x: 0.8, y: 0.77}
+      label: S04 330 OHM
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: led
+      kind: 2
+      position: {x: 0.92, y: 0.77}
+      label: GREEN LED
+      color: {r: 0.35, g: 0.95, b: 0.52, a: 1}
+    - id: r_bleed
+      kind: 1
+      position: {x: 0.8, y: 0.4}
+      label: S05 1k OHM
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: gnd
+      kind: 6
+      position: {x: 0.5, y: 0.14}
+      label: BATTERY NEGATIVE
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.13, y: 0.6}
+      - {x: 0.17, y: 0.62}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.25, y: 0.62}
+      - {x: 0.29, y: 0.7}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.37, y: 0.7}
+      - {x: 0.42, y: 0.7}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.5, y: 0.7}
+      - {x: 0.555, y: 0.7}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.61, y: 0.58}
+      - {x: 0.61, y: 0.39}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.61, y: 0.25}
+      - {x: 0.61, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.67, y: 0.7}
+      - {x: 0.75, y: 0.77}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.84, y: 0.77}
+      - {x: 0.88, y: 0.77}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.95, y: 0.7}
+      - {x: 0.95, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.67, y: 0.7}
+      - {x: 0.72, y: 0.7}
+      - {x: 0.72, y: 0.4}
+      - {x: 0.75, y: 0.4}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.84, y: 0.4}
+      - {x: 0.84, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.09, y: 0.48}
+      - {x: 0.09, y: 0.14}
+      - {x: 0.95, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+  - title: LEVEL 28 | Emergency Backup
+    explanation: Switch main supply OFF first. Then move SPDT to BACKUP. SPDT_COM
+      connects charged capacitor+ to SPDT_B. B feeds 330 Ohm -> LED anode -> LED
+      cathode -> battery negative, and 1k Ohm -> battery negative in parallel. The
+      capacitor supplies both loads and discharges.
+    caption: PAGE 3/4 | MAIN OFF | COM-to-B CLOSED
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.09, y: 0.55}
+      label: 5 V DC
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - id: main
+      kind: 5
+      position: {x: 0.21, y: 0.62}
+      label: MAIN
+      color: {r: 0.32, g: 0.86, b: 0.94, a: 1}
+    - id: d_protect
+      kind: 3
+      position: {x: 0.33, y: 0.7}
+      label: S01 1N5819
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: r_charge
+      kind: 1
+      position: {x: 0.46, y: 0.7}
+      label: S02 220 OHM
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: selector
+      kind: 5
+      position: {x: 0.61, y: 0.67}
+      label: S06 SPDT A / COM / B
+      color: {r: 0.32, g: 0.86, b: 0.94, a: 1}
+    - id: cap
+      kind: 4
+      position: {x: 0.61, y: 0.32}
+      label: S03 4700 uF + / -
+      color: {r: 0.32, g: 0.86, b: 0.94, a: 1}
+    - id: r_led
+      kind: 1
+      position: {x: 0.8, y: 0.77}
+      label: S04 330 OHM
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: led
+      kind: 2
+      position: {x: 0.92, y: 0.77}
+      label: GREEN LED
+      color: {r: 0.35, g: 0.95, b: 0.52, a: 1}
+    - id: r_bleed
+      kind: 1
+      position: {x: 0.8, y: 0.4}
+      label: S05 1k OHM
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: gnd
+      kind: 6
+      position: {x: 0.5, y: 0.14}
+      label: BATTERY NEGATIVE
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.13, y: 0.6}
+      - {x: 0.17, y: 0.62}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.25, y: 0.62}
+      - {x: 0.29, y: 0.7}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.37, y: 0.7}
+      - {x: 0.42, y: 0.7}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.5, y: 0.7}
+      - {x: 0.555, y: 0.7}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.61, y: 0.58}
+      - {x: 0.61, y: 0.39}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.61, y: 0.25}
+      - {x: 0.61, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.67, y: 0.7}
+      - {x: 0.75, y: 0.77}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.84, y: 0.77}
+      - {x: 0.88, y: 0.77}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.95, y: 0.7}
+      - {x: 0.95, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.67, y: 0.7}
+      - {x: 0.72, y: 0.7}
+      - {x: 0.72, y: 0.4}
+      - {x: 0.75, y: 0.4}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.84, y: 0.4}
+      - {x: 0.84, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.09, y: 0.48}
+      - {x: 0.09, y: 0.14}
+      - {x: 0.95, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+  - title: LEVEL 28 | Six Phase-Based Goals
+    explanation: Validate all 11 wires and six slots; capacitor voltage reaches >=4.4V
+      in charge; holds >=4.2V briefly while isolated; backup LED turns ON when COM-B
+      selected; LED stays ON >=0.35 s; capacitor falls by >=1.0V and LED eventually
+      OFF. Temporal objectives require a level-specific phase evaluator, not simultaneous
+      static targets. Exact thresholds must be tuned in Play Mode.
+    caption: PAGE 4/4 | CHARGE -> ISOLATE -> BACKUP
+    parts:
+    - id: battery
+      kind: 0
+      position: {x: 0.09, y: 0.55}
+      label: 5 V DC
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - id: main
+      kind: 5
+      position: {x: 0.21, y: 0.62}
+      label: MAIN
+      color: {r: 0.32, g: 0.86, b: 0.94, a: 1}
+    - id: d_protect
+      kind: 3
+      position: {x: 0.33, y: 0.7}
+      label: S01 1N5819
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: r_charge
+      kind: 1
+      position: {x: 0.46, y: 0.7}
+      label: S02 220 OHM
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: selector
+      kind: 5
+      position: {x: 0.61, y: 0.67}
+      label: S06 SPDT A / COM / B
+      color: {r: 0.32, g: 0.86, b: 0.94, a: 1}
+    - id: cap
+      kind: 4
+      position: {x: 0.61, y: 0.32}
+      label: S03 4700 uF + / -
+      color: {r: 0.32, g: 0.86, b: 0.94, a: 1}
+    - id: r_led
+      kind: 1
+      position: {x: 0.8, y: 0.77}
+      label: S04 330 OHM
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: led
+      kind: 2
+      position: {x: 0.92, y: 0.77}
+      label: GREEN LED
+      color: {r: 0.35, g: 0.95, b: 0.52, a: 1}
+    - id: r_bleed
+      kind: 1
+      position: {x: 0.8, y: 0.4}
+      label: S05 1k OHM
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - id: gnd
+      kind: 6
+      position: {x: 0.5, y: 0.14}
+      label: BATTERY NEGATIVE
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.13, y: 0.6}
+      - {x: 0.17, y: 0.62}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.25, y: 0.62}
+      - {x: 0.29, y: 0.7}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.37, y: 0.7}
+      - {x: 0.42, y: 0.7}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.5, y: 0.7}
+      - {x: 0.555, y: 0.7}
+      energized: 0
+      color: {r: 0.98, g: 0.33, b: 0.4, a: 1}
+    - points:
+      - {x: 0.61, y: 0.58}
+      - {x: 0.61, y: 0.39}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.61, y: 0.25}
+      - {x: 0.61, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.67, y: 0.7}
+      - {x: 0.75, y: 0.77}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.84, y: 0.77}
+      - {x: 0.88, y: 0.77}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.95, y: 0.7}
+      - {x: 0.95, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.67, y: 0.7}
+      - {x: 0.72, y: 0.7}
+      - {x: 0.72, y: 0.4}
+      - {x: 0.75, y: 0.4}
+      energized: 0
+      color: {r: 1, g: 0.75, b: 0.33, a: 1}
+    - points:
+      - {x: 0.84, y: 0.4}
+      - {x: 0.84, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.09, y: 0.48}
+      - {x: 0.09, y: 0.14}
+      - {x: 0.95, y: 0.14}
+      energized: 0
+      color: {r: 0.22, g: 0.66, b: 1, a: 1}
