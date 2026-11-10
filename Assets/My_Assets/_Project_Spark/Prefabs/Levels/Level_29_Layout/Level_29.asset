@@ -1,0 +1,167 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_29
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_29
+  displayName: Power Budget - Dual-Brightness LED
+  description: Build a 5 V two-mode LED indicator. SPDT COM is fed by the main switch;
+    A feeds a 330 ohm BRIGHT resistor, B feeds a 1 kohm ECO resistor. Both resistor
+    outputs join LED anode; LED cathode returns to battery negative. Compare BRIGHT,
+    then leave ECO selected with LED on at 2.5-3.5 mA. Completion validates the final
+    ECO state, not the order of mode selection.
+  completionMode: 0
+  requiredTargetCount: 6
+  requireClosedReturn: 1
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 1
+  minimumVoltage: 4.8
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: PowerSupply_01
+    positiveTerminalId: Battery_positive
+    negativeTerminalId: Battery_negative
+    nominalVoltage: 5
+  targets:
+  - targetId: level29_supply
+    displayName: 5 V Supply
+    description: Supply voltage within 4.8-5.2 V.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: Battery_positive
+    requiredNegativeTerminalId: Battery_negative
+    targetComponentId: PowerSupply_01
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level29_led_on
+    displayName: ECO LED Illuminated
+    description: LED is electrically on in the final operating state.
+    targetType: 3
+    targetTerminalId: 
+    requiredPositiveTerminalId: LED_Anode
+    requiredNegativeTerminalId: LED_Cathode
+    targetComponentId: led
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level29_eco_current
+    displayName: ECO Current Budget
+    description: Slot_05 1 kohm branch carries 2.5-3.5 mA.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_ECO_Input
+    requiredNegativeTerminalId: R_ECO_Output
+    targetComponentId: R_ECO_Component
+    minimumVoltage: 0
+    minimumCurrent: 0.0025
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.0035
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level29_bright_isolated
+    displayName: BRIGHT Branch Isolated
+    description: Slot_04 branch current is at most 0.05 mA; conduction is not required.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_BRIGHT_Input
+    requiredNegativeTerminalId: R_BRIGHT_Output
+    targetComponentId: R_BRIGHT_Component
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.00005
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level29_eco_voltage
+    displayName: ECO Resistor Voltage
+    description: Voltage across the ECO resistor is 2.7-3.3 V.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_ECO_Input
+    requiredNegativeTerminalId: R_ECO_Output
+    targetComponentId: R_ECO_Component
+    minimumVoltage: 2.7
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 3.3
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level29_source_current
+    displayName: Low Supply Current
+    description: Total source current magnitude is 2.5-3.5 mA.
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: Battery_positive
+    requiredNegativeTerminalId: Battery_negative
+    targetComponentId: PowerSupply_01
+    minimumVoltage: 0
+    minimumCurrent: 0.0025
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.0035
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds:
+  - R_BRIGHT_Component
+  - R_ECO_Component
+  requireHealthyInstalledResistors: 1
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 0
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

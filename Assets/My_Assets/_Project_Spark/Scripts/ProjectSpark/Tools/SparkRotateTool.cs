@@ -14,7 +14,7 @@ namespace ProjectSpark.Gameplay
     /// HolographicComponentManipulator.
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class SparkRotateTool : MonoBehaviour
+    public sealed class SparkRotateTool : SparkTool
     {
         // ============================================================
         // REFERENCES
@@ -32,6 +32,24 @@ namespace ProjectSpark.Gameplay
 
         [SerializeField]
         private HolographicViewer.HolographicViewerMouseInput viewerMouseInput;
+        private SparkToolController toolController;
+
+        protected override SparkToolType GetToolType() => SparkToolType.Rotate;
+
+        protected override SparkResult OnBegin(SparkToolContext context)
+        {
+            ResolveReferences();
+            if (CurrentTarget == null) return SparkResult.Rejected("Select an object before rotating it.");
+            ShowGizmo();
+            return SparkResult.Success("Drag a rotation ring to rotate the selected object.");
+        }
+
+        protected override SparkResult OnEnd(SparkToolContext context) => SparkResult.Success();
+        protected override SparkResult OnCancel(SparkToolContext context)
+        {
+            if (viewerMouseInput != null) viewerMouseInput.CancelComponentRotation();
+            return SparkResult.Cancelled();
+        }
 
         // ============================================================
         // CURRENT TARGET
@@ -63,28 +81,30 @@ namespace ProjectSpark.Gameplay
         // ============================================================
 
         public bool IsRotateToolActive =>
-            isActiveAndEnabled;
+            isActiveAndEnabled && toolController != null && toolController.ActiveTool == this;
 
         // ============================================================
         // INITIALIZATION
         // ============================================================
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             ResolveReferences();
         }
 
         private void OnEnable()
         {
             ResolveReferences();
-
-            ShowGizmo();
+            if (toolController != null) toolController.ActiveToolChanged += OnToolChanged;
+            if (IsRotateToolActive) ShowGizmo(); else HideGizmo();
         }
 
         private void Update()
         {
-            if (!isActiveAndEnabled)
+            if (!IsRotateToolActive)
             {
+                HideGizmo();
                 return;
             }
 
@@ -93,6 +113,7 @@ namespace ProjectSpark.Gameplay
 
         private void OnDisable()
         {
+            if (toolController != null) toolController.ActiveToolChanged -= OnToolChanged;
             /*
              * Stop an active gizmo drag first.
              *
@@ -150,6 +171,8 @@ namespace ProjectSpark.Gameplay
 
         private void ResolveReferences()
         {
+            if (toolController == null) toolController = GetComponentInParent<SparkToolController>();
+            if (toolController == null) toolController = FindFirstObjectByType<SparkToolController>();
             if (selectionController == null)
             {
                 selectionController =
@@ -185,6 +208,7 @@ namespace ProjectSpark.Gameplay
 
         private void ShowGizmo()
         {
+            if (!IsRotateToolActive) { HideGizmo(); return; }
             if (rotationGizmo == null)
             {
                 return;
@@ -212,6 +236,7 @@ namespace ProjectSpark.Gameplay
 
         private void UpdateGizmoTarget()
         {
+            if (!IsRotateToolActive) { HideGizmo(); return; }
             if (rotationGizmo == null)
             {
                 return;
@@ -249,6 +274,16 @@ namespace ProjectSpark.Gameplay
 
             rotationGizmo.Cancel();
             rotationGizmo.Hide();
+        }
+
+        private void OnToolChanged(SparkTool previous, SparkTool next)
+        {
+            if (next == this) ShowGizmo();
+            else
+            {
+                if (viewerMouseInput != null) viewerMouseInput.CancelComponentRotation();
+                HideGizmo();
+            }
         }
     }
 }

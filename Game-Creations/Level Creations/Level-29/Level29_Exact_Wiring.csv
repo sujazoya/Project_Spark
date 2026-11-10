@@ -1,0 +1,12 @@
+Wire,From,To
+F0,Battery_positive,SwitchInput
+W1,SwitchOutput,D_MAIN_Anode
+W2,D_MAIN_Cathode,R_LED_Input
+W3,SwitchOutput,D_CHARGE_Anode
+W4,D_CHARGE_Cathode,R_CHARGE_Input
+W5,R_CHARGE_Output,C_STORE_Positive
+W6,C_STORE_Positive,D_BACKUP_Anode
+W7,D_BACKUP_Cathode,R_LED_Input
+W8,R_LED_Output,LED_Anode
+W9,LED_Cathode,Battery_negative
+W10,C_STORE_Negative,Battery_negative

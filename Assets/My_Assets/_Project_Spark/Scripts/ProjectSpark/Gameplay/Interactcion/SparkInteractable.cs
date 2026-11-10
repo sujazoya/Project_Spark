@@ -22,6 +22,8 @@ namespace ProjectSpark.Gameplay
         [Header("Switch Lever")]
         [SerializeField] private SwitchLeverController switchLeverController;
 
+        [SerializeField] private SparkSpdtInteraction spdtInteraction;
+
         [Header("Shelf Interaction")]
         [SerializeField] private SparkShelfItem shelfItem;
         [SerializeField] private SparkObjectShelf objectShelf;
@@ -60,6 +62,8 @@ namespace ProjectSpark.Gameplay
 
         private void ResolveReferences()
         {
+            if (spdtInteraction == null)
+                spdtInteraction = GetComponentInChildren<SparkSpdtInteraction>(true);
             if (switchLeverController == null)
                 switchLeverController =
                     GetComponent<SwitchLeverController>();
@@ -167,7 +171,7 @@ namespace ProjectSpark.Gameplay
 
             // Placed switches remain operational.
             if (operateSwitchWhenPlaced &&
-                switchLeverController != null &&
+                (switchLeverController != null || spdtInteraction != null) &&
                 shelfItem.IsAtWorkbench)
             {
                 ActivateSwitch();
@@ -181,6 +185,12 @@ namespace ProjectSpark.Gameplay
 
         private void ActivateSwitch()
         {
+            ResolveReferences();
+            if (spdtInteraction != null && spdtInteraction.isActiveAndEnabled)
+            {
+                spdtInteraction.Activate();
+                return;
+            }
             if (switchLeverController == null)
                 ResolveReferences();
 

@@ -787,6 +787,17 @@ foreach (SparkShelfItem item in purchasedItems)
 }
 
 // Preserve existing workstation slots and filters.
+// Runtime layout items are separate instances from inventory prefab/scene refs.
+// Only admit actual, settled occupants of this level's already-allowed slots.
+foreach (SparkShelfSlot slot in activeSlots)
+{
+    if (slot == null || !slot.isActiveAndEnabled) continue;
+    SparkShelfItem installed = slot.InstalledItem;
+    if (installed != null && installed.isActiveAndEnabled && installed.IsAtWorkbench &&
+        slot.Occupant == installed && !allowedItems.Contains(installed))
+        allowedItems.Add(installed);
+}
+
 manualPlacement.Configure(
     allowedItems.ToArray(),
     activeSlots);

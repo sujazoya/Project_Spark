@@ -59,6 +59,7 @@ namespace ProjectSpark.HolographicViewer
         private bool rotating;
         private bool panning;
         private bool componentRotating;
+        private bool waitForWirePointerRelease;
 
         private Vector2 rotationStartPosition;
 
@@ -80,6 +81,24 @@ namespace ProjectSpark.HolographicViewer
         private void Update()
         {
             ResolveReferences();
+
+            // Wire owns the pointer only during a real drawing session.
+            // Do not change the active tool or the saved screen-control setting.
+            if (AAAUI.VFX.SignalWireBuilder.AnyWireDrawing)
+            {
+                StopComponentRotation(true);
+                StopScreenManipulation();
+                waitForWirePointerRelease = true;
+                return;
+            }
+            if (waitForWirePointerRelease)
+            {
+#if ENABLE_INPUT_SYSTEM
+                if (Mouse.current != null && (Mouse.current.leftButton.isPressed || Mouse.current.middleButton.isPressed)) return;
+#endif
+                waitForWirePointerRelease = false;
+                return;
+            }
 
             HandleZoom();
 

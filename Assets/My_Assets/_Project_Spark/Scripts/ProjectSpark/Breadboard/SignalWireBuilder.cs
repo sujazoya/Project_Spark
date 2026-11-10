@@ -111,6 +111,27 @@ public bool ExternalInputControl
         private SparkTerminal startTerminal;
 
         private bool drawing;
+        private static readonly HashSet<SignalWireBuilder> activeDrawings = new HashSet<SignalWireBuilder>();
+
+        public static bool AnyWireDrawing
+        {
+            get
+            {
+                foreach (var builder in activeDrawings)
+                    if (builder != null && builder.isActiveAndEnabled && builder.drawing) return true;
+                return false;
+            }
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetActiveDrawings() { activeDrawings.Clear(); }
+
+        private void SetDrawing(bool value)
+        {
+            drawing = value;
+            if (value) activeDrawings.Add(this);
+            else activeDrawings.Remove(this);
+        }
 
         private Vector3 currentEnd;
 
@@ -342,7 +363,7 @@ private void CompleteVisualWire()
         pathManager.FinishCurrentPath();
     }
 
-    drawing = false;
+    SetDrawing(false);
     currentPath = null;
     startTerminal = null;
 
@@ -366,7 +387,7 @@ private void DiscardVisualWire()
 
 private void ResetWireState()
 {
-    drawing = false;
+    SetDrawing(false);
 
     if (pathManager != null)
     {
@@ -566,7 +587,7 @@ private void ResetWireState()
 
             currentEnd = hole;
 
-            drawing = true;
+            SetDrawing(true);
 
             Rebuild();
 
@@ -1120,7 +1141,7 @@ private SparkTerminal FindTerminalAtScreenPosition(
 
         private void FinishVisualWireOnly()
         {
-            drawing = false;
+            SetDrawing(false);
 
             if (currentPath != null)
             {

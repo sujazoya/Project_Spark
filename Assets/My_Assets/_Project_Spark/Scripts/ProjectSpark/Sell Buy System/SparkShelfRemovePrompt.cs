@@ -173,6 +173,7 @@ namespace ProjectSpark.Gameplay
         private bool CanDisplayFor(SparkShelfItem item)
         {
             return item != null &&
+                   SparkSelectedObjectActions.CanAct(item) &&
                    item.isActiveAndEnabled &&
                    item.gameObject.activeInHierarchy &&
                    item.AllowTouch &&
@@ -466,6 +467,13 @@ namespace ProjectSpark.Gameplay
             ResolveReferences();
 
             SparkShelfItem item = selectedItem;
+
+            // Recheck at click time: tool/selection may change before LateUpdate.
+            if (!SparkSelectedObjectActions.CanAct(item))
+            {
+                ClearSelection();
+                return;
+            }
 
             if (item == null || shelf == null)
             {

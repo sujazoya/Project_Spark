@@ -23,6 +23,11 @@ namespace ProjectSpark.Gameplay
         [Header("Diagnostics")]
         [SerializeField] private bool logChanges;
 
+        public SparkSwitch CommonToA => commonToA;
+        public SparkSwitch CommonToB => commonToB;
+        public SparkTerminal Common => commonTerminal;
+        public SparkTerminal A => terminalA;
+        public SparkTerminal B => terminalB;
         public bool IsReady => ValidateSetup(false);
 
         public void SetSpdtConnection(bool chargeSelected)
@@ -76,7 +81,10 @@ namespace ProjectSpark.Gameplay
             if (!commonToA.isActiveAndEnabled || !commonToB.isActiveAndEnabled ||
                 !commonToA.ElectricalEnabled || !commonToB.ElectricalEnabled)
             {
-                if (report) Debug.LogError("[SPDT] Both electrical SparkSwitch components must be active and ElectricalEnabled.", this);
+                if (report) Debug.LogError(
+                    "[SPDT] Both electrical SparkSwitch components must be active and ElectricalEnabled. " +
+                    $"COM-A '{commonToA.name}': activeInHierarchy={commonToA.gameObject.activeInHierarchy}, componentEnabled={commonToA.enabled}, ElectricalEnabled={commonToA.ElectricalEnabled}; " +
+                    $"COM-B '{commonToB.name}': activeInHierarchy={commonToB.gameObject.activeInHierarchy}, componentEnabled={commonToB.enabled}, ElectricalEnabled={commonToB.ElectricalEnabled}.", this);
                 return false;
             }
             return true;

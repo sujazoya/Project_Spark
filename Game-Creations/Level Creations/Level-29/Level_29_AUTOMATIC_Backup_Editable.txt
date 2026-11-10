@@ -1,0 +1,185 @@
+PROJECT_SPARK_EDITABLE_SO_TXT_V1
+# Readable/editable Unity serialized data. Modify values in the JSON section.
+# Keep field names, object-reference structures, and section markers unchanged.
+# The import requires selecting the ORIGINAL asset in Unity.
+Asset Name: Level_29
+Asset Type: ProjectSpark.Gameplay.SparkLevelDefinition, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+Asset Path: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_29_Layout/Level_29.asset
+Asset GUID: 2e4bc1d5117b4e744ab6e32d6970c3a9
+Export Date: 2026-11-11 00:20:08
+----- BEGIN UNITY EDITOR JSON -----
+{
+  "MonoBehaviour": {
+    "m_Enabled": true,
+    "m_EditorHideFlags": 0,
+    "m_Name": "Level_29",
+    "m_EditorClassIdentifier": "Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition",
+    "levelId": "level_29",
+    "displayName": "Automatic Emergency Backup - No Manual Transfer",
+    "description": "Build a three-diode automatic capacitor backup. Verify charging, isolate the mains with the main switch, sustain LED backup for 2 accepted simulated seconds, then restore power and recharge. SparkLevel29AutomaticBackup validates the sequence and publishes six runtime LED gate aliases. No SPDT is used. Without the observer the level cannot complete.",
+    "completionMode": 0,
+    "requiredTargetCount": 6,
+    "requireClosedReturn": true,
+    "rejectShortCircuit": true,
+    "rejectTargetShort": true,
+    "allowIntermediateConnections": true,
+    "requireMinimumVoltage": true,
+    "minimumVoltage": 4.8,
+    "allowAnyConfiguredPowerSource": true,
+    "powerSources": [
+      {
+        "sourceName": "PowerSupply_01",
+        "positiveTerminalId": "Battery_positive",
+        "negativeTerminalId": "Battery_negative",
+        "nominalVoltage": 5.0
+      }
+    ],
+    "targets": [
+      {
+        "targetId": "level29_auto_0",
+        "displayName": "Correct automatic-backup circuit",
+        "description": "Required nets, values and healthy parts verified by the level observer.",
+        "targetType": 3,
+        "targetTerminalId": "",
+        "requiredPositiveTerminalId": "",
+        "requiredNegativeTerminalId": "",
+        "targetComponentId": "L29_Wiring",
+        "minimumVoltage": 0,
+        "minimumCurrent": 0.002,
+        "minimumPower": 0,
+        "requireElectricalEnabled": true,
+        "requireConduction": true,
+        "inverted": false,
+        "useMaximumVoltage": false,
+        "maximumVoltage": 0,
+        "useMaximumCurrent": false,
+        "maximumCurrent": 0,
+        "useMaximumPower": false,
+        "maximumPower": 0
+      },
+      {
+        "targetId": "level29_auto_1",
+        "displayName": "Storage charged with observed rise",
+        "description": "Capacitor rises at least 0.30 V and reaches 4.10 V.",
+        "targetType": 3,
+        "targetTerminalId": "",
+        "requiredPositiveTerminalId": "",
+        "requiredNegativeTerminalId": "",
+        "targetComponentId": "L29_Charged",
+        "minimumVoltage": 0,
+        "minimumCurrent": 0.002,
+        "minimumPower": 0,
+        "requireElectricalEnabled": true,
+        "requireConduction": true,
+        "inverted": false,
+        "useMaximumVoltage": false,
+        "maximumVoltage": 0,
+        "useMaximumCurrent": false,
+        "maximumCurrent": 0,
+        "useMaximumPower": false,
+        "maximumPower": 0
+      },
+      {
+        "targetId": "level29_auto_2",
+        "displayName": "Automatic isolated transfer",
+        "description": "MAIN is open; backup diode powers LED while main/charge/source current stays below 0.10 mA.",
+        "targetType": 3,
+        "targetTerminalId": "",
+        "requiredPositiveTerminalId": "",
+        "requiredNegativeTerminalId": "",
+        "targetComponentId": "L29_Isolated",
+        "minimumVoltage": 0,
+        "minimumCurrent": 0.002,
+        "minimumPower": 0,
+        "requireElectricalEnabled": true,
+        "requireConduction": true,
+        "inverted": false,
+        "useMaximumVoltage": false,
+        "maximumVoltage": 0,
+        "useMaximumCurrent": false,
+        "maximumCurrent": 0,
+        "useMaximumPower": false,
+        "maximumPower": 0
+      },
+      {
+        "targetId": "level29_auto_3",
+        "displayName": "Sustained backup power",
+        "description": "LED current at least 2 mA for 2 accepted simulated seconds, capacitor drops at least 0.20 V.",
+        "targetType": 3,
+        "targetTerminalId": "",
+        "requiredPositiveTerminalId": "",
+        "requiredNegativeTerminalId": "",
+        "targetComponentId": "L29_Backup",
+        "minimumVoltage": 0,
+        "minimumCurrent": 0.002,
+        "minimumPower": 0,
+        "requireElectricalEnabled": true,
+        "requireConduction": true,
+        "inverted": false,
+        "useMaximumVoltage": false,
+        "maximumVoltage": 0,
+        "useMaximumCurrent": false,
+        "maximumCurrent": 0,
+        "useMaximumPower": false,
+        "maximumPower": 0
+      },
+      {
+        "targetId": "level29_auto_4",
+        "displayName": "Main power restored and charging",
+        "description": "MAIN restored, load powered by main diode and positive charging current observed.",
+        "targetType": 3,
+        "targetTerminalId": "",
+        "requiredPositiveTerminalId": "",
+        "requiredNegativeTerminalId": "",
+        "targetComponentId": "L29_Restored",
+        "minimumVoltage": 0,
+        "minimumCurrent": 0.002,
+        "minimumPower": 0,
+        "requireElectricalEnabled": true,
+        "requireConduction": true,
+        "inverted": false,
+        "useMaximumVoltage": false,
+        "maximumVoltage": 0,
+        "useMaximumCurrent": false,
+        "maximumCurrent": 0,
+        "useMaximumPower": false,
+        "maximumPower": 0
+      },
+      {
+        "targetId": "level29_auto_5",
+        "displayName": "Recovered normal operation",
+        "description": "Capacitor rises at least 0.15 V after restoration, reaches 4.10 V and remains normal for 0.5 simulated seconds.",
+        "targetType": 3,
+        "targetTerminalId": "",
+        "requiredPositiveTerminalId": "",
+        "requiredNegativeTerminalId": "",
+        "targetComponentId": "L29_Recharged",
+        "minimumVoltage": 0,
+        "minimumCurrent": 0.002,
+        "minimumPower": 0,
+        "requireElectricalEnabled": true,
+        "requireConduction": true,
+        "inverted": false,
+        "useMaximumVoltage": false,
+        "maximumVoltage": 0,
+        "useMaximumCurrent": false,
+        "maximumCurrent": 0,
+        "useMaximumPower": false,
+        "maximumPower": 0
+      }
+    ],
+    "failureMode": 0,
+    "requiredHealthyResistorIds": [
+      "R_CHARGE_Component",
+      "R_LED_Component"
+    ],
+    "requireHealthyInstalledResistors": true,
+    "successOutputIds": [],
+    "failureOutputIds": [],
+    "unlockNextLevelOnCompletion": true,
+    "unlockedByDefault": false,
+    "autoUnlockNextLevel": true,
+    "autoAdvanceOnCompletion": false
+  }
+}
+----- END UNITY EDITOR JSON -----

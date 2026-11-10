@@ -1,0 +1,172 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_28
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_28
+  displayName: Emergency Power Backup - SPDT Capacitor Challenge
+  description: 'Build a 5 V emergency backup circuit: 1N5819 Schottky diode, 220
+    ohm charge resistor, 4700 uF storage capacitor, 330 ohm LED resistor, 1 kohm
+    bleed resistor, and a three-terminal SPDT charge/backup selector. Charge in A-COM
+    mode, switch source OFF, then select COM-B to power the LED from stored energy.
+    Static targets sample BACKUP state only; phase sequence and discharge duration
+    require a Level 28 local transient/phase driver.'
+  completionMode: 0
+  requiredTargetCount: 6
+  requireClosedReturn: 1
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 1
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: PowerSupply_01
+    positiveTerminalId: Battery_positive
+    negativeTerminalId: Battery_negative
+    nominalVoltage: 5
+  targets:
+  - targetId: level28_supply
+    displayName: 5 V Supply Available
+    description: Verify fixed 5 V supply. A voltage reading alone does not prove
+      the source switch is OFF.
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: Battery_positive
+    requiredNegativeTerminalId: Battery_negative
+    targetComponentId: PowerSupply_01
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level28_cap_backup_voltage
+    displayName: Stored Backup Voltage
+    description: 'BACKUP snapshot: storage capacitor is energized. Requires level-local
+      transient support to retain charge with main switch OFF.'
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: C_BACKUP_Positive
+    requiredNegativeTerminalId: C_BACKUP_Negative
+    targetComponentId: C_BACKUP_Component
+    minimumVoltage: 2.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 4.9
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level28_backup_led_on
+    displayName: Backup LED Illuminated
+    description: 'BACKUP snapshot: green LED illuminates from the isolated stored
+      energy.'
+    targetType: 3
+    targetTerminalId: 
+    requiredPositiveTerminalId: LED_Anode
+    requiredNegativeTerminalId: LED_Cathode
+    targetComponentId: led
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level28_led_branch_current
+    displayName: Safe Backup LED Current
+    description: 'BACKUP snapshot: 2-12 mA flowing through the 330 ohm LED limiting
+      resistor.'
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_LED_Input
+    requiredNegativeTerminalId: R_LED_Output
+    targetComponentId: R_LED_Component
+    minimumVoltage: 0
+    minimumCurrent: 0.002
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.012
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level28_bleed_branch_current
+    displayName: 1 kOhm Discharge Load Active
+    description: 'BACKUP snapshot: 2.8-4.9 mA in the 1 kohm bleed resistor at 2.8-4.9
+      V.'
+    targetType: 6
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_BLEED_Input
+    requiredNegativeTerminalId: R_BLEED_Output
+    targetComponentId: R_BLEED_Component
+    minimumVoltage: 0
+    minimumCurrent: 0.0028
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 1
+    maximumCurrent: 0.0049
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level28_led_resistor_drop
+    displayName: LED Resistor Voltage
+    description: 'BACKUP snapshot: voltage across the 330 ohm LED resistor indicates
+      the LED branch is active.'
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: R_LED_Input
+    requiredNegativeTerminalId: R_LED_Output
+    targetComponentId: R_LED_Component
+    minimumVoltage: 0.6
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 3.8
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 1
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 0
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

@@ -224,6 +224,13 @@ private List<Rule> BuildRules(
                 continue;
             }
 
+            // The dedicated SPDT binder owns two devices and three terminals.
+            if (slot.GetComponent<SparkSpdtSlotBinding>() != null)
+            {
+                smartIds.Add(slot.SlotId); // Suppress legacy rules too.
+                continue;
+            }
+
             // Determine the physical terminal naming
             // convention for each component category.
             //

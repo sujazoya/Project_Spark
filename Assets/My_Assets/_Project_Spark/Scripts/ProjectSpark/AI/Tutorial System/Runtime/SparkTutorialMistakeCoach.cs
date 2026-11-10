@@ -39,6 +39,7 @@ namespace ProjectSpark.AI.Tutorial
         [SerializeField] private bool replayGhostAfterRepeatedMistakes = true;
         [SerializeField, Range(2, 6)] private int replayAfterCount = 3;
         [SerializeField, Min(0f)] private float minSecondsBetweenMessages = 1f;
+        [SerializeField, Min(1f)] private float repeatSameCorrectionAfterSeconds = 10f;
         [SerializeField, Min(1f)] private float showSeconds = 6f;
         [SerializeField] private bool logMistakes = true;
 
@@ -58,6 +59,7 @@ namespace ProjectSpark.AI.Tutorial
         [SerializeField] private Vector2 panelBottomRightOffset = new Vector2(-24f, 24f);
 
         private readonly Dictionary<string, int> counts = new Dictionary<string, int>();
+        private readonly Dictionary<string, float> lastPresented = new Dictionary<string, float>();
         private Canvas canvas;
         private CanvasGroup group;
         private Text title;
@@ -190,6 +192,7 @@ namespace ProjectSpark.AI.Tutorial
         {
             stepId = newStepId;
             counts.Clear();
+            lastPresented.Clear();
             if (clearOnStepChange)
                 Hide();
             if (resetCooldownOnStepChange)
@@ -233,6 +236,13 @@ namespace ProjectSpark.AI.Tutorial
             }
 
             string key = currentId + ":" + mistake;
+            string repeatedKey = key + ":" + (detail ?? "");
+            float now = Time.unscaledTime;
+            if (lastPresented.TryGetValue(repeatedKey, out float previous) &&
+                now - previous < repeatSameCorrectionAfterSeconds)
+                return;
+            // Count actual presented corrections, not duplicate/cooldown callbacks.
+            if (now - lastMessageTime < minSecondsBetweenMessages) return;
             counts.TryGetValue(key, out int count);
             count++;
             counts[key] = count;
@@ -248,6 +258,7 @@ namespace ProjectSpark.AI.Tutorial
             }
 
             lastMessageTime = Time.unscaledTime;
+            lastPresented[repeatedKey] = lastMessageTime;
             string correction = CorrectionFor(mistake, count);
             Show(correction, count);
 
@@ -353,9 +364,10 @@ namespace ProjectSpark.AI.Tutorial
             if (canvas == null || title == null || message == null)
                 return;
 
-            title.text = count >= replayAfterCount
+            bool exampleAvailable = IsTutorialRunning() && replayGhostAfterRepeatedMistakes && ghost != null;
+            title.text = exampleAvailable && count >= replayAfterCount
                 ? "SPARK AI  /  WATCH THE EXAMPLE"
-                : "SPARK AI  /  TRY THIS";
+                : "SPARK AI  /  CHECK THIS";
             message.text = correction;
             canvas.gameObject.SetActive(true);
             group.alpha = 1f;
@@ -412,9 +424,16 @@ namespace ProjectSpark.AI.Tutorial
             title = AddStretchText("Title", panel.transform,
                 new Vector2(20f, -42f), new Vector2(-20f, -10f),
                 22, FontStyle.Bold, accentColor);
+            // A fixed top row; stretching from the panel bottom overlapped the message.
+            RectTransform titleRect = title.rectTransform;
+            titleRect.anchorMin = new Vector2(0f, 1f);
+            titleRect.anchorMax = new Vector2(1f, 1f);
+            titleRect.offsetMin = new Vector2(20f, -42f);
+            titleRect.offsetMax = new Vector2(-20f, -10f);
             message = AddStretchText("Message", panel.transform,
-                new Vector2(20f, 14f), new Vector2(-20f, -46f),
+                new Vector2(20f, 14f), new Vector2(-20f, -54f),
                 20, FontStyle.Normal, Color.white);
+            message.alignment = TextAnchor.UpperLeft;
 
             root.SetActive(false);
         }

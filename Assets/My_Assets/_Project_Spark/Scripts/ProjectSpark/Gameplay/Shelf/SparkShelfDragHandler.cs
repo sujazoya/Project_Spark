@@ -57,6 +57,13 @@ namespace ProjectSpark.Gameplay
         {
             ResolveReferences();
 
+            if (!SparkSelectedObjectActions.SelectToolEnabled ||
+                (pressedItem != null && !SparkSelectedObjectActions.CanAct(pressedItem)))
+            {
+                CancelDrag();
+                return;
+            }
+
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 CancelDrag();
@@ -123,6 +130,12 @@ namespace ProjectSpark.Gameplay
             if (pressedItem == null)
                 return;
 
+            if (!SparkSelectedObjectActions.CanAct(pressedItem))
+            {
+                pressedItem = null;
+                return;
+            }
+
             if (!pressedItem.AllowTouch ||
                 pressedItem.IsMoving)
             {
@@ -169,6 +182,11 @@ namespace ProjectSpark.Gameplay
 
         private void EndPress()
         {
+            if (!SparkSelectedObjectActions.CanAct(pressedItem) || IsPointerOverUI())
+            {
+                Cleanup();
+                return;
+            }
             if (pressedItem == null)
             {
                 Cleanup();

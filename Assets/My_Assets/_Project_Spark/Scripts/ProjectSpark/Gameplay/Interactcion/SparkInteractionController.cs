@@ -127,10 +127,18 @@ namespace ProjectSpark.Gameplay
             }
 
             // Unity UI owns pointer interactions.
+            if (!SparkSelectedObjectActions.SelectToolEnabled)
+            {
+                shelfDragHandler?.CancelDrag();
+                removePrompt?.ClearSelection();
+                manualPlacement?.CancelSelection();
+            }
+
             // This prevents clicking the recycle button
             // from also interacting with objects behind it.
             if (IsPointerOverUI())
             {
+                shelfDragHandler?.CancelDrag();
                 ClearTarget();
                 return;
             }
@@ -146,7 +154,7 @@ if (Input.GetKeyDown(interactKey))
 {
     // Select the recycle target BEFORE the drag handler
     // gets a chance to consume the mouse click.
-    if (currentShelfItem != null)
+    if (currentShelfItem != null && SparkSelectedObjectActions.TrySelectItem(currentShelfItem))
     {
         if (removePrompt == null)
             ResolveReferences();
@@ -359,6 +367,19 @@ if (Input.GetKeyDown(interactKey))
                 if (collider == null)
                     continue;
 
+                // A fixed SPDT sits below a slot target. A hit on its own
+                // collider operates the switch rather than selecting that slot.
+                SparkInteractable spdtTarget = FindInteractable(collider);
+                if (spdtTarget != null)
+                {
+                    var spdt = spdtTarget.GetComponentInChildren<SparkSpdtInteraction>(true);
+                    if (spdt != null && spdt.isActiveAndEnabled)
+                    {
+                        interactable = spdtTarget;
+                        return;
+                    }
+                }
+
                 SparkShelfSlotClickTarget slot =
                     collider.GetComponentInParent<
                         SparkShelfSlotClickTarget>();
@@ -429,6 +450,18 @@ if (Input.GetKeyDown(interactKey))
             {
                 SparkShelfItem item = currentShelfItem;
 
+                if (!SparkSelectedObjectActions.SelectToolEnabled)
+                {
+                    // Operating a placed switch is separate from moving/recycling it.
+                    if (item.IsAtWorkbench && currentTarget != null && currentTarget.CanInteract())
+                    {
+                        var spdt = currentTarget.GetComponentInChildren<SparkSpdtInteraction>(true);
+                        if (spdt != null && spdt.isActiveAndEnabled) currentTarget.Interact();
+                    }
+                    return;
+                }
+                if (!SparkSelectedObjectActions.TrySelectItem(item)) return;
+
                 // Exactly one recycle selection call.
                /* if (removePrompt == null)
                     ResolveReferences();
@@ -454,6 +487,12 @@ if (Input.GetKeyDown(interactKey))
                 // placement or movement.
                 if (item.IsAtWorkbench)
                 {
+                    if (currentTarget != null && currentTarget.CanInteract())
+                    {
+                        var spdt = currentTarget.GetComponentInChildren<SparkSpdtInteraction>(true);
+                        if (spdt != null && spdt.isActiveAndEnabled)
+                            currentTarget.Interact();
+                    }
                     RememberForSparkAI(item.gameObject);
                     return;
                 }
@@ -486,13 +525,15 @@ if (Input.GetKeyDown(interactKey))
 
             SparkInteractable target = currentTarget;
 
+            bool shelfInteractionHandled = false;
             if (target != null && target.CanInteract())
             {
+                shelfInteractionHandled = target.Type == SparkInteractable.InteractionType.ShelfItem;
                 target.Interact();
             }
 
             // Preserve manual selection fallback.
-            if (manualPlacement != null &&
+            if (!shelfInteractionHandled && manualPlacement != null &&
                 manualPlacement.SelectedItem != item &&
                 item.isActiveAndEnabled &&
                 !item.IsAtWorkbench)
@@ -574,6 +615,7 @@ if (Input.GetKeyDown(interactKey))
         private void TryPlaceAtSlot(
             SparkShelfSlotClickTarget clickTarget)
         {
+            if (!SparkSelectedObjectActions.SelectToolEnabled) return;
             if (clickTarget == null)
                 return;
 
@@ -612,6 +654,8 @@ if (Input.GetKeyDown(interactKey))
 
             SparkShelfItem selected =
                 manualPlacement.SelectedItem;
+
+            if (!SparkSelectedObjectActions.CanAct(selected)) return;
 
             bool success =
                 manualPlacement.TryPlaceAt(slot);

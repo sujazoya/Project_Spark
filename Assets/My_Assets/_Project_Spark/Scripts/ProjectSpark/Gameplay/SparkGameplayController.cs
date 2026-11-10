@@ -333,6 +333,22 @@ private void Update()
                 return;
             }
 
+            // Selection owns its own selectable-layer raycast. It must not
+            // require a SparkElectronicObject hit from the electrical pipeline.
+            if (tool.ToolType == SparkToolType.Select)
+            {
+                var selection = tool.GetComponentInParent<SparkSelectionController>();
+                if (selection == null) selection = FindFirstObjectByType<SparkSelectionController>();
+                if (selection == null || !selection.isActiveAndEnabled)
+                {
+                    Publish(SparkResult.Unavailable("SparkSelectionController is missing or disabled."));
+                    return;
+                }
+                bool selected = selection.TrySelect(ReadPointerPosition(), out string selectionReason);
+                Publish(selected ? SparkResult.Success("Object selected.") : SparkResult.Rejected(selectionReason));
+                return;
+            }
+
             if (!CurrentTarget.HasValue)
             {
                 Publish(

@@ -10,6 +10,7 @@ namespace ProjectSpark.Gameplay
     public sealed class SparkSpdtInteraction : MonoBehaviour
     {
         [SerializeField] private SparkSpdtSwitchController controller;
+        private int lastActivationFrame = -1;
 
         private void Awake()
         {
@@ -19,8 +20,13 @@ namespace ProjectSpark.Gameplay
 
         public void Activate()
         {
-            if (controller != null)
+            if (!isActiveAndEnabled || lastActivationFrame == Time.frameCount) return;
+            if (controller == null) controller = GetComponentInParent<SparkSpdtSwitchController>();
+            if (controller != null && controller.isActiveAndEnabled)
+            {
+                lastActivationFrame = Time.frameCount;
                 controller.Toggle();
+            }
         }
 
         public void SelectCharge()

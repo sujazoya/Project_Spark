@@ -156,6 +156,16 @@ namespace ProjectSpark.Gameplay
         {
             map.Clear();
 
+            // The scene's Rotate registry slot was empty because the old
+            // rotation component was not derived from SparkTool.
+            tools ??= new List<SparkTool>();
+            if (!tools.Exists(t => t != null && t is SparkRotateTool))
+            {
+                var rotate = GetComponentInChildren<SparkRotateTool>(true);
+                if (rotate == null) rotate = FindFirstObjectByType<SparkRotateTool>();
+                if (rotate != null) tools.Add(rotate);
+            }
+
             for (int i = 0; i < tools.Count; i++)
             {
                 SparkTool tool =
@@ -167,7 +177,7 @@ namespace ProjectSpark.Gameplay
                 }
 
                 SparkToolType type =
-                    tool.ToolType;
+                    tool is SparkRotateTool ? SparkToolType.Rotate : tool.ToolType;
 
                 if (map.ContainsKey(type))
                 {

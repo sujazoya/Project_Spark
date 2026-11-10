@@ -147,6 +147,12 @@ namespace ProjectSpark.Gameplay
         {
             reason = null;
 
+            if (!SparkSelectedObjectActions.CanAct(item))
+            {
+                reason = "Enable Select and select this component before throwing/recycling it.";
+                return false;
+            }
+
             if (!allowThrowing)
             {
                 reason = "Recycling is disabled.";

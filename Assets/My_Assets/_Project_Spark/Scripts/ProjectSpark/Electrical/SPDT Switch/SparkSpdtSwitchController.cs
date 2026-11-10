@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -32,7 +33,7 @@ namespace ProjectSpark.Gameplay
         [SerializeField] private bool initializeRouterOnStart = true;
 
         [Header("Interaction")]
-        [SerializeField] private bool allowMouseClick = true;
+        [SerializeField, HideInInspector] private bool allowMouseClick = false;
         [SerializeField] private bool logChanges = false;
         [SerializeField] private UnityEvent onChargeSelected;
         [SerializeField] private UnityEvent onBackupSelected;
@@ -66,8 +67,6 @@ namespace ProjectSpark.Gameplay
 
         private void Start()
         {
-            if (initializeRouterOnStart)
-                ApplyElectricalState();
             if (router == null)
                 Debug.LogWarning("[SPDT] No electrical router assigned. Toggle animates but DOES NOT switch the circuit.", this);
         }
@@ -81,11 +80,22 @@ namespace ProjectSpark.Gameplay
                 leverSpeedDegreesPerSecond * Time.deltaTime);
         }
 
-        private void OnMouseDown()
+        private void OnEnable()
         {
-            // Requires a Collider on this GameObject, and the project must permit OnMouseDown.
-            if (allowMouseClick) Toggle();
+            if (!initialized) return;
+            SnapLeverToState();
+            if (initializeRouterOnStart) StartCoroutine(RestoreAfterActivation());
         }
+
+        private IEnumerator RestoreAfterActivation()
+        {
+            // A parent's OnEnable can run before its children finish activation.
+            // Wait until all Awake/OnEnable/Start callbacks in this activation finish.
+            yield return null;
+            if (isActiveAndEnabled) ApplyElectricalState();
+        }
+
+        private void OnDisable() { StopAllCoroutines(); }
 
         [ContextMenu("Toggle SPDT")]
         public void Toggle() => SetPosition(IsCharge ? Position.BackupB : Position.ChargeA);
@@ -95,7 +105,14 @@ namespace ProjectSpark.Gameplay
 
         public void SetPosition(Position position)
         {
-            if (currentPosition == position) return;
+            if (position != Position.ChargeA && position != Position.BackupB) return;
+            var dual = circuitRouter as SparkSpdtDualSwitchRouter;
+            if (dual == null || !dual.IsReady)
+            {
+                Debug.LogError("[SPDT] Router is not ready; position was not changed.", this);
+                return;
+            }
+            if (currentPosition == position) { ApplyElectricalState(); return; }
             currentPosition = position;
             ApplyElectricalState();
             PositionChanged?.Invoke(position);
