@@ -1,0 +1,260 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_30_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_30
+  levelTitle: "Elevate the Lamp — Motor Control and Limit Switches"
+  initialPage: 0
+  pages:
+  - title: "01 / What the lift must do"
+    explanation: "The UP/OFF/DOWN selector controls two feed-and-return pairs. UP makes Motor A positive relative to B. DOWN reverses that polarity. Each limit opens only its own direction, so the lift can leave either end. The top contact switches the lamp on its own branch."
+    caption: "UP RAISES • TOP STOPS AND LIGHTS • DOWN LOWERS"
+    parts:
+    - id: bottom
+      kind: 9
+      position: {x: 0.17, y: 0.73}
+      label: "BOTTOM"
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - id: top
+      kind: 9
+      position: {x: 0.5, y: 0.73}
+      label: "TOP / LAMP ON"
+      color: {r: 0.36, g: 0.91, b: 0.54, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.83, y: 0.73}
+      label: "BOTTOM AGAIN"
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - id: down_blocked
+      kind: 9
+      position: {x: 0.17, y: 0.28}
+      label: "DOWN BLOCKED"
+      color: {r: 0.51, g: 0.62, b: 0.72, a: 1}
+    - id: up_blocked
+      kind: 9
+      position: {x: 0.5, y: 0.28}
+      label: "UP BLOCKED"
+      color: {r: 0.51, g: 0.62, b: 0.72, a: 1}
+    - id: lamp_off
+      kind: 9
+      position: {x: 0.83, y: 0.28}
+      label: "LAMP OFF"
+      color: {r: 0.51, g: 0.62, b: 0.72, a: 1}
+    wires:
+    - points:
+      - {x: 0.19, y: 0.73}
+      - {x: 0.47, y: 0.73}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - points:
+      - {x: 0.445, y: 0.762}
+      - {x: 0.47, y: 0.73}
+      - {x: 0.445, y: 0.698}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - points:
+      - {x: 0.53, y: 0.73}
+      - {x: 0.8, y: 0.73}
+      energized: 0
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - points:
+      - {x: 0.775, y: 0.762}
+      - {x: 0.8, y: 0.73}
+      - {x: 0.775, y: 0.698}
+      energized: 0
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - points:
+      - {x: 0.17, y: 0.6}
+      - {x: 0.17, y: 0.32}
+      energized: 0
+      color: {r: 0.51, g: 0.62, b: 0.72, a: 1}
+    - points:
+      - {x: 0.5, y: 0.6}
+      - {x: 0.5, y: 0.32}
+      energized: 0
+      color: {r: 0.51, g: 0.62, b: 0.72, a: 1}
+    - points:
+      - {x: 0.83, y: 0.6}
+      - {x: 0.83, y: 0.32}
+      energized: 0
+      color: {r: 0.51, g: 0.62, b: 0.72, a: 1}
+  - title: "02 / Wire the UP path"
+    explanation: "W01 Battery_positive → UP_Feed_IN. W07 UP_Feed_OUT → Upper_Limit_IN. W09 Upper_Limit_OUT → Motor_A. W12 Motor_B → UP_Return_IN. W04 Battery_negative → UP_Return_OUT. Both UP contacts close in UP. The upper limit opens when the carriage reaches the top."
+    caption: "A POSITIVE TO B • UPPER LIMIT STOPS UP"
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.08, y: 0.62}
+      label: "BATTERY +"
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: feed
+      kind: 5
+      position: {x: 0.23, y: 0.62}
+      label: "UP FEED"
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - id: limit
+      kind: 5
+      position: {x: 0.4, y: 0.62}
+      label: "UPPER LIMIT"
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - id: motor
+      kind: 7
+      position: {x: 0.56, y: 0.62}
+      label: "MOTOR A → B"
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - id: return
+      kind: 5
+      position: {x: 0.73, y: 0.62}
+      label: "UP RETURN"
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - id: negative
+      kind: 9
+      position: {x: 0.92, y: 0.62}
+      label: "BATTERY −"
+      color: {r: 0.27, g: 0.68, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.08, y: 0.62}
+      - {x: 0.185, y: 0.62}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.275, y: 0.62}
+      - {x: 0.355, y: 0.62}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - points:
+      - {x: 0.445, y: 0.62}
+      - {x: 0.527, y: 0.62}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - points:
+      - {x: 0.593, y: 0.62}
+      - {x: 0.685, y: 0.62}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - points:
+      - {x: 0.775, y: 0.62}
+      - {x: 0.92, y: 0.62}
+      energized: 0
+      color: {r: 0.27, g: 0.68, b: 1, a: 1}
+  - title: "03 / Wire the DOWN path"
+    explanation: "W02 Battery_positive → DOWN_Feed_IN. W08 DOWN_Feed_OUT → Lower_Limit_IN. W11 Lower_Limit_OUT → Motor_B. W10 Motor_A → DOWN_Return_IN. W05 Battery_negative → DOWN_Return_OUT. Both DOWN contacts close in DOWN. The lower limit is open at the bottom."
+    caption: "B POSITIVE TO A • LOWER LIMIT STOPS DOWN"
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.08, y: 0.62}
+      label: "BATTERY +"
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: feed
+      kind: 5
+      position: {x: 0.23, y: 0.62}
+      label: "DOWN FEED"
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - id: limit
+      kind: 5
+      position: {x: 0.4, y: 0.62}
+      label: "LOWER LIMIT"
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - id: motor
+      kind: 7
+      position: {x: 0.56, y: 0.62}
+      label: "MOTOR B → A"
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - id: return
+      kind: 5
+      position: {x: 0.73, y: 0.62}
+      label: "DOWN RETURN"
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - id: negative
+      kind: 9
+      position: {x: 0.92, y: 0.62}
+      label: "BATTERY −"
+      color: {r: 0.27, g: 0.68, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.08, y: 0.62}
+      - {x: 0.185, y: 0.62}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.275, y: 0.62}
+      - {x: 0.355, y: 0.62}
+      energized: 0
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - points:
+      - {x: 0.445, y: 0.62}
+      - {x: 0.527, y: 0.62}
+      energized: 0
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - points:
+      - {x: 0.593, y: 0.62}
+      - {x: 0.685, y: 0.62}
+      energized: 0
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - points:
+      - {x: 0.775, y: 0.62}
+      - {x: 0.92, y: 0.62}
+      energized: 0
+      color: {r: 0.27, g: 0.68, b: 1, a: 1}
+  - title: "04 / Top lamp and the five checks"
+    explanation: "W03 Battery_positive → Top_Lamp_IN. W13 Top_Lamp_OUT → R_LED_IN. W14 R_LED_OUT → Lamp_A. W06 Battery_negative → Lamp_K.\nTest 1/5: DOWN at bottom is blocked. 2/5: UP raises. 3/5: UP stops at the top and the lamp lights. 4/5: DOWN lowers and the lamp goes out. 5/5: DOWN stops at the bottom."
+    caption: "TOP CONTACT → 330 Ω → LAMP A • LAMP K → RETURN"
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.09, y: 0.62}
+      label: "BATTERY +"
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: top_contact
+      kind: 5
+      position: {x: 0.29, y: 0.62}
+      label: "TOP CONTACT"
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - id: r_led
+      kind: 1
+      position: {x: 0.51, y: 0.62}
+      label: "330 Ω"
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - id: lamp
+      kind: 2
+      position: {x: 0.72, y: 0.62}
+      label: "LAMP A → K"
+      color: {r: 0.36, g: 0.91, b: 0.54, a: 1}
+    - id: negative
+      kind: 9
+      position: {x: 0.91, y: 0.62}
+      label: "BATTERY −"
+      color: {r: 0.27, g: 0.68, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.09, y: 0.62}
+      - {x: 0.245, y: 0.62}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.335, y: 0.62}
+      - {x: 0.465, y: 0.62}
+      energized: 0
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - points:
+      - {x: 0.555, y: 0.62}
+      - {x: 0.675, y: 0.62}
+      energized: 0
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - points:
+      - {x: 0.765, y: 0.62}
+      - {x: 0.91, y: 0.62}
+      energized: 0
+      color: {r: 0.27, g: 0.68, b: 1, a: 1}

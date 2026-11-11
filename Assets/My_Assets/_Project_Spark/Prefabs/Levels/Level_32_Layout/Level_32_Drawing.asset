@@ -1,0 +1,308 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_32_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_32
+  levelTitle: Optical Quality Sorter
+  initialPage: 0
+  pages:
+  - title: 01 / Sensor and motor branches
+    explanation: "MAIN powers the conveyor motor and the light-sensing branch. The
+      sensor branch puts the LDR above the 10 k\u03A9 resistor. The SENSE reading
+      is taken at the junction between them, relative to supply negative."
+    caption: "5 V SUPPLY \u2022 MAIN \u2022 TWO PARALLEL BRANCHES"
+    parts:
+    - id: source
+      kind: 0
+      position: {x: 0.1, y: 0.49}
+      label: 5 V
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - id: main
+      kind: 5
+      position: {x: 0.32, y: 0.75}
+      label: MAIN
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - id: ldr
+      kind: 1
+      position: {x: 0.57, y: 0.75}
+      label: LDR
+      color: {r: 0.2, g: 0.9, b: 0.78, a: 1}
+    - id: divider
+      kind: 1
+      position: {x: 0.82, y: 0.75}
+      label: "10 k\u03A9"
+      color: {r: 0.98, g: 0.72, b: 0.32, a: 1}
+    - id: motor
+      kind: 9
+      position: {x: 0.63, y: 0.43}
+      label: MOTOR
+      color: {r: 0.98, g: 0.72, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.72, y: 0.18}
+      label: GND
+      color: {r: 0.23, g: 0.66, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.62}
+      - {x: 0.1, y: 0.75}
+      - {x: 0.275, y: 0.75}
+      energized: 0
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.365, y: 0.75}
+      - {x: 0.525, y: 0.75}
+      energized: 0
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.615, y: 0.75}
+      - {x: 0.775, y: 0.75}
+      energized: 0
+      color: {r: 0.2, g: 0.9, b: 0.78, a: 1}
+    - points:
+      - {x: 0.865, y: 0.75}
+      - {x: 0.92, y: 0.75}
+      - {x: 0.92, y: 0.18}
+      - {x: 0.1, y: 0.18}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.23, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.75}
+      - {x: 0.43, y: 0.43}
+      - {x: 0.585, y: 0.43}
+      energized: 0
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.675, y: 0.43}
+      - {x: 0.92, y: 0.43}
+      energized: 0
+      color: {r: 0.23, g: 0.66, b: 1, a: 1}
+  - title: 02 / Six bench connections
+    explanation: "W01 Battery_positive \u2192 MAIN_IN. W02 MAIN_OUT \u2192 LDR_A.
+      W03 LDR_B \u2192 R_DIV_IN. W04 R_DIV_OUT \u2192 Battery_negative. W05 MAIN_OUT
+      \u2192 Motor_A. W06 Motor_B \u2192 Battery_negative."
+    caption: USE THE TERMINAL LABELS ON THE WORKBENCH
+    parts:
+    - id: source
+      kind: 0
+      position: {x: 0.1, y: 0.49}
+      label: 5 V
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - id: main
+      kind: 5
+      position: {x: 0.32, y: 0.75}
+      label: MAIN
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - id: ldr
+      kind: 1
+      position: {x: 0.57, y: 0.75}
+      label: LDR
+      color: {r: 0.2, g: 0.9, b: 0.78, a: 1}
+    - id: divider
+      kind: 1
+      position: {x: 0.82, y: 0.75}
+      label: "10 k\u03A9"
+      color: {r: 0.98, g: 0.72, b: 0.32, a: 1}
+    - id: motor
+      kind: 9
+      position: {x: 0.63, y: 0.43}
+      label: MOTOR
+      color: {r: 0.98, g: 0.72, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.72, y: 0.18}
+      label: GND
+      color: {r: 0.23, g: 0.66, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.62}
+      - {x: 0.1, y: 0.75}
+      - {x: 0.275, y: 0.75}
+      energized: 0
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.365, y: 0.75}
+      - {x: 0.525, y: 0.75}
+      energized: 0
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.615, y: 0.75}
+      - {x: 0.775, y: 0.75}
+      energized: 0
+      color: {r: 0.2, g: 0.9, b: 0.78, a: 1}
+    - points:
+      - {x: 0.865, y: 0.75}
+      - {x: 0.92, y: 0.75}
+      - {x: 0.92, y: 0.18}
+      - {x: 0.1, y: 0.18}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.23, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.75}
+      - {x: 0.43, y: 0.43}
+      - {x: 0.585, y: 0.43}
+      energized: 0
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.675, y: 0.43}
+      - {x: 0.92, y: 0.43}
+      energized: 0
+      color: {r: 0.23, g: 0.66, b: 1, a: 1}
+  - title: 03 / Calibrate the divider
+    explanation: Read each reference tile. More reflected light lowers LDR resistance
+      and raises SENSE. The sorter uses DARK at or below 1.5 V, BRIGHT at or above
+      3.5 V, and REVIEW between them.
+    caption: "DARK \u2248 0.83 V \u2022 BORDERLINE \u2248 2.50 V \u2022 BRIGHT \u2248
+      4.32 V"
+    parts:
+    - id: source
+      kind: 0
+      position: {x: 0.1, y: 0.49}
+      label: 5 V
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - id: main
+      kind: 5
+      position: {x: 0.32, y: 0.75}
+      label: MAIN
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - id: ldr
+      kind: 1
+      position: {x: 0.57, y: 0.75}
+      label: LDR
+      color: {r: 0.2, g: 0.9, b: 0.78, a: 1}
+    - id: divider
+      kind: 1
+      position: {x: 0.82, y: 0.75}
+      label: "10 k\u03A9"
+      color: {r: 0.98, g: 0.72, b: 0.32, a: 1}
+    - id: motor
+      kind: 9
+      position: {x: 0.63, y: 0.43}
+      label: MOTOR
+      color: {r: 0.98, g: 0.72, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.72, y: 0.18}
+      label: GND
+      color: {r: 0.23, g: 0.66, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.62}
+      - {x: 0.1, y: 0.75}
+      - {x: 0.275, y: 0.75}
+      energized: 0
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.365, y: 0.75}
+      - {x: 0.525, y: 0.75}
+      energized: 0
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.615, y: 0.75}
+      - {x: 0.775, y: 0.75}
+      energized: 0
+      color: {r: 0.2, g: 0.9, b: 0.78, a: 1}
+    - points:
+      - {x: 0.865, y: 0.75}
+      - {x: 0.92, y: 0.75}
+      - {x: 0.92, y: 0.18}
+      - {x: 0.1, y: 0.18}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.23, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.75}
+      - {x: 0.43, y: 0.43}
+      - {x: 0.585, y: 0.43}
+      energized: 0
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.675, y: 0.43}
+      - {x: 0.92, y: 0.43}
+      energized: 0
+      color: {r: 0.23, g: 0.66, b: 1, a: 1}
+  - title: 04 / Reject glare
+    explanation: The brief bright pulse lasts 0.12 s and cannot qualify. The sensor
+      must read the same band for 0.24 s before the gate locks a route. With no stable
+      result, the gate sends the part to REVIEW. Finish with all six mixed parts
+      in the correct bins.
+    caption: REQUIRE 0.24 S IN ONE BAND INSIDE THE INSPECTION WINDOW
+    parts:
+    - id: source
+      kind: 0
+      position: {x: 0.1, y: 0.49}
+      label: 5 V
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - id: main
+      kind: 5
+      position: {x: 0.32, y: 0.75}
+      label: MAIN
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - id: ldr
+      kind: 1
+      position: {x: 0.57, y: 0.75}
+      label: LDR
+      color: {r: 0.2, g: 0.9, b: 0.78, a: 1}
+    - id: divider
+      kind: 1
+      position: {x: 0.82, y: 0.75}
+      label: "10 k\u03A9"
+      color: {r: 0.98, g: 0.72, b: 0.32, a: 1}
+    - id: motor
+      kind: 9
+      position: {x: 0.63, y: 0.43}
+      label: MOTOR
+      color: {r: 0.98, g: 0.72, b: 0.32, a: 1}
+    - id: ground
+      kind: 6
+      position: {x: 0.72, y: 0.18}
+      label: GND
+      color: {r: 0.23, g: 0.66, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.62}
+      - {x: 0.1, y: 0.75}
+      - {x: 0.275, y: 0.75}
+      energized: 0
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.365, y: 0.75}
+      - {x: 0.525, y: 0.75}
+      energized: 0
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.615, y: 0.75}
+      - {x: 0.775, y: 0.75}
+      energized: 0
+      color: {r: 0.2, g: 0.9, b: 0.78, a: 1}
+    - points:
+      - {x: 0.865, y: 0.75}
+      - {x: 0.92, y: 0.75}
+      - {x: 0.92, y: 0.18}
+      - {x: 0.1, y: 0.18}
+      - {x: 0.1, y: 0.36}
+      energized: 0
+      color: {r: 0.23, g: 0.66, b: 1, a: 1}
+    - points:
+      - {x: 0.43, y: 0.75}
+      - {x: 0.43, y: 0.43}
+      - {x: 0.585, y: 0.43}
+      energized: 0
+      color: {r: 0.97, g: 0.29, b: 0.35, a: 1}
+    - points:
+      - {x: 0.675, y: 0.43}
+      - {x: 0.92, y: 0.43}
+      energized: 0
+      color: {r: 0.23, g: 0.66, b: 1, a: 1}

@@ -1,0 +1,266 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_31_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_31
+  levelTitle: "Loop Connection — START, STOP, and Safe Restart"
+  initialPage: 0
+  pages:
+  - title: "01 / MAIN supplies two branches"
+    explanation: "W01 Battery_positive → MAIN_IN. W02 MAIN_OUT → STOP_IN. W03 MAIN_OUT → RUN_IN. STOP is normally closed. The motor contact is normally open and follows the solved relay coil state. Turn MAIN on with both buttons released. The motor should stay stopped."
+    caption: "5 V → MAIN → STOP AND MOTOR CONTACT"
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.11, y: 0.63}
+      label: "BATTERY +"
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: main
+      kind: 5
+      position: {x: 0.31, y: 0.63}
+      label: "MAIN"
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: main_out
+      kind: 9
+      position: {x: 0.49, y: 0.63}
+      label: "MAIN OUT"
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: stop
+      kind: 5
+      position: {x: 0.74, y: 0.77}
+      label: "STOP (NC)"
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - id: run
+      kind: 5
+      position: {x: 0.74, y: 0.37}
+      label: "MOTOR CONTACT"
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    wires:
+    - points:
+      - {x: 0.11, y: 0.63}
+      - {x: 0.265, y: 0.63}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.355, y: 0.63}
+      - {x: 0.49, y: 0.63}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.49, y: 0.63}
+      - {x: 0.49, y: 0.77}
+      - {x: 0.695, y: 0.77}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - points:
+      - {x: 0.49, y: 0.63}
+      - {x: 0.49, y: 0.37}
+      - {x: 0.695, y: 0.37}
+      energized: 0
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+  - title: "02 / START and the holding loop"
+    explanation: "W04 STOP_OUT → START_IN. W05 STOP_OUT → Hold_COM. W06 START_OUT → Coil_plus. W07 START_OUT → Hold_NO. W08 Coil_minus → Battery_negative. Leave Hold_NC_spare empty. START picks up the coil. HOLD NO then closes and feeds the coil after START is released."
+    caption: "START (NO) AND HOLD COM–NO SHARE THE SAME TWO NODES"
+    parts:
+    - id: stop_out
+      kind: 9
+      position: {x: 0.1, y: 0.63}
+      label: "STOP OUT"
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - id: start
+      kind: 5
+      position: {x: 0.35, y: 0.77}
+      label: "START (NO)"
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - id: hold
+      kind: 5
+      position: {x: 0.35, y: 0.35}
+      label: "HOLD COM / NO"
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - id: join
+      kind: 9
+      position: {x: 0.56, y: 0.63}
+      label: "COIL + NODE"
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - id: coil
+      kind: 1
+      position: {x: 0.72, y: 0.63}
+      label: "RELAY COIL"
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.92, y: 0.63}
+      label: "BATTERY −"
+      color: {r: 0.27, g: 0.68, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.63}
+      - {x: 0.19, y: 0.63}
+      - {x: 0.19, y: 0.77}
+      - {x: 0.305, y: 0.77}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - points:
+      - {x: 0.19, y: 0.63}
+      - {x: 0.19, y: 0.35}
+      - {x: 0.305, y: 0.35}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - points:
+      - {x: 0.395, y: 0.77}
+      - {x: 0.56, y: 0.77}
+      - {x: 0.56, y: 0.63}
+      - {x: 0.675, y: 0.63}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - points:
+      - {x: 0.395, y: 0.35}
+      - {x: 0.56, y: 0.35}
+      - {x: 0.56, y: 0.63}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - points:
+      - {x: 0.765, y: 0.63}
+      - {x: 0.92, y: 0.63}
+      energized: 0
+      color: {r: 0.27, g: 0.68, b: 1, a: 1}
+  - title: "03 / Motor contact and STOP"
+    explanation: "W10 RUN_OUT → Motor_A. W09 Motor_B → Battery_negative. MAIN OUT feeds RUN_IN through W03. When STOP is pressed, coil current falls and both relay contacts open. Release STOP. START is still open, so the conveyor stays stopped."
+    caption: "COIL OFF → MOTOR CONTACT OPENS → MOTOR STOPS"
+    parts:
+    - id: main_out
+      kind: 9
+      position: {x: 0.1, y: 0.62}
+      label: "MAIN OUT"
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: run
+      kind: 5
+      position: {x: 0.34, y: 0.62}
+      label: "MOTOR CONTACT"
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - id: motor
+      kind: 7
+      position: {x: 0.6, y: 0.62}
+      label: "MOTOR A → B"
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.88, y: 0.62}
+      label: "BATTERY −"
+      color: {r: 0.27, g: 0.68, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.62}
+      - {x: 0.295, y: 0.62}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.385, y: 0.62}
+      - {x: 0.567, y: 0.62}
+      energized: 0
+      color: {r: 1, g: 0.77, b: 0.34, a: 1}
+    - points:
+      - {x: 0.633, y: 0.62}
+      - {x: 0.88, y: 0.62}
+      energized: 0
+      color: {r: 0.27, g: 0.68, b: 1, a: 1}
+  - title: "04 / Prove safe restoration"
+    explanation: "1/6: MAIN ON, conveyor idle. 2/6: Press START and release it. The conveyor keeps running. 3/6: Press STOP and release it. The conveyor stays stopped. 4/6: START again, release it, then turn MAIN OFF. 5/6: Restore MAIN with both buttons released. The conveyor stays stopped. 6/6: Press and release START to restart deliberately."
+    caption: "COMPLETE ALL SIX CHECKS IN ORDER"
+    parts:
+    - id: idle
+      kind: 9
+      position: {x: 0.17, y: 0.75}
+      label: "1 MAIN ON / IDLE"
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - id: start
+      kind: 9
+      position: {x: 0.5, y: 0.75}
+      label: "2 START / HOLDS"
+      color: {r: 0.36, g: 0.91, b: 0.54, a: 1}
+    - id: stop
+      kind: 9
+      position: {x: 0.83, y: 0.75}
+      label: "3 STOP / IDLE"
+      color: {r: 0.51, g: 0.62, b: 0.72, a: 1}
+    - id: loss
+      kind: 9
+      position: {x: 0.83, y: 0.33}
+      label: "4 RUN, THEN OFF"
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: restore
+      kind: 9
+      position: {x: 0.5, y: 0.33}
+      label: "5 RESTORE / IDLE"
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - id: restart
+      kind: 9
+      position: {x: 0.17, y: 0.33}
+      label: "6 START AGAIN"
+      color: {r: 0.36, g: 0.91, b: 0.54, a: 1}
+    wires:
+    - points:
+      - {x: 0.19, y: 0.75}
+      - {x: 0.47, y: 0.75}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - points:
+      - {x: 0.445, y: 0.782}
+      - {x: 0.47, y: 0.75}
+      - {x: 0.445, y: 0.718}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - points:
+      - {x: 0.53, y: 0.75}
+      - {x: 0.8, y: 0.75}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - points:
+      - {x: 0.775, y: 0.782}
+      - {x: 0.8, y: 0.75}
+      - {x: 0.775, y: 0.718}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - points:
+      - {x: 0.83, y: 0.62}
+      - {x: 0.83, y: 0.39}
+      energized: 0
+      color: {r: 0.51, g: 0.62, b: 0.72, a: 1}
+    - points:
+      - {x: 0.813, y: 0.43}
+      - {x: 0.83, y: 0.39}
+      - {x: 0.847, y: 0.43}
+      energized: 0
+      color: {r: 0.51, g: 0.62, b: 0.72, a: 1}
+    - points:
+      - {x: 0.53, y: 0.33}
+      - {x: 0.8, y: 0.33}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.56, y: 0.36}
+      - {x: 0.53, y: 0.33}
+      - {x: 0.56, y: 0.3}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.2, y: 0.33}
+      - {x: 0.47, y: 0.33}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}
+    - points:
+      - {x: 0.23, y: 0.36}
+      - {x: 0.2, y: 0.33}
+      - {x: 0.23, y: 0.3}
+      energized: 0
+      color: {r: 0.31, g: 0.88, b: 0.84, a: 1}

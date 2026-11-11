@@ -1,0 +1,246 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_34_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_34
+  levelTitle: Priority Power - Automatic Load Shedding
+  initialPage: 0
+  pages:
+  - title: 01 / Feed the shared bus
+    explanation: "W01 Battery_positive \u2192 FEED_IN. W02 FEED_OUT \u2192 Pump_A.
+      W03 FEED_OUT \u2192 AUX_IN. W04 FEED_OUT \u2192 DEMAND_IN. FEED OUT is BUS.
+      Each load draws through the same feeder, so increasing total current makes
+      the bus voltage fall."
+    caption: "5 V \u2192 10 \u03A9 FEEDER \u2192 THREE BRANCHES"
+    parts:
+    - id: supply
+      kind: 9
+      position: {x: 0.09, y: 0.55}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: feed
+      kind: 1
+      position: {x: 0.29, y: 0.55}
+      label: "FEEDER 10 \u03A9"
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: bus
+      kind: 9
+      position: {x: 0.49, y: 0.55}
+      label: BUS
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: pump
+      kind: 9
+      position: {x: 0.81, y: 0.81}
+      label: PUMP A
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: aux
+      kind: 9
+      position: {x: 0.81, y: 0.55}
+      label: AUX IN
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: demand
+      kind: 9
+      position: {x: 0.81, y: 0.29}
+      label: DEMAND IN
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    wires:
+    - points:
+      - {x: 0.09, y: 0.55}
+      - {x: 0.245, y: 0.55}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.335, y: 0.55}
+      - {x: 0.81, y: 0.55}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.49, y: 0.55}
+      - {x: 0.49, y: 0.81}
+      - {x: 0.81, y: 0.81}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.49, y: 0.55}
+      - {x: 0.49, y: 0.29}
+      - {x: 0.81, y: 0.29}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+  - title: 02 / Wire the loads and returns
+    explanation: "W05 AUX_OUT \u2192 Fan_A. W06 DEMAND_OUT \u2192 R_DEMAND_IN. W07
+      Pump_B \u2192 Battery_negative. W08 Fan_B \u2192 Battery_negative. W09 R_DEMAND_OUT
+      \u2192 Battery_negative. The pump stays on BUS while the cutoff opens only
+      the fan branch."
+    caption: "PUMP DIRECT \u2022 FAN AND DEMAND SWITCHED"
+    parts:
+    - id: bus
+      kind: 9
+      position: {x: 0.11, y: 0.51}
+      label: BUS
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: pump
+      kind: 7
+      position: {x: 0.65, y: 0.8}
+      label: "PUMP 47 \u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: aux
+      kind: 5
+      position: {x: 0.35, y: 0.51}
+      label: AUX CUTOFF
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: fan
+      kind: 7
+      position: {x: 0.65, y: 0.51}
+      label: "FAN 47 \u03A9"
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: demand
+      kind: 5
+      position: {x: 0.35, y: 0.23}
+      label: DEMAND
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: bank
+      kind: 1
+      position: {x: 0.65, y: 0.23}
+      label: "BANK 47 \u03A9"
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.92, y: 0.51}
+      label: "BATTERY \u2212"
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.11, y: 0.51}
+      - {x: 0.11, y: 0.8}
+      - {x: 0.617, y: 0.8}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.11, y: 0.51}
+      - {x: 0.305, y: 0.51}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.11, y: 0.51}
+      - {x: 0.11, y: 0.23}
+      - {x: 0.305, y: 0.23}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.395, y: 0.51}
+      - {x: 0.617, y: 0.51}
+      energized: 0
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - points:
+      - {x: 0.395, y: 0.23}
+      - {x: 0.605, y: 0.23}
+      energized: 0
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - points:
+      - {x: 0.683, y: 0.8}
+      - {x: 0.92, y: 0.8}
+      - {x: 0.92, y: 0.51}
+      energized: 0
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.683, y: 0.51}
+      - {x: 0.92, y: 0.51}
+      energized: 0
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.695, y: 0.23}
+      - {x: 0.92, y: 0.23}
+      - {x: 0.92, y: 0.51}
+      energized: 0
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+  - title: 03 / Observe sag and recovery
+    explanation: The source still reads near 5 V. Nominal BUS is 4.12 V with one
+      branch, 3.51 V with two, and 3.05 V with all three. At less than 3.25 V the
+      controller records the sag and opens the fan contact. Pump plus demand then
+      return to about 3.51 V.
+    caption: "SOURCE STAYS NEAR 5 V \u2022 BUS VOLTAGE CHANGES"
+    parts:
+    - id: one
+      kind: 9
+      position: {x: 0.14, y: 0.8}
+      label: PUMP 4.12 V
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: two
+      kind: 9
+      position: {x: 0.36, y: 0.6}
+      label: ADD FAN 3.51 V
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: three
+      kind: 9
+      position: {x: 0.59, y: 0.33}
+      label: SAG 3.05 V
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: shed
+      kind: 9
+      position: {x: 0.84, y: 0.6}
+      label: SHED 3.51 V
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    wires:
+    - points:
+      - {x: 0.14, y: 0.8}
+      - {x: 0.36, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.36, y: 0.6}
+      - {x: 0.59, y: 0.33}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.59, y: 0.33}
+      - {x: 0.84, y: 0.6}
+      energized: 0
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+  - title: 04 / Restore deliberately
+    explanation: 1/6 Pump alone. 2/6 CONNECT AUX and verify both loads. 3/6 APPLY
+      DEMAND and record the sag. 4/6 Keep demand on while the pump voltage recovers
+      and fan current drops near zero. 5/6 REMOVE DEMAND and verify the fan stays
+      off. 6/6 RESTORE AUX and confirm both loads run again.
+    caption: "DEMAND OFF + BUS \u2265 3.90 V \u2192 RESTORE AUX"
+    parts:
+    - id: shed
+      kind: 9
+      position: {x: 0.17, y: 0.59}
+      label: AUX SHED
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: remove
+      kind: 9
+      position: {x: 0.4, y: 0.59}
+      label: DEMAND OFF
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: recovered
+      kind: 9
+      position: {x: 0.63, y: 0.59}
+      label: "BUS \u2265 3.90 V"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: restore
+      kind: 9
+      position: {x: 0.85, y: 0.59}
+      label: RESTORE AUX
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    wires:
+    - points:
+      - {x: 0.17, y: 0.59}
+      - {x: 0.4, y: 0.59}
+      energized: 0
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - points:
+      - {x: 0.4, y: 0.59}
+      - {x: 0.85, y: 0.59}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}

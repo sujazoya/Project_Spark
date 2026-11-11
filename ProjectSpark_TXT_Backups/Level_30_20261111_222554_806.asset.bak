@@ -1,0 +1,171 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_30
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_30
+  displayName: Automatic Emergency Backup - No Manual Transfer
+  description: Build a three-diode automatic capacitor backup. Verify charging, isolate
+    the mains with the main switch, sustain LED backup for 2 accepted simulated seconds,
+    then restore power and recharge. SparkLevel29AutomaticBackup validates the sequence
+    and publishes six runtime LED gate aliases. No SPDT is used. Without the observer
+    the level cannot complete.
+  completionMode: 0
+  requiredTargetCount: 6
+  requireClosedReturn: 1
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 4.8
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: PowerSupply_01
+    positiveTerminalId: Battery_positive
+    negativeTerminalId: Battery_negative
+    nominalVoltage: 5
+  targets:
+  - targetId: level29_auto_0
+    displayName: Correct automatic-backup circuit
+    description: Required nets, values and healthy parts verified by the level observer.
+    targetType: 3
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L29_Wiring
+    minimumVoltage: 0
+    minimumCurrent: 0.002
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level29_auto_1
+    displayName: Storage charged with observed rise
+    description: Capacitor rises at least 0.30 V and reaches 4.10 V.
+    targetType: 3
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L29_Charged
+    minimumVoltage: 0
+    minimumCurrent: 0.002
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level29_auto_2
+    displayName: Automatic isolated transfer
+    description: MAIN is open; backup diode powers LED while main/charge/source current
+      stays below 0.10 mA.
+    targetType: 3
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L29_Isolated
+    minimumVoltage: 0
+    minimumCurrent: 0.002
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level29_auto_3
+    displayName: Sustained backup power
+    description: LED current at least 2 mA for 2 accepted simulated seconds, capacitor
+      drops at least 0.20 V.
+    targetType: 3
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L29_Backup
+    minimumVoltage: 0
+    minimumCurrent: 0.002
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level29_auto_4
+    displayName: Main power restored and charging
+    description: MAIN restored, load powered by main diode and positive charging
+      current observed.
+    targetType: 3
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L29_Restored
+    minimumVoltage: 0
+    minimumCurrent: 0.002
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level29_auto_5
+    displayName: Recovered normal operation
+    description: Capacitor rises at least 0.15 V after restoration, reaches 4.10
+      V and remains normal for 0.5 simulated seconds.
+    targetType: 3
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L29_Recharged
+    minimumVoltage: 0
+    minimumCurrent: 0.002
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds:
+  - R_CHARGE_Component
+  - R_LED_Component
+  requireHealthyInstalledResistors: 1
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 0
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

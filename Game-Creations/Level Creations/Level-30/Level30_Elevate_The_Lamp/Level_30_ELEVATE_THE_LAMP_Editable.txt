@@ -1,0 +1,160 @@
+PROJECT_SPARK_EDITABLE_SO_TXT_V1
+# Readable/editable Unity serialized data. Modify values in the JSON section.
+# Keep field names, object-reference structures, and section markers unchanged.
+# The import requires selecting the ORIGINAL asset in Unity.
+Asset Name: Level_30
+Asset Type: ProjectSpark.Gameplay.SparkLevelDefinition, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+Asset Path: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_30_Layout/Level_30.asset
+Asset GUID: 09947b5992b753a4791e1e6d3c25490d
+Export Date: 2026-11-11 22:19:27
+----- BEGIN UNITY EDITOR JSON -----
+{
+  "MonoBehaviour": {
+    "m_Enabled": true,
+    "m_EditorHideFlags": 0,
+    "m_Name": "Level_30",
+    "m_EditorClassIdentifier": "Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition",
+    "levelId": "level_30",
+    "displayName": "Elevate the Lamp - Motor Control and Limit Switches",
+    "description": "Wire a reversible lift. Verify both end stops, the top-only lamp, and a complete UP/DOWN round trip.",
+    "completionMode": 0,
+    "requiredTargetCount": 5,
+    "requireClosedReturn": false,
+    "rejectShortCircuit": true,
+    "rejectTargetShort": true,
+    "allowIntermediateConnections": true,
+    "requireMinimumVoltage": false,
+    "minimumVoltage": 4.800000190734863,
+    "allowAnyConfiguredPowerSource": true,
+    "powerSources": [
+      {
+        "sourceName": "PowerSupply_01",
+        "positiveTerminalId": "Battery_positive",
+        "negativeTerminalId": "Battery_negative",
+        "nominalVoltage": 5.0
+      }
+    ],
+    "targets": [
+      {
+        "targetId": "level30_lift_1",
+        "displayName": "Lower limit blocks DOWN",
+        "description": "Recorded by the lift controller from solved electrical behavior.",
+        "targetType": 5,
+        "targetTerminalId": "",
+        "requiredPositiveTerminalId": "",
+        "requiredNegativeTerminalId": "",
+        "targetComponentId": "L30_BottomInterlock",
+        "minimumVoltage": 4.8,
+        "minimumCurrent": 0,
+        "minimumPower": 0,
+        "requireElectricalEnabled": true,
+        "requireConduction": false,
+        "inverted": false,
+        "useMaximumVoltage": true,
+        "maximumVoltage": 5.2,
+        "useMaximumCurrent": false,
+        "maximumCurrent": 0,
+        "useMaximumPower": false,
+        "maximumPower": 0
+      },
+      {
+        "targetId": "level30_lift_2",
+        "displayName": "Motor raises lift",
+        "description": "Recorded by the lift controller from solved electrical behavior.",
+        "targetType": 5,
+        "targetTerminalId": "",
+        "requiredPositiveTerminalId": "",
+        "requiredNegativeTerminalId": "",
+        "targetComponentId": "L30_Rise",
+        "minimumVoltage": 4.8,
+        "minimumCurrent": 0,
+        "minimumPower": 0,
+        "requireElectricalEnabled": true,
+        "requireConduction": false,
+        "inverted": false,
+        "useMaximumVoltage": true,
+        "maximumVoltage": 5.2,
+        "useMaximumCurrent": false,
+        "maximumCurrent": 0,
+        "useMaximumPower": false,
+        "maximumPower": 0
+      },
+      {
+        "targetId": "level30_lift_3",
+        "displayName": "Upper limit stops motor and lamp lights",
+        "description": "Recorded by the lift controller from solved electrical behavior.",
+        "targetType": 5,
+        "targetTerminalId": "",
+        "requiredPositiveTerminalId": "",
+        "requiredNegativeTerminalId": "",
+        "targetComponentId": "L30_TopStopLamp",
+        "minimumVoltage": 4.8,
+        "minimumCurrent": 0,
+        "minimumPower": 0,
+        "requireElectricalEnabled": true,
+        "requireConduction": false,
+        "inverted": false,
+        "useMaximumVoltage": true,
+        "maximumVoltage": 5.2,
+        "useMaximumCurrent": false,
+        "maximumCurrent": 0,
+        "useMaximumPower": false,
+        "maximumPower": 0
+      },
+      {
+        "targetId": "level30_lift_4",
+        "displayName": "Motor reverses and lamp goes out",
+        "description": "Recorded by the lift controller from solved electrical behavior.",
+        "targetType": 5,
+        "targetTerminalId": "",
+        "requiredPositiveTerminalId": "",
+        "requiredNegativeTerminalId": "",
+        "targetComponentId": "L30_Descend",
+        "minimumVoltage": 4.8,
+        "minimumCurrent": 0,
+        "minimumPower": 0,
+        "requireElectricalEnabled": true,
+        "requireConduction": false,
+        "inverted": false,
+        "useMaximumVoltage": true,
+        "maximumVoltage": 5.2,
+        "useMaximumCurrent": false,
+        "maximumCurrent": 0,
+        "useMaximumPower": false,
+        "maximumPower": 0
+      },
+      {
+        "targetId": "level30_lift_5",
+        "displayName": "Lower limit stops motor after round trip",
+        "description": "Recorded by the lift controller from solved electrical behavior.",
+        "targetType": 5,
+        "targetTerminalId": "",
+        "requiredPositiveTerminalId": "",
+        "requiredNegativeTerminalId": "",
+        "targetComponentId": "L30_BottomStop",
+        "minimumVoltage": 4.8,
+        "minimumCurrent": 0,
+        "minimumPower": 0,
+        "requireElectricalEnabled": true,
+        "requireConduction": false,
+        "inverted": false,
+        "useMaximumVoltage": true,
+        "maximumVoltage": 5.2,
+        "useMaximumCurrent": false,
+        "maximumCurrent": 0,
+        "useMaximumPower": false,
+        "maximumPower": 0
+      }
+    ],
+    "failureMode": 0,
+    "requiredHealthyResistorIds": [],
+    "requireHealthyInstalledResistors": false,
+    "successOutputIds": [],
+    "failureOutputIds": [],
+    "unlockNextLevelOnCompletion": true,
+    "unlockedByDefault": false,
+    "autoUnlockNextLevel": true,
+    "autoAdvanceOnCompletion": false
+  }
+}
+----- END UNITY EDITOR JSON -----

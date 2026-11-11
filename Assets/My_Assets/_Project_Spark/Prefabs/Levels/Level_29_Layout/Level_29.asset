@@ -13,19 +13,15 @@ MonoBehaviour:
   m_Name: Level_29
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
   levelId: level_29
-  displayName: Power Budget - Dual-Brightness LED
-  description: Build a 5 V two-mode LED indicator. SPDT COM is fed by the main switch;
-    A feeds a 330 ohm BRIGHT resistor, B feeds a 1 kohm ECO resistor. Both resistor
-    outputs join LED anode; LED cathode returns to battery negative. Compare BRIGHT,
-    then leave ECO selected with LED on at 2.5-3.5 mA. Completion validates the final
-    ECO state, not the order of mode selection.
+  displayName: 'Automatic Emergency Backup - No Manual Transfer'
+  description: 'Build a three-diode automatic capacitor backup. Verify charging, isolate the mains with the main switch, sustain LED backup for 2 accepted simulated seconds, then restore power and recharge. SparkLevel29AutomaticBackup validates the sequence and publishes six runtime LED gate aliases. No SPDT is used. Without the observer the level cannot complete.'
   completionMode: 0
   requiredTargetCount: 6
   requireClosedReturn: 1
   rejectShortCircuit: 1
   rejectTargetShort: 1
   allowIntermediateConnections: 1
-  requireMinimumVoltage: 1
+  requireMinimumVoltage: 0
   minimumVoltage: 4.8
   allowAnyConfiguredPowerSource: 1
   powerSources:
@@ -34,39 +30,19 @@ MonoBehaviour:
     negativeTerminalId: Battery_negative
     nominalVoltage: 5
   targets:
-  - targetId: level29_supply
-    displayName: 5 V Supply
-    description: Supply voltage within 4.8-5.2 V.
-    targetType: 5
-    targetTerminalId: 
-    requiredPositiveTerminalId: Battery_positive
-    requiredNegativeTerminalId: Battery_negative
-    targetComponentId: PowerSupply_01
-    minimumVoltage: 4.8
-    minimumCurrent: 0
-    minimumPower: 0
-    requireElectricalEnabled: 1
-    requireConduction: 0
-    inverted: 0
-    useMaximumVoltage: 1
-    maximumVoltage: 5.2
-    useMaximumCurrent: 0
-    maximumCurrent: 0
-    useMaximumPower: 0
-    maximumPower: 0
-  - targetId: level29_led_on
-    displayName: ECO LED Illuminated
-    description: LED is electrically on in the final operating state.
+  - targetId: 'level29_auto_0'
+    displayName: 'Correct automatic-backup circuit'
+    description: 'Required nets, values and healthy parts verified by the level observer.'
     targetType: 3
-    targetTerminalId: 
-    requiredPositiveTerminalId: LED_Anode
-    requiredNegativeTerminalId: LED_Cathode
-    targetComponentId: led
+    targetTerminalId: ''
+    requiredPositiveTerminalId: ''
+    requiredNegativeTerminalId: ''
+    targetComponentId: 'L29_Wiring'
     minimumVoltage: 0
-    minimumCurrent: 0
+    minimumCurrent: 0.002
     minimumPower: 0
     requireElectricalEnabled: 1
-    requireConduction: 0
+    requireConduction: 1
     inverted: 0
     useMaximumVoltage: 0
     maximumVoltage: 0
@@ -74,90 +50,110 @@ MonoBehaviour:
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level29_eco_current
-    displayName: ECO Current Budget
-    description: Slot_05 1 kohm branch carries 2.5-3.5 mA.
-    targetType: 6
-    targetTerminalId: 
-    requiredPositiveTerminalId: R_ECO_Input
-    requiredNegativeTerminalId: R_ECO_Output
-    targetComponentId: R_ECO_Component
+  - targetId: 'level29_auto_1'
+    displayName: 'Storage charged with observed rise'
+    description: 'Capacitor rises at least 0.30 V and reaches 4.10 V.'
+    targetType: 3
+    targetTerminalId: ''
+    requiredPositiveTerminalId: ''
+    requiredNegativeTerminalId: ''
+    targetComponentId: 'L29_Charged'
     minimumVoltage: 0
-    minimumCurrent: 0.0025
+    minimumCurrent: 0.002
     minimumPower: 0
     requireElectricalEnabled: 1
-    requireConduction: 0
+    requireConduction: 1
     inverted: 0
     useMaximumVoltage: 0
     maximumVoltage: 0
-    useMaximumCurrent: 1
-    maximumCurrent: 0.0035
-    useMaximumPower: 0
-    maximumPower: 0
-  - targetId: level29_bright_isolated
-    displayName: BRIGHT Branch Isolated
-    description: Slot_04 branch current is at most 0.05 mA; conduction is not required.
-    targetType: 6
-    targetTerminalId: 
-    requiredPositiveTerminalId: R_BRIGHT_Input
-    requiredNegativeTerminalId: R_BRIGHT_Output
-    targetComponentId: R_BRIGHT_Component
-    minimumVoltage: 0
-    minimumCurrent: 0
-    minimumPower: 0
-    requireElectricalEnabled: 1
-    requireConduction: 0
-    inverted: 0
-    useMaximumVoltage: 0
-    maximumVoltage: 0
-    useMaximumCurrent: 1
-    maximumCurrent: 0.00005
-    useMaximumPower: 0
-    maximumPower: 0
-  - targetId: level29_eco_voltage
-    displayName: ECO Resistor Voltage
-    description: Voltage across the ECO resistor is 2.7-3.3 V.
-    targetType: 5
-    targetTerminalId: 
-    requiredPositiveTerminalId: R_ECO_Input
-    requiredNegativeTerminalId: R_ECO_Output
-    targetComponentId: R_ECO_Component
-    minimumVoltage: 2.7
-    minimumCurrent: 0
-    minimumPower: 0
-    requireElectricalEnabled: 1
-    requireConduction: 0
-    inverted: 0
-    useMaximumVoltage: 1
-    maximumVoltage: 3.3
     useMaximumCurrent: 0
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level29_source_current
-    displayName: Low Supply Current
-    description: Total source current magnitude is 2.5-3.5 mA.
-    targetType: 6
-    targetTerminalId: 
-    requiredPositiveTerminalId: Battery_positive
-    requiredNegativeTerminalId: Battery_negative
-    targetComponentId: PowerSupply_01
+  - targetId: 'level29_auto_2'
+    displayName: 'Automatic isolated transfer'
+    description: 'MAIN is open; backup diode powers LED while main/charge/source current stays below 0.10 mA.'
+    targetType: 3
+    targetTerminalId: ''
+    requiredPositiveTerminalId: ''
+    requiredNegativeTerminalId: ''
+    targetComponentId: 'L29_Isolated'
     minimumVoltage: 0
-    minimumCurrent: 0.0025
+    minimumCurrent: 0.002
     minimumPower: 0
     requireElectricalEnabled: 1
-    requireConduction: 0
+    requireConduction: 1
     inverted: 0
     useMaximumVoltage: 0
     maximumVoltage: 0
-    useMaximumCurrent: 1
-    maximumCurrent: 0.0035
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: 'level29_auto_3'
+    displayName: 'Sustained backup power'
+    description: 'LED current at least 2 mA for 2 accepted simulated seconds, capacitor drops at least 0.20 V.'
+    targetType: 3
+    targetTerminalId: ''
+    requiredPositiveTerminalId: ''
+    requiredNegativeTerminalId: ''
+    targetComponentId: 'L29_Backup'
+    minimumVoltage: 0
+    minimumCurrent: 0.002
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: 'level29_auto_4'
+    displayName: 'Main power restored and charging'
+    description: 'MAIN restored, load powered by main diode and positive charging current observed.'
+    targetType: 3
+    targetTerminalId: ''
+    requiredPositiveTerminalId: ''
+    requiredNegativeTerminalId: ''
+    targetComponentId: 'L29_Restored'
+    minimumVoltage: 0
+    minimumCurrent: 0.002
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: 'level29_auto_5'
+    displayName: 'Recovered normal operation'
+    description: 'Capacitor rises at least 0.15 V after restoration, reaches 4.10 V and remains normal for 0.5 simulated seconds.'
+    targetType: 3
+    targetTerminalId: ''
+    requiredPositiveTerminalId: ''
+    requiredNegativeTerminalId: ''
+    targetComponentId: 'L29_Recharged'
+    minimumVoltage: 0
+    minimumCurrent: 0.002
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 1
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
   failureMode: 0
   requiredHealthyResistorIds:
-  - R_BRIGHT_Component
-  - R_ECO_Component
+  - R_CHARGE_Component
+  - R_LED_Component
   requireHealthyInstalledResistors: 1
   successOutputIds: []
   failureOutputIds: []

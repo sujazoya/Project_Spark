@@ -1,0 +1,205 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_33_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_33
+  levelTitle: Jam Guard - Delayed Trip and Manual Reset
+  initialPage: 0
+  pages:
+  - title: 01 / Charge the timer
+    explanation: "W01 Battery_positive \u2192 JAM_IN. W02 JAM_OUT \u2192 R_CHARGE_IN.
+      W03 R_CHARGE_OUT \u2192 Timer_Positive. W04 Timer_Negative \u2192 Battery_negative.
+      JAM closes while blocked. The 470 \xB5F capacitor rises gradually. Observe
+      about 1.0 V after a 0.50 s blockage and about 3.0 V after 2 s."
+    caption: "JAM \u2192 4.7 k\u03A9 \u2192 TIMER +"
+    parts:
+    - id: supply
+      kind: 9
+      position: {x: 0.08, y: 0.6}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: jam
+      kind: 5
+      position: {x: 0.26, y: 0.6}
+      label: JAM CONTACT
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: r_charge
+      kind: 1
+      position: {x: 0.46, y: 0.6}
+      label: "4.7 k\u03A9"
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: cap
+      kind: 4
+      position: {x: 0.68, y: 0.6}
+      label: "TIMER + / \u2212"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: ground
+      kind: 9
+      position: {x: 0.9, y: 0.6}
+      label: "BATTERY \u2212"
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.08, y: 0.6}
+      - {x: 0.215, y: 0.6}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.305, y: 0.6}
+      - {x: 0.415, y: 0.6}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.505, y: 0.6}
+      - {x: 0.635, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.725, y: 0.6}
+      - {x: 0.9, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+  - title: 02 / Discharge when clear
+    explanation: "W05 Timer_Positive \u2192 R_CLEAR_IN. W06 R_CLEAR_OUT \u2192 CLEAR_IN.
+      W07 CLEAR_OUT \u2192 Battery_negative. Clearing opens JAM and closes CLEAR.
+      TIMER falls through 1 k\u03A9. Clearing a latched jam leaves the conveyor stopped."
+    caption: "TIMER + \u2192 1 k\u03A9 \u2192 CLEAR CONTACT \u2192 BATTERY \u2212"
+    parts:
+    - id: timer
+      kind: 9
+      position: {x: 0.1, y: 0.6}
+      label: TIMER +
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: r_clear
+      kind: 1
+      position: {x: 0.35, y: 0.6}
+      label: "1 k\u03A9"
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: clear
+      kind: 5
+      position: {x: 0.61, y: 0.6}
+      label: CLEAR CONTACT
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: ground
+      kind: 9
+      position: {x: 0.88, y: 0.6}
+      label: "BATTERY \u2212"
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.6}
+      - {x: 0.305, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.395, y: 0.6}
+      - {x: 0.565, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.655, y: 0.6}
+      - {x: 0.88, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+  - title: 03 / Wire the motor cutoff
+    explanation: "W08 Battery_positive \u2192 RUN_IN. W09 RUN_OUT \u2192 Motor_A.
+      W10 Motor_B \u2192 Battery_negative. The controller reads the solved capacitor
+      voltage. At 3.0 V it opens the motor contact and holds it open. The timer has
+      a separate supply path."
+    caption: 3.0 V AT TIMER OPENS THE MOTOR CONTACT
+    parts:
+    - id: supply
+      kind: 9
+      position: {x: 0.09, y: 0.6}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: cutoff
+      kind: 5
+      position: {x: 0.35, y: 0.6}
+      label: MOTOR CONTACT
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: motor
+      kind: 7
+      position: {x: 0.61, y: 0.6}
+      label: MOTOR A / B
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: ground
+      kind: 9
+      position: {x: 0.89, y: 0.6}
+      label: "BATTERY \u2212"
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.09, y: 0.6}
+      - {x: 0.305, y: 0.6}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.395, y: 0.6}
+      - {x: 0.577, y: 0.6}
+      energized: 0
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - points:
+      - {x: 0.643, y: 0.6}
+      - {x: 0.89, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+  - title: 04 / Verify trip and reset
+    explanation: 1/6 Start with TIMER below 0.25 V. 2/6 Brief blockage leaves the
+      conveyor running. 3/6 Hold JAM until the conveyor stops. 4/6 Press RESET while
+      blocked and observe that it is refused. 5/6 CLEAR JAM and wait below 1.0 V.
+      The motor stays stopped. 6/6 Press RESET to restart.
+    caption: "BELOW 1.0 V AND CLEAR \u2192 MANUAL RESET"
+    parts:
+    - id: brief
+      kind: 9
+      position: {x: 0.19, y: 0.33}
+      label: "BRIEF \u2248 1.0 V"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: trip
+      kind: 9
+      position: {x: 0.49, y: 0.72}
+      label: TRIP AT 3.0 V
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: reset
+      kind: 9
+      position: {x: 0.79, y: 0.32}
+      label: RESET BELOW 1.0 V
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.08, y: 0.18}
+      - {x: 0.19, y: 0.33}
+      - {x: 0.25, y: 0.2}
+      - {x: 0.3, y: 0.18}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.33, y: 0.18}
+      - {x: 0.38, y: 0.39}
+      - {x: 0.44, y: 0.59}
+      - {x: 0.49, y: 0.72}
+      energized: 0
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - points:
+      - {x: 0.49, y: 0.72}
+      - {x: 0.65, y: 0.72}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.65, y: 0.72}
+      - {x: 0.7, y: 0.49}
+      - {x: 0.79, y: 0.32}
+      - {x: 0.9, y: 0.2}
+      energized: 0
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}

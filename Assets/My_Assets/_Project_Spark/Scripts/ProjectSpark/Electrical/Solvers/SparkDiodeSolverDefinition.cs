@@ -93,36 +93,21 @@ public override void Stamp(
         anodeVoltage - cathodeVoltage;
 
    
-bool wasConducting =
-    context.GetNonlinearState(diode);
+    bool wasConducting = context.GetNonlinearState(diode);
+    double resistance = Math.Max(minimumResistance, diode.OnResistance);
 
-// Use a small voltage hysteresis to prevent
-// the diode switching OFF when the solved
-// voltage is numerically close to its
-// forward-voltage threshold.
-const float hysteresis = 0.005f;
+    // A forward-drop stamp can carry reverse current if left on below Vf.
+    // Limit the hysteresis by current so low-resistance diodes cannot backfeed.
+    const double currentTolerance = 0.00001d;
+    double voltageTolerance = resistance * currentTolerance;
+    double overdrive = (double)diodeVoltage - diode.ForwardVoltage;
+    bool conducting = wasConducting
+        ? overdrive >= -voltageTolerance
+        : overdrive > voltageTolerance;
 
-bool conducting = wasConducting
-    ? diodeVoltage >= diode.ForwardVoltage - hysteresis
-    : diodeVoltage >= diode.ForwardVoltage + hysteresis;
-
-context.SetNonlinearState(diode, conducting);
-
-
-    context.SetNonlinearState(
-        diode,
-        conducting);
-
+    context.SetNonlinearState(diode, conducting);
     if (!conducting)
-    {
         return;
-    }
-
-    // AddForwardDrop already stamps the conductance.
-    // Its final argument is RESISTANCE, not conductance.
-    double resistance = Math.Max(
-        minimumResistance,
-        diode.OnResistance);
 
     context.AddForwardDrop(
         anode,

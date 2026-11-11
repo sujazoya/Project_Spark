@@ -115,28 +115,9 @@ namespace ProjectSpark.HolographicViewer
 
         public void Pan(Vector2 delta)
         {
-            Vector3 right =
-                transform.right * delta.x;
-
-            Vector3 up =
-                transform.up * delta.y;
-
-            targetOffset +=
-                right + up;
-
-            targetOffset.x =
-                Mathf.Clamp(
-                    targetOffset.x,
-                    -panLimit,
-                    panLimit
-                );
-
-            targetOffset.y =
-                Mathf.Clamp(
-                    targetOffset.y,
-                    defaultOffset.y - panLimit,
-                    defaultOffset.y + panLimit
-                );
+            Vector3 movement = transform.right * delta.x + transform.up * delta.y;
+            targetOffset = defaultOffset + Vector3.ClampMagnitude(
+                targetOffset - defaultOffset + movement, Mathf.Max(0f, panLimit));
         }
 
         public void ResetView()

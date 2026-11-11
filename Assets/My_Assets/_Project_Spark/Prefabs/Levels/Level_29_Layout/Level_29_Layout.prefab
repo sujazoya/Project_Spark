@@ -1559,7 +1559,7 @@ Transform:
   m_GameObject: {fileID: 476177687499003174}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.818, y: 0.046, z: -0.963}
+  m_LocalPosition: {x: 3.858, y: 0.046, z: 1.553}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2281,7 +2281,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1788221909308059832
 Transform:
   m_ObjectHideFlags: 0
@@ -3614,7 +3614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.Shelf.SparkShelfSlot
   slotId: Slot_03
-  category: 5
+  category: 3
   kind: 1
   placementAnchor: {fileID: 3916036930819275250}
   acceptAnyCategory: 0
@@ -4983,7 +4983,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: CAPACITOR
+  m_text: RESISTOR
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
   m_sharedMaterial: {fileID: 2201847597516483309, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
@@ -5520,7 +5520,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RESISTOR
+  m_text: DIODE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
   m_sharedMaterial: {fileID: 2201847597516483309, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
@@ -11124,9 +11124,9 @@ MonoBehaviour:
   acceptAnyCategory: 0
   occupiedAtStart: 1
   enableSmartBinding: 1
-  runtimeComponentId: R_BRIGHT_Component
-  runtimeTerminalAId: R_BRIGHT_Input
-  runtimeTerminalBId: R_BRIGHT_Output
+  runtimeComponentId: R_LED_Component
+  runtimeTerminalAId: R_LED_Input
+  runtimeTerminalBId: R_LED_Output
   logBindingRefresh: 0
   labelText: {fileID: 1826724054352145708}
   autoUpdateLabel: 1
@@ -11757,7 +11757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.Shelf.SparkShelfSlot
   slotId: Slot_04
-  category: 3
+  category: 5
   kind: 1
   placementAnchor: {fileID: 3214257352613583991}
   acceptAnyCategory: 0
@@ -13048,7 +13048,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RESISTOR
+  m_text: DIODE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
   m_sharedMaterial: {fileID: 2201847597516483309, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
@@ -14619,7 +14619,7 @@ Transform:
   m_GameObject: {fileID: 6365225772652536436}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.104, y: 0.776, z: 1.145}
+  m_LocalPosition: {x: 0.104, y: 0.776, z: 0.812}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14640,13 +14640,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.Shelf.SparkShelfSlot
   slotId: Slot_02
-  category: 3
+  category: 6
   kind: 1
   placementAnchor: {fileID: 204132067180334134}
   acceptAnyCategory: 0
   occupiedAtStart: 1
   enableSmartBinding: 1
-  runtimeComponentId: R_CHARGE_Component
+  runtimeComponentId: D_CHARGE_Component
   runtimeTerminalAId: D_CHARGE_Anode
   runtimeTerminalBId: D_CHARGE_Cathode
   logBindingRefresh: 0
@@ -20224,7 +20224,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3065138532110708790
 Transform:
   m_ObjectHideFlags: 0
@@ -20234,7 +20234,7 @@ Transform:
   m_GameObject: {fileID: 6813747622435009230}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.832, y: 0.046, z: 0.836}
+  m_LocalPosition: {x: 0.72, y: 0.046, z: 1.51}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21162,7 +21162,6 @@ Transform:
   - {fileID: 204132067180334134}
   - {fileID: 3916036930819275250}
   - {fileID: 3214257352613583991}
-  - {fileID: 8468017438241323419}
   - {fileID: 2690620037928653309}
   - {fileID: 4270418306331437646}
   - {fileID: 5940093876547807691}
@@ -21311,35 +21310,31 @@ MonoBehaviour:
     electronicObject: {fileID: 5924648031613838877}
   outputs: []
   runtimeTerminalIds:
-  - D_PROTECT_Anode
-  - D_PROTECT_Cathode
+  - D_MAIN_Anode
+  - D_MAIN_Cathode
+  - D_CHARGE_Anode
+  - D_CHARGE_Cathode
   - R_CHARGE_Input
   - R_CHARGE_Output
-  - C_BACKUP_Positive
-  - C_BACKUP_Negative
+  - C_STORE_Positive
+  - C_STORE_Negative
   - R_LED_Input
   - R_LED_Output
-  - R_BLEED_Input
-  - R_BLEED_Output
-  - SPDT_COM
-  - SPDT_A
-  - SPDT_B
-  - R_BRIGHT_Input
-  - R_BRIGHT_Output
-  - R_ECO_Input
-  - R_ECO_Output
+  - D_BACKUP_Anode
+  - D_BACKUP_Cathode
   runtimeComponentIds:
-  - D_PROTECT_Component
+  - D_MAIN_Component
+  - D_CHARGE_Component
   - R_CHARGE_Component
-  - C_BACKUP_Component
+  - C_STORE_Component
   - R_LED_Component
-  - R_BLEED_Component
-  - Electrical_COM_A
-  - Electrical_COM_B
-  - SPDT_COM_A
-  - SPDT_COM_B
-  - R_BRIGHT_Component
-  - R_ECO_Component
+  - D_BACKUP_Component
+  - L29_Wiring
+  - L29_Charged
+  - L29_Isolated
+  - L29_Backup
+  - L29_Restored
+  - L29_Recharged
   runtimeElectronicObjectIds: []
 --- !u!114 &1886200828356261374
 MonoBehaviour:
@@ -21374,12 +21369,18 @@ MonoBehaviour:
   solver: {fileID: 0}
   loader: {fileID: 0}
   circuit: {fileID: 0}
-  showStatus: 1
-  backupSeconds: 4
+  backupSeconds: 2
   chargedVoltage: 4.1
   minimumBackupCurrent: 0.002
   maximumLedCurrent: 0.009
   isolationCurrent: 0.0001
+  requiredBackupVoltageDrop: 0.2
+  requiredRechargeRise: 0.15
+  recoveryHoldSeconds: 0.5
+  showStatus: 1
+  logStageChanges: 1
+  logHeartbeat: 1
+  heartbeatSeconds: 2
   status: Waiting for active Level 29.
 --- !u!1 &7600811454120929080
 GameObject:
@@ -22473,7 +22474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.Shelf.SparkShelfSlot
   slotId: Slot_06
-  category: 3
+  category: 6
   kind: 1
   placementAnchor: {fileID: 4270418306331437646}
   acceptAnyCategory: 0
@@ -28040,7 +28041,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RESISTOR
+  m_text: CAPACITOR
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
   m_sharedMaterial: {fileID: 2201847597516483309, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
@@ -31818,137 +31819,6 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 303217067205414811, guid: 4227a4b50cfc1a046ab72954aaebf29d, type: 3}
   m_PrefabInstance: {fileID: 6557671203438685582}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &6651780780262622644
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 7369214646710095682}
-    m_Modifications:
-    - target: {fileID: -734272108378776809, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: fixedInstalledRouter
-      value: 
-      objectReference: {fileID: 4782726882491014731}
-    - target: {fileID: 1060030063329759834, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: m_Name
-      value: Slot_07
-      objectReference: {fileID: 0}
-    - target: {fileID: 1060030063329759834, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1189264223965402292, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: m_Name
-      value: Spdt_Switch_Common
-      objectReference: {fileID: 0}
-    - target: {fileID: 1241867425729153173, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: owner
-      value: 
-      objectReference: {fileID: 8860592180196921540}
-    - target: {fileID: 1582290645060748162, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: owner
-      value: 
-      objectReference: {fileID: 1222163758817421571}
-    - target: {fileID: 1973055789418295837, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: m_Name
-      value: Spdt_Switch_Input
-      objectReference: {fileID: 0}
-    - target: {fileID: 3011693869461732399, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.435
-      objectReference: {fileID: 0}
-    - target: {fileID: 3011693869461732399, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.776
-      objectReference: {fileID: 0}
-    - target: {fileID: 3011693869461732399, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.063
-      objectReference: {fileID: 0}
-    - target: {fileID: 3011693869461732399, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3011693869461732399, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3011693869461732399, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3011693869461732399, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3011693869461732399, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3011693869461732399, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3011693869461732399, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4048445235069911140, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: m_Name
-      value: Spdt_Switch_Output
-      objectReference: {fileID: 0}
-    - target: {fileID: 7107334860307511638, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: slotId
-      value: Slot_07
-      objectReference: {fileID: 0}
-    - target: {fileID: 8648011695081715044, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-      propertyPath: owner
-      value: 
-      objectReference: {fileID: 8860592180196921540}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
---- !u!114 &1222163758817421571 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5528766771931655351, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-  m_PrefabInstance: {fileID: 6651780780262622644}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daa3cd4b89a947b4dbcdd45aaeb77dec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkSwitch
---- !u!114 &4782726882491014731 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2166362962657647615, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-  m_PrefabInstance: {fileID: 6651780780262622644}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 020fbf2e41fc0c648a2f3c890e5dc7a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkSpdtDualSwitchRouter
---- !u!4 &8468017438241323419 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3011693869461732399, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-  m_PrefabInstance: {fileID: 6651780780262622644}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8860592180196921540 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2790255693094901104, guid: beac41f6992adca4c943f1f5e11bb642, type: 3}
-  m_PrefabInstance: {fileID: 6651780780262622644}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daa3cd4b89a947b4dbcdd45aaeb77dec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkSwitch
 --- !u!1001 &6682145858933297735
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32576,6 +32446,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3916036930819275250}
     m_Modifications:
+    - target: {fileID: -5798655078967942531, guid: d102726e40c09134e9f61b6a57dcf8f1, type: 3}
+      propertyPath: fallbackStartupState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -5798655078967942531, guid: d102726e40c09134e9f61b6a57dcf8f1, type: 3}
+      propertyPath: workbenchOnlyObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5798655078967942531, guid: d102726e40c09134e9f61b6a57dcf8f1, type: 3}
+      propertyPath: 'workbenchOnlyObjects.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2871212062553084686, guid: d102726e40c09134e9f61b6a57dcf8f1, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -34285,7 +34167,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3934464232879755693, guid: 6085128c32a65e64dbd45575396f8dca, type: 3}
       propertyPath: m_Name
-      value: Capacitor_1000uF_16V
+      value: Capacitor_10000uF_16V
       objectReference: {fileID: 0}
     - target: {fileID: 4055302761545958495, guid: 6085128c32a65e64dbd45575396f8dca, type: 3}
       propertyPath: m_LocalPosition.z
@@ -34401,7 +34283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8910608071488408253, guid: 6085128c32a65e64dbd45575396f8dca, type: 3}
       propertyPath: capacitanceFarads
-      value: 0.0047
+      value: 0.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

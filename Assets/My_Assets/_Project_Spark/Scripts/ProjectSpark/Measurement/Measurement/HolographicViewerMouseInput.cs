@@ -46,7 +46,7 @@ namespace ProjectSpark.HolographicViewer
         private bool panWithMiddleMouse = true;
 
         [SerializeField]
-        private float panSensitivity = 1f;
+        private float panSensitivity = 0.0025f;
 
         [Header("Zoom")]
         [SerializeField]
@@ -62,6 +62,7 @@ namespace ProjectSpark.HolographicViewer
         private bool waitForWirePointerRelease;
 
         private Vector2 rotationStartPosition;
+        private Vector2 lastPanPosition;
 
         public bool IsComponentRotating
         {
@@ -123,8 +124,9 @@ namespace ProjectSpark.HolographicViewer
                 return;
             }
 
-            HandleRotation();
             HandlePan();
+            if (!panning)
+                HandleRotation();
             UpdateGizmoHover();
         }
 
@@ -425,50 +427,30 @@ private bool TryBeginComponentRotation(Vector2 pointer)
 
         private void HandlePan()
         {
-            if (!panWithMiddleMouse)
-            {
-                return;
-            }
-
 #if ENABLE_INPUT_SYSTEM
-
-            if (Mouse.current == null)
+            var mouse = Mouse.current;
+            if (!panWithMiddleMouse || viewerCamera == null || mouse == null ||
+                !mouse.middleButton.isPressed || rotating)
             {
+                panning = false;
                 return;
             }
 
-            if (Mouse.current.middleButton.wasPressedThisFrame)
+            Vector2 pointer = mouse.position.ReadValue();
+            if (mouse.middleButton.wasPressedThisFrame)
             {
-                if (IsPointerOverUI())
-                {
-                    return;
-                }
-
-                panning =
-                    true;
+                panning = !mouse.leftButton.wasPressedThisFrame && !IsPointerOverUI();
+                lastPanPosition = pointer;
+                return;
             }
 
-            if (panning &&
-                Mouse.current.middleButton.isPressed)
-            {
-                Vector2 delta =
-                    Mouse.current.delta.ReadValue();
+            if (!panning)
+                return;
 
-                if (viewerCamera != null)
-                {
-                    viewerCamera.Pan(
-                        -delta *
-                        panSensitivity);
-                }
-            }
-
-            if (panning &&
-                Mouse.current.middleButton.wasReleasedThisFrame)
-            {
-                panning =
-                    false;
-            }
-
+            Vector2 delta = pointer - lastPanPosition;
+            lastPanPosition = pointer;
+            if (delta != Vector2.zero)
+                viewerCamera.Pan(-delta * panSensitivity);
 #endif
         }
 
@@ -631,6 +613,15 @@ private bool TryBeginComponentRotation(Vector2 pointer)
         // ============================================================
         // DISABLE
         // ============================================================
+
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            if (hasFocus)
+                return;
+
+            StopComponentRotation(true);
+            StopScreenManipulation();
+        }
 
         private void OnDisable()
         {
