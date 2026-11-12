@@ -24,6 +24,10 @@ namespace ProjectSpark.Gameplay
         public Light pumpLight, fanLight, shedLight, demandLight;
         public Text statusText, voltageText, currentText, demandLabel;
         public Button auxButton, demandButton, restoreButton, retryButton;
+        public Transform cutoffArm, demandRocker;
+        public Vector3 fanRotorAxis = Vector3.right;
+        public Renderer pumpIndicator, fanIndicator, shedIndicator, connectedIndicator, demandIndicator;
+        public TextMesh busReadout, sagReadout, stateReadout;
 
         private const float SagThreshold = 3.25f;
         private const float RestoreThreshold = 3.90f;
@@ -140,7 +144,7 @@ namespace ProjectSpark.Gameplay
             Show(Prompt(), pumpOn, fanOn, demandOn);
 
             if (pumpOn && pumpShaft != null) pumpShaft.Rotate(Vector3.right,bus * 140f * Time.deltaTime,Space.Self);
-            if (fanOn && fanShaft != null) fanShaft.Rotate(Vector3.right,bus * 200f * Time.deltaTime,Space.Self);
+            if (fanOn && fanShaft != null) fanShaft.Rotate(fanRotorAxis,bus * 200f * Time.deltaTime,Space.Self);
         }
 
         private bool Award()
@@ -182,6 +186,22 @@ namespace ProjectSpark.Gameplay
             if (fanLight != null) fanLight.enabled = fanOn;
             if (demandLight != null) demandLight.enabled = demandOn;
             if (shedLight != null) shedLight.enabled = shed;
+            if (cutoffArm != null && auxContact != null)
+                cutoffArm.localRotation = Quaternion.Euler(0, 0, auxContact.IsClosed ? 0 : 15f);
+            if (demandRocker != null && demandContact != null)
+                demandRocker.localRotation = Quaternion.Euler(demandContact.IsClosed ? 11f : -11f, 0, 0);
+            if (pumpIndicator != null) pumpIndicator.enabled = pumpOn;
+            if (fanIndicator != null) fanIndicator.enabled = fanOn;
+            if (demandIndicator != null) demandIndicator.enabled = demandOn;
+            if (shedIndicator != null) shedIndicator.enabled = shed;
+            if (connectedIndicator != null) connectedIndicator.enabled = ready && auxContact != null && auxContact.IsClosed;
+            if (busReadout != null) busReadout.text = ready ? $"BUS {bus:0.00} V" : "BUS —";
+            if (sagReadout != null) sagReadout.text = ready && sag > 0f ? $"SAG {sag:0.00} V" : "SAG —";
+            if (stateReadout != null)
+            {
+                stateReadout.text = shed ? "AUX SHED" : fanOn ? "PUMP + FAN" : pumpOn ? "PUMP ONLY" : "READY TO WIRE";
+                stateReadout.color = shed ? new Color(1f,.73f,.31f) : new Color(.49f,.95f,1f);
+            }
             if (auxButton != null) auxButton.interactable = ready && stage == 1 && !auxContact.IsClosed;
             if (demandButton != null) demandButton.interactable = ready && (stage == 2 && !demandContact.IsClosed || stage == 4 && demandContact.IsClosed);
             if (demandLabel != null) demandLabel.text = stage == 4 ? "REMOVE DEMAND" : "APPLY DEMAND";

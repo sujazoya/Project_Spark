@@ -26,12 +26,18 @@ namespace ProjectSpark.Gameplay
         public Light runLight, jamLight;
         public Text statusText, readingsText, jamLabel;
         public Button startButton, briefButton, jamButton, resetButton, retryButton;
+        public Transform jamRocker, clearCap, contactArm, detectorBeam, alarmBeacon;
+        public Renderer monitorRun, monitorWait, monitorTrip;
+        public TextMesh timerReadout;
+        public Vector3 blockedParcelPosition = new Vector3(-.03f, .12f, 0);
+        public float beltStartX = -.48f, beltLength = .96f;
 
         private const float TripVoltage = 3f;
         private const float ResetVoltage = 1f;
         private const float IdleVoltage = .25f;
         private const float PulseSeconds = .50f;
         private SparkLevelLayoutLoader loader;
+        private LevelGamePlayManager manager;
         private SparkElectricalSolver solver;
         private SparkCircuitSystem circuit;
         private SparkLevelSceneBindings bindings;
@@ -42,6 +48,12 @@ namespace ProjectSpark.Gameplay
         private int stage;
         private bool ready, started, blocked, tripped, pulseActive, pulseFinished, pulseLostDrive, resetDenied, restarted;
         private float voltage, peak, pulseTime, nextSolve, beltOffset;
+        private Vector3 clearCapRest;
+
+        private void Awake()
+        {
+            if (clearCap != null) clearCapRest = clearCap.localPosition;
+        }
 
         public void StartTest()
         {
@@ -91,6 +103,7 @@ namespace ProjectSpark.Gameplay
         {
             if (loader == null) loader = FindFirstObjectByType<SparkLevelLayoutLoader>();
             if (layout == null || loader == null || loader.ActiveLayout != layout) return;
+            if (manager == null) manager = FindFirstObjectByType<LevelGamePlayManager>();
             if (solver == null) solver = FindFirstObjectByType<SparkElectricalSolver>();
             if (circuit == null) circuit = FindFirstObjectByType<SparkCircuitSystem>();
             if (solver == null || circuit == null) { Show("Waiting for the circuit and solver.", false); return; }
@@ -192,7 +205,16 @@ namespace ProjectSpark.Gameplay
                 5 => !blocked && !tripped && restarted && running,
                 _ => false
             };
-            if (passed && bindings.SetRuntimeComponentBinding(Gates[stage], source)) stage++;
+            if (passed && bindings.SetRuntimeComponentBinding(Gates[stage], source))
+            {
+                stage++;
+                QueueEvaluation();
+            }
+        }
+
+        private void QueueEvaluation()
+        {
+            if (manager != null && manager.SceneBindings == bindings) manager.QueueEvaluation();
         }
 
         private string Prompt()
@@ -230,6 +252,7 @@ namespace ProjectSpark.Gameplay
         private void ResetTrial()
         {
             if (bindings != null) foreach (string id in Gates) bindings.ClearRuntimeComponentBinding(id);
+            if (stage > 0) QueueEvaluation();
             ready = started = tripped = pulseActive = pulseFinished = pulseLostDrive = resetDenied = restarted = false;
             stage = 0;
             peak = pulseTime = voltage = nextSolve = 0;
@@ -250,8 +273,24 @@ namespace ProjectSpark.Gameplay
             if (jamLight != null) jamLight.enabled = tripped;
             if (parcel != null)
             {
-                parcel.localPosition = new Vector3(blocked ? -.03f : -.48f,.12f,0);
-                parcel.gameObject.SetActive(blocked);
+                if (blocked) parcel.localPosition = blockedParcelPosition;
+                SetVisible(parcel, blocked);
+            }
+            SetVisible(detectorBeam, blocked);
+            SetVisible(alarmBeacon, tripped);
+            if (jamRocker != null && chargeContact != null)
+                jamRocker.localRotation = Quaternion.Euler(chargeContact.IsClosed ? 12f : -12f, 0, 0);
+            if (clearCap != null && clearContact != null)
+                clearCap.localPosition = clearCapRest + Vector3.down * (clearContact.IsClosed ? .009f : 0);
+            if (contactArm != null && motorContact != null)
+                contactArm.localRotation = Quaternion.Euler(0, 0, motorContact.IsClosed ? 0 : -16f);
+            if (monitorRun != null) monitorRun.enabled = running && !blocked;
+            if (monitorWait != null) monitorWait.enabled = ready && !tripped && (blocked || !running);
+            if (monitorTrip != null) monitorTrip.enabled = tripped;
+            if (timerReadout != null)
+            {
+                timerReadout.text = ready ? $"{voltage:0.00} V" : "— V";
+                timerReadout.color = tripped ? new Color(1f,.40f,.34f) : new Color(.49f,.95f,1f);
             }
             if (statusText != null && statusText.text != message) statusText.text = message;
             if (readingsText != null)
@@ -268,14 +307,19 @@ namespace ProjectSpark.Gameplay
         {
             if (shaft != null) shaft.Rotate(Vector3.right, 720f * dt, Space.Self);
             if (beltSlats == null || beltSlats.Length == 0) return;
-            beltOffset = Mathf.Repeat(beltOffset + dt * .52f, .96f);
+            beltOffset = Mathf.Repeat(beltOffset + dt * .52f, beltLength);
             for (int i=0; i<beltSlats.Length; i++)
             {
                 if (beltSlats[i] == null) continue;
                 var p=beltSlats[i].localPosition;
-                p.x=Mathf.Repeat(i * .96f / beltSlats.Length + beltOffset, .96f) - .48f;
+                p.x=Mathf.Repeat(i * beltLength / beltSlats.Length + beltOffset, beltLength) + beltStartX;
                 beltSlats[i].localPosition=p;
             }
+        }
+
+        private static void SetVisible(Transform model, bool visible)
+        {
+            if (model != null && model.gameObject.activeSelf != visible) model.gameObject.SetActive(visible);
         }
 
         private void OnDisable()

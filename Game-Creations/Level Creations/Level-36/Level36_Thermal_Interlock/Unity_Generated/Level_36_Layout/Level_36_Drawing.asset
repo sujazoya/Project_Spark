@@ -1,0 +1,282 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_36_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_36
+  levelTitle: Thermal Interlock
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the sensor divider
+    explanation: "W01 Battery_positive \u2192 PULLUP_IN. W02 PULLUP_OUT \u2192 SENSOR_IN.
+      W03 SENSOR_RETURN \u2192 Battery_negative. Cool NTC is 15 k\u03A9 and SENSE
+      is about 3.00 V. The pull-up limits sensor current even in the short test."
+    caption: "5 V \u2192 10 k\u03A9 \u2192 SENSE \u2192 NTC \u2192 RETURN"
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.09, y: 0.56}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: pullup
+      kind: 1
+      position: {x: 0.31, y: 0.56}
+      label: "10 k\u03A9 PULL-UP"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: sense
+      kind: 9
+      position: {x: 0.5, y: 0.71}
+      label: SENSE 3.00 V
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: ntc
+      kind: 1
+      position: {x: 0.69, y: 0.56}
+      label: "NTC \xB7 15 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: negative
+      kind: 9
+      position: {x: 0.91, y: 0.56}
+      label: "BATTERY \u2212"
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.09, y: 0.56}
+      - {x: 0.265, y: 0.56}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.355, y: 0.56}
+      - {x: 0.645, y: 0.56}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.5, y: 0.56}
+      - {x: 0.5, y: 0.68}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.735, y: 0.56}
+      - {x: 0.91, y: 0.56}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+  - title: 02 / Wire the three outputs
+    explanation: "W04 + \u2192 FAN_SW_IN, W05 FAN_SW_OUT \u2192 FAN_A, W06 FAN_B
+      \u2192 \u2212. W07 + \u2192 HEAT_SW_IN, W08 HEAT_SW_OUT \u2192 HEATER_IN, W09
+      HEATER_OUT \u2192 \u2212. W10 + \u2192 FAULT_SW_IN, W11 FAULT_SW_OUT \u2192
+      LED_R_IN, W12 LED_R_OUT \u2192 LED_A, W13 LED_K \u2192 \u2212."
+    caption: FAN, HEATER, AND FAULT LED BRANCHES
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.09, y: 0.54}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: fan-contact
+      kind: 9
+      position: {x: 0.29, y: 0.78}
+      label: FAN CONTACT
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: heat-contact
+      kind: 9
+      position: {x: 0.29, y: 0.54}
+      label: HEATER CONTACT
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: fault-contact
+      kind: 9
+      position: {x: 0.29, y: 0.3}
+      label: FAULT CONTACT
+      color: {r: 1, g: 0.49, b: 0.25, a: 1}
+    - id: fan
+      kind: 9
+      position: {x: 0.62, y: 0.78}
+      label: FAN MOTOR
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: heater
+      kind: 1
+      position: {x: 0.62, y: 0.54}
+      label: "HEATER 100 \u03A9"
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: limiter
+      kind: 1
+      position: {x: 0.51, y: 0.3}
+      label: "330 \u03A9"
+      color: {r: 1, g: 0.49, b: 0.25, a: 1}
+    - id: led
+      kind: 9
+      position: {x: 0.71, y: 0.3}
+      label: FAULT LED
+      color: {r: 1, g: 0.49, b: 0.25, a: 1}
+    - id: negative
+      kind: 9
+      position: {x: 0.91, y: 0.54}
+      label: "BATTERY \u2212"
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.09, y: 0.54}
+      - {x: 0.09, y: 0.78}
+      - {x: 0.245, y: 0.78}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.09, y: 0.54}
+      - {x: 0.245, y: 0.54}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.09, y: 0.54}
+      - {x: 0.09, y: 0.3}
+      - {x: 0.245, y: 0.3}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.335, y: 0.78}
+      - {x: 0.575, y: 0.78}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.335, y: 0.54}
+      - {x: 0.575, y: 0.54}
+      energized: 0
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - points:
+      - {x: 0.335, y: 0.3}
+      - {x: 0.465, y: 0.3}
+      energized: 0
+      color: {r: 1, g: 0.49, b: 0.25, a: 1}
+    - points:
+      - {x: 0.555, y: 0.3}
+      - {x: 0.665, y: 0.3}
+      energized: 0
+      color: {r: 1, g: 0.49, b: 0.25, a: 1}
+    - points:
+      - {x: 0.665, y: 0.78}
+      - {x: 0.91, y: 0.78}
+      - {x: 0.91, y: 0.54}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.665, y: 0.54}
+      - {x: 0.91, y: 0.54}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.755, y: 0.3}
+      - {x: 0.91, y: 0.3}
+      - {x: 0.91, y: 0.54}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+  - title: 03 / Test both sides of the warm band
+    explanation: HOT reads 1.60 V and starts cooling. WARM reads 2.25 V and keeps
+      cooling on. COOL reads 3.00 V and stops cooling. WARM again reads 2.25 V with
+      cooling off. The same voltage keeps whichever state was already active.
+    caption: "FAN ON BELOW 2.00 V  \u2022  FAN OFF ABOVE 2.70 V"
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.09, y: 0.56}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: pullup
+      kind: 1
+      position: {x: 0.31, y: 0.56}
+      label: "10 k\u03A9 PULL-UP"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: sense
+      kind: 9
+      position: {x: 0.5, y: 0.71}
+      label: SENSE 2.25 V
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: ntc
+      kind: 1
+      position: {x: 0.69, y: 0.56}
+      label: "NTC \xB7 8.2 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: negative
+      kind: 9
+      position: {x: 0.91, y: 0.56}
+      label: "BATTERY \u2212"
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.09, y: 0.56}
+      - {x: 0.265, y: 0.56}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.355, y: 0.56}
+      - {x: 0.645, y: 0.56}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.5, y: 0.56}
+      - {x: 0.5, y: 0.68}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.735, y: 0.56}
+      - {x: 0.91, y: 0.56}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+  - title: 04 / Test the fault latch
+    explanation: Both faults cut the heater, run the fan, and light the fault LED.
+      Restore the sensor after each fault and watch the warning stay on. RESET FAULT
+      is available after a valid cool reading returns. Finish both tests and verify
+      normal outputs.
+    caption: "OPEN \u2248 5 V  \u2022  SHORT \u2248 0 V"
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.09, y: 0.56}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: pullup
+      kind: 1
+      position: {x: 0.31, y: 0.56}
+      label: "10 k\u03A9 PULL-UP"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: sense
+      kind: 9
+      position: {x: 0.5, y: 0.71}
+      label: "SENSE \u2192 FAULT"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: ntc
+      kind: 1
+      position: {x: 0.69, y: 0.56}
+      label: "NTC \xB7 OPEN / SHORT"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: negative
+      kind: 9
+      position: {x: 0.91, y: 0.56}
+      label: "BATTERY \u2212"
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.09, y: 0.56}
+      - {x: 0.265, y: 0.56}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.355, y: 0.56}
+      - {x: 0.645, y: 0.56}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.5, y: 0.56}
+      - {x: 0.5, y: 0.68}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.735, y: 0.56}
+      - {x: 0.91, y: 0.56}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}

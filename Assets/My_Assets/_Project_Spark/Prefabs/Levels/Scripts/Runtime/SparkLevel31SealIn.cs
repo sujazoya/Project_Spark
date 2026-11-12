@@ -29,6 +29,7 @@ namespace ProjectSpark.Gameplay
         public int Stage { get; private set; }
         public string Status { get; private set; }
         private SparkLevelLayoutLoader loader;
+        private LevelGamePlayManager manager;
         private SparkElectricalSolver solver;
         private SparkCircuitSystem circuit;
         private SparkLevelSceneBindings bindings;
@@ -73,6 +74,7 @@ namespace ProjectSpark.Gameplay
             if (!Configured) { SetStatus("Level 31 setup is missing a part reference."); return; }
             if (loader == null) loader = FindFirstObjectByType<SparkLevelLayoutLoader>();
             if (!Active) return;
+            if (manager == null) manager = FindFirstObjectByType<LevelGamePlayManager>();
             if (solver == null) solver = FindFirstObjectByType<SparkElectricalSolver>();
             if (circuit == null) circuit = FindFirstObjectByType<SparkCircuitSystem>();
             if (solver == null || circuit == null) { SetStatus("Waiting for the circuit and solver."); return; }
@@ -193,6 +195,7 @@ namespace ProjectSpark.Gameplay
             Stage++;
             holdTime = 0f;
             sawButtonAction = false;
+            QueueEvaluation();
         }
 
         private void ResetTrial()
@@ -211,8 +214,14 @@ namespace ProjectSpark.Gameplay
 
         private void ClearGates()
         {
-            if (bindings != null)
-                foreach (string gate in Gates) bindings.ClearRuntimeComponentBinding(gate);
+            if (bindings == null) return;
+            foreach (string gate in Gates) bindings.ClearRuntimeComponentBinding(gate);
+            if (Stage > 0) QueueEvaluation();
+        }
+
+        private void QueueEvaluation()
+        {
+            if (manager != null && manager.SceneBindings == bindings) manager.QueueEvaluation();
         }
 
         private void OnApplicationFocus(bool hasFocus)

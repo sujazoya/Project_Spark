@@ -1,0 +1,413 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_39_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_39
+  levelTitle: Across the Isolation Gap
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the isolated circuits
+    explanation: "W01 TX_POS \u2192 SEND_IN. W02 SEND_OUT \u2192 TX_R_IN. W03 TX_R_OUT
+      \u2192 OPTO_A. W04 OPTO_K \u2192 TX_RETURN. W05 RX_POS \u2192 PULLUP_IN. W06
+      PULLUP_OUT \u2192 OPTO_C. W07 OPTO_E \u2192 RX_RETURN. Leave the returns separate."
+    caption: "SEPARATE 5 V SUPPLIES  \u2022  SEPARATE RETURNS"
+    parts:
+    - id: tx-supply
+      kind: 9
+      position: {x: 0.1, y: 0.78}
+      label: TX +5 V
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: send
+      kind: 9
+      position: {x: 0.27, y: 0.78}
+      label: SEND
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: limit
+      kind: 1
+      position: {x: 0.43, y: 0.78}
+      label: "470 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: emitter
+      kind: 9
+      position: {x: 0.33, y: 0.48}
+      label: TX OFF
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: gap
+      kind: 9
+      position: {x: 0.5, y: 0.48}
+      label: LIGHT ONLY
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: receiver
+      kind: 9
+      position: {x: 0.67, y: 0.48}
+      label: RX HIGH
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: pull-up
+      kind: 1
+      position: {x: 0.73, y: 0.78}
+      label: "1 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: rx-supply
+      kind: 9
+      position: {x: 0.9, y: 0.78}
+      label: RX +5 V
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: tx-return
+      kind: 9
+      position: {x: 0.16, y: 0.27}
+      label: TX RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: rx-return
+      kind: 9
+      position: {x: 0.84, y: 0.27}
+      label: RX RETURN
+      color: {r: 0.65, g: 0.53, b: 0.99, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.78}
+      - {x: 0.225, y: 0.78}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.315, y: 0.78}
+      - {x: 0.385, y: 0.78}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.43, y: 0.78}
+      - {x: 0.43, y: 0.48}
+      - {x: 0.375, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.285, y: 0.48}
+      - {x: 0.16, y: 0.48}
+      - {x: 0.16, y: 0.27}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.9, y: 0.78}
+      - {x: 0.775, y: 0.78}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.685, y: 0.78}
+      - {x: 0.6, y: 0.78}
+      - {x: 0.6, y: 0.48}
+      - {x: 0.625, y: 0.48}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.715, y: 0.48}
+      - {x: 0.84, y: 0.48}
+      - {x: 0.84, y: 0.27}
+      energized: 0
+      color: {r: 0.65, g: 0.53, b: 0.99, a: 1}
+  - title: 02 / Send and release
+    explanation: "Turn SEND on. The transmitter LED draws about 6.4 mA. The receiver
+      contact closes and sinks about 5 mA through the 1 k\u03A9 pull-up. RX drops
+      near 0 V. Turn SEND off and the pull-up returns RX to about 5 V."
+    caption: "ACTIVE-LOW OUTPUT  \u2022  SEND ON MEANS RX LOW"
+    parts:
+    - id: tx-supply
+      kind: 9
+      position: {x: 0.1, y: 0.78}
+      label: TX +5 V
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: send
+      kind: 9
+      position: {x: 0.27, y: 0.78}
+      label: SEND
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: limit
+      kind: 1
+      position: {x: 0.43, y: 0.78}
+      label: "470 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: emitter
+      kind: 9
+      position: {x: 0.33, y: 0.48}
+      label: TX LED ON
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: gap
+      kind: 9
+      position: {x: 0.5, y: 0.48}
+      label: LIGHT ONLY
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: receiver
+      kind: 9
+      position: {x: 0.67, y: 0.48}
+      label: RX LOW
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: pull-up
+      kind: 1
+      position: {x: 0.73, y: 0.78}
+      label: "1 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: rx-supply
+      kind: 9
+      position: {x: 0.9, y: 0.78}
+      label: RX +5 V
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: tx-return
+      kind: 9
+      position: {x: 0.16, y: 0.27}
+      label: TX RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: rx-return
+      kind: 9
+      position: {x: 0.84, y: 0.27}
+      label: RX RETURN
+      color: {r: 0.65, g: 0.53, b: 0.99, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.78}
+      - {x: 0.225, y: 0.78}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.315, y: 0.78}
+      - {x: 0.385, y: 0.78}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.43, y: 0.78}
+      - {x: 0.43, y: 0.48}
+      - {x: 0.375, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.285, y: 0.48}
+      - {x: 0.16, y: 0.48}
+      - {x: 0.16, y: 0.27}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.9, y: 0.78}
+      - {x: 0.775, y: 0.78}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.685, y: 0.78}
+      - {x: 0.6, y: 0.78}
+      - {x: 0.6, y: 0.48}
+      - {x: 0.625, y: 0.48}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.715, y: 0.48}
+      - {x: 0.84, y: 0.48}
+      - {x: 0.84, y: 0.27}
+      energized: 0
+      color: {r: 0.65, g: 0.53, b: 0.99, a: 1}
+  - title: 03 / Prove independent receiver power
+    explanation: Turn SEND on again, then turn RX POWER off. The transmitter LED
+      stays on and the receiver shows UNPOWERED. Restore RX POWER and confirm RX
+      goes LOW again while SEND remains on.
+    caption: THE RECEIVER HAS ITS OWN POWER SUPPLY
+    parts:
+    - id: tx-supply
+      kind: 9
+      position: {x: 0.1, y: 0.78}
+      label: TX +5 V
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: send
+      kind: 9
+      position: {x: 0.27, y: 0.78}
+      label: SEND
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: limit
+      kind: 1
+      position: {x: 0.43, y: 0.78}
+      label: "470 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: emitter
+      kind: 9
+      position: {x: 0.33, y: 0.48}
+      label: TX LED ON
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: gap
+      kind: 9
+      position: {x: 0.5, y: 0.48}
+      label: LIGHT ONLY
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: receiver
+      kind: 9
+      position: {x: 0.67, y: 0.48}
+      label: RX UNPOWERED
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: pull-up
+      kind: 1
+      position: {x: 0.73, y: 0.78}
+      label: "1 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: rx-supply
+      kind: 9
+      position: {x: 0.9, y: 0.78}
+      label: RX +5 V
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: tx-return
+      kind: 9
+      position: {x: 0.16, y: 0.27}
+      label: TX RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: rx-return
+      kind: 9
+      position: {x: 0.84, y: 0.27}
+      label: RX RETURN
+      color: {r: 0.65, g: 0.53, b: 0.99, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.78}
+      - {x: 0.225, y: 0.78}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.315, y: 0.78}
+      - {x: 0.385, y: 0.78}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.43, y: 0.78}
+      - {x: 0.43, y: 0.48}
+      - {x: 0.375, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.285, y: 0.48}
+      - {x: 0.16, y: 0.48}
+      - {x: 0.16, y: 0.27}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.9, y: 0.78}
+      - {x: 0.775, y: 0.78}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.685, y: 0.78}
+      - {x: 0.6, y: 0.78}
+      - {x: 0.6, y: 0.48}
+      - {x: 0.625, y: 0.48}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.715, y: 0.48}
+      - {x: 0.84, y: 0.48}
+      - {x: 0.84, y: 0.27}
+      energized: 0
+      color: {r: 0.65, g: 0.53, b: 0.99, a: 1}
+  - title: 04 / Detect and remove the bridge
+    explanation: Add the temporary W08 wire between TX_RETURN and RX_RETURN. RX may
+      still read LOW while the indicator changes to BRIDGED. Remove W08, turn SEND
+      off to see HIGH, then turn SEND on to verify LOW with isolation restored.
+    caption: THE OUTPUT CAN WORK WHILE ISOLATION IS LOST
+    parts:
+    - id: tx-supply
+      kind: 9
+      position: {x: 0.1, y: 0.78}
+      label: TX +5 V
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: send
+      kind: 9
+      position: {x: 0.27, y: 0.78}
+      label: SEND
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: limit
+      kind: 1
+      position: {x: 0.43, y: 0.78}
+      label: "470 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: emitter
+      kind: 9
+      position: {x: 0.33, y: 0.48}
+      label: TX LED ON
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: gap
+      kind: 9
+      position: {x: 0.5, y: 0.48}
+      label: LIGHT ONLY
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: receiver
+      kind: 9
+      position: {x: 0.67, y: 0.48}
+      label: RX LOW
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: pull-up
+      kind: 1
+      position: {x: 0.73, y: 0.78}
+      label: "1 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: rx-supply
+      kind: 9
+      position: {x: 0.9, y: 0.78}
+      label: RX +5 V
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: tx-return
+      kind: 9
+      position: {x: 0.16, y: 0.27}
+      label: TX RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: rx-return
+      kind: 9
+      position: {x: 0.84, y: 0.27}
+      label: RX RETURN
+      color: {r: 0.65, g: 0.53, b: 0.99, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.78}
+      - {x: 0.225, y: 0.78}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.315, y: 0.78}
+      - {x: 0.385, y: 0.78}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.43, y: 0.78}
+      - {x: 0.43, y: 0.48}
+      - {x: 0.375, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.285, y: 0.48}
+      - {x: 0.16, y: 0.48}
+      - {x: 0.16, y: 0.27}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.9, y: 0.78}
+      - {x: 0.775, y: 0.78}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.685, y: 0.78}
+      - {x: 0.6, y: 0.78}
+      - {x: 0.6, y: 0.48}
+      - {x: 0.625, y: 0.48}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.715, y: 0.48}
+      - {x: 0.84, y: 0.48}
+      - {x: 0.84, y: 0.27}
+      energized: 0
+      color: {r: 0.65, g: 0.53, b: 0.99, a: 1}
+    - points:
+      - {x: 0.16, y: 0.27}
+      - {x: 0.16, y: 0.19}
+      - {x: 0.84, y: 0.19}
+      - {x: 0.84, y: 0.27}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}

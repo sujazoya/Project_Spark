@@ -1,0 +1,274 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_40_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_40
+  levelTitle: The Long Run
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the current loop
+    explanation: "W01 LOOP_POS \u2192 TX_IN. W02 TX_OUT \u2192 CABLE_IN. W03 CABLE_OUT
+      \u2192 LINE_IN. W04 LINE_OUT \u2192 RX_IN. W05 RX_OUT \u2192 LOOP_RETURN. The
+      empty tank sends 4 mA and the 250 \u03A9 receiver reads 1.00 V."
+    caption: 4 mA IS LIVE ZERO
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.1, y: 0.72}
+      label: 12 V +
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: transmitter
+      kind: 9
+      position: {x: 0.32, y: 0.72}
+      label: "4\u201320 mA TX"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: cable
+      kind: 1
+      position: {x: 0.58, y: 0.72}
+      label: "50 \u03A9 CABLE"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: line
+      kind: 9
+      position: {x: 0.81, y: 0.52}
+      label: LINE CLOSED
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: receiver
+      kind: 1
+      position: {x: 0.58, y: 0.32}
+      label: "250 \u03A9  RX 1.00 V"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.1, y: 0.32}
+      label: LOOP RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.72}
+      - {x: 0.275, y: 0.72}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.365, y: 0.72}
+      - {x: 0.535, y: 0.72}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.625, y: 0.72}
+      - {x: 0.765, y: 0.72}
+      - {x: 0.765, y: 0.52}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.855, y: 0.52}
+      - {x: 0.855, y: 0.32}
+      - {x: 0.625, y: 0.32}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.535, y: 0.32}
+      - {x: 0.1, y: 0.32}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+  - title: 02 / Extend the cable at midscale
+    explanation: "Select 50% TANK, then fit the 350 \u03A9 cable. Receiver current
+      and voltage stay at 12 mA and 3.00 V. The transmitter has about 4.80 V across
+      it after the cable change."
+    caption: "50% TANK  \u2022  12 mA  \u2022  3.00 V AT RX"
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.1, y: 0.72}
+      label: 12 V +
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: transmitter
+      kind: 9
+      position: {x: 0.32, y: 0.72}
+      label: "4\u201320 mA TX"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: cable
+      kind: 1
+      position: {x: 0.58, y: 0.72}
+      label: "350 \u03A9 CABLE"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: line
+      kind: 9
+      position: {x: 0.81, y: 0.52}
+      label: LINE CLOSED
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: receiver
+      kind: 1
+      position: {x: 0.58, y: 0.32}
+      label: "250 \u03A9  RX 3.00 V"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.1, y: 0.32}
+      label: LOOP RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.72}
+      - {x: 0.275, y: 0.72}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.365, y: 0.72}
+      - {x: 0.535, y: 0.72}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.625, y: 0.72}
+      - {x: 0.765, y: 0.72}
+      - {x: 0.765, y: 0.52}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.855, y: 0.52}
+      - {x: 0.855, y: 0.32}
+      - {x: 0.625, y: 0.32}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.535, y: 0.32}
+      - {x: 0.1, y: 0.32}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+  - title: 03 / Find the voltage limit
+    explanation: "At 100% with the long cable, 600 \u03A9 of cable and receiver resistance
+      leaves no headroom at 20 mA. With 10 V available to the load, current is about
+      16.67 mA. The receiver reads 4.17 V and decodes about 79%."
+    caption: THE TRANSMITTER NEEDS 2.0 V OF HEADROOM
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.1, y: 0.72}
+      label: 12 V +
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: transmitter
+      kind: 9
+      position: {x: 0.32, y: 0.72}
+      label: "4\u201320 mA TX"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: cable
+      kind: 1
+      position: {x: 0.58, y: 0.72}
+      label: "350 \u03A9 CABLE"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: line
+      kind: 9
+      position: {x: 0.81, y: 0.52}
+      label: LINE CLOSED
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: receiver
+      kind: 1
+      position: {x: 0.58, y: 0.32}
+      label: "250 \u03A9  RX 4.17 V"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.1, y: 0.32}
+      label: LOOP RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.72}
+      - {x: 0.275, y: 0.72}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.365, y: 0.72}
+      - {x: 0.535, y: 0.72}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.625, y: 0.72}
+      - {x: 0.765, y: 0.72}
+      - {x: 0.765, y: 0.52}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.855, y: 0.52}
+      - {x: 0.855, y: 0.32}
+      - {x: 0.625, y: 0.32}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.535, y: 0.32}
+      - {x: 0.1, y: 0.32}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+  - title: 04 / Restore full scale and test the break
+    explanation: "Fit the 50 \u03A9 cable to recover 20 mA and 5.00 V at RX. Open
+      the line and confirm that 0 mA reports LINE OPEN. Close it again and verify
+      the 100% reading returns."
+    caption: "20 mA FULL SCALE  \u2022  0 mA OPEN LINE"
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.1, y: 0.72}
+      label: 12 V +
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: transmitter
+      kind: 9
+      position: {x: 0.32, y: 0.72}
+      label: "4\u201320 mA TX"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: cable
+      kind: 1
+      position: {x: 0.58, y: 0.72}
+      label: "50 \u03A9 CABLE"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: line
+      kind: 9
+      position: {x: 0.81, y: 0.52}
+      label: LINE OPEN
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: receiver
+      kind: 1
+      position: {x: 0.58, y: 0.32}
+      label: "250 \u03A9  RX 0.00 V"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.1, y: 0.32}
+      label: LOOP RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.72}
+      - {x: 0.275, y: 0.72}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.365, y: 0.72}
+      - {x: 0.535, y: 0.72}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.625, y: 0.72}
+      - {x: 0.765, y: 0.72}
+      - {x: 0.765, y: 0.52}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.855, y: 0.52}
+      - {x: 0.855, y: 0.32}
+      - {x: 0.625, y: 0.32}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.535, y: 0.32}
+      - {x: 0.1, y: 0.32}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}

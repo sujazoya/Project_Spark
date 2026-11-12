@@ -1,0 +1,326 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_37_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_37
+  levelTitle: Kelvin Test
+  initialPage: 0
+  pages:
+  - title: 01 / Measure the FORCE loop
+    explanation: "W01 Battery_positive \u2192 LIMIT_IN. W02 LIMIT_OUT \u2192 LEAD_PLUS_IN.
+      W03 LEAD_PLUS_OUT \u2192 CONNECTOR_PLUS. W04 CONNECTOR_MINUS \u2192 LEAD_RETURN_IN.
+      W05 LEAD_RETURN_OUT \u2192 Battery_negative. Press READ LOOP. The 100 \u03A9
+      limiter sets the test current and sits outside the two-wire voltage measurement."
+    caption: "TWO-WIRE = 10 \u03A9 + 5 \u03A9 + 10 \u03A9 = 25 \u03A9"
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.075, y: 0.66}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: limiter
+      kind: 1
+      position: {x: 0.24, y: 0.66}
+      label: "LIMITER 100 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: lead
+      kind: 1
+      position: {x: 0.405, y: 0.66}
+      label: "LEAD 10 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: connector
+      kind: 1
+      position: {x: 0.57, y: 0.66}
+      label: "CONNECTOR 5 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: return-lead
+      kind: 1
+      position: {x: 0.735, y: 0.66}
+      label: "RETURN 10 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: negative
+      kind: 9
+      position: {x: 0.915, y: 0.66}
+      label: "BATTERY \u2212"
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.075, y: 0.66}
+      - {x: 0.195, y: 0.66}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.285, y: 0.66}
+      - {x: 0.36, y: 0.66}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.45, y: 0.66}
+      - {x: 0.525, y: 0.66}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.615, y: 0.66}
+      - {x: 0.69, y: 0.66}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.78, y: 0.66}
+      - {x: 0.915, y: 0.66}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+  - title: 02 / Connect the Kelvin meter
+    explanation: "W06 SENSE_PLUS \u2192 CONNECTOR_PLUS. W07 SENSE_MINUS \u2192 CONNECTOR_MINUS.
+      Leave the FORCE wires connected to the same connector terminals. At 40.0 mA,
+      0.20 V across the connector gives 5 \u03A9. Press READ KELVIN."
+    caption: "KELVIN = CONNECTOR VOLTAGE \xF7 TEST CURRENT"
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.075, y: 0.66}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: limiter
+      kind: 1
+      position: {x: 0.24, y: 0.66}
+      label: "LIMITER 100 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: lead
+      kind: 1
+      position: {x: 0.405, y: 0.66}
+      label: "LEAD 10 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: connector
+      kind: 1
+      position: {x: 0.57, y: 0.66}
+      label: "CONNECTOR 5 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: return-lead
+      kind: 1
+      position: {x: 0.735, y: 0.66}
+      label: "RETURN 10 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: negative
+      kind: 9
+      position: {x: 0.915, y: 0.66}
+      label: "BATTERY \u2212"
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: sense
+      kind: 9
+      position: {x: 0.57, y: 0.34}
+      label: KELVIN SENSE
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    wires:
+    - points:
+      - {x: 0.075, y: 0.66}
+      - {x: 0.195, y: 0.66}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.285, y: 0.66}
+      - {x: 0.36, y: 0.66}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.45, y: 0.66}
+      - {x: 0.525, y: 0.66}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.615, y: 0.66}
+      - {x: 0.69, y: 0.66}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.78, y: 0.66}
+      - {x: 0.915, y: 0.66}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.525, y: 0.66}
+      - {x: 0.505, y: 0.66}
+      - {x: 0.505, y: 0.34}
+      - {x: 0.525, y: 0.34}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.615, y: 0.66}
+      - {x: 0.635, y: 0.66}
+      - {x: 0.635, y: 0.34}
+      - {x: 0.615, y: 0.34}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+  - title: 03 / Diagnose both faults
+    explanation: "Load the first case. Two-wire rises to 35 \u03A9 and Kelvin stays
+      at 5 \u03A9. Choose LEAD FAULT. Load the second case. Both readings rise to
+      42 \u03A9 and 12 \u03A9. Choose CONNECTOR FAULT. The drawing shows the second
+      case."
+    caption: COMPARE THE TWO-WIRE AND KELVIN READINGS
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.075, y: 0.66}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: limiter
+      kind: 1
+      position: {x: 0.24, y: 0.66}
+      label: "LIMITER 100 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: lead
+      kind: 1
+      position: {x: 0.405, y: 0.66}
+      label: "LEAD 20 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: connector
+      kind: 1
+      position: {x: 0.57, y: 0.66}
+      label: "CONNECTOR 12 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: return-lead
+      kind: 1
+      position: {x: 0.735, y: 0.66}
+      label: "RETURN 10 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: negative
+      kind: 9
+      position: {x: 0.915, y: 0.66}
+      label: "BATTERY \u2212"
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: sense
+      kind: 9
+      position: {x: 0.57, y: 0.34}
+      label: KELVIN SENSE
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    wires:
+    - points:
+      - {x: 0.075, y: 0.66}
+      - {x: 0.195, y: 0.66}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.285, y: 0.66}
+      - {x: 0.36, y: 0.66}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.45, y: 0.66}
+      - {x: 0.525, y: 0.66}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.615, y: 0.66}
+      - {x: 0.69, y: 0.66}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.78, y: 0.66}
+      - {x: 0.915, y: 0.66}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.525, y: 0.66}
+      - {x: 0.505, y: 0.66}
+      - {x: 0.505, y: 0.34}
+      - {x: 0.525, y: 0.34}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.615, y: 0.66}
+      - {x: 0.635, y: 0.66}
+      - {x: 0.635, y: 0.34}
+      - {x: 0.615, y: 0.34}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+  - title: 04 / Verify the repair
+    explanation: "Press FIT CONNECTOR. Kelvin returns to 5 \u03A9 while two-wire
+      still reads 35 \u03A9. Press REPLACE LEAD. The readings return to 25 \u03A9
+      and 5 \u03A9. The drawing shows the intermediate state after the connector
+      repair."
+    caption: VERIFY THE CONNECTOR, THEN THE FIXTURE
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.075, y: 0.66}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: limiter
+      kind: 1
+      position: {x: 0.24, y: 0.66}
+      label: "LIMITER 100 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: lead
+      kind: 1
+      position: {x: 0.405, y: 0.66}
+      label: "LEAD 20 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: connector
+      kind: 1
+      position: {x: 0.57, y: 0.66}
+      label: "CONNECTOR 5 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: return-lead
+      kind: 1
+      position: {x: 0.735, y: 0.66}
+      label: "RETURN 10 \u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: negative
+      kind: 9
+      position: {x: 0.915, y: 0.66}
+      label: "BATTERY \u2212"
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: sense
+      kind: 9
+      position: {x: 0.57, y: 0.34}
+      label: KELVIN SENSE
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    wires:
+    - points:
+      - {x: 0.075, y: 0.66}
+      - {x: 0.195, y: 0.66}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.285, y: 0.66}
+      - {x: 0.36, y: 0.66}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.45, y: 0.66}
+      - {x: 0.525, y: 0.66}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.615, y: 0.66}
+      - {x: 0.69, y: 0.66}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.78, y: 0.66}
+      - {x: 0.915, y: 0.66}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.525, y: 0.66}
+      - {x: 0.505, y: 0.66}
+      - {x: 0.505, y: 0.34}
+      - {x: 0.525, y: 0.34}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.615, y: 0.66}
+      - {x: 0.635, y: 0.66}
+      - {x: 0.635, y: 0.34}
+      - {x: 0.615, y: 0.34}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}

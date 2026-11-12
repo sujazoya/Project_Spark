@@ -1,0 +1,471 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_41_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_41
+  levelTitle: Build the Analog Output
+  initialPage: 0
+  pages:
+  - title: "01 / Wire the R\u20132R ladder"
+    explanation: "W01 BIT2 \u2192 B2_R_IN. W02 BIT1 \u2192 B1_R_IN. W03 BIT0 \u2192
+      B0_R_IN. W04 B2_R_OUT \u2192 LINK21_IN. W05 LINK21_OUT \u2192 B1_R_OUT. W06
+      B1_R_OUT \u2192 LINK10_IN. W07 LINK10_OUT \u2192 B0_R_OUT. W08 B0_R_OUT \u2192
+      TERM_R_IN. W09 TERM_OUT \u2192 DAC_RETURN."
+    caption: "R = 10 k\u03A9  \u2022  2R = 20 k\u03A9"
+    parts:
+    - id: out
+      kind: 9
+      position: {x: 0.1, y: 0.78}
+      label: DAC OUT 0.000 V
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: link21
+      kind: 1
+      position: {x: 0.34, y: 0.78}
+      label: "10 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: link10
+      kind: 1
+      position: {x: 0.63, y: 0.78}
+      label: "10 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.19, y: 0.51}
+      label: "20 k\u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.49, y: 0.51}
+      label: "20 k\u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: r0
+      kind: 1
+      position: {x: 0.77, y: 0.51}
+      label: "20 k\u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: b2
+      kind: 9
+      position: {x: 0.19, y: 0.24}
+      label: B2 = 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: b1
+      kind: 9
+      position: {x: 0.49, y: 0.24}
+      label: B1 = 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: b0
+      kind: 9
+      position: {x: 0.77, y: 0.24}
+      label: B0 = 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: term
+      kind: 1
+      position: {x: 0.9, y: 0.6}
+      label: "20 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.9, y: 0.3}
+      label: RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.78}
+      - {x: 0.295, y: 0.78}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.385, y: 0.78}
+      - {x: 0.585, y: 0.78}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.675, y: 0.78}
+      - {x: 0.9, y: 0.78}
+      - {x: 0.9, y: 0.65}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.19, y: 0.78}
+      - {x: 0.19, y: 0.56}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.49, y: 0.78}
+      - {x: 0.49, y: 0.56}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.77, y: 0.78}
+      - {x: 0.77, y: 0.56}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.19, y: 0.46}
+      - {x: 0.19, y: 0.24}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.49, y: 0.46}
+      - {x: 0.49, y: 0.24}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.77, y: 0.46}
+      - {x: 0.77, y: 0.24}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.9, y: 0.55}
+      - {x: 0.9, y: 0.3}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+  - title: 02 / Compare the bit weights
+    explanation: Apply 001, 010, and 100 to measure the bits individually. B2 contributes
+      four steps, B1 contributes two, and B0 contributes one. Use those weights to
+      find the code for 3.125 V.
+    caption: "001 = 0.625 V  \u2022  010 = 1.250 V  \u2022  100 = 2.500 V"
+    parts:
+    - id: out
+      kind: 9
+      position: {x: 0.1, y: 0.78}
+      label: DAC OUT 2.500 V
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: link21
+      kind: 1
+      position: {x: 0.34, y: 0.78}
+      label: "10 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: link10
+      kind: 1
+      position: {x: 0.63, y: 0.78}
+      label: "10 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.19, y: 0.51}
+      label: "20 k\u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.49, y: 0.51}
+      label: "20 k\u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: r0
+      kind: 1
+      position: {x: 0.77, y: 0.51}
+      label: "20 k\u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: b2
+      kind: 9
+      position: {x: 0.19, y: 0.24}
+      label: B2 = 1
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: b1
+      kind: 9
+      position: {x: 0.49, y: 0.24}
+      label: B1 = 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: b0
+      kind: 9
+      position: {x: 0.77, y: 0.24}
+      label: B0 = 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: term
+      kind: 1
+      position: {x: 0.9, y: 0.6}
+      label: "20 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.9, y: 0.3}
+      label: RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.78}
+      - {x: 0.295, y: 0.78}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.385, y: 0.78}
+      - {x: 0.585, y: 0.78}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.675, y: 0.78}
+      - {x: 0.9, y: 0.78}
+      - {x: 0.9, y: 0.65}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.19, y: 0.78}
+      - {x: 0.19, y: 0.56}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.49, y: 0.78}
+      - {x: 0.49, y: 0.56}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.77, y: 0.78}
+      - {x: 0.77, y: 0.56}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.19, y: 0.46}
+      - {x: 0.19, y: 0.24}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.49, y: 0.46}
+      - {x: 0.49, y: 0.24}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.77, y: 0.46}
+      - {x: 0.77, y: 0.24}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.9, y: 0.55}
+      - {x: 0.9, y: 0.3}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+  - title: 03 / Find the open termination
+    explanation: First apply 111 with the link closed. Then open the link while keeping
+      111 applied. With the path to return open and all three bits high, the output
+      rises toward the reference. Select OPEN TERMINATION.
+    caption: "111  \u2022  HEALTHY 4.375 V  \u2022  OPEN LINK \u2248 5.000 V"
+    parts:
+    - id: out
+      kind: 9
+      position: {x: 0.1, y: 0.78}
+      label: "DAC OUT \u2248 5.000 V"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: link21
+      kind: 1
+      position: {x: 0.34, y: 0.78}
+      label: "10 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: link10
+      kind: 1
+      position: {x: 0.63, y: 0.78}
+      label: "10 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.19, y: 0.51}
+      label: "20 k\u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.49, y: 0.51}
+      label: "20 k\u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: r0
+      kind: 1
+      position: {x: 0.77, y: 0.51}
+      label: "20 k\u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: b2
+      kind: 9
+      position: {x: 0.19, y: 0.24}
+      label: B2 = 1
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: b1
+      kind: 9
+      position: {x: 0.49, y: 0.24}
+      label: B1 = 1
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: b0
+      kind: 9
+      position: {x: 0.77, y: 0.24}
+      label: B0 = 1
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: term
+      kind: 1
+      position: {x: 0.9, y: 0.6}
+      label: "20 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.9, y: 0.3}
+      label: LINK OPEN
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.78}
+      - {x: 0.295, y: 0.78}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.385, y: 0.78}
+      - {x: 0.585, y: 0.78}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.675, y: 0.78}
+      - {x: 0.9, y: 0.78}
+      - {x: 0.9, y: 0.65}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.19, y: 0.78}
+      - {x: 0.19, y: 0.56}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.49, y: 0.78}
+      - {x: 0.49, y: 0.56}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.77, y: 0.78}
+      - {x: 0.77, y: 0.56}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.19, y: 0.46}
+      - {x: 0.19, y: 0.24}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.49, y: 0.46}
+      - {x: 0.49, y: 0.24}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.77, y: 0.46}
+      - {x: 0.77, y: 0.24}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.9, y: 0.55}
+      - {x: 0.9, y: 0.46}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+  - title: 04 / Restore and sweep
+    explanation: Restore the link and run the sweep from 000 through 111. The readings
+      rise from 0.000 V to 4.375 V in seven equal steps. Full scale is one step below
+      the 5 V reference.
+    caption: "EIGHT LEVELS  \u2022  SEVEN STEPS OF 0.625 V"
+    parts:
+    - id: out
+      kind: 9
+      position: {x: 0.1, y: 0.78}
+      label: DAC OUT 4.375 V
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: link21
+      kind: 1
+      position: {x: 0.34, y: 0.78}
+      label: "10 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: link10
+      kind: 1
+      position: {x: 0.63, y: 0.78}
+      label: "10 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: r2
+      kind: 1
+      position: {x: 0.19, y: 0.51}
+      label: "20 k\u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: r1
+      kind: 1
+      position: {x: 0.49, y: 0.51}
+      label: "20 k\u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: r0
+      kind: 1
+      position: {x: 0.77, y: 0.51}
+      label: "20 k\u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: b2
+      kind: 9
+      position: {x: 0.19, y: 0.24}
+      label: B2 = 1
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: b1
+      kind: 9
+      position: {x: 0.49, y: 0.24}
+      label: B1 = 1
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: b0
+      kind: 9
+      position: {x: 0.77, y: 0.24}
+      label: B0 = 1
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: term
+      kind: 1
+      position: {x: 0.9, y: 0.6}
+      label: "20 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.9, y: 0.3}
+      label: RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.78}
+      - {x: 0.295, y: 0.78}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.385, y: 0.78}
+      - {x: 0.585, y: 0.78}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.675, y: 0.78}
+      - {x: 0.9, y: 0.78}
+      - {x: 0.9, y: 0.65}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.19, y: 0.78}
+      - {x: 0.19, y: 0.56}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.49, y: 0.78}
+      - {x: 0.49, y: 0.56}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.77, y: 0.78}
+      - {x: 0.77, y: 0.56}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.19, y: 0.46}
+      - {x: 0.19, y: 0.24}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.49, y: 0.46}
+      - {x: 0.49, y: 0.24}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.77, y: 0.46}
+      - {x: 0.77, y: 0.24}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.9, y: 0.55}
+      - {x: 0.9, y: 0.3}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}

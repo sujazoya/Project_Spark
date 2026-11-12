@@ -1,0 +1,345 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_35_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_35
+  levelTitle: Bridge Balance - Find the Hidden Fault
+  initialPage: 0
+  pages:
+  - title: 01 / Wire and capture the baseline
+    explanation: "W01 Battery_positive \u2192 LU_IN. W02 Battery_positive \u2192
+      RU_IN. W03 LU_OUT \u2192 LL_IN. W04 RU_OUT \u2192 RL_IN. W05 LL_OUT \u2192
+      Battery_negative. W06 RL_OUT \u2192 Battery_negative. Each midpoint should
+      read 2.50 V relative to Battery \u2212."
+    caption: "TWO PARALLEL DIVIDERS \u2022 5 V \u2022 FOUR 1 k\u03A9 RESISTORS"
+    parts:
+    - id: supply
+      kind: 9
+      position: {x: 0.1, y: 0.55}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: lu
+      kind: 1
+      position: {x: 0.33, y: 0.77}
+      label: "LU 1 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: lm
+      kind: 9
+      position: {x: 0.51, y: 0.77}
+      label: LEFT 2.50 V
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: ll
+      kind: 1
+      position: {x: 0.7, y: 0.77}
+      label: "LL 1 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: ru
+      kind: 1
+      position: {x: 0.33, y: 0.34}
+      label: "RU 1 k\u03A9"
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: rm
+      kind: 9
+      position: {x: 0.51, y: 0.34}
+      label: RIGHT 2.50 V
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: rl
+      kind: 1
+      position: {x: 0.7, y: 0.34}
+      label: "RL 1 k\u03A9"
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.9, y: 0.55}
+      label: "BATTERY \u2212"
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.55}
+      - {x: 0.1, y: 0.77}
+      - {x: 0.285, y: 0.77}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.1, y: 0.55}
+      - {x: 0.1, y: 0.34}
+      - {x: 0.285, y: 0.34}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.375, y: 0.77}
+      - {x: 0.655, y: 0.77}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.375, y: 0.34}
+      - {x: 0.655, y: 0.34}
+      energized: 0
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - points:
+      - {x: 0.745, y: 0.77}
+      - {x: 0.9, y: 0.77}
+      - {x: 0.9, y: 0.55}
+      energized: 0
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.745, y: 0.34}
+      - {x: 0.9, y: 0.34}
+      - {x: 0.9, y: 0.55}
+      energized: 0
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+  - title: 02 / Locate a single fault
+    explanation: "A 2.2 k\u03A9 lower resistor raises its midpoint to 3.44 V. A positive
+      difference of +0.94 V with RIGHT at 2.50 V identifies the left lower arm. A
+      negative difference of \u22120.94 V with LEFT at 2.50 V identifies the right
+      lower arm. The drawing shows the left fault."
+    caption: "DIFFERENCE = LEFT \u2212 RIGHT"
+    parts:
+    - id: supply
+      kind: 9
+      position: {x: 0.1, y: 0.55}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: lu
+      kind: 1
+      position: {x: 0.33, y: 0.77}
+      label: "LU 1 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: lm
+      kind: 9
+      position: {x: 0.51, y: 0.77}
+      label: LEFT 3.44 V
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: ll
+      kind: 1
+      position: {x: 0.7, y: 0.77}
+      label: "LL 2.2 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: ru
+      kind: 1
+      position: {x: 0.33, y: 0.34}
+      label: "RU 1 k\u03A9"
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: rm
+      kind: 9
+      position: {x: 0.51, y: 0.34}
+      label: RIGHT 2.50 V
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: rl
+      kind: 1
+      position: {x: 0.7, y: 0.34}
+      label: "RL 1 k\u03A9"
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.9, y: 0.55}
+      label: "BATTERY \u2212"
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.55}
+      - {x: 0.1, y: 0.77}
+      - {x: 0.285, y: 0.77}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.1, y: 0.55}
+      - {x: 0.1, y: 0.34}
+      - {x: 0.285, y: 0.34}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.375, y: 0.77}
+      - {x: 0.655, y: 0.77}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.375, y: 0.34}
+      - {x: 0.655, y: 0.34}
+      energized: 0
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - points:
+      - {x: 0.745, y: 0.77}
+      - {x: 0.9, y: 0.77}
+      - {x: 0.9, y: 0.55}
+      energized: 0
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.745, y: 0.34}
+      - {x: 0.9, y: 0.34}
+      - {x: 0.9, y: 0.55}
+      energized: 0
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+  - title: 03 / Detect false balance
+    explanation: "When both lower arms are 2.2 k\u03A9, their midpoints match at
+      3.44 V. The differential meter reads 0.00 V. Compare each midpoint with the
+      2.50 V baseline to find the two faults."
+    caption: "BOTH MIDPOINTS ARE HIGH \u2022 DIFF IS STILL 0.00 V"
+    parts:
+    - id: supply
+      kind: 9
+      position: {x: 0.1, y: 0.55}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: lu
+      kind: 1
+      position: {x: 0.33, y: 0.77}
+      label: "LU 1 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: lm
+      kind: 9
+      position: {x: 0.51, y: 0.77}
+      label: LEFT 3.44 V
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: ll
+      kind: 1
+      position: {x: 0.7, y: 0.77}
+      label: "LL 2.2 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: ru
+      kind: 1
+      position: {x: 0.33, y: 0.34}
+      label: "RU 1 k\u03A9"
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: rm
+      kind: 9
+      position: {x: 0.51, y: 0.34}
+      label: RIGHT 3.44 V
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: rl
+      kind: 1
+      position: {x: 0.7, y: 0.34}
+      label: "RL 2.2 k\u03A9"
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.9, y: 0.55}
+      label: "BATTERY \u2212"
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.55}
+      - {x: 0.1, y: 0.77}
+      - {x: 0.285, y: 0.77}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.1, y: 0.55}
+      - {x: 0.1, y: 0.34}
+      - {x: 0.285, y: 0.34}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.375, y: 0.77}
+      - {x: 0.655, y: 0.77}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.375, y: 0.34}
+      - {x: 0.655, y: 0.34}
+      energized: 0
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - points:
+      - {x: 0.745, y: 0.77}
+      - {x: 0.9, y: 0.77}
+      - {x: 0.9, y: 0.55}
+      energized: 0
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.745, y: 0.34}
+      - {x: 0.9, y: 0.34}
+      - {x: 0.9, y: 0.55}
+      energized: 0
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+  - title: 04 / Repair and verify
+    explanation: "Fit a 1 k\u03A9 cartridge to each lower arm. Replacing one first
+      makes a signed difference appear again. Once both are replaced, check LEFT
+      \u2248 2.50 V, RIGHT \u2248 2.50 V, and DIFF \u2248 0.00 V. Press VERIFY REPAIR
+      to finish."
+    caption: BOTH MIDPOINTS RETURN TO 2.50 V
+    parts:
+    - id: supply
+      kind: 9
+      position: {x: 0.1, y: 0.55}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - id: lu
+      kind: 1
+      position: {x: 0.33, y: 0.77}
+      label: "LU 1 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: lm
+      kind: 9
+      position: {x: 0.51, y: 0.77}
+      label: LEFT 2.50 V
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: ll
+      kind: 1
+      position: {x: 0.7, y: 0.77}
+      label: "LL 1 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: ru
+      kind: 1
+      position: {x: 0.33, y: 0.34}
+      label: "RU 1 k\u03A9"
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: rm
+      kind: 9
+      position: {x: 0.51, y: 0.34}
+      label: RIGHT 2.50 V
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: rl
+      kind: 1
+      position: {x: 0.7, y: 0.34}
+      label: "RL 1 k\u03A9"
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - id: return
+      kind: 9
+      position: {x: 0.9, y: 0.55}
+      label: "BATTERY \u2212"
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.55}
+      - {x: 0.1, y: 0.77}
+      - {x: 0.285, y: 0.77}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.1, y: 0.55}
+      - {x: 0.1, y: 0.34}
+      - {x: 0.285, y: 0.34}
+      energized: 0
+      color: {r: 0.98, g: 0.34, b: 0.4, a: 1}
+    - points:
+      - {x: 0.375, y: 0.77}
+      - {x: 0.655, y: 0.77}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.375, y: 0.34}
+      - {x: 0.655, y: 0.34}
+      energized: 0
+      color: {r: 0.99, g: 0.71, b: 0.28, a: 1}
+    - points:
+      - {x: 0.745, y: 0.77}
+      - {x: 0.9, y: 0.77}
+      - {x: 0.9, y: 0.55}
+      energized: 0
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.745, y: 0.34}
+      - {x: 0.9, y: 0.34}
+      - {x: 0.9, y: 0.55}
+      energized: 0
+      color: {r: 0.24, g: 0.69, b: 1, a: 1}

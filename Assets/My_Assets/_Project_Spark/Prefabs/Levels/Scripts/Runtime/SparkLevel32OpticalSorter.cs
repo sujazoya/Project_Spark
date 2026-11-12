@@ -48,6 +48,16 @@ namespace ProjectSpark.Gameplay
         public Text statusText, meterText, countText;
         public Image mainIndicator;
         public Button darkReference, brightReference, runTrial;
+        public Transform mainRocker, inspectionEmitter;
+        public Transform[] darkDeposits, brightDeposits, reviewDeposits;
+        public Renderer[] routeIndicators;
+        public Vector3 sampleStart = new Vector3(-.54f, .12f, 0);
+        public Vector3 referencePosition = new Vector3(-.08f, .12f, 0);
+        public Vector3 sampleAtGate = new Vector3(.35f, .12f, 0);
+        public Vector3 darkDestination = new Vector3(.71f, .08f, -.30f);
+        public Vector3 reviewDestination = new Vector3(.71f, .08f, 0);
+        public Vector3 brightDestination = new Vector3(.71f, .08f, .30f);
+        public float beltStartX = -.54f, beltLength = .94f, gateSwing = 34.5f, transferClearance;
 
         private const float DarkLimit = 1.5f, BrightLimit = 3.5f, StabilityTime = .24f;
         private const float InspectStart = .65f, InspectEnd = 1.25f, GateArrival = 1.75f, BinArrival = 2.50f, SampleEnd = 2.80f;
@@ -79,7 +89,7 @@ namespace ProjectSpark.Gameplay
             reference = tile;
             referenceTime = 0;
             SetIllumination(light);
-            ShowPart(tile == 1 ? Bin.Dark : Bin.Bright, new Vector3(-.08f, .12f, 0));
+            ShowPart(tile == 1 ? Bin.Dark : Bin.Bright, referencePosition);
         }
 
         public void RunTrial()
@@ -182,7 +192,7 @@ namespace ProjectSpark.Gameplay
             locked = false;
             SetIllumination(.50f);
             var sample = activeTrial[sampleIndex];
-            ShowPart(sample.Expected, new Vector3(-.54f,.12f,0));
+            ShowPart(sample.Expected, sampleStart);
         }
 
         private void AdvanceSample(float sense, float dt)
@@ -223,12 +233,20 @@ namespace ProjectSpark.Gameplay
 
         private void MovePart()
         {
-            float binZ = route == Bin.Dark ? -.30f : route == Bin.Bright ? .30f : 0;
-            float alongBelt = Mathf.InverseLerp(0, GateArrival, timer);
+            Vector3 destination = route == Bin.Dark ? darkDestination : route == Bin.Bright ? brightDestination : reviewDestination;
+            float inspectionMid = (InspectStart + InspectEnd) * .5f;
+            Vector3 alongBelt = timer < inspectionMid
+                ? Vector3.Lerp(sampleStart, referencePosition, Mathf.InverseLerp(0, inspectionMid, timer))
+                : Vector3.Lerp(referencePosition, sampleAtGate, Mathf.InverseLerp(inspectionMid, GateArrival, timer));
             float toBin = Mathf.InverseLerp(GateArrival, BinArrival, timer);
-            if (part != null) part.localPosition = new Vector3(Mathf.Lerp(-.54f,.35f,alongBelt) + .36f * toBin,
-                .12f - .04f * toBin, binZ * toBin);
-            if (gate != null) gate.localRotation = Quaternion.Euler(0, -binZ * 115f * Mathf.InverseLerp(InspectEnd,GateArrival,timer), 0);
+            if (part != null)
+                part.localPosition = Vector3.Lerp(alongBelt, destination, toBin) +
+                    Vector3.up * (Mathf.Sin(toBin * Mathf.PI) * transferClearance);
+            float direction = route == Bin.Dark ? 1f : route == Bin.Bright ? -1f : 0f;
+            if (gate != null) gate.localRotation = Quaternion.Euler(0, direction * gateSwing * Mathf.InverseLerp(InspectEnd, GateArrival, timer), 0);
+            if (routeIndicators != null)
+                for (int i = 0; i < routeIndicators.Length; i++)
+                    if (routeIndicators[i] != null) routeIndicators[i].enabled = locked && i == (int)route;
         }
 
         private void AnimateBelt(float dt)
@@ -236,12 +254,12 @@ namespace ProjectSpark.Gameplay
             if (inspectionLight != null) inspectionLight.enabled = true;
             if (shaft != null) shaft.Rotate(Vector3.right, 720f * dt, Space.Self);
             if (beltSlats == null || beltSlats.Length == 0) return;
-            beltOffset = Mathf.Repeat(beltOffset + dt * .50f, .94f);
+            beltOffset = Mathf.Repeat(beltOffset + dt * .50f, beltLength);
             for (int i = 0; i < beltSlats.Length; i++)
             {
                 if (beltSlats[i] == null) continue;
                 var p = beltSlats[i].localPosition;
-                p.x = Mathf.Repeat(i * .94f / beltSlats.Length + beltOffset, .94f) - .54f;
+                p.x = Mathf.Repeat(i * beltLength / beltSlats.Length + beltOffset, beltLength) + beltStartX;
                 beltSlats[i].localPosition = p;
             }
         }
@@ -258,6 +276,9 @@ namespace ProjectSpark.Gameplay
         {
             if (part != null) part.gameObject.SetActive(false);
             if (gate != null) gate.localRotation = Quaternion.identity;
+            if (routeIndicators != null)
+                foreach (var indicator in routeIndicators)
+                    if (indicator != null) indicator.enabled = false;
         }
 
         private bool SetIllumination(float value)
@@ -315,12 +336,26 @@ namespace ProjectSpark.Gameplay
         private void UpdateControls()
         {
             bool powered = ready && main != null && main.IsClosed;
+            if (mainRocker != null) mainRocker.localRotation = Quaternion.Euler(powered ? 11f : -11f, 0, 0);
+            if (inspectionEmitter != null && inspectionEmitter.gameObject.activeSelf != powered)
+                inspectionEmitter.gameObject.SetActive(powered);
+            ShowDeposits(darkDeposits, darkCount);
+            ShowDeposits(brightDeposits, brightCount);
+            ShowDeposits(reviewDeposits, reviewCount);
             if (mainIndicator != null) mainIndicator.color = powered ? new Color(.12f,.50f,.34f) : new Color(.22f,.29f,.37f);
             if (darkReference != null) darkReference.interactable = powered && stage == 1;
             if (brightReference != null) brightReference.interactable = powered && stage == 1;
             if (runTrial != null) runTrial.interactable = powered && stage >= 2 && stage < Gates.Length && activeTrial == null;
             string count = $"DARK {darkCount}   |   BRIGHT {brightCount}   |   REVIEW {reviewCount}";
             if (countText != null && countText.text != count) countText.text = count;
+        }
+
+        private static void ShowDeposits(Transform[] tiles, int count)
+        {
+            if (tiles == null) return;
+            for (int i = 0; i < tiles.Length; i++)
+                if (tiles[i] != null && tiles[i].gameObject.activeSelf != (i < count))
+                    tiles[i].gameObject.SetActive(i < count);
         }
 
         private static bool Available(SparkElectricalComponent component) => component != null && component.isActiveAndEnabled && component.ElectricalEnabled;

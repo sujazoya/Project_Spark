@@ -28,6 +28,7 @@ namespace ProjectSpark.Gameplay
         private enum Direction { Off, Up, Down }
         private Direction direction;
         private SparkLevelLayoutLoader loader;
+        private LevelGamePlayManager manager;
         private SparkElectricalSolver solver;
         private SparkCircuitSystem circuit;
         private SparkLevelSceneBindings bindings;
@@ -74,6 +75,7 @@ namespace ProjectSpark.Gameplay
             if (!configured) { SetStatus("Level 30 setup is incomplete. Check the lift references."); return; }
             if (loader == null) loader = FindFirstObjectByType<SparkLevelLayoutLoader>();
             if (loader == null || loader.ActiveLayout != layout || layout.LevelDefinition?.LevelId != "level_30") return;
+            if (manager == null) manager = FindFirstObjectByType<LevelGamePlayManager>();
             if (solver == null) solver = FindFirstObjectByType<SparkElectricalSolver>();
             if (circuit == null) circuit = FindFirstObjectByType<SparkCircuitSystem>();
             if (solver == null || circuit == null) { SetStatus("Level 30 needs the active solver and circuit system."); return; }
@@ -183,9 +185,14 @@ namespace ProjectSpark.Gameplay
             SetStatus(message);
             hold = passed ? hold + dt : 0f;
             if (!passed || ((Stage == 0 || Stage == 2 || Stage == 4) && hold < 0.15f)) return;
-            bindings.SetRuntimeComponentBinding(Gates[Stage], source);
+            if (!bindings.SetRuntimeComponentBinding(Gates[Stage], source))
+            {
+                SetStatus("Could not record the Level 30 objective. Check its runtime binding.");
+                return;
+            }
             Stage++;
             hold = 0f;
+            QueueEvaluation();
         }
 
         private static int AtLimit(float value) => value <= 0f ? -1 : value >= 1f ? 1 : 0;
@@ -229,8 +236,14 @@ namespace ProjectSpark.Gameplay
 
         private void ClearGates()
         {
-            if (bindings != null)
-                foreach (string id in Gates) bindings.ClearRuntimeComponentBinding(id);
+            if (bindings == null) return;
+            foreach (string id in Gates) bindings.ClearRuntimeComponentBinding(id);
+            if (Stage > 0) QueueEvaluation();
+        }
+
+        private void QueueEvaluation()
+        {
+            if (manager != null && manager.SceneBindings == bindings) manager.QueueEvaluation();
         }
 
         private void SetStatus(string text)

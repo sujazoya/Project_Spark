@@ -20,18 +20,27 @@ namespace ProjectSpark.Gameplay
         public Transform leadScrew;
         public SparkLED lamp;
         public Renderer bulb;
+        public Renderer socketBulb;
         public Light bulbLight;
         public ContactVisual[] contacts;
         public Image upButton, offButton, downButton;
         public SparkSwitch upFeed, downFeed;
+        public Renderer selectorUp, selectorOff, selectorDown;
+        public SparkSwitch topContact;
+        public Transform topPress;
 
         private MaterialPropertyBlock block;
         private float glow;
+        private Vector3 topPressRest;
         private static readonly int Emission = Shader.PropertyToID("_EmissionColor");
         private static readonly int BaseColor = Shader.PropertyToID("_BaseColor");
         private static readonly int StandardColor = Shader.PropertyToID("_Color");
 
-        private void Awake() => block = new MaterialPropertyBlock();
+        private void Awake()
+        {
+            block = new MaterialPropertyBlock();
+            if (topPress != null) topPressRest = topPress.localPosition;
+        }
 
         private void LateUpdate()
         {
@@ -45,8 +54,9 @@ namespace ProjectSpark.Gameplay
 
             bool lit = lamp != null && lamp.IsOn && Mathf.Abs(lamp.ElectricalState.Current) >= .002f;
             glow = Mathf.MoveTowards(glow, lit ? 1f : 0f, dt * 12f);
-            if (bulb != null)
-                Tint(bulb, Color.Lerp(new Color(.38f,.30f,.17f),new Color(1f,.79f,.34f),glow), glow * 2.5f);
+            Color bulbColor = Color.Lerp(new Color(.38f,.30f,.17f),new Color(1f,.79f,.34f),glow);
+            if (bulb != null) Tint(bulb, bulbColor, glow * 2.5f);
+            if (socketBulb != null) Tint(socketBulb, bulbColor, glow * 2.5f);
             if (bulbLight != null)
             {
                 bulbLight.enabled = glow > .01f;
@@ -69,6 +79,17 @@ namespace ProjectSpark.Gameplay
             Highlight(upButton, up);
             Highlight(downButton, down);
             Highlight(offButton, !up && !down);
+            Indicate(selectorUp, up);
+            Indicate(selectorDown, down);
+            Indicate(selectorOff, !up && !down);
+            if (topPress != null && topContact != null)
+                topPress.localPosition = topPressRest + Vector3.down * (topContact.IsClosed ? .013f : 0f);
+        }
+
+        private void Indicate(Renderer renderer, bool selected)
+        {
+            if (renderer != null)
+                Tint(renderer, selected ? new Color(.12f,.80f,1f) : new Color(.09f,.19f,.24f), selected ? 1.2f : 0f);
         }
 
         private void Tint(Renderer target, Color color, float emission)

@@ -1,0 +1,248 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_38_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_38
+  levelTitle: One Press, One Count
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the debounce circuit
+    explanation: "W01 Battery_positive \u2192 SW_IN. W02 SW_OUT \u2192 FEED_IN. W03
+      FEED_OUT \u2192 PULLDOWN_IN. W04 FEED_OUT \u2192 FILTER_IN. W05 PULLDOWN_OUT
+      \u2192 Battery_negative. W06 FILTER_OUT \u2192 CAP_PLUS. W07 CAP_MINUS \u2192
+      Battery_negative."
+    caption: "5 V SUPPLY  \u2022  RAW AT FEED OUT  \u2022  FILTERED AT CAP +"
+    parts:
+    - id: positive
+      kind: 9
+      position: {x: 0.08, y: 0.77}
+      label: BATTERY +
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: switch
+      kind: 9
+      position: {x: 0.25, y: 0.77}
+      label: PUSHBUTTON
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - id: feed
+      kind: 1
+      position: {x: 0.43, y: 0.77}
+      label: "FEED 1 k\u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: pull
+      kind: 1
+      position: {x: 0.58, y: 0.48}
+      label: "PULL-DOWN 10 k\u03A9"
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: filter
+      kind: 1
+      position: {x: 0.7, y: 0.77}
+      label: "FILTER 10 k\u03A9"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: cap
+      kind: 9
+      position: {x: 0.89, y: 0.55}
+      label: "47 \xB5F  + / \u2212"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: negative
+      kind: 9
+      position: {x: 0.74, y: 0.23}
+      label: "BATTERY \u2212"
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    wires:
+    - points:
+      - {x: 0.08, y: 0.77}
+      - {x: 0.205, y: 0.77}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.295, y: 0.77}
+      - {x: 0.385, y: 0.77}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.42, a: 1}
+    - points:
+      - {x: 0.475, y: 0.77}
+      - {x: 0.52, y: 0.77}
+      - {x: 0.52, y: 0.48}
+      - {x: 0.535, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.475, y: 0.77}
+      - {x: 0.655, y: 0.77}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.625, y: 0.48}
+      - {x: 0.67, y: 0.48}
+      - {x: 0.67, y: 0.23}
+      - {x: 0.74, y: 0.23}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.745, y: 0.77}
+      - {x: 0.81, y: 0.77}
+      - {x: 0.81, y: 0.55}
+      - {x: 0.845, y: 0.55}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.935, y: 0.55}
+      - {x: 0.96, y: 0.55}
+      - {x: 0.96, y: 0.23}
+      - {x: 0.74, y: 0.23}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+  - title: 02 / Watch the raw overcount
+    explanation: Run RAW TEST. One press closes, opens, closes, opens, and closes
+      again. Count the three upward steps. The test ends with a clean release and
+      a short wait for the capacitor to discharge.
+    caption: "RAW TEST  \u2022  THREE RISING EDGES"
+    parts:
+    - id: raw
+      kind: 9
+      position: {x: 0.5, y: 0.88}
+      label: RAW
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.25}
+      - {x: 0.92, y: 0.25}
+      energized: 0
+      color: {r: 0.38, g: 0.52, b: 0.6, a: 1}
+    - points:
+      - {x: 0.1, y: 0.25}
+      - {x: 0.18, y: 0.25}
+      - {x: 0.18, y: 0.76}
+      - {x: 0.25, y: 0.76}
+      - {x: 0.25, y: 0.25}
+      - {x: 0.32, y: 0.25}
+      - {x: 0.32, y: 0.76}
+      - {x: 0.39, y: 0.76}
+      - {x: 0.39, y: 0.25}
+      - {x: 0.46, y: 0.25}
+      - {x: 0.46, y: 0.76}
+      - {x: 0.89, y: 0.76}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+  - title: 03 / Reject a glitch and accept a press
+    explanation: Select FILTERED MODE, then inject a 100 ms glitch. The filtered
+      voltage stays under 3.0 V, so the count stays at zero. Run BOUNCED PRESS. The
+      contact settles closed and the filtered voltage crosses 3.0 V once.
+    caption: "FILTERED MODE  \u2022  3.0 V PRESS THRESHOLD"
+    parts:
+    - id: raw
+      kind: 9
+      position: {x: 0.34, y: 0.88}
+      label: RAW
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: filtered
+      kind: 9
+      position: {x: 0.66, y: 0.88}
+      label: FILTERED
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.25}
+      - {x: 0.92, y: 0.25}
+      energized: 0
+      color: {r: 0.38, g: 0.52, b: 0.6, a: 1}
+    - points:
+      - {x: 0.1, y: 0.55}
+      - {x: 0.92, y: 0.55}
+      energized: 0
+      color: {r: 0.38, g: 0.52, b: 0.6, a: 1}
+    - points:
+      - {x: 0.1, y: 0.45}
+      - {x: 0.92, y: 0.45}
+      energized: 0
+      color: {r: 0.38, g: 0.52, b: 0.6, a: 1}
+    - points:
+      - {x: 0.1, y: 0.25}
+      - {x: 0.22, y: 0.25}
+      - {x: 0.22, y: 0.76}
+      - {x: 0.29, y: 0.76}
+      - {x: 0.29, y: 0.25}
+      - {x: 0.49, y: 0.25}
+      - {x: 0.49, y: 0.76}
+      - {x: 0.54, y: 0.76}
+      - {x: 0.54, y: 0.25}
+      - {x: 0.59, y: 0.25}
+      - {x: 0.59, y: 0.76}
+      - {x: 0.89, y: 0.76}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.1, y: 0.25}
+      - {x: 0.22, y: 0.25}
+      - {x: 0.29, y: 0.33}
+      - {x: 0.39, y: 0.28}
+      - {x: 0.49, y: 0.26}
+      - {x: 0.59, y: 0.37}
+      - {x: 0.69, y: 0.56}
+      - {x: 0.79, y: 0.66}
+      - {x: 0.89, y: 0.7}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+  - title: 04 / Release and rearm
+    explanation: Run BOUNCED RELEASE. The counter stays at one while FILTERED falls
+      below 2.0 V and rearms. Run SECOND CYCLE. The filtered signal crosses 3.0 V
+      once on the way up and 2.0 V once on the way down. The count finishes at two.
+    caption: "2.0 V REARM THRESHOLD  \u2022  TWO COMPLETE CYCLES"
+    parts:
+    - id: raw
+      kind: 9
+      position: {x: 0.34, y: 0.88}
+      label: RAW
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: filtered
+      kind: 9
+      position: {x: 0.66, y: 0.88}
+      label: FILTERED
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    wires:
+    - points:
+      - {x: 0.1, y: 0.25}
+      - {x: 0.92, y: 0.25}
+      energized: 0
+      color: {r: 0.38, g: 0.52, b: 0.6, a: 1}
+    - points:
+      - {x: 0.1, y: 0.55}
+      - {x: 0.92, y: 0.55}
+      energized: 0
+      color: {r: 0.38, g: 0.52, b: 0.6, a: 1}
+    - points:
+      - {x: 0.1, y: 0.45}
+      - {x: 0.92, y: 0.45}
+      energized: 0
+      color: {r: 0.38, g: 0.52, b: 0.6, a: 1}
+    - points:
+      - {x: 0.1, y: 0.76}
+      - {x: 0.21, y: 0.76}
+      - {x: 0.21, y: 0.25}
+      - {x: 0.28, y: 0.25}
+      - {x: 0.28, y: 0.76}
+      - {x: 0.34, y: 0.76}
+      - {x: 0.34, y: 0.25}
+      - {x: 0.89, y: 0.25}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.1, y: 0.7}
+      - {x: 0.21, y: 0.7}
+      - {x: 0.34, y: 0.64}
+      - {x: 0.47, y: 0.53}
+      - {x: 0.61, y: 0.44}
+      - {x: 0.75, y: 0.38}
+      - {x: 0.89, y: 0.34}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
