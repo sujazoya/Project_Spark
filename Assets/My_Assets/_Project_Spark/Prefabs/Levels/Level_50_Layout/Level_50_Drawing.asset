@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_50_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_50
+  levelTitle: Zero Defect Factory
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the factory
+    explanation: Connect four branches of 5 V and return, then optical, encoder,
+      station commands, vision, motor, bin and safety feedback.
+    caption: "22 WIRES  \u2022  38 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.5}
+      label: 5 V / RETURN
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.5, y: 0.5}
+      label: FACTORY CONTROL
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.5}
+      label: FEEDBACK
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.5}
+      - {x: 0.43, y: 0.5}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.5}
+      - {x: 0.75, y: 0.5}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 02 / Track each product
+    explanation: Calibrate from two genuine marks. An ID moves from print to cut,
+      inspection and sorting according to encoder distance.
+    caption: 80 COUNTS PER STATION
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.5}
+      label: MARK
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.5, y: 0.5}
+      label: PRINT / CUT
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.5}
+      label: INSPECT
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.5}
+      - {x: 0.43, y: 0.5}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.5}
+      - {x: 0.75, y: 0.5}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 03 / Prove quality
+    explanation: Produce three good pieces at 30 RPM. At 60 RPM, run a mixed batch
+      and confirm each product using its bin sensor.
+    caption: GOOD AND REJECT
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.5}
+      label: INSPECTION
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.5, y: 0.5}
+      label: DIVERTER
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.5}
+      label: BIN CONFIRMATION
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.5}
+      - {x: 0.43, y: 0.5}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.5}
+      - {x: 0.75, y: 0.5}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 04 / Recover safely
+    explanation: Verify tracking through a speed dip and reject a false pulse. Stop
+      the line, restore safety, reset, home, calibrate and produce four good pieces.
+    caption: "SPEED DIP  \u2022  FALSE MARK  \u2022  E-STOP"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.5}
+      label: DISTURBANCE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.5, y: 0.5}
+      label: SAFE STOP
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.5}
+      label: RESTART
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.5}
+      - {x: 0.43, y: 0.5}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.5}
+      - {x: 0.75, y: 0.5}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}

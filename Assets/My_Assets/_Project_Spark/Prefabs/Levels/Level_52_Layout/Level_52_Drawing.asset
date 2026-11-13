@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_52_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_52
+  levelTitle: Cancel the Shake
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the balance rig
+    explanation: Wire both drives, the vibration pickup, A/B/Z encoder and guard.
+      W19 is the once-per-turn reference.
+    caption: "19 WIRES  \u2022  32 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.52}
+      label: 5 V
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.52, y: 0.52}
+      label: DRIVES
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.52}
+      label: A / B / Z
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.52}
+      - {x: 0.43, y: 0.52}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.52}
+      - {x: 0.75, y: 0.52}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 02 / Measure shaft phase
+    explanation: "Capture the 1\xD7 vibration vector, move both weights to a known
+      trial correction and remeasure."
+    caption: "45 RPM  \u2022  FIVE REVOLUTIONS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.52}
+      label: BASELINE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.52, y: 0.52}
+      label: TRIAL VECTOR
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.52}
+      label: INFLUENCE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.52}
+      - {x: 0.43, y: 0.52}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.52}
+      - {x: 0.75, y: 0.52}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 03 / Cancel the shake
+    explanation: Use the measured influence to find both target angles. Verify lower
+      vibration at 45 and then 60 RPM.
+    caption: TWO EQUAL CORRECTION MASSES
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.52}
+      label: MASS A
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.52, y: 0.52}
+      label: MASS B
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.52}
+      label: RESIDUAL
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.52}
+      - {x: 0.43, y: 0.52}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.52}
+      - {x: 0.75, y: 0.52}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 04 / Recover the index
+    explanation: Remove W19 while running. Restore the wire, reset after stopping,
+      and restart to reacquire phase and verify balance.
+    caption: "W19 OPEN  \u2022  CONTROLLED STOP"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.52}
+      label: ENCODER Z
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.52, y: 0.52}
+      label: SAFE STOP
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.52}
+      label: RESTART
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.52}
+      - {x: 0.43, y: 0.52}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.52}
+      - {x: 0.75, y: 0.52}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}

@@ -1,0 +1,265 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_46_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_46
+  levelTitle: Keep in Step
+  initialPage: 0
+  pages:
+  - title: 01 / Build the transport loop
+    explanation: Wire supply and return, both PWM signals, each pair of motor leads
+      and the four feedback leads. Add follower A and B last for the direction test.
+    caption: "12 WIRES  \u2022  TWO MOTORS  \u2022  TWO ENCODERS"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: ENCODER
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: GOVERNOR
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: MASTER A/B
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: FOLLOWER A/B
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: DRIVER / WEB
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+  - title: 02 / Match the master
+    explanation: Jog forward and compare signed counts. In SYNC, the master tracks
+      the preset and the follower tracks measured master speed. Both motors must
+      hold within the target band and within 2 RPM of each other.
+    caption: "30 RPM  \u2022  60 RPM  \u2022  80 COUNTS PER REVOLUTION"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: ENCODER
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: GOVERNOR
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: MASTER SPEED
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: FOLLOWER SPEED
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: DRIVER / WEB
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+  - title: 03 / Recover under load
+    explanation: Apply the test brake at steady 60 RPM. The follower slows. The governor
+      raises follower duty and the web returns to its safe band when both rollers
+      match again.
+    caption: "FOLLOWER BRAKE  \u2022  WEB SLACK  \u2022  RECOVERY"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: ENCODER
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: GOVERNOR
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: FOLLOWER LOAD
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: DUTY RISES
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: DRIVER / WEB
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+  - title: 04 / Repair reversed feedback
+    explanation: Cross follower A and B at the controller and start the direction
+      test. Three backward transitions with forward shaft motion stop both drives.
+      Restore the wires, reset and synchronize at 60 RPM again.
+    caption: "FORWARD SHAFT  \u2022  REVERSE COUNT  \u2022  SAFE STOP"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: ENCODER
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: GOVERNOR
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: "F A \u2192 B"
+      color: {r: 0.98, g: 0.35, b: 0.46, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: "F B \u2192 A"
+      color: {r: 0.98, g: 0.35, b: 0.46, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: DRIVER / WEB
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.46, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.46, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}

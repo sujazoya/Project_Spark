@@ -1,0 +1,266 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_44_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_44
+  levelTitle: Find Home
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the encoder
+    explanation: W01 supply + to decoder +. W02 supply return to decoder return.
+      W03 ENC Z to DEC Z. W04 ENC A to DEC A. W05 ENC B to DEC B. Fit the A/B wires
+      last so you can swap them later.
+    caption: "A AND B  \u2022  Z INDEX  \u2022  5 V"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: ENCODER
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: DECODER
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: "A \u2192 A"
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: "B \u2192 B"
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: Z INDEX
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+  - title: 02 / Find home and decode direction
+    explanation: "Home rotates clockwise until the unique Z pulse resets the count.
+      Clockwise gives 00 \u2192 10 \u2192 11 \u2192 01 \u2192 00, so A leads. Counterclockwise
+      reverses that sequence. Station A is +20 counts and Station B is +52."
+    caption: "80 COUNTS PER TURN  \u2022  4.5\xB0 PER COUNT"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: ENCODER
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: DECODER
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: A LEADS CW
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: B LEADS CCW
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: Z INDEX
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+  - title: 03 / Repair crossed A and B
+    explanation: Swap the A and B leads at the decoder. TEST DIRECTION compares commanded
+      clockwise travel with the decoded count. It stops after three backward counts.
+      Repair both leads and re-home.
+    caption: "TABLE CW  \u2022  COUNT FALLING"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: ENCODER
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: DECODER
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: "A \u2192 B"
+      color: {r: 0.98, g: 0.35, b: 0.44, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: "B \u2192 A"
+      color: {r: 0.98, g: 0.35, b: 0.44, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: Z INDEX
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.44, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.44, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+  - title: 04 / Recover the reference
+    explanation: "Move to B and cycle decoder power. The platter stays at 234\xB0.
+      After power-up, HOME restores a known zero. Move to B again and check that
+      the position repeats."
+    caption: "PHYSICAL ANGLE STAYS  \u2022  COUNT REFERENCE IS LOST"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: ENCODER
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: DECODER
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: HOME ON Z
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: B = +52
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: Z INDEX
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}

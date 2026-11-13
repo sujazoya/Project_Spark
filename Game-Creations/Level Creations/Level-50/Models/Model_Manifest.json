@@ -1,0 +1,829 @@
+{
+  "level": 50,
+  "display_name": "Zero Defect Factory",
+  "subtitle": "Smart Manufacturing Master Challenge",
+  "type": "VISUAL ASSETS ONLY: NO FUNCTIONAL ELECTRICAL SYSTEM/LEVEL OBJECTIVES IMPLEMENTED",
+  "models_count": 16,
+  "wires_count": 22,
+  "art_sockets_count": 38,
+  "triangles": 112876,
+  "assembled_fbx": "Level50_Complete_ArtKit_Showcase.fbx",
+  "model_entries": {
+    "00_L50_IndustrialFrame": {
+      "fbx": "00_L50_IndustrialFrame.fbx",
+      "glb": "00_L50_IndustrialFrame.glb",
+      "triangles": 10542,
+      "mesh_part_count": 304,
+      "art_sockets_local_xyz": {},
+      "animation_groups": {}
+    },
+    "01_L50_WebTransport": {
+      "fbx": "01_L50_WebTransport.fbx",
+      "glb": "01_L50_WebTransport.glb",
+      "triangles": 3800,
+      "mesh_part_count": 96,
+      "art_sockets_local_xyz": {},
+      "animation_groups": {
+        "WEB_ADVANCE_X": [
+          0,
+          1.5,
+          0
+        ]
+      }
+    },
+    "02_L50_MeasuringEncoder": {
+      "fbx": "02_L50_MeasuringEncoder.fbx",
+      "glb": "02_L50_MeasuringEncoder.glb",
+      "triangles": 10556,
+      "mesh_part_count": 126,
+      "art_sockets_local_xyz": {
+        "ENC_A": [
+          -0.57,
+          0.65,
+          -2.909
+        ],
+        "ENC_B": [
+          0.57,
+          0.65,
+          -2.909
+        ]
+      },
+      "animation_groups": {
+        "ENCODER_DISC_ROTATE_Z": [
+          0,
+          1.54,
+          -2.05
+        ],
+        "MEASURE_ROLLER_ROTATE_Z": [
+          0,
+          1.54,
+          0
+        ],
+        "L50_ENCODER_EncoderPulseIndicator_STATUS_LAMP": [
+          0.46,
+          2.42,
+          -2.38
+        ]
+      }
+    },
+    "03_L50_MarkSensor": {
+      "fbx": "03_L50_MarkSensor.fbx",
+      "glb": "03_L50_MarkSensor.glb",
+      "triangles": 6758,
+      "mesh_part_count": 59,
+      "art_sockets_local_xyz": {
+        "MARK_PLUS": [
+          -1.38,
+          0.73,
+          -1.662
+        ],
+        "MARK_GND": [
+          0,
+          0.73,
+          -1.662
+        ],
+        "MARK_OUT": [
+          1.38,
+          0.73,
+          -1.662
+        ]
+      },
+      "animation_groups": {
+        "SCANNER_BEAM_ENABLE": [
+          0,
+          3.55,
+          0.32
+        ],
+        "L50_MARK_DetectionLamp_STATUS_LAMP": [
+          1.8,
+          1.6,
+          -1.563
+        ]
+      }
+    },
+    "04_L50_PrintStation": {
+      "fbx": "04_L50_PrintStation.fbx",
+      "glb": "04_L50_PrintStation.glb",
+      "triangles": 3228,
+      "mesh_part_count": 44,
+      "art_sockets_local_xyz": {
+        "PRINT_HEAD_TRIG": [
+          0,
+          0.69,
+          -3.859
+        ]
+      },
+      "animation_groups": {
+        "PRINT_HEAD_STROKE_Y": [
+          0,
+          3.8,
+          0.1
+        ],
+        "L50_PRINT_PrintReadyLamp_STATUS_LAMP": [
+          1.8,
+          1.1,
+          -2.88
+        ]
+      }
+    },
+    "05_L50_FlyingCutter": {
+      "fbx": "05_L50_FlyingCutter.fbx",
+      "glb": "05_L50_FlyingCutter.glb",
+      "triangles": 10214,
+      "mesh_part_count": 98,
+      "art_sockets_local_xyz": {
+        "CUT_HEAD_TRIG": [
+          0,
+          0.67,
+          -3.679
+        ]
+      },
+      "animation_groups": {
+        "CUTTER_BLADE_STROKE_Y": [
+          0,
+          2.52,
+          0
+        ],
+        "CUTTER_CARRIAGE_SLIDE_X": [
+          0,
+          1.48,
+          0
+        ],
+        "CUTTER_LEAD_SCREW_ROTATE_X": [
+          0,
+          1.15,
+          0.03
+        ],
+        "L50_SHEAR_SafeLight_STATUS_LAMP": [
+          2.18,
+          1.23,
+          -2.65
+        ]
+      }
+    },
+    "06_L50_VisionInspection": {
+      "fbx": "06_L50_VisionInspection.fbx",
+      "glb": "06_L50_VisionInspection.glb",
+      "triangles": 8216,
+      "mesh_part_count": 69,
+      "art_sockets_local_xyz": {
+        "VISION_PLUS": [
+          -1.76,
+          0.71,
+          -3.739
+        ],
+        "VISION_GND": [
+          -0.6,
+          0.71,
+          -3.739
+        ],
+        "VISION_PASS": [
+          0.6,
+          0.71,
+          -3.739
+        ],
+        "VISION_FAIL": [
+          1.76,
+          0.71,
+          -3.739
+        ]
+      },
+      "animation_groups": {
+        "VISION_RINGLIGHT": [
+          0,
+          3.23,
+          0.34
+        ],
+        "L50_VISION_PassLamp_STATUS_LAMP": [
+          -1.4,
+          1.19,
+          -2.79
+        ],
+        "L50_VISION_FailLamp_STATUS_LAMP": [
+          1.4,
+          1.19,
+          -2.79
+        ]
+      }
+    },
+    "07_L50_SortDiverter": {
+      "fbx": "07_L50_SortDiverter.fbx",
+      "glb": "07_L50_SortDiverter.glb",
+      "triangles": 3930,
+      "mesh_part_count": 35,
+      "art_sockets_local_xyz": {
+        "DIVERTER_HOME_OUT": [
+          1.7,
+          0.68,
+          -3.489
+        ]
+      },
+      "animation_groups": {
+        "SORTING_ARM_PIVOT_Y": [
+          0,
+          1.65,
+          0
+        ],
+        "L50_SORT_GATE_DiverterReady_STATUS_LAMP": [
+          -1.79,
+          1.22,
+          -3.01
+        ]
+      }
+    },
+    "08_L50_DiverterMotor": {
+      "fbx": "08_L50_DiverterMotor.fbx",
+      "glb": "08_L50_DiverterMotor.glb",
+      "triangles": 4336,
+      "mesh_part_count": 48,
+      "art_sockets_local_xyz": {
+        "DIVERTER_MOTOR_PLUS": [
+          -0.75,
+          0.65,
+          -2.889
+        ],
+        "DIVERTER_MOTOR_MINUS": [
+          0.75,
+          0.65,
+          -2.889
+        ]
+      },
+      "animation_groups": {
+        "SORT_MOTOR_SHAFT_ROTATE_X": [
+          -2.1,
+          1.67,
+          0.16
+        ]
+      }
+    },
+    "09_L50_GoodCollectionBin": {
+      "fbx": "09_L50_GoodCollectionBin.fbx",
+      "glb": "09_L50_GoodCollectionBin.glb",
+      "triangles": 3130,
+      "mesh_part_count": 32,
+      "art_sockets_local_xyz": {
+        "GOOD_COUNT_OUT": [
+          0,
+          0.66,
+          -3.779
+        ]
+      },
+      "animation_groups": {
+        "BIN_ITEM_DROP_Y": [
+          0,
+          0.65,
+          0
+        ],
+        "L50_L50_GoodCollectionBin_BinStatusIndicator_STATUS_LAMP": [
+          1.91,
+          2.23,
+          -3.0
+        ]
+      }
+    },
+    "10_L50_RejectCollectionBin": {
+      "fbx": "10_L50_RejectCollectionBin.fbx",
+      "glb": "10_L50_RejectCollectionBin.glb",
+      "triangles": 3080,
+      "mesh_part_count": 32,
+      "art_sockets_local_xyz": {
+        "REJECT_COUNT_OUT": [
+          0,
+          0.66,
+          -3.779
+        ]
+      },
+      "animation_groups": {
+        "BIN_ITEM_DROP_Y": [
+          0,
+          0.65,
+          0
+        ],
+        "L50_L50_RejectCollectionBin_BinStatusIndicator_STATUS_LAMP": [
+          1.91,
+          2.23,
+          -3.0
+        ]
+      }
+    },
+    "11_L50_FactoryController": {
+      "fbx": "11_L50_FactoryController.fbx",
+      "glb": "11_L50_FactoryController.glb",
+      "triangles": 20998,
+      "mesh_part_count": 153,
+      "art_sockets_local_xyz": {
+        "CTRL_PLUS": [
+          -5.91,
+          0.68,
+          -2.037
+        ],
+        "CTRL_GND": [
+          -3.94,
+          0.68,
+          -2.037
+        ],
+        "CTRL_MARK_IN": [
+          -1.97,
+          0.68,
+          -2.037
+        ],
+        "CTRL_ENC_A": [
+          0.0,
+          0.68,
+          -2.037
+        ],
+        "CTRL_ENC_B": [
+          1.97,
+          0.68,
+          -2.037
+        ],
+        "CTRL_PRINT_TRIG": [
+          3.94,
+          0.68,
+          -2.037
+        ],
+        "CTRL_CUT_TRIG": [
+          5.91,
+          0.68,
+          -2.037
+        ],
+        "CTRL_PASS_IN": [
+          -5.91,
+          1.41,
+          -2.037
+        ],
+        "CTRL_FAIL_IN": [
+          -3.94,
+          1.41,
+          -2.037
+        ],
+        "CTRL_SORT_CMD": [
+          -1.97,
+          1.41,
+          -2.037
+        ],
+        "CTRL_DIVERTER_HOME": [
+          0.0,
+          1.41,
+          -2.037
+        ],
+        "CTRL_GOOD_COUNT": [
+          1.97,
+          1.41,
+          -2.037
+        ],
+        "CTRL_REJECT_COUNT": [
+          3.94,
+          1.41,
+          -2.037
+        ],
+        "CTRL_SAFETY_IN": [
+          5.91,
+          1.41,
+          -2.037
+        ]
+      },
+      "animation_groups": {
+        "FACTORY_RUNTIME_DISPLAY_FACE": [
+          0,
+          2.36,
+          -1.9979999999999998
+        ],
+        "BUTTON_AUTO_PRESS_Z": [
+          -6.48,
+          2.4,
+          -1.988
+        ],
+        "BUTTON_STOP_PRESS_Z": [
+          -5.47,
+          2.4,
+          -1.988
+        ],
+        "BUTTON_RESET_PRESS_Z": [
+          5.47,
+          2.4,
+          -1.988
+        ],
+        "BUTTON_START_PRESS_Z": [
+          6.48,
+          2.4,
+          -1.988
+        ],
+        "L50_FACTORY_CTRL_POWER_STATUS_LAMP": [
+          -3.0,
+          3.03,
+          -1.948
+        ],
+        "L50_FACTORY_CTRL_READY_STATUS_LAMP": [
+          -1.5,
+          3.03,
+          -1.948
+        ],
+        "L50_FACTORY_CTRL_SYNC_STATUS_LAMP": [
+          0.0,
+          3.03,
+          -1.948
+        ],
+        "L50_FACTORY_CTRL_WARN_STATUS_LAMP": [
+          1.5,
+          3.03,
+          -1.948
+        ],
+        "L50_FACTORY_CTRL_FAULT_STATUS_LAMP": [
+          3.0,
+          3.03,
+          -1.948
+        ]
+      }
+    },
+    "12_L50_SortDriver": {
+      "fbx": "12_L50_SortDriver.fbx",
+      "glb": "12_L50_SortDriver.glb",
+      "triangles": 8228,
+      "mesh_part_count": 79,
+      "art_sockets_local_xyz": {
+        "DRIVER_PLUS": [
+          -2.8,
+          0.69,
+          -1.762
+        ],
+        "DRIVER_GND": [
+          -1.4,
+          0.69,
+          -1.762
+        ],
+        "DRIVER_SORT_CMD": [
+          0.0,
+          0.69,
+          -1.762
+        ],
+        "DRIVER_MOTOR_PLUS": [
+          1.4,
+          0.69,
+          -1.762
+        ],
+        "DRIVER_MOTOR_MINUS": [
+          2.8,
+          0.69,
+          -1.762
+        ]
+      },
+      "animation_groups": {
+        "L50_SORT_DRIVER_Status_STATUS_LAMP": [
+          2.84,
+          1.8,
+          -1.678
+        ]
+      }
+    },
+    "13_L50_QualityDashboard": {
+      "fbx": "13_L50_QualityDashboard.fbx",
+      "glb": "13_L50_QualityDashboard.glb",
+      "triangles": 4554,
+      "mesh_part_count": 49,
+      "art_sockets_local_xyz": {},
+      "animation_groups": {
+        "DASHBOARD_RUNTIME_TMP_FACE": [
+          0,
+          2.06,
+          -1.8929999999999998
+        ],
+        "QUALITY_HISTORY_BAR_00": [
+          -4.52,
+          0.8,
+          -1.8929999999999998
+        ],
+        "QUALITY_HISTORY_BAR_01": [
+          -3.5199999999999996,
+          0.8,
+          -1.8929999999999998
+        ],
+        "QUALITY_HISTORY_BAR_02": [
+          -2.5199999999999996,
+          0.8,
+          -1.8929999999999998
+        ],
+        "QUALITY_HISTORY_BAR_03": [
+          -1.5199999999999996,
+          0.8,
+          -1.8929999999999998
+        ],
+        "QUALITY_HISTORY_BAR_04": [
+          -0.5199999999999996,
+          0.8,
+          -1.8929999999999998
+        ],
+        "QUALITY_HISTORY_BAR_05": [
+          0.4800000000000004,
+          0.8,
+          -1.8929999999999998
+        ],
+        "QUALITY_HISTORY_BAR_06": [
+          1.4800000000000004,
+          0.8,
+          -1.8929999999999998
+        ],
+        "QUALITY_HISTORY_BAR_07": [
+          2.4800000000000004,
+          0.8,
+          -1.8929999999999998
+        ],
+        "QUALITY_HISTORY_BAR_08": [
+          3.4800000000000004,
+          0.8,
+          -1.8929999999999998
+        ],
+        "QUALITY_HISTORY_BAR_09": [
+          4.48,
+          0.8,
+          -1.8929999999999998
+        ],
+        "L50_QUALITY_GoodIndicator_STATUS_LAMP": [
+          -4.9,
+          2.96,
+          -1.823
+        ],
+        "L50_QUALITY_BadIndicator_STATUS_LAMP": [
+          4.9,
+          2.96,
+          -1.823
+        ]
+      }
+    },
+    "14_L50_SafetyInterlock": {
+      "fbx": "14_L50_SafetyInterlock.fbx",
+      "glb": "14_L50_SafetyInterlock.glb",
+      "triangles": 5986,
+      "mesh_part_count": 45,
+      "art_sockets_local_xyz": {
+        "SAFETY_NC_OUT": [
+          0,
+          0.69,
+          -1.712
+        ]
+      },
+      "animation_groups": {
+        "ESTOP_BUTTON_PRESS_Z": [
+          0,
+          1.78,
+          -1.783
+        ],
+        "L50_SAFETY_SafeGreen_STATUS_LAMP": [
+          -1.62,
+          1.68,
+          -1.623
+        ],
+        "L50_SAFETY_UnsafeRed_STATUS_LAMP": [
+          1.62,
+          1.68,
+          -1.623
+        ]
+      }
+    },
+    "15_L50_5VSupply": {
+      "fbx": "15_L50_5VSupply.fbx",
+      "glb": "15_L50_5VSupply.glb",
+      "triangles": 5320,
+      "mesh_part_count": 57,
+      "art_sockets_local_xyz": {
+        "SUPPLY_PLUS": [
+          -1.01,
+          0.73,
+          -1.712
+        ],
+        "SUPPLY_RETURN": [
+          1.01,
+          0.73,
+          -1.712
+        ]
+      },
+      "animation_groups": {
+        "L50_SUPPLY_PowerLED_STATUS_LAMP": [
+          1.91,
+          1.48,
+          -1.623
+        ]
+      }
+    }
+  },
+  "showcase_placements_xyz": {
+    "00_L50_IndustrialFrame": [
+      0,
+      0,
+      0
+    ],
+    "01_L50_WebTransport": [
+      0,
+      0,
+      0
+    ],
+    "02_L50_MeasuringEncoder": [
+      18.9,
+      0,
+      0.0
+    ],
+    "03_L50_MarkSensor": [
+      16.0,
+      0,
+      0.5
+    ],
+    "04_L50_PrintStation": [
+      8.0,
+      0,
+      0.05
+    ],
+    "05_L50_FlyingCutter": [
+      0,
+      0,
+      0.05
+    ],
+    "06_L50_VisionInspection": [
+      -8.0,
+      0,
+      0.05
+    ],
+    "07_L50_SortDiverter": [
+      -16.5,
+      0,
+      0.05
+    ],
+    "08_L50_DiverterMotor": [
+      -21.1,
+      0,
+      5.65
+    ],
+    "09_L50_GoodCollectionBin": [
+      -20.15,
+      0,
+      -4.9
+    ],
+    "10_L50_RejectCollectionBin": [
+      -20.15,
+      0,
+      5.35
+    ],
+    "11_L50_FactoryController": [
+      10.6,
+      0,
+      -8.2
+    ],
+    "12_L50_SortDriver": [
+      -1.4,
+      0,
+      -8.25
+    ],
+    "13_L50_QualityDashboard": [
+      0,
+      0,
+      8.9
+    ],
+    "14_L50_SafetyInterlock": [
+      -17.6,
+      0,
+      -8.3
+    ],
+    "15_L50_5VSupply": [
+      20.0,
+      0,
+      -8.2
+    ]
+  },
+  "wiring": [
+    [
+      "W01",
+      "SUPPLY_PLUS",
+      "CTRL_PLUS",
+      "Supply +5 V -> Factory Controller +5 V"
+    ],
+    [
+      "W02",
+      "SUPPLY_RETURN",
+      "CTRL_GND",
+      "Supply RETURN -> Factory Controller GND"
+    ],
+    [
+      "W03",
+      "SUPPLY_PLUS",
+      "MARK_PLUS",
+      "Supply +5 V -> Mark Sensor +5 V"
+    ],
+    [
+      "W04",
+      "SUPPLY_RETURN",
+      "MARK_GND",
+      "Supply RETURN -> Mark Sensor GND"
+    ],
+    [
+      "W05",
+      "SUPPLY_PLUS",
+      "VISION_PLUS",
+      "Supply +5 V -> Vision Sensor +5 V"
+    ],
+    [
+      "W06",
+      "SUPPLY_RETURN",
+      "VISION_GND",
+      "Supply RETURN -> Vision Sensor GND"
+    ],
+    [
+      "W07",
+      "SUPPLY_PLUS",
+      "DRIVER_PLUS",
+      "Supply +5 V -> Sort Driver +5 V"
+    ],
+    [
+      "W08",
+      "SUPPLY_RETURN",
+      "DRIVER_GND",
+      "Supply RETURN -> Sort Driver GND"
+    ],
+    [
+      "W09",
+      "MARK_OUT",
+      "CTRL_MARK_IN",
+      "Mark Sensor OUT -> Controller MARK IN"
+    ],
+    [
+      "W10",
+      "ENC_A",
+      "CTRL_ENC_A",
+      "Encoder A -> Controller ENC A"
+    ],
+    [
+      "W11",
+      "ENC_B",
+      "CTRL_ENC_B",
+      "Encoder B -> Controller ENC B"
+    ],
+    [
+      "W12",
+      "CTRL_PRINT_TRIG",
+      "PRINT_HEAD_TRIG",
+      "Controller PRINT TRIG -> Print Head TRIG"
+    ],
+    [
+      "W13",
+      "CTRL_CUT_TRIG",
+      "CUT_HEAD_TRIG",
+      "Controller CUT TRIG -> Cutter TRIG"
+    ],
+    [
+      "W14",
+      "VISION_PASS",
+      "CTRL_PASS_IN",
+      "Vision PASS OUT -> Controller PASS IN"
+    ],
+    [
+      "W15",
+      "VISION_FAIL",
+      "CTRL_FAIL_IN",
+      "Vision FAIL OUT -> Controller FAIL IN"
+    ],
+    [
+      "W16",
+      "CTRL_SORT_CMD",
+      "DRIVER_SORT_CMD",
+      "Controller SORT CMD -> Sort Driver CMD"
+    ],
+    [
+      "W17",
+      "DRIVER_MOTOR_PLUS",
+      "DIVERTER_MOTOR_PLUS",
+      "Sort Driver M+ -> Diverter Motor +"
+    ],
+    [
+      "W18",
+      "DRIVER_MOTOR_MINUS",
+      "DIVERTER_MOTOR_MINUS",
+      "Sort Driver M- -> Diverter Motor -"
+    ],
+    [
+      "W19",
+      "DIVERTER_HOME_OUT",
+      "CTRL_DIVERTER_HOME",
+      "Diverter HOME OUT -> Controller HOME"
+    ],
+    [
+      "W20",
+      "GOOD_COUNT_OUT",
+      "CTRL_GOOD_COUNT",
+      "Good Bin Sensor OUT -> Controller GOOD COUNT"
+    ],
+    [
+      "W21",
+      "REJECT_COUNT_OUT",
+      "CTRL_REJECT_COUNT",
+      "Reject Bin Sensor OUT -> Controller REJECT COUNT"
+    ],
+    [
+      "W22",
+      "SAFETY_NC_OUT",
+      "CTRL_SAFETY_IN",
+      "Safety NC OUT -> Controller SAFETY IN"
+    ]
+  ],
+  "coordinates": "Y up; front -Z; model units relative art units, not actual breadboard hole positions",
+  "signals": "All modeled plugs are visual; attach real SparkTerminal components and validated signal interfaces in Unity",
+  "safety": "SAFETY_NC_OUT -> CTRL_SAFETY_IN; actual safety interlock must be implemented in Level 50",
+  "screen": "Controller/dashboard are blank for live TMP overlays; visual labels are static mesh lettering"
+}

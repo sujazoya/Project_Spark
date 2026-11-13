@@ -56,6 +56,16 @@ namespace ProjectSpark.Gameplay
             }
             if (receiverReadout != null)
                 receiverReadout.text = loop.HasLoopReading ? $"{loop.ReceiverVoltage:0.00} V" : "— V";
+            if (tankReadout != null) tankReadout.text = $"TANK {tank * 100f:0}%";
+            if (receiverPercentReadout != null)
+                receiverPercentReadout.text = loop.HasLoopReading && !loop.IsLineOpen
+                    ? $"RECEIVER {loop.ReceiverFraction * 100f:0}%" : "RECEIVER —";
+            if (stateReadout != null)
+            {
+                stateReadout.text = !loop.HasLoopReading ? "WIRE LOOP" : loop.IsLineOpen ? "LINE OPEN" :
+                    loop.IsHeadroomLimited ? "HEADROOM LIMIT" : "REGULATED";
+                stateReadout.color = loop.IsLineOpen || loop.IsHeadroomLimited ? warningColor : signalColor;
+            }
         }
     }
 }

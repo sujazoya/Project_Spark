@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_54_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_54
+  levelTitle: Cross the Critical
+  initialPage: 0
+  pages:
+  - title: 01 / Build and calibrate
+    explanation: Install W15 last. Zero both powered probes at rest, then start at
+      45 RPM and capture the reference.
+    caption: "22 WIRES  \u2022  36 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.54}
+      label: X AND Y
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.54, y: 0.54}
+      label: ENCODER Z
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.54}
+      label: 45 RPM
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.54}
+      - {x: 0.43, y: 0.54}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.54}
+      - {x: 0.75, y: 0.54}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 02 / Find the critical speed
+    explanation: Measure amplitude and phase across eight speeds. Resonance occurs
+      near the natural speed, where the excitation and shaft motion shift phase.
+    caption: "LOW DAMPING  \u2022  MEASURED SWEEP"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.54}
+      label: 45 RPM
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.54, y: 0.54}
+      label: AMPLITUDE PEAK
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.54}
+      label: 72 RPM
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.54}
+      - {x: 0.43, y: 0.54}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.54}
+      - {x: 0.75, y: 0.54}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 03 / Verify active damping
+    explanation: Repeat the same sweep with active damping. The actuator opposes
+      lateral velocity and reduces the measured peak.
+    caption: "COMPARE RUNS  \u2022  \u226550% REDUCTION"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.54}
+      label: VELOCITY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.54, y: 0.54}
+      label: DAMPER FORCE
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.54}
+      label: PEAK REDUCTION
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.54}
+      - {x: 0.43, y: 0.54}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.54}
+      - {x: 0.75, y: 0.54}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 04 / Cross and recertify
+    explanation: Cross at 75 RPM, coast down, then test W15. Restore the wire, reset,
+      recalibrate and run the crossing again.
+    caption: "75 RPM  \u2022  W15 SENSOR LOSS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.54}
+      label: 75 RPM
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.54, y: 0.54}
+      label: SAFE STOP
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.54}
+      label: RECERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.54}
+      - {x: 0.43, y: 0.54}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.54}
+      - {x: 0.75, y: 0.54}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}

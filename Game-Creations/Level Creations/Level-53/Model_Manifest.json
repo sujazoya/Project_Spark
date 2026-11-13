@@ -1,0 +1,759 @@
+{
+  "level": 53,
+  "name": "The Hidden Couple",
+  "theme": "Two-Plane Dynamic Rotor Balancing Facility",
+  "scope": "VISUAL 3D ASSETS ONLY. No Unity physics, electrical components, evaluator or gameplay.",
+  "individual_models": 17,
+  "player_wires": 24,
+  "art_socket_count": 40,
+  "triangle_count": 120976,
+  "assembled_fbx": "Level53_Complete_ArtKit_Showcase.fbx",
+  "parts": {
+    "00_L53_IndustrialBase": {
+      "fbx": "00_L53_IndustrialBase.fbx",
+      "glb": "00_L53_IndustrialBase.glb",
+      "triangles": 4488,
+      "submesh_count": 105,
+      "local_socket_anchors": {},
+      "animation_pivots": {}
+    },
+    "01_L53_DCMotor": {
+      "fbx": "01_L53_DCMotor.fbx",
+      "glb": "01_L53_DCMotor.glb",
+      "triangles": 8824,
+      "submesh_count": 80,
+      "local_socket_anchors": {
+        "MOTOR_POS": [
+          -0.73,
+          0.75,
+          -3.339
+        ],
+        "MOTOR_NEG": [
+          0.73,
+          0.75,
+          -3.339
+        ]
+      },
+      "animation_pivots": {
+        "MOTOR_SHAFT_ROTATE_X": [
+          2.45,
+          3.3,
+          0
+        ]
+      }
+    },
+    "02_L53_LongRotorShaft": {
+      "fbx": "02_L53_LongRotorShaft.fbx",
+      "glb": "02_L53_LongRotorShaft.glb",
+      "triangles": 10924,
+      "submesh_count": 52,
+      "local_socket_anchors": {},
+      "animation_pivots": {
+        "LONG_ROTOR_SHAFT_ROTATE_X": [
+          0,
+          3.3,
+          0
+        ]
+      }
+    },
+    "03_L53_CorrectionPlaneA": {
+      "fbx": "03_L53_CorrectionPlaneA.fbx",
+      "glb": "03_L53_CorrectionPlaneA.glb",
+      "triangles": 16932,
+      "submesh_count": 112,
+      "local_socket_anchors": {
+        "PLANE_A_PLUS": [
+          -0.77,
+          0.74,
+          -3.739
+        ],
+        "PLANE_A_NEG": [
+          0.77,
+          0.74,
+          -3.739
+        ]
+      },
+      "animation_pivots": {
+        "PLANE_A_ROTOR_ROTATE_X": [
+          0,
+          3.3,
+          0
+        ],
+        "PLANE_A_CORRECTION_WEIGHT_ORBIT_X": [
+          0,
+          3.3,
+          0
+        ]
+      }
+    },
+    "04_L53_CorrectionPlaneB": {
+      "fbx": "04_L53_CorrectionPlaneB.fbx",
+      "glb": "04_L53_CorrectionPlaneB.glb",
+      "triangles": 17124,
+      "submesh_count": 112,
+      "local_socket_anchors": {
+        "PLANE_B_PLUS": [
+          -0.77,
+          0.74,
+          -3.739
+        ],
+        "PLANE_B_NEG": [
+          0.77,
+          0.74,
+          -3.739
+        ]
+      },
+      "animation_pivots": {
+        "PLANE_B_ROTOR_ROTATE_X": [
+          0,
+          3.3,
+          0
+        ],
+        "PLANE_B_CORRECTION_WEIGHT_ORBIT_X": [
+          0,
+          3.3,
+          0
+        ]
+      }
+    },
+    "05_L53_LeftBearing": {
+      "fbx": "05_L53_LeftBearing.fbx",
+      "glb": "05_L53_LeftBearing.glb",
+      "triangles": 3508,
+      "submesh_count": 35,
+      "local_socket_anchors": {},
+      "animation_pivots": {}
+    },
+    "06_L53_RightBearing": {
+      "fbx": "06_L53_RightBearing.fbx",
+      "glb": "06_L53_RightBearing.glb",
+      "triangles": 3630,
+      "submesh_count": 35,
+      "local_socket_anchors": {},
+      "animation_pivots": {}
+    },
+    "07_L53_LeftVibrationSensor": {
+      "fbx": "07_L53_LeftVibrationSensor.fbx",
+      "glb": "07_L53_LeftVibrationSensor.glb",
+      "triangles": 4416,
+      "submesh_count": 39,
+      "local_socket_anchors": {
+        "VIB_LEFT_PLUS": [
+          -1.44,
+          0.75,
+          -1.629
+        ],
+        "VIB_LEFT_GND": [
+          0,
+          0.75,
+          -1.629
+        ],
+        "VIB_LEFT_OUT": [
+          1.44,
+          0.75,
+          -1.629
+        ]
+      },
+      "animation_pivots": {}
+    },
+    "08_L53_RightVibrationSensor": {
+      "fbx": "08_L53_RightVibrationSensor.fbx",
+      "glb": "08_L53_RightVibrationSensor.glb",
+      "triangles": 4538,
+      "submesh_count": 39,
+      "local_socket_anchors": {
+        "VIB_RIGHT_PLUS": [
+          -1.44,
+          0.75,
+          -1.629
+        ],
+        "VIB_RIGHT_GND": [
+          0,
+          0.75,
+          -1.629
+        ],
+        "VIB_RIGHT_OUT": [
+          1.44,
+          0.75,
+          -1.629
+        ]
+      },
+      "animation_pivots": {}
+    },
+    "09_L53_EncoderABZ": {
+      "fbx": "09_L53_EncoderABZ.fbx",
+      "glb": "09_L53_EncoderABZ.glb",
+      "triangles": 7974,
+      "submesh_count": 117,
+      "local_socket_anchors": {
+        "ENCODER_A": [
+          -1.18,
+          0.75,
+          -3.179
+        ],
+        "ENCODER_B": [
+          0,
+          0.75,
+          -3.179
+        ],
+        "ENCODER_Z": [
+          1.18,
+          0.75,
+          -3.179
+        ]
+      },
+      "animation_pivots": {
+        "ENCODER_ABZ_DISC_ROTATE_X": [
+          0,
+          3.3,
+          0
+        ]
+      }
+    },
+    "10_L53_BalanceDriver": {
+      "fbx": "10_L53_BalanceDriver.fbx",
+      "glb": "10_L53_BalanceDriver.glb",
+      "triangles": 7604,
+      "submesh_count": 76,
+      "local_socket_anchors": {
+        "BDRV_PLUS": [
+          -3.57,
+          0.76,
+          -1.829
+        ],
+        "BDRV_GND": [
+          -2.38,
+          0.76,
+          -1.829
+        ],
+        "BDRV_CMD": [
+          -1.19,
+          0.76,
+          -1.829
+        ],
+        "BDRV_AP": [
+          0.0,
+          0.76,
+          -1.829
+        ],
+        "BDRV_AN": [
+          1.19,
+          0.76,
+          -1.829
+        ],
+        "BDRV_BP": [
+          2.38,
+          0.76,
+          -1.829
+        ],
+        "BDRV_BN": [
+          3.57,
+          0.76,
+          -1.829
+        ]
+      },
+      "animation_pivots": {
+        "L53_DUAL_PLANE_DRIVER_Status-2.1_LED": [
+          -2.1,
+          1.5,
+          -1.6900000000000002
+        ],
+        "L53_DUAL_PLANE_DRIVER_Status2.1_LED": [
+          2.1,
+          1.5,
+          -1.6900000000000002
+        ]
+      }
+    },
+    "11_L53_MotorDriver": {
+      "fbx": "11_L53_MotorDriver.fbx",
+      "glb": "11_L53_MotorDriver.glb",
+      "triangles": 5578,
+      "submesh_count": 60,
+      "local_socket_anchors": {
+        "MDRV_PLUS": [
+          -2.48,
+          0.76,
+          -1.754
+        ],
+        "MDRV_GND": [
+          -1.24,
+          0.76,
+          -1.754
+        ],
+        "MDRV_PWM": [
+          0.0,
+          0.76,
+          -1.754
+        ],
+        "MDRV_MP": [
+          1.24,
+          0.76,
+          -1.754
+        ],
+        "MDRV_MN": [
+          2.48,
+          0.76,
+          -1.754
+        ]
+      },
+      "animation_pivots": {
+        "L53_ROTATION_MOTOR_DRIVER_PWR_LED": [
+          2.7,
+          1.49,
+          -1.615
+        ]
+      }
+    },
+    "12_L53_BalanceController": {
+      "fbx": "12_L53_BalanceController.fbx",
+      "glb": "12_L53_BalanceController.glb",
+      "triangles": 9674,
+      "submesh_count": 88,
+      "local_socket_anchors": {
+        "CTRL_PLUS": [
+          -5.09,
+          0.72,
+          -1.979
+        ],
+        "CTRL_GND": [
+          -3.96,
+          0.72,
+          -1.979
+        ],
+        "CTRL_PWM": [
+          -2.83,
+          0.72,
+          -1.979
+        ],
+        "CTRL_VIB_L": [
+          -1.7,
+          0.72,
+          -1.979
+        ],
+        "CTRL_VIB_R": [
+          -0.57,
+          0.72,
+          -1.979
+        ],
+        "CTRL_ENC_A": [
+          0.56,
+          0.72,
+          -1.979
+        ],
+        "CTRL_ENC_B": [
+          1.69,
+          0.72,
+          -1.979
+        ],
+        "CTRL_ENC_Z": [
+          2.82,
+          0.72,
+          -1.979
+        ],
+        "CTRL_BAL": [
+          3.95,
+          0.72,
+          -1.979
+        ],
+        "CTRL_SAFE": [
+          5.08,
+          0.72,
+          -1.979
+        ]
+      },
+      "animation_pivots": {
+        "CONTROLLER_BLANK_DYNAMIC_SCREEN": [
+          0,
+          1.98,
+          -1.977
+        ],
+        "CTRL_BASELINE_BUTTON": [
+          -4.34,
+          1.33,
+          -1.975
+        ],
+        "CTRL_TRIAL_A_BUTTON": [
+          -2.17,
+          1.33,
+          -1.975
+        ],
+        "CTRL_TRIAL_B_BUTTON": [
+          0.0,
+          1.33,
+          -1.975
+        ],
+        "CTRL_SOLVE_BUTTON": [
+          2.17,
+          1.33,
+          -1.975
+        ],
+        "CTRL_APPLY_BUTTON": [
+          4.34,
+          1.33,
+          -1.975
+        ]
+      }
+    },
+    "13_L53_VectorMonitor": {
+      "fbx": "13_L53_VectorMonitor.fbx",
+      "glb": "13_L53_VectorMonitor.glb",
+      "triangles": 4540,
+      "submesh_count": 49,
+      "local_socket_anchors": {},
+      "animation_pivots": {
+        "BLANK_LIVE_VECTOR_SCREEN": [
+          0,
+          1.93,
+          -1.9260000000000002
+        ]
+      }
+    },
+    "14_L53_SafetyEnclosure": {
+      "fbx": "14_L53_SafetyEnclosure.fbx",
+      "glb": "14_L53_SafetyEnclosure.glb",
+      "triangles": 2790,
+      "submesh_count": 37,
+      "local_socket_anchors": {
+        "GUARD_NC": [
+          17.55,
+          0.76,
+          -5.629
+        ]
+      },
+      "animation_pivots": {
+        "SAFETY_FRONT_GUARD_DOOR_HINGE_Y": [
+          -18.14,
+          3.43,
+          -4.5
+        ],
+        "L53_TRANSPARENT_BALANCING_GUARD_DoorHealthy_LED": [
+          16.23,
+          1.49,
+          -4.62
+        ]
+      }
+    },
+    "15_L53_TrialWeightTray": {
+      "fbx": "15_L53_TrialWeightTray.fbx",
+      "glb": "15_L53_TrialWeightTray.glb",
+      "triangles": 4028,
+      "submesh_count": 47,
+      "local_socket_anchors": {},
+      "animation_pivots": {
+        "TRIAL_WEIGHT_00_DETACH_Y": [
+          -2.28,
+          1.3,
+          -0.74
+        ],
+        "TRIAL_WEIGHT_01_DETACH_Y": [
+          -1.15,
+          1.3,
+          -0.74
+        ],
+        "TRIAL_WEIGHT_02_DETACH_Y": [
+          -0.020000000000000018,
+          1.3,
+          -0.74
+        ],
+        "TRIAL_WEIGHT_03_DETACH_Y": [
+          1.1099999999999999,
+          1.3,
+          -0.74
+        ],
+        "TRIAL_WEIGHT_04_DETACH_Y": [
+          2.2399999999999998,
+          1.3,
+          -0.74
+        ],
+        "TRIAL_WEIGHT_05_DETACH_Y": [
+          -2.28,
+          1.3,
+          0.5800000000000001
+        ],
+        "TRIAL_WEIGHT_06_DETACH_Y": [
+          -1.15,
+          1.3,
+          0.5800000000000001
+        ],
+        "TRIAL_WEIGHT_07_DETACH_Y": [
+          -0.020000000000000018,
+          1.3,
+          0.5800000000000001
+        ],
+        "TRIAL_WEIGHT_08_DETACH_Y": [
+          1.1099999999999999,
+          1.3,
+          0.5800000000000001
+        ],
+        "TRIAL_WEIGHT_09_DETACH_Y": [
+          2.2399999999999998,
+          1.3,
+          0.5800000000000001
+        ]
+      }
+    },
+    "16_L53_5VSupply": {
+      "fbx": "16_L53_5VSupply.fbx",
+      "glb": "16_L53_5VSupply.glb",
+      "triangles": 4404,
+      "submesh_count": 48,
+      "local_socket_anchors": {
+        "SUPPLY_PLUS": [
+          -1.08,
+          0.78,
+          -1.729
+        ],
+        "SUPPLY_RETURN": [
+          1.08,
+          0.78,
+          -1.729
+        ]
+      },
+      "animation_pivots": {
+        "L53_REGULATED_POWER_Power_LED": [
+          1.96,
+          1.62,
+          -1.59
+        ]
+      }
+    }
+  },
+  "showcase_positions": {
+    "00_L53_IndustrialBase": [
+      0,
+      0,
+      0
+    ],
+    "01_L53_DCMotor": [
+      -20.8,
+      0,
+      1.75
+    ],
+    "02_L53_LongRotorShaft": [
+      0,
+      0,
+      1.75
+    ],
+    "03_L53_CorrectionPlaneA": [
+      -7.1,
+      0,
+      1.75
+    ],
+    "04_L53_CorrectionPlaneB": [
+      7.1,
+      0,
+      1.75
+    ],
+    "05_L53_LeftBearing": [
+      -13.9,
+      0,
+      1.75
+    ],
+    "06_L53_RightBearing": [
+      13.9,
+      0,
+      1.75
+    ],
+    "07_L53_LeftVibrationSensor": [
+      -21.7,
+      0,
+      6.9
+    ],
+    "08_L53_RightVibrationSensor": [
+      21.2,
+      0,
+      6.9
+    ],
+    "09_L53_EncoderABZ": [
+      20.0,
+      0,
+      1.75
+    ],
+    "10_L53_BalanceDriver": [
+      -5.1,
+      0,
+      -8.2
+    ],
+    "11_L53_MotorDriver": [
+      -16.4,
+      0,
+      -8.2
+    ],
+    "12_L53_BalanceController": [
+      4.4,
+      0,
+      9.1
+    ],
+    "13_L53_VectorMonitor": [
+      -12.8,
+      0,
+      9.1
+    ],
+    "14_L53_SafetyEnclosure": [
+      0,
+      0,
+      1.75
+    ],
+    "15_L53_TrialWeightTray": [
+      18.8,
+      0,
+      -8.1
+    ],
+    "16_L53_5VSupply": [
+      21.6,
+      0,
+      9.15
+    ]
+  },
+  "wires": [
+    [
+      "W01",
+      "SUPPLY_PLUS",
+      "CTRL_PLUS",
+      "Supply +5V -> Balancing Controller +5V"
+    ],
+    [
+      "W02",
+      "SUPPLY_RETURN",
+      "CTRL_GND",
+      "Supply RETURN -> Controller GND"
+    ],
+    [
+      "W03",
+      "SUPPLY_PLUS",
+      "MDRV_PLUS",
+      "Supply +5V -> Motor Driver +5V"
+    ],
+    [
+      "W04",
+      "SUPPLY_RETURN",
+      "MDRV_GND",
+      "Supply RETURN -> Motor Driver GND"
+    ],
+    [
+      "W05",
+      "SUPPLY_PLUS",
+      "VIB_LEFT_PLUS",
+      "Supply +5V -> Left Sensor +5V"
+    ],
+    [
+      "W06",
+      "SUPPLY_RETURN",
+      "VIB_LEFT_GND",
+      "Supply RETURN -> Left Sensor GND"
+    ],
+    [
+      "W07",
+      "SUPPLY_PLUS",
+      "VIB_RIGHT_PLUS",
+      "Supply +5V -> Right Sensor +5V"
+    ],
+    [
+      "W08",
+      "SUPPLY_RETURN",
+      "VIB_RIGHT_GND",
+      "Supply RETURN -> Right Sensor GND"
+    ],
+    [
+      "W09",
+      "SUPPLY_PLUS",
+      "BDRV_PLUS",
+      "Supply +5V -> Balance Driver +5V"
+    ],
+    [
+      "W10",
+      "SUPPLY_RETURN",
+      "BDRV_GND",
+      "Supply RETURN -> Balance Driver GND"
+    ],
+    [
+      "W11",
+      "CTRL_PWM",
+      "MDRV_PWM",
+      "Controller MOTOR PWM -> Motor Driver PWM"
+    ],
+    [
+      "W12",
+      "MDRV_MP",
+      "MOTOR_POS",
+      "Motor Driver M+ -> DC Motor +"
+    ],
+    [
+      "W13",
+      "MDRV_MN",
+      "MOTOR_NEG",
+      "Motor Driver M- -> DC Motor -"
+    ],
+    [
+      "W14",
+      "VIB_LEFT_OUT",
+      "CTRL_VIB_L",
+      "Left Sensor OUT -> Controller VIB L"
+    ],
+    [
+      "W15",
+      "VIB_RIGHT_OUT",
+      "CTRL_VIB_R",
+      "Right Sensor OUT -> Controller VIB R (install LAST for fault test)"
+    ],
+    [
+      "W16",
+      "ENCODER_A",
+      "CTRL_ENC_A",
+      "Encoder A -> Controller ENC A"
+    ],
+    [
+      "W17",
+      "ENCODER_B",
+      "CTRL_ENC_B",
+      "Encoder B -> Controller ENC B"
+    ],
+    [
+      "W18",
+      "ENCODER_Z",
+      "CTRL_ENC_Z",
+      "Encoder Z -> Controller ENC Z"
+    ],
+    [
+      "W19",
+      "CTRL_BAL",
+      "BDRV_CMD",
+      "Controller BAL CMD -> Balance Driver CMD"
+    ],
+    [
+      "W20",
+      "BDRV_AP",
+      "PLANE_A_PLUS",
+      "Balance Driver A+ -> Plane A Actuator +"
+    ],
+    [
+      "W21",
+      "BDRV_AN",
+      "PLANE_A_NEG",
+      "Balance Driver A- -> Plane A Actuator -"
+    ],
+    [
+      "W22",
+      "BDRV_BP",
+      "PLANE_B_PLUS",
+      "Balance Driver B+ -> Plane B Actuator +"
+    ],
+    [
+      "W23",
+      "BDRV_BN",
+      "PLANE_B_NEG",
+      "Balance Driver B- -> Plane B Actuator -"
+    ],
+    [
+      "W24",
+      "GUARD_NC",
+      "CTRL_SAFE",
+      "Guard NC -> Controller SAFE IN"
+    ]
+  ],
+  "coordinate_system": "Y up; front -Z; art units; scale/align to Unity workbench",
+  "note": "The two correction mass groups orbit independently. Controller must combine shaft phase with each correction angle.",
+  "safety_note": "Actual safety guard mesh is cosmetic; interlock and circuit must use Project Spark runtime.",
+  "ordering_note": "Install W15 (right sensor OUT -> Controller VIB R) last for the deliberate sensor fault test."
+}

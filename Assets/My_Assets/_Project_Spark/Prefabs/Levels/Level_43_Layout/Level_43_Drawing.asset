@@ -1,0 +1,319 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_43_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_43
+  levelTitle: Hold the Line
+  initialPage: 0
+  pages:
+  - title: 01 / Close the loop
+    explanation: W01 SUPPLY_PLUS to DRIVER_PLUS. W02 SUPPLY_RET to DRIVER_RET. W03
+      COMMAND_OUT to COMMAND_IN. W04 POSITION_OUT to POSITION_IN. W05 OUT_A to MOTOR_A.
+      W06 OUT_B to MOTOR_B. Add the motor wires last.
+    caption: "5 V SUPPLY  \u2022  REVERSIBLE H-BRIDGE"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.13, y: 0.8}
+      label: 5 V / RET
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: driver
+      kind: 9
+      position: {x: 0.47, y: 0.74}
+      label: H-BRIDGE
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: motor
+      kind: 9
+      position: {x: 0.84, y: 0.74}
+      label: MOTOR
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: command
+      kind: 9
+      position: {x: 0.13, y: 0.37}
+      label: COMMAND MANUAL
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: control
+      kind: 9
+      position: {x: 0.47, y: 0.37}
+      label: COMPARE / STOP BAND
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: sensor
+      kind: 9
+      position: {x: 0.84, y: 0.37}
+      label: FEEDBACK POSITION
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    wires:
+    - points:
+      - {x: 0.13, y: 0.8}
+      - {x: 0.32, y: 0.8}
+      - {x: 0.47, y: 0.74}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.51, y: 0.78}
+      - {x: 0.68, y: 0.78}
+      - {x: 0.8, y: 0.78}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.51, y: 0.7}
+      - {x: 0.68, y: 0.7}
+      - {x: 0.8, y: 0.7}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.15, y: 0.37}
+      - {x: 0.43, y: 0.37}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.82, y: 0.37}
+      - {x: 0.51, y: 0.37}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.47, y: 0.42}
+      - {x: 0.47, y: 0.69}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.84, y: 0.69}
+      - {x: 0.84, y: 0.42}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+  - title: 02 / Compare command and position
+    explanation: Jog right to verify that feedback rises. AUTO A commands 1.25 V
+      or 25% travel. AUTO B commands 3.75 V or 75% travel. A command above feedback
+      drives right. A command below feedback drives left. Within 0.15 V the driver
+      stops.
+    caption: "LEFT  \u2022  STOP  \u2022  RIGHT"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.13, y: 0.8}
+      label: 5 V / RET
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: driver
+      kind: 9
+      position: {x: 0.47, y: 0.74}
+      label: H-BRIDGE
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: motor
+      kind: 9
+      position: {x: 0.84, y: 0.74}
+      label: MOTOR
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: command
+      kind: 9
+      position: {x: 0.13, y: 0.37}
+      label: COMMAND 3.75 V
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: control
+      kind: 9
+      position: {x: 0.47, y: 0.37}
+      label: COMPARE / STOP BAND
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: sensor
+      kind: 9
+      position: {x: 0.84, y: 0.37}
+      label: FEEDBACK 2.50 V
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    wires:
+    - points:
+      - {x: 0.13, y: 0.8}
+      - {x: 0.32, y: 0.8}
+      - {x: 0.47, y: 0.74}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.51, y: 0.78}
+      - {x: 0.68, y: 0.78}
+      - {x: 0.8, y: 0.78}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.51, y: 0.7}
+      - {x: 0.68, y: 0.7}
+      - {x: 0.8, y: 0.7}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.15, y: 0.37}
+      - {x: 0.43, y: 0.37}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.82, y: 0.37}
+      - {x: 0.51, y: 0.37}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.47, y: 0.42}
+      - {x: 0.47, y: 0.69}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.84, y: 0.69}
+      - {x: 0.84, y: 0.42}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+  - title: 03 / Diagnose the reversed motor
+    explanation: Remove W05 and W06. Connect OUT A to MOTOR B and OUT B to MOTOR
+      A, then press TEST FAULT. The carriage moves away and stops. Restore both leads
+      and select AUTO B.
+    caption: "WRONG DIRECTION  \u2022  SAFE STOP"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.13, y: 0.8}
+      label: 5 V / RET
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: driver
+      kind: 9
+      position: {x: 0.47, y: 0.74}
+      label: H-BRIDGE
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: motor
+      kind: 9
+      position: {x: 0.84, y: 0.74}
+      label: MOTOR
+      color: {r: 0.98, g: 0.35, b: 0.43, a: 1}
+    - id: command
+      kind: 9
+      position: {x: 0.13, y: 0.37}
+      label: COMMAND 3.75 V
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: control
+      kind: 9
+      position: {x: 0.47, y: 0.37}
+      label: COMPARE / STOP BAND
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: sensor
+      kind: 9
+      position: {x: 0.84, y: 0.37}
+      label: FEEDBACK FALLING
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    wires:
+    - points:
+      - {x: 0.13, y: 0.8}
+      - {x: 0.32, y: 0.8}
+      - {x: 0.47, y: 0.74}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.51, y: 0.78}
+      - {x: 0.68, y: 0.78}
+      - {x: 0.8, y: 0.7}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.43, a: 1}
+    - points:
+      - {x: 0.51, y: 0.7}
+      - {x: 0.68, y: 0.7}
+      - {x: 0.8, y: 0.78}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.43, a: 1}
+    - points:
+      - {x: 0.15, y: 0.37}
+      - {x: 0.43, y: 0.37}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.82, y: 0.37}
+      - {x: 0.51, y: 0.37}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.47, y: 0.42}
+      - {x: 0.47, y: 0.69}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.84, y: 0.69}
+      - {x: 0.84, y: 0.42}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+  - title: 04 / Reject a disturbance
+    explanation: Nudge left. The controller drives right until the carriage settles.
+      Then nudge right. The controller drives left until it settles again. The feedback
+      loop holds the same position command.
+    caption: "AUTO B  \u2022  CORRECT FROM BOTH SIDES"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.13, y: 0.8}
+      label: 5 V / RET
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: driver
+      kind: 9
+      position: {x: 0.47, y: 0.74}
+      label: H-BRIDGE
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: motor
+      kind: 9
+      position: {x: 0.84, y: 0.74}
+      label: MOTOR
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: command
+      kind: 9
+      position: {x: 0.13, y: 0.37}
+      label: COMMAND 3.75 V
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: control
+      kind: 9
+      position: {x: 0.47, y: 0.37}
+      label: COMPARE / STOP BAND
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: sensor
+      kind: 9
+      position: {x: 0.84, y: 0.37}
+      label: FEEDBACK 3.75 V
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    wires:
+    - points:
+      - {x: 0.13, y: 0.8}
+      - {x: 0.32, y: 0.8}
+      - {x: 0.47, y: 0.74}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.51, y: 0.78}
+      - {x: 0.68, y: 0.78}
+      - {x: 0.8, y: 0.78}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.51, y: 0.7}
+      - {x: 0.68, y: 0.7}
+      - {x: 0.8, y: 0.7}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.15, y: 0.37}
+      - {x: 0.43, y: 0.37}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - points:
+      - {x: 0.82, y: 0.37}
+      - {x: 0.51, y: 0.37}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.47, y: 0.42}
+      - {x: 0.47, y: 0.69}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.84, y: 0.69}
+      - {x: 0.84, y: 0.42}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}

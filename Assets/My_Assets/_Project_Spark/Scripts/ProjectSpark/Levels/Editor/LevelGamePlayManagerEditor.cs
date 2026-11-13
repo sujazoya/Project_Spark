@@ -12,6 +12,7 @@ namespace ProjectSpark.Gameplay.Editor
         private SerializedProperty electricalSolver;
         private SerializedProperty layoutLoaderProperty;
         private SerializedProperty levelProgressionProperty;
+        private SerializedProperty enforceProgressionAccessProperty;
         private SerializedProperty levels;
         private SerializedProperty activeLevelIndex;
 
@@ -67,6 +68,9 @@ private void OnEnable()
 
         levelProgressionProperty =
             serializedObject.FindProperty("levelProgression");
+
+    enforceProgressionAccessProperty =
+        so.FindProperty("enforceProgressionAccess");
 
     levels =
         so.FindProperty("levels");
@@ -263,6 +267,12 @@ private void DrawSystems()
         EditorGUILayout.PropertyField(
             levelProgressionProperty,
             new GUIContent("Level Progression"));
+
+        EditorGUILayout.PropertyField(
+            enforceProgressionAccessProperty,
+            new GUIContent(
+                "Enforce Progression Access",
+                "Turn off to start locked levels while testing."));
 
         EditorGUILayout.Space(4);
 

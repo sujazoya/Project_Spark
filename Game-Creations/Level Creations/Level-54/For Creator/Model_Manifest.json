@@ -1,0 +1,443 @@
+{
+  "level_id": "level_54",
+  "title": "Cross the Critical",
+  "asset_type": "visual_art_only",
+  "unit": "Unity Y-up, 1 art unit",
+  "models": [
+    {
+      "name": "IndustrialBase",
+      "fbx": "00_L54_IndustrialBase.fbx",
+      "glb": "00_L54_IndustrialBase.glb",
+      "position_xyz": [
+        0,
+        0,
+        0
+      ],
+      "mesh_count": 54,
+      "triangles": 760,
+      "pivots": [],
+      "sockets": [],
+      "fbx_bytes": 87168,
+      "glb_bytes": 33156
+    },
+    {
+      "name": "DriveMotor",
+      "fbx": "01_L54_DriveMotor.fbx",
+      "glb": "01_L54_DriveMotor.glb",
+      "position_xyz": [
+        -18.2,
+        0,
+        0.45
+      ],
+      "mesh_count": 51,
+      "triangles": 9557,
+      "pivots": [
+        "MOTOR_SHAFT_ROTATE_X"
+      ],
+      "sockets": [
+        "MOTOR_POS",
+        "MOTOR_NEG"
+      ],
+      "fbx_bytes": 190755,
+      "glb_bytes": 121536
+    },
+    {
+      "name": "FlexibleShaft",
+      "fbx": "02_L54_FlexibleShaft.fbx",
+      "glb": "02_L54_FlexibleShaft.glb",
+      "position_xyz": [
+        0,
+        0,
+        0.45
+      ],
+      "mesh_count": 21,
+      "triangles": 2856,
+      "pivots": [
+        "SHAFT_FLEX_SEGMENT_00",
+        "SHAFT_FLEX_SEGMENT_01",
+        "SHAFT_FLEX_SEGMENT_02",
+        "SHAFT_FLEX_SEGMENT_03",
+        "SHAFT_FLEX_SEGMENT_04",
+        "SHAFT_FLEX_SEGMENT_05",
+        "SHAFT_FLEX_SEGMENT_06"
+      ],
+      "sockets": [],
+      "fbx_bytes": 70127,
+      "glb_bytes": 32000
+    },
+    {
+      "name": "TestRotor",
+      "fbx": "03_L54_TestRotor.fbx",
+      "glb": "03_L54_TestRotor.glb",
+      "position_xyz": [
+        2.4,
+        0,
+        0.45
+      ],
+      "mesh_count": 38,
+      "triangles": 4032,
+      "pivots": [
+        "TEST_ROTOR_ROTATE_X"
+      ],
+      "sockets": [],
+      "fbx_bytes": 102191,
+      "glb_bytes": 63984
+    },
+    {
+      "name": "LeftFlexureBearing",
+      "fbx": "04_L54_LeftFlexureBearing.fbx",
+      "glb": "04_L54_LeftFlexureBearing.glb",
+      "position_xyz": [
+        -10.5,
+        0,
+        0.45
+      ],
+      "mesh_count": 22,
+      "triangles": 6844,
+      "pivots": [
+        "LEFT_FLEXURE_BEARING_YZ"
+      ],
+      "sockets": [],
+      "fbx_bytes": 220437,
+      "glb_bytes": 82940
+    },
+    {
+      "name": "RightFlexureBearing",
+      "fbx": "05_L54_RightFlexureBearing.fbx",
+      "glb": "05_L54_RightFlexureBearing.glb",
+      "position_xyz": [
+        16.8,
+        0,
+        0.45
+      ],
+      "mesh_count": 22,
+      "triangles": 6844,
+      "pivots": [
+        "RIGHT_FLEXURE_BEARING_YZ"
+      ],
+      "sockets": [],
+      "fbx_bytes": 220528,
+      "glb_bytes": 82984
+    },
+    {
+      "name": "DisplacementProbeX",
+      "fbx": "06_L54_DisplacementProbeX.fbx",
+      "glb": "06_L54_DisplacementProbeX.glb",
+      "position_xyz": [
+        -0.8,
+        0,
+        0.45
+      ],
+      "mesh_count": 20,
+      "triangles": 3011,
+      "pivots": [
+        "X_PROBE_ADJUST"
+      ],
+      "sockets": [
+        "XS_POS",
+        "XS_GND",
+        "XS_OUT"
+      ],
+      "fbx_bytes": 80588,
+      "glb_bytes": 53648
+    },
+    {
+      "name": "DisplacementProbeY",
+      "fbx": "07_L54_DisplacementProbeY.fbx",
+      "glb": "07_L54_DisplacementProbeY.glb",
+      "position_xyz": [
+        4.9,
+        0,
+        0.45
+      ],
+      "mesh_count": 20,
+      "triangles": 3025,
+      "pivots": [
+        "Y_PROBE_ADJUST"
+      ],
+      "sockets": [
+        "YS_POS",
+        "YS_GND",
+        "YS_OUT"
+      ],
+      "fbx_bytes": 81114,
+      "glb_bytes": 54992
+    },
+    {
+      "name": "EncoderABZ",
+      "fbx": "08_L54_EncoderABZ.fbx",
+      "glb": "08_L54_EncoderABZ.glb",
+      "position_xyz": [
+        -13.6,
+        0,
+        0.45
+      ],
+      "mesh_count": 100,
+      "triangles": 5583,
+      "pivots": [
+        "ENCODER_DISC_ROTATE_X"
+      ],
+      "sockets": [
+        "ENC_A",
+        "ENC_B",
+        "ENC_Z"
+      ],
+      "fbx_bytes": 219394,
+      "glb_bytes": 116572
+    },
+    {
+      "name": "ActiveDamper",
+      "fbx": "09_L54_ActiveDamper.fbx",
+      "glb": "09_L54_ActiveDamper.glb",
+      "position_xyz": [
+        10.1,
+        0,
+        0.45
+      ],
+      "mesh_count": 111,
+      "triangles": 22520,
+      "pivots": [
+        "DAMPER_X_FORCE",
+        "DAMPER_Y_FORCE"
+      ],
+      "sockets": [
+        "DAMP_POS",
+        "DAMP_NEG"
+      ],
+      "fbx_bytes": 505746,
+      "glb_bytes": 212712
+    },
+    {
+      "name": "DamperDriver",
+      "fbx": "10_L54_DamperDriver.fbx",
+      "glb": "10_L54_DamperDriver.glb",
+      "position_xyz": [
+        -4.4,
+        0,
+        -9.7
+      ],
+      "mesh_count": 53,
+      "triangles": 5161,
+      "pivots": [],
+      "sockets": [
+        "DDRV_POS",
+        "DDRV_GND",
+        "DDRV_CMD",
+        "DDRV_ACTPOS",
+        "DDRV_ACTNEG"
+      ],
+      "fbx_bytes": 152703,
+      "glb_bytes": 84068
+    },
+    {
+      "name": "MotorDriver",
+      "fbx": "11_L54_MotorDriver.fbx",
+      "glb": "11_L54_MotorDriver.glb",
+      "position_xyz": [
+        -14.8,
+        0,
+        -9.7
+      ],
+      "mesh_count": 50,
+      "triangles": 4996,
+      "pivots": [],
+      "sockets": [
+        "MDRV_POS",
+        "MDRV_GND",
+        "MDRV_PWM",
+        "MDRV_MPOS",
+        "MDRV_MNEG"
+      ],
+      "fbx_bytes": 146501,
+      "glb_bytes": 81172
+    },
+    {
+      "name": "CriticalSpeedController",
+      "fbx": "12_L54_CriticalSpeedController.fbx",
+      "glb": "12_L54_CriticalSpeedController.glb",
+      "position_xyz": [
+        4.6,
+        0,
+        10.2
+      ],
+      "mesh_count": 72,
+      "triangles": 8841,
+      "pivots": [],
+      "sockets": [
+        "CTRL_POS",
+        "CTRL_GND",
+        "CTRL_MOTOR_PWM",
+        "CTRL_X_IN",
+        "CTRL_Y_IN",
+        "CTRL_ENC_A",
+        "CTRL_ENC_B",
+        "CTRL_ENC_Z",
+        "CTRL_DAMP_CMD",
+        "CTRL_SAFE_IN"
+      ],
+      "fbx_bytes": 236089,
+      "glb_bytes": 121596
+    },
+    {
+      "name": "OrbitSpectrumMonitor",
+      "fbx": "13_L54_OrbitSpectrumMonitor.fbx",
+      "glb": "13_L54_OrbitSpectrumMonitor.glb",
+      "position_xyz": [
+        -13.5,
+        0,
+        10.2
+      ],
+      "mesh_count": 31,
+      "triangles": 1093,
+      "pivots": [],
+      "sockets": [],
+      "fbx_bytes": 65287,
+      "glb_bytes": 38596
+    },
+    {
+      "name": "SafetyGuard",
+      "fbx": "14_L54_SafetyGuard.fbx",
+      "glb": "14_L54_SafetyGuard.glb",
+      "position_xyz": [
+        0,
+        0,
+        0.45
+      ],
+      "mesh_count": 73,
+      "triangles": 1600,
+      "pivots": [
+        "SAFETY_DOOR_HINGE"
+      ],
+      "sockets": [
+        "GUARD_NC"
+      ],
+      "fbx_bytes": 124097,
+      "glb_bytes": 59192
+    },
+    {
+      "name": "SensorCalibrationStand",
+      "fbx": "15_L54_SensorCalibrationStand.fbx",
+      "glb": "15_L54_SensorCalibrationStand.glb",
+      "position_xyz": [
+        16.5,
+        0,
+        -9.7
+      ],
+      "mesh_count": 31,
+      "triangles": 1279,
+      "pivots": [],
+      "sockets": [],
+      "fbx_bytes": 66114,
+      "glb_bytes": 34040
+    },
+    {
+      "name": "5VSupply",
+      "fbx": "16_L54_5VSupply.fbx",
+      "glb": "16_L54_5VSupply.glb",
+      "position_xyz": [
+        19.3,
+        0,
+        10.2
+      ],
+      "mesh_count": 25,
+      "triangles": 2471,
+      "pivots": [],
+      "sockets": [
+        "SUPPLY_POS",
+        "SUPPLY_NEG"
+      ],
+      "fbx_bytes": 78714,
+      "glb_bytes": 55012
+    }
+  ],
+  "wires": 22,
+  "distinct_socket_anchors": 36,
+  "model_positions": {
+    "IndustrialBase": [
+      0,
+      0,
+      0
+    ],
+    "DriveMotor": [
+      -18.2,
+      0,
+      0.45
+    ],
+    "FlexibleShaft": [
+      0,
+      0,
+      0.45
+    ],
+    "TestRotor": [
+      2.4,
+      0,
+      0.45
+    ],
+    "LeftFlexureBearing": [
+      -10.5,
+      0,
+      0.45
+    ],
+    "RightFlexureBearing": [
+      16.8,
+      0,
+      0.45
+    ],
+    "DisplacementProbeX": [
+      -0.8,
+      0,
+      0.45
+    ],
+    "DisplacementProbeY": [
+      4.9,
+      0,
+      0.45
+    ],
+    "EncoderABZ": [
+      -13.6,
+      0,
+      0.45
+    ],
+    "ActiveDamper": [
+      10.1,
+      0,
+      0.45
+    ],
+    "DamperDriver": [
+      -4.4,
+      0,
+      -9.7
+    ],
+    "MotorDriver": [
+      -14.8,
+      0,
+      -9.7
+    ],
+    "CriticalSpeedController": [
+      4.6,
+      0,
+      10.2
+    ],
+    "OrbitSpectrumMonitor": [
+      -13.5,
+      0,
+      10.2
+    ],
+    "SafetyGuard": [
+      0,
+      0,
+      0.45
+    ],
+    "SensorCalibrationStand": [
+      16.5,
+      0,
+      -9.7
+    ],
+    "5VSupply": [
+      19.3,
+      0,
+      10.2
+    ]
+  },
+  "terminal_note": "FBX socket anchor transforms are art locators, not electrical SparkTerminal components."
+}

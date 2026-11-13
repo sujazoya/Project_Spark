@@ -1,0 +1,263 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_47_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_47
+  levelTitle: Hold the Tension
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the winding loop
+    explanation: Connect both drives and encoders. Connect W13 and W14 to sensor
+      power. Connect W15 from Sensor Signal to Tension In last.
+    caption: "15 WIRES  \u2022  TWO DRIVES  \u2022  ANALOG SENSOR"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: DANCER SENSOR
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: TENSION CONTROL
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: FEED ENCODER
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: TAKE-UP ENCODER
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: DRIVER / WEB
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+  - title: 02 / Calibrate the dancer
+    explanation: "Calibrate the centered dancer. Start automatic winding and observe
+      the sensor stay inside 2.30\u20132.70 V as material transfers."
+    caption: "MOTORS STOPPED  \u2022  NEUTRAL 2.50 V"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: DANCER SENSOR
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: TENSION CONTROL
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: DANCER
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: 2.50 V
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: DRIVER / WEB
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+  - title: 03 / Compensate for roll growth
+    explanation: The feed roll shrinks while the take-up roll grows. Watch their
+      RPM ratio change. Apply the feed brake and watch the take-up drive ease back
+      as the dancer moves toward high tension.
+    caption: "SURFACE SPEED = ANGULAR SPEED \xD7 RADIUS"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: DANCER SENSOR
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: TENSION CONTROL
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: FEED SHRINKS
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: TAKE-UP GROWS
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: DRIVER / WEB
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+  - title: 04 / Recover from a sensor fault
+    explanation: Remove W15 while winding. Restore it, wait for safe stationary feedback,
+      explicitly reset the fault and start AUTO again.
+    caption: "W15 OPEN  \u2022  BOTH DRIVES STOP"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: DANCER SENSOR
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: TENSION CONTROL
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: W15 OPEN
+      color: {r: 0.98, g: 0.35, b: 0.47, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: RESET / START
+      color: {r: 0.98, g: 0.35, b: 0.47, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: DRIVER / WEB
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.47, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.47, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}

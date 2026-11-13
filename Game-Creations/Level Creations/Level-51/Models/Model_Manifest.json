@@ -1,0 +1,649 @@
+{
+  "level": 51,
+  "name": "Predict the Failure",
+  "theme": "Predictive Maintenance / Motor Diagnostic Laboratory",
+  "scope": "VISUAL ASSETS ONLY \u2014 does not implement solver/level gameplay",
+  "model_count": 15,
+  "art_socket_count": 32,
+  "player_wires": 19,
+  "triangles": 108848,
+  "assembled_fbx": "Level51_Complete_ArtKit_Showcase.fbx",
+  "parts": {
+    "00_L51_IndustrialBase": {
+      "fbx": "00_L51_IndustrialBase.fbx",
+      "glb": "00_L51_IndustrialBase.glb",
+      "triangle_count": 2698,
+      "part_count": 69,
+      "local_socket_anchors": {},
+      "animation_pivots": {}
+    },
+    "01_L51_DCMotorAssembly": {
+      "fbx": "01_L51_DCMotorAssembly.fbx",
+      "glb": "01_L51_DCMotorAssembly.glb",
+      "triangle_count": 7872,
+      "part_count": 71,
+      "local_socket_anchors": {
+        "MOTOR_PLUS": [
+          -0.7,
+          0.7,
+          -3.05
+        ],
+        "MOTOR_MINUS": [
+          0.7,
+          0.7,
+          -3.05
+        ]
+      },
+      "animation_pivots": {
+        "MOTOR_SHAFT_ROTATE_X": [
+          2.4,
+          2.27,
+          0
+        ]
+      }
+    },
+    "02_L51_DiagnosticRotor": {
+      "fbx": "02_L51_DiagnosticRotor.fbx",
+      "glb": "02_L51_DiagnosticRotor.glb",
+      "triangle_count": 19682,
+      "part_count": 176,
+      "local_socket_anchors": {},
+      "animation_pivots": {
+        "DIAGNOSTIC_ROTOR_ROTATE_X": [
+          0,
+          2.35,
+          0
+        ],
+        "ECCENTRIC_TEST_WEIGHT_DETACH": [
+          0.5,
+          3.43,
+          0
+        ]
+      }
+    },
+    "03_L51_ServiceBearing": {
+      "fbx": "03_L51_ServiceBearing.fbx",
+      "glb": "03_L51_ServiceBearing.glb",
+      "triangle_count": 5314,
+      "part_count": 43,
+      "local_socket_anchors": {},
+      "animation_pivots": {
+        "SERVICE_BEARING_CARTRIDGE_REMOVABLE": [
+          0,
+          2.15,
+          0
+        ],
+        "L51_BEARING_bearing_status_LAMP": [
+          1.34,
+          1.1,
+          -2.07
+        ]
+      }
+    },
+    "04_L51_EncoderAssembly": {
+      "fbx": "04_L51_EncoderAssembly.fbx",
+      "glb": "04_L51_EncoderAssembly.glb",
+      "triangle_count": 7186,
+      "part_count": 112,
+      "local_socket_anchors": {
+        "ENCODER_A": [
+          -0.59,
+          0.68,
+          -2.66
+        ],
+        "ENCODER_B": [
+          0.59,
+          0.68,
+          -2.66
+        ]
+      },
+      "animation_pivots": {
+        "ENCODER_DISC_ROTATE_X": [
+          0,
+          2.24,
+          0
+        ]
+      }
+    },
+    "05_L51_VibrationSensor": {
+      "fbx": "05_L51_VibrationSensor.fbx",
+      "glb": "05_L51_VibrationSensor.glb",
+      "triangle_count": 5458,
+      "part_count": 55,
+      "local_socket_anchors": {
+        "VIB_PLUS": [
+          -1.35,
+          0.72,
+          -1.664
+        ],
+        "VIB_GND": [
+          0,
+          0.72,
+          -1.664
+        ],
+        "VIB_OUT": [
+          1.35,
+          0.72,
+          -1.664
+        ]
+      },
+      "animation_pivots": {}
+    },
+    "06_L51_TemperatureSensor": {
+      "fbx": "06_L51_TemperatureSensor.fbx",
+      "glb": "06_L51_TemperatureSensor.glb",
+      "triangle_count": 7200,
+      "part_count": 58,
+      "local_socket_anchors": {
+        "TEMP_PLUS": [
+          -1.35,
+          0.72,
+          -1.664
+        ],
+        "TEMP_GND": [
+          0,
+          0.72,
+          -1.664
+        ],
+        "TEMP_OUT": [
+          1.35,
+          0.72,
+          -1.664
+        ]
+      },
+      "animation_pivots": {}
+    },
+    "07_L51_CurrentShunt": {
+      "fbx": "07_L51_CurrentShunt.fbx",
+      "glb": "07_L51_CurrentShunt.glb",
+      "triangle_count": 7054,
+      "part_count": 72,
+      "local_socket_anchors": {
+        "SHUNT_IN": [
+          -1.77,
+          0.72,
+          -1.689
+        ],
+        "SHUNT_OUT": [
+          -0.6,
+          0.72,
+          -1.689
+        ],
+        "SHUNT_SENSE_PLUS": [
+          0.6,
+          0.72,
+          -1.689
+        ],
+        "SHUNT_SENSE_MINUS": [
+          1.77,
+          0.72,
+          -1.689
+        ]
+      },
+      "animation_pivots": {}
+    },
+    "08_L51_MotorDriver": {
+      "fbx": "08_L51_MotorDriver.fbx",
+      "glb": "08_L51_MotorDriver.glb",
+      "triangle_count": 7178,
+      "part_count": 86,
+      "local_socket_anchors": {
+        "DRIVER_PLUS": [
+          -1.89,
+          0.72,
+          -1.764
+        ],
+        "DRIVER_GND": [
+          -0.94,
+          0.72,
+          -1.764
+        ],
+        "DRIVER_PWM_IN": [
+          0,
+          0.72,
+          -1.764
+        ],
+        "DRIVER_MOTOR_PLUS": [
+          0.94,
+          0.72,
+          -1.764
+        ],
+        "DRIVER_MOTOR_MINUS": [
+          1.89,
+          0.72,
+          -1.764
+        ]
+      },
+      "animation_pivots": {
+        "L51_DRIVER_DriverPowerLamp_LAMP": [
+          1.95,
+          1.63,
+          -1.7040000000000002
+        ]
+      }
+    },
+    "09_L51_HealthController": {
+      "fbx": "09_L51_HealthController.fbx",
+      "glb": "09_L51_HealthController.glb",
+      "triangle_count": 13826,
+      "part_count": 106,
+      "local_socket_anchors": {
+        "CTRL_PLUS": [
+          -3.22,
+          1.3,
+          -2.014
+        ],
+        "CTRL_GND": [
+          -1.6,
+          1.3,
+          -2.014
+        ],
+        "CTRL_PWM_OUT": [
+          0,
+          1.3,
+          -2.014
+        ],
+        "CTRL_VIB_IN": [
+          1.6,
+          1.3,
+          -2.014
+        ],
+        "CTRL_TEMP_IN": [
+          3.22,
+          1.3,
+          -2.014
+        ],
+        "CTRL_CURRENT_PLUS": [
+          -3.22,
+          0.58,
+          -2.014
+        ],
+        "CTRL_CURRENT_MINUS": [
+          -1.6,
+          0.58,
+          -2.014
+        ],
+        "CTRL_ENC_A": [
+          0,
+          0.58,
+          -2.014
+        ],
+        "CTRL_ENC_B": [
+          1.6,
+          0.58,
+          -2.014
+        ],
+        "CTRL_SAFETY_IN": [
+          3.22,
+          0.58,
+          -2.014
+        ]
+      },
+      "animation_pivots": {
+        "CTRL_BUTTON_BASELINE": [
+          -2.7,
+          2.74,
+          -1.43
+        ],
+        "CTRL_BUTTON_ANALYZE": [
+          -0.9,
+          2.74,
+          -1.43
+        ],
+        "CTRL_BUTTON_SERVICE": [
+          0.9,
+          2.74,
+          -1.43
+        ],
+        "CTRL_BUTTON_RESET": [
+          2.7,
+          2.74,
+          -1.43
+        ],
+        "L51_CONTROLLER_HealthLamp_LAMP": [
+          3.91,
+          2.07,
+          -1.9340000000000002
+        ]
+      }
+    },
+    "10_L51_ConditionMonitor": {
+      "fbx": "10_L51_ConditionMonitor.fbx",
+      "glb": "10_L51_ConditionMonitor.glb",
+      "triangle_count": 8400,
+      "part_count": 208,
+      "local_socket_anchors": {},
+      "animation_pivots": {
+        "CONDITION_SCREEN_FACE": [
+          0,
+          1.65,
+          -1.449
+        ]
+      }
+    },
+    "11_L51_BalanceWeightKit": {
+      "fbx": "11_L51_BalanceWeightKit.fbx",
+      "glb": "11_L51_BalanceWeightKit.glb",
+      "triangle_count": 4000,
+      "part_count": 44,
+      "local_socket_anchors": {},
+      "animation_pivots": {
+        "WEIGHT_00_PICKUP": [
+          -1.61,
+          1.3,
+          -0.55
+        ],
+        "WEIGHT_01_PICKUP": [
+          -0.8,
+          1.3,
+          -0.55
+        ],
+        "WEIGHT_02_PICKUP": [
+          0.010000000000000009,
+          1.3,
+          -0.55
+        ],
+        "WEIGHT_03_PICKUP": [
+          0.8200000000000001,
+          1.3,
+          -0.55
+        ],
+        "WEIGHT_04_PICKUP": [
+          1.6300000000000001,
+          1.3,
+          -0.55
+        ],
+        "WEIGHT_05_PICKUP": [
+          -1.61,
+          1.3,
+          0.38
+        ],
+        "WEIGHT_06_PICKUP": [
+          -0.8,
+          1.3,
+          0.38
+        ],
+        "WEIGHT_07_PICKUP": [
+          0.010000000000000009,
+          1.3,
+          0.38
+        ],
+        "WEIGHT_08_PICKUP": [
+          0.8200000000000001,
+          1.3,
+          0.38
+        ],
+        "WEIGHT_09_PICKUP": [
+          1.6300000000000001,
+          1.3,
+          0.38
+        ]
+      }
+    },
+    "12_L51_BearingServiceStation": {
+      "fbx": "12_L51_BearingServiceStation.fbx",
+      "glb": "12_L51_BearingServiceStation.glb",
+      "triangle_count": 5504,
+      "part_count": 60,
+      "local_socket_anchors": {},
+      "animation_pivots": {
+        "SERVICE_BEARING_HEALTHY_PICKUP": [
+          -1.27,
+          1.78,
+          0.2
+        ],
+        "SERVICE_BEARING_WORN_PICKUP": [
+          1.26,
+          1.78,
+          0.2
+        ]
+      }
+    },
+    "13_L51_SafetyEnclosure": {
+      "fbx": "13_L51_SafetyEnclosure.fbx",
+      "glb": "13_L51_SafetyEnclosure.glb",
+      "triangle_count": 2528,
+      "part_count": 38,
+      "local_socket_anchors": {
+        "GUARD_NC_OUT": [
+          10.94,
+          0.76,
+          -4.51
+        ]
+      },
+      "animation_pivots": {
+        "FRONT_SAFETY_DOOR_HINGE_Y": [
+          -11.520000000000001,
+          2.8,
+          -3.5
+        ],
+        "L51_GUARD_GuardReadyLED_LAMP": [
+          9.38,
+          1.34,
+          -3.59
+        ]
+      }
+    },
+    "14_L51_5VSupply": {
+      "fbx": "14_L51_5VSupply.fbx",
+      "glb": "14_L51_5VSupply.glb",
+      "triangle_count": 4948,
+      "part_count": 56,
+      "local_socket_anchors": {
+        "SUPPLY_PLUS": [
+          -0.93,
+          0.72,
+          -1.664
+        ],
+        "SUPPLY_RETURN": [
+          0.93,
+          0.72,
+          -1.664
+        ]
+      },
+      "animation_pivots": {
+        "L51_SUPPLY_powerLED_LAMP": [
+          1.66,
+          1.58,
+          -1.564
+        ]
+      }
+    }
+  },
+  "showcase_positions": {
+    "00_L51_IndustrialBase": [
+      0,
+      0,
+      0
+    ],
+    "01_L51_DCMotorAssembly": [
+      -13.05,
+      0,
+      0.9
+    ],
+    "02_L51_DiagnosticRotor": [
+      -6.4,
+      0,
+      0.9
+    ],
+    "03_L51_ServiceBearing": [
+      -0.7,
+      0,
+      0.9
+    ],
+    "04_L51_EncoderAssembly": [
+      4.25,
+      0,
+      0.9
+    ],
+    "05_L51_VibrationSensor": [
+      -13.0,
+      0,
+      6.55
+    ],
+    "06_L51_TemperatureSensor": [
+      -0.7,
+      0,
+      6.55
+    ],
+    "07_L51_CurrentShunt": [
+      7.0,
+      0,
+      -7.05
+    ],
+    "08_L51_MotorDriver": [
+      -13.45,
+      0,
+      -7.0
+    ],
+    "09_L51_HealthController": [
+      -3.9,
+      0,
+      -7.15
+    ],
+    "10_L51_ConditionMonitor": [
+      -6.35,
+      0,
+      8.4
+    ],
+    "11_L51_BalanceWeightKit": [
+      13.25,
+      0,
+      -0.5
+    ],
+    "12_L51_BearingServiceStation": [
+      13.1,
+      0,
+      5.85
+    ],
+    "13_L51_SafetyEnclosure": [
+      -5.7,
+      0,
+      0.9
+    ],
+    "14_L51_5VSupply": [
+      15.15,
+      0,
+      -7.1
+    ]
+  },
+  "wires": [
+    [
+      "W01",
+      "SUPPLY_PLUS",
+      "CTRL_PLUS",
+      "Supply +5 V > Health Controller +5 V"
+    ],
+    [
+      "W02",
+      "SUPPLY_RETURN",
+      "CTRL_GND",
+      "Supply RETURN > Controller GND"
+    ],
+    [
+      "W03",
+      "SUPPLY_PLUS",
+      "DRIVER_PLUS",
+      "Supply +5 V > Driver +5 V"
+    ],
+    [
+      "W04",
+      "SUPPLY_RETURN",
+      "DRIVER_GND",
+      "Supply RETURN > Driver GND"
+    ],
+    [
+      "W05",
+      "CTRL_PWM_OUT",
+      "DRIVER_PWM_IN",
+      "Controller PWM > Motor Driver PWM"
+    ],
+    [
+      "W06",
+      "DRIVER_MOTOR_PLUS",
+      "SHUNT_IN",
+      "Driver MOTOR+ > Current Shunt IN"
+    ],
+    [
+      "W07",
+      "SHUNT_OUT",
+      "MOTOR_PLUS",
+      "Shunt OUT > DC Motor +"
+    ],
+    [
+      "W08",
+      "DRIVER_MOTOR_MINUS",
+      "MOTOR_MINUS",
+      "Driver MOTOR- > DC Motor -"
+    ],
+    [
+      "W09",
+      "SUPPLY_PLUS",
+      "VIB_PLUS",
+      "Supply +5 V > Vibration Sensor +5 V"
+    ],
+    [
+      "W10",
+      "SUPPLY_RETURN",
+      "VIB_GND",
+      "Supply RETURN > Vibration Sensor GND"
+    ],
+    [
+      "W11",
+      "VIB_OUT",
+      "CTRL_VIB_IN",
+      "Vibration OUT > Controller VIB IN"
+    ],
+    [
+      "W12",
+      "SUPPLY_PLUS",
+      "TEMP_PLUS",
+      "Supply +5 V > Temperature Sensor +5 V"
+    ],
+    [
+      "W13",
+      "SUPPLY_RETURN",
+      "TEMP_GND",
+      "Supply RETURN > Temperature Sensor GND"
+    ],
+    [
+      "W14",
+      "TEMP_OUT",
+      "CTRL_TEMP_IN",
+      "Temperature OUT > Controller TEMP IN"
+    ],
+    [
+      "W15",
+      "SHUNT_SENSE_PLUS",
+      "CTRL_CURRENT_PLUS",
+      "Shunt S+ > Controller I+"
+    ],
+    [
+      "W16",
+      "SHUNT_SENSE_MINUS",
+      "CTRL_CURRENT_MINUS",
+      "Shunt S- > Controller I-"
+    ],
+    [
+      "W17",
+      "ENCODER_A",
+      "CTRL_ENC_A",
+      "Encoder A > Controller ENC A"
+    ],
+    [
+      "W18",
+      "ENCODER_B",
+      "CTRL_ENC_B",
+      "Encoder B > Controller ENC B"
+    ],
+    [
+      "W19",
+      "GUARD_NC_OUT",
+      "CTRL_SAFETY_IN",
+      "Safety Guard NC OUT > Controller SAFE IN"
+    ]
+  ],
+  "coordinate_system": "Y up; front -Z; project-relative units; scale and align in Unity",
+  "assembly_note": "Assembly is an art arrangement. Anchor points are on model faces, not validated breadboard holes.",
+  "electrical_note": "W01\u2013W19 are design connections; digital signals need valid Project Spark binding/signal integration"
+}

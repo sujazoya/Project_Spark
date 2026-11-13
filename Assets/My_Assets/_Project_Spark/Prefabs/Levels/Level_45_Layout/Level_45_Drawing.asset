@@ -1,0 +1,264 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_45_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_45
+  levelTitle: Hold the Speed
+  initialPage: 0
+  pages:
+  - title: 01 / Build the speed loop
+    explanation: Connect controller and driver power, encoder A/B, controller PWM
+      to driver PWM, and both motor leads. Add encoder B (W06) last so it can be
+      removed with Undo Last.
+    caption: "5 V  \u2022  ENCODER A/B  \u2022  PWM  \u2022  MOTOR"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: ENCODER
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: GOVERNOR
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: ENCODER A/B
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: PWM COMMAND
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: MOTOR / BRAKE
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+  - title: 02 / Measure speed
+    explanation: Start in open loop. Count valid quadrature transitions to measure
+      RPM. Add load and compare speed at the same duty. Release the brake, then select
+      closed loop at 30 and 60 RPM.
+    caption: "80 COUNTS PER REVOLUTION  \u2022  0.5 SECOND SAMPLE"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: ENCODER
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: GOVERNOR
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: MEASURED RPM
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: SPEED ERROR
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: MOTOR / BRAKE
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+  - title: 03 / Reject a load change
+    explanation: The brake adds torque opposing the motor. Speed falls first. The
+      governor increases duty and brings the speed back to the target band.
+    caption: "60 RPM  \u2022  TEST LOAD"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: ENCODER
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: GOVERNOR
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: LOAD TORQUE
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: DUTY RISES
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: MOTOR / BRAKE
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+  - title: 04 / Recover safely
+    explanation: Remove W06 while running. The driver opens and the rotor coasts
+      down. Restore W06, explicitly reset, and start again in closed loop at 60 RPM.
+    caption: "ENCODER B LOST  \u2022  DRIVE DISABLED"
+    parts:
+    - id: source
+      kind: 9
+      position: {x: 0.12, y: 0.8}
+      label: 5 V + RETURN
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - id: encoder
+      kind: 9
+      position: {x: 0.14, y: 0.48}
+      label: ENCODER
+      color: {r: 0.24, g: 0.87, b: 0.8, a: 1}
+    - id: decoder
+      kind: 9
+      position: {x: 0.82, y: 0.48}
+      label: GOVERNOR
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    - id: phaseA
+      kind: 9
+      position: {x: 0.47, y: 0.64}
+      label: FEEDBACK LOST
+      color: {r: 0.98, g: 0.35, b: 0.45, a: 1}
+    - id: phaseB
+      kind: 9
+      position: {x: 0.47, y: 0.3}
+      label: RESET / RESTART
+      color: {r: 0.98, g: 0.35, b: 0.45, a: 1}
+    - id: index
+      kind: 9
+      position: {x: 0.47, y: 0.48}
+      label: MOTOR / BRAKE
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}
+    wires:
+    - points:
+      - {x: 0.12, y: 0.8}
+      - {x: 0.82, y: 0.8}
+      - {x: 0.82, y: 0.57}
+      energized: 0
+      color: {r: 0.28, g: 0.69, b: 1, a: 1}
+    - points:
+      - {x: 0.18, y: 0.6}
+      - {x: 0.33, y: 0.6}
+      - {x: 0.67, y: 0.34}
+      - {x: 0.78, y: 0.34}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.45, a: 1}
+    - points:
+      - {x: 0.18, y: 0.34}
+      - {x: 0.33, y: 0.34}
+      - {x: 0.67, y: 0.6}
+      - {x: 0.78, y: 0.6}
+      energized: 0
+      color: {r: 0.98, g: 0.35, b: 0.45, a: 1}
+    - points:
+      - {x: 0.18, y: 0.48}
+      - {x: 0.78, y: 0.48}
+      energized: 0
+      color: {r: 0.99, g: 0.73, b: 0.31, a: 1}

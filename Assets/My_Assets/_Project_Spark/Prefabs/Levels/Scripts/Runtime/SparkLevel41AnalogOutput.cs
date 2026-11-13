@@ -29,6 +29,11 @@ namespace ProjectSpark.Gameplay
         public Button[] bitButtons;
         public Button applyButton, linkButton, diagnoseOpenButton, diagnoseBitButton, sweepButton, restartButton;
         public GameObject healthyLamp, faultLamp;
+        public GameObject referenceLamp;
+        public GameObject[] bitLamps;
+        public Transform[] bitRockers;
+        public Renderer[] voltageBars;
+        public TextMesh voltageReadout, codeReadout, linkReadout;
 
         private SparkLevelLayoutLoader loader;
         private LevelGamePlayManager manager;
@@ -99,10 +104,15 @@ namespace ProjectSpark.Gameplay
             if (CanControl() && !sweeping && stage < Gates.Length) ResetTrial();
         }
 
-        private bool CanControl() =>
-            ready && loader != null && loader.ActiveLayout == layout && circuit != null &&
-            topology == circuit.TopologyVersion && solver != null && !solver.IsDirty && !solver.IsSolving &&
-            ReferenceEquals(solver.LatestSolveResult,measuredResult);
+        private bool CanControl()
+        {
+            if (!isActiveAndEnabled || loader == null || loader.ActiveLayout != layout || circuit == null ||
+                solver == null || solver.IsSolving || topology != circuit.TopologyVersion)
+                return false;
+            if (solver.IsDirty || !ReferenceEquals(solver.LatestSolveResult, measuredResult))
+                RefreshReadings(0f);
+            return ready && !solver.IsDirty && ReferenceEquals(solver.LatestSolveResult, measuredResult);
+        }
 
         private bool CanSelectCode() => ready && stage >= 1 && stage <= 4 && !healthyFullScaleSeen;
         private bool CanDiagnose() => ready && stage == 4 && healthyFullScaleSeen &&
@@ -110,13 +120,15 @@ namespace ProjectSpark.Gameplay
         private bool CanSweep() => ready && stage == 5 && !sweeping && terminationContact.IsClosed &&
             appliedCode == 7 && MatchesCode(7);
 
-        private void Update()
+        private void Update() => RefreshReadings(Time.unscaledDeltaTime);
+
+        private void RefreshReadings(float elapsed)
         {
             if (loader == null) loader = FindFirstObjectByType<SparkLevelLayoutLoader>();
             if (layout == null || loader == null || loader.ActiveLayout != layout) return;
             if (manager == null) manager = FindFirstObjectByType<LevelGamePlayManager>();
-            if (circuit == null) circuit = FindFirstObjectByType<SparkCircuitSystem>();
-            if (solver == null) solver = FindFirstObjectByType<SparkElectricalSolver>();
+            if (circuit == null) circuit = manager != null ? manager.CircuitSystem : FindFirstObjectByType<SparkCircuitSystem>();
+            if (solver == null) solver = manager != null ? manager.ElectricalSolver : FindFirstObjectByType<SparkElectricalSolver>();
             if (circuit == null || solver == null)
             {
                 Show("Waiting for the circuit and solver.");
@@ -164,7 +176,7 @@ namespace ProjectSpark.Gameplay
             measuredResult = result;
             if (stage == 0 && MatchesCode(0)) Award();
             else if (applyPending) CheckAppliedCode();
-            if (sweeping) AdvanceSweep();
+            if (sweeping) AdvanceSweep(elapsed);
             Show(feedback ?? Prompt());
         }
 
@@ -201,9 +213,9 @@ namespace ProjectSpark.Gameplay
             }
         }
 
-        private void AdvanceSweep()
+        private void AdvanceSweep(float elapsed)
         {
-            sweepElapsed += Time.unscaledDeltaTime;
+            sweepElapsed += elapsed;
             if (sweepElapsed < .22f) return;
             float step = rail / 8f;
             if (!MatchesCode(appliedCode) ||
@@ -266,6 +278,7 @@ namespace ProjectSpark.Gameplay
         private void Show(string message)
         {
             if (statusText != null) statusText.text = message;
+            UpdateWorkbenchDisplays();
             if (meterText != null)
                 meterText.text = ready
                     ? $"SELECTED {Bits(selectedCode)}    |    APPLIED {Bits(appliedCode)}    |    OUTPUT {output:0.000} V    |    REF {rail:0.00} V"
@@ -288,6 +301,38 @@ namespace ProjectSpark.Gameplay
             SetButton(restartButton,ready && stage > 0 && stage < Gates.Length && !sweeping);
             if (healthyLamp != null) healthyLamp.SetActive(ready && terminationContact.IsClosed);
             if (faultLamp != null) faultLamp.SetActive(ready && !terminationContact.IsClosed);
+        }
+
+        private void UpdateWorkbenchDisplays()
+        {
+            if (referenceLamp != null) referenceLamp.SetActive(source != null && source.IsOutputActive);
+            bool open = ready && !terminationContact.IsClosed;
+            if (voltageReadout != null)
+            {
+                voltageReadout.text = ready ? $"{output:0.000} V" : "— V";
+                voltageReadout.color = open ? new Color(1f, .68f, .26f) : new Color(.47f, 1f, .76f);
+            }
+            if (codeReadout != null)
+                codeReadout.text = !ready ? "CODE —" : sweeping || sweepCount == 8
+                    ? $"CODE {Bits(appliedCode)}  /  SWEEP {sweepCount}/8" : $"CODE {Bits(appliedCode)}";
+            if (linkReadout != null)
+            {
+                linkReadout.text = !ready ? "CHECK WIRING" : open ? "LINK OPEN" : "LINK CLOSED";
+                linkReadout.color = open ? new Color(1f, .68f, .26f) : new Color(.52f, .92f, 1f);
+            }
+            if (bitRockers != null && bitLamps != null)
+                for (int bit = 0; bit < bitRockers.Length && bit < bitLamps.Length; bit++)
+                {
+                    bool high = (appliedCode & (1 << bit)) != 0;
+                    if (bitRockers[bit] != null) bitRockers[bit].localRotation = Quaternion.Euler(0, 0, high ? -12f : 12f);
+                    if (bitLamps[bit] != null) bitLamps[bit].SetActive(ready && high);
+                }
+            if (voltageBars != null)
+            {
+                int lit = ready && rail > 0f ? Mathf.RoundToInt(Mathf.Clamp01(output / rail) * voltageBars.Length) : 0;
+                for (int i = 0; i < voltageBars.Length; i++)
+                    if (voltageBars[i] != null) voltageBars[i].enabled = i < lit;
+            }
         }
 
         private static string Bits(int code) => Convert.ToString(code,2).PadLeft(3,'0');
