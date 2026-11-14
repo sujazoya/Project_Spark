@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_62_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_62
+  levelTitle: Hold the Voltage
+  initialPage: 0
+  pages:
+  - title: 01 / Build the DVR
+    explanation: Wire control rails, the three series transformers and the voltage
+      feedback. Connect W54 last.
+    caption: "54 WIRES  \u2022  84 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.62}
+      label: SOURCE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.62, y: 0.62}
+      label: INJECTION
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.62}
+      label: PROTECTED
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.62}
+      - {x: 0.43, y: 0.62}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.62, y: 0.62}
+      - {x: 0.75, y: 0.62}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 02 / Commission
+    explanation: Check the energy bank. Wait for the DC link and PLL, then enable
+      the DVR.
+    caption: "CALIBRATE  \u2022  PRECHARGE  \u2022  PLL"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.62}
+      label: STORAGE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.62, y: 0.62}
+      label: PRECHARGE
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.62}
+      label: PHASE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.62}
+      - {x: 0.43, y: 0.62}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.62, y: 0.62}
+      - {x: 0.75, y: 0.62}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 03 / Protect the load
+    explanation: Test sag, swell and imbalance. Observe signed per-phase injection,
+      then start the heavy motor.
+    caption: "0.95\u20131.05 PU"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.62}
+      label: SAG
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.62, y: 0.62}
+      label: SWELL / UNBALANCE
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.62}
+      label: INRUSH
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.62}
+      - {x: 0.43, y: 0.62}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.62, y: 0.62}
+      - {x: 0.75, y: 0.62}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 04 / Repair and certify
+    explanation: Remove actual injection feedback. Verify bypass, reconnect, reset,
+      recalibrate, enable and repeat a sag.
+    caption: "W54  \u2022  INJECTION VOLTAGE"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.62}
+      label: BYPASS
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.62, y: 0.62}
+      label: REPAIR
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.62}
+      label: CERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.62}
+      - {x: 0.43, y: 0.62}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.62, y: 0.62}
+      - {x: 0.75, y: 0.62}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}

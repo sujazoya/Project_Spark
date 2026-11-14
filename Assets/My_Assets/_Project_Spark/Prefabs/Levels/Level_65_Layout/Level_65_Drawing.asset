@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_65_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_65
+  levelTitle: The Factory Thinks
+  initialPage: 0
+  pages:
+  - title: 01 / Build the factory
+    explanation: Connect power, sensors, drives, vacuum, pneumatics and safety. Add
+      W66 last.
+    caption: "66 WIRES  \u2022  104 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.65}
+      label: POWER
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.65, y: 0.65}
+      label: CONTROL
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.65}
+      label: SAFETY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.65}
+      - {x: 0.43, y: 0.65}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.65, y: 0.65}
+      - {x: 0.75, y: 0.65}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 02 / Prove inspection
+    explanation: Commission the PLC, calibrate motion and vision and track a test
+      part.
+    caption: "BELT ENCODER  \u2022  CAMERA"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.65}
+      label: DETECT
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.65, y: 0.65}
+      label: INSPECT
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.65}
+      label: TRACK
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.65}
+      - {x: 0.43, y: 0.65}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.65, y: 0.65}
+      - {x: 0.75, y: 0.65}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 03 / Sort and optimize
+    explanation: Home the robot, commission services and prove sorting. Tune belt
+      and cycle speeds for the mixed batch.
+    caption: "A / B / C  \u2022  REJECT"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.65}
+      label: PICK
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.65, y: 0.65}
+      label: PLACE
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.65}
+      label: MEASURE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.65}
+      - {x: 0.43, y: 0.65}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.65, y: 0.65}
+      - {x: 0.75, y: 0.65}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 04 / Recover and certify
+    explanation: Disconnect actual encoder feedback. Restore the signal, recalibrate
+      and reset. Run a fresh certification batch.
+    caption: "W66  \u2022  20-PART BATCH"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.65}
+      label: STOP
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.65, y: 0.65}
+      label: RECOVER
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.65}
+      label: CERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.65}
+      - {x: 0.43, y: 0.65}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.65, y: 0.65}
+      - {x: 0.75, y: 0.65}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}

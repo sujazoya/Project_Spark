@@ -1,0 +1,2880 @@
+# PROJECT SPARK — LEVEL 69 MASTER UNITY IMPLEMENTATION PROMPT
+
+## LEVEL 69: KEEP IT COLD
+### Advanced Vapor-Compression Refrigeration, Dual-Zone Cold Storage, Refrigerant Phase-Change Thermodynamics, Electronic Expansion Valve Superheat Control, Compressor Protection, Adaptive Evaporator Defrost, Energy Optimization and Critical Sensor Fault Recovery
+
+Act as my senior Unity C# engineer, industrial refrigeration engineer, thermodynamics specialist, vapor-compression systems engineer, refrigerant property-model developer, compressor simulation specialist, industrial cold-chain automation engineer, PID and EEV control specialist, PLC programmer, functional safety engineer, SCADA developer, gameplay programmer, Unity Editor automation specialist and technical artist.
+
+**YOUR TASK IS TO IMPLEMENT THE COMPLETE, WORKING, PLAYABLE LEVEL 69 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+This is an implementation task.
+
+Do not stop at:
+
+- A level design proposal.
+- Architecture discussion.
+- Pseudocode.
+- Nonfunctional example scripts.
+- Decorative 3D models.
+- An art-only scene.
+- Spinning compressor meshes without actual compressor dynamics.
+- A cooling chamber that directly sets its own temperature.
+- A refrigerant circuit with no conserved energy or mass.
+- Fake suction and discharge pressure.
+- A simulated pressure–enthalpy chart unrelated to thermodynamic state.
+- Superheat values copied from a target setting.
+- An EEV that directly changes chamber temperature.
+- Fake refrigerant liquid/vapor states.
+- Frost that appears only through a timed animation.
+- Instant defrost without energy or time.
+- A safety relay that cannot actually disable the compressor.
+- A digital SCADA screen with fabricated values.
+- A local-only 6/6 objective display.
+
+Implement all safely achievable gameplay systems using my existing Project Spark Unity codebase and the approved Level 69 HD/AAA-inspired FBX asset package.
+
+**THE LEVEL 69 DESIGN AND 46 EQUIPMENT MODELS ARE APPROVED.**
+
+Do not redesign the laboratory or regenerate its art unnecessarily.
+
+**MAIN REQUIREMENT: THE PLAYER MUST BUILD, COMMISSION, CONTROL, OPTIMIZE, PROTECT AND RECOVER AN ACTUALLY SIMULATED DUAL-ZONE INDUSTRIAL REFRIGERATION PLANT.**
+
+The level must teach real engineering relationships through observable gameplay:
+
+- Refrigerant mass conservation.
+- Vapor-compression refrigeration.
+- Pressure-dependent saturation temperature.
+- Refrigerant enthalpy and phase condition.
+- Compressor work.
+- Evaporator heat absorption.
+- Condenser heat rejection.
+- Expansion-valve flow regulation.
+- Suction superheat.
+- Liquid subcooling.
+- Finite compressor capacity.
+- Two-zone thermal demand.
+- Cold-chain product thermal inertia.
+- Evaporator frost accumulation.
+- Adaptive defrost.
+- Cooling coefficient of performance.
+- Electrical-energy optimization.
+- Functional safety.
+- Fault recovery.
+
+---
+
+# 1. CRITICAL EXISTING PROJECT INTEGRATION
+
+Project Spark is an existing Unity electrical engineering, industrial automation, circuit-building and simulation game.
+
+Before implementing Level 69, inspect the actual Unity project source code.
+
+At minimum, inspect the following classes if they exist:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+
+Also inspect:
+
+- Player-created wire registration.
+- Functional terminal registration.
+- Connection topology validation.
+- Circuit power and return paths.
+- Component signal propagation.
+- Switch and relay controls.
+- Motor and variable-frequency drive abstractions.
+- Pressure sensor abstractions.
+- Temperature sensor calibration.
+- Sensor timestamps and validity.
+- PID control infrastructure.
+- PLC scan-cycle implementation.
+- Safety interlocks.
+- Fault latching and reset.
+- Temperature simulation.
+- Energy accounting.
+- Rotating equipment animation.
+- Workstation component placement.
+- Objective evidence tracking.
+- Historical objective completion.
+- UI interaction controls.
+- TextMeshPro dashboard binding.
+- Unity Editor level builders.
+- Prefab creation.
+- Save, reload and reset behavior.
+
+## RELEVANT PREVIOUS LEVELS
+
+Inspect and reuse only compatible functionality actually implemented in:
+
+**Level 54 — Cross the Critical**
+
+Rotating machinery, motor dynamics and protective behavior.
+
+**Level 56 — Harvest the Spin**
+
+Torque, mechanical power and finite energy.
+
+**Level 58 — Isolate the Fault**
+
+Electrical protection, safe isolation and relay states.
+
+**Level 59 — Bring Back the Power**
+
+System commissioning and ordered restoration.
+
+**Level 60 — The Grid Must Survive**
+
+Coordinated automation, fault handling and supervisory controls.
+
+**Level 63 — Catch the Frequency**
+
+Actual rotating-shaft feedback and dynamic control.
+
+**Level 65 — The Factory Thinks**
+
+PLC sequencing, industrial I/O, sensors, motor drives and safe automated operation.
+
+**Level 66 — Save the Factory**
+
+Motor fault monitoring, thermal diagnostics and health certification.
+
+**Level 67 — Master the Flow**
+
+Fluid circulation, pumps, valves and cascade PID.
+
+**Level 68 — Tame the Heat**
+
+Heat transfer, thermal energy balances, exchanger dynamics, temperature PID, heat recovery and thermal safety.
+
+Level 68 is particularly relevant for chamber and heat-exchanger behavior.
+
+Reuse working thermal code if present.
+
+Do not assume any previous system is implemented simply because its design or art pack exists.
+
+---
+
+# 2. NON-NEGOTIABLE IMPLEMENTATION RULES
+
+1. Inspect actual source before calling existing APIs.
+2. Never invent existing Unity methods or namespaces.
+3. Preserve Levels 1–68.
+4. Reuse compatible existing infrastructure.
+5. Keep Level 69 systems level-local where possible.
+6. Avoid unnecessary global solver modifications.
+7. Do not treat refrigerant as an ordinary incompressible liquid across the entire cycle.
+8. Do not fabricate refrigerant mass.
+9. Do not create unlimited refrigerant inventory.
+10. Do not fabricate pressure independently of the chosen cycle model.
+11. Do not assign compressor suction and discharge pressure from arbitrary dashboard constants.
+12. Do not set actual compressor RPM directly from speed command.
+13. Do not create compressor cooling without a corresponding work and heat balance.
+14. Do not force the compressor outlet to a predefined temperature independent of modeled compression.
+15. Do not calculate superheat using an unrelated saturation temperature.
+16. Do not treat target superheat as actual measured superheat.
+17. Do not permit unrestricted liquid refrigerant into the compressor.
+18. Do not allow unlimited cooling capacity.
+19. Do not allow unlimited condenser heat rejection.
+20. Do not change chamber temperature directly from an EEV command.
+21. Do not allow one evaporator branch to use unlimited shared compressor capacity.
+22. Do not make door opening change only a UI label.
+23. Do not instantly freeze or defrost an evaporator without thermal consequences.
+24. Do not ignore product/cargo thermal inertia.
+25. Do not fabricate COP.
+26. Do not count energy savings without a valid comparison.
+27. Do not use invalid pressure or temperature feedback for closed-loop superheat control.
+28. Do not allow normal PID to bypass safety trips.
+29. Do not automatically restart compressor operation after a latched fault.
+30. Do not treat the animated compressor shaft as authoritative physics.
+31. Do not mark a product temperature-certified solely because the chamber air temperature is correct.
+32. Do not let a disconnected sensor continue returning valid values.
+33. Do not fabricate the final fault using a Boolean while the wire remains connected.
+34. Do not bypass the existing objective evaluator.
+35. Do not claim an asset-only scene is playable.
+36. Do not duplicate the assembled showcase and all individual models.
+37. Use coherent SI units.
+38. Use deterministic simulation time.
+39. Prevent duplicate simulation owners.
+40. Provide complete C# source files.
+41. Make Editor creation rerunnable.
+42. Report unresolved integration dependencies.
+43. Do not claim Unity compilation without performing it.
+44. Do not claim Play Mode success without performing it.
+45. Do not claim 6/6 completion unless the actual authoritative manager reaches 6/6.
+
+## ABSOLUTE COMPLETION REQUIREMENT
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6.**
+
+A Level 69-specific script displaying 6/6 is not sufficient.
+
+Inspect:
+
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `LevelGamePlayManager`
+
+Implement six genuine objectives using the existing authoritative architecture.
+
+Objectives 1–5 must remain historically certified during Objective 6's deliberate sensor disconnection.
+
+Objective 6 must require actual topology repair, sensor recalibration, fault reset, safe recommissioning and a fresh refrigeration certification.
+
+---
+
+# 3. LEVEL 69 CONFIGURATION
+
+**Level Number:** 69
+
+**Level ID:** `level_69`
+
+**Display Name:** `Keep It Cold`
+
+**Subtitle:** `Intelligent Refrigeration and Cold Chain Control`
+
+**Difficulty:** Master / Expert
+
+**Educational Control Supply:** 5 V DC
+
+**Primary Plant:** Dual-zone vapor-compression refrigeration system
+
+**Equipment FBX Models:** 46
+
+**Matching GLB Backups:** 46
+
+**Player-Created Wires:** 82
+
+**Unique Functional Terminals:** 128
+
+**Main Compressor:** 1 variable-speed
+
+**Condenser:** 1 air-cooled unit
+
+**Condenser Fans:** 2
+
+**Evaporator Branches:** 2
+
+**Evaporator Fan Assemblies:** 2
+
+**Electronic Expansion Valves:** 2
+
+**Cold Chambers:** 2
+
+**Liquid Receiver:** 1
+
+**Suction Accumulator:** 1
+
+**Oil Separator:** 1
+
+**Refrigerant Flow Measurement:** 1 shared measurement assembly
+
+**Pressure Sensors:** Suction and discharge
+
+**Temperature Sensors:** Compressor suction, discharge, liquid line, two evaporator outlets and two chambers
+
+**Main Superheat Controller:** 1 dual-channel controller
+
+**Dual-Zone Temperature PID Controller:** 1
+
+**Adaptive Defrost Controller:** 1
+
+**Defrost Heating Assembly:** 1
+
+**Energy Analyzer:** 1
+
+**Main PLC:** 1
+
+**Safety PLC:** 1
+
+**Compressor Protection Relay:** 1
+
+**Disturbance Controller:** 1
+
+**Final Fault:** Evaporator A outlet temperature feedback disconnect
+
+**Authoritative Objectives:** 6
+
+## PROPOSED EDUCATIONAL OPERATING TARGETS
+
+- Chamber A target: 4°C.
+- Chamber B target: 2°C.
+- Steady-state chamber tolerance: ±1°C.
+- Nominal evaporator outlet superheat range: 5–8 K, subject to refrigerant and system calibration.
+- Liquid-line subcooling: positive margin according to model.
+- Compressor RPM: bounded by configured equipment rating.
+- Electrical power: finite and measured.
+- Refrigerant mass: finite.
+- Frost accumulation: gradual.
+- Defrost heating: finite.
+- Product thermal limits: scenario-specific and explicitly documented.
+- Compressor liquid-protection requirements: mandatory.
+
+These are gameplay calibration targets, not universal refrigeration design or food-storage safety specifications.
+
+---
+
+# 4. REFRIGERANT PROPERTY MODEL
+
+A vapor-compression simulator must use a coherent refrigerant property model.
+
+## REQUIRED STATE VARIABLES
+
+- Refrigerant identity.
+- Pressure.
+- Temperature.
+- Specific enthalpy.
+- Saturation temperature.
+- Saturated liquid enthalpy.
+- Saturated vapor enthalpy.
+- Vapor quality where appropriate.
+- Mass flow.
+- Specific volume or density.
+- Phase region.
+- Valid operating range.
+
+## IMPLEMENTATION OPTIONS
+
+Prefer an existing compatible thermophysical property system if actually present.
+
+Otherwise implement a documented reduced-order property model or verified property-table interpolation for one selected refrigerant.
+
+For example, choose an explicitly supported educational refrigerant with a consistent property dataset.
+
+Do not mix property values from multiple refrigerants.
+
+Do not use arbitrary unrelated saturation temperatures.
+
+## REQUIRED PROPERTY FUNCTIONS
+
+Suggested responsibility:
+
+`SparkLevel69RefrigerantProperties`
+
+Implement functions conceptually equivalent to:
+
+- Saturation temperature from pressure.
+- Saturation pressure from temperature.
+- Liquid/vapor enthalpy at supported states.
+- Superheated vapor state estimate.
+- Subcooled liquid state estimate.
+- Two-phase quality estimate.
+- Property validity checking.
+
+Use actual project coding conventions.
+
+Do not assume these method names exist.
+
+## IMPORTANT
+
+A reduced-order educational model is acceptable.
+
+Do not claim full REFPROP/CoolProp-level accuracy unless an actual verified property library is integrated.
+
+---
+
+# 5. INITIAL LEVEL STATE
+
+At level start:
+
+- Educational control power awaiting enable.
+- Compressor off.
+- Compressor drive disabled.
+- Condenser fans off.
+- Evaporator fans off.
+- EEV A closed or in defined commissioning position.
+- EEV B closed or in defined commissioning position.
+- Refrigerant inventory initialized.
+- Receiver at valid modeled fill state.
+- Suction accumulator ready.
+- Oil separator available.
+- Pressure sensors uncalibrated.
+- Temperature sensors uncalibrated.
+- Mass-flow measurement uncalibrated.
+- Superheat controller disabled.
+- Zone temperature PID disabled.
+- Defrost controller in IDLE.
+- Defrost heater off.
+- Frost inventory at defined initial value.
+- Chamber doors closed.
+- Chamber temperatures initialized above targets.
+- Cargo initialized at a documented temperature.
+- Main PLC in IDLE.
+- Safety PLC in safe startup state.
+- Compressor protection armed.
+- SCADA awaiting commissioning.
+- No unresolved critical fault.
+- Objectives 0/6.
+
+## PLAYER MISSION
+
+1. Connect the 82-wire electrical/control network.
+2. Validate 128 functional terminals.
+3. Enable control supply.
+4. Commission PLC and safety.
+5. Calibrate pressure sensors.
+6. Calibrate refrigerant temperature sensors.
+7. Calibrate chamber temperature sensors.
+8. Calibrate refrigerant mass-flow measurement.
+9. Verify compressor motor drive.
+10. Verify condenser fan controls.
+11. Verify evaporator fan controls.
+12. Verify EEV wiring.
+13. Validate refrigerant circuit topology.
+14. Commission compressor.
+15. Establish high-pressure discharge.
+16. Establish condenser heat rejection.
+17. Establish liquid refrigerant supply.
+18. Establish evaporation in both branches.
+19. Maintain vapor-only compressor suction conditions.
+20. Configure EEV superheat control.
+21. Stabilize Chamber A at 4°C.
+22. Stabilize Chamber B at 2°C.
+23. Introduce door-opening heat load.
+24. Create a controlled evaporator-frost scenario.
+25. Diagnose performance loss.
+26. Perform safe defrost.
+27. Recover cooling.
+28. Introduce condenser fan fault.
+29. Protect compressor.
+30. Optimize energy consumption.
+31. Disconnect Evaporator A outlet sensor.
+32. Detect invalid superheat feedback.
+33. Enter safe operation.
+34. Reconnect the actual wire.
+35. Recalibrate sensor.
+36. Explicitly reset fault.
+37. Recommission cooling.
+38. Complete fresh certification.
+39. Reach actual 6/6.
+
+---
+
+# 6. USE MY ACTUAL LEVEL 69 HD/AAA ASSET PACKAGE
+
+The approved existing package is:
+
+`ProjectSpark_Level69_HD_AAA_Models.zip`
+
+The verified manifest reports:
+
+- 46 individual binary FBX models.
+- 46 matching GLB backups.
+- One assembled showcase FBX.
+- One assembled showcase GLB.
+- 27,168 equipment triangles.
+- 14 animation-pivot mappings.
+- Unity visual-art placement helper.
+- Model manifest.
+- Animation CSV.
+- README.
+- Verification report.
+- Geometry generation and export verification scripts.
+
+## EXACT 46 INDIVIDUAL FBX FILENAMES
+
+Use these exact filenames:
+
+| FILE | FUNCTION |
+|---|---|
+| `00_L69_IndustrialColdChainBase.fbx` | Main laboratory chassis |
+| `01_L69_VariableSpeedRefrigerationCompressor.fbx` | Compressor |
+| `02_L69_CompressorCutawayAssembly.fbx` | Internal mechanism |
+| `03_L69_CompressorMotorDrive.fbx` | Compressor drive |
+| `04_L69_AirCooledCondenser.fbx` | Condenser |
+| `05_L69_CondenserFanBank.fbx` | Condenser fan assembly |
+| `06_L69_HighPressureLiquidReceiver.fbx` | Liquid receiver |
+| `07_L69_LiquidLineFilterDrier.fbx` | Filter-drier |
+| `08_L69_RefrigerantSightGlass.fbx` | Liquid-line visualization |
+| `09_L69_ElectronicExpansionValveA.fbx` | Expansion valve A |
+| `10_L69_ElectronicExpansionValveB.fbx` | Expansion valve B |
+| `11_L69_EvaporatorCoilA.fbx` | Evaporator A |
+| `12_L69_EvaporatorCoilB.fbx` | Evaporator B |
+| `13_L69_EvaporatorFanAssemblyA.fbx` | Evaporator fan A |
+| `14_L69_EvaporatorFanAssemblyB.fbx` | Evaporator fan B |
+| `15_L69_TransparentColdStorageChamber.fbx` | Chamber A |
+| `16_L69_TransparentRapidCoolingChamber.fbx` | Chamber B |
+| `17_L69_TemperatureSensitiveCargoRack.fbx` | Thermal product load |
+| `18_L69_SuctionAccumulator.fbx` | Liquid carryover protection |
+| `19_L69_CompressorOilSeparator.fbx` | Oil separation |
+| `20_L69_CopperRefrigerantPipelineNetwork.fbx` | Refrigerant piping |
+| `21_L69_SuctionPressureTransmitter.fbx` | Suction pressure |
+| `22_L69_DischargePressureTransmitter.fbx` | Discharge pressure |
+| `23_L69_SuctionTemperatureSensor.fbx` | Suction temperature |
+| `24_L69_DischargeTemperatureSensor.fbx` | Discharge temperature |
+| `25_L69_LiquidLineTemperatureSensor.fbx` | Liquid-line temperature |
+| `26_L69_EvaporatorOutletSensorA.fbx` | Evaporator A temperature |
+| `27_L69_EvaporatorOutletSensorB.fbx` | Evaporator B temperature |
+| `28_L69_ColdChamberTemperatureSensor.fbx` | Chamber A temperature |
+| `29_L69_RapidCoolingTemperatureSensor.fbx` | Chamber B temperature |
+| `30_L69_RefrigerantMassFlowMeter.fbx` | Mass-flow sensing |
+| `31_L69_RefrigerationEnergyAnalyzer.fbx` | COP/energy analysis |
+| `32_L69_PressureEnthalpyCycleDisplay.fbx` | P–h cycle display |
+| `33_L69_DualZoneTemperaturePIDController.fbx` | Zone temperature PID |
+| `34_L69_ElectronicSuperheatController.fbx` | EEV superheat control |
+| `35_L69_AdaptiveDefrostController.fbx` | Defrost sequencing |
+| `36_L69_EvaporatorDefrostHeaterBank.fbx` | Defrost heating |
+| `37_L69_CondensateDrainAssembly.fbx` | Meltwater drain |
+| `38_L69_CompressorProtectionRelay.fbx` | Compressor protection |
+| `39_L69_ColdChainSafetyPLC.fbx` | Safety PLC |
+| `40_L69_IndustrialRefrigerationPLCRack.fbx` | Main PLC |
+| `41_L69_RefrigerationDigitalIOModule.fbx` | Digital I/O |
+| `42_L69_ThermalLoadDisturbanceModule.fbx` | Door/load scenarios |
+| `43_L69_HolographicRefrigerationSCADA.fbx` | Main monitor |
+| `44_L69_TransparentRefrigerationSafetyEnclosure.fbx` | Safety housing |
+| `45_L69_Regulated5VControlSupply.fbx` | Educational control supply |
+
+## SUPPORTING FILES
+
+Inspect:
+
+- `Level69_Complete_ArtKit_Showcase.fbx`
+- `Level69_Complete_ArtKit_Showcase.glb`
+- `SparkLevel69ArtPlacementEditor.cs`
+- `Model_Manifest.json`
+- `Animation_Rigs.csv`
+- `README_Unity.txt`
+- `Verification_Report.json`
+- `Source/`
+- `Previews/`
+
+## ASSET COORDINATE SYSTEM
+
+The actual manifest states:
+
+- X = workstation width.
+- Y = up.
+- Z = front.
+- GLB authored in meters.
+- FBX numeric geometry in centimeters with `UnitScaleFactor=1`.
+
+**IMPORTANT FBX SCALE REQUIREMENT**
+
+The FBX coordinate data and the GLB geometry are expressed in different numeric units.
+
+Unity generally handles FBX centimeter-to-meter conversion through import settings.
+
+Verify actual import scale.
+
+Use the supplied workstation base width of approximately 13.8 m as a scale reference.
+
+If an import is 100 times too large, inspect the model importer and use the appropriate conversion, such as a 0.01 import factor where necessary.
+
+Do not apply duplicate conversions.
+
+Do not blindly assume FBX vertices are already numeric meters.
+
+## ART PLACEMENT
+
+Create:
+
+`L69_HD_VISUAL_ART`
+
+Instantiate all 46 individual models at the common-origin alignment.
+
+Do not render the assembled showcase together with all 46 independent models.
+
+## VERIFIED ART MENU
+
+The existing placement helper provides:
+
+`Tools/Project Spark/Levels/69/Place HD Art Under Selected Layout`
+
+Reuse it for artwork placement.
+
+It does not create gameplay circuitry or refrigeration simulation.
+
+## QUALITY LIMITATIONS
+
+The actual art package contains procedural HD/AAA-inspired geometry.
+
+It does not contain:
+
+- Final artist-authored PBR material sets.
+- Completed rigging.
+- Actual `SparkTerminal` components.
+- W01–W82 gameplay wiring.
+- 128 functional socket anchors.
+- A refrigerant property model.
+- Compressor dynamics.
+- EEV PID.
+- Frost physics.
+- PLC gameplay.
+- Six objectives.
+
+Do not claim those systems are already packaged.
+
+---
+
+# 7. EXACT 14 VERIFIED ANIMATION PIVOTS
+
+The supplied `Animation_Rigs.csv` contains these exact reference pivots:
+
+| MODEL | PIVOT | REFERENCE XYZ |
+|---|---|---|
+| VariableSpeedRefrigerationCompressor | `ANIM_COMPRESSOR_ROTOR` | (0.25, 1.27, 0.55) |
+| CompressorCutawayAssembly | `ANIM_COMPRESSOR_MECHANISM` | (0.96, 1.35, 0.61) |
+| CondenserFanBank | `ANIM_CONDENSER_FAN_A` | (3.18, 2.38, -0.60) |
+| CondenserFanBank | `ANIM_CONDENSER_FAN_B` | (4.95, 2.38, -0.60) |
+| EvaporatorFanAssemblyA | `ANIM_EVAP_FAN_A` | (-4.85, 2.48, -2.16) |
+| EvaporatorFanAssemblyB | `ANIM_EVAP_FAN_B` | (-4.85, 0.58, -2.16) |
+| ElectronicExpansionValveA | `ANIM_EEV_A_ACTUATOR` | (4.40, 1.00, 3.03) |
+| ElectronicExpansionValveB | `ANIM_EEV_B_ACTUATOR` | (5.60, 1.00, 3.03) |
+| TransparentColdStorageChamber | `ANIM_CHAMBER_A_DOOR` | (-4.35, 2.52, -0.54) |
+| TransparentRapidCoolingChamber | `ANIM_CHAMBER_B_DOOR` | (-4.35, 0.62, -0.54) |
+| EvaporatorCoilA | `ANIM_EVAPORATOR_FROST` | (-4.35, 2.50, -2.65) |
+| CondensateDrainAssembly | `ANIM_CONDENSATE_DRAIN` | (-3.04, 0.20, -1.75) |
+| HolographicRefrigerationSCADA | `ANIM_REFRIGERATION_SCADA` | (0.50, 3.20, -2.10) |
+| TransparentRefrigerationSafetyEnclosure | `ANIM_SAFETY_DOOR` | (0.00, 2.04, 1.50) |
+
+## RIGGING REQUIREMENTS
+
+These coordinates are spatial references.
+
+They are not completed animation rigs.
+
+Inspect the individual FBXs and determine which moving mesh groups can be separated.
+
+Create proper animated subhierarchies for:
+
+- Compressor rotor.
+- Compressor mechanism.
+- Condenser fan A.
+- Condenser fan B.
+- Evaporator fan A.
+- Evaporator fan B.
+- EEV A actuator.
+- EEV B actuator.
+- Chamber A door.
+- Chamber B door.
+- Frost overlay.
+- Drain effect.
+- Safety enclosure door.
+
+## IMPORTANT
+
+Do not rotate entire equipment assets when only one internal part should rotate.
+
+Compressor rotor animation must follow actual compressor shaft state.
+
+Fan animation must follow actual fan speed.
+
+EEV actuator movement must follow actual valve position.
+
+Door animation must follow actual door/interlock state.
+
+Frost visuals must follow simulated frost mass, not an unrelated animation timer.
+
+For Evaporator B, create a corresponding frost visual adapter using its real geometry. The existing CSV does not include a separate B frost pivot.
+
+Do not falsely describe this additional pivot as already supplied.
+
+---
+
+# 8. PLAYER WIRING — W01 TO W82
+
+The Level 69 design requires:
+
+**82 player-created wires and 128 unique functional terminal anchors.**
+
+The existing art package does not provide the full endpoint map.
+
+Create a real, validated W01–W82 wiring manifest.
+
+## GROUP A — CONTROL POWER
+
+- Regulated 5 V supply.
+- Control return.
+- Main PLC supply.
+- Digital I/O supply.
+- Safety PLC supply.
+- Superheat controller supply.
+- Dual-zone controller supply.
+- Sensor control supply.
+
+## GROUP B — COMPRESSOR
+
+- Compressor motor-drive enable.
+- Compressor speed reference.
+- Compressor running status.
+- Compressor fault.
+- Compressor protection.
+- Compressor power measurement.
+
+## GROUP C — CONDENSER
+
+- Condenser fan A enable.
+- Condenser fan B enable.
+- Fan speed control.
+- Fan status.
+- Condenser fault.
+
+## GROUP D — EXPANSION VALVES
+
+- EEV A command.
+- EEV A position feedback.
+- EEV B command.
+- EEV B position feedback.
+- EEV controller enable.
+- EEV controller fault.
+
+## GROUP E — EVAPORATORS
+
+- Evaporator fan A control.
+- Evaporator fan B control.
+- Evaporator branch status.
+- Cooling demand A.
+- Cooling demand B.
+- Evaporator temperature feedback.
+
+## GROUP F — PRESSURE INSTRUMENTATION
+
+- Suction pressure transmitter.
+- Discharge pressure transmitter.
+- Measurement validity.
+- High-pressure protection.
+- Low-pressure protection.
+
+## GROUP G — TEMPERATURE INSTRUMENTATION
+
+- Suction temperature.
+- Discharge temperature.
+- Liquid-line temperature.
+- Evaporator outlet A.
+- Evaporator outlet B.
+- Chamber A temperature.
+- Chamber B temperature.
+
+## GROUP H — DEFROST
+
+- Defrost request.
+- Defrost heater command.
+- Defrost heater status.
+- Defrost termination sensing.
+- Condensate drain status.
+- Restart permission.
+
+## GROUP I — SAFETY AND SUPERVISION
+
+- Emergency stop.
+- Safety enclosure.
+- Compressor protection relay.
+- Refrigerant monitoring.
+- Energy analyzer.
+- PLC state.
+- Alarm output.
+- Fault reset.
+
+## EXACT WIRING REQUIREMENTS
+
+1. Create exactly 82 player-created connections.
+2. Create exactly 128 unique functional terminal IDs.
+3. Define the FROM endpoint for every wire.
+4. Define the TO endpoint for every wire.
+5. Register real `SparkTerminal` components.
+6. Use actual component IDs.
+7. Validate control supply and return.
+8. Validate signal compatibility.
+9. Validate required compressor connections.
+10. Validate fan controls.
+11. Validate EEV commands.
+12. Validate EEV position feedback.
+13. Validate temperature feedback.
+14. Validate pressure feedback.
+15. Validate chamber sensors.
+16. Validate defrost controls.
+17. Validate protection wiring.
+18. Reject invalid topology.
+19. Detect missing connections.
+20. Detect duplicate connections.
+21. Support physical wire removal.
+22. Support actual wire reconnection.
+23. Preserve preinstalled internal connections separately.
+
+## INTERNAL CONNECTIONS
+
+Complex refrigeration equipment may have internal control interfaces not directly exposed to the player.
+
+Use documented fixed internal wiring where justified.
+
+Do not add extra player wires beyond 82.
+
+## FINAL CRITICAL SENSOR WIRE
+
+Reserve one player wire for Evaporator A outlet temperature feedback.
+
+Conceptual endpoints:
+
+`EVAP_A_OUTLET_TEMP_OUT → SUPERHEAT_CONTROLLER_EVAP_A_TEMP_IN`
+
+Assign the final W-number only after generating the actual wiring manifest.
+
+Disconnecting this actual wire must invalidate the corresponding measured temperature.
+
+Do not fake the fault using only an unrelated Boolean.
+
+---
+
+# 9. SINGLE AUTHORITATIVE REFRIGERATION SIMULATION
+
+Implement one coordinated refrigeration state.
+
+## REQUIRED VALUES
+
+- Refrigerant total mass.
+- Liquid receiver inventory.
+- Suction accumulator inventory.
+- Suction pressure.
+- Discharge pressure.
+- Compressor RPM.
+- Compressor mass flow.
+- Compressor electrical power.
+- Compressor discharge temperature.
+- Condenser cooling duty.
+- Liquid-line temperature.
+- Refrigerant subcooling.
+- EEV A actual opening.
+- EEV B actual opening.
+- Branch A refrigerant mass flow.
+- Branch B refrigerant mass flow.
+- Evaporator A cooling duty.
+- Evaporator B cooling duty.
+- Superheat A.
+- Superheat B.
+- Chamber A temperature.
+- Chamber B temperature.
+- Cargo temperatures.
+- Frost A and B.
+- Fan speeds.
+- Defrost energy.
+- Protection state.
+
+## CRITICAL RULE
+
+Do not create unrelated scripts that each independently assign the same refrigerant pressures or cooling capacities.
+
+The compressor, condenser, EEVs, evaporators and suction return must operate through a coherent thermodynamic network.
+
+---
+
+# 10. REFRIGERANT CYCLE STATES
+
+Track four principal cycle states.
+
+## STATE 1 — COMPRESSOR SUCTION
+
+- Low-side pressure.
+- Suction temperature.
+- Suction enthalpy.
+- Vapor phase.
+- Superheat.
+- Liquid carryover risk.
+
+## STATE 2 — COMPRESSOR DISCHARGE
+
+- High-side pressure.
+- Discharge temperature.
+- Discharge enthalpy.
+- Compressor work.
+
+## STATE 3 — CONDENSER OUTLET
+
+- High-side pressure.
+- Liquid-line temperature.
+- Liquid enthalpy.
+- Subcooling.
+
+## STATE 4 — EXPANSION VALVE OUTLET
+
+- Low-side pressure.
+- Expansion outlet enthalpy.
+- Two-phase quality.
+- Mass flow to evaporator.
+
+For the two-branch configuration, track branch-specific expansion and evaporator states where required.
+
+Do not force both evaporators to have identical temperatures or mass flow when their loads and valve positions differ.
+
+---
+
+# 11. COMPRESSOR DYNAMICS
+
+Use:
+
+- `01_L69_VariableSpeedRefrigerationCompressor.fbx`
+- `02_L69_CompressorCutawayAssembly.fbx`
+- `03_L69_CompressorMotorDrive.fbx`
+
+## REQUIRED PROPERTIES
+
+- Compressor enabled.
+- Commanded RPM.
+- Actual RPM.
+- Acceleration limit.
+- Deceleration limit.
+- Shaft torque.
+- Mechanical inertia.
+- Suction pressure.
+- Discharge pressure.
+- Compression ratio.
+- Refrigerant mass flow.
+- Isentropic efficiency.
+- Mechanical efficiency.
+- Electrical efficiency.
+- Compressor power.
+- Discharge temperature.
+- Current limit.
+- Fault state.
+
+## ROTATIONAL DYNAMICS
+
+`J * dOmega/dt = Tmotor - Tcompressor - Tloss`
+
+## COMPRESSOR WORK
+
+`Wdot_compressor = mdot * (h2 - h1)`
+
+## REQUIRED BEHAVIOR
+
+- Drive enable starts acceleration.
+- Actual RPM changes gradually.
+- Refrigerant mass flow responds.
+- Compressor work responds to pressure ratio and mass flow.
+- Discharge temperature changes consistently.
+- Electrical power demand changes.
+- Protection limits apply.
+
+## IMPORTANT
+
+Do not assign fixed compressor cooling power based solely on RPM.
+
+Cooling capacity also depends on available evaporator conditions, mass flow, refrigerant state and condenser performance.
+
+---
+
+# 12. CONDENSER MODEL
+
+Use:
+
+- `04_L69_AirCooledCondenser.fbx`
+- `05_L69_CondenserFanBank.fbx`
+
+## REQUIRED STATES
+
+- Condenser refrigerant inlet.
+- Condenser outlet.
+- Air inlet temperature.
+- Fan A actual RPM.
+- Fan B actual RPM.
+- Airflow.
+- Heat-transfer capacity.
+- Refrigerant condensing pressure.
+- Condenser heat duty.
+- Fouling/airflow limitation where modeled.
+- Fan fault.
+
+## ENERGY BALANCE
+
+`Qdot_condenser = Qdot_evaporators + Wdot_compressor`
+
+within modeled losses and storage dynamics.
+
+## REQUIRED BEHAVIOR
+
+- Fans create finite airflow.
+- Fan operation affects heat rejection.
+- Higher ambient temperature reduces available temperature difference.
+- Fan failure reduces heat rejection capacity.
+- High-side pressure may rise when heat rejection is insufficient.
+- Compressor protection acts before unsafe modeled conditions continue indefinitely.
+
+Do not leave high-side pressure fixed during a condenser fan failure.
+
+---
+
+# 13. LIQUID RECEIVER AND FILTER-DRIER
+
+Use:
+
+- `06_L69_HighPressureLiquidReceiver.fbx`
+- `07_L69_LiquidLineFilterDrier.fbx`
+- `08_L69_RefrigerantSightGlass.fbx`
+
+## RECEIVER
+
+Track:
+
+- Liquid inventory.
+- Available liquid mass.
+- Pressure.
+- Temperature.
+- Fill condition.
+- Supply to the expansion valves.
+
+## FILTER-DRIER
+
+Represent a finite hydraulic resistance or simplified normal operating component.
+
+A clogged-filter scenario is optional, not required for the six objectives.
+
+## SIGHT GLASS
+
+Display a derived educational visual reflecting appropriate liquid-line condition.
+
+Do not use the appearance of the sight glass as the only authoritative refrigerant measurement.
+
+---
+
+# 14. ELECTRONIC EXPANSION VALVES
+
+Use:
+
+- `09_L69_ElectronicExpansionValveA.fbx`
+- `10_L69_ElectronicExpansionValveB.fbx`
+
+## REQUIRED PROPERTIES
+
+- Commanded opening.
+- Actual opening.
+- Actuator response rate.
+- Minimum position.
+- Maximum position.
+- Upstream pressure.
+- Downstream pressure.
+- Upstream enthalpy.
+- Calculated mass flow.
+- Valve characteristic.
+- Position feedback.
+- Electrical connectivity.
+- Fault state.
+
+## EXPANSION APPROXIMATION
+
+For a throttling valve:
+
+`h_out ≈ h_in`
+
+subject to the chosen model and assumptions.
+
+## REQUIRED BEHAVIOR
+
+- EEV opening affects available refrigerant flow.
+- Pressure drop affects downstream refrigerant state.
+- Evaporator feeding changes.
+- Superheat changes through evaporator dynamics.
+- Closing the EEV reduces refrigerant supply.
+- EEV position cannot change instantaneously without a justified actuator model.
+
+## IMPORTANT
+
+EEV control must not write a target superheat directly into the sensor.
+
+---
+
+# 15. EVAPORATOR BRANCH A
+
+Use:
+
+- `11_L69_EvaporatorCoilA.fbx`
+- `13_L69_EvaporatorFanAssemblyA.fbx`
+
+## REQUIRED STATES
+
+- Refrigerant inlet pressure.
+- Refrigerant inlet enthalpy.
+- Refrigerant mass flow.
+- Evaporator outlet pressure.
+- Evaporator outlet enthalpy.
+- Evaporator outlet temperature.
+- Air temperature.
+- Fan airflow.
+- Coil temperature.
+- Frost mass.
+- Heat-transfer effectiveness.
+- Actual cooling duty.
+
+## REQUIRED BEHAVIOR
+
+- Air transfers heat to refrigerant.
+- Refrigerant state changes.
+- Chamber A cools dynamically.
+- Frost reduces effective cooling when present.
+- Fan failure reduces heat transfer.
+- Insufficient refrigerant feed reduces cooling capacity.
+
+---
+
+# 16. EVAPORATOR BRANCH B
+
+Use:
+
+- `12_L69_EvaporatorCoilB.fbx`
+- `14_L69_EvaporatorFanAssemblyB.fbx`
+
+Implement independent branch states.
+
+## IMPORTANT
+
+Evaporator B must not simply copy Evaporator A's cooling duty or superheat.
+
+The two zones have distinct temperatures, heat loads, fans, frost conditions and EEV positions.
+
+Their combined refrigerant mass demand must remain compatible with shared compressor capability.
+
+---
+
+# 17. SUPERHEAT MEASUREMENT
+
+Use:
+
+- `26_L69_EvaporatorOutletSensorA.fbx`
+- `27_L69_EvaporatorOutletSensorB.fbx`
+- Pressure measurements appropriate to each branch.
+
+## EQUATION
+
+`Superheat = EvaporatorOutletTemperature - SaturationTemperature(EvaporatorOutletPressure)`
+
+Use compatible absolute pressure values and refrigerant property data.
+
+## REQUIRED OUTPUTS
+
+- Superheat A.
+- Superheat B.
+- Measurement validity.
+- Measurement age.
+- Sensor calibration.
+- Pressure validity.
+- Low-superheat warning.
+- High-superheat warning.
+
+## IMPORTANT
+
+If the system has only a shared suction pressure transmitter, document the assumed pressure drops and infer branch outlet pressures consistently.
+
+Do not silently assume identical pressures when meaningful differences are modeled.
+
+---
+
+# 18. ELECTRONIC SUPERHEAT CONTROLLER
+
+Use:
+
+`34_L69_ElectronicSuperheatController.fbx`
+
+## REQUIRED FUNCTIONS
+
+- Read valid branch outlet temperatures.
+- Read valid pressure feedback.
+- Calculate saturation temperature.
+- Calculate measured superheat.
+- Compare against setpoint.
+- Run bounded PID control.
+- Command EEV actuator.
+- Respect position limits.
+- Apply anti-windup.
+- Detect feedback loss.
+- Trigger safety restrictions.
+
+## PROPOSED TARGET
+
+Use a model-calibrated superheat target, initially within the proposed 5–8 K educational range.
+
+## REQUIRED BEHAVIOR
+
+- Low superheat tends to restrict feeding according to the selected control scheme.
+- High superheat may request additional feeding within capacity.
+- Feedback failure invalidates automatic control.
+- Safety overrides remain authoritative.
+
+## IMPORTANT
+
+Do not keep normal closed-loop EEV operation active after the essential temperature feedback disconnects.
+
+---
+
+# 19. SUCTION ACCUMULATOR
+
+Use:
+
+`18_L69_SuctionAccumulator.fbx`
+
+## REQUIRED PROPERTIES
+
+- Liquid refrigerant inventory.
+- Vapor flow.
+- Liquid return capacity.
+- Accumulator capacity.
+- Carryover risk.
+- Pressure.
+- Temperature.
+- Fault state.
+
+## REQUIRED BEHAVIOR
+
+The accumulator reduces liquid-carryover risk within its modeled limits.
+
+It must not provide infinite protection from continuous liquid floodback.
+
+If liquid accumulation exceeds modeled capacity or safe vapor-return conditions fail, the compressor protection must react.
+
+---
+
+# 20. COMPRESSOR OIL SEPARATOR
+
+Use:
+
+`19_L69_CompressorOilSeparator.fbx`
+
+Represent a consistent simplified oil-management state.
+
+## REQUIRED PROPERTIES
+
+- Separator availability.
+- Oil-separation efficiency where modeled.
+- Oil return status.
+- Compressor lubrication status.
+- Fault state.
+
+The oil separator may be an internal system with fixed connections.
+
+Do not inflate player wiring unnecessarily.
+
+---
+
+# 21. COLD CHAMBER A THERMAL MODEL
+
+Use:
+
+- `15_L69_TransparentColdStorageChamber.fbx`
+- `28_L69_ColdChamberTemperatureSensor.fbx`
+
+## TARGET
+
+4°C.
+
+## REQUIRED STATES
+
+- Air temperature.
+- Wall/insulation thermal mass.
+- Cargo thermal mass.
+- Ambient temperature.
+- Door state.
+- Air leakage.
+- Evaporator cooling duty.
+- Fan airflow.
+- Heat gain.
+- Product temperature.
+- Sensor validity.
+
+## THERMAL EQUATION
+
+`Czone * dT/dt = Qambient + Qdoor + Qcargo - Qcooling`
+
+Use consistent units.
+
+## DOOR OPENING
+
+Opening the door increases heat and moisture ingress.
+
+It must affect real thermal state, not only the door animation.
+
+---
+
+# 22. RAPID-COOLING CHAMBER B
+
+Use:
+
+- `16_L69_TransparentRapidCoolingChamber.fbx`
+- `29_L69_RapidCoolingTemperatureSensor.fbx`
+
+## TARGET
+
+2°C.
+
+Implement independent thermal and cooling-demand state.
+
+## REQUIRED BEHAVIOR
+
+- Chamber B temperature responds to Evaporator B.
+- Warm product loading increases cooling demand.
+- Fan status affects cooling transfer.
+- Frost affects effective evaporator performance.
+- Compressor capacity sharing influences recovery time.
+
+---
+
+# 23. CARGO THERMAL MODEL
+
+Use:
+
+`17_L69_TemperatureSensitiveCargoRack.fbx`
+
+## REQUIRED PROPERTIES
+
+- Cargo mass.
+- Specific heat.
+- Product temperature.
+- Initial temperature.
+- Allowed game-scenario temperature range.
+- Heat-transfer coefficient.
+- Packaging thermal resistance if modeled.
+- Time outside allowable range.
+- Quality state.
+
+## REQUIRED BEHAVIOR
+
+Cargo temperature changes gradually.
+
+Do not instantly set cargo temperature equal to chamber air temperature.
+
+## CERTIFICATION
+
+Measure actual cargo thermal exposure, not only chamber setpoint achievement.
+
+Use explicit educational thresholds.
+
+Do not claim a particular food or medicine remains safe for real-world use based solely on this game simulation.
+
+---
+
+# 24. DUAL-ZONE TEMPERATURE PID
+
+Use:
+
+`33_L69_DualZoneTemperaturePIDController.fbx`
+
+## REQUIRED INPUTS
+
+- Chamber A measured temperature.
+- Chamber B measured temperature.
+- Chamber A setpoint.
+- Chamber B setpoint.
+- Valid sensor feedback.
+- Compressor capacity.
+- EEV state.
+- Evaporator availability.
+- Protection status.
+
+## REQUIRED OUTPUTS
+
+- Cooling demand A.
+- Cooling demand B.
+- Compressor capacity request.
+- Evaporator branch demand.
+- Fan commands.
+- Priority state.
+
+## REQUIRED BEHAVIOR
+
+When both chambers need cooling, the controller allocates finite shared capacity.
+
+Do not allow both chambers to receive full compressor capacity independently.
+
+## PID
+
+Implement bounded controller states with:
+
+- Proportional gain.
+- Integral gain.
+- Filtered derivative where used.
+- Output saturation.
+- Anti-windup.
+- Sensor validity.
+- Bumpless transfer.
+
+---
+
+# 25. FROST ACCUMULATION MODEL
+
+Use:
+
+- Evaporator coils.
+- Fan assemblies.
+- Chamber door states.
+- Temperature and moisture inputs.
+
+## REQUIRED STATES
+
+- Coil surface temperature.
+- Chamber humidity estimate.
+- Moisture ingress.
+- Frost mass.
+- Frost thickness or normalized coverage.
+- Airflow restriction.
+- Heat-transfer resistance.
+- Defrost availability.
+
+## REQUIRED BEHAVIOR
+
+Frost accumulation depends on moisture and coil conditions.
+
+When frost grows:
+
+- Airflow may decrease.
+- Thermal resistance increases.
+- Cooling duty decreases.
+- Chamber temperature may rise.
+- Defrost becomes necessary.
+
+## IMPORTANT
+
+Do not make frost increase solely with elapsed level time regardless of coil temperature, moisture or operating state.
+
+---
+
+# 26. ADAPTIVE DEFROST CONTROLLER
+
+Use:
+
+`35_L69_AdaptiveDefrostController.fbx`
+
+## REQUIRED STATES
+
+- IDLE.
+- DEFROST_REQUESTED.
+- PREPARING.
+- REFRIGERATION_ISOLATED.
+- HEATING.
+- MELTING.
+- DRAINING.
+- DRIP_DELAY.
+- FAN_DELAY.
+- RECOMMISSIONING.
+- COMPLETE.
+- FAULT.
+
+## REQUIRED BEHAVIOR
+
+1. Detect frost or performance degradation.
+2. Validate conditions for defrost.
+3. Isolate affected cooling branch as required.
+4. Control evaporator fans appropriately.
+5. Apply bounded defrost heating.
+6. Reduce actual frost inventory.
+7. Track coil temperature.
+8. Convert melted frost to condensate.
+9. Drain condensate.
+10. Complete drip/fan delay.
+11. Restore EEV operation.
+12. Restore safe superheat control.
+13. Restore cooling.
+
+## IMPORTANT
+
+Do not instantly remove all frost on START DEFROST.
+
+---
+
+# 27. DEFROST HEATER MODEL
+
+Use:
+
+`36_L69_EvaporatorDefrostHeaterBank.fbx`
+
+## REQUIRED PROPERTIES
+
+- Heater enabled.
+- Requested power.
+- Actual power.
+- Maximum power.
+- Coil temperature.
+- Frost mass.
+- Energy consumed.
+- Overtemperature limit.
+- Fault state.
+
+## HEAT REQUIRED TO MELT FROST
+
+For a simplified model:
+
+`Qmelt = mIce * LatentHeatOfFusion`
+
+Also account for sensible heating where relevant.
+
+## REQUIRED BEHAVIOR
+
+- Heating uses finite power.
+- Frost melts over time.
+- Chamber may warm.
+- Excess heating is restricted.
+- Heater shuts off at termination.
+
+---
+
+# 28. CONDENSATE DRAIN
+
+Use:
+
+`37_L69_CondensateDrainAssembly.fbx`
+
+## REQUIRED STATES
+
+- Meltwater inventory.
+- Drain capacity.
+- Drain active.
+- Drain blockage where modeled.
+- Drain-complete condition.
+
+Meltwater must not disappear without a defined sink.
+
+A simple finite-capacity drain model is sufficient.
+
+---
+
+# 29. REFRIGERATION ENERGY ANALYZER
+
+Use:
+
+`31_L69_RefrigerationEnergyAnalyzer.fbx`
+
+## REQUIRED VALUES
+
+- Evaporator A cooling duty.
+- Evaporator B cooling duty.
+- Total useful cooling duty.
+- Compressor electrical power.
+- Condenser fan electrical power.
+- Evaporator fan electrical power.
+- Defrost heater power.
+- Total electrical energy.
+- Cooling COP.
+- Temperature stability.
+- Cargo quality.
+- Efficiency baseline.
+
+## COP
+
+`COP = UsefulCoolingPower / ElectricalInputPower`
+
+Clearly define the accounting boundary.
+
+## ENERGY
+
+`Energy = Integral(ElectricalPower * DeltaTime)`
+
+## REQUIRED BEHAVIOR
+
+Energy optimization must result from actual measured modeled consumption.
+
+Do not claim savings based on an ECO MODE toggle alone.
+
+---
+
+# 30. PRESSURE–ENTHALPY CYCLE DISPLAY
+
+Use:
+
+`32_L69_PressureEnthalpyCycleDisplay.fbx`
+
+## REQUIRED FEATURES
+
+Display a live cycle with:
+
+- Compressor suction.
+- Compressor discharge.
+- Condenser outlet.
+- Expansion outlet.
+- Evaporator branches.
+- Pressure axis.
+- Enthalpy axis.
+- State-point values.
+- Phase-region reference.
+- Compressor work.
+- Cooling duty.
+- Condenser duty.
+
+## IMPORTANT
+
+Do not display a static prerecorded diagram while the actual simulated cycle changes.
+
+The state points must come from the same thermodynamic model used by the compressor and heat exchangers.
+
+If the property model does not support plotting a physically meaningful saturation dome, show a clearly labeled reduced-order state plot instead.
+
+---
+
+# 31. REFRIGERATION PRESSURE AND TEMPERATURE SENSORS
+
+Use:
+
+- `21_L69_SuctionPressureTransmitter.fbx`
+- `22_L69_DischargePressureTransmitter.fbx`
+- `23_L69_SuctionTemperatureSensor.fbx`
+- `24_L69_DischargeTemperatureSensor.fbx`
+- `25_L69_LiquidLineTemperatureSensor.fbx`
+- `26_L69_EvaporatorOutletSensorA.fbx`
+- `27_L69_EvaporatorOutletSensorB.fbx`
+
+## SENSOR PROPERTIES
+
+- True process value.
+- Measured value.
+- Calibration.
+- Response time.
+- Noise/filtering.
+- Signal timestamp.
+- Connectivity.
+- Validity.
+- Fault state.
+
+## IMPORTANT
+
+Measured values must derive from authoritative physical state.
+
+Disconnected signals must not remain valid.
+
+The controller must distinguish:
+
+- VALID.
+- STALE.
+- DISCONNECTED.
+- OUT_OF_RANGE.
+- UNCALIBRATED.
+
+---
+
+# 32. REFRIGERANT MASS-FLOW METER
+
+Use:
+
+`30_L69_RefrigerantMassFlowMeter.fbx`
+
+## REQUIRED PROPERTIES
+
+- True modeled mass flow.
+- Measured mass flow.
+- Measurement range.
+- Calibration.
+- Validity.
+- Sample age.
+- Fault status.
+
+The flow meter must not simply repeat compressor target RPM.
+
+Where branch flow cannot be directly measured, derive estimates from documented network/valve models and distinguish estimated from measured quantities.
+
+---
+
+# 33. COMPRESSOR PROTECTION RELAY
+
+Use:
+
+`38_L69_CompressorProtectionRelay.fbx`
+
+## REQUIRED PROTECTIONS
+
+- High discharge pressure.
+- Low suction pressure.
+- Excess discharge temperature.
+- Compressor overcurrent.
+- Excess compression ratio.
+- Insufficient superheat.
+- Liquid carryover risk.
+- Accumulator capacity violation.
+- Condenser airflow failure.
+- Essential sensor feedback loss.
+- Motor drive fault.
+- Emergency stop.
+- Safety enclosure violation.
+
+## REQUIRED STATES
+
+- READY.
+- RUNNING.
+- WARNING.
+- DERATING.
+- TRIP_PENDING.
+- TRIPPED.
+- LOCKED_OUT.
+- RESET_REQUIRED.
+
+## REQUIRED RESPONSE
+
+The relay must actually limit, inhibit or stop compressor operation.
+
+Do not simply illuminate a red warning.
+
+---
+
+# 34. COLD-CHAIN SAFETY PLC
+
+Use:
+
+`39_L69_ColdChainSafetyPLC.fbx`
+
+## REQUIRED SAFETY FUNCTIONS
+
+- High-pressure protection.
+- Refrigerant suction protection.
+- Compressor liquid protection.
+- Overtemperature monitoring.
+- Chamber thermal excursion detection.
+- Defrost heater protection.
+- Fan failure response.
+- Sensor-validity monitoring.
+- Emergency stop.
+- Safe restart permissions.
+
+## IMPORTANT
+
+The safety PLC must override ordinary temperature and EEV controllers.
+
+The safety model is educational and must not be represented as a certified real-world refrigeration protection system.
+
+---
+
+# 35. INDUSTRIAL REFRIGERATION PLC
+
+Use:
+
+- `40_L69_IndustrialRefrigerationPLCRack.fbx`
+- `41_L69_RefrigerationDigitalIOModule.fbx`
+
+## REQUIRED STATES
+
+- OFF.
+- INITIALIZING.
+- IDLE.
+- SENSOR_CALIBRATION.
+- SAFETY_CHECK.
+- READY.
+- COMPRESSOR_STARTING.
+- REFRIGERANT_CYCLE_ESTABLISHING.
+- EEV_COMMISSIONING.
+- COOLING.
+- DUAL_ZONE_STABILIZATION.
+- DEFROST_PREPARE.
+- DEFROST_ACTIVE.
+- POST_DEFROST.
+- ENERGY_OPTIMIZATION.
+- DISTURBANCE_RESPONSE.
+- SAFE_SHUTDOWN.
+- FAULT.
+- RESET_REQUIRED.
+
+## REQUIRED INPUTS
+
+- Compressor ready.
+- Compressor running.
+- Suction pressure valid.
+- Discharge pressure valid.
+- Superheat valid.
+- EEV feedback.
+- Condenser fan status.
+- Evaporator fan status.
+- Chamber temperature.
+- Defrost state.
+- Safety relay.
+- Emergency stop.
+
+## REQUIRED OUTPUTS
+
+- Compressor enable.
+- Compressor speed.
+- Condenser fan commands.
+- Evaporator fan commands.
+- EEV enable.
+- Cooling request.
+- Defrost request.
+- Defrost heater command.
+- Alarm.
+- Shutdown.
+- Reset request.
+
+## IMPORTANT
+
+PLC state transitions must depend on real validated measurements and equipment states.
+
+Do not advance through startup using a simple fixed timer regardless of pressure or refrigerant condition.
+
+---
+
+# 36. THERMAL LOAD DISTURBANCES
+
+Use:
+
+`42_L69_ThermalLoadDisturbanceModule.fbx`
+
+Implement:
+
+## SCENARIO A — CHAMBER DOOR OPEN
+
+- Door opens physically.
+- Additional heat enters Chamber A.
+- Moisture ingress increases.
+- Chamber temperature responds.
+- Cargo temperature responds gradually.
+- Cooling demand rises.
+- Compressor responds within limits.
+- Frost risk increases.
+
+## SCENARIO B — EVAPORATOR FROST
+
+- Frost grows on Evaporator B.
+- Airflow/heat transfer degrades.
+- Cooling capacity falls.
+- Chamber temperature may rise.
+- Defrost becomes necessary.
+
+## SCENARIO C — CONDENSER FAN FAULT
+
+- One condenser fan becomes unavailable.
+- Actual airflow decreases.
+- Heat-rejection capability falls.
+- High-side pressure responds.
+- Compressor protection may derate or trip.
+
+## SCENARIO D — SENSOR FEEDBACK LOSS
+
+- Actual Evaporator A outlet sensor wire disconnected.
+- Temperature measurement becomes invalid.
+- Superheat calculation becomes unavailable or invalid.
+- Automatic feeding is restricted.
+- Compressor protection acts as required.
+- Fault latches.
+
+---
+
+# 37. LIVE AAA REFRIGERATION SCADA
+
+Use:
+
+`43_L69_HolographicRefrigerationSCADA.fbx`
+
+Create actual runtime TextMeshPro and graph bindings.
+
+## REQUIRED READINGS
+
+- MAIN CONTROL POWER.
+- MAIN PLC STATE.
+- SAFETY PLC STATE.
+- COMPRESSOR STATUS.
+- COMPRESSOR RPM.
+- COMPRESSOR POWER.
+- SUCTION PRESSURE.
+- DISCHARGE PRESSURE.
+- COMPRESSION RATIO.
+- SUCTION TEMPERATURE.
+- DISCHARGE TEMPERATURE.
+- LIQUID-LINE TEMPERATURE.
+- LIQUID SUBCOOLING.
+- REFRIGERANT MASS FLOW.
+- EEV A OPENING.
+- EEV B OPENING.
+- EVAPORATOR A SUPERHEAT.
+- EVAPORATOR B SUPERHEAT.
+- EVAPORATOR A COOLING DUTY.
+- EVAPORATOR B COOLING DUTY.
+- CONDENSER HEAT REJECTION.
+- CONDENSER FAN A RPM.
+- CONDENSER FAN B RPM.
+- EVAPORATOR FAN A RPM.
+- EVAPORATOR FAN B RPM.
+- CHAMBER A TEMPERATURE.
+- CHAMBER B TEMPERATURE.
+- CARGO A TEMPERATURE.
+- CARGO B TEMPERATURE.
+- CHAMBER A DOOR STATE.
+- CHAMBER B DOOR STATE.
+- EVAPORATOR A FROST MASS.
+- EVAPORATOR B FROST MASS.
+- DEFROST STATE.
+- DEFROST ENERGY.
+- ACCUMULATOR LIQUID INVENTORY.
+- COMPRESSOR FLOODBACK RISK.
+- COOLING COP.
+- TOTAL ELECTRICAL ENERGY.
+- PROTECTION STATUS.
+- SENSOR VALIDITY.
+- FAULT HISTORY.
+- OBJECTIVES X/6.
+
+## PLAYER CONTROLS
+
+- MAIN POWER.
+- SAFETY CHECK.
+- CALIBRATE PRESSURE SENSORS.
+- CALIBRATE TEMPERATURE SENSORS.
+- CALIBRATE MASS-FLOW SENSOR.
+- ENABLE CONDENSER FANS.
+- ENABLE EVAPORATOR FANS.
+- START COMPRESSOR.
+- SET COMPRESSOR RPM.
+- ENABLE EEV A.
+- ENABLE EEV B.
+- CALIBRATE SUPERHEAT A.
+- CALIBRATE SUPERHEAT B.
+- SET CHAMBER A TARGET.
+- SET CHAMBER B TARGET.
+- ENABLE DUAL-ZONE AUTO.
+- TUNE SUPERHEAT PID.
+- TUNE CHAMBER PID.
+- ENABLE ENERGY OPTIMIZATION.
+- START DOOR DISTURBANCE.
+- START FROST TEST.
+- REQUEST DEFROST.
+- START FAN-FAULT TEST.
+- EMERGENCY STOP.
+- RESET PROTECTION.
+- DISCONNECT EVAPORATOR A TEMP.
+- RECALIBRATE EVAPORATOR A TEMP.
+- RESET SENSOR FAULT.
+- FINAL CERTIFY.
+
+Every UI control must change authoritative gameplay state.
+
+No decorative buttons that simply change displayed text.
+
+---
+
+# 38. SIX AUTHORITATIVE LEVEL 69 OBJECTIVES
+
+Integrate all six with the actual Project Spark evaluator.
+
+## OBJECTIVE 1 — BUILD THE REFRIGERATION NETWORK
+
+Require:
+
+1. All 82 player wires connected.
+2. All 128 terminals registered.
+3. Valid control power.
+4. Valid control return.
+5. Main PLC connected.
+6. I/O module connected.
+7. Safety PLC connected.
+8. Compressor drive connected.
+9. Compressor protection connected.
+10. Condenser fans connected.
+11. Evaporator fans connected.
+12. EEV A connected.
+13. EEV B connected.
+14. Suction pressure measurement connected.
+15. Discharge pressure measurement connected.
+16. All temperature feedback connected.
+17. Refrigerant mass-flow sensing connected.
+18. Dual-zone controller connected.
+19. Superheat controller connected.
+20. Defrost controller connected.
+21. Defrost heater connected.
+22. Energy analyzer connected.
+23. Emergency protection connected.
+24. No unsafe topology.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — COMMISSION THE VAPOR-COMPRESSION CYCLE
+
+Require:
+
+1. Objective 1 certified.
+2. Safety ready.
+3. Pressure sensors calibrated.
+4. Temperature sensors calibrated.
+5. Flow sensor calibrated.
+6. Refrigerant inventory valid.
+7. Compressor drive ready.
+8. Condenser fans operational.
+9. Evaporator fans operational.
+10. Compressor accelerates physically.
+11. High and low pressures established.
+12. Condenser rejects real heat.
+13. Liquid-line state valid.
+14. EEVs feed refrigerant.
+15. Evaporators absorb real heat.
+16. Suction vapor state safe.
+17. Accumulator within limits.
+18. No critical fault.
+19. Stable operating interval completed.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — STABILIZE BOTH COOLING ZONES
+
+Require:
+
+1. Previous objectives certified.
+2. EEV A control enabled.
+3. EEV B control enabled.
+4. Pressure feedback valid.
+5. Evaporator outlet temperature feedback valid.
+6. Superheat A within calibrated range.
+7. Superheat B within calibrated range.
+8. Chamber A temperature controller enabled.
+9. Chamber B temperature controller enabled.
+10. Compressor capacity sharing valid.
+11. Chamber A reaches 4°C target range.
+12. Chamber B reaches 2°C target range.
+13. Actual cargo conditions acceptable.
+14. No sustained temperature oscillation.
+15. No liquid carryover.
+16. No compressor high-pressure fault.
+17. Stable observation interval completed.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — DEFROST AND RESTORE COOLING
+
+Require:
+
+1. Previous objectives certified.
+2. Controlled frost event activated.
+3. Actual frost inventory increases.
+4. Evaporator B airflow degrades.
+5. Cooling effectiveness decreases.
+6. Frost degradation detected.
+7. Defrost requested.
+8. Appropriate evaporator branch isolated.
+9. Heater enables under safe conditions.
+10. Actual thermal energy applied.
+11. Frost inventory decreases through melting.
+12. Condensate reaches drain.
+13. Defrost terminates correctly.
+14. Drip/fan delay completed.
+15. Cooling branch recommissioned.
+16. Safe superheat restored.
+17. Cooling capacity improves.
+18. Chamber/cargo temperature constraints respected.
+19. No critical fault.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — PROTECT AND OPTIMIZE THE COLD CHAIN
+
+Require:
+
+1. Previous objectives certified.
+2. Stable baseline recorded.
+3. Chamber door load disturbance applied.
+4. Actual chamber heat gain increases.
+5. Cooling controller responds.
+6. Cargo thermal conditions evaluated.
+7. Temperature recovers where physically feasible.
+8. Condenser fan fault activated.
+9. Available condenser airflow decreases.
+10. High-side thermodynamic response occurs.
+11. Compressor protection responds correctly.
+12. Unsafe compressor operation prevented.
+13. Controlled recovery performed.
+14. Energy consumption recorded.
+15. COP calculated from real modeled energy.
+16. Optimized operating test performed.
+17. Required energy target achieved without violating safety.
+18. No unacceptable cold-chain temperature excursion.
+19. Event history recorded.
+20. Objective test certified.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — RESTORE SUPERHEAT FEEDBACK
+
+Require:
+
+1. Objectives 1–5 historically certified.
+2. Designated Evaporator A outlet temperature wire disconnected.
+3. Actual circuit topology becomes invalid.
+4. Evaporator A temperature measurement becomes invalid.
+5. Superheat A calculation marked invalid.
+6. EEV controller detects feedback loss.
+7. Unsafe EEV feeding inhibited.
+8. Compressor protection applies safe response.
+9. Fault latched.
+10. Player reconnects actual wire.
+11. Electrical connectivity restored.
+12. Temperature sensor recalibrated.
+13. Fresh valid measurement acquired.
+14. Superheat calculation becomes valid.
+15. Player explicitly resets fault.
+16. Compressor and EEVs recommissioned safely.
+17. Stable refrigerant cycle restored.
+18. Chamber A returns to target.
+19. Chamber B remains properly controlled.
+20. Safe suction state verified.
+21. Fresh thermal disturbance test performed.
+22. No unresolved critical fault.
+23. Final certification interval completed.
+
+Progress becomes **6/6**.
+
+## HISTORICAL OBJECTIVE REQUIREMENT
+
+Objectives 1–5 must remain historically certified during the deliberate final sensor fault.
+
+Do not reset previous progress merely because the last test requires disconnecting a wire.
+
+However, Objective 6 requires repair and fresh certification.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REPORT 6/6.**
+
+---
+
+# 39. FINAL SENSOR FAULT — ACTUAL WIRE DISCONNECTION
+
+The final challenge must use the Project Spark wiring system.
+
+## FAULT INJECTION
+
+The player disconnects the designated Evaporator A outlet temperature signal wire.
+
+## REQUIRED FAULT RESPONSE
+
+1. Actual wire connection removed.
+2. Circuit topology changes.
+3. Signal validity becomes false.
+4. Temperature measurement becomes INVALID.
+5. Calculated Superheat A becomes INVALID.
+6. Superheat PID exits normal automatic control.
+7. EEV A follows a documented safe strategy.
+8. Compressor operation is restricted or stopped where required.
+9. Safety PLC records fault.
+10. Fault latches.
+11. SCADA shows valid diagnostics.
+
+## IMPORTANT
+
+Do not silently substitute the last valid temperature as fresh measurement.
+
+If showing the last known value, mark it STALE and include its timestamp.
+
+Do not use stale feedback for normal closed-loop EEV control.
+
+## RECOVERY
+
+1. Player reconnects actual wire.
+2. Topology becomes valid.
+3. Sensor power and signal checked.
+4. Evaporator A outlet temperature measurement reacquired.
+5. Sensor recalibrated.
+6. Fresh valid samples collected.
+7. Superheat calculation validated.
+8. Player explicitly resets fault.
+9. Safety controller validates restart conditions.
+10. Compressor restarts under safe constraints.
+11. EEV A recommissioned.
+12. Zone A and B control restored.
+13. A fresh thermal/load test begins.
+14. Product/cargo temperatures remain acceptable.
+15. Compressor suction remains safe.
+16. Final objective passes.
+
+---
+
+# 40. RECOMMENDED UNITY C# ARCHITECTURE
+
+Inspect the real project before creating new classes.
+
+Suggested responsibilities:
+
+- `SparkLevel69Coordinator.cs`
+- `SparkLevel69RefrigerantNetwork.cs`
+- `SparkLevel69RefrigerantProperties.cs`
+- `SparkLevel69RefrigerantInventory.cs`
+- `SparkLevel69CompressorDynamics.cs`
+- `SparkLevel69CompressorMotorDrive.cs`
+- `SparkLevel69CondenserModel.cs`
+- `SparkLevel69CondenserFans.cs`
+- `SparkLevel69LiquidReceiver.cs`
+- `SparkLevel69ExpansionValve.cs`
+- `SparkLevel69EvaporatorModel.cs`
+- `SparkLevel69EvaporatorFans.cs`
+- `SparkLevel69SuctionAccumulator.cs`
+- `SparkLevel69OilSeparator.cs`
+- `SparkLevel69ColdChamberThermalModel.cs`
+- `SparkLevel69CargoThermalModel.cs`
+- `SparkLevel69PressureTransmitter.cs`
+- `SparkLevel69TemperatureSensor.cs`
+- `SparkLevel69RefrigerantMassFlowSensor.cs`
+- `SparkLevel69SuperheatController.cs`
+- `SparkLevel69DualZonePIDController.cs`
+- `SparkLevel69FrostAccumulation.cs`
+- `SparkLevel69AdaptiveDefrost.cs`
+- `SparkLevel69DefrostHeater.cs`
+- `SparkLevel69CondensateDrain.cs`
+- `SparkLevel69EnergyAnalyzer.cs`
+- `SparkLevel69PressureEnthalpyDisplay.cs`
+- `SparkLevel69CompressorProtection.cs`
+- `SparkLevel69SafetyController.cs`
+- `SparkLevel69PLCController.cs`
+- `SparkLevel69DisturbanceController.cs`
+- `SparkLevel69FaultRecovery.cs`
+- `SparkLevel69EventRecorder.cs`
+- `SparkLevel69ObjectiveTracker.cs`
+- `SparkLevel69SCADADashboard.cs`
+- `SparkLevel69Interaction.cs`
+- `SparkLevel69VisualRig.cs`
+
+These are proposed responsibilities, not verified existing classes.
+
+Reuse actual existing infrastructure where appropriate.
+
+## RUNTIME SIMULATION ORDER
+
+1. Validate electrical topology.
+2. Evaluate control supply.
+3. Read player commands.
+4. Evaluate safety inputs.
+5. Read sensor states.
+6. Execute PLC scan when due.
+7. Evaluate zone temperature PID.
+8. Evaluate superheat controllers.
+9. Apply actuator and safety limits.
+10. Update compressor drive command.
+11. Integrate compressor shaft dynamics.
+12. Update compressor thermodynamic state.
+13. Update condenser heat rejection.
+14. Update receiver state.
+15. Update expansion valve positions.
+16. Solve refrigerant branch mass flow.
+17. Update evaporator heat absorption.
+18. Update suction return/accumulator state.
+19. Update chamber thermal states.
+20. Update cargo thermal states.
+21. Update frost formation.
+22. Update defrost thermal dynamics.
+23. Update condensate drainage.
+24. Update refrigerant inventory and energy balance.
+25. Acquire new pressure and temperature measurements.
+26. Apply sensor latency/validity.
+27. Update superheat/subcooling estimates.
+28. Update electrical-energy accounting.
+29. Evaluate protection.
+30. Record event history.
+31. Evaluate authoritative objectives.
+32. Update SCADA and P–h chart.
+33. Update 3D visuals.
+
+Use a coherent integration schedule.
+
+This is a conceptual dependency order, not permission to integrate state twice. A coupled thermodynamic network may require a solver iteration to find a consistent state before committing one timestep.
+
+---
+
+# 41. AAA VISUAL IMPLEMENTATION
+
+Create a visual adapter driven by the authoritative refrigeration simulation.
+
+## STARTUP
+
+- Compressor stopped.
+- Fans stopped.
+- Chambers above target temperature.
+- EEVs in commissioning positions.
+- Frost at defined initial state.
+- SCADA displays real readiness.
+
+## REFRIGERATION COMMISSIONING
+
+- Compressor shaft accelerates.
+- Condenser fans rotate.
+- High-pressure discharge visual activates.
+- Refrigerant flow visualization begins.
+- EEV actuators respond.
+- Evaporator fans rotate.
+- Chamber temperatures decrease.
+- Cargo temperatures respond gradually.
+
+## DUAL-ZONE CONTROL
+
+- Chamber A and B displays show actual measurements.
+- Compressor speed changes under load.
+- EEV A/B positions change.
+- Fan operation reflects actual state.
+- Thermal charts show real history.
+
+## FROST SCENARIO
+
+- Frost overlay grows on Evaporator B.
+- Airflow and cooling change.
+- SCADA reports degraded cooling.
+- Defrost sequence begins.
+- Coil warms.
+- Frost overlay decreases.
+- Drain visualization activates.
+- Cooling returns after safe restart.
+
+## CONDENSER FAN FAULT
+
+- A condenser fan stops.
+- Condenser thermal performance changes.
+- Pressure gauge responds.
+- Compressor derates or trips as required.
+- Protection state appears.
+
+## FINAL SENSOR FAILURE
+
+- Evaporator A temperature feedback invalid.
+- SCADA shows sensor fault.
+- Superheat A becomes unavailable.
+- EEV control restricts unsafe feeding.
+- Compressor protection responds.
+- Reconnection and recalibration restore measurement validity.
+
+## IMPORTANT
+
+Never use visuals as the source of physical state.
+
+Visuals follow the simulation, not the other way around.
+
+---
+
+# 42. UNITY EDITOR LEVEL CREATOR
+
+Create:
+
+`Tools/Project Spark/Levels/Create Level 69`
+
+The builder must generate or safely update:
+
+- `Level_69.asset`
+- `Level_69_Layout.prefab`
+- Level configuration.
+- Refrigerant property configuration.
+- Refrigerant network configuration.
+- Compressor configuration.
+- Condenser configuration.
+- Evaporator A/B configuration.
+- EEV A/B configuration.
+- Dual-zone thermal configuration.
+- Cargo thermal configuration.
+- Frost configuration.
+- Defrost configuration.
+- Energy-analysis configuration.
+- Pressure and temperature sensor configuration.
+- PLC configuration.
+- Safety configuration.
+- Wiring manifest.
+- Terminal binding manifest.
+- Component binding manifest.
+- Six objective definitions.
+- Animation mappings.
+- Diagnostic report.
+
+## REQUIRED EDITOR OPERATIONS
+
+1. Inspect existing Project Spark Editor infrastructure.
+2. Locate all 46 independent FBXs.
+3. Validate exact filenames.
+4. Validate FBX import scale.
+5. Verify approximately 13.8 m workstation width.
+6. Create/update Level 69 definition.
+7. Set `level_69`.
+8. Set display name.
+9. Set subtitle.
+10. Register six objectives.
+11. Create/update layout prefab.
+12. Create `L69_HD_VISUAL_ART`.
+13. Instantiate all 46 individual models.
+14. Preserve authored common-origin coordinates.
+15. Configure compressor motor.
+16. Configure compressor mechanical model.
+17. Configure condenser.
+18. Configure two condenser fans.
+19. Configure liquid receiver.
+20. Configure filter-drier.
+21. Configure sight glass visuals.
+22. Configure EEV A.
+23. Configure EEV B.
+24. Configure Evaporator A.
+25. Configure Evaporator B.
+26. Configure both evaporator fan systems.
+27. Configure Chamber A.
+28. Configure Chamber B.
+29. Configure cargo thermal load.
+30. Configure suction accumulator.
+31. Configure oil separator.
+32. Configure refrigerant pipeline network.
+33. Configure pressure transmitters.
+34. Configure all temperature sensors.
+35. Configure mass-flow sensor.
+36. Configure energy analyzer.
+37. Configure P–h display.
+38. Configure dual-zone temperature PID.
+39. Configure superheat controller.
+40. Configure adaptive defrost.
+41. Configure defrost heater.
+42. Configure condensate drain.
+43. Configure compressor protection.
+44. Configure safety PLC.
+45. Configure main PLC.
+46. Configure digital I/O.
+47. Configure disturbance module.
+48. Configure SCADA.
+49. Configure safety enclosure.
+50. Configure regulated control supply.
+51. Create exactly 128 functional terminal anchors.
+52. Create exactly 82 player-wire declarations.
+53. Register functional component IDs.
+54. Register unique terminal IDs.
+55. Configure fixed internal connections.
+56. Configure refrigerant property dataset.
+57. Configure refrigerant inventory.
+58. Configure compressor limits.
+59. Configure condenser effectiveness.
+60. Configure evaporator performance.
+61. Configure EEV flow characteristics.
+62. Configure superheat target ranges.
+63. Configure two chamber temperature targets.
+64. Configure cargo thermal parameters.
+65. Configure frost accumulation.
+66. Configure defrost heater limits.
+67. Configure condensate drain.
+68. Configure compressor protection.
+69. Configure sensor validity.
+70. Configure door disturbance.
+71. Configure frost scenario.
+72. Configure condenser fan failure.
+73. Configure final sensor-feedback fault.
+74. Assign all 14 verified pivot references.
+75. Create working 3D animation hierarchy.
+76. Create frost visual overlays.
+77. Create live SCADA labels.
+78. Create live P–h cycle visualization.
+79. Bind six authoritative objectives.
+80. Validate missing references.
+81. Detect duplicate terminals.
+82. Detect conflicting simulation ownership.
+83. Generate a report.
+84. Save all assets and prefabs.
+
+## EDITOR RELIABILITY
+
+Use actual asset paths.
+
+Do not invent GUIDs.
+
+Use appropriate Unity Editor APIs:
+
+- `AssetDatabase`
+- `PrefabUtility`
+- `SerializedObject`
+- Undo
+- Asset saving
+
+Make builder execution idempotent.
+
+Do not create duplicate equipment or controllers.
+
+Do not overwrite unrelated previous-level assets.
+
+---
+
+# 43. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 82 WIRES → VERIFY 128 TERMINALS → POWER CONTROL SYSTEM → CALIBRATE PRESSURE SENSORS → CALIBRATE TEMPERATURE SENSORS → CALIBRATE MASS FLOW → VERIFY REFRIGERANT INVENTORY → START CONDENSER FANS → START EVAPORATOR FANS → ENABLE COMPRESSOR DRIVE → ACCELERATE COMPRESSOR → ESTABLISH SUCTION AND DISCHARGE PRESSURES → CONDENSER REJECTS HEAT → LIQUID RECEIVER SUPPLIES REFRIGERANT → ENABLE EEV A → ENABLE EEV B → ESTABLISH EVAPORATOR COOLING → VERIFY COMPRESSOR SUCTION VAPOR → TUNE SUPERHEAT PID → STABILIZE CHAMBER A AT 4°C → STABILIZE CHAMBER B AT 2°C → VERIFY CARGO TEMPERATURE → INTRODUCE FROST → DETECT COOLING PERFORMANCE LOSS → REQUEST DEFROST → APPLY FINITE DEFROST HEATING → MELT FROST → DRAIN CONDENSATE → RESTART EVAPORATOR SAFELY → RESTORE COOLING → APPLY DOOR HEAT LOAD → RESTORE CHAMBER TEMPERATURE → APPLY CONDENSER FAN FAULT → DETECT HIGH-SIDE PERFORMANCE LOSS → PROTECT COMPRESSOR → OPTIMIZE ENERGY USE → DISCONNECT EVAPORATOR A TEMPERATURE FEEDBACK → DETECT INVALID SUPERHEAT → RESTRICT EEV OPERATION → APPLY SAFE COMPRESSOR RESPONSE → RECONNECT ACTUAL WIRE → RECALIBRATE SENSOR → EXPLICITLY RESET FAULT → RECOMMISSION REFRIGERATION → COMPLETE FRESH DUAL-ZONE CERTIFICATION → FINAL 6/6**
+
+## PLAYER-FACING MESSAGES
+
+- `BUILD THE REFRIGERATION NETWORK`
+- `CONNECT ALL 82 WIRES`
+- `VERIFY 128 TERMINALS`
+- `POWER THE CONTROL PLC`
+- `CALIBRATE PRESSURE SENSORS`
+- `CALIBRATE REFRIGERANT TEMPERATURE`
+- `CALIBRATE MASS FLOW`
+- `VERIFY REFRIGERANT INVENTORY`
+- `ENABLE CONDENSER FANS`
+- `ENABLE EVAPORATOR FANS`
+- `START COMPRESSOR`
+- `COMPRESSOR ACCELERATING`
+- `HIGH-SIDE PRESSURE ESTABLISHED`
+- `CONDENSER HEAT REJECTION ACTIVE`
+- `LIQUID REFRIGERANT AVAILABLE`
+- `ENABLE EEV A`
+- `ENABLE EEV B`
+- `EVAPORATOR COOLING ACTIVE`
+- `CALIBRATE SUPERHEAT CONTROL`
+- `STABILIZE CHAMBER A`
+- `STABILIZE CHAMBER B`
+- `COLD CHAIN STABLE`
+- `FROST ACCUMULATION DETECTED`
+- `EVAPORATOR AIRFLOW REDUCED`
+- `REQUEST SAFE DEFROST`
+- `DEFROST HEATING ACTIVE`
+- `FROST MELTING`
+- `CONDENSATE DRAINING`
+- `DEFROST COMPLETE`
+- `RESTORE REFRIGERATION`
+- `APPLY DOOR HEAT LOAD`
+- `CHAMBER TEMPERATURE RISING`
+- `COOLING DEMAND INCREASING`
+- `CONDENSER FAN FAILURE`
+- `HEAT REJECTION CAPACITY REDUCED`
+- `COMPRESSOR PROTECTION ACTIVE`
+- `RECOVER SAFE OPERATION`
+- `OPTIMIZE ENERGY CONSUMPTION`
+- `COOLING COP VERIFIED`
+- `DISCONNECT EVAPORATOR A FEEDBACK`
+- `SUPERHEAT FEEDBACK LOST`
+- `UNSAFE REFRIGERANT FEED INHIBITED`
+- `RESTORE SENSOR CONNECTION`
+- `RECALIBRATE EVAPORATOR A TEMPERATURE`
+- `RESET LATCHED FAULT`
+- `RECOMMISSION SUPERHEAT CONTROL`
+- `FINAL COLD-CHAIN CERTIFICATION`
+- `LEVEL 69 COMPLETE`
+
+---
+
+# 44. TESTING AND DIAGNOSTICS
+
+Implement diagnostic messages for:
+
+- Incorrect W01–W82 wiring.
+- Missing terminal ID.
+- Duplicate terminal ID.
+- Control supply invalid.
+- Control return missing.
+- Compressor drive disconnected.
+- Compressor not accelerating.
+- Compressor pressure ratio invalid.
+- Compressor work inconsistent.
+- Refrigerant inventory negative.
+- Refrigerant mass created or lost.
+- Property state outside supported range.
+- Pressure/temperature inconsistency.
+- Condenser heat rejection invalid.
+- Condenser fan disconnected.
+- High-side pressure not responding to fan fault.
+- Liquid receiver unavailable.
+- EEV command not reaching valve.
+- EEV position invalid.
+- EEV flow inconsistent.
+- Evaporator not absorbing heat.
+- Evaporator cooling exceeding modeled capacity.
+- Superheat calculation invalid.
+- Saturation-temperature calculation invalid.
+- Suction liquid carryover risk.
+- Accumulator overcapacity.
+- Chamber temperature not responding.
+- Cargo temperature falsely matching chamber instantly.
+- Cooling capacity double-counted.
+- Frost not affecting airflow.
+- Defrost heater producing unlimited heat.
+- Frost disappearing instantly without energy.
+- Meltwater not accounted for.
+- Defrost restart bypassing safety.
+- COP calculation invalid.
+- Electrical energy not integrated.
+- Sensor feedback disconnected.
+- Stale sensor treated as valid.
+- EEV using invalid superheat.
+- Compressor protection ignored.
+- Safety PLC not overriding control.
+- Fault reset permitted before repair.
+- Historical objectives erased.
+- Level manager stuck at 0/6 or 5/6.
+- Unity reload breaking state.
+- Regression in Levels 1–68.
+
+## REQUIRED TESTS
+
+1. Correct 82-wire topology.
+2. Exactly 128 terminals valid.
+3. Control supply valid.
+4. Main PLC initializes.
+5. Safety PLC ready.
+6. Refrigerant property table valid.
+7. Refrigerant inventory conserved.
+8. Compressor drive enabled.
+9. Actual compressor RPM changes.
+10. Compressor mass flow changes.
+11. Compressor work calculated.
+12. Suction pressure valid.
+13. Discharge pressure valid.
+14. Condenser fans respond.
+15. Condenser heat rejection computed.
+16. Fan failure affects condenser.
+17. High-side pressure responds.
+18. Liquid receiver state valid.
+19. EEV A opens/closes.
+20. EEV B opens/closes.
+21. Refrigerant flow responds.
+22. Evaporator A cools.
+23. Evaporator B cools.
+24. Branch mass flows consistent.
+25. Superheat A calculated.
+26. Superheat B calculated.
+27. EEV A PID functional.
+28. EEV B PID functional.
+29. Superheat remains within calibrated limits.
+30. Low-superheat protection functional.
+31. Suction accumulator limits enforced.
+32. Chamber A cools dynamically.
+33. Chamber B cools dynamically.
+34. Cargo temperature changes gradually.
+35. Both temperature controllers work.
+36. Shared compressor capacity enforced.
+37. Door opening increases heat load.
+38. Chamber temperature responds.
+39. Frost forms under modeled conditions.
+40. Frost reduces airflow/cooling.
+41. Defrost sequence starts safely.
+42. Defrost heater uses finite power.
+43. Frost mass decreases through melting.
+44. Meltwater drains.
+45. Defrost terminates.
+46. Fan delay works.
+47. Evaporator safely restarts.
+48. Cooling performance recovers.
+49. Condenser fan fault triggers protection.
+50. Compressor derating/trip works.
+51. Protection reset requires safe conditions.
+52. Energy consumption recorded.
+53. COP calculated correctly.
+54. Energy optimization preserves safety.
+55. Actual Evaporator A sensor wire disconnects.
+56. Temperature feedback becomes invalid.
+57. Superheat A becomes invalid.
+58. EEV automatic control inhibited.
+59. Compressor safe response performed.
+60. Fault latches.
+61. Wire reconnected.
+62. Measurement restored.
+63. Calibration succeeds.
+64. Explicit reset succeeds.
+65. Safe compressor recommissioning succeeds.
+66. EEV A superheat control restored.
+67. Chamber A and B targets achieved.
+68. Fresh load disturbance test succeeds.
+69. No unresolved critical fault.
+70. Authoritative evaluator reaches 6/6.
+71. Level progression succeeds.
+72. Levels 1–68 remain unaffected.
+
+Only mark a test as passed when actually executed.
+
+---
+
+# 45. REQUIRED DOWNLOADABLE DELIVERABLES
+
+Create a complete Level 69 Unity implementation ZIP containing:
+
+- Full Level 69 runtime C# scripts.
+- Authoritative refrigeration network.
+- Refrigerant property configuration.
+- Refrigerant inventory model.
+- Compressor dynamics.
+- Compressor motor-drive integration.
+- Condenser heat-transfer model.
+- Condenser fan dynamics.
+- Liquid receiver.
+- Filter-drier abstraction.
+- Sight glass visual adapter.
+- EEV A/B physics.
+- Evaporator A/B models.
+- Evaporator fan dynamics.
+- Suction accumulator.
+- Oil separator.
+- Chamber A thermal dynamics.
+- Chamber B thermal dynamics.
+- Cargo thermal dynamics.
+- Pressure transmitter simulation.
+- Temperature sensor simulation.
+- Refrigerant mass-flow sensor.
+- Superheat calculation.
+- Superheat PID.
+- Dual-zone temperature PID.
+- Capacity-sharing controller.
+- Frost accumulation.
+- Adaptive defrost.
+- Defrost heater physics.
+- Condensate drain.
+- Energy consumption.
+- COP analyzer.
+- P–h diagram data.
+- Compressor protection.
+- Safety PLC.
+- Main PLC.
+- Digital I/O.
+- Door-opening disturbance.
+- Frost scenario.
+- Condenser fan failure.
+- Final sensor wire disconnection.
+- Invalid-feedback detection.
+- Safe EEV restriction.
+- Safe compressor response.
+- Sensor repair/recalibration.
+- Explicit fault reset.
+- Fresh certification.
+- Six authoritative objectives.
+- Unity Editor Level 69 creator.
+- Level definition creator or asset.
+- Level layout prefab creator.
+- Exact W01–W82 wiring manifest.
+- 128-terminal binding manifest.
+- Component binding manifest.
+- Fourteen verified pivot mappings.
+- Compressor configuration.
+- Refrigerant property data and licensing notes if relevant.
+- Evaporator and condenser configuration.
+- EEV configuration.
+- PID settings.
+- Frost and defrost settings.
+- Protection configuration.
+- Scenario configuration.
+- Live SCADA UI.
+- Gameplay walkthrough.
+- Objective checklist.
+- Diagnostics guide.
+- Actual test report.
+
+Reuse:
+
+`ProjectSpark_Level69_HD_AAA_Models.zip`
+
+Do not regenerate the 46 approved equipment models without a specific compatibility issue.
+
+Do not claim Unity compilation or Play Mode verification without actual testing.
+
+Only link output files actually created and verified.
+
+---
+
+# 46. FINAL EXECUTION REQUIREMENTS
+
+**IMPLEMENT LEVEL 69 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect my real Project Spark Unity source code and approved Level 69 art assets.
+
+Then:
+
+1. Reuse compatible Project Spark infrastructure.
+2. Import all 46 individual FBXs.
+3. Verify correct FBX unit conversion.
+4. Preserve shared-origin art placement.
+5. Finalize exactly 82 player wires.
+6. Create exactly 128 functional terminals.
+7. Implement refrigerant property state.
+8. Implement refrigerant inventory.
+9. Implement compressor mechanical dynamics.
+10. Implement compressor thermodynamic behavior.
+11. Implement compressor motor drive.
+12. Implement condenser heat rejection.
+13. Implement two condenser fans.
+14. Implement liquid receiver.
+15. Implement filter-drier abstraction.
+16. Implement suction accumulator.
+17. Implement oil separator.
+18. Implement EEV A and B.
+19. Implement Evaporator A.
+20. Implement Evaporator B.
+21. Implement both evaporator fans.
+22. Implement suction/discharge pressure sensing.
+23. Implement all required temperature sensors.
+24. Implement refrigerant mass-flow measurement.
+25. Implement real superheat calculations.
+26. Implement EEV superheat PID.
+27. Implement two independent chamber thermal models.
+28. Implement cargo thermal inertia.
+29. Implement dual-zone temperature PID.
+30. Implement finite shared cooling capacity.
+31. Implement chamber-door load disturbance.
+32. Implement frost accumulation.
+33. Implement frost-related cooling degradation.
+34. Implement adaptive defrost.
+35. Implement bounded defrost heating.
+36. Implement condensate drainage.
+37. Implement safe defrost restart.
+38. Implement condenser fan fault.
+39. Implement compressor protection.
+40. Implement independent safety PLC.
+41. Implement main PLC sequencing.
+42. Implement electrical-energy consumption.
+43. Implement COP calculation.
+44. Implement live P–h cycle visualization.
+45. Implement actual Evaporator A outlet sensor disconnection.
+46. Implement invalid-feedback detection.
+47. Implement safe EEV restriction.
+48. Implement safe compressor response.
+49. Implement wire reconnection.
+50. Implement sensor recalibration.
+51. Implement explicit fault reset.
+52. Implement controlled recommissioning.
+53. Implement fresh final certification.
+54. Integrate six authoritative objectives.
+55. Build the one-click Unity Level 69 creator.
+56. Apply 14 verified pivot references.
+57. Implement real animation-driven visual adapters.
+58. Implement frost and temperature VFX.
+59. Implement live SCADA dashboard.
+60. Run feasible tests.
+61. Package and verify deliverables.
+
+Do not ask for approval of the already-approved Level 69 design.
+
+Do not fabricate pressures, refrigerant temperatures, enthalpy, phase state, compressor power, cooling duty, EEV opening, superheat, subcooling, chamber temperatures, frost mass, defrost completion, COP, safety status or objective completion.
+
+If a Project Spark API cannot be verified, implement safely independent functionality where possible and report the precise unresolved integration dependency.
+
+---
+
+# 47. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect all 82 wires.
+2. Validate all 128 terminals.
+3. Commission the refrigeration PLC.
+4. Calibrate pressure sensors.
+5. Calibrate temperature sensors.
+6. Calibrate mass-flow sensing.
+7. Validate refrigerant inventory.
+8. Enable condenser fans.
+9. Enable evaporator fans.
+10. Start the compressor safely.
+11. Observe actual compressor acceleration.
+12. Establish correct refrigerant pressures.
+13. Reject heat through the condenser.
+14. Feed liquid refrigerant to both EEVs.
+15. Establish evaporation in both branches.
+16. Calculate real superheat.
+17. Tune both EEV superheat controls.
+18. Prevent unsafe liquid floodback.
+19. Stabilize Chamber A at the proposed 4°C target.
+20. Stabilize Chamber B at the proposed 2°C target.
+21. Verify cargo thermal conditions.
+22. Introduce an actual chamber-door heat load.
+23. Observe increased cooling demand.
+24. Introduce evaporator frost.
+25. Observe reduced cooling performance.
+26. Execute a safe defrost cycle.
+27. Melt modeled frost using finite energy.
+28. Drain condensate.
+29. Restore evaporator cooling.
+30. Introduce a condenser fan failure.
+31. Observe reduced heat rejection.
+32. Protect the compressor.
+33. Restore safe operating conditions.
+34. Measure energy consumption and COP.
+35. Optimize cold-chain operation.
+36. Disconnect the actual Evaporator A outlet temperature wire.
+37. Detect invalid superheat feedback.
+38. Inhibit unsafe EEV control.
+39. Apply the correct compressor safety response.
+40. Reconnect the actual wire.
+41. Recalibrate the sensor.
+42. Explicitly reset the fault.
+43. Safely recommission the compressor and EEV.
+44. Reestablish both zone temperatures.
+45. Pass fresh final refrigeration certification.
+46. Complete all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 69.**
+
+The player must learn vapor-compression refrigeration, refrigerant phase-change behavior, compressor power, saturation pressure, electronic expansion control, superheat, subcooling, condenser heat rejection, evaporator cooling, two-zone temperature automation, frost formation, adaptive defrost, energy efficiency and critical sensor recovery through real gameplay simulation.
+
+**FINAL GOAL: A COMPLETE, POLISHED, UNITY-READY, AAA-QUALITY AND ACTUALLY PLAYABLE LEVEL 69 — KEEP IT COLD.**

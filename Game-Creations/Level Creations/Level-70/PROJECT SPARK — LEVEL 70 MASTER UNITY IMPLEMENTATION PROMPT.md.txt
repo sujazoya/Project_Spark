@@ -1,0 +1,2987 @@
+# PROJECT SPARK — LEVEL 70 MASTER UNITY IMPLEMENTATION PROMPT
+
+## LEVEL 70: GUARD THE AIR
+### Advanced Semiconductor Cleanroom Engineering, Industrial HVAC Automation, HEPA Filtration, Positive-Pressure Cascade Control, Airborne Particle Transport, Psychrometric Temperature and Humidity Regulation, Wafer Contamination Protection and Critical Sensor Fault Recovery
+
+Act as my senior Unity C# engineer, industrial HVAC engineer, semiconductor cleanroom engineer, air-distribution systems designer, fluid-network simulation specialist, aerosol and particle-transport specialist, psychrometrics engineer, industrial instrumentation developer, cascade PID specialist, PLC programmer, functional safety engineer, SCADA architect, gameplay engineer, Unity Editor automation specialist and technical artist.
+
+**YOUR TASK IS TO IMPLEMENT THE COMPLETE, WORKING, PLAYABLE LEVEL 70 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+This is a complete implementation task, not another level-design discussion.
+
+The Level 70 design and its 48 modular 3D equipment models are already approved.
+
+Do not stop at:
+
+- A design explanation.
+- Pseudocode.
+- Incomplete scripts.
+- A decorative cleanroom scene.
+- Static airflow arrows.
+- Fans rotating without calculated airflow.
+- A cleanroom pressure gauge showing a fixed value.
+- HEPA filters that do not affect pressure drop or particles.
+- A fake contamination cloud.
+- Particle counts unrelated to actual transport.
+- A humidity controller that directly writes the desired RH.
+- An airlock that ignores pressure and door state.
+- A robot that operates despite unsafe contamination.
+- A safety controller that only changes warning colors.
+- A pressure sensor that remains valid after its wire is removed.
+- A local-only objective counter.
+- An art-only Unity prefab.
+- Claims of compilation or Play Mode success without testing.
+
+**IMPLEMENT A FUNCTIONAL INDUSTRIAL CLEANROOM TRAINING SIMULATION.**
+
+The player must build the electrical control network, commission filtration, regulate room pressure, control temperature and humidity, achieve valid particle cleanliness, operate a wafer-transfer process, handle contamination faults and restore a critical pressure sensor.
+
+The player must learn through actual simulation, not decorative indicators.
+
+---
+
+# 1. INSPECT MY EXISTING PROJECT SPARK SOURCE CODE
+
+Project Spark is an established Unity electrical engineering and industrial automation game.
+
+Before writing Level 70 runtime scripts, inspect the actual project.
+
+At minimum, inspect these classes if present:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+
+Also inspect existing implementations of:
+
+- Electrical component registration.
+- Player-created wires.
+- Circuit topology.
+- Electrical supply and return.
+- Signal connectivity.
+- Component pin compatibility.
+- Motor power.
+- Variable-frequency drives.
+- Sensors.
+- Analog measurement.
+- Digital I/O.
+- PLC scan cycles.
+- PID control.
+- Fault latching.
+- Safety interlocks.
+- Emergency stop.
+- Object placement.
+- Object removal and replacement.
+- Historical objective completion.
+- Runtime diagnostic UI.
+- TextMeshPro.
+- Prefab and scene creation.
+- Unity Editor automation.
+- Model rigging and animation adapters.
+
+## REUSE PREVIOUS LEVEL INFRASTRUCTURE
+
+Inspect compatible actual implementations from:
+
+**Level 54 — Cross the Critical**
+
+Motor speed and protective behavior.
+
+**Level 58 — Isolate the Fault**
+
+Electrical isolation and fault protection.
+
+**Level 59 — Bring Back the Power**
+
+System commissioning and sequential control.
+
+**Level 60 — The Grid Must Survive**
+
+Coordinated automated control.
+
+**Level 63 — Catch the Frequency**
+
+Actual sensor feedback and dynamic controller response.
+
+**Level 65 — The Factory Thinks**
+
+Robotic automation, PLC sequencing, sensor validation and factory safety.
+
+**Level 66 — Save the Factory**
+
+Condition monitoring and fault diagnostics.
+
+**Level 67 — Master the Flow**
+
+Fluid flow, valves, pressure feedback and cascade PID.
+
+**Level 68 — Tame the Heat**
+
+Thermal capacity, temperature control and heat exchangers.
+
+**Level 69 — Keep It Cold**
+
+Cooling equipment, energy accounting and temperature-sensitive cargo.
+
+Only reuse functionality that is genuinely implemented and compatible.
+
+Do not assume a prior system exists because its design prompt or art package exists.
+
+---
+
+# 2. NON-NEGOTIABLE IMPLEMENTATION RULES
+
+1. Inspect the actual Unity source before calling existing methods.
+2. Never invent existing Project Spark APIs.
+3. Preserve Levels 1–69.
+4. Reuse compatible infrastructure where possible.
+5. Keep Level 70 simulation responsibilities separate from artwork.
+6. Avoid unnecessary changes to the shared electrical solver.
+7. Do not represent a large blower as being powered entirely by a 5 V control signal.
+8. Do not fabricate supply airflow.
+9. Do not fabricate room pressure.
+10. Do not fabricate fan RPM.
+11. Do not force pressure equal to the controller setpoint.
+12. Do not allow unlimited fan flow or pressure.
+13. Do not ignore duct or filter resistance.
+14. Do not treat all airflow as having the same direction regardless of pressure.
+15. Do not allow room pressure to change without consistent air mass flow.
+16. Do not fabricate airborne particle concentrations.
+17. Do not instantly remove particles when filtration is enabled.
+18. Do not use filter loading and filter seal leakage as identical failures.
+19. Do not claim a filter is healthy merely because its fan is running.
+20. Do not let contaminated air become clean without a modeled removal mechanism.
+21. Do not force temperature to 22°C directly.
+22. Do not force relative humidity to 45% directly.
+23. Do not violate moisture or thermal-energy balances.
+24. Do not fabricate condensate removal.
+25. Do not bypass valid sensor feedback.
+26. Do not use stale pressure measurements as fresh values.
+27. Do not let the inner and outer airlock doors open simultaneously during normal interlocked operation.
+28. Do not allow wafer handling during an unsafe contamination event.
+29. Do not bypass the safety controller merely to complete an objective.
+30. Do not mark filter replacement successful without changing the installed physical component state.
+31. Do not treat pressing RESET as repairing a failed HEPA seal.
+32. Do not bypass the final wiring-fault test.
+33. Do not allow disconnected pressure feedback to continue controlling the plant normally.
+34. Do not erase historically certified objectives during the deliberate final fault.
+35. Do not create multiple conflicting airflow simulators.
+36. Do not create multiple competing objective trackers.
+37. Use consistent units and timestamps.
+38. Use numerically stable integration.
+39. Make Unity Editor generation repeatable.
+40. Provide complete compilable C# source files.
+41. Report unresolved dependencies accurately.
+42. Do not claim ISO cleanroom certification from an educational simulator.
+43. Do not claim Unity import or Play Mode success unless actually tested.
+
+## AUTHORITATIVE COMPLETION
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6.**
+
+A Level 70-specific UI saying COMPLETE is insufficient.
+
+Inspect the real evaluator architecture and integrate all six objectives with `SparkLevelEvaluator`.
+
+Objectives 1–5 must remain historically certified during Objective 6's deliberate pressure-sensor disconnection.
+
+Objective 6 must require actual wire repair, recalibration, explicit reset and fresh environmental certification.
+
+---
+
+# 3. LEVEL 70 CONFIGURATION
+
+**Level Number:** 70
+
+**Level ID:** `level_70`
+
+**Display Name:** `Guard the Air`
+
+**Subtitle:** `Advanced Cleanroom Environmental Control`
+
+**Difficulty:** Advanced AAA / Master / Expert
+
+**Environment:** Semiconductor cleanroom workstation
+
+**Educational Control Voltage:** 5 V DC
+
+**Main Blower Power:** Separately modeled motor-drive power domain
+
+**Player-Created Wires:** 86
+
+**Unique Functional Terminals:** 134
+
+**Individual Equipment Models:** 48
+
+**GLB Backups:** 48
+
+**Animation Pivot References:** 19
+
+**Controlled Air Regions:** 2
+
+**External Reference Region:** Corridor
+
+**Air Handling Unit:** 1
+
+**Main Blowermotors:** 3
+
+**Fan-Filter Units:** 2
+
+**HEPA Cartridges:** 2
+
+**Motorized Dampers:** 4
+
+**Differential Pressure Sensors:** 2
+
+**Air Velocity Probe:** 1
+
+**Particle Counters:** 2
+
+**Temperature/Humidity Sensors:** 2
+
+**Dew-Point Sensor:** 1
+
+**Filter Differential-Pressure Transmitter:** 1
+
+**Main PLC:** 1
+
+**Cascade Pressure Controller:** 1
+
+**Psychrometric Controller:** 1
+
+**Wafer Handling Robot:** 1
+
+**Airlock Doors:** 2
+
+**Major Contamination Scenarios:** 3
+
+**Final Deliberate Fault:** Cleanroom differential-pressure sensor feedback disconnection
+
+**Authoritative Objectives:** 6
+
+## PROPOSED EDUCATIONAL SETPOINTS
+
+- Cleanroom temperature: 22°C ±1°C.
+- Relative humidity: 45% ±5 percentage points.
+- Cleanroom pressure relative to corridor: +15 Pa.
+- Airlock pressure relative to corridor: +8 Pa.
+- Corridor gauge pressure: 0 Pa.
+- Cleanroom-to-airlock differential: approximately +7 Pa.
+- Cleanroom particle target: no more than 3,000 particles/m³ for the configured ≥0.5 µm channel.
+- Airlock cleanliness target: separately calibrated.
+- Filter efficiency: configurable by particle size.
+- HEPA pressure drop: finite and flow-dependent.
+- Fan pressure and flow: limited by performance curves.
+- Damper movement: finite response time.
+- Airlock door timing: safety-interlocked.
+- Particle counting: sampled and time-stamped.
+- Certification: sustained valid operation, not one instant.
+
+These are gameplay design targets.
+
+They are not sufficient to claim actual ISO 14644 certification, semiconductor manufacturing qualification, or biological containment performance.
+
+---
+
+# 4. USE MY EXISTING LEVEL 70 AAA/HD ASSET PACKAGE
+
+The existing approved package is:
+
+`ProjectSpark_Level70_HD_AAA_Models.zip`
+
+Its actual manifest reports:
+
+- 48 independent binary FBX models.
+- 48 matching GLB backups.
+- One assembled reference FBX.
+- One assembled reference GLB.
+- 57,976 individual equipment triangles.
+- 1,941 modeled mesh parts.
+- 19 animation-pivot references.
+- Unity art-placement helper.
+- Unity material-upgrade helper.
+- Optional visual-only animation adapter.
+- Material palette.
+- Model manifest.
+- Animation CSV.
+- Art assembly CSV.
+- README.
+- Verification report.
+- Geometry generation and export verification scripts.
+
+## EXACT 48 FBX FILENAMES
+
+Use these exact approved models:
+
+| # | Exact FBX filename | Function |
+|---|---|---|
+| 00 | `00_L70_IndustrialCleanroomBase.fbx` | Main workstation |
+| 01 | `01_L70_TransparentSemiconductorCleanroom.fbx` | Primary cleanroom |
+| 02 | `02_L70_TransparentCleanroomAirlock.fbx` | Controlled airlock |
+| 03 | `03_L70_IndustrialCorridorFacade.fbx` | Corridor reference |
+| 04 | `04_L70_SemiconductorInspectionBench.fbx` | Inspection station |
+| 05 | `05_L70_SiliconWaferCarrierRack.fbx` | Wafer storage |
+| 06 | `06_L70_AutomatedWaferTransferRobot.fbx` | Wafer handling |
+| 07 | `07_L70_IndustrialAirHandlingUnit.fbx` | Main AHU |
+| 08 | `08_L70_AirIntakePrefilter.fbx` | Prefiltration |
+| 09 | `09_L70_ChilledWaterCoolingCoil.fbx` | Cooling/dehumidification |
+| 10 | `10_L70_ElectricReheatCoil.fbx` | Reheat |
+| 11 | `11_L70_PrecisionAirHumidifier.fbx` | Humidity addition |
+| 12 | `12_L70_CondensateDrainAssembly.fbx` | Moisture drainage |
+| 13 | `13_L70_SupplyAirBlowerMotor.fbx` | Supply blower |
+| 14 | `14_L70_ReturnAirBlowerMotor.fbx` | Return blower |
+| 15 | `15_L70_ExhaustAirBlowerMotor.fbx` | Exhaust blower |
+| 16 | `16_L70_CeilingFanFilterUnitA.fbx` | Fan-filter unit A |
+| 17 | `17_L70_CeilingFanFilterUnitB.fbx` | Fan-filter unit B |
+| 18 | `18_L70_ReplaceableHEPACartridgeA.fbx` | HEPA cartridge A |
+| 19 | `19_L70_ReplaceableHEPACartridgeB.fbx` | HEPA cartridge B |
+| 20 | `20_L70_LowLevelReturnAirGrille.fbx` | Low return-air grille |
+| 21 | `21_L70_TransparentSupplyDuctNetwork.fbx` | Supply duct network |
+| 22 | `22_L70_TransparentReturnDuctNetwork.fbx` | Return/exhaust network |
+| 23 | `23_L70_FreshAirMixingDamper.fbx` | Fresh-air mixing damper |
+| 24 | `24_L70_CleanroomSupplyDamperA.fbx` | Cleanroom supply damper |
+| 25 | `25_L70_AirlockSupplyDamperB.fbx` | Airlock supply damper |
+| 26 | `26_L70_MotorizedPressureReliefDamper.fbx` | Pressure relief |
+| 27 | `27_L70_CleanroomDifferentialPressureSensor.fbx` | Main pressure feedback |
+| 28 | `28_L70_AirlockDifferentialPressureSensor.fbx` | Airlock pressure |
+| 29 | `29_L70_AirVelocityMeasurementProbe.fbx` | Air velocity |
+| 30 | `30_L70_CleanroomParticleCounter.fbx` | Cleanroom particles |
+| 31 | `31_L70_AirlockParticleCounter.fbx` | Airlock particles |
+| 32 | `32_L70_CleanroomTemperatureHumiditySensor.fbx` | Cleanroom T/RH |
+| 33 | `33_L70_AirlockTemperatureHumiditySensor.fbx` | Airlock T/RH |
+| 34 | `34_L70_AirDewPointSensor.fbx` | Dew point |
+| 35 | `35_L70_FilterDifferentialPressureTransmitter.fbx` | Filter loading |
+| 36 | `36_L70_IndustrialAirShowerModule.fbx` | Air shower |
+| 37 | `37_L70_AirlockInnerSafetyDoor.fbx` | Inner door |
+| 38 | `38_L70_AirlockOuterSafetyDoor.fbx` | Outer door |
+| 39 | `39_L70_HEPASealFailureSimulator.fbx` | Seal fault scenario |
+| 40 | `40_L70_EmergencyStopAndDoorSafetyStation.fbx` | Safety station |
+| 41 | `41_L70_AirQualityDisturbanceSimulator.fbx` | Contamination scenarios |
+| 42 | `42_L70_EnvironmentalControlPLCRack.fbx` | Main environmental PLC |
+| 43 | `43_L70_EnvironmentalDigitalIOModule.fbx` | Digital I/O |
+| 44 | `44_L70_CascadeAirPressurePIDController.fbx` | Pressure cascade |
+| 45 | `45_L70_PsychrometricControlModule.fbx` | Temperature/humidity control |
+| 46 | `46_L70_HolographicCleanroomSCADAMonitor.fbx` | Environmental SCADA |
+| 47 | `47_L70_Regulated5VControlSupply.fbx` | Control power |
+
+## INCLUDED SUPPORTING FILES
+
+Inspect and reuse:
+
+- `Level70_Complete_ArtKit_Showcase.fbx`
+- `Level70_Complete_ArtKit_Showcase.glb`
+- `SparkLevel70ArtPlacementEditor.cs`
+- `SparkLevel70MaterialUpgradeEditor.cs`
+- `SparkLevel70VisualRig.cs`
+- `Model_Manifest.json`
+- `Animation_Rigs.csv`
+- `Art_Assembly.csv`
+- `Material_Palette.json`
+- `README_Unity.txt`
+- `Verification_Report.json`
+- `Source/build_level70.py`
+- `Source/verify_level70.py`
+
+## ART PLACEMENT
+
+Create or reuse:
+
+`L70_HD_VISUAL_ART`
+
+Import and place all 48 individual models at their authored common origin.
+
+Do not place the assembled reference model together with all 48 individual assets.
+
+## IMPORTANT SCALE REQUIREMENT
+
+The manifest and README state:
+
+- X = workstation width.
+- Y = up.
+- Z = front.
+- Authored layout width approximately 15.6 m.
+- GLB numeric coordinates are meters.
+- FBX vertices use numeric centimeters with `UnitScaleFactor=1`.
+
+Verify Unity FBX import scaling.
+
+The workstation should be approximately 15.6 Unity units wide if 1 Unity unit represents 1 metre.
+
+If the FBX imports 100 times too large, correct the import scale once.
+
+Do not double-apply a conversion.
+
+Do not generate functional terminal positions before the visual scale is validated.
+
+## QUALITY LIMITATIONS
+
+These are genuine original procedural HD/AAA-inspired geometry assets.
+
+They are not final artist-authored cinematic AAA assets with complete PBR textures, UV atlases, optimized LODs, production collision rigs or skeletal animation clips.
+
+The supplied art package contains no functional HVAC gameplay, particle transport, player wiring or objective evaluator.
+
+Implement these separately.
+
+---
+
+# 5. EXACT 19 ANIMATION PIVOT REFERENCES
+
+Use the actual `Animation_Rigs.csv`.
+
+| Model | Pivot | Reference position XYZ |
+|---|---|---|
+| SupplyAirBlowerMotor | `ANIM_SUPPLY_BLOWER` | (-3.86, 1.67, -1.60) |
+| ReturnAirBlowerMotor | `ANIM_RETURN_BLOWER` | (-3.86, 0.98, -2.50) |
+| ExhaustAirBlowerMotor | `ANIM_EXHAUST_BLOWER` | (-4.10, 1.77, -3.02) |
+| CeilingFanFilterUnitA | `ANIM_FFU_A_FAN` | (-1.71, 3.61, -0.84) |
+| CeilingFanFilterUnitB | `ANIM_FFU_B_FAN` | (1.06, 3.61, -0.84) |
+| FreshAirMixingDamper | `ANIM_FRESH_AIR_DAMPER` | (-3.58, 3.89, -2.78) |
+| CleanroomSupplyDamperA | `ANIM_SUPPLY_DAMPER_A` | (-0.54, 3.90, -2.76) |
+| AirlockSupplyDamperB | `ANIM_SUPPLY_DAMPER_B` | (4.55, 3.88, -2.78) |
+| MotorizedPressureReliefDamper | `ANIM_RELIEF_DAMPER` | (6.24, 2.68, -2.66) |
+| AirlockInnerSafetyDoor | `ANIM_INNER_DOOR` | (3.55, 1.67, -0.10) |
+| AirlockOuterSafetyDoor | `ANIM_OUTER_DOOR` | (6.37, 1.67, 0.15) |
+| AutomatedWaferTransferRobot | `ANIM_WAFER_ROBOT_BASE` | (-1.35, 0.73, -0.83) |
+| AutomatedWaferTransferRobot | `ANIM_WAFER_ROBOT_ARM` | (-0.98, 1.56, -0.88) |
+| AutomatedWaferTransferRobot | `ANIM_WAFER_ROBOT_TOOL` | (0.22, 1.50, -0.40) |
+| IndustrialAirShowerModule | `ANIM_AIR_SHOWER` | (4.89, 1.59, -1.72) |
+| ReplaceableHEPACartridgeA | `ANIM_HEPA_SERVICE_LATCH_A` | (-1.71, 3.08, -0.84) |
+| ReplaceableHEPACartridgeB | `ANIM_HEPA_SERVICE_LATCH_B` | (1.06, 3.08, -0.84) |
+| HolographicCleanroomSCADAMonitor | `ANIM_CLEANROOM_SCADA` | (1.44, 1.23, 3.00) |
+| CleanroomParticleCounter | `ANIM_PARTICLE_SAMPLER` | (2.52, 1.30, 1.45) |
+
+## IMPORTANT PIVOT RULES
+
+These are reference coordinates, not a finished FBX rig.
+
+The supplied `SparkLevel70VisualRig.cs` supports a limited selection of fan, damper and door animations. It does not implement all 19 reference pivots automatically.
+
+Inspect the actual FBX mesh hierarchy.
+
+Create separated moving submeshes where necessary.
+
+The final rig must support:
+
+- Three main blower motors.
+- Two FFU fans.
+- Four dampers.
+- Two airlock doors.
+- Three robot pivots.
+- Air-shower animation.
+- Two HEPA service latches.
+- SCADA reference.
+- Particle sampler reference.
+
+All moving animations must follow authoritative gameplay state.
+
+Do not use visual rotation to calculate actual airflow.
+
+Do not animate a door as open while the safety controller reports it closed.
+
+---
+
+# 6. EXISTING UNITY HELPERS
+
+The package provides three important C# helpers.
+
+## ART PLACEMENT
+
+`SparkLevel70ArtPlacementEditor.cs`
+
+Existing menu:
+
+`Tools/Project Spark/Levels/70/Place HD Art Under Selected Layout`
+
+This places the 48 imported models under:
+
+`L70_HD_VISUAL_ART`
+
+It is visual-only.
+
+## MATERIALS
+
+`SparkLevel70MaterialUpgradeEditor.cs`
+
+Existing menu:
+
+`Tools/Project Spark/Levels/70/Create & Apply HD Materials To Selected Art`
+
+Use it as a starting point for render-pipeline-compatible materials.
+
+Verify glass alpha/transparency and emission settings.
+
+## VISUAL ANIMATION
+
+`SparkLevel70VisualRig.cs`
+
+Existing namespace:
+
+`ProjectSpark.Visuals`
+
+Existing public visual methods include:
+
+- `SetFanRPM(...)`
+- `SetDoorOpenFractions(...)`
+- `SetDamperOpenFractions(...)`
+
+Inspect the actual signatures before connecting runtime scripts.
+
+The rig is visual-only and has no control authority over room pressure, airborne particles, HVAC operation, safety or objectives.
+
+## REQUIRED INTEGRATION
+
+Create a separate gameplay system and feed the visual rig with valid state.
+
+Do not put room-pressure physics directly into the visual-only art component.
+
+---
+
+# 7. COMPLETE ELECTRICAL WIRING — W01 TO W86
+
+The level requires:
+
+**86 player-created connections and 134 unique functional terminal anchors.**
+
+The 3D art package does not include these terminal components or a completed wiring map.
+
+Create them in Unity.
+
+## PROPOSED WIRING BUDGET
+
+| Group | Signals | Count |
+|---|---|---|
+| A | Control supply and returns | 8 |
+| B | Blower motors and FFU controls | 12 |
+| C | Dampers and airflow actuators | 10 |
+| D | Pressure and airflow measurement | 12 |
+| E | HEPA and particle monitoring | 10 |
+| F | Temperature and humidity control | 10 |
+| G | Airlock and safety interlocks | 12 |
+| H | PLC, controller and SCADA coordination | 12 |
+| TOTAL | | 86 |
+
+## GROUP A — W01–W08
+
+Educational 5 V power and return connections.
+
+Required destinations:
+
+- Environmental PLC.
+- Digital I/O module.
+- Cascade pressure controller.
+- Psychrometric controller.
+
+Use real supply and ground terminals.
+
+Other complex modules may receive preinstalled internal power connections where documented.
+
+## GROUP B — W09–W20
+
+Required gameplay control signals for:
+
+- Supply blower enable.
+- Supply blower speed request.
+- Supply blower running feedback.
+- Return blower enable.
+- Return blower speed request.
+- Return blower running feedback.
+- Exhaust blower enable.
+- Exhaust blower speed request.
+- Exhaust blower running feedback.
+- FFU A enable.
+- FFU B enable.
+- FFU health/status feedback.
+
+Where FFUs share one status interface, define a documented aggregate status with internal per-unit sensing.
+
+## GROUP C — W21–W30
+
+Required actuator signals:
+
+- Fresh-air damper command.
+- Fresh-air damper position feedback.
+- Cleanroom supply damper command.
+- Cleanroom supply damper position feedback.
+- Airlock supply damper command.
+- Airlock supply damper position feedback.
+- Pressure relief damper command.
+- Pressure relief damper position feedback.
+- Damper-control enable/permissive.
+- Damper diagnostic feedback.
+
+## GROUP D — W31–W42
+
+Required pressure and airflow instrumentation:
+
+- Main differential-pressure sensor power.
+- Main sensor return.
+- Main pressure measurement.
+- Main pressure measurement validity.
+- Airlock differential-pressure sensor power.
+- Airlock sensor return.
+- Airlock pressure measurement.
+- Airlock pressure measurement validity.
+- Air velocity sensor power.
+- Air velocity sensor return.
+- Air velocity measurement.
+- Air velocity measurement validity.
+
+## GROUP E — W43–W52
+
+Required particle and HEPA monitoring:
+
+- Cleanroom particle counter power.
+- Cleanroom particle counter return.
+- Cleanroom particle count signal.
+- Cleanroom particle count validity.
+- Airlock particle counter power.
+- Airlock particle counter return.
+- Airlock particle count signal.
+- Airlock particle count validity.
+- Filter differential-pressure feedback.
+- Filter differential-pressure validity.
+
+Additional internal HEPA integrity or bypass signals must be documented separately.
+
+## GROUP F — W53–W62
+
+Required psychrometric signals:
+
+- Cleanroom temperature.
+- Cleanroom humidity ratio or RH measurement.
+- Airlock temperature.
+- Airlock humidity measurement.
+- Dew-point measurement.
+- Cooling coil command.
+- Reheat power command.
+- Humidifier command.
+- Humidifier operating feedback.
+- Condensate drain status.
+
+Controller implementations must also validate calibration and freshness.
+
+## GROUP G — W63–W74
+
+Required safety/robot/door signals:
+
+- Inner airlock door lock command.
+- Inner door closed/locked feedback.
+- Outer airlock door lock command.
+- Outer door closed/locked feedback.
+- Door interlock fault.
+- Emergency stop.
+- Safety permission to PLC.
+- Safety permission for wafer robot.
+- Wafer robot start.
+- Wafer batch status.
+- Air-shower enable.
+- Air-shower completion/ready.
+
+## GROUP H — W75–W86
+
+Required coordination signals:
+
+- Main PLC pressure setpoint.
+- Pressure controller airflow request.
+- Pressure controller cleanroom damper request.
+- Pressure controller airlock damper request.
+- Psychrometric controller status.
+- Particle-contamination fault.
+- HEPA bypass fault.
+- Air-quality scenario control/status.
+- PLC status to SCADA.
+- SCADA operator command to PLC.
+- Fault-reset request.
+- Environmental certification/status event.
+
+## WIRING REQUIREMENTS
+
+1. Define every W-number exactly once.
+2. Define its FROM endpoint.
+3. Define its TO endpoint.
+4. Define its signal type.
+5. Define its expected nominal state.
+6. Define its component owner.
+7. Define whether it is mandatory.
+8. Define fault behavior on disconnection.
+9. Define diagnostic failure messages.
+10. Register actual `SparkTerminal` components.
+
+Use a consistent naming convention.
+
+Example conceptual endpoint:
+
+`W_PRESSURE_MAIN: CLEANROOM_DP_SIGNAL_OUT → PRESSURE_PID_FEEDBACK_IN`
+
+Final endpoint names must match actual created Unity terminal IDs.
+
+## EXACT TERMINAL REQUIREMENT
+
+Create exactly 134 unique functional terminal IDs.
+
+The 86 wires create 172 connection endpoints, so some terminal IDs may legitimately participate in shared distribution or explicitly supported fan-out connections.
+
+Do not invent 172 different terminals to avoid this relationship.
+
+Define valid fan-out, shared supply, return and signal-bus behavior according to the existing Project Spark wiring system.
+
+If the existing terminal system forbids fan-out, use actual terminal/junction components and redesign the endpoint allocation while preserving the requested 86 player wires and 134 functional terminals.
+
+No duplicate terminal IDs.
+
+No decorative fake sockets.
+
+---
+
+# 8. FINAL CRITICAL PRESSURE SENSOR WIRE
+
+Reserve one actual player-created wire for the cleanroom differential-pressure sensor.
+
+Conceptual connection:
+
+`CLEANROOM_DP_SENSOR_SIGNAL_OUT → CASCADE_PRESSURE_PID_FEEDBACK_IN`
+
+This is the final deliberate fault.
+
+Removing the wire must:
+
+- Change actual circuit topology.
+- Invalidate the pressure feedback.
+- Notify the control system.
+- Invalidate dependent pressure-control certification.
+- Trigger safe operating restrictions.
+- Record a latched fault.
+
+The pressure sensor itself may still physically sense air pressure, but its signal must not reach the controller through the disconnected path.
+
+This distinction is important.
+
+Do not simply set the actual cleanroom pressure to zero when the wire disconnects.
+
+The room pressure continues evolving physically while the controller loses valid measurement.
+
+---
+
+# 9. ONE AUTHORITATIVE CLEANROOM AIR NETWORK
+
+Build one coherent HVAC network containing:
+
+- Corridor.
+- Cleanroom.
+- Airlock.
+- Fresh-air intake.
+- Air handling unit.
+- Supply fan.
+- Return fan.
+- Exhaust fan.
+- FFU A.
+- FFU B.
+- Supply ducts.
+- Return ducts.
+- Exhaust routes.
+- Four motorized dampers.
+- HEPA media.
+- Door leakage paths.
+- Pressure relief path.
+
+## REQUIRED AUTHORITATIVE STATES
+
+- Air mass in each room.
+- Absolute room pressure.
+- Gauge room pressure.
+- Cleanroom-to-corridor differential.
+- Airlock-to-corridor differential.
+- Cleanroom-to-airlock differential.
+- Fan RPM.
+- Fan pressure rise.
+- Actual volume flow.
+- Air mass flow.
+- Damper opening.
+- Filter pressure drop.
+- Door opening area.
+- Leakage flow.
+- Temperature.
+- Humidity ratio.
+- Airborne particle concentration.
+
+## IMPORTANT
+
+Do not implement several independent airflow scripts that each update pressure separately.
+
+Use one network solver or one coordinated owner for air mass and pressure.
+
+---
+
+# 10. DIFFERENTIAL-PRESSURE PHYSICS
+
+The primary pressure cascade is:
+
+- Cleanroom: +15 Pa relative to corridor.
+- Airlock: +8 Pa relative to corridor.
+- Corridor: 0 Pa gauge.
+
+The cleanroom should normally be at higher pressure than the airlock.
+
+The airlock should normally be at higher pressure than the corridor.
+
+## IDEAL-GAS MASS RELATION
+
+For a well-mixed room approximation:
+
+`P = m * Rair * T / V`
+
+where:
+
+- P = absolute pressure.
+- m = air mass.
+- Rair = specific gas constant.
+- T = absolute temperature.
+- V = room volume.
+
+## DYNAMIC PRESSURE
+
+For a fixed-volume, near-isothermal approximation:
+
+`dP/dt ≈ (Rair * T / V) * (mdotIn - mdotOut)`
+
+For changing temperature, include the corresponding temperature term or solve the pressure state consistently.
+
+## PRACTICAL SOLVER
+
+Because cleanroom pressure differences are small relative to atmospheric pressure, a quasi-steady node-pressure solver may be numerically more suitable.
+
+Either approach is acceptable if documented and validated.
+
+## REQUIRED BEHAVIOR
+
+- Increasing supply airflow can increase room pressure.
+- Increasing return/exhaust airflow can lower room pressure.
+- Door opening changes leakage area.
+- Fan saturation limits pressure control.
+- Filter loading changes operating flow.
+- Relief damper limits excess pressure.
+- The controller cannot maintain impossible pressure setpoints.
+
+---
+
+# 11. DOOR AND LEAKAGE FLOW
+
+Use room-to-room pressure differences.
+
+## SIMPLIFIED LEAKAGE MODEL
+
+`Qleak = C * sign(DeltaP) * sqrt(abs(DeltaP))`
+
+where C includes opening area and appropriate physical coefficients.
+
+## REQUIRED BEHAVIOR
+
+- Direction follows pressure difference.
+- Door opening increases available flow path.
+- Simultaneously open doors greatly increase exchange between cleanroom and corridor.
+- Airlock controls prevent unsafe normal operations.
+- Pressure responds dynamically.
+
+## IMPORTANT
+
+Do not use a fixed inward leakage rate when pressure is positive.
+
+Leakage direction must follow actual pressure relationships.
+
+---
+
+# 12. SUPPLY, RETURN AND EXHAUST BLOWER DYNAMICS
+
+Use:
+
+- `13_L70_SupplyAirBlowerMotor.fbx`
+- `14_L70_ReturnAirBlowerMotor.fbx`
+- `15_L70_ExhaustAirBlowerMotor.fbx`
+
+## REQUIRED STATES
+
+- Drive enabled.
+- Commanded speed.
+- Actual RPM.
+- Acceleration limit.
+- Deceleration limit.
+- Fan pressure curve.
+- Actual airflow.
+- Mechanical power.
+- Electrical power estimate.
+- Current limit.
+- Operating status.
+- Fault state.
+
+## FAN PERFORMANCE
+
+Use a simplified fan pressure-flow curve.
+
+An educational approximation:
+
+`DeltaPfan = A * RPM² - B * Q²`
+
+with calibrated units and valid operating range.
+
+## FAN POWER
+
+Approximate:
+
+`Pshaft = DeltaP * Q / Efficiency`
+
+subject to valid efficiency and operating conditions.
+
+## REQUIRED BEHAVIOR
+
+- Fan acceleration takes time.
+- Duct resistance affects actual airflow.
+- Filter loading affects airflow.
+- Damper restriction affects airflow.
+- Fan power increases appropriately.
+- Protection limits operation.
+
+Do not assign actual airflow directly from requested RPM without considering system resistance.
+
+---
+
+# 13. TWO FAN-FILTER UNITS
+
+Use:
+
+- `16_L70_CeilingFanFilterUnitA.fbx`
+- `17_L70_CeilingFanFilterUnitB.fbx`
+
+## REQUIRED STATES
+
+- Fan enable.
+- Actual RPM.
+- Airflow.
+- Available static pressure.
+- HEPA filter status.
+- Filter pressure drop.
+- Particle removal performance.
+- Fault state.
+
+## REQUIRED BEHAVIOR
+
+The FFUs move actual air through their filters.
+
+Filtered air enters the primary cleanroom.
+
+FFU airflow must be limited by fan and filter performance.
+
+When filter resistance increases, airflow responds according to the fan curve.
+
+When filter leakage occurs, air may bypass the filter media with reduced particle removal.
+
+Do not automatically assign perfect filtration to all air passing through an FFU housing.
+
+---
+
+# 14. HEPA FILTER MODEL
+
+Use:
+
+- `18_L70_ReplaceableHEPACartridgeA.fbx`
+- `19_L70_ReplaceableHEPACartridgeB.fbx`
+
+Implement two separate physical filter states.
+
+## REQUIRED PROPERTIES
+
+- Filter identity.
+- Installed location.
+- Compatibility.
+- Media filtration efficiency.
+- Airflow resistance.
+- Dust loading.
+- Seal integrity.
+- Bypass leakage fraction.
+- Actual flow.
+- Pressure drop.
+- Replacement status.
+- Maintenance status.
+
+## FILTER LOADING
+
+As loading increases:
+
+- Pressure drop increases.
+- Fan operating point can change.
+- Actual airflow may decrease.
+- Energy consumption may increase if fan control compensates.
+
+## FILTER SEAL LEAKAGE
+
+As seal integrity deteriorates:
+
+- Some air bypasses filter media.
+- Effective particle removal decreases.
+- Particle concentration downstream may rise.
+- Pressure drop alone may not identify the fault.
+
+## IMPORTANT
+
+Loading and seal leakage must be independent state variables.
+
+Do not make every clogged filter leak particles by default.
+
+Do not make every seal failure create a large pressure-drop increase.
+
+---
+
+# 15. FILTER DIFFERENTIAL-PRESSURE MEASUREMENT
+
+Use:
+
+`35_L70_FilterDifferentialPressureTransmitter.fbx`
+
+## REQUIRED VALUES
+
+- Upstream pressure.
+- Downstream pressure.
+- True filter pressure difference.
+- Measured pressure difference.
+- Calibration.
+- Validity.
+- Signal timestamp.
+- Fault status.
+
+## REQUIRED BEHAVIOR
+
+Filter loading must affect actual pressure loss.
+
+The differential-pressure measurement must follow the model.
+
+Do not simply display a fixed dirty-filter pressure value when a loading scenario starts.
+
+---
+
+# 16. AIRBORNE PARTICLE TRANSPORT MODEL
+
+This is Level 70's most important new simulation subsystem.
+
+Implement an authoritative particle inventory for:
+
+- Cleanroom.
+- Airlock.
+- Corridor or external supply reference.
+
+## REQUIRED PARTICLE STATE
+
+- Particle concentration.
+- Particle-size class.
+- Total particle inventory.
+- Incoming particle rate.
+- Internal generation rate.
+- Deposition rate.
+- Removal rate.
+- Filter efficiency.
+- Bypass leakage.
+- Door infiltration.
+- Measurement uncertainty.
+
+## PARTICLE BALANCE
+
+For a well-mixed region:
+
+`d(Nparticles)/dt = ParticleIn + ParticleGenerated - ParticleOut - ParticleRemoved`
+
+where:
+
+`Nparticles = Concentration * ZoneVolume`
+
+## AIRFLOW TRANSPORT
+
+For a flow entering from another zone:
+
+`ParticleInRate = FlowRate * SourceConcentration`
+
+Use consistent flow units.
+
+For outgoing room air:
+
+`ParticleOutRate = FlowRate * RoomConcentration`
+
+## HEPA FILTRATION
+
+Filtered particle concentration must depend on filter efficiency and bypass fraction.
+
+A suitable simplified relation:
+
+`Cdownstream = (1 - BypassFraction) * (1 - MediaEfficiency) * Cupstream + BypassFraction * Cupstream`
+
+Modify as needed for the implemented flow topology.
+
+## REQUIRED BEHAVIOR
+
+- Filtration reduces particle inventory over time.
+- Door opening increases contaminant exchange where appropriate.
+- Wafer movement may generate particles.
+- A seal leak increases particle penetration.
+- The cleanroom recovers through actual clean air delivery and removal.
+- Particle concentration never becomes negative.
+
+---
+
+# 17. PARTICLE COUNTER SIMULATION
+
+Use:
+
+- `30_L70_CleanroomParticleCounter.fbx`
+- `31_L70_AirlockParticleCounter.fbx`
+
+## REQUIRED PROPERTIES
+
+- Actual zone concentration.
+- Sampled air volume.
+- Particle-size threshold.
+- Sample duration.
+- Counted particles.
+- Reported concentration.
+- Measurement timestamp.
+- Calibration.
+- Signal validity.
+- Measurement uncertainty.
+
+## REQUIRED BEHAVIOR
+
+Particle measurements must derive from the actual particle model.
+
+Do not simply copy a hidden HEALTHY or CONTAMINATED Boolean.
+
+For a realistic simplified sensor, count estimates may include statistical variation around true concentration, with reproducible randomness for automated tests.
+
+## IMPORTANT
+
+A zero observed count in a tiny sample is not proof of zero airborne particles.
+
+Use defined sample windows.
+
+Report invalid or stale measurements clearly.
+
+---
+
+# 18. CLEANROOM PARTICLE TARGET
+
+The level's proposed target is:
+
+**≤3,000 particles/m³ in the configured ≥0.5 µm channel.**
+
+Treat this as an educational gameplay threshold.
+
+## REQUIRED CERTIFICATION
+
+- Particle counter calibrated.
+- Sensor connected.
+- Sample volume sufficient for the configured game criteria.
+- Multiple valid sample windows.
+- Actual concentration below target.
+- No active contamination leak.
+- Proper airflow and pressure.
+- No wafer handling during an unsafe interval.
+
+## IMPORTANT
+
+Do not describe this as formal ISO cleanroom certification.
+
+A real cleanroom classification involves specified standards and measurement procedures beyond this gameplay target.
+
+---
+
+# 19. PSYCHROMETRIC AIR MODEL
+
+Use:
+
+`45_L70_PsychrometricControlModule.fbx`
+
+The environment must track air temperature and moisture consistently.
+
+## REQUIRED PROPERTIES
+
+- Dry-bulb temperature.
+- Relative humidity.
+- Humidity ratio.
+- Absolute pressure.
+- Dew point.
+- Moist-air enthalpy.
+- Supply-air temperature.
+- Supply-air humidity.
+- Cooling capacity.
+- Heating capacity.
+- Humidification capacity.
+- Condensate production.
+
+## CORE RELATIONSHIPS
+
+Humidity ratio:
+
+`w = 0.62198 * Pv / (P - Pv)`
+
+where Pv is vapor partial pressure.
+
+Relative humidity:
+
+`RH = Pv / Pvsat(T)`
+
+Use a valid saturation vapor pressure relationship.
+
+## IMPORTANT
+
+Relative humidity is not an independently conserved quantity.
+
+Track moisture content and temperature.
+
+Calculate RH from those physical states.
+
+---
+
+# 20. CHILLED-WATER COOLING COIL
+
+Use:
+
+`09_L70_ChilledWaterCoolingCoil.fbx`
+
+## REQUIRED PROPERTIES
+
+- Supply air mass flow.
+- Coil surface temperature.
+- Cooling-water availability.
+- Available cooling power.
+- Entering air temperature.
+- Leaving air temperature.
+- Entering humidity ratio.
+- Leaving humidity ratio.
+- Condensate rate.
+- Coil thermal inertia.
+
+## REQUIRED BEHAVIOR
+
+The cooling coil removes finite thermal energy.
+
+When the coil is below air dew point, moisture can condense.
+
+This changes humidity ratio and generates condensate.
+
+Do not instantly assign 22°C and 45% RH to its outlet air.
+
+---
+
+# 21. REHEAT COIL
+
+Use:
+
+`10_L70_ElectricReheatCoil.fbx`
+
+## REQUIRED PROPERTIES
+
+- Requested power.
+- Actual power.
+- Maximum power.
+- Air mass flow.
+- Inlet temperature.
+- Outlet temperature.
+- Safety status.
+
+## REQUIRED BEHAVIOR
+
+Reheat adds sensible thermal energy.
+
+For a simplified dry-air model:
+
+`Qdot = mdot * cp * DeltaT`
+
+It must not create moisture.
+
+The temperature increase changes relative humidity even if humidity ratio is unchanged.
+
+---
+
+# 22. PRECISION HUMIDIFIER
+
+Use:
+
+`11_L70_PrecisionAirHumidifier.fbx`
+
+## REQUIRED PROPERTIES
+
+- Requested humidity addition.
+- Actual moisture addition.
+- Water availability.
+- Maximum capacity.
+- Airflow.
+- Temperature effect.
+- Fault status.
+
+## REQUIRED BEHAVIOR
+
+The humidifier must increase moisture inventory through actual modeled water addition.
+
+The effect on air enthalpy/temperature must follow the selected humidification assumption.
+
+Do not directly set relative humidity.
+
+---
+
+# 23. CONDENSATE DRAIN
+
+Use:
+
+`12_L70_CondensateDrainAssembly.fbx`
+
+## REQUIRED PROPERTIES
+
+- Condensate inventory.
+- Drain capacity.
+- Drain status.
+- Fault state.
+
+Condensed moisture must be accounted for.
+
+Do not delete water mass silently without a defined drain sink.
+
+---
+
+# 24. FOUR MOTORIZED DAMPERS
+
+Use:
+
+- `23_L70_FreshAirMixingDamper.fbx`
+- `24_L70_CleanroomSupplyDamperA.fbx`
+- `25_L70_AirlockSupplyDamperB.fbx`
+- `26_L70_MotorizedPressureReliefDamper.fbx`
+
+## REQUIRED PROPERTIES
+
+- Command position.
+- Actual position.
+- Actuator speed.
+- Flow resistance.
+- Position feedback.
+- Validity.
+- Fault state.
+
+## REQUIRED BEHAVIOR
+
+- Dampers move at finite speed.
+- Position changes airflow resistance.
+- Fresh-air damper affects intake/recirculation.
+- Cleanroom damper affects primary supply.
+- Airlock damper affects airlock supply.
+- Pressure relief damper limits excessive pressure.
+
+Do not equate a damper command directly with actual airflow percentage.
+
+---
+
+# 25. AIR VELOCITY MEASUREMENT
+
+Use:
+
+`29_L70_AirVelocityMeasurementProbe.fbx`
+
+## REQUIRED STATES
+
+- True local velocity.
+- Measured velocity.
+- Sensor direction.
+- Calibration.
+- Validity.
+- Timestamp.
+
+## REQUIRED BEHAVIOR
+
+Velocity derives from network flow and relevant duct or measurement area.
+
+`Velocity = VolumetricFlow / Area`
+
+Use consistent units.
+
+Where flow profiles are simplified, label readings as zone-average or duct-average estimates.
+
+---
+
+# 26. DIFFERENTIAL-PRESSURE SENSORS
+
+Use:
+
+- `27_L70_CleanroomDifferentialPressureSensor.fbx`
+- `28_L70_AirlockDifferentialPressureSensor.fbx`
+
+## REQUIRED VALUES
+
+- Actual zone pressure.
+- Corridor reference pressure.
+- True differential pressure.
+- Measured differential pressure.
+- Calibration offset.
+- Measurement noise.
+- Sampling interval.
+- Timestamp.
+- Signal validity.
+- Connectivity.
+- Fault state.
+
+## REQUIRED BEHAVIOR
+
+Cleanroom sensor reads actual cleanroom-to-corridor pressure difference.
+
+Airlock sensor reads actual airlock-to-corridor difference.
+
+Do not display target pressure as measured pressure.
+
+When disconnected, the measurement becomes invalid but the physical room pressure continues changing.
+
+---
+
+# 27. CASCADE PRESSURE PID
+
+Use:
+
+`44_L70_CascadeAirPressurePIDController.fbx`
+
+## OUTER LOOP
+
+Cleanroom pressure control.
+
+Input:
+
+- Target differential pressure.
+- Valid measured differential pressure.
+
+Output:
+
+- Required airflow or supply/return balance request.
+
+## INNER LOOP
+
+Airflow controller.
+
+Input:
+
+- Requested flow.
+- Valid measured airflow.
+
+Output:
+
+- Fan-speed request.
+- Appropriate damper command.
+
+## PID EQUATION
+
+`u = Kp*error + Ki*Integral(error) + Kd*FilteredDerivative(error)`
+
+## REQUIRED FEATURES
+
+- Outer PID gains.
+- Inner PID gains.
+- Output limits.
+- Integral anti-windup.
+- Sample intervals.
+- Measurement filtering.
+- Actuator saturation.
+- Manual-to-auto transfer.
+- Safe fallback when feedback invalid.
+
+## IMPORTANT
+
+The pressure controller must not write directly to the actual room pressure state.
+
+It must command actual airflow equipment.
+
+The resulting air mass balance changes pressure.
+
+---
+
+# 28. AIRLOCK PRESSURE CONTROL
+
+Use the same authoritative air network.
+
+The airlock should normally maintain approximately +8 Pa relative to corridor.
+
+## REQUIRED STATES
+
+- Airlock pressure.
+- Supply airflow.
+- Leakage airflow.
+- Inner door state.
+- Outer door state.
+- Door lock state.
+- Air shower status.
+- Occupancy/transfer state if modeled.
+- Contamination concentration.
+
+## REQUIRED BEHAVIOR
+
+Opening the outer door changes pressure and particle exchange.
+
+The controller may recover pressure after the door closes.
+
+The inner door should remain interlocked during unsafe pressure or contamination conditions.
+
+---
+
+# 29. INNER AND OUTER AIRLOCK DOORS
+
+Use:
+
+- `37_L70_AirlockInnerSafetyDoor.fbx`
+- `38_L70_AirlockOuterSafetyDoor.fbx`
+
+## REQUIRED SAFETY INTERLOCKS
+
+- Inner door cannot open while outer door is open under normal operation.
+- Outer door cannot open while inner door is open.
+- Access sequence requires valid safety permission.
+- A door-open event affects actual leakage area.
+- Pressure must be re-established before protected transfer.
+- Door-fault status must be reported.
+
+## IMPORTANT
+
+Emergency egress behavior should be represented separately from normal contamination-control interlocking.
+
+Do not design the simulation to encourage physically trapping people in a real airlock.
+
+This is an educational virtual system.
+
+---
+
+# 30. AIR-SHOWER MODULE
+
+Use:
+
+`36_L70_IndustrialAirShowerModule.fbx`
+
+## REQUIRED PROPERTIES
+
+- Enable.
+- Fan status.
+- Airflow.
+- Cycle progress.
+- Door state.
+- Safety status.
+
+## REQUIRED BEHAVIOR
+
+Air-shower operation must use actual fan/airflow state.
+
+Completing a timer with the fan disabled must not count as a successful cycle.
+
+The air shower can reduce a configured loose-particle load on the simulated entering object, if that mechanism is explicitly modeled.
+
+Do not represent air shower operation as perfect sterilization or absolute particle removal.
+
+---
+
+# 31. WAFER TRANSFER ROBOT
+
+Use:
+
+`06_L70_AutomatedWaferTransferRobot.fbx`
+
+## REQUIRED GAMEPLAY STATES
+
+- IDLE.
+- HOMING.
+- READY.
+- PICKING.
+- TRANSFERRING.
+- INSPECTING.
+- PLACING.
+- COMPLETE.
+- PAUSED.
+- SAFETY_STOP.
+- FAULT.
+
+## REQUIRED INPUTS
+
+- Cleanroom pressure valid.
+- Particle concentration acceptable.
+- Temperature valid.
+- Humidity valid.
+- Doors safe.
+- Robot ready.
+- Wafer carrier available.
+- Inspection station available.
+- Safety permission.
+
+## REQUIRED BEHAVIOR
+
+The robot must not process wafer batches while critical environmental measurements are invalid.
+
+Robotic movements must use actual machine state and animation.
+
+## WAFER CONTAMINATION EXPOSURE
+
+Track a simplified cumulative exposure metric based on particle concentration and exposure duration.
+
+For example:
+
+`Exposure = Integral(Cparticle * ExposureFactor * dt)`
+
+Define how exposure relates to educational product quality.
+
+Do not automatically classify a wafer as good simply because the robot completed the motion.
+
+---
+
+# 32. SEMICONDUCTOR INSPECTION STATION
+
+Use:
+
+- `04_L70_SemiconductorInspectionBench.fbx`
+- `05_L70_SiliconWaferCarrierRack.fbx`
+
+## REQUIRED STATES
+
+- Wafer available.
+- Wafer picked.
+- Wafer being inspected.
+- Wafer processed.
+- Environmental exposure.
+- Inspection result.
+- Certified batch count.
+
+## REQUIRED BEHAVIOR
+
+Only batches processed under valid environmental conditions should count toward Objective 4.
+
+Do not count unsafe batches as certified merely because the robot reached its final transform.
+
+---
+
+# 33. HEPA FILTER REPLACEMENT
+
+The HEPA cartridges are separate gameplay components.
+
+## MAINTENANCE REQUIREMENTS
+
+1. Detect a specific filter fault.
+2. Identify the affected cartridge.
+3. Suspend sensitive wafer operations.
+4. Place the affected filtration branch into a safe service state.
+5. Verify fan/airflow conditions for maintenance.
+6. Unlock the correct service latch.
+7. Remove the installed cartridge.
+8. Obtain the compatible replacement.
+9. Install the replacement.
+10. Verify correct mounting.
+11. Verify seal integrity.
+12. Close the service housing.
+13. Restore filtered airflow.
+14. Perform an integrity/particle recovery test.
+15. Re-enable wafer operations only after certification.
+
+## IMPORTANT
+
+Do not simply press REPAIR and set the particle concentration to zero.
+
+The new filter changes the actual media/seal properties.
+
+Particle concentration must then recover over time through valid filtration and ventilation.
+
+---
+
+# 34. HEPA FILTER LOADING DISTURBANCE
+
+Use the actual filter model.
+
+## DISTURBANCE
+
+Increase filter dust loading over a controlled event.
+
+## REQUIRED RESPONSE
+
+- Filter resistance rises.
+- Differential pressure increases at comparable flow.
+- Fan operating point changes.
+- Actual airflow may decline.
+- Controller may increase fan effort within limits.
+- Fan energy may increase.
+- Pressure stability can become harder.
+
+## REQUIRED DIAGNOSIS
+
+Use actual filter differential pressure and airflow data.
+
+Do not simply read the hidden scenario flag and display FILTER LOADED.
+
+---
+
+# 35. HEPA SEAL FAILURE DISTURBANCE
+
+Use:
+
+`39_L70_HEPASealFailureSimulator.fbx`
+
+## FAULT
+
+Introduce a bypass leak around one HEPA cartridge.
+
+## REQUIRED RESPONSE
+
+- Effective particle penetration increases.
+- Downstream particle concentration may rise.
+- Room pressure may remain near normal.
+- Filter differential pressure may not show the same signature as loading.
+- Particle counters detect degradation.
+- Wafer handling becomes restricted.
+- Fault is recorded.
+
+## REQUIRED RECOVERY
+
+- Identify affected filter.
+- Isolate for safe service.
+- Repair the seal or replace the cartridge as modeled.
+- Verify seal integrity.
+- Restore filtration.
+- Purge contaminated air over time.
+- Recalibrate/verify monitoring as needed.
+- Certify cleanroom conditions.
+
+## IMPORTANT
+
+This must be distinct from filter loading.
+
+---
+
+# 36. AIR QUALITY DISTURBANCE SIMULATOR
+
+Use:
+
+`41_L70_AirQualityDisturbanceSimulator.fbx`
+
+Implement controlled scenarios.
+
+## A — AIRLOCK DOOR BREACH
+
+- Outer door opens.
+- Leakage changes.
+- Airlock pressure responds.
+- Particle exchange increases.
+- Control system attempts recovery.
+- Access is restricted until safe.
+
+## B — FILTER LOADING
+
+- HEPA resistance increases.
+- Fan operating point changes.
+- Pressure control responds.
+
+## C — FILTER SEAL FAILURE
+
+- Filter bypass fraction increases.
+- Particles penetrate.
+- Cleanroom contamination rises.
+- Wafer processing stops.
+- Correct repair is required.
+
+## D — FINAL SENSOR WIRE FAULT
+
+- Actual pressure feedback disconnected.
+- Measurement invalidated.
+- Controller enters safe fallback.
+- Fault repair and reset required.
+
+All disturbance states must affect the authoritative simulation.
+
+---
+
+# 37. INDEPENDENT SAFETY CONTROLLER
+
+Implement Level 70 safety logic using existing Project Spark infrastructure if available.
+
+## REQUIRED SAFETY CONDITIONS
+
+- Main cleanroom pressure valid.
+- Airlock pressure valid.
+- Particle counters valid.
+- Critical particle levels acceptable.
+- Airlock doors interlocked.
+- AHU airflow valid.
+- FFUs operational.
+- HEPA integrity valid.
+- Temperature and humidity within acceptable limits for sensitive operation.
+- Emergency stop released.
+- Wafer robot operating permission valid.
+
+## REQUIRED SAFETY RESPONSE
+
+When a serious contamination or feedback fault occurs:
+
+1. Stop or pause wafer transfers.
+2. Prevent unsafe pressure-dependent door access.
+3. Preserve safe ventilation where possible.
+4. Avoid automatically switching off all filtration if that would worsen contamination.
+5. Record fault and timestamps.
+6. Latch critical faults.
+7. Require corrective action.
+8. Require explicit reset.
+9. Revalidate environmental conditions.
+10. Permit controlled restart.
+
+## IMPORTANT
+
+Safe response must be appropriate to the actual fault.
+
+A pressure sensor disconnect does not necessarily mean all fans must turn off.
+
+The appropriate fallback may be bounded airflow with wafer processing and pressure-dependent access inhibited.
+
+---
+
+# 38. ENVIRONMENTAL CONTROL PLC
+
+Use:
+
+- `42_L70_EnvironmentalControlPLCRack.fbx`
+- `43_L70_EnvironmentalDigitalIOModule.fbx`
+
+## REQUIRED PLC STATES
+
+- OFF.
+- INITIALIZING.
+- IDLE.
+- SENSOR_CALIBRATION.
+- AIRFLOW_COMMISSIONING.
+- FILTER_VALIDATION.
+- PRESSURE_CONTROL_READY.
+- TEMPERATURE_HUMIDITY_CONTROL.
+- CLEANROOM_PURGE.
+- PARTICLE_CERTIFICATION.
+- WAFER_OPERATION.
+- DISTURBANCE_RESPONSE.
+- FILTER_MAINTENANCE.
+- SAFE_HOLD.
+- FAULT.
+- RESET_REQUIRED.
+
+## REQUIRED INPUTS
+
+- Fan ready.
+- Fan running.
+- Filter installed.
+- Pressure measurement valid.
+- Air velocity valid.
+- Particle count valid.
+- Temperature and humidity valid.
+- Damper position valid.
+- Inner door state.
+- Outer door state.
+- Air shower state.
+- Wafer robot status.
+- Safety relay status.
+
+## REQUIRED OUTPUTS
+
+- Blower enable.
+- Blower speed reference.
+- FFU enable.
+- Damper commands.
+- Cooling command.
+- Reheat command.
+- Humidifier command.
+- Airlock lock commands.
+- Air-shower enable.
+- Robot permission.
+- Alarm.
+- Fault reset request.
+
+## IMPORTANT
+
+PLC states must advance based on actual validated conditions.
+
+Do not use timers alone to pretend that the cleanroom has become clean.
+
+---
+
+# 39. LIVE ENVIRONMENTAL SCADA DASHBOARD
+
+Use:
+
+`46_L70_HolographicCleanroomSCADAMonitor.fbx`
+
+Create real runtime TextMeshPro controls and graphs.
+
+## REQUIRED LIVE READINGS
+
+- MAIN POWER.
+- ENVIRONMENTAL PLC STATUS.
+- CLEANROOM PRESSURE.
+- CLEANROOM PRESSURE TARGET.
+- AIRLOCK PRESSURE.
+- AIRLOCK PRESSURE TARGET.
+- CLEANROOM-TO-AIRLOCK PRESSURE.
+- SUPPLY AIRFLOW.
+- RETURN AIRFLOW.
+- EXHAUST AIRFLOW.
+- FFU A AIRFLOW.
+- FFU B AIRFLOW.
+- SUPPLY FAN RPM.
+- RETURN FAN RPM.
+- EXHAUST FAN RPM.
+- FFU A RPM.
+- FFU B RPM.
+- FRESH AIR DAMPER OPENING.
+- CLEANROOM SUPPLY DAMPER OPENING.
+- AIRLOCK SUPPLY DAMPER OPENING.
+- PRESSURE RELIEF DAMPER OPENING.
+- HEPA A DIFFERENTIAL PRESSURE.
+- HEPA B DIFFERENTIAL PRESSURE WHERE MODELED.
+- HEPA A LOADING.
+- HEPA B LOADING.
+- HEPA A SEAL STATUS.
+- HEPA B SEAL STATUS.
+- CLEANROOM PARTICLE COUNT.
+- AIRLOCK PARTICLE COUNT.
+- PARTICLE TREND.
+- CLEANROOM TEMPERATURE.
+- AIRLOCK TEMPERATURE.
+- CLEANROOM RELATIVE HUMIDITY.
+- AIRLOCK RELATIVE HUMIDITY.
+- AIR DEW POINT.
+- COOLING COIL DUTY.
+- REHEAT POWER.
+- HUMIDIFIER OUTPUT.
+- CONDENSATE DRAIN STATUS.
+- INNER DOOR STATE.
+- OUTER DOOR STATE.
+- AIR SHOWER STATUS.
+- WAFER ROBOT STATUS.
+- WAFER BATCH PROGRESS.
+- WAFER CONTAMINATION EXPOSURE.
+- FAN ELECTRICAL POWER.
+- TOTAL ENERGY.
+- SENSOR VALIDITY.
+- SAFETY STATUS.
+- EVENT HISTORY.
+- OBJECTIVES X/6.
+
+## REQUIRED PLAYER CONTROLS
+
+- MAIN POWER.
+- CALIBRATE PRESSURE.
+- CALIBRATE AIRFLOW.
+- CALIBRATE PARTICLE COUNTERS.
+- CALIBRATE TEMPERATURE.
+- CALIBRATE HUMIDITY.
+- START SUPPLY FAN.
+- START RETURN FAN.
+- START EXHAUST FAN.
+- ENABLE FFU A.
+- ENABLE FFU B.
+- SET CLEANROOM PRESSURE.
+- SET AIRLOCK PRESSURE.
+- TUNE PRESSURE PID.
+- TUNE AIRFLOW PID.
+- SET TEMPERATURE.
+- SET HUMIDITY.
+- ENABLE AUTO ENVIRONMENT.
+- START WAFER TEST.
+- AIRLOCK DOOR TEST.
+- FILTER LOADING TEST.
+- HEPA LEAK TEST.
+- REQUEST FILTER MAINTENANCE.
+- ISOLATE FILTER BRANCH.
+- REPLACE HEPA FILTER.
+- VERIFY SEAL.
+- RESET SAFETY.
+- DISCONNECT PRESSURE FEEDBACK.
+- RECALIBRATE PRESSURE SENSOR.
+- RESET PRESSURE FAULT.
+- FINAL CERTIFY.
+
+Every button must have real gameplay consequences.
+
+No decorative controls that only change labels.
+
+---
+
+# 40. SIX AUTHORITATIVE LEVEL 70 OBJECTIVES
+
+Integrate all six with the real Project Spark evaluator.
+
+## OBJECTIVE 1 — BUILD THE ENVIRONMENTAL CONTROL NETWORK
+
+Require:
+
+1. All 86 player-created wires connected.
+2. Exactly 134 functional terminals registered.
+3. Valid 5 V control power.
+4. Valid control return.
+5. Main PLC connected.
+6. Digital I/O connected.
+7. Cascade pressure controller connected.
+8. Psychrometric controller connected.
+9. Supply blower connected.
+10. Return blower connected.
+11. Exhaust blower connected.
+12. FFU A connected.
+13. FFU B connected.
+14. Four damper control paths valid.
+15. Pressure sensors connected.
+16. Air velocity sensor connected.
+17. Particle counters connected.
+18. Temperature/humidity sensors connected.
+19. Dew-point measurement connected.
+20. Filter differential pressure connected.
+21. Airlock door interlocks connected.
+22. Air-shower controls connected.
+23. Robot safety permission connected.
+24. Emergency stop connected.
+25. No unsafe circuit topology.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — COMMISSION CLEAN AIR CIRCULATION
+
+Require:
+
+1. Objective 1 certified.
+2. Supply blower enabled.
+3. Return blower enabled.
+4. Exhaust blower available.
+5. FFU A enabled.
+6. FFU B enabled.
+7. Actual fan RPM increases.
+8. Supply airflow established.
+9. Return path valid.
+10. HEPA cartridges correctly installed.
+11. HEPA filter paths valid.
+12. Air velocity measured.
+13. Pressure sensors calibrated.
+14. Particle counters calibrated.
+15. Temperature/humidity sensors calibrated.
+16. Filter differential-pressure measurement valid.
+17. Airflow balance stable.
+18. No critical safety fault.
+19. Stable commissioning interval completed.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — MASTER ENVIRONMENTAL STABILITY
+
+Require:
+
+1. Previous objectives certified.
+2. Cleanroom pressure controller enabled.
+3. Airflow inner loop enabled.
+4. Cleanroom pressure reaches target range around +15 Pa.
+5. Airlock pressure reaches target range around +8 Pa.
+6. Cleanroom-to-airlock pressure relationship valid.
+7. Supply and return airflow remain within limits.
+8. Fan commands bounded.
+9. Dampers operate.
+10. Controller anti-windup functional.
+11. No sustained pressure oscillation.
+12. Cleanroom temperature within 22°C ±1°C.
+13. Relative humidity within 45% ±5 percentage points.
+14. Dew-point measurement valid.
+15. Psychrometric controller operational.
+16. No safety fault.
+17. Stable observation interval completed.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — ACHIEVE PARTICLE CLEANLINESS
+
+Require:
+
+1. Previous objectives certified.
+2. Both particle counters valid.
+3. HEPA filters installed.
+4. HEPA integrity valid.
+5. Clean airflow established.
+6. Actual particle concentration decreases.
+7. Cleanroom particle target achieved.
+8. Airlock particle condition acceptable.
+9. Multiple valid sample windows completed.
+10. Cleanroom pressure cascade stable.
+11. Temperature/humidity acceptable.
+12. Door safety valid.
+13. Wafer robot enabled.
+14. Wafer batch transferred.
+15. Actual contamination exposure recorded.
+16. Product quality within game threshold.
+17. Required batch count completed.
+18. No critical contamination event.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — SURVIVE THE CONTAMINATION BREACH
+
+Require:
+
+1. Previous objectives certified.
+2. Airlock door disturbance activated.
+3. Door opens physically.
+4. Actual pressure/airflow responds.
+5. Particle exchange changes.
+6. Safety interlocks function.
+7. Pressure restored.
+8. Filter loading scenario activated.
+9. Filter differential pressure increases.
+10. Fan/airflow operating point responds.
+11. Loading detected using measurements.
+12. HEPA seal failure activated.
+13. Actual particle bypass increases.
+14. Cleanroom particle count rises.
+15. Wafer transfer inhibited.
+16. Correct failed cartridge identified.
+17. Safe maintenance state entered.
+18. Cartridge/seal repaired or replaced.
+19. Filtration restored.
+20. Contaminated air purged over time.
+21. Particle concentrations return to limits.
+22. Pressure cascade restored.
+23. Filter integrity test completed.
+24. No unresolved critical fault.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — RESTORE CRITICAL PRESSURE FEEDBACK
+
+Require:
+
+1. Objectives 1–5 historically certified.
+2. Designated pressure-feedback wire disconnected.
+3. Actual topology invalidated.
+4. Cleanroom pressure measurement becomes invalid.
+5. Pressure PID detects measurement loss.
+6. Unsafe pressure-dependent automatic operations inhibited.
+7. Wafer robot enters safe hold.
+8. Airlock access restricted appropriately.
+9. Safe ventilation fallback maintained where possible.
+10. Fault latched.
+11. Player reconnects the actual wire.
+12. Electrical connectivity restored.
+13. Pressure sensor recalibrated.
+14. Fresh valid pressure measurement acquired.
+15. Player explicitly resets fault.
+16. Pressure control recommissioned.
+17. Cleanroom pressure restored.
+18. Airlock pressure restored.
+19. Temperature/humidity stable.
+20. Particle concentrations within limits.
+21. Fresh wafer batch test performed.
+22. Fresh airlock disturbance/recovery test completed.
+23. No unresolved critical fault.
+24. Final environmental certification succeeds.
+
+Progress becomes **6/6**.
+
+## HISTORICAL CERTIFICATION
+
+Objectives 1–5 must remain historically certified during the deliberate final feedback failure.
+
+Do not erase previous achievements.
+
+However, do not award Objective 6 immediately upon reconnection.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6.**
+
+---
+
+# 41. FINAL PRESSURE-SENSOR FAULT SEQUENCE
+
+This is the final major gameplay challenge.
+
+## DISCONNECTION
+
+1. Player identifies the designated pressure feedback wire.
+2. Player removes it using the actual Project Spark wiring interaction.
+3. Circuit topology changes.
+4. Sensor-to-controller measurement signal becomes unavailable.
+5. Pressure measurement validity becomes false.
+6. Pressure PID detects invalid feedback.
+7. Controller enters documented safe fallback.
+8. Wafer handling stops.
+9. Pressure-dependent airlock operations are restricted.
+10. Safety fault becomes latched.
+11. Event recorder records timestamp and fault.
+
+## IMPORTANT
+
+Do not instantly change the physical pressure to zero.
+
+Do not keep the last measured value marked valid.
+
+If a stale value is displayed, mark it as stale with its timestamp.
+
+## RECOVERY
+
+1. Player reconnects the actual wire.
+2. Circuit topology becomes valid.
+3. Sensor supply and return checked.
+4. Sensor measurement reacquired.
+5. Calibration performed.
+6. Fresh valid pressure samples collected.
+7. Player explicitly resets fault.
+8. Safety conditions verified.
+9. Pressure PID recommissioned.
+10. Cleanroom pressure stabilizes.
+11. Airlock pressure stabilizes.
+12. Airflow confirmed.
+13. Particle concentration confirmed.
+14. Temperature/humidity confirmed.
+15. Wafer robot test restarted.
+16. Fresh environmental certification completed.
+
+---
+
+# 42. RECOMMENDED UNITY C# ARCHITECTURE
+
+Inspect actual code before adding these classes.
+
+Suggested responsibilities:
+
+- `SparkLevel70Coordinator.cs`
+- `SparkLevel70AirNetwork.cs`
+- `SparkLevel70AirNode.cs`
+- `SparkLevel70RoomPressureModel.cs`
+- `SparkLevel70LeakageFlow.cs`
+- `SparkLevel70FanDynamics.cs`
+- `SparkLevel70FanFilterUnit.cs`
+- `SparkLevel70DamperDynamics.cs`
+- `SparkLevel70DuctResistance.cs`
+- `SparkLevel70HEPAFilterModel.cs`
+- `SparkLevel70FilterIntegrity.cs`
+- `SparkLevel70ParticleTransport.cs`
+- `SparkLevel70ParticleCounter.cs`
+- `SparkLevel70AirflowSensor.cs`
+- `SparkLevel70DifferentialPressureSensor.cs`
+- `SparkLevel70FilterDifferentialPressureSensor.cs`
+- `SparkLevel70PsychrometricModel.cs`
+- `SparkLevel70CoolingCoil.cs`
+- `SparkLevel70ReheatCoil.cs`
+- `SparkLevel70Humidifier.cs`
+- `SparkLevel70CondensateDrain.cs`
+- `SparkLevel70TemperatureHumiditySensor.cs`
+- `SparkLevel70PIDController.cs`
+- `SparkLevel70CascadePressureController.cs`
+- `SparkLevel70AirlockController.cs`
+- `SparkLevel70AirShowerController.cs`
+- `SparkLevel70WaferHandlingController.cs`
+- `SparkLevel70ContaminationExposure.cs`
+- `SparkLevel70FilterMaintenance.cs`
+- `SparkLevel70DisturbanceController.cs`
+- `SparkLevel70SafetyController.cs`
+- `SparkLevel70EnvironmentalPLC.cs`
+- `SparkLevel70FaultRecovery.cs`
+- `SparkLevel70EventRecorder.cs`
+- `SparkLevel70ObjectiveTracker.cs`
+- `SparkLevel70SCADADashboard.cs`
+- `SparkLevel70Interaction.cs`
+- `SparkLevel70VisualRigAdapter.cs`
+
+These names are proposed implementation responsibilities, not verified existing APIs.
+
+Reuse existing working project systems where suitable.
+
+## SIMULATION UPDATE ORDER
+
+1. Validate electrical topology.
+2. Evaluate control supply.
+3. Read player commands.
+4. Evaluate safety inputs.
+5. Read valid sensor samples.
+6. Execute PLC cycle when due.
+7. Evaluate outer pressure controller.
+8. Evaluate inner airflow controller.
+9. Evaluate temperature/humidity controller.
+10. Apply control and safety limits.
+11. Update fan motor commands.
+12. Integrate fan RPM.
+13. Update damper positions.
+14. Update door positions.
+15. Solve duct/room airflow.
+16. Integrate room air mass or solve pressure nodes.
+17. Update actual room pressures.
+18. Update filter loading and leakage.
+19. Solve particle transport.
+20. Update cleanroom particle inventories.
+21. Update heat transfer.
+22. Update moisture balance.
+23. Update condensate drainage.
+24. Update wafer exposure.
+25. Acquire new sensor measurements.
+26. Apply sensor latency, noise and validity.
+27. Evaluate faults.
+28. Evaluate safety state.
+29. Record event history.
+30. Evaluate authoritative objectives.
+31. Update SCADA.
+32. Update visual animations.
+
+Use a coherent simulation step.
+
+Do not integrate one timestep twice.
+
+If the airflow/pressure network requires iteration, solve to a consistent state before committing the final timestep.
+
+---
+
+# 43. AAA VISUAL IMPLEMENTATION
+
+The final Unity scene should closely match the approved cinematic Level 70 concept while using the actual 48-model asset pack.
+
+## VISUAL STARTUP
+
+- All fans stationary.
+- Damper positions reflect initial state.
+- Pressure displays show actual values.
+- Particle counters awaiting calibration.
+- Wafer robot idle.
+- Airlock doors closed.
+- SCADA status INITIALIZING.
+
+## CLEAN AIR COMMISSIONING
+
+- Supply blower accelerates.
+- Return blower accelerates.
+- Exhaust blower operates.
+- FFU A/B fans rotate.
+- Airflow effects appear.
+- Pressure cascade establishes.
+- Particle concentration begins falling.
+
+## STABLE CLEANROOM
+
+- Cleanroom illumination cyan.
+- Airflow visualization balanced.
+- Particle count below target.
+- Temperature/humidity displays valid.
+- Wafer robot performs precision motion.
+
+## DOOR DISTURBANCE
+
+- Outer airlock door opens.
+- Airflow visual directions reflect pressure.
+- Airlock pressure drops or changes.
+- Particle levels respond.
+- Access restriction appears.
+
+## HEPA LOADING
+
+- Filter service view displays increasing loading.
+- Filter differential pressure rises.
+- Fan response becomes visible.
+- Airflow reduction can be shown.
+
+## SEAL FAILURE
+
+- Faulted seal region highlighted.
+- Diagnostic contamination overlay appears.
+- Particle counter responds.
+- Wafer robot stops.
+- Maintenance interface becomes available.
+
+## FILTER REPLACEMENT
+
+- Service latch opens.
+- Correct cartridge removed.
+- Replacement installed.
+- Seal checked.
+- Airflow restored.
+- Particle concentration gradually recovers.
+
+## FINAL PRESSURE FAULT
+
+- Pressure measurement becomes INVALID.
+- SCADA warning appears.
+- Wafer process stops.
+- Safe ventilation continues where appropriate.
+- Wiring is repaired.
+- Pressure controller recommissioned.
+- Fresh environmental certification passes.
+
+## IMPORTANT
+
+Airflow, particle and pressure visual effects follow simulation state.
+
+Do not derive authoritative gameplay values from material animation or particle-system emission rates.
+
+---
+
+# 44. ONE-CLICK UNITY EDITOR LEVEL CREATOR
+
+Create the menu command:
+
+`Tools/Project Spark/Levels/Create Level 70`
+
+The editor creator must generate or safely update:
+
+- `Level_70.asset`
+- `Level_70_Layout.prefab`
+- Electrical wiring manifest.
+- Terminal binding manifest.
+- Equipment binding manifest.
+- Air network configuration.
+- Cleanroom configuration.
+- Airlock configuration.
+- Fan curves.
+- Damper curves.
+- HEPA filter configurations.
+- Particle-transport configuration.
+- Temperature/humidity configuration.
+- Pressure PID.
+- Airflow PID.
+- Safety state machine.
+- Wafer handling configuration.
+- Disturbance scenarios.
+- Six objectives.
+- Animation mappings.
+- Diagnostic validation report.
+
+## REQUIRED EDITOR OPERATIONS
+
+1. Inspect actual Project Spark Editor infrastructure.
+2. Locate all 48 FBX assets.
+3. Validate exact filenames.
+4. Validate scale.
+5. Confirm approximately 15.6 m workstation width.
+6. Create/update Level 70 definition.
+7. Set ID to `level_70`.
+8. Set display name.
+9. Set subtitle.
+10. Create six objective definitions.
+11. Create/update layout prefab.
+12. Create `L70_HD_VISUAL_ART`.
+13. Instantiate all 48 individual FBXs.
+14. Preserve common-origin alignment.
+15. Configure primary cleanroom.
+16. Configure airlock.
+17. Configure corridor reference.
+18. Configure inspection bench.
+19. Configure wafer carrier rack.
+20. Configure wafer transfer robot.
+21. Configure AHU.
+22. Configure prefilter.
+23. Configure cooling coil.
+24. Configure reheat coil.
+25. Configure humidifier.
+26. Configure condensate drain.
+27. Configure supply blower.
+28. Configure return blower.
+29. Configure exhaust blower.
+30. Configure FFU A.
+31. Configure FFU B.
+32. Configure HEPA A.
+33. Configure HEPA B.
+34. Configure return grille.
+35. Configure supply ducts.
+36. Configure return ducts.
+37. Configure fresh-air damper.
+38. Configure cleanroom damper.
+39. Configure airlock damper.
+40. Configure pressure relief damper.
+41. Configure two differential-pressure sensors.
+42. Configure air velocity sensor.
+43. Configure two particle counters.
+44. Configure two temperature/humidity sensors.
+45. Configure dew-point sensor.
+46. Configure filter differential-pressure sensor.
+47. Configure air shower.
+48. Configure inner door.
+49. Configure outer door.
+50. Configure HEPA fault simulator.
+51. Configure emergency stop/door safety.
+52. Configure air-quality disturbance simulator.
+53. Configure main PLC.
+54. Configure digital I/O.
+55. Configure cascade pressure PID.
+56. Configure psychrometric controller.
+57. Configure SCADA monitor.
+58. Configure regulated 5 V control supply.
+59. Create exactly 134 functional terminal anchors.
+60. Create exactly 86 player-wire declarations.
+61. Register component IDs.
+62. Register unique terminal IDs.
+63. Configure fixed internal connections.
+64. Configure air volumes.
+65. Configure fan pressure curves.
+66. Configure duct resistances.
+67. Configure filter pressure curves.
+68. Configure HEPA particle efficiencies.
+69. Configure filter bypass leakage.
+70. Configure door leakage paths.
+71. Configure particle generation.
+72. Configure particle deposition.
+73. Configure particle sensors.
+74. Configure temperature/humidity parameters.
+75. Configure psychrometric controls.
+76. Configure pressure cascade PID.
+77. Configure door safety interlocks.
+78. Configure robot permissions.
+79. Configure wafer exposure.
+80. Configure filter maintenance.
+81. Configure door disturbance.
+82. Configure filter loading scenario.
+83. Configure HEPA seal failure.
+84. Configure final pressure-sensor wire fault.
+85. Assign all 19 verified pivot references.
+86. Create dynamic airflow and contamination visuals.
+87. Create real SCADA readouts.
+88. Bind six authoritative objectives.
+89. Validate missing references.
+90. Detect duplicate terminals.
+91. Detect conflicting simulation ownership.
+92. Generate validation report.
+93. Save level assets and prefab.
+
+## EDITOR RELIABILITY
+
+Reuse the art-placement helper where appropriate.
+
+Use actual Unity asset paths.
+
+Do not invent GUIDs.
+
+Use `AssetDatabase`, `PrefabUtility`, `SerializedObject`, Undo and asset-saving APIs appropriately.
+
+Make builder execution idempotent.
+
+Do not duplicate models or simulation controllers.
+
+Do not overwrite previous-level assets.
+
+---
+
+# 45. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 86 WIRES → VERIFY 134 TERMINALS → POWER ENVIRONMENTAL PLC → CALIBRATE PRESSURE SENSORS → CALIBRATE AIRFLOW SENSOR → CALIBRATE PARTICLE COUNTERS → CALIBRATE TEMPERATURE/HUMIDITY → CHECK HEPA INSTALLATION → START SUPPLY BLOWER → START RETURN BLOWER → START EXHAUST BLOWER → ENABLE FFU A → ENABLE FFU B → ESTABLISH FILTERED AIRFLOW → TUNE INNER AIRFLOW PID → TUNE OUTER PRESSURE PID → ESTABLISH CLEANROOM +15 PA → ESTABLISH AIRLOCK +8 PA → STABILIZE TEMPERATURE AT 22°C → STABILIZE HUMIDITY AT 45% → REDUCE PARTICLE CONCENTRATION → VERIFY CLEANROOM PARTICLE THRESHOLD → START WAFER TRANSFER → COMPLETE CLEAN BATCH → OPEN OUTER AIRLOCK DOOR → DETECT PRESSURE DISTURBANCE → RECOVER AIRLOCK PRESSURE → INTRODUCE HEPA FILTER LOADING → DETECT HIGH FILTER PRESSURE DROP → COMPENSATE WITHIN FAN LIMITS → INTRODUCE HEPA SEAL FAILURE → DETECT PARTICLE INCREASE → STOP WAFER PROCESSING → ISOLATE FAILED FILTER PATH → REPLACE OR REPAIR FILTER → VERIFY SEAL → RESTORE FILTRATION → PURGE CONTAMINATION → REVALIDATE CLEANROOM → DISCONNECT MAIN PRESSURE FEEDBACK WIRE → DETECT INVALID PRESSURE SIGNAL → APPLY SAFE CONTROL FALLBACK → RESTRICT WAFER OPERATIONS → RECONNECT ACTUAL WIRE → RECALIBRATE PRESSURE SENSOR → EXPLICITLY RESET FAULT → RECOMMISSION PRESSURE CONTROL → VERIFY PRESSURE, AIRFLOW, TEMPERATURE, HUMIDITY AND PARTICLES → COMPLETE FRESH WAFER TEST → COMPLETE FINAL ENVIRONMENTAL CERTIFICATION → AUTHORITATIVE 6/6**
+
+## PLAYER-FACING MESSAGES
+
+- `BUILD THE ENVIRONMENTAL CONTROL NETWORK`
+- `CONNECT ALL 86 WIRES`
+- `VERIFY 134 FUNCTIONAL TERMINALS`
+- `POWER THE ENVIRONMENTAL PLC`
+- `CALIBRATE PRESSURE SENSORS`
+- `CALIBRATE AIRFLOW`
+- `CALIBRATE PARTICLE COUNTERS`
+- `CALIBRATE TEMPERATURE AND HUMIDITY`
+- `VERIFY HEPA FILTER INSTALLATION`
+- `START SUPPLY BLOWER`
+- `START RETURN BLOWER`
+- `ENABLE FFU A`
+- `ENABLE FFU B`
+- `FILTERED AIRFLOW ESTABLISHED`
+- `TUNE PRESSURE CASCADE`
+- `CLEANROOM PRESSURE RISING`
+- `AIRLOCK PRESSURE STABILIZING`
+- `POSITIVE PRESSURE VERIFIED`
+- `STABILIZE TEMPERATURE`
+- `STABILIZE HUMIDITY`
+- `PARTICLE CONCENTRATION DECREASING`
+- `CLEANROOM PARTICLE TARGET ACHIEVED`
+- `START WAFER INSPECTION`
+- `WAFER BATCH CERTIFIED`
+- `AIRLOCK DOOR DISTURBANCE`
+- `PRESSURE CASCADE DISTURBED`
+- `PRESSURE RECOVERING`
+- `FILTER LOADING DETECTED`
+- `FILTER PRESSURE DROP INCREASING`
+- `HEPA SEAL FAILURE DETECTED`
+- `PARTICLE COUNT RISING`
+- `STOP WAFER HANDLING`
+- `IDENTIFY COMPROMISED FILTER`
+- `REQUEST SAFE FILTER MAINTENANCE`
+- `REMOVE FAULTED CARTRIDGE`
+- `INSTALL HEALTHY HEPA CARTRIDGE`
+- `VERIFY FILTER SEAL`
+- `RESTORE FILTERED AIRFLOW`
+- `PURGE CONTAMINATED AIR`
+- `CLEANROOM RECOVERED`
+- `DISCONNECT MAIN PRESSURE FEEDBACK`
+- `PRESSURE SENSOR SIGNAL LOST`
+- `SAFE CONTROL FALLBACK ACTIVE`
+- `RESTORE PRESSURE WIRING`
+- `RECALIBRATE PRESSURE FEEDBACK`
+- `RESET LATCHED FAULT`
+- `RECOMMISSION PRESSURE PID`
+- `FINAL ENVIRONMENTAL CERTIFICATION`
+- `LEVEL 70 COMPLETE`
+
+---
+
+# 46. TESTING AND DIAGNOSTICS
+
+Implement exact diagnostic feedback for:
+
+- Incorrect W01–W86 wiring.
+- Missing terminal IDs.
+- Duplicate terminal IDs.
+- Invalid control supply.
+- Missing control return.
+- Blower drive disconnected.
+- Fan RPM not responding.
+- Fan producing airflow without available pressure.
+- Fan capacity exceeded.
+- Duct resistance ignored.
+- Damper position not affecting flow.
+- Door opening not affecting leakage.
+- Room pressure changing without mass flow.
+- Room pressure outside numerical limits.
+- Pressure direction inconsistent with leakage.
+- Filter pressure drop inconsistent with flow.
+- Filter loading not affecting resistance.
+- Filter seal leakage not affecting particles.
+- Particle concentration becoming negative.
+- Particle inventory not conserved.
+- HEPA removal not affecting filtration.
+- Particle counter disconnected.
+- Particle sample window incomplete.
+- Sensor stale but treated as valid.
+- Temperature sensor disconnected.
+- Humidity calculation inconsistent.
+- Cooling coil generating unlimited cooling.
+- Reheat power unlimited.
+- Humidifier adding unaccounted moisture.
+- Condensate disappearing without drainage.
+- Pressure PID writing room pressure directly.
+- Airflow PID output not connected to a fan/damper.
+- PID integral windup.
+- Two airlock doors opening simultaneously.
+- Wafer robot active during contamination.
+- Wafer batch certified despite high particles.
+- Filter replacement performed without safe maintenance.
+- Fault reset permitted before repair.
+- Pressure sensor wire disconnected without invalidating feedback.
+- Prior objectives incorrectly erased.
+- Manager stuck at 0/6 or 5/6.
+- Unity scene reload problems.
+- Regression in Levels 1–69.
+
+## REQUIRED TESTS
+
+1. Exactly 86 wires valid.
+2. Exactly 134 terminal IDs valid.
+3. Control power valid.
+4. Main PLC initializes.
+5. Safety controller ready.
+6. Supply blower starts.
+7. Return blower starts.
+8. Exhaust blower starts.
+9. FFU A starts.
+10. FFU B starts.
+11. Actual fan RPM changes.
+12. Actual airflow changes.
+13. Fan pressure-flow behavior valid.
+14. Duct resistance influences airflow.
+15. Fresh-air damper operates.
+16. Cleanroom damper operates.
+17. Airlock damper operates.
+18. Relief damper operates.
+19. Room pressure follows air mass balance.
+20. Pressure direction correct.
+21. Main pressure sensor calibrated.
+22. Airlock pressure sensor calibrated.
+23. Airflow sensor valid.
+24. HEPA A installed.
+25. HEPA B installed.
+26. HEPA particle removal functions.
+27. Filter pressure drop functions.
+28. Cleanroom particle transport functions.
+29. Airlock particle transport functions.
+30. Particle concentration nonnegative.
+31. Particle counters valid.
+32. Particle sampling behaves correctly.
+33. Temperature sensing valid.
+34. Humidity sensing valid.
+35. Dew point calculated.
+36. Cooling coil removes heat.
+37. Cooling coil dehumidifies when appropriate.
+38. Reheat coil adds heat.
+39. Humidifier adds moisture.
+40. Condensate drainage works.
+41. Outer pressure PID operates.
+42. Inner airflow PID operates.
+43. Actuator saturation respected.
+44. Anti-windup works.
+45. Cleanroom +15 Pa target achieved.
+46. Airlock +8 Pa target achieved.
+47. Pressure cascade valid.
+48. Temperature target achieved.
+49. Humidity target achieved.
+50. Particle target achieved.
+51. Wafer robot starts under valid conditions.
+52. Wafer transfer operation works.
+53. Wafer contamination exposure tracked.
+54. Certified wafer batch counted.
+55. Outer airlock door disturbance works.
+56. Airlock pressure responds.
+57. Particle exchange responds.
+58. Door interlock works.
+59. Pressure recovery works.
+60. HEPA loading increases resistance.
+61. Filter differential pressure responds.
+62. Fan operating point responds.
+63. HEPA seal failure increases bypass penetration.
+64. Particle counter detects contamination.
+65. Wafer robot safely stops.
+66. Failed filter identified.
+67. Maintenance isolation works.
+68. Damaged filter removed.
+69. Compatible replacement installed.
+70. Seal integrity restored.
+71. Particle concentration decreases through real filtration.
+72. Cleanroom revalidated.
+73. Actual pressure-feedback wire disconnected.
+74. Measurement becomes invalid.
+75. Pressure PID detects feedback loss.
+76. Safe fallback activates.
+77. Unsafe wafer handling inhibited.
+78. Fault latches.
+79. Actual wire reconnected.
+80. Pressure measurement restored.
+81. Recalibration succeeds.
+82. Explicit reset succeeds.
+83. Pressure PID recommissioned.
+84. Temperature/humidity stable.
+85. Particles within limits.
+86. Fresh wafer test succeeds.
+87. Fresh environmental disturbance certification succeeds.
+88. Authoritative evaluator reaches 6/6.
+89. Level progression works.
+90. Levels 1–69 remain unaffected.
+
+Only report tests as passed when actually executed.
+
+---
+
+# 47. REQUIRED DELIVERABLES
+
+Create a downloadable Level 70 Unity implementation ZIP containing:
+
+- Full runtime C# source files.
+- Air network simulation.
+- Room pressure dynamics.
+- Fan curves and motor dynamics.
+- Duct resistance.
+- Damper dynamics.
+- Door leakage simulation.
+- HEPA filter model.
+- Filter loading simulation.
+- HEPA seal leakage simulation.
+- Particle transport.
+- Particle counter sampling.
+- Differential-pressure sensing.
+- Air velocity sensing.
+- Filter differential-pressure sensing.
+- Psychrometric model.
+- Cooling coil.
+- Reheat coil.
+- Humidifier.
+- Condensate drain.
+- Temperature/humidity sensors.
+- Dew-point sensing.
+- Cascade pressure PID.
+- Inner airflow PID.
+- Controller anti-windup.
+- Airlock controller.
+- Air-shower controller.
+- Wafer handling controller.
+- Wafer contamination exposure.
+- Filter replacement interactions.
+- Maintenance safety.
+- Environmental PLC.
+- Independent safety controller.
+- Airlock door disturbance.
+- Filter loading disturbance.
+- HEPA seal failure disturbance.
+- Actual pressure-sensor wire disconnection.
+- Measurement invalidation.
+- Safe fallback.
+- Wire repair/recalibration.
+- Explicit fault reset.
+- Fresh environmental certification.
+- Six authoritative objectives.
+- Unity Editor Level 70 builder.
+- Level definition creator or asset.
+- Layout prefab creator.
+- Exact W01–W86 wiring manifest.
+- 134-terminal binding manifest.
+- Component binding manifest.
+- All 19 verified animation pivots.
+- Airflow parameters.
+- Particle parameters.
+- HEPA configurations.
+- Psychrometric settings.
+- PID configurations.
+- Safety configurations.
+- Disturbance configurations.
+- Live SCADA UI.
+- Player gameplay walkthrough.
+- Objective verification checklist.
+- Troubleshooting guide.
+- Actual test report.
+
+Reuse the approved:
+
+`ProjectSpark_Level70_HD_AAA_Models.zip`
+
+Do not regenerate the 48 art models unless a specific compatibility problem requires it.
+
+Only provide verified download links.
+
+Do not claim Unity compilation or Play Mode success without performing those tests.
+
+---
+
+# 48. FINAL EXECUTION REQUIREMENTS
+
+**IMPLEMENT LEVEL 70 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect the actual Project Spark Unity source code and the approved Level 70 asset collection.
+
+Then:
+
+1. Reuse compatible Project Spark infrastructure.
+2. Import all 48 individual FBX models.
+3. Validate FBX unit scaling.
+4. Preserve common-origin layout.
+5. Implement exactly 86 player wires.
+6. Implement exactly 134 functional terminal anchors.
+7. Implement room air-mass dynamics.
+8. Implement the cleanroom pressure state.
+9. Implement the airlock pressure state.
+10. Implement corridor reference.
+11. Implement supply blower.
+12. Implement return blower.
+13. Implement exhaust blower.
+14. Implement FFU A.
+15. Implement FFU B.
+16. Implement four dampers.
+17. Implement duct network resistance.
+18. Implement room leakage and door flow.
+19. Implement two HEPA filter states.
+20. Implement particle penetration.
+21. Implement filter loading.
+22. Implement filter seal leakage.
+23. Implement airborne particle transport.
+24. Implement two particle counters.
+25. Implement two differential-pressure sensors.
+26. Implement air velocity measurement.
+27. Implement filter pressure-drop measurement.
+28. Implement temperature/humidity sensors.
+29. Implement dew-point sensing.
+30. Implement cooling coil dynamics.
+31. Implement reheat.
+32. Implement humidification.
+33. Implement condensate drainage.
+34. Implement psychrometric control.
+35. Implement outer pressure PID.
+36. Implement inner airflow PID.
+37. Implement anti-windup.
+38. Implement normal door interlocks.
+39. Implement air shower.
+40. Implement wafer transfer robot.
+41. Implement wafer contamination exposure.
+42. Implement particle-based product certification.
+43. Implement door disturbance.
+44. Implement filter loading disturbance.
+45. Implement HEPA seal failure.
+46. Implement safe HEPA replacement.
+47. Implement filtration recovery.
+48. Implement independent safety controller.
+49. Implement environmental PLC.
+50. Implement actual pressure sensor feedback disconnect.
+51. Implement invalid-measurement detection.
+52. Implement safe control fallback.
+53. Implement wire repair.
+54. Implement sensor recalibration.
+55. Implement explicit fault reset.
+56. Implement environmental recommissioning.
+57. Implement fresh particle certification.
+58. Implement fresh wafer batch test.
+59. Implement all six authoritative objectives.
+60. Create one-click Unity Editor Level 70 builder.
+61. Integrate all 19 verified animation references.
+62. Create animation-driven visual adapters.
+63. Create transparent airflow visualization.
+64. Create particle contamination diagnostic overlay.
+65. Create live SCADA dashboard.
+66. Run feasible automated and Play Mode tests.
+67. Package and verify all deliverables.
+
+Do not ask for reapproval of the already-approved Level 70 design.
+
+Do not fabricate room pressure, airflow, fan speed, filter resistance, HEPA efficiency, particle concentration, humidity, temperature, door status, wafer quality, safety state, sensor validity or objective completion.
+
+If an existing Project Spark API cannot be verified, implement safely independent functionality where practical and report the exact unresolved integration dependency.
+
+---
+
+# 49. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect all 86 wires.
+2. Validate all 134 functional terminals.
+3. Commission the environmental PLC.
+4. Calibrate pressure sensors.
+5. Calibrate airflow sensors.
+6. Calibrate particle counters.
+7. Calibrate temperature/humidity measurement.
+8. Start supply, return and exhaust blowers.
+9. Start both fan-filter units.
+10. Establish real filtered airflow.
+11. Tune the inner airflow PID.
+12. Tune the outer pressure PID.
+13. Achieve the cleanroom +15 Pa target.
+14. Achieve the airlock +8 Pa target.
+15. Maintain the positive pressure cascade.
+16. Achieve 22°C ±1°C.
+17. Achieve 45% RH ±5 percentage points.
+18. Reduce actual particles below the game target.
+19. Verify sample validity.
+20. Perform safe wafer transfers.
+21. Complete a contamination-compliant wafer batch.
+22. Handle an airlock door disturbance.
+23. Restore the airlock pressure.
+24. Detect HEPA filter loading.
+25. Respond to reduced airflow.
+26. Detect a HEPA seal failure.
+27. Observe actual particle concentration rise.
+28. Safely stop wafer operations.
+29. Identify the compromised filter.
+30. Perform safe filter replacement.
+31. Verify filter sealing.
+32. Restore clean airflow.
+33. Purge contaminated air.
+34. Revalidate the cleanroom.
+35. Disconnect the actual main pressure-feedback wire.
+36. Detect invalid measurement.
+37. Apply safe fallback.
+38. Inhibit unsafe wafer handling.
+39. Reconnect the actual wire.
+40. Recalibrate the sensor.
+41. Explicitly reset the fault.
+42. Recommission pressure control.
+43. Restore valid temperature and humidity.
+44. Restore particle concentration.
+45. Complete a fresh wafer-processing test.
+46. Complete fresh environmental certification.
+47. Pass all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 70.**
+
+The player must learn cleanroom pressure control, industrial HVAC, fan performance, HEPA filtration, airborne particle behavior, contamination detection, psychrometrics, humidity control, cascade PID, airlock interlocks, environmental safety and feedback recovery through meaningful simulation.
+
+**FINAL GOAL: A COMPLETE, POLISHED, UNITY-READY, AAA-QUALITY AND ACTUALLY PLAYABLE LEVEL 70 — GUARD THE AIR.**

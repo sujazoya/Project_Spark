@@ -1,0 +1,2448 @@
+# PROJECT SPARK — LEVEL 68 MASTER UNITY IMPLEMENTATION PROMPT
+
+## LEVEL 68: TAME THE HEAT
+### Advanced Regenerative Heat Exchange, Industrial Thermal Engineering, Three-Loop Process Automation, Cascade Temperature PID, Thermal Energy Storage, Heat Exchanger Fouling, Process Safety and Temperature Feedback Recovery
+
+Act as my senior Unity C# engineer, industrial thermal systems engineer, thermodynamics specialist, heat-exchanger designer, fluid-process simulation architect, cascade PID control engineer, industrial automation developer, SCADA engineer, functional safety specialist, gameplay programmer, Unity Editor automation specialist and technical artist.
+
+**YOUR TASK IS TO IMPLEMENT THE COMPLETE, WORKING, PLAYABLE LEVEL 68 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+Do not stop at:
+
+- A design document.
+- Pseudocode.
+- Nonfunctional scripts.
+- An art-only layout.
+- Decorative hot-water and cooling-water pipes.
+- A heater with fabricated temperature output.
+- A heat exchanger that directly sets the desired outlet temperature.
+- A prerecorded temperature graph.
+- Fake regenerative efficiency.
+- A PID controller disconnected from physical actuators.
+- A heat-recovery percentage that is not calculated.
+- A fake fouling warning.
+- A safety relay that cannot actually inhibit heating.
+- An outlet RTD that remains valid after its wire disconnects.
+- A local-only 6/6 objective counter.
+
+Implement all safely achievable functionality using the existing Project Spark source code and the approved Level 68 FBX/GLB asset package.
+
+The Level 68 design and 44 individual 3D models are approved.
+
+Do not redesign the thermal laboratory or regenerate its models unnecessarily.
+
+**THE PLAYER MUST BUILD, COMMISSION, CONTROL, OPTIMIZE, PROTECT AND RECOVER A REALISTIC SIMULATED INDUSTRIAL THERMAL-PROCESS NETWORK.**
+
+The implementation must teach:
+
+- Conservation of energy.
+- Conservation of fluid mass.
+- Sensible heat.
+- Heat exchanger effectiveness.
+- Regenerative energy recovery.
+- Thermal inertia.
+- Dynamic heating and cooling.
+- Finite heater and cooling capacity.
+- Cascade temperature PID.
+- Anti-windup.
+- Heat exchanger fouling.
+- Thermal safety.
+- Valid sensor feedback.
+- Safe fault repair and recommissioning.
+
+---
+
+# 1. INSPECT THE ACTUAL PROJECT SPARK CODEBASE
+
+Project Spark is an existing Unity electrical engineering, circuit-building and industrial automation game.
+
+Before writing implementation scripts, inspect the real project.
+
+At minimum, inspect these classes if present:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+
+Also inspect existing systems for:
+
+- Player-created wiring.
+- Circuit topology validation.
+- Electrical component registration.
+- Low-voltage control supply.
+- Motor drives and motor dynamics.
+- Pumps and fluid processes.
+- Industrial PLC logic.
+- Sensor calibration.
+- Sensor feedback validity.
+- Sensor signal timestamps.
+- PID controllers.
+- Fault detection.
+- Safety relays.
+- Emergency stop.
+- Historical objective completion.
+- Level asset generation.
+- Runtime dashboard binding.
+- Unity Editor menu creators.
+- Workstation component interactions.
+- Moving mesh hierarchies.
+- Material and VFX controls.
+
+## RELEVANT PREVIOUS LEVELS
+
+Inspect and reuse working systems from:
+
+**Level 54 — Cross the Critical**
+
+Motor dynamics and mechanical protection.
+
+**Level 56 — Harvest the Spin**
+
+Mechanical power and drive behavior.
+
+**Level 58 — Isolate the Fault**
+
+Protection relays and fault isolation.
+
+**Level 59 — Bring Back the Power**
+
+Sequenced commissioning.
+
+**Level 60 — The Grid Must Survive**
+
+Coordinated automation and safety.
+
+**Level 63 — Catch the Frequency**
+
+Dynamic feedback and controller limits.
+
+**Level 65 — The Factory Thinks**
+
+PLC scan logic, sensor feedback and motor drives.
+
+**Level 66 — Save the Factory**
+
+Temperature monitoring, diagnostic trends and predictive condition analysis.
+
+**Level 67 — Master the Flow**
+
+Tank dynamics, fluid inventory, pumps, valves, pressure measurement, cascade PID, fluid mixing and process safety.
+
+Level 67 is particularly important.
+
+If its hydraulic network or PID controllers are implemented and compatible, reuse them.
+
+Do not assume previous designs exist as functional code merely because their art packs or implementation prompts exist.
+
+---
+
+# 2. NON-NEGOTIABLE ENGINEERING RULES
+
+1. Inspect real project files before referencing APIs.
+2. Never invent existing Unity class methods or namespaces.
+3. Preserve Levels 1–67.
+4. Reuse working project infrastructure.
+5. Keep new Level 68 systems isolated where practical.
+6. Avoid modifying the global electrical solver unnecessarily.
+7. Do not model a thermal process by changing arbitrary DC resistances.
+8. Do not fabricate fluid temperature.
+9. Do not create thermal energy from nothing.
+10. Do not allow negative tank volumes.
+11. Do not ignore mass or energy conservation.
+12. Do not treat heater command as actual heating power.
+13. Do not treat pump speed command as measured flow.
+14. Do not allow infinite heating capacity.
+15. Do not allow infinite cooling capacity.
+16. Do not allow heat transfer across a disconnected exchanger path.
+17. Do not allow hot and cold exchanger streams to mix unless explicitly modeled.
+18. Do not display heat recovery independent of measured/modelled heat transfer.
+19. Do not assign outlet temperature directly from the temperature setpoint.
+20. Do not use preauthored temperature trajectories for gameplay.
+21. Do not skip exchanger metal and fluid thermal inertia.
+22. Do not ignore heat losses where they are part of the chosen model.
+23. Do not run multiple conflicting thermal solvers.
+24. Do not create an independent fake SCADA temperature state.
+25. Do not use invalid RTD feedback in automatic heating control.
+26. Do not let normal PID override safety protection.
+27. Do not ignore heating-element dry-run conditions.
+28. Do not bypass flow and pressure safety.
+29. Do not award energy efficiency based only on an ENABLE REGENERATION button.
+30. Do not fabricate fouling detection.
+31. Do not allow arbitrary cleaning to instantly restore exchanger performance without a valid maintenance state.
+32. Do not certify off-spec product.
+33. Do not count energy twice during regenerative exchange.
+34. Do not use unbounded PID integrator values.
+35. Do not bypass historical objective tracking.
+36. Do not treat reference animation pivots as completed rigging.
+37. Use consistent physical units and simulation time.
+38. Implement deterministic tests where possible.
+39. Provide complete C# scripts.
+40. Make Editor generation idempotent.
+41. Report unresolved integration dependencies.
+42. Do not claim Unity compilation or Play Mode verification unless actually tested.
+
+## AUTHORITATIVE COMPLETION REQUIREMENT
+
+**The actual `LevelGamePlayManager` must reach 6/6.**
+
+A local Level 68 script displaying LEVEL COMPLETE is insufficient.
+
+Inspect and integrate with:
+
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `LevelGamePlayManager`
+
+Objectives 1–5 must remain historically certified during the deliberate final outlet RTD fault.
+
+Objective 6 must require:
+
+1. Actual feedback wire disconnection.
+2. Measurement invalidation.
+3. Safe heater shutdown/restriction.
+4. Actual wire reconnection.
+5. RTD recalibration.
+6. Explicit fault reset.
+7. Controlled restart.
+8. Fresh thermal stability certification.
+
+---
+
+# 3. LEVEL 68 CONFIGURATION
+
+**Level Number:** 68
+
+**Level ID:** `level_68`
+
+**Display Name:** `Tame the Heat`
+
+**Subtitle:** `Industrial Heat Exchange and Intelligent Thermal Control`
+
+**Difficulty:** Master / Expert
+
+**Educational Control Supply:** 5 V DC
+
+**Thermal Process:** Simulated liquid thermal network
+
+**Player-Created Wires:** 78
+
+**Unique Functional Terminals:** 122
+
+**Individual FBX Models:** 44
+
+**GLB Backups:** 44
+
+**Main Exchanger:** Regenerative plate heat exchanger
+
+**Secondary Exchanger:** Trim heater/cooler
+
+**Process Fluid Circuits:** 3
+
+**Main Circulation Pumps:** 3
+
+**Pump Motors:** 3
+
+**Main Control Valves:** 5
+
+**Temperature Sensors:** 5
+
+**Main Flow Meter Assembly:** 1
+
+**Differential Pressure Transmitter:** 1
+
+**Heat Flux Module:** 1
+
+**Regenerative Efficiency Analyzer:** 1
+
+**Cascade PID Controller:** 1
+
+**Thermal Energy Management Controller:** 1
+
+**Safety Protection:** Overtemperature relay and emergency shutdown
+
+**Primary Disturbances:** Cold inlet, flow surge, exchanger fouling
+
+**Final Fault:** Outlet RTD feedback disconnection
+
+**Authoritative Objectives:** 6
+
+## PROPOSED OPERATING VALUES
+
+- Normal product inlet: 25°C.
+- Cold-inlet disturbance: 15°C.
+- Product outlet setpoint: 65°C.
+- Steady-state temperature tolerance: ±1°C.
+- Maximum educational product temperature: 72°C.
+- Nominal product flow: 12 L/min.
+- Hot-water target: 80°C.
+- Cold-water supply: 20°C.
+- Recovery performance target: configurable, with a proposed 50% recovery benchmark when physically feasible.
+- Heating power: finite.
+- Cooling capacity: finite.
+- Thermal buffer capacity: finite.
+- Pump flow: finite.
+- Valve movement: finite.
+
+These are proposed gameplay calibration values.
+
+Validate the chosen heater power, exchanger UA, fluid flow, tank capacity and cooling capability against them.
+
+Do not demand physically impossible temperature or energy-recovery targets.
+
+---
+
+# 4. INITIAL LEVEL STATE
+
+At level start:
+
+- Control power unavailable or waiting for player enable.
+- All pumps stopped.
+- Hot-loop motor off.
+- Cooling-loop motor off.
+- Product pump off.
+- Electric heater off.
+- Heating tank at defined ambient or safe initial temperature.
+- Cooling-water reservoir at defined initial temperature.
+- Thermal buffer at initial temperature.
+- Product holding chamber at defined initial condition.
+- Regenerative exchanger available but not commissioned.
+- Trim exchanger awaiting flow.
+- Product isolation valve in safe position.
+- Other control valves in defined startup positions.
+- All temperature sensors uncalibrated.
+- Flow sensor channels uncalibrated.
+- Differential pressure transmitter uncalibrated.
+- Heat recovery analyzer idle.
+- Cascade PID disabled.
+- Energy management controller disabled.
+- Fouling simulator idle.
+- Inlet disturbance simulator idle.
+- Process PLC in IDLE.
+- Overtemperature protection armed subject to valid sensors.
+- Safety enclosure closed.
+- No unresolved critical fault.
+- Objectives 0/6.
+
+## PLAYER MISSION
+
+1. Connect all 78 wires.
+2. Register 122 functional terminal anchors.
+3. Validate control supply.
+4. Commission the PLC.
+5. Commission the three motor drives.
+6. Calibrate five temperature sensors.
+7. Calibrate flow sensors.
+8. Calibrate differential pressure measurement.
+9. Verify hydraulic paths.
+10. Establish product circulation.
+11. Establish hot-water circulation.
+12. Establish cooling-water circulation.
+13. Verify heater safe-to-enable.
+14. Energize heater.
+15. Observe real thermal energy rise.
+16. Commission trim exchanger.
+17. Configure cascade PID.
+18. Stabilize outlet temperature at 65°C.
+19. Enable regenerative exchange.
+20. Record measured heat recovery.
+21. Compare heating-energy consumption against baseline.
+22. Apply cold inlet.
+23. Apply product flow surge.
+24. Apply fouling.
+25. Detect reduced exchanger performance.
+26. Maintain safety and quality.
+27. Disconnect actual product outlet RTD feedback.
+28. Detect invalid measurement.
+29. Inhibit unsafe heating.
+30. Reconnect RTD wire.
+31. Recalibrate RTD.
+32. Explicitly reset fault.
+33. Recommission thermal control.
+34. Pass fresh recovery test.
+35. Reach actual 6/6.
+
+---
+
+# 5. USE MY EXISTING LEVEL 68 ART PACKAGE
+
+The approved package is:
+
+`ProjectSpark_Level68_HD_AAA_Models.zip`
+
+The actual model manifest reports:
+
+- 44 independent binary FBX files.
+- 44 matching GLB backups.
+- One assembled showcase FBX.
+- One assembled showcase GLB.
+- 39,388 triangles across individual models.
+- 14 animation-pivot mappings.
+- Unity art-placement helper.
+- Model manifest.
+- README.
+- Verification report.
+- Procedural source scripts.
+
+## EXACT INDIVIDUAL FBX FILENAMES
+
+Use these exact 44 files:
+
+| FILE | FUNCTION |
+|---|---|
+| `00_L68_IndustrialThermalProcessBase.fbx` | Main laboratory chassis |
+| `01_L68_RegenerativePlateHeatExchanger.fbx` | Main regenerative exchanger |
+| `02_L68_HeatExchangerPlateStack.fbx` | Exchanger plates |
+| `03_L68_SecondaryTrimHeatExchanger.fbx` | Final temperature trimming |
+| `04_L68_InsulatedHeatingTank.fbx` | Hot-water reservoir |
+| `05_L68_ColdWaterReservoir.fbx` | Cooling-water reservoir |
+| `06_L68_ThermalBufferTank.fbx` | Thermal energy buffer |
+| `07_L68_ProductHoldingChamber.fbx` | Product holding vessel |
+| `08_L68_FinishedProductOutletModule.fbx` | Output interface |
+| `09_L68_HotWaterCirculationPump.fbx` | Heating-loop pump |
+| `10_L68_ColdWaterCirculationPump.fbx` | Cooling-loop pump |
+| `11_L68_ProductTransferPump.fbx` | Product pump |
+| `12_L68_HotLoopPumpMotor.fbx` | Hot-loop motor |
+| `13_L68_ColdLoopPumpMotor.fbx` | Cooling-loop motor |
+| `14_L68_ProductPumpMotor.fbx` | Product pump motor |
+| `15_L68_ElectricHeatingElementBank.fbx` | Simulated electric heater |
+| `16_L68_HeatingPowerController.fbx` | Heater power control |
+| `17_L68_VariableFrequencyDriveBank.fbx` | Pump motor drives |
+| `18_L68_HotWaterControlValve.fbx` | Heating flow valve |
+| `19_L68_CoolingWaterControlValve.fbx` | Cooling flow valve |
+| `20_L68_ThreeWayMixingValve.fbx` | Three-way fluid control |
+| `21_L68_RegenerativeBypassValve.fbx` | Recovery bypass |
+| `22_L68_ProductIsolationValve.fbx` | Product isolation |
+| `23_L68_TransparentThermalPipelineNetwork.fbx` | Process piping |
+| `24_L68_ProductInletTemperatureSensor.fbx` | Inlet temperature |
+| `25_L68_ProductOutletRTDTemperatureSensor.fbx` | Outlet temperature |
+| `26_L68_HotWaterTemperatureSensor.fbx` | Hot-loop measurement |
+| `27_L68_ColdWaterTemperatureSensor.fbx` | Cooling-loop measurement |
+| `28_L68_ThermalBufferTemperatureSensor.fbx` | Buffer temperature |
+| `29_L68_ThermalFlowMeterBank.fbx` | Fluid-flow sensing |
+| `30_L68_DifferentialPressureTransmitter.fbx` | Exchanger pressure drop |
+| `31_L68_HeatFluxMeasurementModule.fbx` | Heat duty measurement |
+| `32_L68_RegenerativeEfficiencyAnalyzer.fbx` | Energy recovery analysis |
+| `33_L68_CascadeTemperaturePIDController.fbx` | Cascade temperature control |
+| `34_L68_ThermalEnergyManagementController.fbx` | Thermal energy coordination |
+| `35_L68_HeatExchangerFoulingSimulator.fbx` | Fouling scenario |
+| `36_L68_InletTemperatureDisturbanceModule.fbx` | Cold inlet scenario |
+| `37_L68_OvertemperatureProtectionRelay.fbx` | Thermal protection |
+| `38_L68_IndustrialThermalPLC.fbx` | Main PLC |
+| `39_L68_ThermalDigitalIOModule.fbx` | Digital I/O |
+| `40_L68_HolographicThermalSCADAMonitor.fbx` | SCADA monitoring |
+| `41_L68_EmergencyThermalShutdownStation.fbx` | Emergency stop |
+| `42_L68_TransparentThermalSafetyEnclosure.fbx` | Process enclosure |
+| `43_L68_Regulated5VControlSupply.fbx` | Control power |
+
+## SUPPORTING FILES
+
+Inspect and reuse:
+
+- `Level68_Complete_ArtKit_Showcase.fbx`
+- `Level68_Complete_ArtKit_Showcase.glb`
+- `SparkLevel68ArtPlacementEditor.cs`
+- `Model_Manifest.json`
+- `Animation_Rigs.csv`
+- `README_Unity.txt`
+- `Verification_Report.json`
+- `Source/`
+- `Previews/`
+
+## COORDINATE SYSTEM
+
+The manifest specifies:
+
+- X = workbench width.
+- Y = up.
+- Z = front.
+- 1 unit = 1 meter.
+
+Create:
+
+`L68_HD_VISUAL_ART`
+
+All individual models share the authored coordinate origin.
+
+## IMPORTANT ART RULES
+
+1. Instantiate all 44 individual FBXs.
+2. Do not also instantiate the assembled showcase.
+3. Preserve common coordinates.
+4. Verify imported scale.
+5. Retain model material-color regions.
+6. Keep gameplay components independent of art geometry.
+7. Create real terminal objects separately.
+8. Preserve source FBX assets.
+9. Verify moving-mesh hierarchy.
+10. Do not claim that animation pivot references constitute finished rigging.
+
+## VERIFIED ART PLACEMENT MENU
+
+The supplied art helper uses:
+
+`Tools/Project Spark/Levels/68/Place HD Art Under Selected Layout`
+
+Reuse it safely.
+
+It is an art-placement helper, not a complete gameplay creator.
+
+## QUALITY DISTINCTION
+
+The art package is genuine procedural HD/AAA-inspired 3D geometry.
+
+The asset documentation explicitly states that:
+
+- Fully authored PBR texture sets are not included.
+- Gameplay circuits are not included.
+- Thermal physics are not included.
+- Unity import is not tested.
+- Unity Play Mode is not tested.
+
+Do not claim otherwise.
+
+---
+
+# 6. EXACT ANIMATION PIVOT MAPPINGS
+
+The supplied `Animation_Rigs.csv` contains 14 reference mappings.
+
+Use these exact names and coordinates:
+
+| MODEL | PIVOT | WORLD REFERENCE XYZ |
+|---|---|---|
+| HotWaterCirculationPump | `ANIM_HOT_PUMP_IMPELLER` | (-4.49, 1.08, 1.10) |
+| ColdWaterCirculationPump | `ANIM_COLD_PUMP_IMPELLER` | (-2.19, 1.08, 1.10) |
+| ProductTransferPump | `ANIM_PRODUCT_PUMP_IMPELLER` | (1.36, 1.08, 1.12) |
+| HotLoopPumpMotor | `ANIM_HOT_MOTOR` | (-3.95, 1.05, 1.72) |
+| ColdLoopPumpMotor | `ANIM_COLD_MOTOR` | (-1.67, 1.05, 1.73) |
+| ProductPumpMotor | `ANIM_PRODUCT_MOTOR` | (1.90, 1.05, 1.73) |
+| HotWaterControlValve | `ANIM_HOT_VALVE` | (-3.35, 2.19, -0.50) |
+| CoolingWaterControlValve | `ANIM_COOLING_VALVE` | (-1.90, 2.19, -0.45) |
+| ThreeWayMixingValve | `ANIM_THREE_WAY_VALVE` | (2.30, 2.19, 0.18) |
+| RegenerativeBypassValve | `ANIM_REGEN_BYPASS` | (3.65, 2.19, -0.50) |
+| ProductIsolationValve | `ANIM_PRODUCT_ISOLATION` | (5.45, 2.19, 1.30) |
+| HolographicThermalSCADAMonitor | `ANIM_THERMAL_SCADA` | (5.50, 3.12, -0.20) |
+| EmergencyThermalShutdownStation | `ANIM_EMERGENCY_STOP` | (5.95, 1.42, 2.64) |
+| TransparentThermalSafetyEnclosure | `ANIM_SAFETY_DOOR` | (6.55, 2.43, -0.05) |
+
+## ANIMATION REQUIREMENTS
+
+- Pump impellers follow actual pump RPM.
+- Motor shaft visuals follow actual motor dynamics.
+- Valve animation follows actual valve position.
+- Three-way valve shows true actuator state.
+- Bypass valve shows true heat-recovery routing.
+- Product isolation valve shows true isolation state.
+- Emergency stop reflects real state.
+- Enclosure reflects actual interlock position.
+- SCADA monitor tilt is visual only.
+
+## IMPORTANT
+
+Reference pivot coordinates do not prove that the FBX already contains appropriate separated moving meshes.
+
+Inspect each imported model.
+
+Create suitable animated subhierarchies where necessary.
+
+Do not rotate the entire equipment FBX to imitate one moving part.
+
+---
+
+# 7. ELECTRICAL WIRING — W01 TO W78
+
+The approved design requires:
+
+**78 player-created wires and 122 unique functional terminals.**
+
+The art package does not include these as actual `SparkTerminal` objects.
+
+Create a complete verified wiring manifest.
+
+Do not invent an existing `Exact_Wiring.csv`.
+
+## GROUP A — CONTROL SUPPLY
+
+- Regulated 5 V supply.
+- Control return.
+- Main PLC.
+- Digital I/O module.
+- Cascade PID controller.
+- Energy management controller.
+- Sensor electronics.
+- Safety relay.
+
+## GROUP B — HOT-WATER PUMP
+
+- Motor drive enable.
+- Motor speed command.
+- Motor status.
+- Pump status.
+- Drive fault.
+- Hot-water flow measurement.
+
+## GROUP C — COOLING-WATER PUMP
+
+- Cooling motor enable.
+- Cooling speed command.
+- Cooling status.
+- Cooling fault.
+- Cooling flow feedback.
+
+## GROUP D — PRODUCT PUMP
+
+- Product motor enable.
+- Product speed command.
+- Actual product flow.
+- Product pump status.
+- Pump fault.
+
+## GROUP E — HEATING
+
+- Heating power controller enable.
+- Heater demand.
+- Heater actual power feedback.
+- Heater temperature protection.
+- Heating tank measurement.
+- Heater fault.
+
+## GROUP F — TEMPERATURE SENSING
+
+- Product inlet temperature.
+- Product outlet RTD.
+- Hot-water temperature.
+- Cold-water temperature.
+- Buffer temperature.
+- Measurement validity.
+
+## GROUP G — VALVE CONTROL
+
+- Hot-water valve command.
+- Hot-water valve position feedback.
+- Cooling valve command.
+- Cooling valve position feedback.
+- Three-way valve command.
+- Three-way valve feedback.
+- Bypass valve command.
+- Bypass valve feedback.
+- Product isolation command.
+- Product isolation feedback.
+
+## GROUP H — FLOW AND DIAGNOSTICS
+
+- Product flow.
+- Hot-loop flow.
+- Cooling-loop flow.
+- Differential pressure.
+- Heat flux measurement.
+- Recovery analyzer.
+- Fouling detection.
+
+## GROUP I — SAFETY AND DISTURBANCES
+
+- Overtemperature relay.
+- Emergency shutdown.
+- Product isolation.
+- Inlet disturbance.
+- Fouling disturbance.
+- Fault reset.
+- Safety state.
+
+## REQUIREMENTS
+
+1. Exactly 78 expected player wires.
+2. Exactly 122 unique socket IDs.
+3. Real `SparkTerminal` components.
+4. Valid FROM and TO endpoints.
+5. Valid electrical signal types.
+6. Valid 5 V supply and return.
+7. Functional component registration.
+8. Valid pump-control routing.
+9. Valid heater-control routing.
+10. Valid temperature sensing.
+11. Valid flow sensing.
+12. Valid pressure sensing.
+13. Valid valve command and feedback.
+14. Valid safety wiring.
+15. Correct missing-wire detection.
+16. Correct wrong-wire rejection.
+17. Correct duplicate-wire handling.
+18. Wire removal and reconnection supported.
+19. Real final RTD fault connection.
+20. Fixed internal connections documented separately.
+
+## INTERNAL CONNECTIONS
+
+Complex equipment may contain preinstalled internal sub-connections.
+
+These must not count toward the 78 player-created wires unless intentionally part of the puzzle.
+
+## FINAL RTD FAULT
+
+Reserve one actual wire for product outlet temperature feedback.
+
+Conceptual endpoint roles:
+
+`PRODUCT_OUTLET_RTD_TEMP_OUT → CASCADE_PID_PRODUCT_TEMP_IN`
+
+Assign its final W-number only after the full manifest is validated.
+
+Removing that wire must make the actual measurement invalid.
+
+Do not simulate the fault solely with a Boolean.
+
+---
+
+# 8. ONE AUTHORITATIVE THERMAL NETWORK
+
+Implement a single coherent process state.
+
+## REQUIRED PHYSICAL QUANTITIES
+
+- Product mass flow.
+- Hot-water mass flow.
+- Cooling-water mass flow.
+- Product inlet temperature.
+- Product after-regeneration temperature.
+- Product trim-exchanger outlet temperature.
+- Product final outlet temperature.
+- Hot-water inlet and outlet temperatures.
+- Cooling-water inlet and outlet temperatures.
+- Heating tank energy.
+- Thermal buffer energy.
+- Holding chamber temperature.
+- Exchanger wall temperature.
+- Heat transfer rates.
+- Heater electrical power.
+- Cooling duty.
+- Pump speed.
+- Valve position.
+- Fouling resistance.
+- Differential pressure.
+- Product compliance.
+
+## MAIN RULE
+
+There must not be independent scripts that each directly write to product temperature without a coherent energy balance.
+
+All physical heat transfer must be resolved through the authoritative thermal model.
+
+---
+
+# 9. FLUID MASS AND ENERGY CONSERVATION
+
+For each liquid circuit, implement a consistent mass and energy balance.
+
+## MASS
+
+`MassNext = MassCurrent + (MassIn - MassOut)`
+
+using integrated mass flows over the simulation interval.
+
+## INTERNAL ENERGY
+
+For a constant-specific-heat approximation:
+
+`U = m * cp * T`
+
+with a consistent temperature reference.
+
+## FLOW ENERGY
+
+Inflow and outflow must carry appropriate thermal enthalpy.
+
+## IMPORTANT
+
+Do not transfer heat between fluids by simply averaging their temperatures.
+
+The exchanger must transfer an energy quantity, removing it from the hotter stream and adding it to the colder stream, subject to defined losses and capacity limits.
+
+---
+
+# 10. PRODUCT THERMAL CIRCUIT
+
+Use:
+
+- `07_L68_ProductHoldingChamber.fbx`
+- `08_L68_FinishedProductOutletModule.fbx`
+- `11_L68_ProductTransferPump.fbx`
+- `14_L68_ProductPumpMotor.fbx`
+
+## REQUIRED PARAMETERS
+
+- Product density.
+- Specific heat capacity.
+- Mass flow.
+- Inlet temperature.
+- Outlet temperature.
+- Holding volume.
+- Residence time.
+- Heat losses.
+- Pump availability.
+- Product isolation state.
+
+## REQUIRED BEHAVIOR
+
+- Product moves through real configured paths.
+- Temperature evolves through exchanger heat transfer.
+- Holding chamber stores mass and thermal energy.
+- Product outlet reports actual modeled temperature.
+- Product cannot be certified without valid outlet measurement.
+- Off-spec volume is recorded separately.
+
+## IMPORTANT
+
+The holding chamber must not instantly reach the upstream temperature if its modeled mass and thermal capacity imply a delayed response.
+
+---
+
+# 11. REGENERATIVE PLATE HEAT EXCHANGER
+
+Use:
+
+- `01_L68_RegenerativePlateHeatExchanger.fbx`
+- `02_L68_HeatExchangerPlateStack.fbx`
+
+This is the central visual and engineering element.
+
+## REQUIRED PROPERTIES
+
+- Effective heat-transfer area.
+- Overall heat-transfer coefficient.
+- Hot-stream flow.
+- Cold-stream flow.
+- Hot inlet temperature.
+- Cold inlet temperature.
+- Hot outlet temperature.
+- Cold outlet temperature.
+- Plate thermal capacity.
+- Heat losses.
+- Fouling resistance.
+- Pressure drop.
+- Operating state.
+
+## HEAT DUTY
+
+For a steady flow:
+
+`Qdot = mdot * cp * DeltaT`
+
+## EXCHANGER TRANSFER
+
+Use a consistent effectiveness–NTU or validated LMTD model.
+
+For a heat-exchanger model:
+
+`QdotActual = Effectiveness * Cmin * (ThotIn - TcoldIn)`
+
+where:
+
+`C = mdot * cp`
+
+`Cmin = min(Chot, Ccold)`
+
+## REGENERATION
+
+Outgoing hot product transfers heat to incoming cold product through separate paths.
+
+Do not mix their mass inventories.
+
+## IMPORTANT
+
+Do not allow heat flow from a colder stream into a hotter stream without an explicitly modeled external energy input.
+
+Account for exchanger thermal inertia if implemented dynamically.
+
+---
+
+# 12. TRIM HEAT EXCHANGER
+
+Use:
+
+`03_L68_SecondaryTrimHeatExchanger.fbx`
+
+The trim exchanger provides final heating or cooling.
+
+## REQUIRED PROPERTIES
+
+- Product-side flow.
+- Utility-side flow.
+- Exchanger UA.
+- Product inlet temperature.
+- Product outlet temperature.
+- Utility inlet temperature.
+- Utility outlet temperature.
+- Thermal inertia.
+- Pressure loss.
+- Operating state.
+
+## REQUIRED BEHAVIOR
+
+- Hot-water circulation adds heat when utility conditions permit.
+- Cooling-water circulation removes heat when utility conditions permit.
+- Product temperature changes according to finite transfer capacity.
+- Controller saturation is possible.
+- Exchanger dynamics depend on actual flow and temperatures.
+
+---
+
+# 13. ELECTRIC HEATING SYSTEM
+
+Use:
+
+- `04_L68_InsulatedHeatingTank.fbx`
+- `15_L68_ElectricHeatingElementBank.fbx`
+- `16_L68_HeatingPowerController.fbx`
+
+## REQUIRED STATES
+
+- Heater enable.
+- Requested heater power.
+- Actual heater power.
+- Maximum heating power.
+- Available electrical energy.
+- Heating tank volume.
+- Heating tank temperature.
+- Thermal capacitance.
+- Heat losses.
+- Overtemperature state.
+- Dry-run state.
+
+## THERMAL UPDATE
+
+`Cthermal * dT/dt = PheaterActual - Qout - Qloss + Qin`
+
+Define terms and units carefully.
+
+## IMPORTANT
+
+The heater cannot supply unlimited thermal power.
+
+The hot-water temperature must rise over time.
+
+Do not instantly set it to 80°C.
+
+## SAFETY
+
+If heating tank volume is insufficient or the heater is unsafe, heating must be inhibited.
+
+---
+
+# 14. HOT-WATER CIRCULATION SYSTEM
+
+Use:
+
+- `09_L68_HotWaterCirculationPump.fbx`
+- `12_L68_HotLoopPumpMotor.fbx`
+- `18_L68_HotWaterControlValve.fbx`
+
+## REQUIRED PROPERTIES
+
+- Actual pump RPM.
+- Pump head.
+- Actual hot-water flow.
+- Valve opening.
+- Hot supply temperature.
+- Hot return temperature.
+- Available thermal energy.
+- Pump power.
+- Fault status.
+
+## REQUIRED BEHAVIOR
+
+- Pump speed affects flow and pressure.
+- Valve opening affects circuit resistance.
+- Hot-water heat transfer depends on actual flow.
+- Return-water temperature reflects exchanged energy.
+- Heater compensates within finite capacity.
+
+---
+
+# 15. COOLING-WATER SYSTEM
+
+Use:
+
+- `05_L68_ColdWaterReservoir.fbx`
+- `10_L68_ColdWaterCirculationPump.fbx`
+- `13_L68_ColdLoopPumpMotor.fbx`
+- `19_L68_CoolingWaterControlValve.fbx`
+
+## REQUIRED PROPERTIES
+
+- Cooling reservoir temperature.
+- Actual cooling flow.
+- Pump RPM.
+- Valve position.
+- Cooling capacity.
+- Heat received.
+- Reservoir thermal capacity.
+- Cooling-water return temperature.
+- Pump protection.
+
+## REQUIRED BEHAVIOR
+
+Cooling must remove thermal energy from product or utility circuit through modeled heat transfer.
+
+That energy must appear in the cooling circuit or explicitly defined sink.
+
+Do not instantly lower product temperature merely when cooling is enabled.
+
+---
+
+# 16. THERMAL BUFFER TANK
+
+Use:
+
+`06_L68_ThermalBufferTank.fbx`
+
+## REQUIRED PROPERTIES
+
+- Fluid mass.
+- Temperature.
+- Specific heat.
+- Stored thermal energy.
+- Inflow temperature.
+- Outflow temperature.
+- Heat losses.
+- Available capacity.
+- Operating limits.
+
+## REQUIRED BEHAVIOR
+
+The buffer can absorb or supply finite thermal energy.
+
+Its temperature changes accordingly.
+
+Do not allow unlimited energy storage at fixed temperature.
+
+---
+
+# 17. THREE PUMP MOTOR DYNAMICS
+
+Use:
+
+- `12_L68_HotLoopPumpMotor.fbx`
+- `13_L68_ColdLoopPumpMotor.fbx`
+- `14_L68_ProductPumpMotor.fbx`
+- `17_L68_VariableFrequencyDriveBank.fbx`
+
+## REQUIRED PROPERTIES
+
+- Motor enable.
+- Commanded speed.
+- Actual RPM.
+- Acceleration.
+- Deceleration.
+- Torque.
+- Mechanical power.
+- Electrical power estimate.
+- Current limit.
+- Drive status.
+- Fault.
+
+## MECHANICAL MODEL
+
+`J * dOmega/dt = Tmotor - Tpump - Tloss`
+
+Use compatible existing motor abstractions where possible.
+
+## IMPORTANT
+
+The educational 5 V control circuit should not serve as an impossible source for all thermal and motor energy.
+
+Keep control signals distinct from the simulated motor/heater power domain.
+
+---
+
+# 18. FIVE VALVE ACTUATORS
+
+Use:
+
+- `18_L68_HotWaterControlValve.fbx`
+- `19_L68_CoolingWaterControlValve.fbx`
+- `20_L68_ThreeWayMixingValve.fbx`
+- `21_L68_RegenerativeBypassValve.fbx`
+- `22_L68_ProductIsolationValve.fbx`
+
+## REQUIRED PROPERTIES
+
+- Commanded position.
+- Actual position.
+- Position feedback.
+- Movement speed.
+- Stroke time.
+- Flow coefficient.
+- Fail-safe position.
+- Actuator state.
+- Fault.
+
+## REQUIRED BEHAVIOR
+
+- Actuators move at finite speed.
+- Actual hydraulic routing responds to actual valve position.
+- Bypass changes regenerative flow routing.
+- Three-way valve allocates or mixes compatible circuit flows according to topology.
+- Product isolation valve blocks unsafe output.
+
+## IMPORTANT
+
+Valve command and actual valve position must remain distinct.
+
+---
+
+# 19. FIVE TEMPERATURE SENSORS
+
+Use:
+
+- `24_L68_ProductInletTemperatureSensor.fbx`
+- `25_L68_ProductOutletRTDTemperatureSensor.fbx`
+- `26_L68_HotWaterTemperatureSensor.fbx`
+- `27_L68_ColdWaterTemperatureSensor.fbx`
+- `28_L68_ThermalBufferTemperatureSensor.fbx`
+
+## REQUIRED PROPERTIES
+
+- Actual modeled temperature.
+- Measured temperature.
+- Sensor type.
+- Measurement range.
+- Response time.
+- Calibration.
+- Offset.
+- Noise/filtering.
+- Signal validity.
+- Timestamp.
+- Electrical connectivity.
+- Fault state.
+
+## IMPORTANT
+
+An outlet RTD measures actual product temperature with the selected sensor dynamics.
+
+It must not simply repeat the temperature setpoint.
+
+Disconnected sensors must not remain valid.
+
+---
+
+# 20. FLOW MEASUREMENT
+
+Use:
+
+`29_L68_ThermalFlowMeterBank.fbx`
+
+## REQUIRED MEASUREMENTS
+
+- Product flow.
+- Hot-water flow.
+- Cooling-water flow.
+- Timestamp.
+- Calibration.
+- Sensor validity.
+- Fault status.
+
+## REQUIRED BEHAVIOR
+
+Flow measurements must come from actual hydraulic flow states.
+
+Do not treat commanded pump speed as actual measured flow.
+
+The thermal system must respond appropriately to unavailable or implausible flow measurements.
+
+---
+
+# 21. DIFFERENTIAL PRESSURE MEASUREMENT
+
+Use:
+
+`30_L68_DifferentialPressureTransmitter.fbx`
+
+## REQUIRED STATES
+
+- Upstream pressure.
+- Downstream pressure.
+- Actual pressure difference.
+- Measured pressure difference.
+- Calibration.
+- Validity.
+- Fault status.
+
+## REQUIRED BEHAVIOR
+
+Pressure drop changes when flow resistance or fouling changes.
+
+Do not assign a fixed pressure-drop value solely because fouling is enabled.
+
+Use a consistent simplified hydraulic model.
+
+---
+
+# 22. HEAT FLUX MEASUREMENT
+
+Use:
+
+`31_L68_HeatFluxMeasurementModule.fbx`
+
+## REQUIRED OUTPUTS
+
+- Heat duty.
+- Measurement validity.
+- Heat transfer direction.
+- Estimated uncertainty.
+- Timestamp.
+
+## HEAT DUTY
+
+`Qdot = mdot * cp * (Tout - Tin)`
+
+Use the correct sign convention and measurement locations.
+
+## IMPORTANT
+
+Heat flux/heat duty estimates must be derived from actual process quantities.
+
+Do not display a fabricated energy-recovery value.
+
+---
+
+# 23. REGENERATIVE EFFICIENCY ANALYZER
+
+Use:
+
+`32_L68_RegenerativeEfficiencyAnalyzer.fbx`
+
+## REQUIRED METRICS
+
+- Actual regenerative heat transfer.
+- Available maximum heat transfer.
+- Heat exchanger effectiveness.
+- Utility heater energy.
+- Baseline heater energy.
+- Actual energy savings.
+- Heat recovery efficiency.
+- Operating constraints.
+
+## REQUIRED COMPARISON
+
+Compare equivalent operating conditions with and without regeneration.
+
+A valid comparison must use compatible:
+
+- Product flow.
+- Product inlet temperature.
+- Product outlet target.
+- Simulation duration.
+- Initial thermal state or steady-state conditions.
+- Fluid properties.
+
+## IMPORTANT
+
+Do not claim 50% recovery merely because the bypass valve is closed.
+
+The analyzer must calculate the actual benefit.
+
+---
+
+# 24. CASCADE TEMPERATURE PID
+
+Use:
+
+`33_L68_CascadeTemperaturePIDController.fbx`
+
+This is a primary Level 68 gameplay mechanic.
+
+## OUTER LOOP
+
+Product outlet temperature controller.
+
+Input:
+
+- Temperature setpoint.
+- Valid measured outlet temperature.
+
+Output:
+
+- Desired inner-loop thermal/heating demand.
+
+## INNER LOOP
+
+Hot-water flow, heating power or a clearly specified fast thermal actuator loop.
+
+Input:
+
+- Outer-loop requested setpoint.
+- Valid inner-loop measurement.
+
+Output:
+
+- Actual valve/pump/heater command.
+
+## PID EQUATION
+
+`u = Kp*e + Ki*Integral(e) + Kd*FilteredDerivative(e)`
+
+## PLAYER PARAMETERS
+
+- Product temperature target.
+- Outer Kp.
+- Outer Ki.
+- Outer Kd if used.
+- Inner Kp.
+- Inner Ki.
+- Inner Kd if used.
+- Output limits.
+- Integral limits.
+- Sampling interval.
+- Filtering.
+- Anti-windup.
+- Manual/automatic transfer.
+
+## REQUIRED BEHAVIOR
+
+- Controller reads valid feedback.
+- Controller computes a bounded request.
+- Actuator moves or changes power.
+- Heat transfer changes.
+- Product temperature responds.
+- Controller reacts to actual measurement error.
+
+## IMPORTANT
+
+Do not directly write the product temperature from the PID controller.
+
+---
+
+# 25. PID ANTI-WINDUP AND THERMAL LAG
+
+Thermal systems respond slowly.
+
+Implement meaningful integral limits or back-calculation anti-windup.
+
+## REQUIRED BEHAVIOR
+
+If heating power saturates:
+
+- Controller recognizes saturation.
+- Integrator is constrained appropriately.
+- Temperature does not overshoot due to unlimited accumulated error.
+- Recovery follows actual system dynamics.
+
+## TUNING CHALLENGE
+
+Poor tuning produces:
+
+- Slow response.
+- Temperature overshoot.
+- Oscillation.
+- Actuator saturation.
+- Excess utility consumption.
+
+Correct tuning produces:
+
+- Stable outlet temperature.
+- Bounded heating/cooling commands.
+- Acceptable settling time.
+- Minimal sustained oscillation.
+- Valid product quality.
+
+## PASS CRITERION
+
+Evaluate temperature histories.
+
+Do not require one hardcoded Kp/Ki pair as the only successful solution.
+
+---
+
+# 26. THERMAL ENERGY MANAGEMENT
+
+Use:
+
+`34_L68_ThermalEnergyManagementController.fbx`
+
+## REQUIRED INPUTS
+
+- Product demand.
+- Product temperature.
+- Hot-water availability.
+- Cooling-water availability.
+- Thermal buffer energy.
+- Regenerative exchanger performance.
+- Heater power.
+- Energy consumption.
+- Protection status.
+
+## REQUIRED FUNCTIONS
+
+- Prioritize regenerative heat.
+- Limit heater demand.
+- Use buffer capacity where suitable.
+- Control auxiliary cooling.
+- Preserve temperature safety.
+- Reduce energy consumption where feasible.
+- Coordinate startup and shutdown.
+
+## IMPORTANT
+
+Do not create energy using regeneration.
+
+Recovered heat must correspond to heat taken from an actual hot stream.
+
+---
+
+# 27. HEAT EXCHANGER FOULING
+
+Use:
+
+`35_L68_HeatExchangerFoulingSimulator.fbx`
+
+## REQUIRED PROPERTIES
+
+- Clean exchanger UA.
+- Fouling thermal resistance.
+- Fouled UA.
+- Hydraulic resistance contribution.
+- Pressure drop.
+- Heat duty.
+- Fouling severity.
+- Fault status.
+
+## SIMPLE FOULING RELATION
+
+`1/Ufouled = 1/Uclean + Rfouling`
+
+Use compatible area conventions.
+
+## REQUIRED RESPONSE
+
+As fouling increases:
+
+- Heat transfer decreases.
+- Effective UA decreases.
+- Pressure drop may increase.
+- Utility consumption may increase.
+- Thermal control may saturate.
+- Recovery effectiveness may decrease.
+
+## PLAYER CHALLENGE
+
+The player must distinguish controller mistuning from insufficient exchanger performance.
+
+## IMPORTANT
+
+Do not automatically force temperature stable even after exchanger performance becomes physically insufficient.
+
+Where cleaning/maintenance is included, it must require a valid safe maintenance sequence.
+
+---
+
+# 28. COLD INLET TEMPERATURE DISTURBANCE
+
+Use:
+
+`36_L68_InletTemperatureDisturbanceModule.fbx`
+
+## REQUIRED SCENARIO
+
+- Stable baseline at 25°C inlet.
+- Controlled inlet reduction to 15°C.
+- Real product inlet enthalpy changes.
+- Regeneration and trim exchanger respond.
+- Heater demand increases.
+- Outlet temperature may deviate.
+- Cascade PID attempts recovery.
+- Safety limits respected.
+- Outcome recorded.
+
+## IMPORTANT
+
+Do not simply lower a dashboard number while retaining identical process energy.
+
+---
+
+# 29. PRODUCT FLOW SURGE
+
+Implement a controlled product-flow increase.
+
+## REQUIRED RESPONSE
+
+- Actual mass flow increases.
+- Product residence time changes.
+- Heat-capacity rate changes.
+- Exchanger effectiveness/temperature response changes.
+- Pump power may change.
+- Controller requests additional heat if available.
+- Product quality is evaluated continuously.
+
+Do not modify outlet temperature directly to imitate the event.
+
+---
+
+# 30. OVERTEMPERATURE PROTECTION
+
+Use:
+
+`37_L68_OvertemperatureProtectionRelay.fbx`
+
+## REQUIRED STATES
+
+- READY.
+- ARMED.
+- WARNING.
+- TRIP_PENDING.
+- TRIPPED.
+- LOCKED_OUT.
+- RESET_REQUIRED.
+
+## REQUIRED PROTECTION
+
+- Product temperature too high.
+- Heater temperature too high.
+- Heating tank low level.
+- Product flow too low.
+- Outlet RTD invalid.
+- Heating power control fault.
+- Cooling unavailable when necessary.
+- Process enclosure unsafe.
+- Emergency shutdown.
+
+## REQUIRED RESPONSE
+
+1. Detect the actual unsafe condition.
+2. Inhibit unsafe heating.
+3. Command defined safe valve/pump states.
+4. Stop or divert unsafe product.
+5. Record fault.
+6. Latch relevant protection.
+7. Require repair.
+8. Require explicit reset.
+9. Revalidate measurements.
+10. Permit controlled recommissioning.
+
+## IMPORTANT
+
+The safety relay must override the normal PID command.
+
+---
+
+# 31. INDUSTRIAL THERMAL PLC
+
+Use:
+
+- `38_L68_IndustrialThermalPLC.fbx`
+- `39_L68_ThermalDigitalIOModule.fbx`
+
+## OPERATING STATES
+
+- OFF.
+- INITIALIZING.
+- IDLE.
+- READY.
+- SENSOR_CALIBRATION.
+- PUMP_PRIMING.
+- STARTING.
+- CIRCULATING.
+- PREHEATING.
+- CONTROL_READY.
+- AUTO_CONTROL.
+- REGENERATION_ACTIVE.
+- PRODUCTION.
+- DISTURBANCE_RESPONSE.
+- SAFE_SHUTDOWN.
+- FAULT.
+- RESET_REQUIRED.
+
+## REQUIRED LOGIC
+
+PLC sequences must depend on actual valid sensor inputs:
+
+- Product flow.
+- Hot-water flow.
+- Cooling flow.
+- Temperature.
+- Reservoir level.
+- Pump status.
+- Valve feedback.
+- Heater status.
+- Protection status.
+- Enclosure interlock.
+
+Do not advance automatically through unsafe states using only elapsed time.
+
+---
+
+# 32. SCADA AND HISTORIAN
+
+Use:
+
+`40_L68_HolographicThermalSCADAMonitor.fbx`
+
+## REQUIRED LIVE VALUES
+
+- MAIN POWER.
+- PROCESS STATE.
+- PRODUCT INLET TEMPERATURE.
+- PRODUCT PREHEAT TEMPERATURE.
+- PRODUCT OUTLET TEMPERATURE.
+- PRODUCT SETPOINT.
+- HOT-WATER TEMPERATURE.
+- HOT-WATER RETURN TEMPERATURE.
+- COOLING-WATER TEMPERATURE.
+- COOLING RETURN TEMPERATURE.
+- THERMAL BUFFER TEMPERATURE.
+- PRODUCT FLOW.
+- HOT-WATER FLOW.
+- COOLING-WATER FLOW.
+- HEATER POWER.
+- HEAT DUTY.
+- REGENERATIVE HEAT RECOVERED.
+- RECOVERY EFFECTIVENESS.
+- HEATER ENERGY CONSUMED.
+- ENERGY SAVINGS.
+- PUMP RPM.
+- PUMP POWER.
+- VALVE OPENINGS.
+- PID OUTER ERROR.
+- PID INNER ERROR.
+- PID OUTPUT.
+- PID SATURATION.
+- EXCHANGER PRESSURE DROP.
+- FOULING ESTIMATE.
+- PRODUCT OFF-SPEC VOLUME.
+- SENSOR VALIDITY.
+- SAFETY STATUS.
+- EVENT HISTORY.
+- OBJECTIVES X/6.
+
+## PLAYER CONTROLS
+
+- MAIN POWER.
+- CALIBRATE TEMPERATURE SENSORS.
+- CALIBRATE FLOW SENSORS.
+- CALIBRATE PRESSURE SENSOR.
+- START PRODUCT PUMP.
+- START HOT-WATER PUMP.
+- START COOLING PUMP.
+- ENABLE HEATER.
+- SET TEMPERATURE TARGET.
+- SET OUTER PID.
+- SET INNER PID.
+- ENABLE CASCADE.
+- ENABLE REGENERATION.
+- SET BYPASS.
+- START PRODUCT TRANSFER.
+- COLD INLET TEST.
+- FLOW SURGE TEST.
+- FOULING TEST.
+- EMERGENCY SHUTDOWN.
+- RESET PROTECTION.
+- DISCONNECT OUTLET RTD.
+- RECALIBRATE OUTLET RTD.
+- RESET FAULT.
+- FINAL CERTIFY.
+
+Every control must perform a real gameplay action.
+
+---
+
+# 33. SIX AUTHORITATIVE LEVEL 68 OBJECTIVES
+
+Integrate all six with the existing Project Spark evaluator.
+
+## OBJECTIVE 1 — BUILD THE THERMAL PROCESS NETWORK
+
+Require:
+
+1. All 78 required player wires connected.
+2. All 122 functional terminal IDs registered.
+3. Valid 5 V control supply.
+4. Valid control return.
+5. Main PLC connected.
+6. Digital I/O connected.
+7. Hot-water pump connected.
+8. Cooling-water pump connected.
+9. Product pump connected.
+10. Three motor drives connected.
+11. Heater control connected.
+12. All five temperature sensors connected.
+13. Flow sensing connected.
+14. Differential pressure measurement connected.
+15. Heat flux measurement connected.
+16. Regenerative analyzer connected.
+17. Cascade PID connected.
+18. Energy management controller connected.
+19. All five valves connected.
+20. Overtemperature protection connected.
+21. Emergency shutdown connected.
+22. No unsafe topology.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — COMMISSION HEATING AND COOLING
+
+Require:
+
+1. Objective 1 certified.
+2. Safety system ready.
+3. Product flow valid.
+4. Hot-water flow valid.
+5. Cooling-water flow valid.
+6. Temperature sensors calibrated.
+7. Flow sensors calibrated.
+8. Pressure measurement calibrated.
+9. Pumps start dynamically.
+10. Actual liquid circulation established.
+11. Heater safe-to-enable.
+12. Electric heater enabled.
+13. Actual hot-water temperature rises.
+14. Hot-water circulation transfers heat.
+15. Cooling loop operational.
+16. Product temperature responds physically.
+17. No dry-run.
+18. No overtemperature.
+19. Stable commissioning interval completed.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — STABILIZE CASCADE TEMPERATURE CONTROL
+
+Require:
+
+1. Previous commissioning certified.
+2. Product outlet RTD valid.
+3. Temperature target configured.
+4. Inner PID enabled.
+5. Outer PID enabled.
+6. Actuator commands bounded.
+7. Actual heating/cooling responds.
+8. Product temperature moves toward target.
+9. Outlet reaches configured target range.
+10. Proposed steady-state tolerance of ±1°C achieved.
+11. Acceptable overshoot.
+12. Acceptable settling time.
+13. No sustained oscillation.
+14. No excessive PID saturation.
+15. No active safety fault.
+16. Observation interval completed.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — RECOVER WASTE HEAT
+
+Require:
+
+1. Previous objectives certified.
+2. Valid incoming product flow.
+3. Valid outgoing hot product stream.
+4. Regenerative exchanger connected.
+5. Regeneration enabled.
+6. Bypass correctly configured.
+7. Actual regenerative heat transfer measured.
+8. Energy conservation verified within tolerance.
+9. Product preheat temperature rises.
+10. Heater demand decreases where physically feasible.
+11. Comparable baseline established.
+12. Measured utility energy saving calculated.
+13. Configured recovery target achieved if feasible.
+14. Product outlet remains on-spec.
+15. Safety conditions valid.
+16. Stable recovery observation interval completed.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — SURVIVE THERMAL DISTURBANCES
+
+Require:
+
+1. Previous objectives historically certified.
+2. Stable baseline established.
+3. Cold inlet temperature event activated.
+4. Actual inlet enthalpy decreases.
+5. Controller responds.
+6. Product temperature recovers when physically achievable.
+7. Product flow surge activated.
+8. Actual mass flow changes.
+9. Controller compensates within limits.
+10. Fouling scenario activated.
+11. Actual UA decreases.
+12. Heat duty/pressure changes consistently.
+13. Fouling detected from valid evidence.
+14. Heating/cooling constraints respected.
+15. Overtemperature prevented.
+16. Off-spec product not certified.
+17. Correct safe fallback applied if capacity insufficient.
+18. Event history recorded.
+19. Stable observation or safe shutdown criteria satisfied.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — RECOVER CRITICAL TEMPERATURE FEEDBACK
+
+Require:
+
+1. Objectives 1–5 historically certified.
+2. Designated product outlet RTD wire disconnected.
+3. Actual topology invalidated.
+4. RTD measurement becomes invalid.
+5. Cascade PID detects missing feedback.
+6. Unsafe automatic heating inhibited.
+7. Off-spec/unsafe product discharge restricted.
+8. Fault latched.
+9. Player reconnects actual wire.
+10. Sensor connectivity restored.
+11. RTD recalibrated.
+12. Fresh valid temperature samples obtained.
+13. Player explicitly resets fault.
+14. Heating and circulation recommissioned safely.
+15. Cascade PID re-enabled.
+16. Fresh temperature stability test performed.
+17. Outlet temperature within tolerance.
+18. Fresh disturbance recovery test performed.
+19. No unresolved critical fault.
+20. Final certification successful.
+
+Progress becomes **6/6**.
+
+## HISTORICAL OBJECTIVE RULE
+
+Do not erase Objectives 1–5 merely because the deliberate sensor fault occurs.
+
+Do not mark Objective 6 complete simply after reconnecting the wire.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REPORT 6/6.**
+
+---
+
+# 34. FINAL RTD WIRE-DISCONNECTION FAULT
+
+The final fault is a real player-generated topology change.
+
+## FAULT SEQUENCE
+
+1. Player identifies designated outlet RTD wire.
+2. Player disconnects it.
+3. Circuit connection is physically removed from gameplay topology.
+4. RTD output becomes unavailable.
+5. Measurement validity changes to INVALID.
+6. PID rejects the invalid measurement.
+7. Unsafe heating is inhibited.
+8. Safety controller applies correct safe state.
+9. Fault becomes latched.
+10. Event recorder stores timestamp and state.
+
+## IMPORTANT
+
+Do not keep displaying the last known temperature as valid.
+
+The dashboard may show the last measurement if clearly marked STALE.
+
+Do not use it for normal closed-loop control.
+
+## RECOVERY SEQUENCE
+
+1. Player reconnects actual wire.
+2. Electrical topology becomes valid.
+3. Sensor supply checked.
+4. RTD measurement reacquired.
+5. Calibration performed.
+6. Fresh valid samples collected.
+7. Player explicitly resets fault.
+8. Safety conditions checked.
+9. Pumps recommissioned if needed.
+10. Heating restarts under controlled conditions.
+11. Cascade controller re-enabled.
+12. Temperature stability demonstrated.
+13. Fresh thermal disturbance performed.
+14. Product remains within defined certification conditions.
+15. Final objective completes.
+
+---
+
+# 35. RECOMMENDED UNITY C# ARCHITECTURE
+
+Inspect the real codebase before introducing new classes.
+
+Suggested Level 68 responsibilities:
+
+- `SparkLevel68Coordinator.cs`
+- `SparkLevel68ThermalNetwork.cs`
+- `SparkLevel68FluidThermalState.cs`
+- `SparkLevel68RegenerativeExchanger.cs`
+- `SparkLevel68TrimExchanger.cs`
+- `SparkLevel68HeatExchangerWall.cs`
+- `SparkLevel68HeatingTank.cs`
+- `SparkLevel68ElectricHeater.cs`
+- `SparkLevel68CoolingReservoir.cs`
+- `SparkLevel68ThermalBuffer.cs`
+- `SparkLevel68ProductHoldingChamber.cs`
+- `SparkLevel68PumpDynamics.cs`
+- `SparkLevel68PumpMotor.cs`
+- `SparkLevel68ValveDynamics.cs`
+- `SparkLevel68TemperatureSensor.cs`
+- `SparkLevel68FlowTransmitter.cs`
+- `SparkLevel68DifferentialPressureSensor.cs`
+- `SparkLevel68HeatFluxEstimator.cs`
+- `SparkLevel68RegenerativeEfficiencyAnalyzer.cs`
+- `SparkLevel68PIDController.cs`
+- `SparkLevel68CascadeTemperatureController.cs`
+- `SparkLevel68ThermalEnergyManager.cs`
+- `SparkLevel68FoulingModel.cs`
+- `SparkLevel68DisturbanceController.cs`
+- `SparkLevel68OvertemperatureProtection.cs`
+- `SparkLevel68ThermalPLC.cs`
+- `SparkLevel68FaultRecovery.cs`
+- `SparkLevel68EventRecorder.cs`
+- `SparkLevel68ObjectiveTracker.cs`
+- `SparkLevel68SCADADashboard.cs`
+- `SparkLevel68Interaction.cs`
+- `SparkLevel68VisualRig.cs`
+
+These names describe proposed responsibilities, not verified existing APIs.
+
+Reuse compatible project systems.
+
+## SIMULATION UPDATE SEQUENCE
+
+1. Validate electrical topology.
+2. Evaluate control power.
+3. Read player commands.
+4. Evaluate safety conditions.
+5. Acquire sensor measurements.
+6. Execute PLC cycle when due.
+7. Evaluate outer temperature controller.
+8. Evaluate inner PID.
+9. Apply control limits.
+10. Apply safety overrides.
+11. Update heater command.
+12. Update actual heater power.
+13. Update VFD commands.
+14. Advance pump motor speeds.
+15. Update actual valve positions.
+16. Solve fluid mass flows.
+17. Solve heat exchanger energy transfer.
+18. Integrate heating tank thermal energy.
+19. Integrate cooling reservoir thermal energy.
+20. Integrate thermal buffer state.
+21. Integrate product holding chamber state.
+22. Update fouling and hydraulic pressure loss.
+23. Update actual temperature states.
+24. Acquire new temperature/flow measurements.
+25. Update measurement validity.
+26. Record event history.
+27. Evaluate protection.
+28. Evaluate authoritative objectives.
+29. Update SCADA.
+30. Update visuals.
+
+Use a consistent schedule and numerical integration.
+
+If predictor-corrector solving is required, do not apply energy transfer twice for one timestep.
+
+---
+
+# 36. UNITY EDITOR LEVEL CREATOR
+
+Create:
+
+`Tools/Project Spark/Levels/Create Level 68`
+
+The Editor creator must create or safely update:
+
+- `Level_68.asset`
+- `Level_68_Layout.prefab`
+- Thermal network configuration.
+- Electrical wiring manifest.
+- Terminal binding manifest.
+- Component binding manifest.
+- Pump configuration.
+- Motor configuration.
+- Valve configuration.
+- Heater configuration.
+- Exchanger configuration.
+- Fluid properties.
+- PID configuration.
+- Safety configuration.
+- Disturbance configuration.
+- Six objective definitions.
+- Animation mappings.
+- Diagnostic report.
+
+## REQUIRED EDITOR OPERATIONS
+
+1. Inspect existing Project Spark Editor infrastructure.
+2. Locate all 44 individual FBXs.
+3. Validate exact asset filenames.
+4. Validate import scale.
+5. Create/update Level 68 definition.
+6. Set ID to `level_68`.
+7. Set display name.
+8. Set subtitle.
+9. Create six objectives.
+10. Create/update layout prefab.
+11. Create `L68_HD_VISUAL_ART`.
+12. Instantiate all 44 individual FBXs.
+13. Preserve common-origin placement.
+14. Configure regenerative exchanger.
+15. Configure plate stack.
+16. Configure trim exchanger.
+17. Configure heating tank.
+18. Configure cooling reservoir.
+19. Configure thermal buffer.
+20. Configure product holding chamber.
+21. Configure product outlet.
+22. Configure hot-water pump.
+23. Configure cooling pump.
+24. Configure product pump.
+25. Configure all three pump motors.
+26. Configure electric heater.
+27. Configure heating power controller.
+28. Configure VFD bank.
+29. Configure hot-water valve.
+30. Configure cooling-water valve.
+31. Configure three-way mixing valve.
+32. Configure regenerative bypass.
+33. Configure product isolation.
+34. Configure thermal pipeline.
+35. Configure five temperature sensors.
+36. Configure flow meter channels.
+37. Configure differential pressure.
+38. Configure heat flux estimation.
+39. Configure regenerative analyzer.
+40. Configure cascade PID.
+41. Configure energy management.
+42. Configure fouling simulator.
+43. Configure inlet disturbance.
+44. Configure overtemperature relay.
+45. Configure PLC.
+46. Configure digital I/O.
+47. Configure SCADA display.
+48. Configure emergency shutdown.
+49. Configure enclosure.
+50. Configure regulated control power.
+51. Create exactly 122 real terminal anchors.
+52. Declare exactly 78 player-created wires.
+53. Register functional component IDs.
+54. Register unique terminal IDs.
+55. Configure fixed internal connections.
+56. Configure fluid circuit routes.
+57. Configure flow and pressure parameters.
+58. Configure fluid thermal properties.
+59. Configure heat exchanger UA.
+60. Configure exchanger metal thermal capacity.
+61. Configure hot-water storage.
+62. Configure cooling-water storage.
+63. Configure heater limits.
+64. Configure pump limits.
+65. Configure valve response times.
+66. Configure temperature sensor dynamics.
+67. Configure PID parameters.
+68. Configure anti-windup.
+69. Configure regeneration study.
+70. Configure fouling scenario.
+71. Configure cold inlet scenario.
+72. Configure flow surge.
+73. Configure final RTD wire fault.
+74. Assign all 14 verified pivot mappings.
+75. Create fluid temperature visuals.
+76. Create live TextMeshPro SCADA values.
+77. Bind six authoritative objectives.
+78. Validate missing references.
+79. Detect duplicate terminals.
+80. Detect duplicate simulation ownership.
+81. Generate validation report.
+82. Save definition and prefab.
+
+## EDITOR RELIABILITY
+
+Reuse the supplied art helper where appropriate.
+
+The helper menu is:
+
+`Tools/Project Spark/Levels/68/Place HD Art Under Selected Layout`
+
+The full playable builder must be separate or extend the helper safely.
+
+Use actual Unity asset paths.
+
+Do not invent GUIDs.
+
+Use appropriate `AssetDatabase`, `PrefabUtility`, `SerializedObject`, Undo and asset-saving APIs.
+
+Make builder reruns safe.
+
+Do not duplicate equipment, terminals or controllers.
+
+Do not overwrite unrelated level assets.
+
+---
+
+# 37. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 78 WIRES → VERIFY 122 TERMINALS → POWER PLC → CALIBRATE TEMPERATURE SENSORS → CALIBRATE FLOW SENSORS → CALIBRATE DIFFERENTIAL PRESSURE → VERIFY FLUID CIRCUITS → START PRODUCT PUMP → START HOT-WATER PUMP → START COOLING PUMP → ESTABLISH FLOW → ENABLE HEATING TANK → ACTUAL TEMPERATURE RISES → COMMISSION TRIM EXCHANGER → CONFIGURE INNER PID → CONFIGURE OUTER PID → ENABLE CASCADE → STABILIZE PRODUCT OUTLET AT 65°C → ENABLE REGENERATIVE HEAT EXCHANGE → MEASURE RECOVERED HEAT → VERIFY REDUCED HEATER DEMAND → APPLY COLD INLET DISTURBANCE → STABILIZE OUTLET TEMPERATURE → APPLY PRODUCT FLOW SURGE → RESTORE PROCESS STABILITY → APPLY FOULING EVENT → DETECT HEAT TRANSFER DEGRADATION → PREVENT OVERHEATING AND OFF-SPEC OUTPUT → DISCONNECT OUTLET RTD FEEDBACK → DETECT INVALID SENSOR → INHIBIT UNSAFE HEATING → RECONNECT ACTUAL WIRE → RECALIBRATE RTD → EXPLICITLY RESET FAULT → RESTART HEATING SAFELY → COMPLETE FRESH THERMAL STABILITY TEST → COMPLETE FRESH DISTURBANCE TEST → FINAL 6/6 CERTIFICATION**
+
+## PLAYER-FACING MESSAGES
+
+- `BUILD THE THERMAL PROCESS NETWORK`
+- `CONNECT ALL 78 WIRES`
+- `VERIFY 122 TERMINALS`
+- `CALIBRATE TEMPERATURE SENSORS`
+- `CALIBRATE FLOW MEASUREMENT`
+- `CALIBRATE DIFFERENTIAL PRESSURE`
+- `ESTABLISH PRODUCT CIRCULATION`
+- `START HOT-WATER PUMP`
+- `START COOLING-WATER PUMP`
+- `HEATING SYSTEM READY`
+- `ENABLE HEATER`
+- `HOT-WATER TEMPERATURE RISING`
+- `COMMISSION TRIM EXCHANGER`
+- `CONFIGURE CASCADE PID`
+- `TUNE INNER CONTROL LOOP`
+- `TUNE OUTER CONTROL LOOP`
+- `PRODUCT TEMPERATURE RECOVERING`
+- `TEMPERATURE STABILIZED`
+- `ENABLE REGENERATIVE RECOVERY`
+- `RECOVERED HEAT MEASURED`
+- `HEATING DEMAND REDUCED`
+- `ENERGY SAVINGS VERIFIED`
+- `APPLY COLD INLET DISTURBANCE`
+- `COLD INLET DETECTED`
+- `THERMAL CONTROL RESPONDING`
+- `APPLY PRODUCT FLOW SURGE`
+- `FLOW DISTURBANCE DETECTED`
+- `OUTLET TEMPERATURE STABLE`
+- `INTRODUCE EXCHANGER FOULING`
+- `EXCHANGER PERFORMANCE DECLINING`
+- `HEAT TRANSFER LOSS DETECTED`
+- `PROTECT PRODUCT QUALITY`
+- `DISCONNECT OUTLET RTD`
+- `PRODUCT TEMPERATURE FEEDBACK LOST`
+- `UNSAFE HEATING INHIBITED`
+- `RESTORE RTD CONNECTION`
+- `RECALIBRATE TEMPERATURE FEEDBACK`
+- `RESET THERMAL FAULT`
+- `RECOMMISSION CASCADE PID`
+- `FINAL THERMAL CERTIFICATION`
+- `LEVEL 68 COMPLETE`
+
+---
+
+# 38. TESTING AND DIAGNOSTICS
+
+Implement exact diagnostic messages for:
+
+- Incorrect W01–W78 wiring.
+- Missing socket IDs.
+- Duplicate socket IDs.
+- Invalid control supply.
+- Missing control return.
+- Pump motor disconnected.
+- Pump RPM not responding.
+- Pump flow invalid.
+- Heater power unavailable.
+- Heater active without valid fluid conditions.
+- Hot-water temperature not responding.
+- Cooling unavailable.
+- Fluid mass inconsistent.
+- Thermal energy not conserved.
+- Exchanger transferring more heat than available.
+- Exchanger streams incorrectly mixing.
+- Product temperature changing without heat transfer.
+- Exchanger UA invalid.
+- Exchanger wall thermal inertia missing.
+- Regenerative bypass ineffective.
+- Regeneration claiming energy savings without valid baseline.
+- Valve command not affecting flow.
+- Valve position feedback invalid.
+- Temperature sensor disconnected.
+- Outlet RTD stale.
+- Flow sensor disconnected.
+- Differential pressure invalid.
+- Heat flux estimate inconsistent.
+- PID output not connected to actuator.
+- PID integral windup.
+- Controller saturation ignored.
+- Thermal lag not represented.
+- Fouling not reducing exchanger performance.
+- Fouling not affecting modeled pressure drop.
+- Cold inlet not changing product enthalpy.
+- Flow surge not affecting heat-capacity rate.
+- Overtemperature protection ignored.
+- Product isolation not stopping unsafe output.
+- Reset permitted before repair.
+- Previous objectives erased.
+- Manager stuck at 0/6 or 5/6.
+- Unity scene reload failures.
+- Earlier-level regressions.
+
+## REQUIRED TESTS
+
+1. Correct 78-wire topology.
+2. Exactly 122 terminals registered.
+3. Control power valid.
+4. PLC initializes.
+5. Safety controller ready.
+6. Hot pump motor responds.
+7. Cooling pump motor responds.
+8. Product pump motor responds.
+9. Actual pump RPM changes.
+10. Actual fluid flow changes.
+11. Pump flow within modeled limits.
+12. Hot-water control valve operates.
+13. Cooling control valve operates.
+14. Three-way valve operates.
+15. Regeneration bypass operates.
+16. Product isolation works.
+17. Product inlet RTD valid.
+18. Product outlet RTD valid.
+19. Hot-water temperature sensor valid.
+20. Cooling-water sensor valid.
+21. Buffer temperature sensor valid.
+22. Flow meter channels valid.
+23. Differential pressure valid.
+24. Heater increases thermal energy.
+25. Heating tank temperature rises dynamically.
+26. Cooling loop removes energy.
+27. Product temperature changes through exchanger.
+28. Exchanger conserves energy.
+29. Exchanger wall thermal inertia acts.
+30. Product holding chamber behaves dynamically.
+31. Cascade inner loop modifies actuator.
+32. Cascade outer loop modifies inner setpoint.
+33. PID anti-windup works.
+34. Product reaches target range.
+35. Temperature settles correctly.
+36. Regeneration recovers finite heat.
+37. Regeneration reduces equivalent heater demand.
+38. Efficiency analyzer uses actual energy.
+39. Cold inlet changes product inlet enthalpy.
+40. Temperature controller responds.
+41. Flow surge changes heat demand.
+42. Controller responds within limits.
+43. Fouling reduces UA.
+44. Fouling modifies heat duty.
+45. Fouling affects pressure drop where modeled.
+46. Protection detects unsafe conditions.
+47. Heater shuts down when unsafe.
+48. Product isolation prevents off-spec discharge.
+49. Safety reset requires correct conditions.
+50. Disconnect actual outlet RTD wire.
+51. RTD measurement becomes invalid.
+52. PID rejects invalid feedback.
+53. Unsafe heating inhibited.
+54. Fault latches.
+55. Reconnect actual wire.
+56. RTD feedback restored.
+57. Calibration succeeds.
+58. Explicit reset succeeds.
+59. Controlled heating recommissioning succeeds.
+60. Fresh temperature certification passes.
+61. Fresh disturbance certification passes.
+62. Actual evaluator reaches 6/6.
+63. Level progression succeeds.
+64. Levels 1–67 remain unaffected.
+
+Only report tests as passed when actually executed.
+
+---
+
+# 39. REQUIRED DOWNLOADABLE DELIVERABLES
+
+Create a complete Level 68 Unity implementation ZIP containing:
+
+- Full Level 68 runtime C# source files.
+- Authoritative thermal network.
+- Fluid energy and mass balance.
+- Regenerative plate exchanger model.
+- Trim exchanger model.
+- Exchanger wall thermal inertia.
+- Heating tank thermal dynamics.
+- Electric heater power control.
+- Cooling reservoir model.
+- Thermal buffer model.
+- Product holding chamber.
+- Pump motor dynamics.
+- Pump flow model.
+- Valve dynamics.
+- Temperature sensors.
+- Flow meters.
+- Differential pressure transmitter.
+- Heat flux measurement.
+- Regenerative efficiency analyzer.
+- Cascade temperature PID.
+- Inner and outer PID configuration.
+- Anti-windup.
+- Thermal energy management.
+- Fouling model.
+- Cold inlet disturbance.
+- Product flow surge.
+- Overtemperature protection.
+- PLC control.
+- Digital I/O.
+- Emergency shutdown.
+- Product isolation.
+- Actual RTD wire disconnection.
+- Measurement invalidation.
+- Safe shutdown/restriction.
+- Repair/recalibration.
+- Explicit fault reset.
+- Six-objective evaluator integration.
+- Unity Editor Level 68 builder.
+- Level definition creator or asset.
+- Level layout prefab creator.
+- Exact W01–W78 wiring manifest.
+- 122-terminal binding manifest.
+- Component binding manifest.
+- All 14 verified pivot mappings.
+- Thermal parameter configuration.
+- Exchanger configuration.
+- Heater/pump/valve configuration.
+- Sensor configuration.
+- PID configuration.
+- Safety configuration.
+- Disturbance configurations.
+- Live SCADA dashboard.
+- Player gameplay walkthrough.
+- Objective verification checklist.
+- Troubleshooting documentation.
+- Actual test report.
+
+Reuse:
+
+`ProjectSpark_Level68_HD_AAA_Models.zip`
+
+Do not regenerate the approved 44-model art package without a demonstrated compatibility issue.
+
+Only provide download links to files actually created and verified.
+
+Do not claim Unity compilation or successful Play Mode execution without actually testing.
+
+---
+
+# 40. FINAL EXECUTION REQUIREMENTS
+
+**IMPLEMENT LEVEL 68 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect the actual Project Spark Unity source code and the approved Level 68 model collection.
+
+Then:
+
+1. Reuse compatible Project Spark infrastructure.
+2. Import all 44 individual FBXs.
+3. Preserve common-origin art placement.
+4. Create exactly 78 player wires.
+5. Register exactly 122 unique functional terminals.
+6. Implement product thermal circuit.
+7. Implement heating-water circuit.
+8. Implement cooling-water circuit.
+9. Implement coherent fluid mass balances.
+10. Implement coherent thermal energy balances.
+11. Implement regenerative heat exchanger.
+12. Implement trim exchanger.
+13. Implement exchanger thermal inertia.
+14. Implement hot-water heating tank.
+15. Implement heater power limits.
+16. Implement cooling-water reservoir.
+17. Implement thermal buffer.
+18. Implement product holding chamber.
+19. Implement three pumps.
+20. Implement three motor drives.
+21. Implement five valves.
+22. Implement five temperature sensors.
+23. Implement flow sensing.
+24. Implement differential pressure measurement.
+25. Implement actual heat duty measurement.
+26. Implement regenerative efficiency analysis.
+27. Implement inner-loop PID.
+28. Implement outer-loop PID.
+29. Implement cascade control.
+30. Implement anti-windup.
+31. Implement thermal energy management.
+32. Implement cold inlet disturbance.
+33. Implement product flow surge.
+34. Implement exchanger fouling.
+35. Implement overtemperature protection.
+36. Implement main PLC control.
+37. Implement emergency shutdown.
+38. Implement product isolation.
+39. Implement actual RTD feedback wire disconnection.
+40. Implement invalid-measurement detection.
+41. Implement unsafe heating inhibition.
+42. Implement RTD reconnection.
+43. Implement recalibration.
+44. Implement explicit fault reset.
+45. Implement controlled recommissioning.
+46. Implement fresh thermal certification.
+47. Integrate six authoritative objectives.
+48. Create one-click Unity Editor Level 68 builder.
+49. Assign all 14 verified animation pivots.
+50. Create dynamic temperature/flow visuals.
+51. Create live SCADA diagnostics.
+52. Run all feasible tests.
+53. Package and verify deliverables.
+
+Do not ask for approval of the already-approved Level 68 design.
+
+Do not fabricate temperature, heat duty, flow, thermal energy, pump RPM, valve opening, regeneration efficiency, fouling condition, safety status or objective completion.
+
+If an existing Project Spark API cannot be verified, implement safely independent functionality when practical and report the precise unresolved integration dependency.
+
+---
+
+# 41. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect all 78 required wires.
+2. Validate all 122 functional terminals.
+3. Commission the thermal PLC.
+4. Calibrate all required temperature sensors.
+5. Calibrate flow and pressure measurements.
+6. Establish product circulation.
+7. Establish heating-water circulation.
+8. Establish cooling-water circulation.
+9. Enable the heater safely.
+10. Observe actual hot-water temperature rise.
+11. Transfer thermal energy through the trim exchanger.
+12. Tune inner PID.
+13. Tune outer PID.
+14. Enable cascade control.
+15. Stabilize product temperature at 65°C ±1°C.
+16. Enable regenerative heat exchange.
+17. Recover actual heat from outgoing product.
+18. Measure lower utility heating demand.
+19. Demonstrate valid energy savings.
+20. Handle cold inlet temperature disturbance.
+21. Handle increased product flow.
+22. Detect exchanger fouling.
+23. Respect heat-transfer limitations.
+24. Prevent unsafe overheating.
+25. Prevent off-spec product certification.
+26. Disconnect actual product outlet RTD feedback.
+27. Detect invalid temperature measurement.
+28. Inhibit unsafe heating.
+29. Reconnect the wire.
+30. Recalibrate the RTD.
+31. Explicitly reset the protection fault.
+32. Safely recommission the heating system.
+33. Pass a fresh temperature stability test.
+34. Pass a fresh disturbance recovery test.
+35. Complete all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 68.**
+
+The player must learn industrial thermal engineering, regenerative heat exchange, heat capacity, fluid enthalpy, thermal inertia, cascade PID, heater optimization, fouling diagnosis and thermal protection through real simulated behavior rather than decorative indicators.
+
+**FINAL GOAL: A COMPLETE, POLISHED, UNITY-READY, AAA-QUALITY AND ACTUALLY PLAYABLE LEVEL 68 — TAME THE HEAT.**

@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_64_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_64
+  levelTitle: Hold the Synchronism
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the stability lab
+    explanation: Connect both sources, the dual feeders, relay routing and PMUs.
+      Install W62 last.
+    caption: "62 WIRES  \u2022  96 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.64}
+      label: GENERATORS
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.64, y: 0.64}
+      label: DUAL FEEDERS
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.64}
+      label: PROTECTION
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.64}
+      - {x: 0.43, y: 0.64}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.64, y: 0.64}
+      - {x: 0.75, y: 0.64}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 02 / Synchronize
+    explanation: Calibrate and wait for the relay window before closing the source
+      breakers.
+    caption: "VOLTAGE  \u2022  FREQUENCY  \u2022  PHASE"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.64}
+      label: MATCH
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.64, y: 0.64}
+      label: HOLD
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.64}
+      label: CLOSE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.64}
+      - {x: 0.43, y: 0.64}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.64, y: 0.64}
+      - {x: 0.75, y: 0.64}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 03 / Clear and damp
+    explanation: Clear Feeder A, observe rotor-angle motion and use PSS to damp a
+      load step.
+    caption: "MEASURED CLEARING TIME  \u2022  ESTIMATED CCT"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.64}
+      label: FAULT
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.64, y: 0.64}
+      label: ISOLATE
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.64}
+      label: DAMP
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.64}
+      - {x: 0.43, y: 0.64}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.64, y: 0.64}
+      - {x: 0.75, y: 0.64}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 04 / Recover and certify
+    explanation: Prove upstream backup for a stuck breaker. Restore PMU B, resynchronize
+      and repeat the selective fault.
+    caption: "BREAKER FAILURE  \u2022  W62 PMU LOSS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.64}
+      label: BACKUP
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.64, y: 0.64}
+      label: REPAIR
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.64}
+      label: CERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.64}
+      - {x: 0.43, y: 0.64}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.64, y: 0.64}
+      - {x: 0.75, y: 0.64}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}

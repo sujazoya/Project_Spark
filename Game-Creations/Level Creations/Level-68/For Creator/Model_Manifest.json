@@ -1,0 +1,450 @@
+{
+  "level_id": "level_68",
+  "display_name": "Tame the Heat",
+  "asset_kind": "procedural 3D art only, no gameplay",
+  "individual_models": 44,
+  "planned_player_wires": 78,
+  "planned_unique_sockets": 122,
+  "real_terminals_included": false,
+  "physics_included": false,
+  "coordinate_system": "X=workbench width; Y=up; Z=front; length scale 1 unit=1 meter",
+  "models": [
+    {
+      "file": "00_L68_IndustrialThermalProcessBase.fbx",
+      "glb": "00_L68_IndustrialThermalProcessBase.glb",
+      "name": "L68_IndustrialThermalProcessBase",
+      "triangle_count": 732,
+      "mesh_parts": 61,
+      "animation_pivots": {}
+    },
+    {
+      "file": "01_L68_RegenerativePlateHeatExchanger.fbx",
+      "glb": "01_L68_RegenerativePlateHeatExchanger.glb",
+      "name": "L68_RegenerativePlateHeatExchanger",
+      "triangle_count": 7292,
+      "mesh_parts": 177,
+      "animation_pivots": {}
+    },
+    {
+      "file": "02_L68_HeatExchangerPlateStack.fbx",
+      "glb": "02_L68_HeatExchangerPlateStack.glb",
+      "name": "L68_HeatExchangerPlateStack",
+      "triangle_count": 404,
+      "mesh_parts": 29,
+      "animation_pivots": {}
+    },
+    {
+      "file": "03_L68_SecondaryTrimHeatExchanger.fbx",
+      "glb": "03_L68_SecondaryTrimHeatExchanger.glb",
+      "name": "L68_SecondaryTrimHeatExchanger",
+      "triangle_count": 3848,
+      "mesh_parts": 94,
+      "animation_pivots": {}
+    },
+    {
+      "file": "04_L68_InsulatedHeatingTank.fbx",
+      "glb": "04_L68_InsulatedHeatingTank.glb",
+      "name": "L68_InsulatedHeatingTank",
+      "triangle_count": 2368,
+      "mesh_parts": 30,
+      "animation_pivots": {}
+    },
+    {
+      "file": "05_L68_ColdWaterReservoir.fbx",
+      "glb": "05_L68_ColdWaterReservoir.glb",
+      "name": "L68_ColdWaterReservoir",
+      "triangle_count": 1476,
+      "mesh_parts": 24,
+      "animation_pivots": {}
+    },
+    {
+      "file": "06_L68_ThermalBufferTank.fbx",
+      "glb": "06_L68_ThermalBufferTank.glb",
+      "name": "L68_ThermalBufferTank",
+      "triangle_count": 2676,
+      "mesh_parts": 29,
+      "animation_pivots": {}
+    },
+    {
+      "file": "07_L68_ProductHoldingChamber.fbx",
+      "glb": "07_L68_ProductHoldingChamber.glb",
+      "name": "L68_ProductHoldingChamber",
+      "triangle_count": 1476,
+      "mesh_parts": 24,
+      "animation_pivots": {}
+    },
+    {
+      "file": "08_L68_FinishedProductOutletModule.fbx",
+      "glb": "08_L68_FinishedProductOutletModule.glb",
+      "name": "L68_FinishedProductOutletModule",
+      "triangle_count": 636,
+      "mesh_parts": 8,
+      "animation_pivots": {}
+    },
+    {
+      "file": "09_L68_HotWaterCirculationPump.fbx",
+      "glb": "09_L68_HotWaterCirculationPump.glb",
+      "name": "L68_HotWaterCirculationPump",
+      "triangle_count": 988,
+      "mesh_parts": 29,
+      "animation_pivots": {
+        "ANIM_HOT_PUMP_IMPELLER": [
+          -4.49,
+          1.08,
+          1.1
+        ]
+      }
+    },
+    {
+      "file": "10_L68_ColdWaterCirculationPump.fbx",
+      "glb": "10_L68_ColdWaterCirculationPump.glb",
+      "name": "L68_ColdWaterCirculationPump",
+      "triangle_count": 988,
+      "mesh_parts": 29,
+      "animation_pivots": {
+        "ANIM_COLD_PUMP_IMPELLER": [
+          -2.19,
+          1.08,
+          1.1
+        ]
+      }
+    },
+    {
+      "file": "11_L68_ProductTransferPump.fbx",
+      "glb": "11_L68_ProductTransferPump.glb",
+      "name": "L68_ProductTransferPump",
+      "triangle_count": 988,
+      "mesh_parts": 29,
+      "animation_pivots": {
+        "ANIM_PRODUCT_PUMP_IMPELLER": [
+          1.36,
+          1.08,
+          1.12
+        ]
+      }
+    },
+    {
+      "file": "12_L68_HotLoopPumpMotor.fbx",
+      "glb": "12_L68_HotLoopPumpMotor.glb",
+      "name": "L68_HotLoopPumpMotor",
+      "triangle_count": 508,
+      "mesh_parts": 22,
+      "animation_pivots": {
+        "ANIM_HOT_MOTOR": [
+          -3.9499999999999997,
+          1.05,
+          1.72
+        ]
+      }
+    },
+    {
+      "file": "13_L68_ColdLoopPumpMotor.fbx",
+      "glb": "13_L68_ColdLoopPumpMotor.glb",
+      "name": "L68_ColdLoopPumpMotor",
+      "triangle_count": 508,
+      "mesh_parts": 22,
+      "animation_pivots": {
+        "ANIM_COLD_MOTOR": [
+          -1.67,
+          1.05,
+          1.73
+        ]
+      }
+    },
+    {
+      "file": "14_L68_ProductPumpMotor.fbx",
+      "glb": "14_L68_ProductPumpMotor.glb",
+      "name": "L68_ProductPumpMotor",
+      "triangle_count": 508,
+      "mesh_parts": 22,
+      "animation_pivots": {
+        "ANIM_PRODUCT_MOTOR": [
+          1.9,
+          1.05,
+          1.73
+        ]
+      }
+    },
+    {
+      "file": "15_L68_ElectricHeatingElementBank.fbx",
+      "glb": "15_L68_ElectricHeatingElementBank.glb",
+      "name": "L68_ElectricHeatingElementBank",
+      "triangle_count": 1368,
+      "mesh_parts": 9,
+      "animation_pivots": {}
+    },
+    {
+      "file": "16_L68_HeatingPowerController.fbx",
+      "glb": "16_L68_HeatingPowerController.glb",
+      "name": "L68_HeatingPowerController",
+      "triangle_count": 668,
+      "mesh_parts": 18,
+      "animation_pivots": {}
+    },
+    {
+      "file": "17_L68_VariableFrequencyDriveBank.fbx",
+      "glb": "17_L68_VariableFrequencyDriveBank.glb",
+      "name": "L68_VariableFrequencyDriveBank",
+      "triangle_count": 668,
+      "mesh_parts": 18,
+      "animation_pivots": {}
+    },
+    {
+      "file": "18_L68_HotWaterControlValve.fbx",
+      "glb": "18_L68_HotWaterControlValve.glb",
+      "name": "L68_HotWaterControlValve",
+      "triangle_count": 492,
+      "mesh_parts": 11,
+      "animation_pivots": {
+        "ANIM_HOT_VALVE": [
+          -3.35,
+          2.19,
+          -0.5
+        ]
+      }
+    },
+    {
+      "file": "19_L68_CoolingWaterControlValve.fbx",
+      "glb": "19_L68_CoolingWaterControlValve.glb",
+      "name": "L68_CoolingWaterControlValve",
+      "triangle_count": 492,
+      "mesh_parts": 11,
+      "animation_pivots": {
+        "ANIM_COOLING_VALVE": [
+          -1.9,
+          2.19,
+          -0.45
+        ]
+      }
+    },
+    {
+      "file": "20_L68_ThreeWayMixingValve.fbx",
+      "glb": "20_L68_ThreeWayMixingValve.glb",
+      "name": "L68_ThreeWayMixingValve",
+      "triangle_count": 492,
+      "mesh_parts": 11,
+      "animation_pivots": {
+        "ANIM_THREE_WAY_VALVE": [
+          2.3,
+          2.19,
+          0.18
+        ]
+      }
+    },
+    {
+      "file": "21_L68_RegenerativeBypassValve.fbx",
+      "glb": "21_L68_RegenerativeBypassValve.glb",
+      "name": "L68_RegenerativeBypassValve",
+      "triangle_count": 492,
+      "mesh_parts": 11,
+      "animation_pivots": {
+        "ANIM_REGEN_BYPASS": [
+          3.65,
+          2.19,
+          -0.5
+        ]
+      }
+    },
+    {
+      "file": "22_L68_ProductIsolationValve.fbx",
+      "glb": "22_L68_ProductIsolationValve.glb",
+      "name": "L68_ProductIsolationValve",
+      "triangle_count": 492,
+      "mesh_parts": 11,
+      "animation_pivots": {
+        "ANIM_PRODUCT_ISOLATION": [
+          5.45,
+          2.19,
+          1.3
+        ]
+      }
+    },
+    {
+      "file": "23_L68_TransparentThermalPipelineNetwork.fbx",
+      "glb": "23_L68_TransparentThermalPipelineNetwork.glb",
+      "name": "L68_TransparentThermalPipelineNetwork",
+      "triangle_count": 1264,
+      "mesh_parts": 21,
+      "animation_pivots": {}
+    },
+    {
+      "file": "24_L68_ProductInletTemperatureSensor.fbx",
+      "glb": "24_L68_ProductInletTemperatureSensor.glb",
+      "name": "L68_ProductInletTemperatureSensor",
+      "triangle_count": 172,
+      "mesh_parts": 7,
+      "animation_pivots": {}
+    },
+    {
+      "file": "25_L68_ProductOutletRTDTemperatureSensor.fbx",
+      "glb": "25_L68_ProductOutletRTDTemperatureSensor.glb",
+      "name": "L68_ProductOutletRTDTemperatureSensor",
+      "triangle_count": 172,
+      "mesh_parts": 7,
+      "animation_pivots": {}
+    },
+    {
+      "file": "26_L68_HotWaterTemperatureSensor.fbx",
+      "glb": "26_L68_HotWaterTemperatureSensor.glb",
+      "name": "L68_HotWaterTemperatureSensor",
+      "triangle_count": 172,
+      "mesh_parts": 7,
+      "animation_pivots": {}
+    },
+    {
+      "file": "27_L68_ColdWaterTemperatureSensor.fbx",
+      "glb": "27_L68_ColdWaterTemperatureSensor.glb",
+      "name": "L68_ColdWaterTemperatureSensor",
+      "triangle_count": 172,
+      "mesh_parts": 7,
+      "animation_pivots": {}
+    },
+    {
+      "file": "28_L68_ThermalBufferTemperatureSensor.fbx",
+      "glb": "28_L68_ThermalBufferTemperatureSensor.glb",
+      "name": "L68_ThermalBufferTemperatureSensor",
+      "triangle_count": 172,
+      "mesh_parts": 7,
+      "animation_pivots": {}
+    },
+    {
+      "file": "29_L68_ThermalFlowMeterBank.fbx",
+      "glb": "29_L68_ThermalFlowMeterBank.glb",
+      "name": "L68_ThermalFlowMeterBank",
+      "triangle_count": 324,
+      "mesh_parts": 10,
+      "animation_pivots": {}
+    },
+    {
+      "file": "30_L68_DifferentialPressureTransmitter.fbx",
+      "glb": "30_L68_DifferentialPressureTransmitter.glb",
+      "name": "L68_DifferentialPressureTransmitter",
+      "triangle_count": 252,
+      "mesh_parts": 9,
+      "animation_pivots": {}
+    },
+    {
+      "file": "31_L68_HeatFluxMeasurementModule.fbx",
+      "glb": "31_L68_HeatFluxMeasurementModule.glb",
+      "name": "L68_HeatFluxMeasurementModule",
+      "triangle_count": 172,
+      "mesh_parts": 7,
+      "animation_pivots": {}
+    },
+    {
+      "file": "32_L68_RegenerativeEfficiencyAnalyzer.fbx",
+      "glb": "32_L68_RegenerativeEfficiencyAnalyzer.glb",
+      "name": "L68_RegenerativeEfficiencyAnalyzer",
+      "triangle_count": 172,
+      "mesh_parts": 7,
+      "animation_pivots": {}
+    },
+    {
+      "file": "33_L68_CascadeTemperaturePIDController.fbx",
+      "glb": "33_L68_CascadeTemperaturePIDController.glb",
+      "name": "L68_CascadeTemperaturePIDController",
+      "triangle_count": 668,
+      "mesh_parts": 18,
+      "animation_pivots": {}
+    },
+    {
+      "file": "34_L68_ThermalEnergyManagementController.fbx",
+      "glb": "34_L68_ThermalEnergyManagementController.glb",
+      "name": "L68_ThermalEnergyManagementController",
+      "triangle_count": 668,
+      "mesh_parts": 18,
+      "animation_pivots": {}
+    },
+    {
+      "file": "35_L68_HeatExchangerFoulingSimulator.fbx",
+      "glb": "35_L68_HeatExchangerFoulingSimulator.glb",
+      "name": "L68_HeatExchangerFoulingSimulator",
+      "triangle_count": 652,
+      "mesh_parts": 13,
+      "animation_pivots": {}
+    },
+    {
+      "file": "36_L68_InletTemperatureDisturbanceModule.fbx",
+      "glb": "36_L68_InletTemperatureDisturbanceModule.glb",
+      "name": "L68_InletTemperatureDisturbanceModule",
+      "triangle_count": 652,
+      "mesh_parts": 18,
+      "animation_pivots": {}
+    },
+    {
+      "file": "37_L68_OvertemperatureProtectionRelay.fbx",
+      "glb": "37_L68_OvertemperatureProtectionRelay.glb",
+      "name": "L68_OvertemperatureProtectionRelay",
+      "triangle_count": 668,
+      "mesh_parts": 18,
+      "animation_pivots": {}
+    },
+    {
+      "file": "38_L68_IndustrialThermalPLC.fbx",
+      "glb": "38_L68_IndustrialThermalPLC.glb",
+      "name": "L68_IndustrialThermalPLC",
+      "triangle_count": 668,
+      "mesh_parts": 18,
+      "animation_pivots": {}
+    },
+    {
+      "file": "39_L68_ThermalDigitalIOModule.fbx",
+      "glb": "39_L68_ThermalDigitalIOModule.glb",
+      "name": "L68_ThermalDigitalIOModule",
+      "triangle_count": 668,
+      "mesh_parts": 18,
+      "animation_pivots": {}
+    },
+    {
+      "file": "40_L68_HolographicThermalSCADAMonitor.fbx",
+      "glb": "40_L68_HolographicThermalSCADAMonitor.glb",
+      "name": "L68_HolographicThermalSCADAMonitor",
+      "triangle_count": 312,
+      "mesh_parts": 26,
+      "animation_pivots": {
+        "ANIM_THERMAL_SCADA": [
+          5.5,
+          3.12,
+          -0.2
+        ]
+      }
+    },
+    {
+      "file": "41_L68_EmergencyThermalShutdownStation.fbx",
+      "glb": "41_L68_EmergencyThermalShutdownStation.glb",
+      "name": "L68_EmergencyThermalShutdownStation",
+      "triangle_count": 120,
+      "mesh_parts": 3,
+      "animation_pivots": {
+        "ANIM_EMERGENCY_STOP": [
+          5.95,
+          1.42,
+          2.64
+        ]
+      }
+    },
+    {
+      "file": "42_L68_TransparentThermalSafetyEnclosure.fbx",
+      "glb": "42_L68_TransparentThermalSafetyEnclosure.glb",
+      "name": "L68_TransparentThermalSafetyEnclosure",
+      "triangle_count": 108,
+      "mesh_parts": 9,
+      "animation_pivots": {
+        "ANIM_SAFETY_DOOR": [
+          6.55,
+          2.43,
+          -0.05
+        ]
+      }
+    },
+    {
+      "file": "43_L68_Regulated5VControlSupply.fbx",
+      "glb": "43_L68_Regulated5VControlSupply.glb",
+      "name": "L68_Regulated5VControlSupply",
+      "triangle_count": 600,
+      "mesh_parts": 18,
+      "animation_pivots": {}
+    }
+  ],
+  "triangle_count": 39388
+}

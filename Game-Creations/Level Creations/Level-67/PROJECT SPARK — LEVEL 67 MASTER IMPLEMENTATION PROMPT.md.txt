@@ -1,0 +1,2459 @@
+# PROJECT SPARK — LEVEL 67 MASTER UNITY IMPLEMENTATION PROMPT
+
+## LEVEL 67: MASTER THE FLOW
+### Advanced Industrial Liquid Process Control, Fluid Volume and Pressure Dynamics, Centrifugal Pump Modeling, Cascade PID Automation, Precision Ratio Mixing, Intelligent SCADA, Cavitation Protection and Fault Recovery
+
+Act as my senior Unity C# engineer, industrial process-control engineer, fluid systems engineer, pump and hydraulic network simulation specialist, control systems engineer, cascade PID tuning expert, PLC automation developer, SCADA architect, industrial instrumentation engineer, functional safety engineer, gameplay programmer, Unity Editor automation specialist and technical artist.
+
+**YOUR TASK IS TO IMPLEMENT THE COMPLETE, WORKING, PLAYABLE LEVEL 67 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+This is an implementation task, not a request for another design document.
+
+Do not stop at:
+
+- A high-level explanation.
+- Pseudocode.
+- A decorative factory scene.
+- Nonfunctional liquid animations.
+- Preprogrammed liquid-level graphs.
+- Pump animations without hydraulic behavior.
+- Fake pressure or flow values.
+- PID controls that do not affect the plant.
+- A SCADA display unrelated to gameplay physics.
+- A ratio controller that forces composition directly.
+- Fixed completion flags.
+- A local objective counter.
+- Unverified circuit endpoint definitions.
+- Scripts that do not compile against my actual Unity project.
+
+Implement everything safely achievable using the existing Project Spark source code and approved Level 67 FBX/GLB package.
+
+**The Level 67 design and 42 individual equipment models are already approved.**
+
+Do not redesign the plant or regenerate its art without a specific technical necessity.
+
+**MAIN REQUIREMENT: THE PLAYER MUST CONTROL A GENUINELY SIMULATED LIQUID-PROCESS NETWORK USING REAL GAMEPLAY WIRING, MEASURED SENSOR FEEDBACK, PUMP AND VALVE CONTROL, FLUID CONSERVATION, CASCADE PID, RATIO CONTROL AND SAFETY PROTECTION.**
+
+---
+
+# 1. INSPECT MY ACTUAL PROJECT SPARK UNITY CODEBASE
+
+Project Spark is an existing electrical engineering and industrial automation game.
+
+Before implementing Level 67, inspect these actual classes if present:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+
+Also inspect existing implementations of:
+
+- DC electrical circuits.
+- Player-created electrical wires.
+- Circuit connectivity and topology.
+- Component registration.
+- Motor electrical operation.
+- Motor shaft dynamics.
+- Motor speed control.
+- Encoders and RPM sensing.
+- Switches and relays.
+- PLC digital input/output.
+- Sensor calibration.
+- Sensor validity and freshness.
+- Safety interlocks.
+- Fault latching and explicit reset.
+- Level objective evaluation.
+- Historical objective certification.
+- Workstation object placement.
+- Object removal and replacement.
+- TextMeshPro diagnostics.
+- Interactive controls.
+- Level asset creation.
+- Unity Editor builders.
+- Animation and VFX adapters.
+
+## Previous levels to inspect
+
+Reuse compatible, actually implemented infrastructure from:
+
+**Level 54 — Cross the Critical**
+
+Motor speed, rotating machinery and protection.
+
+**Level 56 — Harvest the Spin**
+
+Motor mechanical power and angular dynamics.
+
+**Level 58 — Isolate the Fault**
+
+Fault isolation and relay states.
+
+**Level 59 — Bring Back the Power**
+
+Sequential commissioning and interlocked startup.
+
+**Level 60 — The Grid Must Survive**
+
+Automated control and coordinated protection.
+
+**Level 63 — Catch the Frequency**
+
+Dynamic feedback control, finite energy and real measurement.
+
+**Level 65 — The Factory Thinks**
+
+PLC state machines, motor drives, industrial I/O and safe automated operation.
+
+**Level 66 — Save the Factory**
+
+Predictive instrumentation, sensor feedback, motor condition and maintenance interlocks.
+
+Only use functionality actually found in the project.
+
+Do not assume a system exists merely because a previous level concept or prompt describes it.
+
+---
+
+# 2. NON-NEGOTIABLE ENGINEERING RULES
+
+1. Inspect the real project before referencing its APIs.
+2. Never invent existing Project Spark methods or namespaces.
+3. Reuse compatible electrical and gameplay infrastructure.
+4. Preserve Levels 1–66.
+5. Keep Level 67 systems level-local when practical.
+6. Do not modify the shared electrical solver without demonstrated need.
+7. Do not model a hydraulic pump by arbitrarily changing an electrical resistance.
+8. Do not fabricate tank liquid volume.
+9. Do not create liquid from an empty source tank.
+10. Do not allow negative tank volumes.
+11. Do not permit unlimited tank capacity.
+12. Do not fabricate pressure independently of the hydraulic model.
+13. Do not fabricate flow values.
+14. Do not treat commanded pump speed as actual RPM.
+15. Do not allow infinite pump head or flow.
+16. Do not use a valve command as actual valve position.
+17. Do not allow instantaneous actuator response unless explicitly justified.
+18. Do not change liquid composition directly from the recipe setting.
+19. Do not claim 70/30 mixing when one source is not supplying liquid.
+20. Do not bypass conservation of mass or constituent volume.
+21. Do not fake PID success by setting the measured variable equal to its setpoint.
+22. Do not implement cascade PID as two unrelated display sliders.
+23. Do not allow unlimited controller integral windup.
+24. Do not use invalid flow measurements for closed-loop ratio control.
+25. Do not allow a pump to run normally with unavailable suction conditions.
+26. Do not ignore dry-run or cavitation protection.
+27. Do not bypass pressure or overflow limits.
+28. Do not let a sensor remain valid after its actual feedback wire disconnects.
+29. Do not bypass process protection merely to pass an objective.
+30. Do not mark product compliant without measured or otherwise valid composition evidence.
+31. Do not count liquid transferred without reducing source inventories appropriately.
+32. Do not award six objectives using local-only completion flags.
+33. Use a single authoritative simulation timeline.
+34. Prevent duplicate pump and hydraulic network simulators.
+35. Keep SI units and conversions consistent.
+36. Implement deterministic tests where possible.
+37. Produce full C# source files.
+38. Make Unity Editor creation safe and repeatable.
+39. Report missing dependencies accurately.
+40. Do not claim Unity compilation or Play Mode success unless actually tested.
+
+## AUTHORITATIVE LEVEL COMPLETION
+
+**The actual `LevelGamePlayManager` must reach 6/6.**
+
+Inspect the real evaluator integration.
+
+A Level 67 script displaying 6/6 is insufficient.
+
+Objectives 1–5 must remain historically certified during the deliberate final flow-sensor fault.
+
+Objective 6 must require actual wire reconnection, recalibration, explicit fault reset, restored valid control and a fresh successful recipe-and-disturbance test.
+
+---
+
+# 3. LEVEL 67 CONFIGURATION
+
+**Level Number:** 67
+
+**Level ID:** `level_67`
+
+**Display Name:** `Master the Flow`
+
+**Subtitle:** `Advanced Liquid Process Control and Cascade PID Automation`
+
+**Difficulty:** Master / Expert
+
+**Control Supply:** 5 V DC educational control
+
+**Process Domain:** Simulated incompressible liquid hydraulic network
+
+**Player-Created Wires:** 74
+
+**Unique Functional Terminals:** 116
+
+**Individual 3D Equipment Models:** 42
+
+**Supply Tanks:** 2
+
+**Mixing Vessels:** 1
+
+**Finished Product Tanks:** 1
+
+**Main Centrifugal Pumps:** 3
+
+**Pump Motors:** 3
+
+**Motorized Control Valves:** 4
+
+**Flow Transmitters:** 3
+
+**Level Transmitters:** 3
+
+**Pressure Transmitters:** 2
+
+**Mixture Quality Sensor:** 1
+
+**Cavitation Monitor:** 1
+
+**PID Control:** Cascade level/flow
+
+**Ratio Control:** Two-source liquid dosing
+
+**Main Disturbances:** Demand surge, pressure loss and Pump B failure
+
+**Final Fault:** Supply B flow feedback disconnection
+
+**Authoritative Objectives:** 6
+
+## Educational design settings
+
+Nominal process example:
+
+- Liquid A: blue.
+- Liquid B: amber.
+- Target composition: 70% A / 30% B.
+- Nominal total dosing flow: 20 L/min.
+- Nominal A flow: 14 L/min.
+- Nominal B flow: 6 L/min.
+- Fluid density: configurable.
+- Tank capacities: finite.
+- Pump pressure and flow limits: finite.
+- Valve response time: finite.
+- Mixer residence time: nonzero.
+- PID sample intervals: configurable.
+- Fault protection: enabled.
+
+These are proposed gameplay values, not ratings verified in the art package.
+
+Calibrate the actual simulation so the specified operating point is achievable.
+
+---
+
+# 4. INITIAL LEVEL STATE
+
+At level start:
+
+- Main control power off or awaiting player enable.
+- Supply Tank A contains a configurable initial volume.
+- Supply Tank B contains a configurable initial volume.
+- Mixing vessel initially empty or at a documented safe initial inventory.
+- Product tank initially empty or at a defined commissioning level.
+- Pump A off.
+- Pump B off.
+- Transfer Pump off.
+- All three motor drives disabled.
+- Control Valve A closed.
+- Control Valve B closed.
+- Product outlet valve in defined safe position.
+- Emergency isolation valve in safe initial position.
+- Mixer motor off.
+- Flow sensors uncalibrated.
+- Level sensors uncalibrated.
+- Pressure transmitters uncalibrated.
+- Quality sensor uncalibrated.
+- Cascade PID disabled.
+- Ratio controller disabled.
+- Tank level controller disabled.
+- Process PLC in IDLE.
+- Safety PLC awaiting validation.
+- No active hydraulic fault.
+- No unresolved critical fault.
+- Objectives 0/6.
+
+## Player mission
+
+1. Build the 74-wire control and instrumentation network.
+2. Validate all 116 functional terminals.
+3. Power PLC and sensor electronics.
+4. Commission all three motor drives.
+5. Calibrate tank level sensors.
+6. Calibrate all three flow transmitters.
+7. Calibrate both pressure sensors.
+8. Validate liquid-quality feedback.
+9. Verify piping route and valve topology.
+10. Prime Pump A.
+11. Prime Pump B.
+12. Prime transfer pump safely.
+13. Establish actual flow from both supply tanks.
+14. Fill the mixing vessel.
+15. Enable mixing.
+16. Configure cascade PID.
+17. Tune inner flow loop.
+18. Tune outer level loop.
+19. Configure 70/30 ratio control.
+20. Deliver compliant product.
+21. Survive a downstream demand surge.
+22. Handle supply pressure loss.
+23. Respond safely to Pump B unavailability.
+24. Disconnect Supply B flow feedback.
+25. Detect invalid measurement.
+26. Inhibit unsafe automatic dosing.
+27. Restore the wire.
+28. Recalibrate transmitter B.
+29. Explicitly reset the fault.
+30. Restore process operation.
+31. Complete fresh certification.
+32. Reach authoritative 6/6.
+
+---
+
+# 5. USE MY EXISTING LEVEL 67 HD/AAA ASSET COLLECTION
+
+The approved package is:
+
+`ProjectSpark_Level67_HD_AAA_Models.zip`
+
+The actual verified manifest reports:
+
+- 42 individual binary FBX models.
+- 42 matching GLB backups.
+- One assembled FBX showcase.
+- One assembled GLB showcase.
+- 26,472 individual equipment triangles.
+- 14 animation-pivot mappings.
+- Model manifest.
+- Art-placement editor script.
+- README and verification report.
+- Procedural geometry source files.
+
+## EXACT 42 INDIVIDUAL FBX FILENAMES
+
+Use these exact filenames:
+
+| FILE | PURPOSE |
+|---|---|
+| `00_L67_IndustrialProcessControlBase.fbx` | Industrial workstation |
+| `01_L67_TransparentSupplyTankA.fbx` | Blue supply reservoir |
+| `02_L67_TransparentSupplyTankB.fbx` | Amber supply reservoir |
+| `03_L67_CentralMixingVessel.fbx` | Main mixing vessel |
+| `04_L67_FinishedProductTank.fbx` | Product storage |
+| `05_L67_CentrifugalPumpA.fbx` | Supply A pump |
+| `06_L67_CentrifugalPumpB.fbx` | Supply B pump |
+| `07_L67_ProductTransferPump.fbx` | Finished-product transfer |
+| `08_L67_PumpMotorA.fbx` | Pump A motor |
+| `09_L67_PumpMotorB.fbx` | Pump B motor |
+| `10_L67_TransferPumpMotor.fbx` | Transfer pump motor |
+| `11_L67_VariableFrequencyDriveBank.fbx` | Pump drive control |
+| `12_L67_ThreeChannelFlowMeterAssembly.fbx` | Flow measurement hardware |
+| `13_L67_FlowTransmitterA.fbx` | Feed A measurement |
+| `14_L67_FlowTransmitterB.fbx` | Feed B measurement |
+| `15_L67_ProductFlowTransmitter.fbx` | Output flow |
+| `16_L67_UltrasonicLevelSensorA.fbx` | Tank A level |
+| `17_L67_UltrasonicLevelSensorB.fbx` | Tank B level |
+| `18_L67_ProductTankLevelSensor.fbx` | Product tank level |
+| `19_L67_PressureTransmitterA.fbx` | Supply pressure |
+| `20_L67_PressureTransmitterB.fbx` | Discharge pressure |
+| `21_L67_MotorizedControlValveA.fbx` | Feed A valve |
+| `22_L67_MotorizedControlValveB.fbx` | Feed B valve |
+| `23_L67_ProductOutletControlValve.fbx` | Finished-product outlet |
+| `24_L67_EmergencyIsolationValve.fbx` | Emergency isolation |
+| `25_L67_TransparentProcessPipelineNetwork.fbx` | Process pipe network |
+| `26_L67_IndustrialMixingImpeller.fbx` | Mixing impeller |
+| `27_L67_MixingMotorDrive.fbx` | Mixer drive |
+| `28_L67_LiquidRatioQualitySensor.fbx` | Blend composition |
+| `29_L67_CascadePIDController.fbx` | Cascade control |
+| `30_L67_FlowRatioController.fbx` | A/B ratio controller |
+| `31_L67_TankLevelController.fbx` | Level control |
+| `32_L67_PumpProtectionRelay.fbx` | Pump protection |
+| `33_L67_CavitationDetectionSensor.fbx` | Cavitation monitoring |
+| `34_L67_ProcessSafetyPLC.fbx` | Independent safety control |
+| `35_L67_IndustrialProcessPLCRack.fbx` | Main PLC |
+| `36_L67_ProcessDigitalIOModule.fbx` | Digital I/O |
+| `37_L67_DownstreamDemandSimulator.fbx` | Demand disturbances |
+| `38_L67_HolographicSCADAMonitor.fbx` | Process visualization |
+| `39_L67_EmergencyStopAndAlarmStation.fbx` | Emergency controls |
+| `40_L67_TransparentProcessSafetyEnclosure.fbx` | Protective enclosure |
+| `41_L67_Regulated5VControlSupply.fbx` | Educational control power |
+
+## SUPPLIED SUPPORTING FILES
+
+Inspect:
+
+- `Level67_Complete_ArtKit_Showcase.fbx`
+- `Level67_Complete_ArtKit_Showcase.glb`
+- `SparkLevel67ArtPlacementEditor.cs`
+- `Model_Manifest.json`
+- `Animation_Rigs.csv`
+- `README_Unity.txt`
+- `Verification_Report.json`
+- `Source/`
+- `Previews/`
+
+## COORDINATE SYSTEM
+
+The asset manifest states:
+
+- X: workstation width.
+- Y: vertical.
+- Z: front.
+- One art length unit: one Unity unit at scale 1.
+
+Create:
+
+`L67_HD_VISUAL_ART`
+
+Instantiate all 42 individual FBXs with their common authored alignment.
+
+Do not instantiate the assembled showcase together with all 42 individual models.
+
+## IMPORTANT VERIFIED ART-HELPER ISSUE
+
+The existing `SparkLevel67ArtPlacementEditor.cs` currently registers this incorrect menu:
+
+`Tools/Project Spark/Levels/66/Place HD Art Under Selected Layout`
+
+Correct it to:
+
+`Tools/Project Spark/Levels/67/Place HD Art Under Selected Layout`
+
+Also correct the Level 67 README's leftover Level 66 paths, names and asset references.
+
+Do not change the genuine Level 66 Editor menu.
+
+## IMPORTANT QUALITY DISTINCTION
+
+The asset pack is procedural HD/AAA-inspired geometry, not final hand-authored PBR art.
+
+The 14 animation mappings are reference pivots, not a promise of fully rigged moving parts.
+
+The asset pack does not include:
+
+- Real `SparkTerminal` components.
+- 74 actual player-wire definitions.
+- 116 functional socket anchors.
+- Pump/tank/pressure/flow physics.
+- Cascade PID runtime.
+- Actual ratio-control gameplay.
+- Six authoritative objectives.
+
+Implement these separately.
+
+---
+
+# 6. EXACT 14 ANIMATION PIVOT MAPPINGS
+
+Use the verified `Animation_Rigs.csv` data.
+
+| MODEL | PIVOT | POSITION XYZ |
+|---|---|---|
+| CentrifugalPumpA | `ANIM_PUMP_A_IMPELLER` | (-4.80, 1.18, 0.77) |
+| CentrifugalPumpB | `ANIM_PUMP_B_IMPELLER` | (-2.30, 1.18, 0.77) |
+| ProductTransferPump | `ANIM_TRANSFER_PUMP` | (2.32, 1.18, 0.75) |
+| PumpMotorA | `ANIM_MOTOR_A` | (-4.54, 1.16, 1.18) |
+| PumpMotorB | `ANIM_MOTOR_B` | (-2.02, 1.16, 1.18) |
+| TransferPumpMotor | `ANIM_MOTOR_TRANSFER` | (2.55, 1.16, 1.12) |
+| MotorizedControlValveA | `ANIM_VALVE_A` | (-3.74, 1.79, 0.05) |
+| MotorizedControlValveB | `ANIM_VALVE_B` | (-1.07, 1.79, 0.05) |
+| ProductOutletControlValve | `ANIM_OUTLET_VALVE` | (3.90, 1.79, 0.13) |
+| EmergencyIsolationValve | `ANIM_ISOLATION_VALVE` | (4.85, 1.79, -1.24) |
+| IndustrialMixingImpeller | `ANIM_MIXER_SHAFT` | (0.45, 2.35, -0.95) |
+| HolographicSCADAMonitor | `ANIM_SCADA_MONITOR` | (4.93, 3.12, -0.30) |
+| EmergencyStopAndAlarmStation | `ANIM_ESTOP` | (5.52, 1.22, 2.35) |
+| TransparentProcessSafetyEnclosure | `ANIM_SAFETY_DOOR` | (5.94, 2.35, 0.10) |
+
+## PUMP IMPELLERS
+
+Impeller animations must follow actual motor/pump angular speeds.
+
+Pump A, Pump B and the transfer pump must operate independently.
+
+## PUMP MOTORS
+
+Motor shaft rotation must reflect the motor dynamics.
+
+Do not spin a motor visually when its actual drive is disabled.
+
+## VALVES
+
+Valve animations must reflect actual valve opening, not simply the commanded position.
+
+Use finite actuator travel time.
+
+## MIXING IMPELLER
+
+The mixer must rotate according to its actual drive state.
+
+Do not visually spin the impeller when mixing power is absent.
+
+## ART HIERARCHY RULE
+
+Pivot references alone do not guarantee correctly separated movable meshes.
+
+Inspect the real FBX hierarchy.
+
+Create moving subtransforms when required without destroying source art.
+
+## LIQUID LEVEL ANIMATION
+
+The manifest does not provide verified liquid-level animation pivots.
+
+Create separate appropriately shaped procedural liquid-surface meshes or child volumes for the tanks.
+
+Their height and rendered volume must follow authoritative tank inventory.
+
+---
+
+# 7. PLAYER WIRING — W01 TO W74
+
+The level requires:
+
+**74 player-created wires and 116 unique functional terminals.**
+
+The current art pack does not contain a validated endpoint map.
+
+Implement the actual W01–W74 manifest during Unity integration.
+
+## GROUP A — CONTROL POWER
+
+- Regulated 5 V supply.
+- Control return.
+- Main PLC power.
+- Process I/O power.
+- Safety PLC power.
+- Sensor module power.
+- Controller power.
+
+## GROUP B — PUMP DRIVES
+
+- Pump A motor drive.
+- Pump A enable.
+- Pump A speed command.
+- Pump A feedback.
+- Pump B motor drive.
+- Pump B enable.
+- Pump B speed command.
+- Pump B feedback.
+- Transfer pump command and feedback.
+
+## GROUP C — FLOW MEASUREMENT
+
+- Flow A power/return.
+- Flow A measured signal.
+- Flow B power/return.
+- Flow B measured signal.
+- Product flow signal.
+- Flow measurement validity.
+
+## GROUP D — TANK LEVELS
+
+- Tank A level sensor.
+- Tank B level sensor.
+- Product tank level sensor.
+- Level-feedback routing.
+- Alarm signals.
+
+## GROUP E — PRESSURE
+
+- Supply pressure.
+- Discharge pressure.
+- Pressure measurement validity.
+- Pump protection input.
+
+## GROUP F — VALVES
+
+- Valve A command.
+- Valve A position feedback.
+- Valve B command.
+- Valve B position feedback.
+- Outlet valve command.
+- Outlet valve feedback.
+- Isolation valve command.
+- Isolation valve feedback.
+
+## GROUP G — MIXER AND QUALITY
+
+- Mixer motor enable.
+- Mixer status.
+- Blend quality sensor.
+- Ratio-control feedback.
+- Product compliance status.
+
+## GROUP H — PID AND PLC
+
+- Cascade controller inputs.
+- Cascade controller outputs.
+- Ratio controller inputs.
+- Level controller inputs.
+- Main PLC coordination.
+- Process-ready status.
+
+## GROUP I — PROCESS SAFETY
+
+- Cavitation sensor.
+- Pump protection.
+- Emergency stop.
+- Safety PLC.
+- Tank overflow.
+- Tank low-level.
+- Fault reset.
+- Demand-disturbance controls.
+
+## MANDATORY WIRING RULES
+
+1. Exactly 74 player connections.
+2. Exactly 116 unique socket IDs.
+3. Every FROM endpoint documented.
+4. Every TO endpoint documented.
+5. Real `SparkTerminal` components.
+6. Correct electrical/signal type validation.
+7. Valid 5 V supply and return.
+8. Pump and drive permissions connected.
+9. Flow transmitter signals connected.
+10. Level transmitter signals connected.
+11. Pressure transmitter signals connected.
+12. Valve commands connected.
+13. Valve feedback connected.
+14. PID controller inputs connected.
+15. Safety signals connected.
+16. Missing wires detected.
+17. Wrong wires detected.
+18. Duplicate wires rejected.
+19. Wire removal and reconnection supported.
+20. Internal preinstalled connections documented separately.
+
+## INTERNAL CONNECTIONS
+
+Complex pump and controller assemblies may require internal channels not all exposed to the player.
+
+Use fixed internal connections where justified.
+
+Do not inflate player-created wiring above 74.
+
+## FINAL SENSOR FAULT
+
+Reserve one player wire for actual Supply B flow feedback.
+
+Conceptual endpoints:
+
+`FLOW_B_MEASURED_OUT → RATIO_CONTROLLER_FLOW_B_IN`
+
+Assign the W-number after completing the exact manifest.
+
+Disconnected feedback must become invalid.
+
+Do not merely toggle a decorative fault state.
+
+---
+
+# 8. ONE AUTHORITATIVE HYDRAULIC PROCESS MODEL
+
+Level 67 requires one coherent plant state.
+
+## REQUIRED AUTHORITATIVE VALUES
+
+- Supply Tank A volume.
+- Supply Tank B volume.
+- Mixer volume.
+- Product tank volume.
+- Supply A flow.
+- Supply B flow.
+- Transfer flow.
+- Product outlet flow.
+- Pipeline pressures.
+- Pump shaft speeds.
+- Pump head.
+- Valve actual positions.
+- Liquid component inventories.
+- Mixture concentration.
+- Sensor measurement states.
+- Controller states.
+- Protection states.
+
+## CONSERVATION
+
+Liquid volume and constituent quantities must be conserved within the model, subject to explicitly defined source replenishment, sink demand, numerical tolerance and modeled losses.
+
+## IMPORTANT
+
+Do not implement three unrelated pump scripts each changing tank levels independently.
+
+Route all pump and valve flows through the authoritative hydraulic network.
+
+Do not update the same tank volume twice during one simulation step.
+
+---
+
+# 9. TANK VOLUME DYNAMICS
+
+Use:
+
+- `01_L67_TransparentSupplyTankA.fbx`
+- `02_L67_TransparentSupplyTankB.fbx`
+- `03_L67_CentralMixingVessel.fbx`
+- `04_L67_FinishedProductTank.fbx`
+
+## REQUIRED PROPERTIES
+
+- Capacity.
+- Cross-sectional area or geometry-based volume relation.
+- Current liquid volume.
+- Current liquid height.
+- Inlet flow.
+- Outlet flow.
+- Overflow threshold.
+- Minimum operating level.
+- Density.
+- Liquid composition.
+- Fault status.
+
+## CONSTANT-AREA TANK
+
+`dLevel/dt = (Qin - Qout) / Area`
+
+`VolumeNext = clamp(VolumeCurrent + (Qin - Qout) * DeltaTime, 0, Capacity)`
+
+## CRITICAL DETAIL
+
+Clamping alone is not enough.
+
+If requested outflow exceeds available liquid, constrain actual outflow.
+
+If inflow would overflow a tank, resolve allowed inflow/overflow consistently and trigger appropriate protection.
+
+Do not simply discard excess liquid without accounting for it.
+
+## LIQUID VISUALS
+
+- Tank surface follows calculated level.
+- Supply A liquid is visually blue.
+- Supply B liquid is visually amber.
+- Mixer color follows composition.
+- Product tank color follows delivered composition.
+
+Do not assign full tanks or a perfect mixture solely for appearance.
+
+---
+
+# 10. HYDRAULIC PIPE NETWORK
+
+Use:
+
+`25_L67_TransparentProcessPipelineNetwork.fbx`
+
+## REQUIRED PROPERTIES
+
+- Hydraulic nodes.
+- Directed pipe segments.
+- Pipe resistance.
+- Elevation difference.
+- Flow direction.
+- Pressure.
+- Liquid availability.
+- Connected valves.
+- Connected pumps.
+- Isolation state.
+
+## REQUIRED BEHAVIOR
+
+- Flow responds to pump head and hydraulic resistance.
+- Closing a valve reduces flow.
+- Disconnecting/isolating a pipe path stops compatible flow.
+- Tank levels and pressure influence pump operation.
+- No flow occurs through a fully isolated path.
+- Flow reverses only when the chosen network model permits it.
+
+## FIDELITY
+
+A quasi-steady incompressible hydraulic network with dynamic tank storage and actuator states is acceptable for gameplay.
+
+Do not claim detailed CFD, water-hammer physics or turbulent transient accuracy unless actually implemented.
+
+---
+
+# 11. THREE CENTRIFUGAL PUMPS
+
+Use:
+
+- `05_L67_CentrifugalPumpA.fbx`
+- `06_L67_CentrifugalPumpB.fbx`
+- `07_L67_ProductTransferPump.fbx`
+
+## REQUIRED PROPERTIES
+
+- Rated RPM.
+- Actual RPM.
+- Motor torque.
+- Pump head.
+- Actual flow.
+- Hydraulic efficiency.
+- Power consumption.
+- Minimum safe suction.
+- Available NPSH.
+- Required NPSH.
+- Cavitation state.
+- Dry-run state.
+- Current limit.
+- Fault state.
+
+## SIMPLIFIED PUMP HEAD MODEL
+
+`H = Hshutoff(N) - K(N) * Q²`
+
+Define the operating range and coefficients consistently.
+
+## PUMP AFFINITY
+
+For similar operating conditions:
+
+`Q ∝ N`
+
+`H ∝ N²`
+
+`P ∝ N³`
+
+Use these as approximate relationships within a valid pump family/model, not universal guarantees at every network operating point.
+
+## POWER
+
+`Phydraulic = Density * g * Q * H`
+
+`Pshaft = Phydraulic / Efficiency`
+
+Handle near-zero efficiency and no-flow conditions safely.
+
+## REQUIRED BEHAVIOR
+
+- Pump starts gradually.
+- Actual RPM changes.
+- Pump head changes.
+- Flow responds to network resistance.
+- Power demand changes.
+- Tank volume responds.
+- Suction conditions affect operation.
+- Protection can disable pump.
+
+Do not produce full flow immediately when a pump enable Boolean becomes true.
+
+---
+
+# 12. THREE PUMP MOTOR DRIVES
+
+Use:
+
+- `08_L67_PumpMotorA.fbx`
+- `09_L67_PumpMotorB.fbx`
+- `10_L67_TransferPumpMotor.fbx`
+- `11_L67_VariableFrequencyDriveBank.fbx`
+
+## REQUIRED PROPERTIES
+
+- Enable.
+- Command speed.
+- Actual RPM.
+- Acceleration limit.
+- Deceleration limit.
+- Shaft torque.
+- Power.
+- Rated current.
+- Current limit.
+- Drive fault.
+- Motor fault.
+
+## MECHANICAL DYNAMICS
+
+`J * dOmega/dt = Tmotor - Tpump - Tloss`
+
+Use consistent units and torque directions.
+
+## ELECTRICAL INTEGRATION
+
+Reuse compatible motor-drive abstractions from Project Spark.
+
+Do not drive actual motor power from a fake unlimited 5 V control signal.
+
+Keep educational control wiring distinct from simulated motor power.
+
+---
+
+# 13. FOUR MOTORIZED VALVES
+
+Use:
+
+- `21_L67_MotorizedControlValveA.fbx`
+- `22_L67_MotorizedControlValveB.fbx`
+- `23_L67_ProductOutletControlValve.fbx`
+- `24_L67_EmergencyIsolationValve.fbx`
+
+## REQUIRED PROPERTIES
+
+- Command opening.
+- Actual opening.
+- Travel speed.
+- Travel time.
+- Minimum opening.
+- Maximum opening.
+- Valve coefficient.
+- Flow characteristic.
+- Actuator status.
+- Feedback validity.
+- Fault state.
+
+## REQUIRED DYNAMICS
+
+Actual opening changes at a finite rate.
+
+For a basic actuator:
+
+`dOpening/dt = clamp((Target - Actual)/ResponseTime, -MaxRate, MaxRate)`
+
+## HYDRAULIC EFFECT
+
+Opening changes hydraulic conductance or resistance.
+
+A closed valve must meaningfully block the intended route.
+
+## IMPORTANT
+
+Do not use valve opening percentage as an exact linear flow percentage unless the selected valve/network model justifies that relationship.
+
+---
+
+# 14. FLOW TRANSMITTERS
+
+Use:
+
+- `12_L67_ThreeChannelFlowMeterAssembly.fbx`
+- `13_L67_FlowTransmitterA.fbx`
+- `14_L67_FlowTransmitterB.fbx`
+- `15_L67_ProductFlowTransmitter.fbx`
+
+## REQUIRED OUTPUTS
+
+- True process flow.
+- Measured flow.
+- Units.
+- Timestamp.
+- Calibration.
+- Measurement latency.
+- Signal freshness.
+- Connectivity.
+- Validity.
+- Fault status.
+
+## SENSOR MODEL
+
+Measured flow should come from actual hydraulic flow through a defined sensor response model.
+
+Include bounded noise or filtering where appropriate.
+
+## IMPORTANT
+
+A pump speed command is not a flow measurement.
+
+A disconnected transmitter must not continue reporting valid flow.
+
+---
+
+# 15. ULTRASONIC LEVEL SENSORS
+
+Use:
+
+- `16_L67_UltrasonicLevelSensorA.fbx`
+- `17_L67_UltrasonicLevelSensorB.fbx`
+- `18_L67_ProductTankLevelSensor.fbx`
+
+## REQUIRED PROPERTIES
+
+- Actual tank level.
+- Measured level.
+- Tank geometry.
+- Sensor range.
+- Calibration.
+- Response delay.
+- Signal validity.
+- Fault state.
+
+## REQUIRED BEHAVIOR
+
+The sensor measures actual liquid height.
+
+It must not derive level directly from a percentage command.
+
+Invalid or missing feedback must inhibit dependent automatic functions when unsafe.
+
+---
+
+# 16. PRESSURE TRANSMITTERS
+
+Use:
+
+- `19_L67_PressureTransmitterA.fbx`
+- `20_L67_PressureTransmitterB.fbx`
+
+## REQUIRED VALUES
+
+- Actual hydraulic pressure.
+- Measured pressure.
+- Calibration.
+- Validity.
+- Timestamp.
+- Sensor range.
+- High-pressure threshold.
+- Low-pressure threshold.
+
+## REQUIRED BEHAVIOR
+
+Pressure must result from the hydraulic network solution, including pump head, elevation and flow losses under the chosen model.
+
+Do not arbitrarily assign pressure when the player increases pump speed.
+
+---
+
+# 17. LIQUID MIXING PHYSICS
+
+Use:
+
+- `03_L67_CentralMixingVessel.fbx`
+- `26_L67_IndustrialMixingImpeller.fbx`
+- `27_L67_MixingMotorDrive.fbx`
+
+The mixing vessel must track actual liquid composition.
+
+## REQUIRED INVENTORY STATES
+
+- Volume of liquid A.
+- Volume of liquid B.
+- Total volume.
+- A fraction.
+- B fraction.
+- Mixing state.
+- Mixer RPM.
+- Mixer power.
+- Residence time.
+- Product discharge concentration.
+
+## PROPOSED FLUID ASSUMPTION
+
+Two miscible educational liquids with approximately equal density and additive volumes.
+
+Document the assumption.
+
+## MIXING EQUATIONS
+
+`Vtotal = VA + VB`
+
+`FractionA = VA / Vtotal`
+
+`FractionB = VB / Vtotal`
+
+For a well-mixed vessel with inflows and outflow, update each constituent inventory according to its inflow and proportionate outflow.
+
+## EXAMPLE A COMPONENT BALANCE
+
+`dVA/dt = QA_in - Qout * FractionA`
+
+## EXAMPLE B COMPONENT BALANCE
+
+`dVB/dt = QB_in - Qout * FractionB`
+
+Use the valid current mixing state and solver scheduling.
+
+## IMPORTANT
+
+The recipe setpoint must not directly change mixture composition.
+
+The incoming flow and inventory determine actual product quality.
+
+---
+
+# 18. MIXING MOTOR AND PRODUCT QUALITY
+
+Use:
+
+`28_L67_LiquidRatioQualitySensor.fbx`
+
+## QUALITY SENSOR
+
+Required outputs:
+
+- Actual modeled A fraction at measurement location.
+- Measured A fraction.
+- Measured B fraction.
+- Sample age.
+- Calibration.
+- Validity.
+- Quality alarm.
+
+## MIXER BEHAVIOR
+
+Mixer enable and shaft speed must affect a documented mixing/residence or homogenization model if one is implemented.
+
+If the simulation uses an ideal continuously stirred tank assumption, label it accurately and avoid implying detailed spatial mixing.
+
+## QUALITY CERTIFICATION
+
+Product is on-spec only when actual mixture fraction remains within the configured tolerance and measurement conditions are valid.
+
+Off-spec production must be tracked.
+
+Do not count off-spec liquid as compliant merely because an indicator reads READY.
+
+---
+
+# 19. FLOW RATIO CONTROLLER
+
+Use:
+
+`30_L67_FlowRatioController.fbx`
+
+## TARGET RECIPE
+
+Default:
+
+- Supply A: 70%.
+- Supply B: 30%.
+
+## FLOW SPLIT
+
+`QA_target = Qtotal_target * 0.70`
+
+`QB_target = Qtotal_target * 0.30`
+
+Allow appropriate player-adjustable ratio settings for training.
+
+## REQUIRED CONTROL BEHAVIOR
+
+- Read valid A flow.
+- Read valid B flow.
+- Calculate measured ratio.
+- Determine flow errors.
+- Command available pumps/valves.
+- Respect source availability.
+- Respect motor and valve limits.
+- Prevent invalid dosing when feedback is lost.
+
+## IMPORTANT
+
+If Pump B is unavailable, the process must not continue to claim 70/30 output using only Pump A.
+
+It must restrict, stop or divert out-of-spec production as appropriate.
+
+---
+
+# 20. CASCADE PID CONTROL
+
+Use:
+
+`29_L67_CascadePIDController.fbx`
+
+This is Level 67's primary advanced gameplay mechanic.
+
+## CASCADE STRUCTURE
+
+Outer controller:
+
+- Measures selected tank or vessel level.
+- Calculates level error.
+- Produces an allowable flow setpoint.
+
+Inner controller:
+
+- Measures actual flow.
+- Calculates flow error.
+- Commands pump speed or valve opening.
+
+## PID EQUATION
+
+`u = Kp*e + Ki*Integral(e) + Kd*FilteredDerivative(e)`
+
+## REQUIRED PLAYER SETTINGS
+
+- Level Kp.
+- Level Ki.
+- Level Kd if used.
+- Flow Kp.
+- Flow Ki.
+- Flow Kd if used.
+- Flow setpoint limits.
+- Actuator saturation limits.
+- PID sample interval.
+- Derivative filtering.
+- Integral anti-windup.
+- Bumpless manual/automatic transfer.
+
+## IMPORTANT
+
+Outer-loop control must not modify actual tank level directly.
+
+It must influence the inner loop.
+
+The inner loop must command a physical actuator.
+
+Actual hydraulic flow must then change the tank level.
+
+---
+
+# 21. TANK LEVEL CONTROLLER
+
+Use:
+
+`31_L67_TankLevelController.fbx`
+
+## REQUIRED FUNCTIONS
+
+- Tank level reference.
+- Measured level.
+- Controller error.
+- Required flow setpoint.
+- Controller output limits.
+- High/low level warnings.
+- Integral state.
+- Control enable.
+
+## REQUIRED BEHAVIOR
+
+Level control must adjust inflow/outflow through real pump or valve actions.
+
+Do not directly set liquid volume from the requested level.
+
+---
+
+# 22. PID TUNING CHALLENGE
+
+The player must actually tune loop parameters.
+
+## POOR TUNING EFFECTS
+
+- Overshoot.
+- Slow recovery.
+- Sustained oscillation.
+- Excessive valve activity.
+- Pump speed hunting.
+- Controller saturation.
+- Integral windup.
+- Mixture ratio deviation.
+
+## CORRECT TUNING
+
+- Stable level.
+- Flow following setpoint.
+- Bounded control outputs.
+- Acceptable settling time.
+- Minimal sustained oscillation.
+- Maintained recipe.
+- Safety constraints satisfied.
+
+## OBJECTIVE VERIFICATION
+
+Analyze actual sampled time histories.
+
+Do not declare tuning successful because the player entered a predefined magic set of Kp/Ki/Kd numbers.
+
+Different physically valid parameter sets may succeed.
+
+---
+
+# 23. PUMP CAVITATION AND DRY-RUN PROTECTION
+
+Use:
+
+`33_L67_CavitationDetectionSensor.fbx`
+
+## REQUIRED PROPERTIES
+
+- Suction pressure.
+- Liquid availability.
+- Available NPSH estimate.
+- Required NPSH estimate.
+- Margin.
+- Pump speed.
+- Cavitation warning.
+- Cavitation trip.
+- Sensor validity.
+
+## NPSH
+
+`NPSHmargin = NPSHavailable - NPSHrequired`
+
+Use consistent pressure and head units.
+
+## REQUIRED RESPONSE
+
+- Detect low suction margin.
+- Reduce pump speed when appropriate.
+- Inhibit unsafe operation.
+- Trip pump if protection threshold reached.
+- Record fault.
+- Require safe reset.
+
+## IMPORTANT
+
+A cavitating pump must not continue producing ideal normal flow indefinitely.
+
+Use an appropriate simplified degraded-performance model or protective shutdown.
+
+---
+
+# 24. PUMP PROTECTION RELAY
+
+Use:
+
+`32_L67_PumpProtectionRelay.fbx`
+
+## REQUIRED PROTECTION
+
+- Motor overcurrent.
+- Pump overload.
+- Dry-run.
+- Cavitation.
+- Excessive discharge pressure.
+- Low suction.
+- Motor drive fault.
+- Invalid essential instrumentation.
+- Emergency stop.
+
+## STATES
+
+- READY.
+- RUNNING.
+- WARNING.
+- CURRENT_LIMITED.
+- TRIPPED.
+- LOCKED_OUT.
+- RESET_REQUIRED.
+
+Protection must affect actual pump operation.
+
+---
+
+# 25. INDUSTRIAL PROCESS PLC
+
+Use:
+
+- `35_L67_IndustrialProcessPLCRack.fbx`
+- `36_L67_ProcessDigitalIOModule.fbx`
+
+## REQUIRED OPERATING STATES
+
+- OFF.
+- INITIALIZING.
+- IDLE.
+- READY.
+- SENSOR_CALIBRATION.
+- PRIMING.
+- STARTING.
+- FILLING.
+- MIXING.
+- AUTO_CONTROL.
+- PRODUCTION.
+- DISTURBANCE_RESPONSE.
+- SAFE_SHUTDOWN.
+- FAULT.
+- RESET_REQUIRED.
+
+## REQUIRED INPUTS
+
+- Pump ready.
+- Pump running.
+- Flow valid.
+- Level valid.
+- Pressure valid.
+- Valve feedback.
+- Mixer ready.
+- Product quality.
+- Emergency stop.
+- Safety enclosure.
+- Pump protection.
+- Cavitation alarm.
+
+## REQUIRED OUTPUTS
+
+- Pump enable.
+- Pump speed reference.
+- Valve command.
+- Mixer enable.
+- Cascade enable.
+- Ratio control enable.
+- Alarm.
+- Process shutdown.
+- Fault reset request.
+
+## IMPORTANT
+
+The PLC must read actual sensor inputs and transition according to validated conditions.
+
+Do not advance production states solely by predetermined delays regardless of process measurements.
+
+---
+
+# 26. PROCESS SAFETY PLC
+
+Use:
+
+`34_L67_ProcessSafetyPLC.fbx`
+
+## REQUIRED PROTECTION FUNCTIONS
+
+- Tank A low level.
+- Tank B low level.
+- Mixer high level.
+- Product tank overflow.
+- Pump dry-run.
+- Cavitation.
+- Excess pressure.
+- Incorrect valve topology.
+- Pump failure.
+- Loss of critical flow measurement.
+- Off-spec product.
+- Emergency stop.
+- Safety enclosure interlock.
+
+## SAFE RESPONSE
+
+1. Detect actual unsafe condition.
+2. Log it.
+3. Restrict unsafe dosing.
+4. Reduce or stop pumps as appropriate.
+5. Move valves to their defined fail-safe positions.
+6. Isolate unsafe product output.
+7. Preserve liquid inventories.
+8. Latch critical faults.
+9. Require valid repair/reset.
+10. Permit controlled restart.
+
+## IMPORTANT
+
+The Safety PLC must have authority over normal PID commands.
+
+A controller requesting high flow must not override a safety trip.
+
+---
+
+# 27. DOWNSTREAM DEMAND SIMULATOR
+
+Use:
+
+`37_L67_DownstreamDemandSimulator.fbx`
+
+## REQUIRED PARAMETERS
+
+- Nominal demand.
+- Demand step magnitude.
+- Demand ramp.
+- Event duration.
+- Return-to-normal condition.
+- Demand availability.
+- Event timestamp.
+
+## DEMAND SURGE
+
+1. Stable baseline established.
+2. Downstream withdrawal demand increases.
+3. Actual product tank outflow changes.
+4. Product tank level responds.
+5. Outer PID detects level deviation.
+6. Inner controller adjusts transfer flow.
+7. Pump speed/valve positions change.
+8. Actual plant responds.
+9. Product volume and composition remain consistent.
+
+Do not lower the displayed tank-level gauge directly when the demand event begins.
+
+---
+
+# 28. SUPPLY PRESSURE LOSS
+
+Implement a controlled reduction in source head or increase in branch resistance.
+
+## REQUIRED BEHAVIOR
+
+- Actual available flow changes.
+- Pressure measurement responds.
+- Ratio controller attempts correction within limits.
+- Pump/valve saturation is recognized.
+- Product quality remains controlled where physically possible.
+- Unsafe conditions cause safe reduction or shutdown.
+
+Do not magically restore recipe compliance when source capacity is insufficient.
+
+---
+
+# 29. PUMP B FAILURE
+
+Implement actual Pump B availability loss.
+
+## REQUIRED RESPONSE
+
+- Pump B drive trips or loses availability.
+- Actual Pump B speed decays.
+- Supply B flow decreases.
+- Flow transmitter reports change while valid.
+- Ratio controller detects deviation.
+- Product quality becomes at risk.
+- Safety controller prevents off-spec output.
+- Controlled fallback or safe shutdown occurs.
+- Fault recorded.
+- Recovery follows valid reset/recommissioning rules.
+
+## IMPORTANT
+
+The player's objective is to protect the process, not to maintain an impossible 70/30 recipe at full production with no B supply.
+
+Safe reduction of throughput or isolation of output may be the correct engineering success condition.
+
+---
+
+# 30. PROCESS EVENT RECORDER
+
+Record time histories for:
+
+- Tank A level.
+- Tank B level.
+- Mixing vessel level.
+- Product tank level.
+- Supply A flow.
+- Supply B flow.
+- Product transfer flow.
+- Outlet demand flow.
+- Pressure A.
+- Pressure B.
+- Pump RPM.
+- Valve positions.
+- Mixture ratio.
+- Actual product composition.
+- PID error.
+- PID output.
+- PID saturation.
+- Cavitation status.
+- Safety events.
+- Sensor validity.
+- Fault and recovery timestamps.
+
+## OBJECTIVE EVIDENCE
+
+Evaluate stabilization using actual recorded trajectories.
+
+For example:
+
+- Maximum tank-level overshoot.
+- Settling time.
+- Flow tracking error.
+- Recipe deviation duration.
+- Product compliance.
+- Safety events.
+- Actual transferred compliant volume.
+
+Do not evaluate an entire disturbance using only one instantaneous sample.
+
+---
+
+# 31. ADVANCED SCADA DASHBOARD
+
+Use:
+
+`38_L67_HolographicSCADAMonitor.fbx`
+
+## REQUIRED LIVE READINGS
+
+- MAIN POWER.
+- PLC STATE.
+- PROCESS STATUS.
+- SUPPLY A LEVEL.
+- SUPPLY A VOLUME.
+- SUPPLY B LEVEL.
+- SUPPLY B VOLUME.
+- MIXER LEVEL.
+- MIXER VOLUME.
+- PRODUCT TANK LEVEL.
+- PRODUCT TANK VOLUME.
+- FLOW A.
+- FLOW B.
+- TOTAL FEED FLOW.
+- PRODUCT TRANSFER FLOW.
+- OUTLET FLOW.
+- PRESSURE A.
+- PRESSURE B.
+- PUMP A RPM.
+- PUMP B RPM.
+- TRANSFER PUMP RPM.
+- PUMP POWER.
+- VALVE A OPENING.
+- VALVE B OPENING.
+- OUTLET VALVE OPENING.
+- ISOLATION VALVE STATE.
+- MIXER RPM.
+- TARGET MIX RATIO.
+- ACTUAL MIX RATIO.
+- PRODUCT QUALITY.
+- LEVEL PID ERROR.
+- FLOW PID ERROR.
+- PID OUTPUT.
+- PID SATURATION.
+- CAVITATION STATUS.
+- PUMP PROTECTION.
+- SENSOR VALIDITY.
+- EMERGENCY STOP.
+- COMPLIANT PRODUCT VOLUME.
+- OFF-SPEC VOLUME.
+- EVENT HISTORY.
+- OBJECTIVES X/6.
+
+## PLAYER CONTROLS
+
+- MAIN POWER.
+- SENSOR CALIBRATION.
+- PRIME PUMP A.
+- PRIME PUMP B.
+- PRIME TRANSFER PUMP.
+- START PUMP A.
+- START PUMP B.
+- START TRANSFER PUMP.
+- MIXER ENABLE.
+- SET TOTAL FLOW.
+- SET TARGET RATIO.
+- SET LEVEL SETPOINT.
+- SET FLOW PID GAINS.
+- SET LEVEL PID GAINS.
+- ENABLE CASCADE.
+- ENABLE RATIO CONTROL.
+- START PRODUCTION.
+- OPEN PRODUCT OUTLET.
+- DEMAND SURGE TEST.
+- PRESSURE LOSS TEST.
+- PUMP B FAILURE TEST.
+- EMERGENCY ISOLATE.
+- RESET PROTECTION.
+- DISCONNECT FLOW B FEEDBACK.
+- RECALIBRATE FLOW B.
+- RESET FAULT.
+- FINAL CERTIFY.
+
+Every control must change authoritative gameplay state.
+
+No decorative buttons.
+
+---
+
+# 32. AAA VISUAL IMPLEMENTATION
+
+Create a Level 67 visual-only animation adapter.
+
+## STARTUP
+
+- Pumps stationary.
+- Vessels show actual initial levels.
+- Valves show actual initial positions.
+- Pipeline flow effects inactive.
+- Mixer stationary.
+- SCADA shows actual sensor availability.
+
+## PRIMING
+
+- Pump chambers indicate filling or primed state.
+- Suction status changes.
+- Pumps become ready only under valid conditions.
+
+## NORMAL PRODUCTION
+
+- Pump impellers rotate at actual RPM.
+- Valves move to actual positions.
+- Liquid surfaces respond to volume.
+- Flow indicators follow actual hydraulic flow.
+- Mixer rotates.
+- Composition color updates.
+- Product tank receives actual transferred liquid.
+
+## DISTURBANCE
+
+- Demand surge changes product tank level.
+- Controllers respond.
+- Pumps accelerate/decelerate.
+- Valves move.
+- SCADA trends show actual response.
+
+## PUMP FAILURE
+
+- Pump B stops or decelerates.
+- B flow falls.
+- Alarm activates.
+- Ratio control detects deviation.
+- Unsafe product output is prevented.
+
+## FLOW SENSOR FAULT
+
+- Feedback validity becomes false.
+- Controller enters safe restriction.
+- SCADA warns.
+- Certification disabled.
+- Fault remains latched until reset.
+
+## FINAL RECOVERY
+
+- Sensor restored.
+- Calibration completes.
+- Safety reset succeeds.
+- Recipe control recommissioned.
+- Fresh disturbance test passes.
+- Final 6/6 appears after authoritative certification.
+
+## ART MATERIALS
+
+Use the actual FBX material regions.
+
+For transparency, configure compatible glass/liquid shaders for the project's render pipeline.
+
+Do not claim a fully volumetric fluid solver simply because liquid is rendered with transparent shaders.
+
+---
+
+# 33. SIX AUTHORITATIVE LEVEL OBJECTIVES
+
+Integrate all six into the actual Project Spark evaluator.
+
+## OBJECTIVE 1 — BUILD THE SMART PROCESS PLANT
+
+Require:
+
+1. All 74 player wires connected.
+2. All 116 unique terminals registered.
+3. Valid 5 V control power.
+4. Valid return.
+5. Pump A connected.
+6. Pump B connected.
+7. Transfer pump connected.
+8. All motor drives connected.
+9. All three flow transmitters connected.
+10. All three level transmitters connected.
+11. Both pressure transmitters connected.
+12. All four valve control paths connected.
+13. Valve feedback connected.
+14. Mixer connected.
+15. Quality sensor connected.
+16. Cascade PID connected.
+17. Ratio controller connected.
+18. Tank level controller connected.
+19. Process PLC connected.
+20. Safety PLC connected.
+21. Cavitation detection connected.
+22. Protection relay connected.
+23. Emergency stop connected.
+24. No unsafe topology.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — COMMISSION THE LIQUID CIRCUITS
+
+Require:
+
+1. Objective 1 certified.
+2. Process safety ready.
+3. Tank levels valid.
+4. Flow sensors calibrated.
+5. Pressure sensors calibrated.
+6. Quality sensor calibrated.
+7. Pump A primed.
+8. Pump B primed.
+9. Transfer pump primed or safely available.
+10. Pump motors enabled.
+11. Actual RPM increases.
+12. Actual pump head generated.
+13. Actual Supply A flow established.
+14. Actual Supply B flow established.
+15. Mixing vessel begins filling.
+16. Tank inventories change consistently.
+17. No cavitation.
+18. No overflow.
+19. Stable commissioning interval completed.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — TUNE CASCADE PID CONTROL
+
+Require:
+
+1. Hydraulic system commissioned.
+2. Valid flow measurements.
+3. Valid level measurement.
+4. Outer PID enabled.
+5. Inner PID enabled.
+6. Setpoints configured.
+7. Pump/valve commands physically executed.
+8. Actual flow responds.
+9. Tank level responds.
+10. Stable flow tracking achieved.
+11. Acceptable level overshoot.
+12. Acceptable settling time.
+13. No sustained oscillation.
+14. No excessive actuator saturation.
+15. No active critical process fault.
+16. Observation interval completed.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — PRODUCE THE PERFECT MIXTURE
+
+Require:
+
+1. Previous objectives certified.
+2. Ratio controller enabled.
+3. Target ratio 70/30 configured.
+4. Supply A delivers actual measured flow.
+5. Supply B delivers actual measured flow.
+6. Both sources have sufficient volume.
+7. Actual mixture inventory updated.
+8. Mixer operational.
+9. Quality sensor valid.
+10. Actual composition within tolerance.
+11. Product transfer pump running.
+12. Product tank receives real volume.
+13. Required compliant product volume delivered.
+14. No off-spec liquid counted as compliant.
+15. No critical fault.
+16. Stable quality interval completed.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — SURVIVE PROCESS DISTURBANCES
+
+Require:
+
+1. Previous objectives certified.
+2. Stable baseline recorded.
+3. Demand surge applied.
+4. Actual downstream withdrawal changes.
+5. Tank level responds.
+6. Cascade PID adjusts real output.
+7. Acceptable recovery achieved.
+8. Supply-pressure loss test performed.
+9. Ratio control adapts within physical limits.
+10. Pump B failure scenario performed.
+11. Actual B flow loss detected.
+12. Unsafe or off-spec delivery prevented.
+13. Tank overflow prevented.
+14. Dry-run/cavitation protection respected.
+15. Correct safe fallback or controlled shutdown performed.
+16. Disturbance history recorded.
+17. No unresolved critical fault after permitted recovery.
+18. Objective certification interval completed.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — RESTORE LOST FLOW FEEDBACK
+
+Require:
+
+1. Objectives 1–5 historically certified.
+2. Designated Supply B flow feedback wire disconnected.
+3. Actual circuit topology invalidated.
+4. Flow B measurement becomes invalid.
+5. Ratio controller detects invalid feedback.
+6. Automatic dosing enters safe state.
+7. Unsafe product release inhibited.
+8. Fault latched.
+9. Player reconnects actual wire.
+10. Feedback electrical connectivity restored.
+11. Sensor power/return checked.
+12. Flow transmitter B recalibrated.
+13. Fresh valid measurement obtained.
+14. Player explicitly resets the fault.
+15. Pumps and valves recommissioned as needed.
+16. Ratio control re-enabled.
+17. Fresh 70/30 product test performed.
+18. Actual product quality within tolerance.
+19. Fresh demand/disturbance test performed.
+20. Stable operation verified.
+21. No active critical fault remains.
+22. Final certification succeeds.
+
+Progress becomes **6/6**.
+
+## HISTORICAL CERTIFICATION
+
+Do not erase completed Objectives 1–5 during the deliberate final wiring failure.
+
+Do not complete Objective 6 simply when the wire is reconnected.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6.**
+
+---
+
+# 34. RECOMMENDED UNITY C# ARCHITECTURE
+
+Inspect existing code before adding these classes.
+
+Suggested Level 67 responsibilities:
+
+- `SparkLevel67Coordinator.cs`
+- `SparkLevel67ProcessNetwork.cs`
+- `SparkLevel67TankDynamics.cs`
+- `SparkLevel67LiquidInventory.cs`
+- `SparkLevel67HydraulicPipe.cs`
+- `SparkLevel67PressureSolver.cs`
+- `SparkLevel67PumpDynamics.cs`
+- `SparkLevel67PumpMotor.cs`
+- `SparkLevel67VariableFrequencyDrive.cs`
+- `SparkLevel67ValveDynamics.cs`
+- `SparkLevel67FlowTransmitter.cs`
+- `SparkLevel67LevelTransmitter.cs`
+- `SparkLevel67PressureTransmitter.cs`
+- `SparkLevel67MixingDynamics.cs`
+- `SparkLevel67LiquidComposition.cs`
+- `SparkLevel67QualitySensor.cs`
+- `SparkLevel67PIDController.cs`
+- `SparkLevel67CascadeController.cs`
+- `SparkLevel67RatioController.cs`
+- `SparkLevel67TankLevelController.cs`
+- `SparkLevel67CavitationMonitor.cs`
+- `SparkLevel67PumpProtection.cs`
+- `SparkLevel67ProcessPLC.cs`
+- `SparkLevel67SafetyController.cs`
+- `SparkLevel67DisturbanceController.cs`
+- `SparkLevel67FaultRecovery.cs`
+- `SparkLevel67EventRecorder.cs`
+- `SparkLevel67ObjectiveTracker.cs`
+- `SparkLevel67SCADADashboard.cs`
+- `SparkLevel67Interaction.cs`
+- `SparkLevel67VisualRig.cs`
+
+These are suggested responsibilities, not verified existing project APIs.
+
+Reuse compatible components instead of duplicating working infrastructure.
+
+## RUNTIME UPDATE SEQUENCE
+
+1. Validate circuit topology.
+2. Evaluate 5 V control supply.
+3. Read player commands.
+4. Evaluate safety inputs.
+5. Read valid instrumentation.
+6. Execute PLC scan when due.
+7. Evaluate cascade PID.
+8. Evaluate ratio control.
+9. Apply controller and safety limits.
+10. Update VFD commands.
+11. Advance pump motor dynamics.
+12. Update actual pump speed.
+13. Update valve actuator positions.
+14. Solve hydraulic network flows and pressures.
+15. Update liquid transfers.
+16. Integrate tank volumes.
+17. Integrate constituent inventories.
+18. Update mixture composition.
+19. Update mixer state.
+20. Update physical protection conditions.
+21. Acquire new sensor measurements.
+22. Apply measurement delay, noise and validity.
+23. Evaluate faults and latching.
+24. Record event history.
+25. Evaluate authoritative objectives.
+26. Update SCADA.
+27. Update visual liquid and mechanical animation.
+
+Use a coherent simulation schedule.
+
+If feedback or network solves require predictor/corrector steps, implement them without integrating one timestep multiple times.
+
+---
+
+# 35. UNITY EDITOR LEVEL CREATOR
+
+Create:
+
+`Tools/Project Spark/Levels/Create Level 67`
+
+The creator must generate or update:
+
+- `Level_67.asset`
+- `Level_67_Layout.prefab`
+- Level configuration
+- Hydraulic network configuration
+- Wiring manifest
+- Terminal binding manifest
+- Component binding manifest
+- Pump configuration
+- Tank configuration
+- Valve configuration
+- Sensor configuration
+- PID configuration
+- Mixing configuration
+- Disturbance scenarios
+- Protection configuration
+- Six authoritative objectives
+- Animation mappings
+- Validation report
+
+## REQUIRED EDITOR OPERATIONS
+
+1. Inspect actual Project Spark Editor infrastructure.
+2. Locate all 42 individual FBXs.
+3. Validate filenames.
+4. Validate import scale.
+5. Correct Level 67 art-placement menu path.
+6. Correct Level 67 README leftovers.
+7. Create/update Level 67 definition.
+8. Set Level ID `level_67`.
+9. Set display name and subtitle.
+10. Create six objective definitions.
+11. Create/update Level 67 layout prefab.
+12. Create `L67_HD_VISUAL_ART`.
+13. Instantiate all 42 individual FBXs.
+14. Preserve common scene origin.
+15. Configure Supply Tank A.
+16. Configure Supply Tank B.
+17. Configure Mixing Vessel.
+18. Configure Product Tank.
+19. Configure Pump A.
+20. Configure Pump B.
+21. Configure Transfer Pump.
+22. Configure all three motors.
+23. Configure VFD bank.
+24. Configure pipe network.
+25. Configure flow sensors A/B/product.
+26. Configure level sensors.
+27. Configure pressure sensors.
+28. Configure Valve A.
+29. Configure Valve B.
+30. Configure outlet valve.
+31. Configure isolation valve.
+32. Configure mixing impeller.
+33. Configure mixing motor.
+34. Configure quality sensor.
+35. Configure cascade PID.
+36. Configure ratio control.
+37. Configure tank level control.
+38. Configure pump protection.
+39. Configure cavitation monitor.
+40. Configure safety PLC.
+41. Configure main PLC.
+42. Configure digital I/O.
+43. Configure demand simulator.
+44. Configure SCADA monitor.
+45. Configure emergency controls.
+46. Configure enclosure.
+47. Configure regulated 5 V supply.
+48. Create exactly 116 functional terminal anchors.
+49. Create exactly 74 player-wire declarations.
+50. Register component IDs.
+51. Register terminal IDs.
+52. Configure fixed internal connections.
+53. Configure tank capacities.
+54. Configure hydraulic node connectivity.
+55. Configure pump curves.
+56. Configure motor torque and speed limits.
+57. Configure valve Cv/flow characteristics.
+58. Configure pressure limits.
+59. Configure flow measurement parameters.
+60. Configure level measurement parameters.
+61. Configure mixture composition.
+62. Configure PID gains and anti-windup.
+63. Configure controller sampling.
+64. Configure pump priming.
+65. Configure cavitation protection.
+66. Configure overflow protection.
+67. Configure demand surge.
+68. Configure pressure loss.
+69. Configure Pump B failure.
+70. Configure final Flow B sensor fault.
+71. Assign all 14 actual animation mappings.
+72. Create animated liquid volumes.
+73. Create SCADA TextMeshPro displays.
+74. Bind six authoritative objectives.
+75. Validate missing references.
+76. Detect duplicate terminals.
+77. Detect duplicate simulation ownership.
+78. Generate diagnostics.
+79. Save assets and prefab.
+
+## EDITOR RELIABILITY
+
+Use actual `AssetDatabase` paths.
+
+Do not invent GUIDs.
+
+Use suitable Unity Editor APIs.
+
+Support Undo where appropriate.
+
+Make creator reruns safe.
+
+Do not duplicate models, components, terminals or controllers.
+
+Do not overwrite unrelated Level 66 content.
+
+---
+
+# 36. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 74 WIRES → VERIFY 116 TERMINALS → ENABLE CONTROL POWER → COMMISSION PLC → CALIBRATE FLOW SENSORS → CALIBRATE LEVEL SENSORS → CALIBRATE PRESSURE TRANSMITTERS → CALIBRATE QUALITY SENSOR → VERIFY HYDRAULIC ROUTES → PRIME PUMP A → PRIME PUMP B → PRIME TRANSFER PUMP → START PUMP A → START PUMP B → ESTABLISH LIQUID FLOW → FILL MIXING VESSEL → ENABLE MIXING → CONFIGURE LEVEL PID → CONFIGURE FLOW PID → ENABLE CASCADE CONTROL → STABILIZE FLOW AND LEVEL → CONFIGURE 70/30 RATIO → VERIFY ACTUAL COMPOSITION → TRANSFER COMPLIANT PRODUCT → FILL PRODUCT TANK → VERIFY PRODUCT QUALITY → APPLY DEMAND SURGE → STABILIZE TANK LEVEL → APPLY SUPPLY PRESSURE LOSS → ADJUST CONTROL → TRIP PUMP B → DETECT RATIO FAILURE → PREVENT OFF-SPEC RELEASE → PERFORM SAFE RECOVERY → DISCONNECT FLOW B FEEDBACK → DETECT INVALID SENSOR → INHIBIT UNSAFE DOSING → RECONNECT ACTUAL WIRE → RECALIBRATE FLOW B → EXPLICITLY RESET FAULT → RESTART PROCESS → PRODUCE FRESH COMPLIANT BATCH → REPEAT DISTURBANCE TEST → COMPLETE AUTHORITATIVE 6/6**
+
+## PLAYER-FACING MESSAGES
+
+- `BUILD THE SMART PROCESS PLANT`
+- `CONNECT ALL 74 WIRES`
+- `VERIFY 116 TERMINALS`
+- `POWER THE PROCESS PLC`
+- `CALIBRATE FLOW TRANSMITTERS`
+- `CALIBRATE TANK LEVEL SENSORS`
+- `CALIBRATE PRESSURE SENSORS`
+- `VERIFY VALVE FEEDBACK`
+- `PRIME SUPPLY PUMPS`
+- `START SUPPLY A`
+- `START SUPPLY B`
+- `FLOW ESTABLISHED`
+- `FILL MIXING VESSEL`
+- `ENABLE MIXER`
+- `CONFIGURE CASCADE PID`
+- `TUNE INNER FLOW LOOP`
+- `TUNE OUTER LEVEL LOOP`
+- `STABILIZE THE PROCESS`
+- `SET 70/30 RECIPE`
+- `ENABLE RATIO CONTROL`
+- `MEASURE ACTUAL MIXTURE`
+- `PRODUCT ON-SPEC`
+- `START PRODUCT TRANSFER`
+- `COMPLIANT PRODUCT DELIVERED`
+- `APPLY DEMAND SURGE`
+- `TANK LEVEL FALLING`
+- `PID CORRECTION ACTIVE`
+- `LEVEL RECOVERING`
+- `APPLY PRESSURE LOSS`
+- `SUPPLY CAPACITY REDUCED`
+- `PUMP B FAILURE`
+- `BLEND RATIO INVALID`
+- `ISOLATE OFF-SPEC PRODUCT`
+- `PROCESS SAFETY VERIFIED`
+- `DISCONNECT FLOW B FEEDBACK`
+- `FLOW SENSOR B SIGNAL LOST`
+- `AUTOMATIC DOSING RESTRICTED`
+- `RESTORE FLOW SENSOR CONNECTION`
+- `RECALIBRATE FLOW B`
+- `RESET PROCESS FAULT`
+- `RESTART CONTROLLED PRODUCTION`
+- `FINAL RECIPE CERTIFICATION`
+- `FINAL DISTURBANCE CERTIFICATION`
+- `LEVEL 67 COMPLETE`
+
+---
+
+# 37. TESTING AND DIAGNOSTICS
+
+Implement exact diagnostic messages for:
+
+- Incorrect W01–W74 wiring.
+- Missing terminal IDs.
+- Duplicate terminal IDs.
+- Invalid control power.
+- Missing control return.
+- Pump motor disconnected.
+- Pump enabled without power.
+- Pump RPM not responding.
+- Pump head invalid.
+- Pump producing flow without available head.
+- Flow continuing through closed isolation path.
+- Tank volume becoming negative.
+- Tank exceeding capacity without appropriate overflow response.
+- Liquid being created or lost unexpectedly.
+- Wrong pipe connectivity.
+- Valve command not reaching actuator.
+- Valve actual position invalid.
+- Valve feedback disconnected.
+- Flow transmitter disconnected.
+- Flow B stale measurement.
+- Level sensor disconnected.
+- Pressure sensor disconnected.
+- Pump cavitation ignored.
+- Dry-run not detected.
+- Product composition incorrect.
+- Actual mixture not following constituent inventory.
+- Ratio controller using invalid measurement.
+- PID integral windup.
+- Cascade controller bypassed.
+- Mixer disabled while falsely reporting compliant output.
+- Pressure loss not changing flow.
+- Demand surge not changing withdrawal.
+- Pump B failure not affecting flow.
+- Unsafe off-spec product delivery.
+- Safety PLC not overriding normal control.
+- Fault reset allowed before repair.
+- Historical objectives erased.
+- Manager stuck at 0/6 or 5/6.
+- Unity scene reload problems.
+- Regression in Levels 1–66.
+
+## REQUIRED TESTS
+
+1. Correct 74-wire topology.
+2. Exactly 116 terminal IDs valid.
+3. Control power valid.
+4. PLC initializes.
+5. Safety PLC ready.
+6. Pump A motor functional.
+7. Pump B motor functional.
+8. Transfer pump motor functional.
+9. Pump startup dynamic.
+10. Pump flow depends on hydraulic head.
+11. Pump pressure finite.
+12. Tank A volume conserved.
+13. Tank B volume conserved.
+14. Mixer volume conserved.
+15. Product tank volume conserved.
+16. Flow A sensor valid.
+17. Flow B sensor valid.
+18. Product flow sensor valid.
+19. Level A sensor valid.
+20. Level B sensor valid.
+21. Product level sensor valid.
+22. Pressure A sensor valid.
+23. Pressure B sensor valid.
+24. Valve A actuates.
+25. Valve B actuates.
+26. Outlet valve actuates.
+27. Isolation valve actuates.
+28. Closed valve restricts flow.
+29. Pump priming works.
+30. Dry-run protection works.
+31. Cavitation protection works.
+32. Supply A liquid enters mixer.
+33. Supply B liquid enters mixer.
+34. Mixing inventory correct.
+35. Mixer drive responds.
+36. Quality sensor reports actual mixture.
+37. Ratio control maintains configured target when feasible.
+38. Invalid ratio detected when unavailable.
+39. Level PID changes physical flow demand.
+40. Inner flow PID changes actual actuator.
+41. Cascade loop stabilizes tank level.
+42. Anti-windup works during saturation.
+43. Demand surge increases actual withdrawal.
+44. Tank levels respond.
+45. PID corrects real process.
+46. Pressure loss changes actual flow.
+47. Pump B failure reduces B supply.
+48. Off-spec delivery prevented.
+49. Overflow protection works.
+50. Low-level protection works.
+51. Safe process shutdown works.
+52. Recovery from process disturbance works.
+53. Disconnect actual Flow B feedback wire.
+54. Flow B measurement becomes invalid.
+55. Ratio controller enters safe restriction.
+56. Fault latches.
+57. Reconnect actual wire.
+58. Measurement connectivity restored.
+59. Recalibration succeeds.
+60. Explicit reset succeeds.
+61. Fresh recipe test succeeds.
+62. Fresh disturbance test succeeds.
+63. Authoritative manager reaches 6/6.
+64. Level progression succeeds.
+65. Levels 1–66 remain unaffected.
+
+Only report tests as passed when actually executed.
+
+---
+
+# 38. REQUIRED DOWNLOADABLE DELIVERABLES
+
+Create a complete Level 67 Unity implementation package containing:
+
+- Full runtime C# source files.
+- Hydraulic process network.
+- Tank volume dynamics.
+- Tank constituent inventories.
+- Pump dynamics.
+- Pump motor/drive integration.
+- Valve dynamics.
+- Pipe pressure and flow model.
+- Flow transmitter simulation.
+- Level transmitter simulation.
+- Pressure transmitter simulation.
+- Quality sensor simulation.
+- Liquid mixing model.
+- Mixer drive control.
+- PID controller.
+- Cascade controller.
+- Ratio controller.
+- Level controller.
+- Anti-windup.
+- Pump priming and cavitation.
+- Pump protection.
+- Process PLC.
+- Safety PLC.
+- Digital I/O integration.
+- Demand surge scenario.
+- Pressure loss scenario.
+- Pump B failure scenario.
+- Sensor feedback disconnect.
+- Safe dosing restriction.
+- Repair/recalibration.
+- Explicit fault reset.
+- SCADA dashboard.
+- Six authoritative objectives.
+- Unity Editor Level 67 builder.
+- Level definition creator or asset.
+- Level layout prefab creator.
+- Exact W01–W74 wiring manifest.
+- 116-terminal binding manifest.
+- Component binding manifest.
+- All 14 verified animation mappings.
+- Process parameter configuration.
+- Pump curve configuration.
+- Valve characteristics.
+- PID configuration.
+- Sensor configuration.
+- Disturbance configuration.
+- Safety configuration.
+- Inspector setup instructions.
+- Gameplay walkthrough.
+- Objective verification checklist.
+- Troubleshooting guide.
+- Actual test report.
+
+Reuse:
+
+`ProjectSpark_Level67_HD_AAA_Models.zip`
+
+Do not regenerate the 42 approved art assets unnecessarily.
+
+Only provide links to files actually created and verified.
+
+Do not claim Unity compilation, Play Mode success or authoritative 6/6 without actual testing.
+
+---
+
+# 39. FINAL EXECUTION REQUIREMENTS
+
+**IMPLEMENT LEVEL 67 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect the actual Project Spark Unity project and the approved Level 67 asset package.
+
+Then:
+
+1. Reuse compatible electrical infrastructure.
+2. Import all 42 individual FBX models.
+3. Correct the supplied art helper's mistaken Level 66 menu path.
+4. Preserve existing Level 66 integration.
+5. Finalize exactly 74 player-created wires.
+6. Create exactly 116 functional terminal anchors.
+7. Implement two supply tanks.
+8. Implement mixing vessel storage.
+9. Implement product tank storage.
+10. Implement hydraulic network topology.
+11. Implement pipe resistance and pressure.
+12. Implement Pump A.
+13. Implement Pump B.
+14. Implement transfer pump.
+15. Implement three motor drives.
+16. Implement four motorized valves.
+17. Implement three flow transmitters.
+18. Implement three level transmitters.
+19. Implement two pressure transmitters.
+20. Implement mixture quality sensing.
+21. Implement actual liquid composition.
+22. Implement mixing motor behavior.
+23. Implement cascade PID control.
+24. Implement ratio control.
+25. Implement tank-level control.
+26. Implement anti-windup.
+27. Implement pump priming.
+28. Implement dry-run protection.
+29. Implement cavitation protection.
+30. Implement overflow protection.
+31. Implement process PLC.
+32. Implement safety PLC.
+33. Implement demand surge.
+34. Implement pressure loss.
+35. Implement Pump B failure.
+36. Implement safe off-spec handling.
+37. Implement actual Flow B signal-wire disconnection.
+38. Implement invalid measurement detection.
+39. Implement safe dosing restriction.
+40. Implement reconnection and recalibration.
+41. Implement explicit fault reset.
+42. Implement fresh recipe certification.
+43. Implement fresh disturbance certification.
+44. Integrate six authoritative objectives.
+45. Create one-click Unity Editor Level 67 builder.
+46. Integrate 14 verified art animation pivots.
+47. Create dynamic liquid surfaces and flow visuals.
+48. Create live SCADA dashboard.
+49. Implement detailed diagnostics.
+50. Run all feasible tests.
+51. Package and verify deliverables.
+
+Do not ask for approval of the already-approved level design.
+
+Do not fabricate flow, pressure, tank volume, pump RPM, valve opening, controller output, product quality, safety states or objective completion.
+
+Where an existing Project Spark API cannot be verified, implement safely independent functionality if practical and clearly report the unresolved integration dependency.
+
+---
+
+# 40. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Build all 74 required wires.
+2. Validate all 116 terminals.
+3. Commission the process PLC.
+4. Calibrate flow sensors.
+5. Calibrate level sensors.
+6. Calibrate pressure sensors.
+7. Validate quality measurements.
+8. Prime all required pumps.
+9. Start Pump A and Pump B.
+10. Establish real flow.
+11. Fill the mixing vessel.
+12. Start the mixer.
+13. Tune the inner flow PID.
+14. Tune the outer level PID.
+15. Stabilize the cascade loop.
+16. Set the desired A/B recipe.
+17. Produce an actual 70/30 blend.
+18. Verify quality.
+19. Transfer compliant product.
+20. Maintain product tank inventory.
+21. Survive the demand surge.
+22. Respond to pressure loss.
+23. Detect Pump B failure.
+24. Prevent unsafe/off-spec delivery.
+25. Respect cavitation and overflow safety.
+26. Disconnect the actual Flow B feedback wire.
+27. Detect invalid measurement.
+28. Inhibit unsafe automatic dosing.
+29. Restore the wire.
+30. Recalibrate Flow B.
+31. Explicitly reset the fault.
+32. Recommission the plant.
+33. Produce fresh compliant product.
+34. Complete a fresh disturbance test.
+35. Pass all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 67.**
+
+The player must learn real fluid conservation, pump behavior, hydraulic pressure, valve control, level dynamics, mixture composition, cascade PID, ratio control, industrial instrumentation, process protection and safe feedback recovery through meaningful simulation.
+
+**FINAL GOAL: A COMPLETE, POLISHED, UNITY-READY, AAA-QUALITY AND ACTUALLY PLAYABLE LEVEL 67 — MASTER THE FLOW.**
