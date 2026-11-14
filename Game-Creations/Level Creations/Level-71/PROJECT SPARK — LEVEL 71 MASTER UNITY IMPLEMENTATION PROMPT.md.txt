@@ -1,0 +1,2808 @@
+# PROJECT SPARK — LEVEL 71 MASTER UNITY IMPLEMENTATION PROMPT
+
+## LEVEL 71: ETCH THE FUTURE
+### Advanced Semiconductor Plasma Processing, Vacuum Pressure Control, RF Impedance Matching, Wafer Thin-Film Etching, Plasma Stability, Optical Endpoint Detection, Wafer Temperature Regulation, Industrial PLC Safety and Fault Recovery
+
+Act as my senior Unity C# engineer, semiconductor process simulation engineer, vacuum systems specialist, RF electrical engineer, impedance-matching engineer, plasma simulation developer, industrial automation architect, sensor and instrumentation specialist, PID control engineer, wafer metrology engineer, PLC programmer, functional safety engineer, gameplay programmer, Unity Editor automation specialist and technical artist.
+
+**YOUR TASK IS TO BUILD THE COMPLETE, FUNCTIONAL, PLAYABLE LEVEL 71 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+This is a full implementation request.
+
+Do not stop at:
+
+- A design discussion.
+- Pseudocode.
+- Example-only components.
+- Decorative reactor equipment.
+- A plasma shader with no process model.
+- A vacuum gauge showing prerecorded values.
+- A turbomolecular pump animation without pumping behavior.
+- Gas-flow displays unrelated to actual gas throughput.
+- An RF generator with fabricated reflected power.
+- Matching capacitors that do not affect impedance.
+- A plasma model that directly copies the RF power slider.
+- Wafer film thickness that changes at a fixed decorative rate.
+- A fake optical endpoint triggered by an elapsed timer.
+- A wafer temperature display unrelated to thermal energy.
+- Safety alarms that do not inhibit unsafe operations.
+- A sensor fault implemented only through a visual warning.
+- An objective system disconnected from the existing Project Spark evaluator.
+- Claims that the 3D art pack already contains gameplay systems.
+
+**IMPLEMENT THE LEVEL, INCLUDING ITS ACTUAL ELECTRICAL CONTROL NETWORK, VIRTUAL PROCESS PHYSICS, INDUSTRIAL AUTOMATION, PLAYER INTERACTIONS, SIX OBJECTIVES AND EDITOR CREATION TOOL.**
+
+Use the approved Level 71 asset collection.
+
+Do not redesign the level or regenerate the 50 approved FBX models unnecessarily.
+
+The plasma chamber, two virtual gas supplies, wafer processing and RF generator are part of a **fictional educational simulation**, not instructions for operating real high-voltage RF plasma equipment or handling hazardous processing gases.
+
+---
+
+# 1. INSPECT MY ACTUAL PROJECT SPARK UNITY CODEBASE
+
+Before implementing Level 71, inspect the real Unity source files.
+
+At minimum, search for these existing classes:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+
+Also inspect available implementations for:
+
+- Player-created electrical wires.
+- Terminal registration and validation.
+- Electrical component identifiers.
+- Circuit connectivity.
+- Signal propagation.
+- Power supply and return wiring.
+- Switches and relays.
+- Analog measurements.
+- Sensor calibration.
+- Sensor validity and timestamps.
+- PID controllers.
+- Motor shaft dynamics.
+- Safety interlocks.
+- PLC state machines.
+- Fault detection and resetting.
+- Object purchasing and installation.
+- Object shelf integration.
+- Workstation placement.
+- Level objective certification.
+- Historical objective state preservation.
+- Level transitions.
+- Runtime UI.
+- TextMeshPro binding.
+- VFX and animation.
+- Unity Editor level creation.
+
+## REUSE COMPATIBLE INFRASTRUCTURE
+
+Inspect previous levels where relevant:
+
+**Level 54 — Cross the Critical**
+
+Rotating machinery and protection.
+
+**Level 58 — Isolate the Fault**
+
+Electrical fault handling and safety isolation.
+
+**Level 59 — Bring Back the Power**
+
+Controlled startup and commissioning.
+
+**Level 60 — The Grid Must Survive**
+
+Supervisory control and protective coordination.
+
+**Level 63 — Catch the Frequency**
+
+Dynamic sensor feedback and controller response.
+
+**Level 65 — The Factory Thinks**
+
+Robotics, industrial I/O and PLC automation.
+
+**Level 66 — Save the Factory**
+
+Measurement-based diagnosis and fault recovery.
+
+**Level 67 — Master the Flow**
+
+Flow systems, valves, pressure and PID control.
+
+**Level 68 — Tame the Heat**
+
+Thermal energy conservation and temperature control.
+
+**Level 69 — Keep It Cold**
+
+Pressure-dependent thermodynamic systems and equipment protection.
+
+**Level 70 — Guard the Air**
+
+Cleanroom operation, wafer robotics, pressure control and sensor validity.
+
+Reuse only functionality actually present in the project.
+
+Do not assume a previous level design or prompt means the corresponding implementation exists.
+
+---
+
+# 2. NON-NEGOTIABLE IMPLEMENTATION REQUIREMENTS
+
+1. Inspect actual Project Spark code before calling APIs.
+2. Do not invent existing methods, types or namespaces.
+3. Preserve Levels 1–70.
+4. Use actual gameplay components for player wiring.
+5. Do not modify shared electrical infrastructure unnecessarily.
+6. Keep 5 V educational control power separate from virtual RF and motor power.
+7. Do not represent the plasma generator as an unlimited 5 V load.
+8. Do not directly assign chamber pressure from the pressure setpoint.
+9. Do not fabricate pump throughput.
+10. Do not ignore vacuum conductance.
+11. Do not fabricate process-gas mass.
+12. Do not allow unlimited gas supply.
+13. Do not treat gas-flow commands as actual measured flow.
+14. Do not directly assign reflected RF power from a tuning-success flag.
+15. Do not fabricate plasma delivered power.
+16. Do not use plasma color as the authoritative plasma state.
+17. Do not allow plasma ignition with an unsafe open chamber.
+18. Do not ignore RF power limits.
+19. Do not allow an unsafe plasma arc to continue normally.
+20. Do not generate wafer film removal without simulated process activity.
+21. Do not make the endpoint controller directly read hidden true remaining thickness.
+22. Do not make every wafer sector etch at exactly the same rate regardless of modeled conditions.
+23. Do not let film thickness become negative.
+24. Do not ignore mask erosion or underlying-layer damage.
+25. Do not directly set wafer temperature from the cooling setpoint.
+26. Do not ignore cooling capacity and thermal inertia.
+27. Do not treat disconnected feedback as valid.
+28. Do not bypass the final physical wire-disconnection challenge.
+29. Do not allow unsafe wafer transfer while required interlocks are invalid.
+30. Do not bypass safety protection to force an objective pass.
+31. Do not use a fake local objective counter.
+32. Do not erase historically certified objectives during the final deliberate fault.
+33. Do not duplicate simulation owners.
+34. Do not assign conflicting process values from multiple independent scripts.
+35. Use consistent physical units.
+36. Use bounded and numerically stable simulation steps.
+37. Make the Editor creator safe to rerun.
+38. Include detailed diagnostics.
+39. Deliver complete source files, not snippets.
+40. Test actual wiring and fault-recovery behavior.
+41. Report missing integration dependencies honestly.
+42. Do not claim Unity compilation or Play Mode success unless tested.
+43. Do not claim the level is complete until the authoritative objective system reaches 6/6.
+
+## ABSOLUTE GAMEPLAY SUCCESS CONDITION
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6.**
+
+Inspect the existing `SparkLevelDefinition`, `SparkLevelEvaluator` and objective-binding architecture.
+
+All six objectives must use the real level system.
+
+A custom Level 71 dashboard displaying 6/6 is insufficient.
+
+---
+
+# 3. LEVEL 71 CONFIGURATION
+
+**Level Number:** 71
+
+**Level ID:** `level_71`
+
+**Display Name:** `Etch the Future`
+
+**Subtitle:** `Advanced Plasma and Precision Semiconductor Processing`
+
+**Difficulty:** Master / Expert
+
+**Level Theme:** Semiconductor plasma fabrication
+
+**Educational Control Power:** 5 V DC
+
+**Virtual High-Power Domains:** RF generator, pumps and wafer cooling
+
+**Individual 3D Assets:** 50 FBX
+
+**GLB Backups:** 50
+
+**Verified Animation References:** 21
+
+**Player-Created Wires:** 90
+
+**Unique Functional Terminals:** 140
+
+**Authoritative Objectives:** 6
+
+**Reactor:** One central vacuum plasma chamber
+
+**Load-Lock:** One
+
+**Backing Pumps:** One
+
+**Turbomolecular Pumps:** One
+
+**Process-Gas Channels:** Two fictional virtual gases
+
+**Gas Controllers:** Two mass-flow controllers
+
+**RF Generator:** One
+
+**RF Matching Network:** One, with two adjustable capacitor controls
+
+**Wafer Handling:** Automated transfer robot
+
+**Wafer Mounting:** Electrostatic chuck
+
+**Etching:** Regional thin-film removal model
+
+**Thermal System:** Wafer temperature controller and chiller
+
+**Endpoint Measurement:** Optical emission spectrometer
+
+**Metrology:** Thin-film thickness and uniformity inspection
+
+**Disturbances:** Vacuum leak, RF mismatch, cooling degradation
+
+**Final Deliberate Fault:** Optical endpoint feedback disconnection
+
+## PROPOSED EDUCATIONAL PROCESS PARAMETERS
+
+Use configurable, validated gameplay parameters.
+
+- RF source frequency: nominal educational 13.56 MHz.
+- RF forward power: finite and adjustable.
+- RF reflected power: calculated.
+- Matching losses: modeled.
+- Plasma delivered power: calculated.
+- Vacuum pressure: calculated using gas throughput and pumping.
+- Virtual gas A/B flow: finite and measured.
+- Wafer initial film thickness: proposed 300 nm.
+- Film thickness across wafer: region-based.
+- Etch nonuniformity target: proposed ≤5%.
+- Wafer temperature: dynamically calculated.
+- Endpoint decision: optical signal-based.
+- Underlying-layer damage: tracked.
+- Pump and valve capacities: finite.
+- Fault protection: enabled.
+
+Do not treat any proposed gameplay value as a verified real-world plasma etching recipe.
+
+Use fictional process-gas properties and synthetic reaction parameters.
+
+---
+
+# 4. USE MY ACTUAL LEVEL 71 FBX ASSET PACKAGE
+
+The approved package is:
+
+`ProjectSpark_Level71_HD_AAA_Models.zip`
+
+Its verified manifest contains:
+
+- 50 individual binary FBX models.
+- 50 matching GLB backups.
+- One assembled FBX showcase.
+- One assembled GLB showcase.
+- 109,716 triangles across individual models.
+- 2,775 mesh parts.
+- 21 animation reference mappings.
+- Model manifest.
+- Art assembly CSV.
+- Component roles CSV.
+- Material palette.
+- Unity placement helper.
+- Unity material helper.
+- Visual-only animation adapter.
+- Geometry-generation source.
+- Export verification source.
+- Unity installation instructions.
+- Gameplay integration plan.
+- Wiring-budget planning file.
+
+The package is **art-only**.
+
+It does not contain the planned 90 playable wires, 140 functional terminals, vacuum solver, RF physics, plasma simulation or six implemented objectives.
+
+---
+
+# 5. EXACT 50 FBX FILENAMES
+
+Use these actual verified filenames without renaming them.
+
+| # | Exact filename | Role |
+|---|---|---|
+| 00 | `00_L71_IndustrialPlasmaFabricationBase.fbx` | Workstation |
+| 01 | `01_L71_TransparentPlasmaEtchReactor.fbx` | Central chamber |
+| 02 | `02_L71_ReactorServiceLid.fbx` | Chamber lid |
+| 03 | `03_L71_QuartzPlasmaObservationViewport.fbx` | Viewport |
+| 04 | `04_L71_InductivelyCoupledRFCoil.fbx` | RF coil |
+| 05 | `05_L71_PrecisionGasDistributionShowerhead.fbx` | Gas distribution |
+| 06 | `06_L71_WaferBiasElectrode.fbx` | Wafer bias |
+| 07 | `07_L71_ElectrostaticWaferChuck.fbx` | Wafer chuck |
+| 08 | `08_L71_PrecisionWaferLiftAssembly.fbx` | Wafer lift |
+| 09 | `09_L71_SiliconWafer.fbx` | Silicon substrate |
+| 10 | `10_L71_WaferThinFilmLayer.fbx` | Target film |
+| 11 | `11_L71_PatternedWaferMask.fbx` | Pattern mask |
+| 12 | `12_L71_WaferCarrierCassette.fbx` | Wafer storage |
+| 13 | `13_L71_VacuumLoadLockChamber.fbx` | Load-lock |
+| 14 | `14_L71_LoadLockGateValve.fbx` | Transfer gate |
+| 15 | `15_L71_AutomatedWaferTransferRobot.fbx` | Wafer robot |
+| 16 | `16_L71_TurbomolecularVacuumPump.fbx` | High-vacuum pump |
+| 17 | `17_L71_VacuumBackingPump.fbx` | Backing pump |
+| 18 | `18_L71_IndustrialVacuumForeline.fbx` | Pump piping |
+| 19 | `19_L71_VacuumIsolationValve.fbx` | Isolation |
+| 20 | `20_L71_AutomaticVacuumThrottleValve.fbx` | Pressure actuation |
+| 21 | `21_L71_CapacitancePressureManometer.fbx` | Process pressure |
+| 22 | `22_L71_RoughVacuumPressureGauge.fbx` | Rough vacuum |
+| 23 | `23_L71_HighVacuumPressureGauge.fbx` | High-vacuum measurement |
+| 24 | `24_L71_ResidualGasAnalyzer.fbx` | Gas diagnostics |
+| 25 | `25_L71_VirtualProcessGasSupplyA.fbx` | Virtual gas A |
+| 26 | `26_L71_VirtualProcessGasSupplyB.fbx` | Virtual gas B |
+| 27 | `27_L71_MassFlowControllerA.fbx` | Gas A control |
+| 28 | `28_L71_MassFlowControllerB.fbx` | Gas B control |
+| 29 | `29_L71_VacuumGasMixingManifold.fbx` | Gas manifold |
+| 30 | `30_L71_HighFrequencyRFGenerator.fbx` | RF power source |
+| 31 | `31_L71_AutomaticRFMatchingNetwork.fbx` | RF matching |
+| 32 | `32_L71_RFVariableCapacitorA.fbx` | Tuning A |
+| 33 | `33_L71_RFVariableCapacitorB.fbx` | Tuning B |
+| 34 | `34_L71_ForwardReflectedPowerCoupler.fbx` | RF power sensing |
+| 35 | `35_L71_RFVoltageCurrentSensor.fbx` | RF V/I sensing |
+| 36 | `36_L71_RFArcProtectionModule.fbx` | RF protection |
+| 37 | `37_L71_WaferTemperatureController.fbx` | Wafer temperature |
+| 38 | `38_L71_PrecisionWaferChiller.fbx` | Chuck cooling |
+| 39 | `39_L71_EmergencyPlasmaSafetyStation.fbx` | Emergency controls |
+| 40 | `40_L71_OpticalEmissionSpectrometer.fbx` | Optical measurement |
+| 41 | `41_L71_OpticalFiberViewportModule.fbx` | Optical collection |
+| 42 | `42_L71_AutomaticEtchEndpointController.fbx` | Endpoint control |
+| 43 | `43_L71_PlasmaUniformityAnalyzer.fbx` | Uniformity |
+| 44 | `44_L71_ThinFilmThicknessMetrology.fbx` | Film metrology |
+| 45 | `45_L71_VacuumPressurePIDController.fbx` | Pressure PID |
+| 46 | `46_L71_PlasmaProcessPLCRack.fbx` | Main PLC |
+| 47 | `47_L71_PlasmaDigitalIOModule.fbx` | Industrial I/O |
+| 48 | `48_L71_HolographicPlasmaSCADAMonitor.fbx` | SCADA display |
+| 49 | `49_L71_Regulated5VControlSupply.fbx` | Control power |
+
+## SUPPORTING FILES
+
+Inspect:
+
+- `Model_Manifest.json`
+- `Animation_Rigs.csv`
+- `Art_Assembly.csv`
+- `Component_Roles.csv`
+- `Material_Palette.json`
+- `Gameplay_Wiring_Budget.csv`
+- `Gameplay_Integration_Plan.md`
+- `README_Unity.txt`
+- `Verification_Report.json`
+
+Also inspect the supplied Unity and source files.
+
+---
+
+# 6. FBX SCALE AND MODEL PLACEMENT
+
+The actual package specifies:
+
+- X = workstation width.
+- Y = up.
+- Z = front.
+- Original construction dimensions in meters.
+- GLB numeric vertex positions in meters.
+- FBX numeric vertex positions in centimeters.
+- FBX `UnitScaleFactor = 1`.
+- Approximate workstation width = 15.8 metres.
+
+## CRITICAL IMPORT RULE
+
+Verify Unity's automatic FBX unit conversion.
+
+At 1 Unity unit per metre, the complete workstation should be approximately 15.8 Unity units wide.
+
+If the model imports 100 times too large, correct the FBX ModelImporter scale once.
+
+Do not apply a second conversion to the transforms after import.
+
+## ART ROOT
+
+Create or reuse:
+
+`L71_HD_VISUAL_ART`
+
+Import the 50 numbered FBXs.
+
+Place all with:
+
+- Local position `(0,0,0)`.
+- Local rotation identity.
+- Local scale `(1,1,1)`.
+
+The models already share a common scene coordinate frame.
+
+**Do not instantiate the assembled showcase together with the individual models.**
+
+---
+
+# 7. EXACT 21 ANIMATION PIVOT REFERENCES
+
+The actual `Animation_Rigs.csv` contains **21 mappings**, not the 18 originally planned in the design.
+
+Use the verified pivot names and reference positions:
+
+| Model | Pivot | XYZ |
+|---|---|---|
+| ReactorServiceLid | `ANIM_REACTOR_LID` | (0.00, 3.35, -0.90) |
+| LoadLockGateValve | `ANIM_CHAMBER_GATE` | (-2.57, 1.78, -0.86) |
+| AutomatedWaferTransferRobot | `ANIM_WAFER_ROBOT_BASE` | (-4.51, 1.05, -0.76) |
+| AutomatedWaferTransferRobot | `ANIM_WAFER_ROBOT_ARM` | (-3.99, 2.13, -0.76) |
+| AutomatedWaferTransferRobot | `ANIM_WAFER_ROBOT_TOOL` | (-2.84, 2.15, -0.80) |
+| PrecisionWaferLiftAssembly | `ANIM_WAFER_LIFT` | (0.00, 1.37, -0.90) |
+| ElectrostaticWaferChuck | `ANIM_WAFER_CLAMP` | (0.00, 1.64, -0.90) |
+| TurbomolecularVacuumPump | `ANIM_TURBO_ROTOR` | (4.12, 1.31, -1.07) |
+| VacuumBackingPump | `ANIM_BACKING_PUMP` | (6.38, 1.22, -1.12) |
+| AutomaticVacuumThrottleValve | `ANIM_THROTTLE_VALVE` | (2.18, 1.82, -0.71) |
+| MassFlowControllerA | `ANIM_MFC_A` | (-5.77, 2.27, -1.82) |
+| MassFlowControllerB | `ANIM_MFC_B` | (-4.72, 2.27, -1.82) |
+| RFVariableCapacitorA | `ANIM_RF_TUNER_A` | (-4.95, 0.88, 3.23) |
+| RFVariableCapacitorB | `ANIM_RF_TUNER_B` | (-4.20, 0.88, 3.23) |
+| OpticalFiberViewportModule | `ANIM_OES_APERTURE` | (1.33, 2.43, 0.35) |
+| VacuumIsolationValve | `ANIM_VACUUM_ISOLATION` | (2.53, 1.84, -1.20) |
+| HolographicPlasmaSCADAMonitor | `ANIM_PLASMA_SCADA` | (4.92, 3.68, -3.29) |
+| SiliconWafer | `ANIM_WAFER_TRANSFER` | (0.00, 1.75, -0.90) |
+| AutomaticRFMatchingNetwork | `ANIM_MATCHING_LIVE_DISPLAY` | (-4.57, 0.77, 2.55) |
+| TransparentPlasmaEtchReactor | `ANIM_PLASMA_VFX_CENTER` | (0.00, 2.23, -0.90) |
+| ThinFilmThicknessMetrology | `ANIM_METROLOGY_PROBE` | (6.90, 1.57, 1.15) |
+
+## IMPORTANT ANIMATION REQUIREMENTS
+
+These are world-space references, not completed animation clips or rig joints.
+
+Inspect the imported FBX hierarchy.
+
+Create moving child transforms for appropriate parts.
+
+Do not rotate entire equipment models.
+
+## ANIMATION BEHAVIOR
+
+- Reactor lid follows actual service-lid state.
+- Gate valve follows actual gate position.
+- Wafer robot follows PLC transfer commands.
+- Wafer lift follows actual lift state.
+- Wafer clamp follows chuck state.
+- Turbo rotor follows actual pump RPM.
+- Backing pump follows actual motor state.
+- Throttle valve follows actual opening.
+- MFC indicators follow controller state.
+- Matching capacitors follow actual tuning positions.
+- OES aperture follows optical hardware state.
+- Plasma VFX responds to simulated plasma activity.
+- Wafer transfer follows actual handling state.
+- Metrology probe follows the inspection sequence.
+
+---
+
+# 8. REUSE SUPPLIED UNITY HELPERS
+
+Three Unity C# files are already included.
+
+## 8.1 ART PLACEMENT
+
+`SparkLevel71ArtPlacementEditor.cs`
+
+Namespace:
+
+`ProjectSpark.EditorTools`
+
+Menu:
+
+`Tools/Project Spark/Levels/71/Place HD Art Under Selected Layout`
+
+The helper:
+
+- Finds the 50 numbered FBX assets.
+- Validates they exist.
+- Creates `L71_HD_VISUAL_ART`.
+- Places them at a common origin.
+- Supports Undo.
+- Can replace an existing visual-art child.
+
+It is an art-only tool.
+
+## 8.2 MATERIALS
+
+`SparkLevel71MaterialUpgradeEditor.cs`
+
+Menu:
+
+`Tools/Project Spark/Levels/71/Create & Apply HD Materials To Selected Art`
+
+Use it to create editable Unity materials.
+
+Configure:
+
+- Stainless steel.
+- Copper.
+- Ceramic.
+- Dark anodized metal.
+- Quartz glass.
+- Transparent plasma visuals.
+- Violet emission.
+- Holographic screens.
+- Wafer iridescence.
+- Safety indicators.
+
+The helper is a starting point; validate shaders against the actual render pipeline.
+
+## 8.3 VISUAL RIG
+
+`SparkLevel71VisualRig.cs`
+
+Namespace:
+
+`ProjectSpark.Visuals`
+
+Class:
+
+`SparkLevel71VisualRig`
+
+The actual public methods are:
+
+- `SetVacuumRPM(float turbo, float backing)`
+- `SetValveOpenFractions(float gate, float isolation, float throttle)`
+- `SetWaferHandlingPose(float lid, float lift, float baseDegrees, float armDegrees, float toolDegrees)`
+- `SetMatchingPositions(float positionA, float positionB)`
+- `SetPlasmaVisualIntensity(float normalizedIntensity)`
+
+Use these exact signatures when compatible.
+
+The rig is visual-only.
+
+It has no authority over vacuum, RF power, plasma, wafer thickness, endpoint detection or gameplay objectives.
+
+The existing rig also does not automatically bind all 21 pivot references. Extend the visual layer where needed without replacing authoritative process logic.
+
+---
+
+# 9. COMPLETE PLAYER ELECTRICAL WIRING — W01 TO W90
+
+The approved design requires:
+
+**Exactly 90 player-created wires.**
+
+**Exactly 140 unique functional terminal anchors.**
+
+The art package contains a wiring budget, not actual endpoint definitions.
+
+Create a complete W01–W90 wiring manifest.
+
+## VERIFIED WIRING BUDGET
+
+| Group | Wires |
+|---|---:|
+| Control power and returns | 10 |
+| Vacuum pumps, valves and pressure | 14 |
+| Virtual gas delivery | 12 |
+| RF generator, matching and protection | 18 |
+| Wafer transfer, chuck and temperature | 10 |
+| Optical endpoint and metrology | 12 |
+| Emergency safety and interlocks | 8 |
+| PLC, controllers and SCADA | 6 |
+| **TOTAL** | **90** |
+
+## GROUP A — W01–W10
+
+Educational control power and return paths.
+
+Include:
+
+- Regulated control supply.
+- Control return.
+- Main PLC supply.
+- Digital I/O supply.
+- Vacuum controller supply.
+- RF control interface supply.
+- Endpoint controller supply.
+- Sensor/interface power.
+- Safety-control interface.
+- Control enable.
+
+## GROUP B — W11–W24
+
+Vacuum equipment:
+
+- Backing pump enable.
+- Backing pump status.
+- Turbomolecular pump enable.
+- Turbo pump status.
+- Pump protection/ready signal.
+- Isolation valve command.
+- Isolation valve feedback.
+- Throttle valve command.
+- Throttle position feedback.
+- Chamber pressure signal.
+- Rough-vacuum measurement.
+- High-vacuum measurement.
+- Vacuum-ready permission.
+- Vacuum fault/status.
+
+## GROUP C — W25–W36
+
+Virtual process-gas network:
+
+- Virtual gas A enable.
+- Virtual gas B enable.
+- MFC A command.
+- MFC A measured flow.
+- MFC A status.
+- MFC B command.
+- MFC B measured flow.
+- MFC B status.
+- Gas manifold permission.
+- Total gas-flow feedback.
+- Gas delivery status.
+- Gas fault/invalid feedback.
+
+## GROUP D — W37–W54
+
+RF system:
+
+- RF generator enable.
+- RF power command.
+- RF ready.
+- RF forward power measurement.
+- RF reflected power measurement.
+- RF voltage feedback.
+- RF current feedback.
+- RF matching enable.
+- Capacitor A command.
+- Capacitor A position feedback.
+- Capacitor B command.
+- Capacitor B position feedback.
+- Matching-network status.
+- RF arc detection.
+- RF trip feedback.
+- RF safety permission.
+- RF reset request.
+- Delivered-power monitoring.
+
+## GROUP E — W55–W64
+
+Wafer systems:
+
+- Load-lock gate command.
+- Gate feedback.
+- Wafer robot enable.
+- Robot ready/status.
+- Wafer lift command.
+- Wafer lift feedback.
+- Chuck clamp command.
+- Chuck feedback.
+- Wafer temperature measurement.
+- Chiller enable/status.
+
+## GROUP F — W65–W76
+
+Endpoint and metrology:
+
+- Optical spectrometer enable.
+- Optical signal output.
+- Optical signal validity.
+- Optical aperture status.
+- Endpoint controller command/enable.
+- Endpoint event output.
+- Endpoint confidence/status.
+- Uniformity analyzer status.
+- Thickness metrology command.
+- Thickness measurement.
+- Measurement validity.
+- Process-quality result.
+
+## GROUP G — W77–W84
+
+Safety/interlocks:
+
+- Emergency stop.
+- Reactor-lid interlock.
+- Load-lock gate interlock.
+- Vacuum safety permission.
+- Wafer cooling safety.
+- RF arc protection.
+- Critical fault latch/status.
+- Fault reset permission.
+
+## GROUP H — W85–W90
+
+Supervisory controls:
+
+- PLC pressure setpoint.
+- Vacuum PID output.
+- Plasma process status.
+- SCADA operator request.
+- SCADA process feedback.
+- Objective/certification event.
+
+## REQUIREMENTS FOR EVERY WIRE
+
+Provide:
+
+- W-number.
+- Actual FROM component.
+- Actual FROM terminal.
+- Actual TO component.
+- Actual TO terminal.
+- Signal type.
+- Required/optional state.
+- Compatible electrical domain.
+- Expected measurement or command.
+- Diagnostic error.
+- Fault behavior after removal.
+
+## CRITICAL TOPOLOGY RULE
+
+There are 90 connections but 140 unique functional terminals.
+
+Do not invent 180 different terminals merely because the wires have two ends.
+
+Use legitimate shared power/return junctions or supported fan-out arrangements.
+
+If the existing terminal system prohibits shared endpoints, create actual junction components and reconcile the manifest while preserving exactly 90 player-created wires and 140 distinct functional terminal IDs.
+
+Do not create fake socket objects that are never registered with Project Spark.
+
+---
+
+# 10. DESIGNATED FINAL OPTICAL SENSOR FAULT WIRE
+
+Reserve one actual player wire for the optical spectrometer's measurement feedback.
+
+Conceptual endpoints:
+
+`OPTICAL_SPECTROMETER_SIGNAL_OUT → ENDPOINT_CONTROLLER_OPTICAL_IN`
+
+Assign its exact W-number after finalizing the real manifest.
+
+This wire must be player-accessible.
+
+## DISCONNECTION EFFECT
+
+When removed:
+
+1. Actual electrical topology changes.
+2. Optical signal no longer reaches the endpoint controller.
+3. Measurement validity becomes false.
+4. Endpoint confidence becomes unavailable or invalid.
+5. Endpoint-controlled etching cannot continue normally.
+6. Safe process protection activates.
+7. A fault event is recorded.
+8. Repair and reset are required.
+
+Do not disconnect the wire visually while leaving the controller supplied with valid data.
+
+---
+
+# 11. INITIAL LEVEL STATE
+
+At level start:
+
+- Main 5 V control power off.
+- PLC awaiting commissioning.
+- Reactor lid closed or in an explicitly safe startup state.
+- Main chamber near ambient pressure.
+- Load-lock near ambient pressure.
+- Backing pump stopped.
+- Turbomolecular pump stopped.
+- Vacuum isolation valve in safe position.
+- Throttle valve in defined startup position.
+- Virtual gas A disabled.
+- Virtual gas B disabled.
+- Both MFCs uncalibrated.
+- RF generator disabled.
+- RF matching network in defined neutral state.
+- Plasma not ignited.
+- Wafer cassette loaded.
+- Wafer robot idle.
+- Wafer chuck unpowered.
+- Chiller disabled.
+- Optical sensor uncalibrated.
+- Endpoint controller disabled.
+- Film thickness set to initial configured value.
+- Wafer-sector film states initialized.
+- No active process fault.
+- No certified wafer batch.
+- Objectives 0/6.
+
+## REQUIRED STARTUP EXPERIENCE
+
+The player must bring the system online in meaningful stages.
+
+No one-button automatic success.
+
+---
+
+# 12. SINGLE AUTHORITATIVE PROCESS SIMULATION
+
+Level 71 requires one coherent physical and manufacturing simulation.
+
+The authoritative state must include:
+
+- Main chamber pressure.
+- Load-lock pressure.
+- Pump speeds.
+- Pump effective throughput.
+- Vacuum-valve positions.
+- Gas A flow.
+- Gas B flow.
+- Total gas throughput.
+- Gas mixture fractions.
+- RF forward power.
+- RF reflected power.
+- Matching losses.
+- Actual delivered power.
+- Effective plasma impedance.
+- Plasma activity.
+- Wafer temperature.
+- Wafer film thickness by region.
+- Mask thickness/condition.
+- Underlying-layer exposure.
+- Optical emission spectrum.
+- Endpoint confidence.
+- Safety state.
+- Wafer quality.
+
+## IMPORTANT
+
+Do not let independently authored scripts write conflicting values to chamber pressure, plasma activity, wafer thickness or endpoint status.
+
+Create one coordinated owner or a correctly synchronized subsystem architecture.
+
+---
+
+# 13. VACUUM CHAMBER PHYSICS
+
+Use:
+
+- `01_L71_TransparentPlasmaEtchReactor.fbx`
+- `13_L71_VacuumLoadLockChamber.fbx`
+- `18_L71_IndustrialVacuumForeline.fbx`
+
+## REQUIRED PROPERTIES
+
+- Chamber volume.
+- Gas pressure.
+- Gas temperature.
+- Total gas inventory.
+- Gas species fractions.
+- Inlet throughput.
+- Leak throughput.
+- Effective pumping speed.
+- Vacuum conductance.
+- Chamber isolation state.
+
+## REDUCED-ORDER VACUUM EQUATION
+
+For an approximately constant-temperature gas model:
+
+`V * dP/dt = Qin + Qleak - Seffective * P`
+
+Use consistent throughput and pressure-volume units.
+
+## REQUIRED BEHAVIOR
+
+- Pumping reduces chamber pressure.
+- Gas input raises gas load.
+- Leakage raises chamber pressure relative to an otherwise identical condition.
+- Throttle restriction changes effective pumping.
+- Finite conductance limits throughput.
+- Chamber isolation changes connected flow paths.
+- Pressure settles according to real model parameters.
+
+## IMPORTANT
+
+Do not directly assign chamber pressure when the player activates a pump.
+
+---
+
+# 14. VACUUM PUMP SYSTEM
+
+Use:
+
+- `16_L71_TurbomolecularVacuumPump.fbx`
+- `17_L71_VacuumBackingPump.fbx`
+
+## BACKING PUMP
+
+Required state:
+
+- Enable.
+- Actual motor speed.
+- Effective pumping capacity.
+- Pressure operating range.
+- Foreline pressure.
+- Power.
+- Ready.
+- Fault.
+
+## TURBOMOLECULAR PUMP
+
+Required state:
+
+- Enable.
+- Actual rotor RPM.
+- Acceleration.
+- Pumping speed.
+- Foreline requirements.
+- Chamber connection.
+- Motor power.
+- Trip status.
+
+## STARTUP REQUIREMENTS
+
+Use modeled interlocks for safe sequencing.
+
+The turbo pump must not simply produce maximum high-vacuum pumping from a stationary rotor.
+
+Require appropriate modeled backing-pump and foreline readiness.
+
+## POWER DOMAIN
+
+Pump motors use a separately modeled virtual power source.
+
+The educational 5 V control wiring provides commands and status.
+
+---
+
+# 15. VACUUM VALVE CONTROL
+
+Use:
+
+- `19_L71_VacuumIsolationValve.fbx`
+- `20_L71_AutomaticVacuumThrottleValve.fbx`
+- `14_L71_LoadLockGateValve.fbx`
+
+## REQUIRED PROPERTIES
+
+- Requested position.
+- Actual position.
+- Actuator speed.
+- Valve conductance.
+- Feedback.
+- Interlock.
+- Fault.
+
+## REQUIRED BEHAVIOR
+
+- Throttle opening affects gas removal.
+- Isolation valve changes connectivity.
+- Gate valve controls load-lock transfer.
+- Actuators have finite movement.
+- Unsafe opening commands are rejected.
+- Feedback must match actual state.
+
+## IMPORTANT
+
+A closed valve must actually restrict the modeled gas path.
+
+A valve command should not be treated as a measured valve position.
+
+---
+
+# 16. VACUUM PRESSURE PID
+
+Use:
+
+`45_L71_VacuumPressurePIDController.fbx`
+
+## REQUIRED INPUTS
+
+- Target chamber pressure.
+- Valid measured pressure.
+- Gas throughput.
+- Throttle position feedback.
+- Pump readiness.
+- Safety permission.
+
+## REQUIRED OUTPUT
+
+- Throttle valve request.
+
+## PID EQUATION
+
+`u = Kp*Error + Ki*Integral(Error) + Kd*FilteredDerivative(Error)`
+
+## REQUIRED FEATURES
+
+- Gain configuration.
+- Finite actuator limits.
+- Anti-windup.
+- Sampling interval.
+- Measurement validity.
+- Manual/automatic transition.
+- Stable recovery from disturbances.
+
+## IMPORTANT
+
+The PID controller must affect chamber pressure through real valve conductance and pumping.
+
+It must not directly write a pressure state.
+
+---
+
+# 17. VIRTUAL PROCESS-GAS DELIVERY
+
+Use:
+
+- `25_L71_VirtualProcessGasSupplyA.fbx`
+- `26_L71_VirtualProcessGasSupplyB.fbx`
+- `27_L71_MassFlowControllerA.fbx`
+- `28_L71_MassFlowControllerB.fbx`
+- `29_L71_VacuumGasMixingManifold.fbx`
+
+## REQUIREMENT
+
+Use two **fictional, nonhazardous virtual gases**, named A and B.
+
+The simulator should model their mass flow and abstract process contributions, without introducing real hazardous gas recipes or operational industrial chemical handling instructions.
+
+## REQUIRED STATES
+
+- Supply availability.
+- Remaining inventory, if finite.
+- Commanded flow.
+- Actual flow.
+- Calibration.
+- Measurement validity.
+- Manifold state.
+- Total gas throughput.
+- Mixture fraction.
+
+## REQUIRED BEHAVIOR
+
+Mass-flow controllers have finite capacity and response time.
+
+The actual gas throughput affects chamber pressure and the simplified plasma model.
+
+The player must not achieve gas delivery merely by moving a graphical slider.
+
+---
+
+# 18. VACUUM INSTRUMENTATION
+
+Use:
+
+- `21_L71_CapacitancePressureManometer.fbx`
+- `22_L71_RoughVacuumPressureGauge.fbx`
+- `23_L71_HighVacuumPressureGauge.fbx`
+- `24_L71_ResidualGasAnalyzer.fbx`
+
+## REQUIRED MEASUREMENTS
+
+- True pressure.
+- Measured pressure.
+- Measurement range.
+- Sensor response.
+- Calibration.
+- Signal timestamp.
+- Validity.
+- Fault.
+
+## REQUIRED BEHAVIOR
+
+Different pressure instruments may have different valid operating ranges.
+
+Do not report all instruments as valid over every possible pressure.
+
+The residual gas analyzer should use the fictional virtual-gas mixture state and clearly label its outputs as educational estimates.
+
+---
+
+# 19. RF POWER GENERATOR
+
+Use:
+
+`30_L71_HighFrequencyRFGenerator.fbx`
+
+## REQUIRED PROPERTIES
+
+- RF enable.
+- Requested power.
+- Actual forward power.
+- Output limit.
+- Reference impedance.
+- Frequency.
+- Matching-network availability.
+- Safety permission.
+- Overcurrent status.
+- Trip state.
+
+## RF CONTROL
+
+The model may represent RF power on averaged simulation timesteps.
+
+Do not numerically simulate every 13.56 MHz waveform cycle in Unity Update.
+
+Use reduced-order power and impedance relationships.
+
+## IMPORTANT
+
+The simulator must distinguish:
+
+- Requested generator power.
+- Actual forward power.
+- Reflected power.
+- Matching-network losses.
+- Delivered plasma power.
+
+---
+
+# 20. RF MATCHING NETWORK
+
+Use:
+
+- `31_L71_AutomaticRFMatchingNetwork.fbx`
+- `32_L71_RFVariableCapacitorA.fbx`
+- `33_L71_RFVariableCapacitorB.fbx`
+
+## REQUIRED STATES
+
+- Capacitor A requested position.
+- Capacitor A actual position.
+- Capacitor B requested position.
+- Capacitor B actual position.
+- Plasma effective impedance.
+- Transformed impedance.
+- Reflection coefficient.
+- Reflected power.
+- Matching loss.
+- Tuning status.
+
+## REFLECTION COEFFICIENT
+
+For an appropriate complex transformed load:
+
+`Gamma = (Zin - Z0) / (Zin + Z0)`
+
+## REFLECTED POWER
+
+`Preflected = abs(Gamma)^2 * Pforward`
+
+## DELIVERED POWER
+
+`Pdelivered = Pforward - Preflected - PmatchingLoss`
+
+Use the physical bounds and consistency checks of the chosen reduced-order model.
+
+## REQUIRED BEHAVIOR
+
+Adjusting matching capacitors changes transformed impedance.
+
+Transformed impedance changes reflected RF power.
+
+Actual plasma load changes with modeled plasma conditions.
+
+Matching controller tuning must respond to real measured signals.
+
+## IMPORTANT
+
+Do not let a matching-success Boolean force reflected power to zero.
+
+---
+
+# 21. RF VOLTAGE, CURRENT AND POWER SENSORS
+
+Use:
+
+- `34_L71_ForwardReflectedPowerCoupler.fbx`
+- `35_L71_RFVoltageCurrentSensor.fbx`
+
+## REQUIRED MEASUREMENTS
+
+- Forward RF power.
+- Reflected RF power.
+- RF voltage estimate.
+- RF current estimate.
+- Effective impedance.
+- Measurement timestamp.
+- Calibration.
+- Validity.
+- Fault state.
+
+## IMPORTANT
+
+All measurements must derive from the same RF power and impedance model.
+
+Do not show mutually inconsistent values on SCADA.
+
+---
+
+# 22. PLASMA IGNITION AND STABILITY MODEL
+
+Use:
+
+- `01_L71_TransparentPlasmaEtchReactor.fbx`
+- `04_L71_InductivelyCoupledRFCoil.fbx`
+- `05_L71_PrecisionGasDistributionShowerhead.fbx`
+- `06_L71_WaferBiasElectrode.fbx`
+
+## REQUIRED STATES
+
+- Ignition permission.
+- Plasma ignition state.
+- Delivered RF power.
+- Chamber pressure.
+- Gas mixture.
+- Effective plasma activity.
+- Simplified ionization state.
+- Spatial uniformity factors.
+- Wafer ion-energy factor.
+- Plasma impedance.
+- Plasma stability.
+- Arc condition.
+
+## REQUIRED BEHAVIOR
+
+- Plasma cannot ignite without safe chamber conditions.
+- Plasma cannot remain stable with no modeled energy input.
+- Gas throughput influences process conditions.
+- Delivered RF power influences plasma activity.
+- Pressure changes affect the model.
+- Plasma impedance can change.
+- Matching network responds.
+- Arcs trigger protection.
+- Plasma shutdown stops process etching.
+
+## FIDELITY
+
+A bounded reduced-order educational plasma model is appropriate.
+
+Do not claim detailed plasma kinetics, electron energy distribution or particle-in-cell simulation unless actually implemented.
+
+---
+
+# 23. WAFER TRANSFER AND LOAD-LOCK
+
+Use:
+
+- `12_L71_WaferCarrierCassette.fbx`
+- `13_L71_VacuumLoadLockChamber.fbx`
+- `14_L71_LoadLockGateValve.fbx`
+- `15_L71_AutomatedWaferTransferRobot.fbx`
+
+## REQUIRED STATES
+
+- Wafer available.
+- Robot home.
+- Robot ready.
+- Load-lock ready.
+- Gate valve closed.
+- Load-lock pressure.
+- Main chamber pressure.
+- Wafer transfer permission.
+- Wafer transfer progress.
+- Transfer complete.
+- Fault state.
+
+## REQUIRED BEHAVIOR
+
+- Wafer transfer requires valid chamber and gate states.
+- The robot moves through a controlled sequence.
+- The load-lock and main chamber do not magically share a valid pressure.
+- Unsafe gate opening is prevented.
+- Wafer cannot occupy contradictory locations.
+- Successful transfer updates the authoritative wafer location.
+
+---
+
+# 24. ELECTROSTATIC CHUCK AND WAFER LIFT
+
+Use:
+
+- `07_L71_ElectrostaticWaferChuck.fbx`
+- `08_L71_PrecisionWaferLiftAssembly.fbx`
+
+## REQUIRED STATES
+
+- Chuck ready.
+- Wafer present.
+- Clamp commanded.
+- Actual clamp state.
+- Lift requested.
+- Actual lift position.
+- Wafer thermal contact.
+- Safety state.
+
+## REQUIRED BEHAVIOR
+
+Chuck readiness must influence wafer process permission.
+
+The wafer lift must move at finite speed.
+
+The wafer cannot be processed while it is in an invalid transfer position.
+
+---
+
+# 25. WAFER FILM AND MASK SIMULATION
+
+Use:
+
+- `09_L71_SiliconWafer.fbx`
+- `10_L71_WaferThinFilmLayer.fbx`
+- `11_L71_PatternedWaferMask.fbx`
+
+## REQUIRED MODEL
+
+Implement a regional wafer representation.
+
+Suggested configuration:
+
+- Central region.
+- Intermediate radial regions.
+- Edge regions.
+- Angular sectors.
+
+Each region tracks:
+
+- Initial film thickness.
+- Remaining film thickness.
+- Etched depth.
+- Mask condition.
+- Underlying material exposure.
+- Damage.
+- Local process rate.
+
+## THICKNESS DYNAMICS
+
+`dThickness_i/dt = -EtchRate_i`
+
+## REQUIRED BEHAVIOR
+
+- Plasma activity changes etch rates.
+- Wafer temperature may influence etching.
+- Uniformity factors change regional rates.
+- Film thickness reduces over time.
+- Thickness cannot become negative.
+- Mask erosion is tracked separately.
+- Underlying-layer damage may accumulate after local clearing.
+- Process shutdown stops active etching.
+
+## IMPORTANT
+
+Do not set every wafer region to the same remaining thickness by default.
+
+Do not assign finished wafer quality based solely on elapsed time.
+
+---
+
+# 26. ETCH RATE AND UNIFORMITY MODEL
+
+Use:
+
+`43_L71_PlasmaUniformityAnalyzer.fbx`
+
+## ETCH RATE
+
+Create a documented synthetic educational model using:
+
+- Plasma activity.
+- Delivered RF power.
+- Virtual gas mixture.
+- Chamber pressure.
+- Wafer temperature.
+- Regional spatial factors.
+
+Do not use real hazardous reactive-gas recipes.
+
+## UNIFORMITY
+
+Calculate a measurable variation metric.
+
+Example:
+
+`NonuniformityPercent = (MaxRate - MinRate) / (2 * MeanRate) * 100`
+
+Clearly define the chosen metric.
+
+## REQUIRED BEHAVIOR
+
+Poor conditions produce nonuniform etching.
+
+Correct tuning should reduce the modeled variation.
+
+The player should be able to recognize:
+
+- Center-fast etching.
+- Edge-fast etching.
+- Uneven film removal.
+- Residual target film.
+- Excess substrate exposure.
+
+---
+
+# 27. WAFER THERMAL MODEL
+
+Use:
+
+- `37_L71_WaferTemperatureController.fbx`
+- `38_L71_PrecisionWaferChiller.fbx`
+
+## REQUIRED STATES
+
+- Wafer temperature.
+- Chuck temperature.
+- Thermal capacity.
+- Plasma heating.
+- Chiller power.
+- Thermal-contact state.
+- Heat losses.
+- Temperature measurement.
+- Safety status.
+
+## ENERGY BALANCE
+
+`Cwafer * dT/dt = Qplasma + Qelectrode - Qcooling - Qloss`
+
+## REQUIRED BEHAVIOR
+
+- Wafer temperature changes gradually.
+- Plasma operation produces thermal input.
+- Chiller removes finite energy.
+- Cooling degradation can cause overheating.
+- Excessive temperature affects process quality or safety.
+- Safety protection can stop etching.
+
+Do not directly assign wafer temperature from its target.
+
+---
+
+# 28. OPTICAL EMISSION SPECTROMETER
+
+Use:
+
+- `40_L71_OpticalEmissionSpectrometer.fbx`
+- `41_L71_OpticalFiberViewportModule.fbx`
+
+## REQUIRED MEASUREMENT STATES
+
+- Optical collection enabled.
+- Spectrometer calibrated.
+- Plasma emission activity.
+- Wavelength-channel signals.
+- Synthetic emission peaks.
+- Measurement noise.
+- Sample interval.
+- Signal timestamp.
+- Measurement validity.
+- Optical throughput.
+- Fault state.
+
+## REQUIRED BEHAVIOR
+
+Generate a synthetic optical signal based on the virtual plasma and wafer process.
+
+The signal may reflect:
+
+- Plasma activity.
+- Virtual gas composition.
+- Process by-product estimate.
+- Film removal stage.
+- Plasma instability.
+
+Use a documented educational spectral model.
+
+## IMPORTANT
+
+The endpoint controller must not receive the hidden true remaining film thickness directly.
+
+The optical signal must be a measurement derived from the process model.
+
+---
+
+# 29. AUTOMATIC ETCH ENDPOINT CONTROLLER
+
+Use:
+
+`42_L71_AutomaticEtchEndpointController.fbx`
+
+This is Level 71's primary precision-manufacturing challenge.
+
+## REQUIRED STATES
+
+- Optical measurement valid.
+- Baseline acquired.
+- Endpoint-monitoring enabled.
+- Spectral feature value.
+- Filtered feature.
+- Feature trend.
+- Endpoint confidence.
+- Endpoint candidate.
+- Endpoint confirmed.
+- Invalid endpoint.
+- Process stop request.
+
+## ENDPOINT LOGIC
+
+Use a measurement-based detection method appropriate to the synthetic spectrum.
+
+Possible approaches include:
+
+- Filtered spectral feature threshold.
+- Baseline-relative change.
+- Persistence interval.
+- Trend consistency.
+- Confidence estimation.
+
+## REQUIRED BEHAVIOR
+
+- Endpoint signal changes as the modeled target film is removed.
+- Measurement noise can affect confidence.
+- A brief transient should not automatically trigger endpoint.
+- Invalid optical feedback disables trustworthy endpoint certification.
+- Confirmed endpoint requests controlled RF shutdown.
+- Post-process metrology verifies actual outcome.
+
+## IMPORTANT
+
+Do not trigger endpoint solely from a fixed timer or hidden thickness threshold.
+
+The hidden process state may generate the synthetic signal, but the detector must infer endpoint through its measurement path.
+
+---
+
+# 30. THIN-FILM THICKNESS METROLOGY
+
+Use:
+
+`44_L71_ThinFilmThicknessMetrology.fbx`
+
+## REQUIRED MEASUREMENTS
+
+- Remaining thickness by region.
+- Average remaining target thickness.
+- Maximum residual thickness.
+- Minimum residual thickness.
+- Etch depth.
+- Uniformity.
+- Mask condition.
+- Underlying-layer damage.
+- Wafer quality.
+
+## REQUIRED BEHAVIOR
+
+Perform inspection through a defined post-process measurement sequence.
+
+Do not use metrology results as a hidden real-time endpoint shortcut if the gameplay challenge requires optical endpoint detection.
+
+A successfully etched wafer must meet actual modeled quality criteria.
+
+---
+
+# 31. RF ARC PROTECTION
+
+Use:
+
+`36_L71_RFArcProtectionModule.fbx`
+
+## REQUIRED PROTECTION
+
+- Excess reflected power.
+- Excess RF current.
+- RF arc event.
+- Invalid matching feedback.
+- Unsafe vacuum conditions.
+- Reactor lid open.
+- Cooling unavailable.
+- Emergency stop.
+
+## REQUIRED RESPONSE
+
+- Reduce or trip RF power.
+- Stop plasma activity where required.
+- Stop active etch progression.
+- Log fault.
+- Latch critical protection.
+- Require valid reset.
+
+Safety must override normal process controls.
+
+---
+
+# 32. MAIN PLASMA SAFETY CONTROLLER
+
+Use:
+
+`39_L71_EmergencyPlasmaSafetyStation.fbx`
+
+## REQUIRED SAFETY INTERLOCKS
+
+- Reactor lid closed.
+- Load-lock gate safe.
+- Vacuum valid.
+- Pumps ready.
+- Gas-flow instrumentation valid.
+- RF protection healthy.
+- Wafer on chuck.
+- Chuck ready.
+- Wafer cooling valid.
+- Optical endpoint feedback valid for endpoint-controlled operation.
+- Emergency stop released.
+
+## REQUIRED RESPONSE
+
+Unsafe conditions must prevent process ignition or require controlled shutdown.
+
+The system must not continue manufacturing simply because the player requests START ETCH.
+
+All operations remain within the fictional simulator.
+
+---
+
+# 33. PLASMA PROCESS PLC
+
+Use:
+
+- `46_L71_PlasmaProcessPLCRack.fbx`
+- `47_L71_PlasmaDigitalIOModule.fbx`
+
+## REQUIRED PLC STATES
+
+- OFF.
+- INITIALIZING.
+- IDLE.
+- SAFETY_CHECK.
+- SENSOR_CALIBRATION.
+- ROUGH_PUMPDOWN.
+- HIGH_VACUUM_PUMPDOWN.
+- VACUUM_READY.
+- LOADLOCK_READY.
+- WAFER_TRANSFER.
+- WAFER_CLAMPING.
+- PROCESS_GAS_READY.
+- RF_MATCHING.
+- PLASMA_IGNITION.
+- PLASMA_STABILIZATION.
+- ETCHING.
+- ENDPOINT_MONITORING.
+- ENDPOINT_DETECTED.
+- RF_SHUTDOWN.
+- PROCESS_COMPLETE.
+- WAFER_UNLOAD.
+- METROLOGY.
+- FAULT.
+- SAFE_SHUTDOWN.
+- RESET_REQUIRED.
+
+## REQUIRED BEHAVIOR
+
+Every transition must depend on actual equipment states and valid measurements.
+
+Do not advance based solely on timers.
+
+Do not start plasma while the chamber is unsafe.
+
+Do not unload a wafer while an incompatible process state is active.
+
+---
+
+# 34. VACUUM LEAK DISTURBANCE
+
+Implement a deliberate fictional chamber leak event.
+
+## REQUIRED RESPONSE
+
+- Gas throughput increases.
+- Chamber pressure changes.
+- Vacuum PID responds.
+- Pump limits may become relevant.
+- Plasma conditions change.
+- RF impedance may change.
+- Safety controller decides whether processing can continue.
+
+## SUCCESS CRITERION
+
+The player must diagnose and safely recover.
+
+Do not mark success based only on clicking a LEAK FIX button.
+
+The leak condition must be cleared and pressure stability demonstrated.
+
+---
+
+# 35. RF MATCHING DRIFT DISTURBANCE
+
+Implement a change in modeled plasma effective impedance.
+
+## REQUIRED RESPONSE
+
+- Transformed load changes.
+- Reflected power rises.
+- Delivered power may decrease.
+- Plasma activity responds.
+- Matching network adjusts.
+- Protective limits remain active.
+
+## SUCCESS CRITERION
+
+The player must restore acceptable reflected power and stable plasma operation without bypassing RF protection.
+
+---
+
+# 36. WAFER COOLING DISTURBANCE
+
+Implement a finite reduction in chiller capability.
+
+## REQUIRED RESPONSE
+
+- Actual cooling duty decreases.
+- Wafer temperature changes over time.
+- Etch uniformity or rate may change.
+- Temperature controller responds.
+- Safety protection acts when necessary.
+
+## SUCCESS CRITERION
+
+The player must protect wafer quality, correct the simulated cooling problem, and complete a valid post-recovery process.
+
+---
+
+# 37. LIVE PLASMA SCADA DASHBOARD
+
+Use:
+
+`48_L71_HolographicPlasmaSCADAMonitor.fbx`
+
+## REQUIRED LIVE VALUES
+
+- MAIN CONTROL POWER.
+- PLC STATE.
+- SAFETY STATUS.
+- REACTOR LID.
+- LOADLOCK GATE.
+- CHAMBER PRESSURE.
+- LOADLOCK PRESSURE.
+- PRESSURE SETPOINT.
+- BACKING PUMP RPM.
+- TURBO PUMP RPM.
+- ISOLATION VALVE STATE.
+- THROTTLE VALVE OPENING.
+- VIRTUAL GAS A FLOW.
+- VIRTUAL GAS B FLOW.
+- TOTAL GAS THROUGHPUT.
+- GAS MIXTURE.
+- RF GENERATOR STATUS.
+- RF FORWARD POWER.
+- RF REFLECTED POWER.
+- RF MATCHING LOSSES.
+- RF DELIVERED POWER.
+- CAPACITOR A POSITION.
+- CAPACITOR B POSITION.
+- RF MATCHING ERROR.
+- PLASMA IGNITION STATE.
+- PLASMA STABILITY.
+- PLASMA ACTIVITY.
+- WAFER CHUCK STATE.
+- WAFER TEMPERATURE.
+- CHILLER STATUS.
+- WAFER INITIAL FILM THICKNESS.
+- REMAINING FILM THICKNESS.
+- REGIONAL ETCH RATES.
+- ETCH UNIFORMITY.
+- UNDERLYING-LAYER DAMAGE.
+- OPTICAL EMISSION SPECTRUM.
+- ENDPOINT SIGNAL.
+- ENDPOINT CONFIDENCE.
+- ENDPOINT VALIDITY.
+- WAFER QUALITY.
+- SENSOR VALIDITY.
+- FAULT HISTORY.
+- OBJECTIVES X/6.
+
+## REQUIRED PLAYER CONTROLS
+
+- MAIN POWER.
+- CALIBRATE PRESSURE.
+- CALIBRATE GAS FLOW.
+- CALIBRATE RF SENSORS.
+- CALIBRATE OPTICAL SPECTROMETER.
+- START BACKING PUMP.
+- START TURBO PUMP.
+- ENABLE PRESSURE PID.
+- OPEN/CLOSE ISOLATION VALVE.
+- ADJUST THROTTLE VALVE.
+- LOAD WAFER.
+- CLAMP WAFER.
+- ENABLE CHILLER.
+- SET VIRTUAL GAS A FLOW.
+- SET VIRTUAL GAS B FLOW.
+- ENABLE GAS DELIVERY.
+- ENABLE RF GENERATOR.
+- SET RF POWER.
+- TUNE CAPACITOR A.
+- TUNE CAPACITOR B.
+- ENABLE AUTOMATIC MATCHING.
+- IGNITE PLASMA.
+- START ETCH.
+- ENABLE ENDPOINT DETECTION.
+- STOP ETCH.
+- RUN METROLOGY.
+- VACUUM LEAK TEST.
+- RF MATCH DRIFT TEST.
+- COOLING FAILURE TEST.
+- EMERGENCY SHUTDOWN.
+- RESET PROTECTION.
+- DISCONNECT OPTICAL FEEDBACK.
+- RECALIBRATE SPECTROMETER.
+- RESET ENDPOINT FAULT.
+- FINAL CERTIFY.
+
+Every control must change a real gameplay state.
+
+No decorative buttons.
+
+---
+
+# 38. SIX AUTHORITATIVE LEVEL 71 OBJECTIVES
+
+Integrate these with the actual Project Spark level evaluator.
+
+## OBJECTIVE 1 — BUILD THE PLASMA PROCESSING NETWORK
+
+Require:
+
+1. All 90 player-created wires connected.
+2. Exactly 140 unique functional terminals registered.
+3. Valid 5 V control supply.
+4. Valid control return.
+5. PLC connected.
+6. Digital I/O connected.
+7. Backing pump controls connected.
+8. Turbo pump controls connected.
+9. Isolation valve connected.
+10. Throttle valve connected.
+11. Pressure instruments connected.
+12. Gas A controller connected.
+13. Gas B controller connected.
+14. RF generator control connected.
+15. Matching network connected.
+16. Matching capacitor commands connected.
+17. RF measurement connected.
+18. RF protection connected.
+19. Wafer robot connected.
+20. Chuck/lift connected.
+21. Chiller and temperature feedback connected.
+22. Optical spectrometer connected.
+23. Endpoint controller connected.
+24. Metrology connected.
+25. Emergency interlocks valid.
+26. No unsafe topology.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — COMMISSION THE VACUUM CHAMBER
+
+Require:
+
+1. Objective 1 certified.
+2. Main safety system ready.
+3. Pressure instruments calibrated.
+4. Vacuum-valve feedback valid.
+5. Backing pump starts.
+6. Actual pump speed increases.
+7. Rough pumpdown occurs.
+8. Turbo pump commissioned under valid modeled conditions.
+9. Effective pumping speed increases.
+10. Main chamber pressure decreases.
+11. Load-lock pressure controlled.
+12. Vacuum integrity valid.
+13. Wafer transfer permission established.
+14. Wafer transferred.
+15. Wafer clamped.
+16. Chamber pressure stable over a defined interval.
+17. No active critical fault.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — IGNITE AND STABILIZE THE PLASMA
+
+Require:
+
+1. Previous objectives certified.
+2. Fictional gas supplies ready.
+3. MFC A valid.
+4. MFC B valid.
+5. Actual gas throughput established.
+6. Pressure controller active.
+7. Stable chamber pressure.
+8. RF measurement valid.
+9. RF protection ready.
+10. Matching capacitor positions adjustable.
+11. Actual reflected power calculated.
+12. Matching network tuned.
+13. Delivered power sufficient for the model.
+14. Plasma ignition successful.
+15. Plasma activity stable.
+16. Wafer cooling operational.
+17. Wafer temperature within limits.
+18. No RF arc or safety fault.
+19. Stable observation interval completed.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — ETCH WITH PRECISION
+
+Require:
+
+1. Previous objectives certified.
+2. Wafer loaded and clamped.
+3. Film initialized.
+4. Plasma stable.
+5. Virtual process-gas conditions valid.
+6. Etch simulation active.
+7. Actual film removal occurring.
+8. Regional etch states updated.
+9. Wafer temperature controlled.
+10. Optical spectrometer valid.
+11. Endpoint controller active.
+12. Synthetic optical features evolve.
+13. Endpoint detected from measurements.
+14. Plasma stop requested.
+15. RF safely shut down.
+16. Post-process metrology completed.
+17. Remaining film within required tolerance.
+18. Etch nonuniformity within configured limit.
+19. Underlying-layer damage within limit.
+20. Wafer batch certified.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — SURVIVE REACTOR DISTURBANCES
+
+Require:
+
+1. Previous objectives certified.
+2. Stable baseline recorded.
+3. Vacuum leak scenario applied.
+4. Actual chamber pressure responds.
+5. Pressure controller responds.
+6. Leak detected and corrected.
+7. Pressure stability restored.
+8. RF matching drift applied.
+9. Reflected power changes.
+10. Matching network responds.
+11. Acceptable RF matching restored.
+12. Wafer cooling degradation applied.
+13. Actual cooling duty changes.
+14. Wafer temperature responds.
+15. Safety protection acts appropriately.
+16. Cooling capability restored.
+17. Faults reset under valid conditions.
+18. A fresh valid wafer process completed.
+19. No critical unresolved fault.
+20. Disturbance evidence recorded.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — RESTORE OPTICAL ENDPOINT FEEDBACK
+
+Require:
+
+1. Objectives 1–5 historically certified.
+2. Designated optical signal wire disconnected.
+3. Actual electrical topology invalidated.
+4. Optical signal becomes invalid.
+5. Endpoint controller detects lost feedback.
+6. Endpoint-controlled processing becomes unavailable.
+7. Unsafe etching inhibited.
+8. Fault latched.
+9. Player reconnects the actual wire.
+10. Electrical connectivity restored.
+11. Optical signal reacquired.
+12. Spectrometer recalibrated.
+13. Fresh valid optical samples collected.
+14. Player explicitly resets the fault.
+15. Process recommissioned safely.
+16. New wafer or valid test sample initialized.
+17. Stable vacuum re-established.
+18. RF matching verified.
+19. Plasma ignited under safe conditions.
+20. A fresh etch performed.
+21. Endpoint detected from fresh measurements.
+22. RF stopped correctly.
+23. Metrology validates remaining film and uniformity.
+24. No unacceptable underlying-layer damage.
+25. No unresolved critical fault.
+26. Final certification succeeds.
+
+Progress becomes **6/6**.
+
+## HISTORICAL CERTIFICATION REQUIREMENT
+
+The deliberate final sensor fault must not erase previously certified Objectives 1–5.
+
+Do not implement the final fault as a forced reset to 0/6.
+
+Objective 6 must not complete merely because the player reconnects the sensor.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REPORT 6/6.**
+
+---
+
+# 39. FINAL OPTICAL SENSOR DISCONNECTION — FULL SEQUENCE
+
+## FAULT INJECTION
+
+1. Player selects the designated optical-feedback wire.
+2. Player disconnects it using the real Project Spark wiring system.
+3. Electrical connectivity changes.
+4. Optical spectrometer measurement path becomes invalid.
+5. Endpoint controller loses fresh measurement.
+6. Endpoint confidence invalidates.
+7. Automatic endpoint-dependent processing is restricted.
+8. Safety controller enters the appropriate safe state.
+9. Fault is recorded and latched.
+
+## IMPORTANT
+
+Do not keep the last measurement marked VALID.
+
+A last known spectrum may remain visible if clearly labeled STALE.
+
+The endpoint detector must not use stale feedback to certify completion.
+
+## RECOVERY
+
+1. Player reconnects the actual wire.
+2. Topology becomes valid.
+3. Sensor power/status verified.
+4. Optical signal reacquired.
+5. Calibration completed.
+6. Valid samples collected.
+7. Player explicitly resets fault.
+8. Safety conditions checked.
+9. Vacuum system recommissioned if necessary.
+10. Virtual gas flow re-established.
+11. RF matching verified.
+12. Plasma re-ignited safely.
+13. Fresh wafer process performed.
+14. Endpoint detected.
+15. Process safely stopped.
+16. Metrology completed.
+17. Final 6/6 certified.
+
+---
+
+# 40. RECOMMENDED UNITY C# ARCHITECTURE
+
+Inspect actual project code before introducing classes.
+
+Suggested responsibilities:
+
+- `SparkLevel71Coordinator.cs`
+- `SparkLevel71ProcessState.cs`
+- `SparkLevel71VacuumNetwork.cs`
+- `SparkLevel71VacuumPumpDynamics.cs`
+- `SparkLevel71VacuumValveDynamics.cs`
+- `SparkLevel71VacuumPressureSensor.cs`
+- `SparkLevel71GasThroughputModel.cs`
+- `SparkLevel71VirtualGasSupply.cs`
+- `SparkLevel71MassFlowController.cs`
+- `SparkLevel71GasMixtureModel.cs`
+- `SparkLevel71RFGenerator.cs`
+- `SparkLevel71RFMatchingNetwork.cs`
+- `SparkLevel71RFCapacitorActuator.cs`
+- `SparkLevel71RFMeasurement.cs`
+- `SparkLevel71RFProtection.cs`
+- `SparkLevel71PlasmaStateModel.cs`
+- `SparkLevel71WaferTransferController.cs`
+- `SparkLevel71WaferChuckController.cs`
+- `SparkLevel71WaferFilmModel.cs`
+- `SparkLevel71WaferMaskModel.cs`
+- `SparkLevel71WaferThermalModel.cs`
+- `SparkLevel71WaferChiller.cs`
+- `SparkLevel71OpticalEmissionSensor.cs`
+- `SparkLevel71EndpointDetector.cs`
+- `SparkLevel71UniformityAnalyzer.cs`
+- `SparkLevel71FilmMetrology.cs`
+- `SparkLevel71VacuumPressurePID.cs`
+- `SparkLevel71PlasmaPLC.cs`
+- `SparkLevel71SafetyController.cs`
+- `SparkLevel71DisturbanceController.cs`
+- `SparkLevel71FaultRecovery.cs`
+- `SparkLevel71EventRecorder.cs`
+- `SparkLevel71ObjectiveTracker.cs`
+- `SparkLevel71SCADADashboard.cs`
+- `SparkLevel71Interaction.cs`
+- `SparkLevel71VisualRigAdapter.cs`
+
+These are proposed responsibilities, not verified existing APIs.
+
+Reuse existing Project Spark systems where appropriate.
+
+---
+
+# 41. AUTHORITATIVE SIMULATION UPDATE ORDER
+
+Implement a coherent fixed-step or scheduled simulation.
+
+Suggested dependency sequence:
+
+1. Validate electrical topology.
+2. Evaluate 5 V control supply.
+3. Read player commands.
+4. Read sensor validity and prior measurements.
+5. Evaluate safety permissions.
+6. Execute PLC scan if due.
+7. Evaluate vacuum PID.
+8. Apply valve requests.
+9. Update actual valve positions.
+10. Update backing and turbo pump motor states.
+11. Update pump throughput.
+12. Update virtual gas mass flow.
+13. Solve chamber gas throughput.
+14. Integrate chamber pressure.
+15. Update RF generator request.
+16. Update actual matching capacitor positions.
+17. Calculate effective plasma load.
+18. Calculate RF reflection and delivered power.
+19. Apply RF protection limits.
+20. Update plasma ignition/activity.
+21. Update wafer thermal energy.
+22. Update film etch rates.
+23. Update regional film thickness.
+24. Update mask and underlying-layer damage.
+25. Generate optical emission measurements.
+26. Evaluate endpoint detector.
+27. Apply endpoint stop request.
+28. Update process interlocks.
+29. Acquire new sensor measurements.
+30. Apply sensor latency/calibration/validity.
+31. Record event history.
+32. Evaluate authoritative objectives.
+33. Update SCADA.
+34. Update visual rig and plasma VFX.
+
+## NUMERICAL RULES
+
+Use one committed process timestep.
+
+If iterative coupling is required between RF load, plasma activity, pressure and wafer states, solve consistently before committing the next state.
+
+Do not integrate film removal multiple times within the same timestep.
+
+---
+
+# 42. AAA VISUAL GAMEPLAY
+
+The approved cinematic reference establishes the desired appearance.
+
+## STARTUP
+
+- Reactor dark.
+- Plasma disabled.
+- Copper RF coil unlit.
+- Vacuum pump rotors stationary.
+- Wafer robot idle.
+- SCADA displays initialization.
+
+## PUMPDOWN
+
+- Backing pump begins operating.
+- Turbo rotor accelerates.
+- Valve positions change.
+- Pressure gauges update.
+- Vacuum diagnostics become active.
+
+## WAFER LOADING
+
+- Load-lock gate operates.
+- Robot moves.
+- Wafer transfers.
+- Lift mechanism positions wafer.
+- Chuck secures wafer.
+
+## RF MATCHING
+
+- RF generator display becomes active.
+- Capacitor controls move.
+- Reflected power graph responds.
+- Matching status changes.
+
+## PLASMA IGNITION
+
+- Violet plasma glow appears.
+- Central reactor illumination increases.
+- Wafer surface reflects plasma lighting.
+- Optical spectrum becomes active.
+
+## ACTIVE ETCH
+
+- Wafer film visualization changes gradually.
+- Etch progress follows actual model state.
+- Uniformity heatmap updates.
+- Wafer temperature display responds.
+- Endpoint trace evolves.
+
+## DISTURBANCE
+
+- Pressure leak affects process gauges.
+- Matching drift changes reflected power.
+- Cooling failure changes wafer temperature.
+- Safety alarms respond.
+
+## FINAL SENSOR FAULT
+
+- Optical measurement becomes invalid.
+- Endpoint controller signals fault.
+- Active processing enters safe restriction.
+- Wire is repaired.
+- Spectrometer recalibrates.
+- Fresh plasma process completes.
+
+## IMPORTANT
+
+Visual effects must follow actual process data.
+
+Do not allow a glowing plasma effect to become the authoritative source of plasma state.
+
+---
+
+# 43. UNITY EDITOR — ONE-CLICK LEVEL BUILDER
+
+Create:
+
+`Tools/Project Spark/Levels/Create Level 71`
+
+This builder must generate or safely update:
+
+- `Level_71.asset`
+- `Level_71_Layout.prefab`
+- Level configuration.
+- All 50 model instances.
+- 140 functional terminal anchors.
+- Exactly 90 player-wire declarations.
+- Fixed internal equipment connections.
+- Vacuum network configuration.
+- Gas delivery configuration.
+- RF configuration.
+- Wafer film configuration.
+- Optical endpoint configuration.
+- Metrology configuration.
+- PID configuration.
+- PLC configuration.
+- Safety configuration.
+- Disturbance configuration.
+- Six objective definitions.
+- Live SCADA.
+- Animation bindings.
+- Diagnostic report.
+
+## REQUIRED EDITOR OPERATIONS
+
+1. Inspect Project Spark Editor infrastructure.
+2. Locate all 50 numbered FBXs.
+3. Verify exact filenames.
+4. Verify FBX import scale.
+5. Verify approximately 15.8 m workstation width.
+6. Create/update Level 71 definition.
+7. Set level ID `level_71`.
+8. Set display name `Etch the Future`.
+9. Set subtitle.
+10. Create six objectives.
+11. Create/update layout prefab.
+12. Create `L71_HD_VISUAL_ART`.
+13. Instantiate 50 individual FBXs.
+14. Preserve common-origin coordinates.
+15. Configure central reactor.
+16. Configure reactor lid.
+17. Configure quartz viewport.
+18. Configure RF coil.
+19. Configure gas showerhead.
+20. Configure bias electrode.
+21. Configure electrostatic chuck.
+22. Configure wafer lift.
+23. Configure wafer, film and mask.
+24. Configure cassette.
+25. Configure load-lock.
+26. Configure gate valve.
+27. Configure wafer robot.
+28. Configure turbo pump.
+29. Configure backing pump.
+30. Configure vacuum foreline.
+31. Configure isolation valve.
+32. Configure throttle valve.
+33. Configure manometer.
+34. Configure rough gauge.
+35. Configure high-vacuum gauge.
+36. Configure residual gas analyzer.
+37. Configure virtual gas A.
+38. Configure virtual gas B.
+39. Configure MFC A.
+40. Configure MFC B.
+41. Configure gas manifold.
+42. Configure RF generator.
+43. Configure matching network.
+44. Configure matching capacitor A.
+45. Configure matching capacitor B.
+46. Configure directional power coupler.
+47. Configure RF V/I sensor.
+48. Configure arc protection.
+49. Configure wafer temperature controller.
+50. Configure wafer chiller.
+51. Configure emergency safety.
+52. Configure optical spectrometer.
+53. Configure optical viewport.
+54. Configure endpoint controller.
+55. Configure uniformity analyzer.
+56. Configure thickness metrology.
+57. Configure vacuum pressure PID.
+58. Configure PLC rack.
+59. Configure digital I/O.
+60. Configure SCADA.
+61. Configure 5 V control supply.
+62. Create 140 unique functional terminals.
+63. Create 90 player-wire definitions.
+64. Register component IDs.
+65. Register terminal IDs.
+66. Configure fixed internal connections.
+67. Configure chamber volume.
+68. Configure pump throughput.
+69. Configure vacuum conductances.
+70. Configure gas-source limits.
+71. Configure RF source limits.
+72. Configure matching impedance model.
+73. Configure plasma ignition model.
+74. Configure wafer film thickness.
+75. Configure regional etch rates.
+76. Configure mask erosion.
+77. Configure underlying-layer damage.
+78. Configure wafer thermal capacity.
+79. Configure chiller limits.
+80. Configure optical emission model.
+81. Configure endpoint detection.
+82. Configure metrology.
+83. Configure vacuum leak event.
+84. Configure matching drift event.
+85. Configure cooling fault.
+86. Configure final optical-feedback fault.
+87. Bind 21 pivot references.
+88. Configure plasma lighting and VFX.
+89. Configure holographic SCADA.
+90. Bind six objectives.
+91. Validate missing references.
+92. Detect duplicate terminals.
+93. Detect duplicate simulation owners.
+94. Generate validation report.
+95. Save all assets and prefab.
+
+## EDITOR RELIABILITY
+
+Use actual Unity Editor APIs and paths.
+
+Do not invent asset GUIDs.
+
+Use appropriate:
+
+- `AssetDatabase`
+- `PrefabUtility`
+- `SerializedObject`
+- Undo
+- Editor asset saving
+
+Make reruns safe.
+
+Do not duplicate models, terminals or controllers.
+
+Preserve existing Levels 1–70.
+
+---
+
+# 44. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 90 WIRES → VERIFY 140 TERMINALS → ENABLE CONTROL POWER → COMMISSION PLC → CALIBRATE VACUUM GAUGES → START BACKING PUMP → ESTABLISH ROUGH VACUUM → START TURBOMOLECULAR PUMP → CONTROL THROTTLE VALVE → STABILIZE CHAMBER PRESSURE → COMMISSION LOAD-LOCK → TRANSFER WAFER → CLAMP WAFER → CALIBRATE GAS FLOW → ENABLE VIRTUAL GAS A/B → ESTABLISH PROCESS THROUGHPUT → CALIBRATE RF POWER SENSORS → ENABLE RF GENERATOR → TUNE MATCHING CAPACITORS → REDUCE REFLECTED POWER → IGNITE VIRTUAL PLASMA → STABILIZE PLASMA → ENABLE WAFER COOLING → CALIBRATE OPTICAL SPECTROMETER → START ETCH → TRACK FILM REMOVAL → MONITOR UNIFORMITY → DETECT OPTICAL ENDPOINT → STOP RF SAFELY → RUN METROLOGY → VERIFY WAFER QUALITY → APPLY VACUUM LEAK → RECOVER CHAMBER PRESSURE → APPLY RF MATCH DRIFT → RESTORE MATCHING → APPLY COOLING DEGRADATION → PROTECT WAFER → COMPLETE RECOVERY PROCESS → DISCONNECT ACTUAL OPTICAL FEEDBACK WIRE → DETECT INVALID ENDPOINT MEASUREMENT → ENTER SAFE PROCESS STATE → RECONNECT WIRE → RECALIBRATE SPECTROMETER → EXPLICITLY RESET FAULT → RECOMMISSION REACTOR → COMPLETE FRESH ETCH → DETECT FRESH ENDPOINT → VERIFY FRESH WAFER METROLOGY → AUTHORITATIVE 6/6**
+
+---
+
+# 45. PLAYER-FACING GAME MESSAGES
+
+- `BUILD THE PLASMA PROCESSING NETWORK`
+- `CONNECT ALL 90 WIRES`
+- `VERIFY 140 TERMINALS`
+- `POWER THE PLASMA CONTROL PLC`
+- `CALIBRATE PRESSURE INSTRUMENTS`
+- `START BACKING PUMP`
+- `ROUGH VACUUM ESTABLISHED`
+- `START TURBOMOLECULAR PUMP`
+- `CHAMBER PRESSURE FALLING`
+- `STABILIZE VACUUM PRESSURE`
+- `LOAD-LOCK READY`
+- `TRANSFER SILICON WAFER`
+- `SECURE WAFER CHUCK`
+- `CALIBRATE VIRTUAL GAS FLOW`
+- `ENABLE PROCESS GAS DELIVERY`
+- `CALIBRATE RF POWER SENSORS`
+- `ENABLE RF GENERATOR`
+- `TUNE MATCHING CAPACITORS`
+- `REFLECTED POWER TOO HIGH`
+- `RF MATCHING IMPROVING`
+- `PLASMA IGNITION READY`
+- `IGNITE PLASMA`
+- `PLASMA STABILIZED`
+- `ENABLE WAFER COOLING`
+- `CALIBRATE OPTICAL SPECTROMETER`
+- `START PRECISION ETCH`
+- `FILM THICKNESS DECREASING`
+- `MONITOR ETCH UNIFORMITY`
+- `ENDPOINT SIGNAL CHANGING`
+- `ENDPOINT DETECTED`
+- `STOP RF PROCESS`
+- `VERIFY FINAL FILM THICKNESS`
+- `WAFER PROCESS CERTIFIED`
+- `VACUUM LEAK DETECTED`
+- `CHAMBER PRESSURE RISING`
+- `RESTORE VACUUM`
+- `RF IMPEDANCE DRIFT DETECTED`
+- `REFLECTED POWER INCREASING`
+- `RESTORE RF MATCH`
+- `WAFER COOLING DEGRADED`
+- `WAFER TEMPERATURE RISING`
+- `PROTECT THE WAFER`
+- `REACTOR DISTURBANCES COMPLETE`
+- `DISCONNECT OPTICAL ENDPOINT FEEDBACK`
+- `OPTICAL ENDPOINT SIGNAL LOST`
+- `AUTOMATIC ENDPOINT CONTROL INHIBITED`
+- `RESTORE OPTICAL SIGNAL WIRE`
+- `RECALIBRATE SPECTROMETER`
+- `RESET ENDPOINT FAULT`
+- `RECOMMISSION THE REACTOR`
+- `FINAL WAFER PROCESS TEST`
+- `FINAL OPTICAL ENDPOINT CERTIFICATION`
+- `LEVEL 71 COMPLETE`
+
+---
+
+# 46. DIAGNOSTICS AND ERROR REPORTING
+
+Implement diagnostic messages for:
+
+- Incorrect W01–W90 wiring.
+- Missing terminal IDs.
+- Duplicate terminal IDs.
+- Invalid supply or return.
+- Pump motor disconnected.
+- Backing pump unavailable.
+- Turbo pump operating without valid backing conditions.
+- Gate valve feedback invalid.
+- Throttle valve disconnected.
+- Chamber pressure not responding to pumping.
+- Pressure invalid or stale.
+- Vacuum leak not affecting pressure.
+- Gas A flow invalid.
+- Gas B flow invalid.
+- Mass-flow controller disconnected.
+- RF generator disabled.
+- RF generator output invalid.
+- Matching capacitor command disconnected.
+- Reflected power calculation inconsistent.
+- Matching network not affecting RF reflection.
+- Delivered RF power negative or invalid.
+- Plasma igniting without safe process conditions.
+- Plasma activity persisting without power.
+- Wafer not loaded.
+- Wafer clamp invalid.
+- Wafer transfer occurring while unsafe.
+- Wafer film thickness becoming negative.
+- Etch process advancing with plasma off.
+- Etch nonuniformity not evaluated.
+- Underlying-layer damage ignored.
+- Wafer temperature not responding to heat transfer.
+- Cooling fault not changing thermal state.
+- Optical spectrometer disconnected.
+- Optical measurement stale.
+- Endpoint triggered by timer rather than sensor evidence.
+- Endpoint controller using hidden film thickness.
+- Unsafe RF operation not inhibited.
+- Arc protection ignored.
+- Fault reset accepted before repair.
+- Previously certified objectives erased.
+- Objective manager stuck at 0/6 or 5/6.
+- Unity scene reload failure.
+- Regression affecting Levels 1–70.
+
+---
+
+# 47. REQUIRED IMPLEMENTATION TESTS
+
+Test:
+
+1. Exactly 90 wires registered.
+2. Exactly 140 functional terminals registered.
+3. Wiring IDs unique.
+4. Control power valid.
+5. PLC initializes.
+6. Safety system ready.
+7. Backing pump operates.
+8. Turbo pump operates under valid interlocks.
+9. Pump RPM changes dynamically.
+10. Chamber pressure decreases through pumping.
+11. Pressure gauges measure actual state.
+12. Throttle valve changes pumping conductance.
+13. Isolation valve changes topology.
+14. Load-lock pressure modeled.
+15. Wafer robot follows safe transfer sequence.
+16. Wafer lift works.
+17. Wafer chuck clamps.
+18. Gas A flow responds.
+19. Gas B flow responds.
+20. Total throughput conserved.
+21. Gas mixture changes.
+22. Chamber pressure responds to gas flow.
+23. RF generator enables.
+24. Forward RF power calculated.
+25. Matching capacitor A affects impedance.
+26. Matching capacitor B affects impedance.
+27. Reflected power responds.
+28. Delivered power calculated.
+29. Matching losses included.
+30. Plasma ignition follows valid process conditions.
+31. Plasma activity responds to delivered power.
+32. Plasma shuts down without required power.
+33. Wafer etching begins when valid.
+34. Etch rate responds to model parameters.
+35. Regional wafer thickness updates.
+36. Thickness remains nonnegative.
+37. Mask state updates.
+38. Underlying damage tracked.
+39. Wafer temperature changes dynamically.
+40. Chiller removes finite heat.
+41. Optical emission signals generated.
+42. Optical measurement calibration works.
+43. Endpoint inference uses valid optical data.
+44. Endpoint decision triggers safe process stop.
+45. Thickness metrology measures actual film state.
+46. Uniformity metric calculated.
+47. Valid wafer certification succeeds.
+48. Vacuum leak changes chamber pressure.
+49. Pressure controller responds.
+50. Vacuum leak recovery works.
+51. RF matching drift changes reflection.
+52. RF tuning recovery works.
+53. Cooling degradation affects wafer temperature.
+54. Thermal protection works.
+55. Process recovers from cooling fault.
+56. Actual optical signal wire disconnects.
+57. Optical measurement becomes invalid.
+58. Endpoint detector rejects invalid data.
+59. Unsafe endpoint-dependent etch inhibited.
+60. Fault latches.
+61. Actual wire reconnects.
+62. Optical measurement restored.
+63. Spectrometer recalibration succeeds.
+64. Explicit reset succeeds.
+65. Controlled recommissioning succeeds.
+66. Fresh wafer process runs.
+67. Fresh endpoint is detected.
+68. Fresh metrology succeeds.
+69. Authoritative evaluator reaches 6/6.
+70. Level progression succeeds.
+71. Levels 1–70 remain unaffected.
+
+Only report a test as PASS if it actually ran successfully.
+
+---
+
+# 48. REQUIRED DELIVERABLES
+
+Create a complete Level 71 Unity implementation package containing:
+
+- Full C# runtime source.
+- Authoritative process coordinator.
+- Vacuum pressure dynamics.
+- Chamber and load-lock gas balances.
+- Backing pump simulation.
+- Turbomolecular pump simulation.
+- Vacuum valve dynamics.
+- Pressure instruments.
+- Two fictional virtual gas sources.
+- Two mass-flow controllers.
+- Gas manifold simulation.
+- RF power generator model.
+- Complex impedance matching model.
+- Two tuning capacitor controllers.
+- RF forward/reflected measurement.
+- RF arc protection.
+- Plasma ignition/activity model.
+- Wafer transfer automation.
+- Load-lock controller.
+- Wafer lift controller.
+- Wafer chuck controller.
+- Wafer film simulation.
+- Wafer mask and underlying-layer tracking.
+- Regional etch-rate model.
+- Etch uniformity analysis.
+- Wafer thermal dynamics.
+- Wafer chiller.
+- Optical emission sensor.
+- Optical endpoint controller.
+- Thin-film metrology.
+- Vacuum pressure PID.
+- PLC state machine.
+- Safety controller.
+- Vacuum leak scenario.
+- RF matching drift scenario.
+- Wafer cooling fault scenario.
+- Final optical signal disconnection.
+- Measurement validity handling.
+- Fault latching.
+- Safe recovery.
+- Fresh certification sequence.
+- Six authoritative objectives.
+- One-click Unity Editor Level 71 creator.
+- Level definition creator or asset.
+- Layout prefab creator.
+- Exact W01–W90 wiring manifest.
+- 140-terminal binding manifest.
+- Component binding manifest.
+- 21 animation pivot mappings.
+- Vacuum configuration.
+- Gas configuration.
+- RF configuration.
+- Wafer film configuration.
+- Synthetic optical configuration.
+- PID configuration.
+- PLC and safety configuration.
+- SCADA dashboard.
+- Diagnostics and troubleshooting guide.
+- Full gameplay walkthrough.
+- Objective certification checklist.
+- Actual test report.
+
+Reuse:
+
+`ProjectSpark_Level71_HD_AAA_Models.zip`
+
+Do not regenerate the approved 50 3D assets without a demonstrated compatibility problem.
+
+Only provide links to files actually created and verified.
+
+Do not claim Unity compilation, Play Mode testing or objective success unless verified.
+
+---
+
+# 49. FINAL IMPLEMENTATION INSTRUCTIONS
+
+**IMPLEMENT LEVEL 71 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect the real Project Spark codebase and the existing Level 71 asset collection.
+
+Then:
+
+1. Preserve existing Levels 1–70.
+2. Import all 50 individual FBXs.
+3. Verify correct scale and common-origin alignment.
+4. Use the existing art-placement helper.
+5. Use the material helper where appropriate.
+6. Reuse or extend the visual rig safely.
+7. Create exactly 90 player-created wires.
+8. Create exactly 140 functional terminals.
+9. Integrate actual control power and return.
+10. Implement vacuum pumps.
+11. Implement vacuum valves.
+12. Implement chamber pressure.
+13. Implement load-lock pressure.
+14. Implement pressure instruments.
+15. Implement vacuum PID.
+16. Implement fictional virtual gas supplies.
+17. Implement MFC A/B.
+18. Implement gas throughput.
+19. Implement RF generator power.
+20. Implement RF matching network.
+21. Implement capacitor controls.
+22. Implement reflected power.
+23. Implement delivered power.
+24. Implement plasma ignition and activity.
+25. Implement wafer robotics.
+26. Implement chuck and wafer lift.
+27. Implement regional wafer thin-film removal.
+28. Implement wafer mask and substrate protection.
+29. Implement etch uniformity.
+30. Implement wafer thermal dynamics.
+31. Implement wafer chiller.
+32. Implement synthetic optical emission.
+33. Implement optical endpoint detection.
+34. Implement thin-film metrology.
+35. Implement vacuum leak disturbance.
+36. Implement RF matching drift.
+37. Implement cooling degradation.
+38. Implement RF and vacuum safety.
+39. Implement PLC sequencing.
+40. Implement final optical feedback wire disconnection.
+41. Implement invalid sensor measurement detection.
+42. Implement safe process shutdown.
+43. Implement physical reconnection.
+44. Implement recalibration.
+45. Implement explicit fault reset.
+46. Implement full recommissioning.
+47. Implement fresh wafer-processing certification.
+48. Integrate six authoritative objectives.
+49. Build the one-click Level 71 Unity Editor creator.
+50. Integrate all 21 animation references.
+51. Create responsive plasma VFX.
+52. Create real SCADA monitoring.
+53. Add runtime diagnostics.
+54. Run feasible tests.
+55. Package and verify all outputs.
+
+Do not ask for approval of the already-approved Level 71 design.
+
+Do not fabricate chamber pressure, gas throughput, RF reflected power, delivered RF power, plasma stability, wafer thickness, etch rate, uniformity, temperature, endpoint measurement, protection state or objective completion.
+
+Where an existing Project Spark API cannot be verified, build an appropriately isolated subsystem if possible and report the exact unresolved integration dependency.
+
+---
+
+# 50. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect 90 player-created wires.
+2. Validate 140 functional terminals.
+3. Commission the plasma PLC.
+4. Calibrate vacuum instruments.
+5. Start backing and turbo pumps.
+6. Establish a valid chamber vacuum.
+7. Stabilize chamber pressure.
+8. Load and clamp a wafer.
+9. Establish virtual gas A/B flow.
+10. Enable RF power safely.
+11. Tune matching capacitors.
+12. Reduce reflected RF power.
+13. Ignite stable virtual plasma.
+14. Maintain valid pressure and gas conditions.
+15. Control wafer temperature.
+16. Etch the target film.
+17. Observe regional film thickness reduction.
+18. Monitor the optical emission signal.
+19. Detect the process endpoint.
+20. Stop the plasma process safely.
+21. Verify wafer thickness and uniformity.
+22. Complete a certified wafer process.
+23. Detect and recover from a vacuum leak.
+24. Detect and correct RF matching drift.
+25. Detect and recover from cooling degradation.
+26. Preserve wafer and reactor safety.
+27. Disconnect the actual optical-feedback wire.
+28. Detect invalid endpoint measurements.
+29. Prevent uncertified endpoint-controlled processing.
+30. Reconnect the actual wire.
+31. Recalibrate the spectrometer.
+32. Explicitly reset the fault.
+33. Recommission the reactor safely.
+34. Perform a new valid wafer etch.
+35. Detect the fresh optical endpoint.
+36. Verify final metrology.
+37. Complete all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 71.**
+
+The player must learn vacuum pressure control, gas-flow regulation, RF impedance matching, electrical-power delivery, plasma stability, wafer thin-film processing, temperature regulation, optical sensing, endpoint detection, manufacturing metrology and industrial safety through coherent gameplay simulation.
+
+**FINAL GOAL: A COMPLETE, POLISHED, UNITY-READY, AAA-QUALITY AND ACTUALLY PLAYABLE LEVEL 71 — ETCH THE FUTURE.**

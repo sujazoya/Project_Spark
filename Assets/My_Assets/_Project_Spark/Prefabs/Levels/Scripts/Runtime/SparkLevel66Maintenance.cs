@@ -83,7 +83,7 @@ namespace ProjectSpark.Gameplay
             var result=solver.LatestSolveResult;
             bool Rail(int a,int b)=>result!=null&&result.TryGetVoltage(pins[a],pins[b],out var value)&&value is >=4.7f and <=5.3f;
             rails=power&&source.IsOutputActive&&!source.IsOverloaded;
-            for(int i=0;i<10&&rails;i++)rails=Rail(Wires[i*2].b,Wires[i*2+1].b);
+            for(int i=0;i<9&&rails;i++)rails=Rail(Wires[i*2].b,Wires[i*2+1].b);
             ready=rails&&door&&!stopped&&wiring==null&&Rail(100,3)&&Rail(101,3)&&Rail(103,3);
             if(stage==0&&ready)Award();
             if(latch==null&&(run||faultArmed)&&!ready)
@@ -341,5 +341,6 @@ namespace ProjectSpark.Gameplay
         }
     }
 }
+
 
 
