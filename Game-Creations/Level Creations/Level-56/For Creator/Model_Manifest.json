@@ -1,0 +1,192 @@
+{
+  "levelId": "level_56",
+  "displayName": "Harvest the Spin",
+  "subtitle": "Advanced Regenerative Braking and Bidirectional Energy Recovery",
+  "artUnits": "Meters, Y up, shaft along +X, panel fronts toward +Z",
+  "visualReference": "User-approved Level 56 Harvest the Spin concept image",
+  "models": [
+    {
+      "file": "00_L56_IndustrialBase.fbx",
+      "model": "L56_IndustrialBase",
+      "triangle_count": 1916,
+      "mesh_parts": 54,
+      "animation_pivots": {}
+    },
+    {
+      "file": "01_L56_RegenerativeMotor.fbx",
+      "model": "L56_RegenerativeMotor",
+      "triangle_count": 9304,
+      "mesh_parts": 47,
+      "animation_pivots": {
+        "ANIM_MOTOR_SHAFT": [
+          -2.7,
+          1.42,
+          0.0
+        ]
+      }
+    },
+    {
+      "file": "02_L56_FlywheelRotor.fbx",
+      "model": "L56_FlywheelRotor",
+      "triangle_count": 10240,
+      "mesh_parts": 25,
+      "animation_pivots": {
+        "ANIM_FLYWHEEL_SPIN": [
+          0.0,
+          1.42,
+          0.0
+        ]
+      }
+    },
+    {
+      "file": "03_L56_LeftBearing.fbx",
+      "model": "L56_LeftBearing",
+      "triangle_count": 3660,
+      "mesh_parts": 35,
+      "animation_pivots": {}
+    },
+    {
+      "file": "04_L56_RightBearing.fbx",
+      "model": "L56_RightBearing",
+      "triangle_count": 3660,
+      "mesh_parts": 35,
+      "animation_pivots": {}
+    },
+    {
+      "file": "05_L56_EncoderABZ.fbx",
+      "model": "L56_EncoderABZ",
+      "triangle_count": 2572,
+      "mesh_parts": 91,
+      "animation_pivots": {
+        "ANIM_ENCODER_DISC": [
+          2.45,
+          1.42,
+          0.0
+        ]
+      }
+    },
+    {
+      "file": "06_L56_BidirectionalConverter.fbx",
+      "model": "L56_BidirectionalConverter",
+      "triangle_count": 2509,
+      "mesh_parts": 51,
+      "animation_pivots": {}
+    },
+    {
+      "file": "07_L56_SupercapacitorBank.fbx",
+      "model": "L56_SupercapacitorBank",
+      "triangle_count": 6233,
+      "mesh_parts": 38,
+      "animation_pivots": {}
+    },
+    {
+      "file": "08_L56_CapacitorProtectionUnit.fbx",
+      "model": "L56_CapacitorProtectionUnit",
+      "triangle_count": 1773,
+      "mesh_parts": 33,
+      "animation_pivots": {}
+    },
+    {
+      "file": "09_L56_BrakingResistor.fbx",
+      "model": "L56_BrakingResistor",
+      "triangle_count": 611,
+      "mesh_parts": 22,
+      "animation_pivots": {}
+    },
+    {
+      "file": "10_L56_BrakeChopperDriver.fbx",
+      "model": "L56_BrakeChopperDriver",
+      "triangle_count": 1624,
+      "mesh_parts": 34,
+      "animation_pivots": {}
+    },
+    {
+      "file": "11_L56_CurrentSensor.fbx",
+      "model": "L56_CurrentSensor",
+      "triangle_count": 728,
+      "mesh_parts": 4,
+      "animation_pivots": {}
+    },
+    {
+      "file": "12_L56_VoltageSensor.fbx",
+      "model": "L56_VoltageSensor",
+      "triangle_count": 1444,
+      "mesh_parts": 26,
+      "animation_pivots": {}
+    },
+    {
+      "file": "13_L56_EnergyMeter.fbx",
+      "model": "L56_EnergyMeter",
+      "triangle_count": 1718,
+      "mesh_parts": 29,
+      "animation_pivots": {}
+    },
+    {
+      "file": "14_L56_RegenerationController.fbx",
+      "model": "L56_RegenerationController",
+      "triangle_count": 2727,
+      "mesh_parts": 49,
+      "animation_pivots": {}
+    },
+    {
+      "file": "15_L56_EnergyFlowMonitor.fbx",
+      "model": "L56_EnergyFlowMonitor",
+      "triangle_count": 1298,
+      "mesh_parts": 61,
+      "animation_pivots": {
+        "ANIM_MONITOR_TILT": [
+          2.62,
+          1.2,
+          -1.85
+        ]
+      }
+    },
+    {
+      "file": "16_L56_SafetyGuard.fbx",
+      "model": "L56_SafetyGuard",
+      "triangle_count": 372,
+      "mesh_parts": 31,
+      "animation_pivots": {
+        "ANIM_SAFETY_DOOR": [
+          0.0,
+          2.53,
+          0.92
+        ]
+      }
+    },
+    {
+      "file": "17_L56_ThermalCoolingModule.fbx",
+      "model": "L56_ThermalCoolingModule",
+      "triangle_count": 2233,
+      "mesh_parts": 33,
+      "animation_pivots": {
+        "ANIM_COOLING_FAN_0": [
+          3.16,
+          0.96,
+          1.8
+        ],
+        "ANIM_COOLING_FAN_1": [
+          3.5900000000000003,
+          0.96,
+          1.8
+        ]
+      }
+    },
+    {
+      "file": "18_L56_ProgrammableLoad.fbx",
+      "model": "L56_ProgrammableLoad",
+      "triangle_count": 1843,
+      "mesh_parts": 39,
+      "animation_pivots": {}
+    },
+    {
+      "file": "19_L56_Regulated5VSupply.fbx",
+      "model": "L56_Regulated5VSupply",
+      "triangle_count": 1418,
+      "mesh_parts": 31,
+      "animation_pivots": {}
+    }
+  ],
+  "limitations": "Art-only. Proposed 30 wires/48 terminals not instantiated or exact binding validated. Physics, gameplay, Unity import and animations not verified.",
+  "triangle_count": 57883
+}

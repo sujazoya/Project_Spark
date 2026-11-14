@@ -1,0 +1,141 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_58_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_58
+  levelTitle: Isolate the Fault
+  initialPage: 0
+  pages:
+  - title: 01 / Build the network
+    explanation: Wire the control rails, ABC distribution and relay feedback. W16
+      carries CTB to R2.
+    caption: "38 WIRES  \u2022  60 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.58}
+      label: 5 V CONTROL
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.58, y: 0.58}
+      label: ABC NETWORK
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.58}
+      label: CT / TRIP
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.58}
+      - {x: 0.43, y: 0.58}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.58, y: 0.58}
+      - {x: 0.75, y: 0.58}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 02 / Grade the relays
+    explanation: Calibrate CTs and verify pickup, time multiplier, curve and high-set
+      settings.
+    caption: "PICKUP  \u2022  CURVE  \u2022  DELAY"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.58}
+      label: NORMAL LOAD
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.58, y: 0.58}
+      label: FEEDER FIRST
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.58}
+      label: MAIN BACKUP
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.58}
+      - {x: 0.43, y: 0.58}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.58, y: 0.58}
+      - {x: 0.75, y: 0.58}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 03 / Prove selectivity
+    explanation: The faulted breaker clears while the other feeders stay energized.
+    caption: "OVERLOAD A  \u2022  SHORT B"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.58}
+      label: Q1 / OVERLOAD
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.58, y: 0.58}
+      label: Q2 / SHORT
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.58}
+      label: Q3 / PRIORITY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.58}
+      - {x: 0.43, y: 0.58}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.58, y: 0.58}
+      - {x: 0.75, y: 0.58}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 04 / Repair and certify
+    explanation: Prove Q0 backup. Restore Q2, reconnect W16 and repeat a selective
+      test.
+    caption: "Q2 FAILURE  \u2022  W16 LOSS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.58}
+      label: BACKUP Q0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.58, y: 0.58}
+      label: REPAIR CTB
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.58}
+      label: CERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.58}
+      - {x: 0.43, y: 0.58}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.58, y: 0.58}
+      - {x: 0.75, y: 0.58}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}

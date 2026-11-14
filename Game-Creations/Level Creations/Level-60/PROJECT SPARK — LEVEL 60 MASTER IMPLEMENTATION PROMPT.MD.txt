@@ -1,0 +1,2052 @@
+# PROJECT SPARK — LEVEL 60 MASTER IMPLEMENTATION PROMPT
+
+## LEVEL 60: THE GRID MUST SURVIVE
+### Advanced Autonomous Microgrid Resilience, Predictive Energy Management, Renewable Power Integration, Multi-Fault Recovery and Intelligent Grid Control
+
+Act as my senior Unity C# engineer, electrical simulation architect, three-phase power systems engineer, power electronics specialist, battery energy management engineer, renewable energy engineer, industrial automation developer, control-systems engineer, gameplay programmer, and Unity Editor automation specialist.
+
+**YOUR TASK IS TO CREATE THE COMPLETE, WORKING, PLAYABLE LEVEL 60 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+Do not stop at a design proposal, explanation, architecture diagram, pseudocode, disconnected scripts, or a decorative electrical demonstration.
+
+Implement all safely achievable functionality using my actual Unity project source code and the previously generated Level 60 HD/AAA-inspired model collection.
+
+The Level 60 design and its 28 individual 3D models are already approved.
+
+Do not redesign the level or regenerate its models unnecessarily.
+
+---
+
+# 1. CRITICAL PROJECT INTEGRATION RULES
+
+Project Spark is an existing Unity electronics simulation, electrical engineering and industrial automation game.
+
+Before implementing Level 60, inspect the actual project source files, especially:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+- Existing three-phase AC network simulation
+- Existing DC electrical solver
+- Existing grid-forming inverter implementations
+- Existing bidirectional power converters
+- Existing battery storage and BMS systems
+- Existing solar PV and DC/DC converter systems
+- Existing generator dynamics and starter systems
+- Existing source synchronization and PLL systems
+- Existing voltage and current sensors
+- Existing electrical energy meters
+- Existing circuit breakers and contactors
+- Existing protection relays
+- Existing load shedding and restoration systems
+- Existing circuit-topology validation
+- Existing motor and industrial load models
+- Existing component damage and thermal systems
+- Existing player wiring and interaction systems
+- Existing diagnostics and dashboard systems
+- Existing Unity Editor creation utilities
+- Existing Levels 56–59 electrical, mechanical and protection systems, where available
+
+## Non-negotiable implementation rules
+
+1. Inspect actual source code before referencing Project Spark APIs.
+2. Never invent existing methods, properties, classes, namespaces or events.
+3. Reuse compatible existing functionality.
+4. Preserve Levels 1–59.
+5. Keep Level 60-specific functionality isolated wherever practical.
+6. Do not modify the shared electrical solver without demonstrated necessity.
+7. Never fabricate voltage, current, power, energy, battery SOC, generator RPM, solar irradiance or source frequency.
+8. Do not inject arbitrary AC waveforms into a DC-only electrical solver.
+9. Do not create two competing three-phase network simulators.
+10. Do not implement battery energy using a decorative progress bar.
+11. Do not allow unlimited power from any electrical source.
+12. Do not directly assign generator RPM from target-speed commands.
+13. Do not directly force inverter and generator phases to match.
+14. Do not bypass synchronization conditions when closing source breakers.
+15. Do not assign source power contributions without an electrical power model.
+16. Do not simulate grid survival by keeping an indicator illuminated after its electrical supply is lost.
+17. Do not bypass current, voltage, thermal or source-capacity limits.
+18. Never bypass objectives through direct manager-completion calls.
+19. Use consistent SI units, electrical references and simulation time.
+20. Properly manage Unity component lifecycle and event subscriptions.
+21. Avoid per-frame global scene searches.
+22. Provide complete C# source files instead of disconnected patches.
+23. Report missing references and unresolved integration dependencies precisely.
+24. Do not claim Unity compilation or Play Mode success unless those tests actually ran.
+
+## Critical authoritative completion requirement
+
+**The actual `LevelGamePlayManager` must reach 6/6.**
+
+A local Level 60 controller reporting Stage 6 is not enough.
+
+Inspect the authoritative evaluator and implement a compatible method for storing verified historical objectives.
+
+Objectives 1–5 must remain recorded while the player completes the final source-restoration challenge.
+
+However, Level 60 must not complete until the final microgrid restoration and resilience certification have succeeded.
+
+Do not fabricate measurements or use fake proxy components to satisfy the level evaluator.
+
+---
+
+# 2. LEVEL CONFIGURATION
+
+**Level Number:** 60
+
+**Level ID:** `level_60`
+
+**Display Name:** `The Grid Must Survive`
+
+**Subtitle:** `Autonomous Microgrid Resilience and Predictive Energy Management`
+
+**Difficulty:** Master / Expert
+
+**Control Supply:** 5 V DC
+
+**Electrical Network:** Simulated low-voltage three-phase AC
+
+**Reference Frequency:** 50 Hz
+
+**Player Wires:** 46
+
+**Unique Player Sockets:** 72
+
+**Utility Grid Interface:** 1
+
+**Grid-Forming Inverter:** 1
+
+**Battery Energy Storage System:** 1
+
+**Battery Management Unit:** 1
+
+**Bidirectional Converter:** 1
+
+**Solar PV Simulator:** 1
+
+**Solar MPPT Controller:** 1
+
+**Backup Generator:** 1
+
+**Generator Starter:** 1
+
+**Three-Phase Distribution Bus:** 1
+
+**Source Breakers:** 4
+
+**Load Breakers:** 4
+
+**Controlled Load Groups:** 4
+
+**Autonomous Resilience Controller:** 1
+
+**Required Objectives:** 6
+
+## Important voltage architecture
+
+The 5 V DC source provides laboratory control power.
+
+The battery, renewable converter and three-phase AC network use configurable simulated electrical ratings.
+
+Do not assume the illustrative 400 V, 720 V or kilowatt-scale values shown in the visual reference are the actual project electrical specifications.
+
+Use consistent, documented, low-voltage educational parameters that work with the existing Project Spark architecture.
+
+## Starting conditions
+
+The level begins with:
+
+- Utility grid available.
+- Main grid breaker closed.
+- Grid-connected microgrid operating normally.
+- Battery partially charged.
+- BMS ready.
+- Bidirectional converter available.
+- Solar PV simulator producing variable power.
+- Backup generator stopped.
+- Generator breaker open.
+- Grid-forming inverter available.
+- Four load branches operating.
+- Protection relay bank healthy.
+- Voltage and current sensors requiring commissioning validation.
+- Resilience controller in manual/commissioning mode.
+- No unresolved critical fault.
+- Objective progress 0/6.
+
+## Player mission
+
+The player must:
+
+1. Connect all 46 required wires.
+2. Verify all 72 terminal anchors.
+3. Calibrate voltage and current sensors.
+4. Verify power from the utility, solar and battery systems.
+5. Configure battery reserve policy.
+6. Configure generator auto-start conditions.
+7. Configure source dispatch priority.
+8. Configure four load-shedding priorities.
+9. Enable autonomous energy management.
+10. Establish stable grid-connected operation.
+11. Simulate a reduction in solar generation.
+12. Maintain the electrical power balance.
+13. Disconnect the upstream utility grid.
+14. Safely transition to islanded operation.
+15. Maintain essential-load supply.
+16. Apply an unexpected industrial load increase.
+17. Detect insufficient available source capacity.
+18. Start or dispatch the generator if appropriate.
+19. Simulate a generator failure during island mode.
+20. Isolate the failed generator.
+21. Shed nonessential loads selectively.
+22. Preserve essential loads using finite available battery energy.
+23. Restore the generator.
+24. Explicitly reset its latched fault.
+25. Re-establish valid generator synchronization.
+26. Restore the utility reference.
+27. Synchronize the microgrid for grid reconnection.
+28. Restore shed loads safely.
+29. Verify stable source power sharing.
+30. Complete the final resilience certification.
+
+## Main learning objective
+
+Teach:
+
+- Multi-source electrical systems
+- Three-phase microgrid control
+- Grid-connected and islanded operation
+- Battery state of charge
+- Energy storage limitations
+- Solar PV generation
+- MPPT behavior
+- Bidirectional power conversion
+- Generator dispatch
+- Source synchronization
+- Load forecasting
+- Autonomous energy management
+- Droop control
+- Source power sharing
+- Selective load shedding
+- Battery reserve management
+- Grid-forming inverter control
+- Protection coordination
+- Multi-fault response
+- Grid restoration
+- Electrical resilience
+
+**The central goal is to maintain critical electrical service during multiple disturbances using real simulated source capacity, stored energy and electrical control—not predetermined successful animations.**
+
+---
+
+# 3. USE MY EXISTING LEVEL 60 HD/AAA FBX PACKAGE
+
+The approved asset collection already exists:
+
+`ProjectSpark_Level60_HD_AAA_Models.zip`
+
+Use these exact 28 individual FBX files:
+
+| FBX MODEL | PURPOSE |
+|---|---|
+| `00_L60_IndustrialResilienceBase.fbx` | Precision industrial workstation |
+| `01_L60_MainGridInterface.fbx` | Utility-grid source interface |
+| `02_L60_GridFormingInverter.fbx` | Grid-forming three-phase inverter |
+| `03_L60_BatteryStorageSystem.fbx` | Electrical energy storage |
+| `04_L60_BatteryManagementUnit.fbx` | Battery monitoring and protection |
+| `05_L60_BidirectionalPowerConverter.fbx` | Battery charge/discharge conversion |
+| `06_L60_SolarPVSimulator.fbx` | Variable renewable generation |
+| `07_L60_SolarMPPTController.fbx` | Solar maximum-power-point controller |
+| `08_L60_BackupGenerator.fbx` | Dispatchable generator |
+| `09_L60_GeneratorStarter.fbx` | Generator starting mechanism |
+| `10_L60_ThreePhaseDistributionBus.fbx` | Central three-phase distribution |
+| `11_L60_MainGridBreaker.fbx` | Utility breaker QGRID |
+| `12_L60_GeneratorBreaker.fbx` | Generator breaker QGEN |
+| `13_L60_BatteryInverterBreaker.fbx` | Inverter breaker QINV |
+| `14_L60_RenewableSourceBreaker.fbx` | Renewable breaker QPV |
+| `15_L60_EssentialLoadBreaker.fbx` | Essential feeder breaker Q1 |
+| `16_L60_PriorityLoadBreaker.fbx` | Priority feeder breaker Q2 |
+| `17_L60_IndustrialLoadBreaker.fbx` | Industrial feeder breaker Q3 |
+| `18_L60_AuxiliaryLoadBreaker.fbx` | Auxiliary feeder breaker Q4 |
+| `19_L60_CriticalServiceLoad.fbx` | Essential service equipment |
+| `20_L60_IndustrialMotorLoad.fbx` | Dynamic motor load |
+| `21_L60_SmartProgrammableLoad.fbx` | Programmable electrical demand |
+| `22_L60_ProtectionRelayBank.fbx` | Coordinated network protection |
+| `23_L60_VoltageCurrentSensorHub.fbx` | Electrical measurements |
+| `24_L60_ResilienceMasterController.fbx` | Autonomous grid-management controller |
+| `25_L60_HolographicSCADAMonitor.fbx` | Live resilience diagnostics |
+| `26_L60_FaultScenarioSimulator.fbx` | Controlled disturbances |
+| `27_L60_TransparentSafetyEnclosure.fbx` | Protective laboratory housing |
+
+## Additional supplied resources
+
+Inspect and reuse:
+
+- `Level60_Complete_ArtKit_Showcase.fbx`
+- `SparkLevel60ArtPlacementEditor.cs`
+- `Animation_Rigs.csv`
+- `Model_Manifest.json`
+- `README_Unity.txt`
+- Individual GLB backups
+- Level 60 assembled preview
+- Level 60 individual-model contact sheet
+- Available asset generation source files
+
+## Critical asset rules
+
+- Use all 28 individual FBXs.
+- Use the assembled model only as a placement reference.
+- Do not render the assembled model together with the individual assets.
+- Preserve the original shared coordinate system.
+- Do not merge gameplay-interactive equipment.
+- Keep electrical terminals stationary.
+- Keep animation pivots separate from electrical component roots.
+- Preserve asset-specific material regions.
+- Validate imported scale and orientation.
+
+## Coordinate system
+
+The asset manifest specifies:
+
+- X: Workstation width
+- Y: Vertical
+- Z: Toward front electronics
+- Scale: 1 art unit = 1 meter
+
+Create the root:
+
+`L60_HD_VISUAL_ART`
+
+Place all 28 FBX models under this root using their shared authored origin.
+
+Do not independently reposition each asset without checking the assembled reference.
+
+## Quality distinction
+
+The approved Level 60 models contain real procedural 3D geometry and material-color regions.
+
+They are AAA-inspired, but the package does not include final authored 2K/4K PBR textures or verified Unity HDRP/URP materials.
+
+Preserve the models and create project-compatible final materials if necessary.
+
+Do not falsely claim the art is already fully production-polished.
+
+---
+
+# 4. EXACT ANIMATION PIVOT INTEGRATION
+
+The supplied Level 60 animation manifest identifies these pivots.
+
+## Source and mechanical pivots
+
+- Solar PV simulator: `ANIM_SOLAR_TILT`
+- Backup generator: `ANIM_GENERATOR_ROTOR`
+- Generator starter: `ANIM_STARTER_PINION`
+- Industrial motor load: `ANIM_MOTOR_SPIN`
+- Holographic SCADA monitor: `ANIM_MONITOR_TILT`
+- Safety enclosure: `ANIM_SAFETY_DOOR`
+
+## Breaker pivots
+
+Each breaker FBX contains its own:
+
+`ANIM_BREAKER_HANDLE`
+
+Apply independently to:
+
+- Main grid breaker
+- Generator breaker
+- Battery inverter breaker
+- Renewable source breaker
+- Essential load breaker
+- Priority load breaker
+- Industrial load breaker
+- Auxiliary load breaker
+
+## Important pivot requirement
+
+The breaker pivot name is repeated across eight different FBX roots.
+
+Resolve each pivot relative to its owning model.
+
+Do not assign all breaker animations to the first globally discovered `ANIM_BREAKER_HANDLE`.
+
+## Required animation behavior
+
+- Generator rotor follows actual shaft angle and RPM.
+- Starter pinion follows actual engagement state.
+- Industrial motor follows its authoritative motor state.
+- Solar panel tilt follows the selected simulator/control state.
+- Breaker handles follow authoritative breaker states.
+- Safety enclosure follows actual door/interlock state.
+- SCADA display follows live electrical simulation.
+
+Do not animate a source as ONLINE when the electrical network reports it disconnected or unavailable.
+
+---
+
+# 5. ELECTRICAL WIRING — W01 TO W46
+
+Level 60 requires:
+
+**46 player-created wires and 72 unique terminal anchors.**
+
+The approved art pack does not contain functional `SparkTerminal` components or a verified exact endpoint manifest.
+
+Therefore, create the complete W01–W46 wiring manifest during implementation.
+
+Do not claim that `Exact_Wiring.csv` already exists.
+
+## Required connection groups
+
+### Group A — Control supply
+
+- Regulated control voltage
+- Control return
+- Resilience controller power
+- Protection controller power
+- Sensor hub power
+
+### Group B — Utility grid
+
+- Main source phases A/B/C
+- Grid interface
+- Main grid breaker
+- Source availability feedback
+- Grid voltage/frequency reference
+
+### Group C — Battery storage
+
+- Battery positive/negative
+- BMS-controlled output
+- Battery voltage measurement
+- Battery current measurement
+- BMS status
+- Charge/discharge permissions
+
+### Group D — Bidirectional converter and inverter
+
+- Converter input/output
+- DC energy path
+- Inverter control
+- Three-phase inverter output
+- Inverter breaker
+- Inverter availability feedback
+
+### Group E — Renewable generation
+
+- Solar PV simulated output
+- MPPT control
+- Renewable converter interface
+- Renewable source breaker
+- Solar power measurement
+- Renewable availability feedback
+
+### Group F — Backup generator
+
+- Starter command
+- Starter power
+- Generator A/B/C output
+- Generator speed/frequency feedback
+- Generator voltage feedback
+- Generator breaker
+- Synchronization status
+
+### Group G — Distribution and loads
+
+- Essential feeder
+- Priority feeder
+- Industrial motor feeder
+- Auxiliary feeder
+- Breaker commands
+- Breaker feedback
+- Load monitoring
+
+### Group H — Protection and diagnostics
+
+- Voltage/current sensing
+- Protection relay outputs
+- Fault scenario commands
+- Safety interlock
+- Restoration controller signals
+- Emergency control
+
+## Wiring implementation requirements
+
+1. Create exactly 46 player wires.
+2. Create exactly 72 unique terminal IDs.
+3. Document each FROM terminal.
+4. Document each TO terminal.
+5. Register functional Project Spark terminals.
+6. Register component IDs.
+7. Validate electrical power routing.
+8. Validate control and signal routing.
+9. Validate three-phase assignments.
+10. Detect incorrect source connections.
+11. Detect unsafe parallel source connections.
+12. Validate breaker control and feedback.
+13. Validate generator and inverter references.
+14. Preserve wire creation/deletion/repair.
+15. Detect missing and duplicate connections.
+16. Keep terminals player-accessible.
+
+## Internal module connections
+
+Some source and load devices require more internal electrical conductors than can reasonably be exposed in a 46-wire player puzzle.
+
+Represent these as documented preinstalled connections.
+
+Do not silently add extra player-created wires.
+
+## Signal architecture
+
+Three-phase power, DC battery power and low-voltage controller signals must use appropriate simulation abstractions.
+
+Do not treat arbitrary digital commands as DC resistors.
+
+If the existing project lacks suitable signal routing, implement a compatible Level 60-local terminal-based signal validation layer.
+
+The layer must validate actual player connections.
+
+---
+
+# 6. THREE-PHASE MICROGRID NETWORK
+
+Reuse compatible Level 57–59 AC simulation.
+
+The network must support:
+
+- Utility source
+- Grid-forming inverter
+- Backup generator
+- Renewable power contribution
+- Four feeder branches
+- Breaker-controlled topology
+- Three-phase bus voltage
+- Phase A/B/C current
+- Frequency
+- Phase angle
+- Active power
+- Reactive power
+- Apparent power
+- Power factor
+- Source impedance
+- Load impedance
+- Power flow
+- Protection states
+
+## Required electrical principle
+
+The microgrid must balance real electrical power.
+
+For a consistent sign convention:
+
+`UtilityPower + GeneratorPower + SolarPower + BatteryDischargePower - BatteryChargePower = LoadPower + ElectricalLosses + ChangeInOtherStoredEnergyPerSecond`
+
+Use appropriate equations for the selected source/network abstraction.
+
+## Important
+
+Do not hardcode power sharing.
+
+Do not allow all sources to regulate the same AC bus independently with incompatible references.
+
+Use a consistent grid-forming/grid-following control architecture.
+
+When breaker topology changes, recalculate the network.
+
+Do not fake the opening of a source breaker by merely setting its displayed power to zero.
+
+---
+
+# 7. BATTERY ENERGY STORAGE SYSTEM
+
+Use:
+
+- `03_L60_BatteryStorageSystem.fbx`
+- `04_L60_BatteryManagementUnit.fbx`
+
+Implement or reuse a physically meaningful battery model.
+
+## Required properties
+
+- Rated capacity
+- Available energy
+- SOC
+- Nominal voltage
+- Open-circuit voltage
+- Terminal voltage
+- Internal resistance
+- Charge current
+- Discharge current
+- Maximum charge/discharge current
+- Minimum allowed SOC
+- Maximum allowed SOC
+- Temperature
+- BMS protection state
+- Battery availability
+
+## Energy model
+
+`BatteryEnergyNext = BatteryEnergyCurrent - BatteryPowerOutput * DeltaTime`
+
+Use a consistent sign convention.
+
+Account for battery internal losses.
+
+## Required behavior
+
+- Battery SOC decreases during discharge.
+- Battery SOC increases during charging.
+- Current limits constrain power.
+- Terminal voltage responds to current.
+- Low SOC limits available discharge energy.
+- BMS inhibits unsafe operation.
+- Battery cannot supply unlimited power.
+- Battery reserve is finite.
+
+## Emergency reserve
+
+Provide a configurable minimum SOC reserve.
+
+Recommended educational starting setting:
+
+**30% minimum emergency reserve.**
+
+This is a controller policy target, not a hardcoded physical battery limitation.
+
+The player may configure it within permitted safe limits.
+
+The simulation must distinguish:
+
+- Battery physical minimum SOC
+- Player-selected reserve threshold
+- Remaining usable energy
+- Available discharge power
+
+---
+
+# 8. BIDIRECTIONAL POWER CONVERTER
+
+Use:
+
+`05_L60_BidirectionalPowerConverter.fbx`
+
+Required modes:
+
+- OFF
+- BATTERY CHARGING
+- BATTERY DISCHARGING
+- STANDBY
+- CURRENT LIMITED
+- FAULT
+
+## Required properties
+
+- DC input voltage
+- DC output voltage
+- Input current
+- Output current
+- Power direction
+- Converter efficiency
+- Current limit
+- Voltage limit
+- Power limit
+- Temperature
+- Availability
+- Fault state
+
+## Power conservation
+
+Converter output power must correspond to input power minus modeled losses.
+
+Do not create energy when switching between charge and discharge modes.
+
+## Control requirements
+
+- Respond to source-dispatch commands.
+- Prevent simultaneous conflicting commands.
+- Respect battery and BMS limits.
+- Respect inverter limits.
+- Prevent unsafe DC-bus conditions.
+- Allow smooth power transitions.
+
+---
+
+# 9. SOLAR PV AND MPPT SYSTEM
+
+Use:
+
+- `06_L60_SolarPVSimulator.fbx`
+- `07_L60_SolarMPPTController.fbx`
+
+This is an important new Level 60 mechanic.
+
+## Solar model properties
+
+- Simulated irradiance
+- PV effective area
+- Conversion efficiency
+- Cell temperature
+- Available maximum power
+- Actual operating voltage
+- Actual current
+- Generated electrical power
+- MPPT efficiency
+- Converter loss
+- Availability
+- Fault state
+
+## Simplified solar power
+
+`PsolarAvailable = Irradiance * Area * Efficiency`
+
+Use a documented educational approximation.
+
+## MPPT behavior
+
+The MPPT controller must adjust the modeled operating point toward available maximum power.
+
+If the PV model is simplified to a power-limited source, clearly document the abstraction.
+
+Do not claim detailed panel I-V curve tracking without actually implementing it.
+
+## Cloud-cover event
+
+During a simulated cloud event:
+
+1. Irradiance decreases.
+2. Available PV power decreases.
+3. Actual solar output changes.
+4. Source dispatch reacts.
+5. Battery or generator output may increase.
+6. Bus voltage/frequency are monitored.
+7. Load shedding occurs if capacity is insufficient.
+8. Recovery occurs as irradiance returns.
+
+Do not directly force the displayed solar power to a predetermined value while leaving electrical power balance unchanged.
+
+---
+
+# 10. GRID-FORMING INVERTER
+
+Use:
+
+`02_L60_GridFormingInverter.fbx`
+
+The inverter must support both grid-connected coordination and independent island operation.
+
+## Required properties
+
+- DC-link voltage
+- DC input current
+- AC output voltage
+- AC output frequency
+- Phase angle
+- Output current
+- Active power
+- Reactive power
+- Apparent power
+- Current limit
+- Power limit
+- Conversion losses
+- Operating mode
+- Protection status
+
+## Operating modes
+
+- OFF
+- STANDBY
+- GRID FOLLOWING
+- GRID FORMING
+- ISLANDED SUPPORT
+- CURRENT LIMITED
+- FAULT
+
+## Islanded control
+
+After the utility disconnects, the inverter must establish or maintain a valid three-phase voltage/frequency reference when permitted and physically capable.
+
+Do not assume that opening the utility breaker automatically creates a stable island.
+
+Verify:
+
+- Battery available
+- BMS valid
+- Inverter connected
+- Grid-forming controller active
+- Sufficient output capacity
+- No unresolved protection fault
+
+---
+
+# 11. BACKUP GENERATOR AND STARTER
+
+Use:
+
+- `08_L60_BackupGenerator.fbx`
+- `09_L60_GeneratorStarter.fbx`
+
+Reuse the Level 59 generator dynamics where compatible.
+
+## Required mechanical properties
+
+- Rotor inertia
+- Shaft angle
+- Actual RPM
+- Angular velocity
+- Angular acceleration
+- Starter torque
+- Prime-mover torque
+- Generator load torque
+- Mechanical friction
+- Operating mode
+
+## Required electrical properties
+
+- Generator voltage
+- Generator frequency
+- Phase angle
+- Active power
+- Reactive power
+- Output current
+- Power limit
+- Synchronization state
+- Protection state
+
+## Generator acceleration
+
+`J * AngularAcceleration = StarterTorque + PrimeMoverTorque - LoadTorque - FrictionTorque`
+
+Use actual modeled torque.
+
+Do not set generator RPM instantly.
+
+## Start sequence
+
+1. Verify starting power.
+2. Verify safety.
+3. Verify generator breaker open.
+4. Engage starter.
+5. Apply bounded starter torque.
+6. Accelerate generator.
+7. Establish prime-mover operation.
+8. Disengage starter.
+9. Stabilize speed.
+10. Establish generator electrical output.
+11. Synchronize if connecting to an energized bus.
+
+## Energy source
+
+Generator mechanical power must come from an explicitly modeled prime-mover energy source.
+
+A simplified finite fuel/energy budget is acceptable.
+
+Do not create unlimited mechanical energy without documenting the simplified model.
+
+---
+
+# 12. SOURCE SYNCHRONIZATION
+
+Reuse compatible Level 57 and Level 59 synchronization systems.
+
+## Required measurements
+
+- Active bus voltage
+- Returning source voltage
+- Bus frequency
+- Source frequency
+- Frequency difference
+- Bus phase angle
+- Source phase angle
+- Phase difference
+- Phase sequence
+- Synchronization readiness
+
+## Suggested educational tolerances
+
+- Frequency difference ≤ 0.2 Hz
+- Phase difference ≤ 5°
+- Voltage mismatch ≤ 5%
+- Correct A/B/C sequence
+
+Use configurable thresholds and a stability dwell.
+
+## Required behavior
+
+The returning source must gradually align its voltage/frequency/phase.
+
+Do not directly assign one phase angle to another.
+
+## Breaker closing
+
+Do not close QGEN or QGRID onto an energized bus unless valid synchronization conditions are satisfied.
+
+In islanded operation, source transitions must respect the actual grid-forming architecture.
+
+---
+
+# 13. AUTONOMOUS ENERGY MANAGEMENT
+
+Use:
+
+`24_L60_ResilienceMasterController.fbx`
+
+This is the central Level 60 gameplay system.
+
+Implement a supervisory energy-management controller that dispatches electrical sources according to measured demand, available capacity and configured priorities.
+
+## Required inputs
+
+- Grid availability
+- Solar available power
+- Solar actual power
+- Battery SOC
+- Battery available power
+- Battery reserve setting
+- Generator readiness
+- Generator available power
+- Inverter capability
+- Actual load power
+- Predicted load
+- Bus voltage
+- Bus frequency
+- Breaker states
+- Fault states
+
+## Required outputs
+
+- Generator start command
+- Generator stop command
+- Battery charge/discharge request
+- Solar utilization request
+- Inverter operating mode
+- Load shedding commands
+- Load restoration commands
+- Source synchronization request
+- Fault recovery state
+- Operator status messages
+
+## Operating modes
+
+- MANUAL
+- AUTO GRID-CONNECTED
+- AUTO ISLANDED
+- EMERGENCY SUPPORT
+- LOAD SHEDDING
+- SOURCE RECOVERY
+- RESTORATION
+- FAULT
+
+## Important controller behavior
+
+The controller must make decisions using actual simulated values.
+
+Do not implement a single predetermined scripted sequence that ignores available battery energy or load demand.
+
+A deterministic rule-based dispatch controller is acceptable and may be preferable to an unnecessarily complex optimization system.
+
+---
+
+# 14. PREDICTIVE LOAD AND ENERGY MANAGEMENT
+
+Implement a simple forecast layer.
+
+## Required predictions
+
+- Recent load demand
+- Short-term expected demand
+- Available solar generation
+- Battery runtime estimate
+- Generator-start requirement
+- Available reserve margin
+
+## Battery runtime estimate
+
+For positive battery discharge power:
+
+`EstimatedRuntime = UsableBatteryEnergy / DischargePower`
+
+Handle near-zero discharge appropriately.
+
+This is an estimate, not a guaranteed future runtime.
+
+## Prediction requirements
+
+- Use actual measurement history.
+- Use consistent time units.
+- Avoid unsupported long-horizon claims.
+- Bound prediction outputs.
+- Report low confidence when data is insufficient.
+- Do not fabricate future measurements.
+
+## Gameplay challenge
+
+The player selects dispatch thresholds that prevent avoidable battery depletion during the upcoming compound fault sequence.
+
+---
+
+# 15. FOUR LOAD GROUPS
+
+Implement four protected branches.
+
+## Load Q1 — Essential Service
+
+Use:
+
+`19_L60_CriticalServiceLoad.fbx`
+
+Highest priority.
+
+Must remain energized whenever physically supportable.
+
+## Load Q2 — Priority Service
+
+Represent the priority load using a compatible runtime load model and associated:
+
+`16_L60_PriorityLoadBreaker.fbx`
+
+The art pack does not contain a separate named priority-load appliance FBX.
+
+Do not invent one.
+
+## Load Q3 — Industrial Motor
+
+Use:
+
+`20_L60_IndustrialMotorLoad.fbx`
+
+Model:
+
+- Motor starting current
+- Rotor inertia
+- Motor acceleration
+- Active power demand
+- Reactive power demand
+- Current limits
+- Load state
+
+## Load Q4 — Auxiliary Programmable Load
+
+Use:
+
+`21_L60_SmartProgrammableLoad.fbx`
+
+Support adjustable demand and fault-test load steps.
+
+## Required load properties
+
+- Priority
+- Requested power
+- Actual power
+- Breaker state
+- Voltage-dependent load behavior
+- Starting/inrush behavior where applicable
+- Protection status
+- Restoration eligibility
+
+Do not mark a load as powered merely because its breaker indicator is green.
+
+Actual bus voltage and load electrical state must support the claim.
+
+---
+
+# 16. INTELLIGENT LOAD SHEDDING
+
+When source power becomes insufficient, the system must reduce demand safely.
+
+## Suggested shedding priority
+
+1. Shed auxiliary load Q4 first.
+2. Shed industrial load Q3 when necessary.
+3. Shed priority load Q2 only if essential survival requires it.
+4. Preserve essential load Q1 whenever possible.
+
+The exact policy may be configurable.
+
+## Required response
+
+1. Detect low reserve or source-capacity shortage.
+2. Calculate current supply-demand imbalance.
+3. Determine required load reduction.
+4. Select permitted load branches.
+5. Issue breaker commands.
+6. Apply actual breaker operating delays.
+7. Update electrical topology.
+8. Recalculate load demand.
+9. Verify bus stabilization.
+10. Record shedding events.
+
+## Important
+
+Do not automatically award success when loads are shed.
+
+The controller must preserve the essential load through actual available power.
+
+If the battery and remaining sources cannot support Q1, the simulator must report the failure honestly.
+
+Do not create energy to keep Q1 alive.
+
+---
+
+# 17. MULTI-FAULT SCENARIO ENGINE
+
+Use:
+
+`26_L60_FaultScenarioSimulator.fbx`
+
+Implement five controlled simulation events.
+
+## EVENT A — SOLAR GENERATION COLLAPSE
+
+1. Establish stable grid-connected operation.
+2. Record initial solar output.
+3. Apply a controlled irradiance reduction.
+4. Reduce actual PV available power.
+5. Measure resulting source dispatch.
+6. Maintain bus stability.
+7. Respect battery and generator limits.
+
+## EVENT B — UTILITY GRID DISCONNECTION
+
+1. Establish valid operating state.
+2. Simulate upstream grid loss.
+3. Detect grid voltage/reference loss.
+4. Open QGRID.
+5. Prevent unsafe backfeed.
+6. Activate a valid grid-forming source.
+7. Maintain island voltage/frequency.
+8. Preserve essential loads.
+
+## EVENT C — INDUSTRIAL LOAD SURGE
+
+1. Maintain island operation.
+2. Increase industrial motor demand.
+3. Calculate actual current/power increase.
+4. Monitor bus voltage/frequency.
+5. Dispatch available sources.
+6. Shed lower-priority loads if needed.
+7. Restore stable operation.
+
+## EVENT D — GENERATOR FAILURE
+
+1. Verify generator supporting the island.
+2. Simulate loss of generator power.
+3. Detect actual output abnormality.
+4. Open QGEN.
+5. Latch generator fault.
+6. Update available source capacity.
+7. Increase battery support where possible.
+8. Shed nonessential loads.
+9. Preserve Q1 essential load where physically possible.
+
+## EVENT E — SOURCE RESTORATION
+
+1. Restore generator fault condition.
+2. Explicitly reset fault.
+3. Restart generator.
+4. Re-establish voltage and frequency.
+5. Synchronize with island bus.
+6. Close QGEN safely.
+7. Restore utility-grid availability.
+8. Synchronize for grid reconnection.
+9. Close QGRID safely.
+10. Restore shed loads.
+11. Verify stable final operation.
+
+## Determinism
+
+The scenario engine should support repeatable test sequences.
+
+Use deterministic or seeded disturbances.
+
+Do not change the fault severity unpredictably when validating the same objective.
+
+---
+
+# 18. PROTECTION RELAY AND BREAKER SYSTEM
+
+Use:
+
+`22_L60_ProtectionRelayBank.fbx`
+
+Implement protection for:
+
+- Utility source loss
+- Grid overcurrent
+- Inverter overcurrent
+- Generator overcurrent
+- Battery undervoltage
+- BMS shutdown
+- DC-link overvoltage
+- DC-link undervoltage
+- PV converter overcurrent
+- Generator overspeed
+- Generator underfrequency
+- Bus overvoltage
+- Bus undervoltage
+- Overfrequency
+- Underfrequency
+- Unsafe source synchronization
+- Excessive circulating current
+- Motor overload
+- Load-breaker failure
+- Source-breaker failure
+- Sensor feedback invalid
+- Safety enclosure open
+- Invalid simulation values
+- Unexpected topology changes
+
+## Breaker identities
+
+- QGRID: Main grid
+- QGEN: Generator
+- QINV: Battery/grid-forming inverter
+- QPV: Renewable source
+- Q1: Essential load
+- Q2: Priority load
+- Q3: Industrial load
+- Q4: Auxiliary load
+
+## Breaker states
+
+- OPEN
+- CLOSING
+- CLOSED
+- OPENING
+- TRIPPED
+- FAILED
+- LOCKED_OUT
+
+## Breaker operation
+
+Every electrical breaker state transition must update the actual network topology.
+
+The animated handle must follow authoritative state.
+
+Do not change current measurements independently without changing topology.
+
+---
+
+# 19. SAFETY AND FAULT RECOVERY
+
+Implement a coordinated Level 60 safety controller.
+
+## Critical fault response
+
+1. Identify the exact fault.
+2. Record the operating state.
+3. Reject unsafe commands.
+4. Open appropriate electrical breakers.
+5. Inhibit unsafe source reconnection.
+6. Protect battery and converter hardware.
+7. Start or dispatch remaining sources where permitted.
+8. Shed loads when necessary.
+9. Preserve critical service if physically possible.
+10. Latch the relevant fault.
+11. Require repair.
+12. Require explicit reset.
+13. Revalidate electrical references.
+14. Require synchronization for reconnection.
+15. Record restoration history.
+
+## Sensor validity
+
+Do not interpret stale or disconnected measurements as zero values.
+
+Invalidate affected control decisions.
+
+If measurement confidence is insufficient for safe source paralleling, prohibit the relevant breaker closure.
+
+## Protection hierarchy
+
+Hardware/model protection has authority over supervisory dispatch commands.
+
+The autonomous controller must not override a critical fault merely to keep an objective active.
+
+---
+
+# 20. SIX AUTHORITATIVE LEVEL OBJECTIVES
+
+Integrate all six objectives with the existing Project Spark evaluator.
+
+## OBJECTIVE 1 — BUILD THE AUTONOMOUS MICROGRID
+
+Player connects W01–W46.
+
+Require:
+
+1. All 72 unique terminals registered.
+2. Valid control power.
+3. Valid electrical return.
+4. Utility-grid interface connected.
+5. Battery storage connected.
+6. BMS connected.
+7. Bidirectional converter connected.
+8. Grid-forming inverter connected.
+9. Solar PV/MPPT connected.
+10. Generator/starter connected.
+11. Three-phase distribution bus connected.
+12. Four source breakers connected.
+13. Four load breakers connected.
+14. Protection relay bank connected.
+15. Sensor hub connected.
+16. Resilience controller connected.
+17. Safety system valid.
+18. No unsafe electrical topology.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — CONFIGURE AUTONOMOUS ENERGY MANAGEMENT
+
+Require:
+
+1. All sensors calibrated.
+2. Utility-grid reference valid.
+3. Battery SOC measured.
+4. BMS healthy.
+5. Solar generation measured.
+6. Generator available.
+7. Inverter ready.
+8. Battery reserve configured.
+9. Generator startup threshold configured.
+10. Load shedding order configured.
+11. Automatic dispatch enabled.
+12. Stable baseline power flow recorded.
+13. Source capacities respected.
+14. Bus voltage/frequency stable.
+15. Observation interval completed.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — SURVIVE RENEWABLE GENERATION LOSS
+
+Require:
+
+1. Valid baseline recorded.
+2. Solar irradiance decreases.
+3. Actual PV output decreases.
+4. Solar loss detected.
+5. Autonomous dispatch responds.
+6. Battery/generator/utility contributions change according to available capability.
+7. Supply-demand balance maintained.
+8. Bus voltage safe.
+9. Frequency safe.
+10. Source current limits respected.
+11. Essential load remains powered.
+12. Stable observation interval completed.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — MAINTAIN ISLANDED OPERATION
+
+Require:
+
+1. Previous dispatch test certified.
+2. Utility grid becomes unavailable.
+3. Grid-loss detection occurs.
+4. QGRID opens.
+5. Unsafe backfeed prevented.
+6. Grid-forming inverter operates correctly.
+7. Battery/BMS valid.
+8. Island bus voltage established.
+9. Island frequency stable.
+10. Essential load powered continuously.
+11. Source limits respected.
+12. No uncontrolled blackout.
+13. Valid island observation interval completed.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — SURVIVE COMPOUND EMERGENCY
+
+Require:
+
+1. Valid islanded operation.
+2. Industrial load surge applied.
+3. Actual demand increases.
+4. Controller responds.
+5. Generator contributes when available.
+6. Generator failure occurs.
+7. Generator output becomes invalid.
+8. Fault detected and latched.
+9. QGEN opens.
+10. Remaining source capacity recalculated.
+11. Battery support activated within limits.
+12. Nonessential loads shed when necessary.
+13. Essential Q1 remains powered throughout the required event, supported by real available energy.
+14. Voltage/frequency remain within permitted transient and recovery limits.
+15. No unsafe source reconnection.
+16. Fault history recorded.
+17. Stable emergency operation verified.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — RESTORE AND CERTIFY THE GRID
+
+Require:
+
+1. Historical objectives 1–5 certified.
+2. Generator fault condition repaired.
+3. Player explicitly resets the fault.
+4. Generator restarts physically.
+5. Generator voltage valid.
+6. Generator frequency valid.
+7. Generator phase reference valid.
+8. Generator synchronizes with the island bus.
+9. QGEN closes safely.
+10. Generator power contribution measured.
+11. Utility-grid availability restored.
+12. Grid voltage/frequency reference reacquired.
+13. Grid synchronization succeeds.
+14. QGRID closes safely.
+15. Source sharing returns to a valid operating state.
+16. Shed nonessential loads restored in safe order.
+17. All required loads powered.
+18. Battery SOC remains above physical minimum.
+19. Source currents remain safe.
+20. Bus voltage stable.
+21. Frequency stable.
+22. No unresolved critical fault.
+23. Final resilience observation interval completed.
+
+Only then award Objective 6.
+
+## Critical authoritative evaluation
+
+Do not implement only a local `stage` variable.
+
+Inspect:
+
+- `SparkLevelEvaluator`
+- `SparkLevelDefinition`
+- `LevelGamePlayManager`
+
+Implement compatible historical objective recording.
+
+Objectives 1–5 must remain certified during final repair and restoration.
+
+However, Level 60 must not complete until the final power-restoration certification succeeds.
+
+Do not fabricate electrical measurements or force completion.
+
+**FINAL RESULT: Actual LevelGamePlayManager = 6/6.**
+
+---
+
+# 21. RECOMMENDED UNITY C# SYSTEMS
+
+Inspect the actual project before creating new classes.
+
+Suggested Level 60 responsibilities:
+
+- `SparkLevel60Coordinator.cs`
+- `SparkLevel60ThreePhaseNetwork.cs`
+- `SparkLevel60BatteryIntegration.cs`
+- `SparkLevel60BatteryReserve.cs`
+- `SparkLevel60BidirectionalConverter.cs`
+- `SparkLevel60SolarPVModel.cs`
+- `SparkLevel60MPPTController.cs`
+- `SparkLevel60GeneratorIntegration.cs`
+- `SparkLevel60GridFormingController.cs`
+- `SparkLevel60SynchronizationController.cs`
+- `SparkLevel60SourceDispatch.cs`
+- `SparkLevel60EnergyManagement.cs`
+- `SparkLevel60LoadForecast.cs`
+- `SparkLevel60LoadShedding.cs`
+- `SparkLevel60IslandController.cs`
+- `SparkLevel60CompoundFaultSimulator.cs`
+- `SparkLevel60ProtectionController.cs`
+- `SparkLevel60SafetyController.cs`
+- `SparkLevel60ResilienceAnalyzer.cs`
+- `SparkLevel60ObjectiveTracker.cs`
+- `SparkLevel60SCADADashboard.cs`
+- `SparkLevel60Interaction.cs`
+- `SparkLevel60VisualRig.cs`
+
+These are suggested class names, not verified existing Project Spark APIs.
+
+Reuse compatible Level 56–59 systems.
+
+Do not duplicate working electrical, mechanical or protection implementations.
+
+## Runtime update sequence
+
+1. Validate electrical topology.
+2. Read player commands.
+3. Read current source/breaker states.
+4. Update solar irradiance.
+5. Calculate available PV power.
+6. Update battery/BMS state.
+7. Update converter state.
+8. Update generator starter/dynamics.
+9. Update source synchronization.
+10. Calculate autonomous dispatch requests.
+11. Apply source limits.
+12. Solve the connected three-phase network.
+13. Calculate source currents and powers.
+14. Calculate load demands.
+15. Update battery energy.
+16. Evaluate load shedding.
+17. Evaluate protection and faults.
+18. Apply breaker transitions and topology updates.
+19. Record electrical histories.
+20. Evaluate resilience objectives.
+21. Update dashboard.
+22. Update visual animations.
+
+Use one consistent simulation timeline.
+
+Avoid integrating the same interval more than once.
+
+Use bounded substeps where necessary.
+
+Do not recursively invoke the shared electrical solver.
+
+---
+
+# 22. LIVE AAA SCADA DASHBOARD
+
+Use:
+
+`24_L60_ResilienceMasterController`
+
+`25_L60_HolographicSCADAMonitor`
+
+Create functional TextMeshPro displays and dynamic power-flow graphs.
+
+## Required live readings
+
+- MAIN POWER
+- GRID MODE
+- UTILITY AVAILABILITY
+- MAIN GRID BREAKER
+- AC BUS VOLTAGE
+- AC BUS FREQUENCY
+- PHASE A/B/C STATUS
+- UTILITY ACTIVE POWER
+- SOLAR IRRADIANCE
+- SOLAR AVAILABLE POWER
+- SOLAR ACTUAL POWER
+- MPPT STATUS
+- BATTERY SOC
+- BATTERY VOLTAGE
+- BATTERY CURRENT
+- BATTERY ENERGY
+- BATTERY RESERVE
+- BATTERY RUNTIME ESTIMATE
+- BMS STATUS
+- CONVERTER MODE
+- CONVERTER POWER
+- INVERTER OUTPUT POWER
+- INVERTER CURRENT
+- GENERATOR RPM
+- GENERATOR VOLTAGE
+- GENERATOR FREQUENCY
+- GENERATOR PHASE DIFFERENCE
+- GENERATOR ACTIVE POWER
+- GENERATOR BREAKER STATE
+- SOURCE CAPACITY
+- TOTAL LOAD POWER
+- ESSENTIAL LOAD STATUS
+- PRIORITY LOAD STATUS
+- INDUSTRIAL LOAD STATUS
+- AUXILIARY LOAD STATUS
+- LOAD SHEDDING STATUS
+- FORECAST DEMAND
+- RESERVE MARGIN
+- AUTO DISPATCH STATUS
+- ISLANDING STATUS
+- FAULT HISTORY
+- PROTECTION STATUS
+- OBJECTIVES X/6
+
+## Player controls
+
+- MAIN POWER
+- CALIBRATE
+- ENABLE AUTO
+- MANUAL MODE
+- SET BATTERY RESERVE
+- SET GENERATOR START THRESHOLD
+- ENABLE SOLAR
+- ENABLE MPPT
+- ENABLE BATTERY CONVERTER
+- START GENERATOR
+- STOP GENERATOR
+- SYNC CHECK
+- AUTO DISPATCH
+- ISLAND MODE
+- SHED AUXILIARY LOAD
+- SHED INDUSTRIAL LOAD
+- RESTORE LOADS
+- SOLAR DROP TEST
+- GRID LOSS TEST
+- MOTOR SURGE TEST
+- GENERATOR FAILURE TEST
+- RESET FAULT
+- RESTORE GENERATOR
+- RESTORE GRID
+- FINAL CERTIFY
+
+All buttons must have meaningful gameplay effects.
+
+Do not create decorative controls that only update labels.
+
+---
+
+# 23. AAA VISUAL IMPLEMENTATION
+
+Use the verified Level 60 pivot manifest.
+
+Create a visual-only adapter that reads authoritative runtime state.
+
+## Required visual behavior
+
+### Healthy grid-connected operation
+
+- Utility source indicates active.
+- Grid breaker closed.
+- Solar generation indicators active.
+- Battery power direction matches charge/discharge state.
+- Required loads illuminated.
+- SCADA display reports real values.
+
+### Solar generation collapse
+
+- PV indicator reflects reduced irradiance/output.
+- Source power-flow display updates.
+- Battery or generator support responds according to simulation.
+
+### Utility outage
+
+- Utility indicator becomes unavailable.
+- QGRID opens.
+- Grid-forming inverter transitions appropriately.
+- Island-mode indicators activate only after valid operation.
+
+### Industrial load surge
+
+- Industrial motor response reflects actual load.
+- Current and power meters respond.
+- Protection and dispatch indicators show actual control actions.
+
+### Generator failure
+
+- Generator output becomes invalid.
+- QGEN opens.
+- Generator rotor follows modeled mechanical behavior.
+- Load-shedding indicators update.
+- Critical load remains illuminated only when powered.
+
+### Restoration
+
+- Generator restarts.
+- Synchronization progresses.
+- QGEN closes safely.
+- Utility reference returns.
+- QGRID reconnects after valid synchronization.
+- Shed loads restore in sequence.
+- Final SCADA dashboard displays certified operating state.
+
+## Critical visual rules
+
+- Do not animate breaker closure without actual electrical state change.
+- Do not show a source online when its breaker is open and it is electrically isolated.
+- Do not show battery charging when battery energy is not increasing.
+- Do not fake generator synchronization.
+- Do not animate motor speed independently of mechanical simulation.
+- Do not illuminate the essential load when actual power is unavailable.
+
+---
+
+# 24. UNITY EDITOR LEVEL CREATOR
+
+Create:
+
+`Tools/Project Spark/Levels/Create Level 60`
+
+The Editor creator must safely generate or update:
+
+- `Level_60.asset`
+- `Level_60_Layout.prefab`
+- Level-specific configuration assets
+- Electrical binding manifests
+- Objective definitions
+- Validation report
+
+## Required Editor operations
+
+1. Inspect actual editor infrastructure.
+2. Locate all 28 FBX models.
+3. Validate model paths and scale.
+4. Create/update Level 60 definition.
+5. Set Level ID to `level_60`.
+6. Configure display name and description.
+7. Create six authoritative objectives.
+8. Create/update layout prefab.
+9. Instantiate all 28 individual FBXs.
+10. Preserve shared placement.
+11. Configure utility grid interface.
+12. Configure grid-forming inverter.
+13. Configure battery storage.
+14. Configure BMS.
+15. Configure bidirectional converter.
+16. Configure solar PV model.
+17. Configure MPPT controller.
+18. Configure generator.
+19. Configure generator starter.
+20. Configure three-phase distribution.
+21. Configure four source breakers.
+22. Configure four load breakers.
+23. Configure critical service load.
+24. Configure priority load runtime representation.
+25. Configure industrial motor.
+26. Configure programmable load.
+27. Configure protection relay bank.
+28. Configure voltage/current sensors.
+29. Configure resilience controller.
+30. Configure SCADA monitor.
+31. Configure fault scenario simulator.
+32. Configure safety enclosure.
+33. Register exactly 72 functional terminals.
+34. Create exactly 46 player-wire declarations.
+35. Register component IDs.
+36. Register terminal IDs.
+37. Configure required internal fixed connections.
+38. Configure battery capacity and reserve.
+39. Configure solar irradiance profile.
+40. Configure MPPT model.
+41. Configure generator dynamics.
+42. Configure source synchronization.
+43. Configure grid-forming control.
+44. Configure source dispatch policy.
+45. Configure load shedding.
+46. Configure compound fault scenarios.
+47. Configure protection.
+48. Assign verified animation pivots.
+49. Create live TextMeshPro displays.
+50. Configure player controls.
+51. Bind six authoritative objectives.
+52. Detect missing and duplicate references.
+53. Detect conflicting simulator ownership.
+54. Generate detailed diagnostics.
+55. Save definition and layout prefab.
+
+## Editor reliability
+
+Reuse compatible functionality from:
+
+`SparkLevel60ArtPlacementEditor.cs`
+
+The existing editor helper performs art placement, not complete gameplay integration.
+
+Extend it safely or create a separate full level builder.
+
+Use real AssetDatabase paths.
+
+Do not invent GUIDs.
+
+Use `PrefabUtility`, `SerializedObject`, Undo and appropriate asset-saving operations.
+
+Make the creator idempotent.
+
+Prevent duplicate models, terminals, components and controllers.
+
+Do not silently destroy unrelated user modifications.
+
+---
+
+# 25. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 46 WIRES → VERIFY 72 TERMINALS → CALIBRATE SENSORS → CONFIGURE BATTERY RESERVE → CONFIGURE GENERATOR START THRESHOLD → CONFIGURE LOAD SHEDDING → ENABLE AUTONOMOUS DISPATCH → ESTABLISH STABLE GRID OPERATION → REDUCE SOLAR GENERATION → VERIFY DISPATCH RESPONSE → DISCONNECT UTILITY → OPEN GRID BREAKER → ENTER ISLAND MODE → VERIFY CRITICAL LOAD → APPLY INDUSTRIAL LOAD SURGE → ACTIVATE GENERATOR SUPPORT → SIMULATE GENERATOR FAILURE → OPEN GENERATOR BREAKER → SHED NONESSENTIAL LOADS → KEEP CRITICAL POWER AVAILABLE → REPAIR GENERATOR → RESET FAULT → RESTART GENERATOR → RESYNCHRONIZE → RECONNECT GENERATOR → RESTORE UTILITY GRID → RESYNCHRONIZE GRID → RESTORE ALL LOADS → FINAL RESILIENCE CERTIFICATION → 6/6 COMPLETE**
+
+## Suggested player-facing messages
+
+- `BUILD THE AUTONOMOUS MICROGRID`
+- `CONNECT ALL 46 WIRES`
+- `CALIBRATE ELECTRICAL SENSORS`
+- `CONFIGURE BATTERY RESERVE`
+- `CONFIGURE AUTOMATIC GENERATOR START`
+- `SET LOAD SHEDDING PRIORITIES`
+- `ENABLE AUTONOMOUS DISPATCH`
+- `GRID-CONNECTED OPERATION STABLE`
+- `SOLAR GENERATION REDUCING`
+- `RENEWABLE OUTPUT LOSS DETECTED`
+- `DISPATCHING AVAILABLE POWER`
+- `GRID SUPPLY LOST`
+- `ISOLATE UTILITY SOURCE`
+- `GRID-FORMING INVERTER ACTIVE`
+- `ISLAND OPERATION STABLE`
+- `INDUSTRIAL LOAD SURGE DETECTED`
+- `SOURCE CAPACITY WARNING`
+- `GENERATOR SUPPORT REQUIRED`
+- `GENERATOR FAILURE DETECTED`
+- `GENERATOR BREAKER OPEN`
+- `AUTOMATIC LOAD SHEDDING`
+- `CRITICAL SERVICE MAINTAINED`
+- `RESTORE GENERATOR`
+- `RESET LATCHED FAULT`
+- `START GENERATOR`
+- `MATCH FREQUENCY AND PHASE`
+- `GENERATOR SYNCHRONIZED`
+- `UTILITY GRID AVAILABLE`
+- `RESYNCHRONIZE MICROGRID`
+- `RECONNECT UTILITY SOURCE`
+- `RESTORE SHED LOADS`
+- `SOURCE POWER BALANCE VERIFIED`
+- `FINAL RESILIENCE CERTIFICATION`
+- `LEVEL 60 COMPLETE`
+
+---
+
+# 26. TESTING AND DIAGNOSTICS
+
+Implement exact diagnostic reporting for:
+
+- Incorrect W01–W46 wiring
+- Missing terminal IDs
+- Duplicate terminal IDs
+- Missing component IDs
+- Invalid control supply
+- Missing return
+- Incorrect phase mapping
+- Incorrect source polarity
+- Invalid battery SOC
+- BMS disconnected
+- Battery overcurrent
+- Battery energy inconsistency
+- Converter power-balance error
+- Solar output not responding to irradiance
+- MPPT unavailable
+- PV source disconnected
+- Grid-forming inverter unavailable
+- Grid frequency invalid
+- Generator not accelerating
+- Generator voltage invalid
+- Generator phase mismatch
+- Unsafe generator breaker closing
+- Main grid reconnection out of phase
+- Incorrect source dispatch
+- Battery reserve ignored
+- Generator startup threshold ignored
+- Source current exceeding limit
+- Load shedding not occurring
+- Essential load incorrectly disconnected
+- Motor load surge not reflected in current
+- Utility outage not detected
+- Islanding unsuccessful
+- Grid-forming control conflict
+- Generator failure not detected
+- Generator breaker failing to open
+- Battery unable to support essential load
+- Fault reset without repair
+- Grid restoration failing
+- Historical objectives being erased
+- Manager stuck at 0/6 or 5/6
+- Scene restart/reload problems
+- Earlier-level regressions
+
+## Required test scenarios
+
+1. Correct 46-wire circuit.
+2. All 72 terminal IDs valid.
+3. Valid utility-grid operation.
+4. Battery/BMS valid.
+5. Solar output physically calculated.
+6. Converter power balance valid.
+7. Source current limits respected.
+8. All four loads powered.
+9. Sensor calibration succeeds.
+10. Autonomous dispatch enabled.
+11. Battery reserve configured.
+12. Solar irradiance decreases.
+13. PV electrical output decreases.
+14. Dispatch compensates using available power.
+15. Bus remains stable.
+16. Utility grid disconnects.
+17. QGRID opens.
+18. Island mode establishes valid voltage/frequency.
+19. Essential load remains supplied.
+20. Industrial load surge increases actual demand.
+21. Generator support responds appropriately.
+22. Generator failure changes real output.
+23. QGEN opens.
+24. Generator fault latches.
+25. Battery support increases where available.
+26. Nonessential loads shed as needed.
+27. Essential load remains energized when physically supportable.
+28. Available battery energy decreases correctly.
+29. Generator fault repaired.
+30. Explicit reset succeeds.
+31. Generator restarts physically.
+32. Generator synchronization succeeds.
+33. QGEN closes safely.
+34. Utility source returns.
+35. Grid synchronization succeeds.
+36. QGRID closes safely.
+37. Loads restore in proper order.
+38. Source sharing stabilizes.
+39. No unresolved critical fault.
+40. Final certification succeeds.
+41. Actual manager reaches 6/6.
+42. Level progression succeeds.
+43. Levels 1–59 remain unaffected.
+
+Only report tests as passed when actually executed.
+
+---
+
+# 27. REQUIRED DOWNLOADABLE DELIVERABLES
+
+Create a complete Level 60 Unity implementation ZIP containing:
+
+- Full Level 60 runtime C# scripts
+- Three-phase network integration
+- Utility-grid source model
+- Grid-forming inverter integration
+- Battery energy model
+- BMS integration
+- Bidirectional converter
+- Solar PV generation
+- MPPT controller
+- Generator and starter integration
+- Source synchronization
+- Autonomous source dispatch
+- Battery reserve management
+- Load forecasting
+- Intelligent load shedding
+- Islanded operation
+- Compound fault scenario engine
+- Source restoration controller
+- Electrical protection
+- Safety and fault recovery
+- Six-objective evaluator integration
+- Unity Editor Level 60 creator
+- Level definition creator or asset
+- Level layout prefab creator
+- Exact W01–W46 wiring manifest
+- 72-terminal binding manifest
+- Component binding manifest
+- Animation pivot mappings
+- Battery configuration
+- Solar/MPPT configuration
+- Generator configuration
+- Source dispatch configuration
+- Load priorities
+- Fault scenario configuration
+- Protection thresholds
+- Inspector setup instructions
+- Player gameplay walkthrough
+- Objective verification checklist
+- Diagnostics and troubleshooting guide
+
+Reuse:
+
+`ProjectSpark_Level60_HD_AAA_Models.zip`
+
+Do not regenerate the 28-model art collection unless a specific compatibility problem requires it.
+
+Only provide links to files actually created and verified.
+
+Do not claim Unity compilation, Play Mode success or actual 6/6 completion unless those tests were performed.
+
+---
+
+# 28. FINAL EXECUTION REQUIREMENTS
+
+**IMPLEMENT LEVEL 60 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect my actual Project Spark codebase and Level 60 model package.
+
+Then:
+
+1. Reuse compatible electrical infrastructure.
+2. Integrate all 28 FBX models.
+3. Finalize exactly 46 player wires.
+4. Register exactly 72 functional terminals.
+5. Implement finite battery energy storage.
+6. Integrate BMS safety.
+7. Implement bidirectional conversion.
+8. Implement solar PV generation.
+9. Implement MPPT behavior.
+10. Integrate generator dynamics.
+11. Integrate three-phase power flow.
+12. Implement valid grid-forming operation.
+13. Implement safe source synchronization.
+14. Implement source power sharing.
+15. Implement autonomous dispatch logic.
+16. Implement battery reserve management.
+17. Implement short-term load forecasting.
+18. Implement intelligent load shedding.
+19. Implement solar-generation collapse.
+20. Implement utility-grid disconnection.
+21. Implement safe islanded operation.
+22. Implement industrial load surge.
+23. Implement generator failure.
+24. Implement protection and emergency response.
+25. Implement source fault repair and reset.
+26. Implement generator resynchronization.
+27. Implement utility-grid reconnection.
+28. Implement controlled load restoration.
+29. Integrate all six authoritative objectives.
+30. Create the Unity Editor Level 60 builder.
+31. Connect live SCADA and visual animations.
+32. Implement detailed diagnostics.
+33. Execute all feasible tests.
+34. Package and verify actual deliverables.
+
+Do not ask for approval of the already-approved Level 60 design.
+
+Do not fabricate source power, battery SOC, generator RPM, solar output, voltage, frequency, current, protection status or objective completion.
+
+If an existing Project Spark API cannot be verified, implement safely independent functionality and identify the exact missing integration dependency.
+
+---
+
+# 29. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect all 46 required wires.
+2. Validate all 72 functional terminals.
+3. Configure battery reserve.
+4. Configure generator dispatch.
+5. Configure load-shedding priorities.
+6. Establish stable autonomous grid-connected operation.
+7. Survive reduced solar generation.
+8. Automatically redistribute available power.
+9. Detect utility-grid loss.
+10. Transition safely to island mode.
+11. Maintain critical electrical service.
+12. Respond to an industrial load surge.
+13. Detect generator failure.
+14. Isolate the failed generator.
+15. Shed nonessential loads selectively.
+16. Preserve essential load using finite available battery energy.
+17. Repair the generator.
+18. Explicitly reset the latched fault.
+19. Restart and resynchronize the generator.
+20. Restore utility-grid availability.
+21. Safely resynchronize and reconnect the grid.
+22. Restore previously shed loads.
+23. Verify stable final power sharing.
+24. Complete all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 60.**
+
+The player must learn genuine autonomous microgrid control, energy conservation, source coordination, battery reserve management, renewable variability, multi-fault recovery, selective load shedding and power restoration through observable physical/electrical simulation—not predetermined animations, fabricated measurements or artificial success flags.
+
+**FINAL GOAL: A COMPLETE, POLISHED, AAA-QUALITY, UNITY-READY AND ACTUALLY PLAYABLE LEVEL 60 — THE GRID MUST SURVIVE.**

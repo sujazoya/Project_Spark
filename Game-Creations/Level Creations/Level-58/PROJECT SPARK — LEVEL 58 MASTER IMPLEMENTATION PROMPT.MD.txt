@@ -1,0 +1,1712 @@
+# PROJECT SPARK — LEVEL 58 MASTER IMPLEMENTATION PROMPT
+
+## LEVEL 58: ISOLATE THE FAULT
+### Advanced Intelligent Microgrid Protection, Selective Circuit Breakers, Fault Localization, Inverse-Time Relays and Adaptive Protection Coordination
+
+Act as my senior Unity C# engineer, electrical simulation architect, three-phase power-system protection engineer, industrial automation specialist, protective-relay engineer, gameplay programmer, and Unity Editor automation developer.
+
+**YOUR TASK IS TO CREATE THE COMPLETE, WORKING, PLAYABLE LEVEL 58 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+Do not stop at a design proposal, architecture diagram, pseudocode, disconnected example scripts, or a collection of decorative animations.
+
+Implement all safely achievable functionality using my actual Unity project source code and the previously generated Level 58 HD/AAA model collection.
+
+The Level 58 concept and 24 individual 3D models are already approved.
+
+Do not redesign the level or regenerate its models unnecessarily.
+
+---
+
+# 1. CRITICAL PROJECT INTEGRATION RULES
+
+Project Spark is an existing Unity electrical engineering, electronics simulation and industrial automation game.
+
+Before implementing Level 58, inspect the actual Unity project source files, especially:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+- Existing three-phase AC simulation
+- Existing inverter and grid-source systems
+- Existing current and voltage sensors
+- Existing switches, relays and contactors
+- Existing circuit-topology validation
+- Existing electrical protection systems
+- Existing component damage and failure systems
+- Existing motor-load simulation
+- Existing player wiring and interaction systems
+- Existing diagnostic and dashboard systems
+- Existing Unity Editor creation utilities
+- Existing Level 57 microgrid simulation and synchronization systems, where available
+
+## Non-negotiable implementation rules
+
+1. Inspect actual source code before referencing Project Spark APIs.
+2. Never invent existing classes, methods, properties, events or namespaces.
+3. Reuse compatible existing functionality.
+4. Preserve Levels 1–57.
+5. Keep Level 58-specific functionality isolated wherever practical.
+6. Do not modify the shared electrical solver without demonstrated necessity.
+7. Do not simulate fault currents using arbitrary hardcoded values.
+8. Do not treat a fault-injection button as proof that a fault has occurred.
+9. Do not treat a breaker animation as authoritative electrical isolation.
+10. Do not create artificial successful protection results.
+11. Do not bypass selective-protection timing.
+12. Do not directly change measured current to satisfy relay objectives.
+13. Do not allow a disconnected current sensor to silently report zero current.
+14. Never bypass objectives through direct level-completion manager calls.
+15. Prevent duplicate electrical solvers and competing breaker-state controllers.
+16. Use consistent electrical units and simulation time.
+17. Manage Unity lifecycle and event subscriptions correctly.
+18. Avoid per-frame global scene searches.
+19. Provide complete C# source files rather than disconnected patches.
+20. Do not claim Unity compilation or Play Mode success unless those tests actually ran.
+
+## Critical authoritative completion requirement
+
+The actual `LevelGamePlayManager` must reach **6/6**.
+
+A Level 58 coordinator reporting Stage 6 does not mean the game level is complete.
+
+Inspect the actual `SparkLevelEvaluator` and implement a compatible method for recording verified historical objectives.
+
+Objectives 1–5 must remain recorded when the player deliberately disconnects current-sensor feedback during Objective 6.
+
+However, Level 58 must not complete until the player restores valid wiring, explicitly resets the fault, restores protection readiness and passes the final selective fault-isolation test.
+
+---
+
+# 2. LEVEL CONFIGURATION
+
+**Level Number:** 58
+
+**Level ID:** `level_58`
+
+**Display Name:** `Isolate the Fault`
+
+**Subtitle:** `Intelligent Selective Protection and Fault Coordination`
+
+**Difficulty:** Advanced / Expert
+
+**DC Supply:** 5 V DC
+
+**Simulated Network:** Low-voltage three-phase AC
+
+**Nominal Grid Frequency:** 50 Hz
+
+**Player Wires:** 38
+
+**Unique Player Sockets:** 60
+
+**Main Incoming Circuit Breaker:** 1
+
+**Feeder Circuit Breakers:** 3
+
+**Current Transformer Groups:** 4
+
+**Protection Relay Modules:** 4
+
+**Distribution Feeders:** 3
+
+**Required Objectives:** 6
+
+## Protected electrical sections
+
+### Incoming network
+
+- Main three-phase source
+- Main current transformer
+- Main protection relay R0
+- Main incoming breaker Q0
+
+### Feeder A
+
+- Circuit breaker Q1
+- Current transformer CTA
+- Protection relay R1
+- Smart resistive load A
+
+### Feeder B
+
+- Circuit breaker Q2
+- Current transformer CTB
+- Protection relay R2
+- Three-phase motor load B
+
+### Feeder C
+
+- Circuit breaker Q3
+- Current transformer CTC
+- Protection relay R3
+- Essential priority load C
+
+## Fault scenarios
+
+1. Feeder A overload.
+2. Feeder B short circuit.
+3. Feeder B breaker failure.
+4. Feeder B current-sensor signal loss.
+
+## Main player mission
+
+The player must:
+
+1. Wire the complete 38-wire protection system.
+2. Verify the three-phase source and bus.
+3. Calibrate four current transformer groups.
+4. Configure protection relay pickup currents.
+5. Configure inverse-time relay characteristics.
+6. Establish selective coordination between feeder and main relays.
+7. Energize all three feeders safely.
+8. Apply a controlled overload to Feeder A.
+9. Verify that Feeder A trips at the appropriate time.
+10. Restore Feeder A safely.
+11. Inject a simulated short circuit into Feeder B.
+12. Identify the faulted feeder.
+13. Isolate Feeder B without unnecessarily disconnecting healthy feeders.
+14. Test the failure of Breaker Q2 to open.
+15. Verify that upstream backup protection operates.
+16. Restore the protection system.
+17. Disconnect Feeder B current-sensor feedback.
+18. Detect missing measurement validity.
+19. Prevent unsafe fault testing.
+20. Restore wiring and reset the latched fault.
+21. Perform a final selective-protection certification.
+22. Complete all six authoritative objectives.
+
+## Main learning objective
+
+Teach the relationship between:
+
+- Three-phase current
+- Fault impedance
+- Overload current
+- Short-circuit current
+- Current transformer scaling
+- Relay pickup threshold
+- Inverse-time protection
+- Instantaneous protection
+- Breaker operating time
+- Selective coordination
+- Backup protection
+- Fault location
+- Fault clearing
+- Essential-load continuity
+- Measurement validity
+- Safe fault recovery
+
+**The goal is not merely to trip a breaker. The player must identify the correct faulty section and isolate it with the smallest justified interruption to the healthy electrical network.**
+
+---
+
+# 3. USE MY EXISTING LEVEL 58 HD/AAA FBX PACKAGE
+
+The approved Level 58 visual asset collection already exists:
+
+`ProjectSpark_Level58_HD_AAA_Models.zip`
+
+Use these exact 24 individual FBX models:
+
+| FBX MODEL | PURPOSE |
+|---|---|
+| `00_L58_IndustrialProtectionBase.fbx` | Precision industrial laboratory chassis |
+| `01_L58_ThreePhaseGridSource.fbx` | Simulated three-phase AC source |
+| `02_L58_MainIncomingBreaker.fbx` | Main breaker Q0 |
+| `03_L58_ThreePhaseDistributionBus.fbx` | Central three-phase A/B/C bus |
+| `04_L58_FeederBreakerA.fbx` | Feeder A breaker Q1 |
+| `05_L58_FeederBreakerB.fbx` | Feeder B breaker Q2 |
+| `06_L58_FeederBreakerC.fbx` | Feeder C breaker Q3 |
+| `07_L58_MainCurrentTransformer.fbx` | Incoming current measurement |
+| `08_L58_FeederCurrentTransformerA.fbx` | Feeder A current measurement |
+| `09_L58_FeederCurrentTransformerB.fbx` | Feeder B current measurement |
+| `10_L58_FeederCurrentTransformerC.fbx` | Feeder C current measurement |
+| `11_L58_MainProtectionRelay.fbx` | Main backup protection R0 |
+| `12_L58_FeederProtectionRelayA.fbx` | Feeder A protection R1 |
+| `13_L58_FeederProtectionRelayB.fbx` | Feeder B protection R2 |
+| `14_L58_FeederProtectionRelayC.fbx` | Feeder C protection R3 |
+| `15_L58_VoltageMonitoringModule.fbx` | Three-phase bus-voltage measurement |
+| `16_L58_SmartLoadBankA.fbx` | Adjustable feeder A load |
+| `17_L58_MotorLoadB.fbx` | Dynamic motor load B |
+| `18_L58_PriorityLoadC.fbx` | Essential feeder C load |
+| `19_L58_FaultInjectionUnit.fbx` | Controlled simulated fault tests |
+| `20_L58_ProtectionCoordinationController.fbx` | Adaptive relay-setting controller |
+| `21_L58_HolographicProtectionMonitor.fbx` | Fault and protection diagnostics |
+| `22_L58_TransparentSafetyEnclosure.fbx` | Protective transparent enclosure |
+| `23_L58_Regulated5VSupply.fbx` | Regulated 5 V DC supply |
+
+## Additional supplied resources
+
+Inspect and reuse:
+
+- `Level58_Complete_ArtKit_Showcase.fbx`
+- `SparkLevel58ArtPlacementEditor.cs`
+- `Animation_Rigs.csv`
+- `Model_Manifest.json`
+- `README_Unity.txt`
+- Supplied GLB backups
+- Level 58 assembled preview
+- Level 58 individual-model contact sheet
+
+## Model integration rules
+
+Use all 24 individual FBXs in the playable level.
+
+Use the complete assembled showcase only as a placement reference.
+
+Do not instantiate the assembled model and all 24 individual models as overlapping visible geometry.
+
+Preserve their common reference coordinate system.
+
+The asset manifest specifies:
+
+- X: workstation width
+- Y: vertical
+- Z: toward front control electronics
+- 1 art unit: 1 Unity meter when import scale is 1
+
+Verify FBX importer scale and actual mesh bounds.
+
+Place the models beneath:
+
+`L58_HD_VISUAL_ART`
+
+Do not modify individual model positions without checking the original assembled layout.
+
+## Exact animation pivots
+
+Preserve the supplied animation hierarchy:
+
+- Main breaker: `ANIM_BREAKER_HANDLE`
+- Feeder A breaker: `ANIM_BREAKER_HANDLE`
+- Feeder B breaker: `ANIM_BREAKER_HANDLE`
+- Feeder C breaker: `ANIM_BREAKER_HANDLE`
+- Motor load: `ANIM_MOTOR_SPIN`
+- Holographic monitor: `ANIM_MONITOR_TILT`
+- Safety enclosure: `ANIM_SAFETY_DOOR`
+
+Each breaker model has its own independent handle pivot.
+
+Use the pivot's owning model identity to distinguish the breakers.
+
+## Critical visual requirement
+
+The actual breaker state must control the corresponding breaker animation.
+
+When Q2 trips, only Q2 should visually open unless other breakers legitimately trip according to the electrical protection model.
+
+Do not turn all feeder indicators red simply because any fault occurs.
+
+Do not animate simulated contact opening before the authoritative breaker state reaches the appropriate mechanical position.
+
+---
+
+# 4. ELECTRICAL WIRING — W01 TO W38
+
+The approved Level 58 design specifies:
+
+**38 player-created wires and 60 unique terminal anchors.**
+
+The existing 3D art collection does not provide a verified exact electrical wiring CSV or real `SparkTerminal` registrations.
+
+Therefore, create and validate the complete wiring manifest during implementation.
+
+Do not falsely claim that the 38 endpoint pairs already exist.
+
+## Required electrical connection groups
+
+### Group A — Supply and control power
+
+- Regulated 5 V positive
+- Electrical return
+- Grid source control power
+- Protection coordination controller power
+- Relay control power
+- Voltage monitoring power
+
+### Group B — Main incoming distribution
+
+- Main source phases A/B/C
+- Main breaker input
+- Main breaker output
+- Three-phase distribution bus
+
+### Group C — Feeder A
+
+- Feeder A phase distribution
+- Breaker Q1
+- Current sensing CTA
+- Relay R1
+- Smart load A
+
+### Group D — Feeder B
+
+- Feeder B phase distribution
+- Breaker Q2
+- Current sensing CTB
+- Relay R2
+- Motor load B
+
+### Group E — Feeder C
+
+- Feeder C phase distribution
+- Breaker Q3
+- Current sensing CTC
+- Relay R3
+- Essential priority load C
+
+### Group F — Protection and diagnostics
+
+- Main CT feedback
+- Feeder current feedback
+- Relay trip signals
+- Breaker status feedback
+- Bus voltage feedback
+- Fault-injection control
+- Safety interlock
+
+## Wiring implementation requirements
+
+1. Define exactly 38 expected player wires.
+2. Define exactly 60 unique socket IDs.
+3. Document every FROM terminal.
+4. Document every TO terminal.
+5. Register all component IDs.
+6. Register all real terminal IDs.
+7. Use the actual Project Spark topology.
+8. Support wire creation and removal.
+9. Support reconnection and repair.
+10. Detect incorrect phase routing.
+11. Detect incorrect relay-to-breaker routing.
+12. Detect missing current feedback.
+13. Detect invalid source and return.
+14. Prevent duplicate bindings.
+15. Keep electrical terminals player-accessible.
+16. Distinguish player-created wires from internal fixed connections.
+
+## Important architecture constraint
+
+Thirty-eight player wires do not necessarily correspond to every internal power and sensing conductor.
+
+Represent preinstalled internal module connections separately.
+
+Do not invent extra player-created wires solely to satisfy the physical model.
+
+## Special current-sensor fault
+
+Reserve **W16 as the proposed designated Feeder B current-feedback connection**, provided this assignment is compatible with the finalized wiring manifest.
+
+If the validated topology requires another number, document the change explicitly.
+
+The fault wire must connect the Feeder B current measurement to its required protection/control input.
+
+During Objective 6, the player disconnects that wire.
+
+The controller must detect invalid current feedback through actual terminal connectivity.
+
+Do not merely toggle a decorative SENSOR LOSS warning.
+
+---
+
+# 5. THREE-PHASE ELECTRICAL NETWORK
+
+Reuse the verified Level 57 three-phase network simulator when possible.
+
+The Level 58 simulation must represent:
+
+- Source voltage
+- Source frequency
+- Phase A/B/C
+- Source impedance
+- Main breaker state
+- Distribution bus
+- Three feeder breaker states
+- Feeder load impedance
+- Motor-load behavior
+- Fault impedance
+- Fault current
+- Feeder currents
+- Main incoming current
+- Network power flow
+
+## Electrical architecture
+
+The incoming three-phase source feeds breaker Q0.
+
+Q0 supplies the distribution bus.
+
+The bus supplies three feeder branches through Q1, Q2 and Q3.
+
+Each feeder has its own current sensing and protection relay.
+
+## Breaker topology
+
+When a breaker opens, its connected feeder must become electrically disconnected from the source.
+
+The network solver must recalculate downstream voltage and current.
+
+Do not simply set displayed feeder current to zero while leaving the electrical topology connected.
+
+## Fault-current modeling
+
+Use a consistent simplified electrical model.
+
+For an appropriate Thevenin-equivalent fault calculation:
+
+`FaultCurrent = SourceVoltage / TotalFaultPathImpedance`
+
+Use the correct AC phasor or RMS interpretation.
+
+Include:
+
+- Source impedance
+- Feeder impedance
+- Fault impedance
+- Breaker contact state
+- Current limiting, if modeled
+- Source capacity
+
+Do not use an infinite ideal source with zero fault impedance.
+
+Do not hardcode a fixed fault current simply because a fault test button was pressed.
+
+## Simulation safety
+
+The network is a simulated low-voltage educational system.
+
+No real mains or external electrical hardware control is required.
+
+Use numerically bounded fault models.
+
+---
+
+# 6. CURRENT TRANSFORMER MODEL
+
+Implement four current-transformer groups:
+
+- CT0: Main incoming
+- CTA: Feeder A
+- CTB: Feeder B
+- CTC: Feeder C
+
+## Required properties
+
+- Primary current
+- Secondary equivalent current
+- Current ratio
+- Measurement scaling
+- Measurement validity
+- Calibration offset
+- Sensor power state
+- Saturation limit
+- Sample timestamp
+- Filtered RMS current
+- Fault/disconnected state
+
+## Basic scaling
+
+For an idealized CT:
+
+`I_secondary = I_primary / CTRatio`
+
+Use actual modeled primary current.
+
+Include suitable saturation and measurement-range limits if required.
+
+## Calibration requirements
+
+1. Verify correct electrical/signal topology.
+2. Verify sensor power where applicable.
+3. Verify CT ratio.
+4. Verify correct feeder association.
+5. Verify current direction.
+6. Verify measurement range.
+7. Verify sample validity.
+8. Record calibration status.
+
+Do not calibrate a disconnected sensor.
+
+Do not interpret invalid feedback as healthy zero current.
+
+---
+
+# 7. PROTECTION RELAY SYSTEM
+
+Implement four independent protection relays:
+
+- R0: Main backup relay
+- R1: Feeder A
+- R2: Feeder B
+- R3: Feeder C
+
+## Required relay properties
+
+- Assigned protected zone
+- Measured RMS current
+- Current pickup threshold
+- Instantaneous trip threshold
+- Time multiplier setting
+- Selected protection curve
+- Pickup status
+- Trip timer
+- Trip request
+- Associated breaker
+- Breaker feedback
+- Relay healthy state
+- Sensor validity
+- Fault latch
+- Event history
+
+## Required protection functions
+
+- Overcurrent pickup
+- Inverse-time trip
+- High-set/instantaneous trip where appropriate
+- Selective feeder isolation
+- Upstream backup protection
+- Breaker-failure detection
+- Sensor-loss protection
+- Fault reset and rearming
+
+## Protection coordination
+
+Feeder relays must generally clear faults inside their protected zones before the upstream main relay.
+
+The upstream relay should act as backup when downstream protection fails.
+
+Use a documented grading margin appropriate to the modeled relay and breaker response times.
+
+Do not force all relays to trip simultaneously.
+
+---
+
+# 8. INVERSE-TIME OVERCURRENT PROTECTION
+
+Implement a simplified, configurable inverse-time relay characteristic.
+
+For an IEC standard-inverse example:
+
+`t = (0.14 * TMS) / ((I / Is)^0.02 - 1)`
+
+Where:
+
+- `t` = trip time in seconds
+- `TMS` = time multiplier setting
+- `I` = measured current
+- `Is` = pickup current
+
+Apply this relationship only when current exceeds pickup and the selected curve supports it.
+
+## Numerical requirements
+
+- Do not evaluate the inverse-time expression at or below pickup.
+- Clamp or handle extreme values safely.
+- Avoid division by zero.
+- Support reset or decay of accumulated relay operation according to the chosen model.
+- Use simulation time, not frame count.
+- Account for changing current during the fault.
+- Separate relay trip-request time from breaker mechanical opening time.
+
+## Required player controls
+
+- PICKUP CURRENT
+- TIME MULTIPLIER
+- CURVE TYPE
+- INSTANTANEOUS SETTING
+- ARM RELAY
+- RESET RELAY
+- VERIFY COORDINATION
+
+The player must understand that a lower pickup setting is not always the correct solution.
+
+The protection must avoid nuisance trips while clearing genuine faults promptly.
+
+---
+
+# 9. SELECTIVE PROTECTION COORDINATION
+
+This is the central Level 58 mechanic.
+
+The player configures R0–R3 so that faults are cleared by the appropriate downstream devices.
+
+## Required principles
+
+For a fault on Feeder A:
+
+- R1 should operate.
+- Q1 should open.
+- Q0 should remain closed if downstream protection succeeds.
+- Feeders B and C should remain powered.
+
+For a fault on Feeder B:
+
+- R2 should operate.
+- Q2 should open.
+- Q0 should remain closed if downstream protection succeeds.
+- Feeders A and C should remain powered.
+
+For a fault on Feeder C:
+
+- R3 should operate.
+- Q3 should open.
+- Healthy feeders should remain energized.
+
+## Selectivity measurement
+
+Record:
+
+- Faulted feeder
+- Relay pickup times
+- Relay trip-request times
+- Breaker open times
+- Total fault-clearance time
+- Unexpected breaker trips
+- Healthy-load interruption
+- Protection margin
+
+A selective trip passes only when the correct breaker isolates the fault and other protective devices behave according to the modeled coordination strategy.
+
+Do not award success merely because the correct trip button was clicked.
+
+---
+
+# 10. CIRCUIT BREAKER MECHANICS
+
+Implement four independent breakers:
+
+- Q0: Main incoming
+- Q1: Feeder A
+- Q2: Feeder B
+- Q3: Feeder C
+
+## Required breaker states
+
+- OPEN
+- CLOSING
+- CLOSED
+- OPENING
+- TRIPPED
+- FAILED_TO_OPEN
+- LOCKED_OUT
+
+## Required properties
+
+- Current state
+- Trip request
+- Operating delay
+- Mechanical opening progress
+- Contact continuity
+- Auxiliary status
+- Fault state
+- Reset eligibility
+- Manual-close command
+- Interlock status
+
+## Mechanical behavior
+
+When a valid trip request occurs:
+
+1. Record trip request time.
+2. Begin breaker operation.
+3. Advance the simulated mechanical delay.
+4. Open contacts.
+5. Change actual network topology.
+6. Recalculate current.
+7. Confirm current interruption.
+8. Record breaker open feedback.
+9. Update visual state.
+
+Do not change the electrical breaker state simply because the handle animation reaches an arbitrary angle.
+
+The authoritative breaker model must drive both topology and animation.
+
+## Closing conditions
+
+Prevent breaker reclosure when:
+
+- Fault remains active.
+- Protection is latched.
+- Sensor feedback is invalid.
+- Safety interlock is open.
+- Breaker is mechanically failed.
+- Source or downstream topology is unsafe.
+
+---
+
+# 11. FAULT LOCATION ANALYZER
+
+Implement a Level 58 fault-identification system.
+
+## Required inputs
+
+- Main incoming current
+- Feeder A current
+- Feeder B current
+- Feeder C current
+- Phase voltages
+- Breaker states
+- Relay pickups
+- Fault-injection reference for test validation only
+- Sensor-validity status
+
+## Fault location requirements
+
+Identify the likely faulted feeder from measured electrical behavior.
+
+Do not simply copy the fault-injection unit's selected feeder into the player-facing result.
+
+The analyzer should use actual current and voltage evidence.
+
+## Diagnostic outputs
+
+- Suspected faulted feeder
+- Fault classification
+- Measured current magnitude
+- Affected phases
+- Confidence/validity status
+- Protection device expected to trip
+- Actual device tripped
+- Fault-clearance result
+
+If measurements are insufficient, report an indeterminate location instead of inventing certainty.
+
+---
+
+# 12. SCENARIO A — FEEDER A OVERLOAD
+
+The player increases the Feeder A load beyond its allowable continuous rating.
+
+## Required sequence
+
+1. Establish healthy three-feeder operation.
+2. Verify protection calibration.
+3. Apply controlled load increase to Feeder A.
+4. Calculate increased current through the network.
+5. Detect R1 pickup.
+6. Start inverse-time accumulation.
+7. Continue monitoring actual current.
+8. Generate a trip request after valid timing.
+9. Operate Q1.
+10. Disconnect Feeder A.
+11. Verify fault/overload current disappears.
+12. Verify feeders B and C remain energized.
+13. Record trip timing.
+
+## Pass conditions
+
+- Genuine current increase.
+- R1 pickup occurs.
+- R1 operates according to configured timing.
+- Q1 opens.
+- Q0 remains closed.
+- Healthy feeders remain powered.
+- No unresolved critical fault.
+
+Progress toward Objective 3 must be based on measured operation.
+
+---
+
+# 13. SCENARIO B — FEEDER B SHORT CIRCUIT
+
+The player injects a simulated low-impedance fault into Feeder B.
+
+## Required sequence
+
+1. Verify safe starting conditions.
+2. Confirm Q0–Q3 closed.
+3. Confirm sensors and relays valid.
+4. Arm the simulated short-circuit test.
+5. Apply bounded Feeder B fault impedance.
+6. Recalculate network currents.
+7. Detect Feeder B current rise.
+8. Detect R2 pickup.
+9. Trigger the configured fast/inverse-time protection.
+10. Command Q2 to open.
+11. Apply breaker operating delay.
+12. Disconnect the faulted branch.
+13. Verify current interruption.
+14. Confirm Q0, Q1 and Q3 remain closed.
+15. Confirm healthy loads remain energized.
+
+## Pass conditions
+
+- Fault current follows modeled impedance.
+- R2 detects the fault.
+- Q2 isolates Feeder B.
+- Main protection does not trip unnecessarily.
+- Healthy feeder continuity is preserved.
+- Fault-clearing time is recorded.
+- No unresolved unsafe condition.
+
+Do not use a hardcoded red warning lamp as proof that the fault was cleared.
+
+---
+
+# 14. SCENARIO C — BREAKER FAILURE BACKUP
+
+This is an advanced industrial protection challenge.
+
+Simulate breaker Q2 failing to open after receiving a valid trip command.
+
+## Required sequence
+
+1. Restore a healthy network.
+2. Arm the breaker-failure test.
+3. Configure Q2 to simulate a mechanical failure.
+4. Apply a controlled simulated Feeder B fault.
+5. R2 detects the fault.
+6. R2 issues a trip request.
+7. Q2 fails to open.
+8. Feeder B fault current persists.
+9. Breaker-failure logic detects the mismatch.
+10. Upstream backup protection operates.
+11. Q0 receives a valid trip request.
+12. Q0 opens after the configured backup interval.
+13. Source current is interrupted.
+14. Event history records why upstream isolation was required.
+
+## Important
+
+The main breaker opening in this scenario is expected.
+
+Do not fail the test solely because healthy feeders lose power.
+
+The educational goal is to demonstrate that **backup protection must clear a persistent fault even when doing so requires a wider interruption**.
+
+## Pass conditions
+
+- Q2 trip request issued.
+- Q2 remains electrically closed due to the simulated failure.
+- Fault current persists.
+- Breaker failure detected.
+- Backup coordination delay respected.
+- Q0 opens.
+- Fault current clears.
+- Event history confirms correct cause.
+
+---
+
+# 15. SCENARIO D — CURRENT SENSOR SIGNAL LOSS
+
+The designated final fault is a disconnected Feeder B current-feedback connection.
+
+Use the validated W16 assignment if compatible with the finalized wiring topology.
+
+## Required detection
+
+The controller must identify:
+
+- Disconnected current-feedback terminal
+- Invalid CTB measurement
+- Missing or stale signal
+- Invalid protection readiness
+
+## Required response
+
+1. Detect real wiring disconnection.
+2. Mark CTB feedback invalid.
+3. Record specific sensor-loss fault.
+4. Inhibit unsafe protection testing.
+5. Transition the affected feeder to a defined safe state.
+6. Trip or isolate Q2 where required by the modeled protection design.
+7. Latch the fault.
+8. Reject unsafe restart commands.
+9. Require player repair.
+10. Require explicit reset.
+
+## Recovery
+
+The player must:
+
+1. Reconnect the missing sensor wire.
+2. Verify actual topology.
+3. Reacquire CTB measurements.
+4. Restore calibration.
+5. Explicitly reset the fault.
+6. Rearm protection.
+7. Restore valid operating conditions.
+8. Perform another selective fault-isolation test.
+9. Verify main and healthy feeders remain appropriately protected.
+10. Complete final certification.
+
+Reconnecting the wire alone must not instantly complete Objective 6.
+
+---
+
+# 16. PROTECTION SAFETY AND FAULT HANDLING
+
+Implement protection for:
+
+- Safety enclosure open
+- Incorrect 5 V supply
+- Missing electrical return
+- Incorrect phase wiring
+- Phase-to-phase short
+- Invalid source impedance
+- Excessive feeder current
+- Main incoming overcurrent
+- Incorrect relay pickup
+- Invalid relay settings
+- Current-transformer disconnected
+- Current-transformer saturation
+- Invalid current measurement
+- Relay-trip signal disconnected
+- Breaker failed to open
+- Breaker feedback mismatch
+- Breaker failed to close
+- Fault remaining after trip
+- Main protection failing
+- Excessive motor-load current
+- Loss of priority feeder
+- Unsafe breaker reclosure
+- Invalid simulation values
+- Unexpected topology changes
+
+## Critical safety response
+
+On a critical fault:
+
+1. Identify the exact fault.
+2. Record the current electrical state.
+3. Reject unsafe commands.
+4. Apply the appropriate protection action.
+5. Update breaker topology.
+6. Monitor current interruption.
+7. Record actual clearing time.
+8. Latch the fault.
+9. Prevent automatic restart.
+10. Require repair.
+11. Require explicit reset.
+12. Recalibrate when required.
+13. Require a verified protection test before certification.
+
+Do not continue to trust invalid sensor readings.
+
+---
+
+# 17. SIX AUTHORITATIVE LEVEL OBJECTIVES
+
+Integrate all six objectives with the actual Project Spark evaluator.
+
+## OBJECTIVE 1 — BUILD THE PROTECTION NETWORK
+
+Player connects all 38 required wires.
+
+Verify:
+
+1. All 60 unique terminals registered.
+2. Correct 5 V supply.
+3. Valid return.
+4. Three-phase source connected.
+5. Main breaker Q0 connected.
+6. Distribution bus valid.
+7. Feeder breakers Q1–Q3 connected.
+8. Current transformers CT0/CTA/CTB/CTC connected.
+9. Protection relays R0–R3 connected.
+10. Voltage sensing valid.
+11. Loads connected correctly.
+12. Fault-injection controller connected.
+13. Protection coordination controller connected.
+14. No source short circuit.
+15. No unsafe wiring state.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — CALIBRATE AND COORDINATE PROTECTION
+
+Require:
+
+1. Valid network power.
+2. CT0 calibrated.
+3. CTA calibrated.
+4. CTB calibrated.
+5. CTC calibrated.
+6. Correct relay-to-feeder associations.
+7. Pickup current settings valid.
+8. Time multiplier settings valid.
+9. Downstream relays coordinated with R0.
+10. Valid protection grading margin.
+11. Healthy load currents measured.
+12. No nuisance trip.
+13. Protection armed successfully.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — ISOLATE FEEDER A OVERLOAD
+
+Require:
+
+1. Stable three-feeder starting state.
+2. Actual Feeder A load increase.
+3. Measured overload current.
+4. R1 pickup.
+5. Valid inverse-time delay.
+6. R1 trip command.
+7. Q1 opens.
+8. Feeder A current interrupted.
+9. Q0 remains closed.
+10. Feeders B and C stay energized.
+11. Actual event history recorded.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — CLEAR FEEDER B SHORT SELECTIVELY
+
+Require:
+
+1. Valid protection reset.
+2. Correct baseline operation.
+3. Simulated Feeder B short introduced.
+4. Actual short-circuit current calculated.
+5. R2 detects the fault.
+6. Correct trip timing.
+7. Q2 opens.
+8. Fault current clears.
+9. Q0 remains closed.
+10. Q1 and Q3 remain closed.
+11. Healthy feeder loads continue operating.
+12. Selective isolation verified.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — DEMONSTRATE BACKUP PROTECTION
+
+Require:
+
+1. Healthy initial operating state.
+2. Q2 breaker-failure test armed.
+3. Feeder B fault introduced.
+4. R2 issues a valid trip request.
+5. Q2 fails to open.
+6. Fault current continues.
+7. Breaker-failure protection detects the condition.
+8. Backup timer operates.
+9. Q0 receives backup trip command.
+10. Q0 opens.
+11. Fault current clears.
+12. Backup timing and reason recorded.
+13. Machine reaches safe state.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — SENSOR FAULT, REPAIR AND FINAL CERTIFICATION
+
+Player disconnects the designated Feeder B current-feedback wire.
+
+Require:
+
+1. Real terminal connection becomes invalid.
+2. CTB measurement becomes invalid.
+3. Protection controller detects missing feedback.
+4. Fault latches.
+5. Unsafe operation is inhibited.
+6. Appropriate feeder protection activates.
+7. Player reconnects the missing wire.
+8. Actual topology becomes valid.
+9. CTB measurement is reacquired.
+10. Sensor calibration is restored.
+11. Player explicitly resets the latched fault.
+12. All required relays are rearmed.
+13. Network is restored safely.
+14. Player performs a fresh Feeder B fault test.
+15. Correct selective trip occurs.
+16. Q0 remains closed when downstream protection succeeds.
+17. Healthy feeders remain energized.
+18. No unresolved critical fault remains.
+19. Final certification succeeds.
+
+Progress becomes **6/6**.
+
+## Critical authoritative evaluation
+
+Do not create a local stage counter and treat it as the sole completion result.
+
+Inspect:
+
+- `SparkLevelEvaluator`
+- `SparkLevelDefinition`
+- `LevelGamePlayManager`
+
+Use a compatible historical objective-recording method.
+
+Objectives 1–5 must remain completed during the deliberate final fault scenario.
+
+However, Objective 6 must remain incomplete until the player repairs the sensor and successfully completes the final selective-protection certification.
+
+Do not fabricate current measurements, relay pickups, breaker states or success flags to satisfy the evaluator.
+
+**Final authoritative result must be 6/6.**
+
+---
+
+# 18. RECOMMENDED UNITY C# SYSTEMS
+
+Inspect the actual project before creating these classes.
+
+Suggested responsibilities:
+
+- `SparkLevel58Coordinator.cs`
+- `SparkLevel58ThreePhaseProtectionNetwork.cs`
+- `SparkLevel58CurrentTransformer.cs`
+- `SparkLevel58VoltageMonitor.cs`
+- `SparkLevel58ProtectionRelay.cs`
+- `SparkLevel58InverseTimeCurve.cs`
+- `SparkLevel58CircuitBreaker.cs`
+- `SparkLevel58FaultInjection.cs`
+- `SparkLevel58FaultLocator.cs`
+- `SparkLevel58ProtectionCoordinator.cs`
+- `SparkLevel58BreakerFailureProtection.cs`
+- `SparkLevel58MotorLoadIntegration.cs`
+- `SparkLevel58SafetyController.cs`
+- `SparkLevel58ObjectiveTracker.cs`
+- `SparkLevel58Dashboard.cs`
+- `SparkLevel58Interaction.cs`
+- `SparkLevel58VisualRig.cs`
+
+These names are suggestions, not verified existing project APIs.
+
+Reuse compatible Level 57 three-phase electrical functionality.
+
+Do not create another independent AC solver if the existing simulator can support the required model.
+
+## Runtime simulation sequence
+
+1. Validate supply and electrical topology.
+2. Read player commands.
+3. Read breaker and relay states.
+4. Apply permitted fault-injection changes.
+5. Solve the three-phase network.
+6. Calculate main and feeder currents.
+7. Update current-transformer measurements.
+8. Validate sensor connectivity.
+9. Calculate relay pickups.
+10. Advance inverse-time protection.
+11. Evaluate instantaneous trip conditions.
+12. Issue relay trip requests.
+13. Advance breaker mechanical operation.
+14. Update breaker topology.
+15. Evaluate breaker-failure protection.
+16. Update fault-location results.
+17. Record event histories.
+18. Evaluate safety conditions.
+19. Evaluate authoritative objectives.
+20. Update the UI and visual rig.
+
+Use a consistent simulation timestep.
+
+If breaker state changes require another electrical solution within the same simulation interval, handle that through an explicit bounded network-update procedure.
+
+Do not recursively call the electrical solver from its own callbacks.
+
+---
+
+# 19. AAA VISUAL IMPLEMENTATION
+
+Create a Level 58 visual-only adapter using the supplied animation pivots.
+
+## Required visual behaviors
+
+- Main breaker Q0 handle
+- Feeder A breaker Q1 handle
+- Feeder B breaker Q2 handle
+- Feeder C breaker Q3 handle
+- Motor load B rotation
+- Relay pickup indicators
+- Relay trip indicators
+- Fault injection status
+- Protection coordination controls
+- Holographic protection monitor
+- Safety enclosure door
+
+## Fault visualization
+
+During healthy operation:
+
+- Healthy feeder indicators green.
+- Normal distribution bus appearance.
+- Relay status normal.
+- Breakers visually closed.
+
+During Feeder A overload:
+
+- Feeder A warning activates.
+- R1 pickup displayed.
+- Q1 opens after modeled delay.
+- Feeders B/C remain healthy.
+
+During Feeder B short:
+
+- Feeder B fault indicator activates.
+- R2 trips.
+- Q2 opens.
+- Main and healthy feeder indicators remain valid.
+
+During Q2 breaker failure:
+
+- Q2 remains closed despite trip request.
+- Backup timer activates.
+- Q0 opens when backup protection operates.
+- All de-energized feeder visuals reflect the actual network state.
+
+## Critical rules
+
+Do not animate breakers independently of authoritative state.
+
+Do not fake current interruption.
+
+Do not shake the camera or entire workstation to imitate a fault.
+
+Do not create real physical electrical arcs.
+
+Controlled VFX are acceptable only as visual representations of simulated events.
+
+## Visual quality
+
+Preserve the approved Level 58 aesthetic:
+
+- Brushed titanium workstation
+- Dark graphite switchgear modules
+- Copper A/B/C busbars
+- Cyan normal-operation lighting
+- Amber relay pickup indicators
+- Green healthy-feeder indicators
+- Red fault/trip indicators
+- Transparent safety enclosure
+- Premium industrial labels
+- Holographic time-current curves
+- Realistic circuit breaker handles
+
+Keep all 60 player terminal anchors accessible.
+
+---
+
+# 20. LIVE PROTECTION DASHBOARD
+
+Use:
+
+`20_L58_ProtectionCoordinationController`
+
+`21_L58_HolographicProtectionMonitor`
+
+Create live TextMeshPro diagnostic surfaces.
+
+## Required readings
+
+- MAIN POWER
+- GRID FREQUENCY
+- PHASE A VOLTAGE
+- PHASE B VOLTAGE
+- PHASE C VOLTAGE
+- MAIN CURRENT
+- FEEDER A CURRENT
+- FEEDER B CURRENT
+- FEEDER C CURRENT
+- CT0 VALIDITY
+- CTA VALIDITY
+- CTB VALIDITY
+- CTC VALIDITY
+- R0 PICKUP
+- R1 PICKUP
+- R2 PICKUP
+- R3 PICKUP
+- RELAY TIME MULTIPLIERS
+- RELAY PICKUP SETTINGS
+- EXPECTED TRIP TIMES
+- ACTUAL TRIP TIMES
+- Q0 BREAKER STATE
+- Q1 BREAKER STATE
+- Q2 BREAKER STATE
+- Q3 BREAKER STATE
+- FAULT LOCATION
+- FAULT TYPE
+- FAULT CURRENT
+- FAULT CLEARANCE TIME
+- SELECTIVITY STATUS
+- ESSENTIAL LOAD STATUS
+- BREAKER FAILURE STATUS
+- SENSOR STATUS
+- PROTECTION STATUS
+- OBJECTIVES X/6
+
+## Player controls
+
+- MAIN POWER
+- ARM PROTECTION
+- CALIBRATE CT
+- SET PICKUP
+- SET TMS
+- SELECT CURVE
+- COORDINATION CHECK
+- OVERLOAD TEST
+- SHORT CIRCUIT TEST
+- BREAKER FAILURE TEST
+- SENSOR LOSS TEST
+- CLOSE Q0
+- CLOSE Q1
+- CLOSE Q2
+- CLOSE Q3
+- TRIP Q0
+- TRIP Q1
+- TRIP Q2
+- TRIP Q3
+- RESET RELAYS
+- REARM PROTECTION
+- FINAL CERTIFY
+
+All controls must have meaningful gameplay effects.
+
+Do not create decorative controls that only change displayed labels.
+
+---
+
+# 21. UNITY EDITOR LEVEL CREATOR
+
+Create:
+
+`Tools/Project Spark/Levels/Create Level 58`
+
+The Unity Editor creator must safely generate or update:
+
+- `Level_58.asset`
+- `Level_58_Layout.prefab`
+- Level-specific protection configuration assets
+- Electrical binding manifests
+- Relay settings
+- Objective definitions
+- Validation report
+
+## Required Editor operations
+
+1. Inspect actual project editor infrastructure.
+2. Locate all 24 Level 58 FBX models.
+3. Validate model paths.
+4. Validate imported scale.
+5. Create/update Level 58 definition.
+6. Set Level ID to `level_58`.
+7. Configure display name and description.
+8. Create six authoritative objectives.
+9. Create/update Level 58 layout.
+10. Instantiate all 24 individual FBXs.
+11. Preserve common model placement.
+12. Configure grid source.
+13. Configure main breaker Q0.
+14. Configure three-phase bus.
+15. Configure feeder breakers Q1–Q3.
+16. Configure main CT0.
+17. Configure feeder CTs CTA/CTB/CTC.
+18. Configure main relay R0.
+19. Configure feeder relays R1–R3.
+20. Configure voltage monitoring.
+21. Configure smart load A.
+22. Configure motor load B.
+23. Configure priority load C.
+24. Configure fault injection module.
+25. Configure protection coordination controller.
+26. Configure holographic monitor.
+27. Configure safety enclosure.
+28. Configure regulated supply.
+29. Register exactly 60 real terminal anchors.
+30. Configure exactly 38 player-wire declarations.
+31. Register fixed and runtime component IDs.
+32. Register fixed and runtime terminal IDs.
+33. Configure internal electrical connections.
+34. Configure inverse-time relay curves.
+35. Configure relay pickup settings.
+36. Configure protection grading.
+37. Configure breaker mechanical delays.
+38. Configure fault scenarios.
+39. Configure breaker-failure protection.
+40. Configure current-sensor loss detection.
+41. Configure safety interlocks.
+42. Assign animation pivots.
+43. Create live TextMeshPro display surfaces.
+44. Configure gameplay buttons.
+45. Bind six authoritative objectives.
+46. Detect missing or duplicate bindings.
+47. Detect conflicting simulation ownership.
+48. Generate detailed diagnostics.
+49. Save definition and prefab.
+
+## Editor reliability
+
+Reuse compatible functionality from:
+
+`SparkLevel58ArtPlacementEditor.cs`
+
+The supplied art helper places the Level 58 models but does not automatically create all gameplay functionality.
+
+Extend it safely or create a separate complete level creator.
+
+Use actual `AssetDatabase` paths.
+
+Do not invent asset GUIDs.
+
+Use `PrefabUtility`, `SerializedObject`, Undo and proper asset-saving operations.
+
+Make the creator idempotent.
+
+Prevent duplicate models, terminals, electrical components and relay controllers.
+
+Do not silently destroy unrelated user modifications.
+
+---
+
+# 22. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 38 WIRES → VERIFY 60 TERMINALS → POWER THREE-PHASE NETWORK → CALIBRATE FOUR CTS → CONFIGURE RELAY PICKUP → SET TIME MULTIPLIERS → VERIFY SELECTIVE COORDINATION → ENERGIZE FEEDERS → OVERLOAD FEEDER A → R1 PICKUP → Q1 TRIP → VERIFY B/C HEALTHY → RESTORE FEEDER A → SHORT FEEDER B → R2 TRIP → Q2 ISOLATES FAULT → VERIFY A/C HEALTHY → RESET SYSTEM → SIMULATE Q2 BREAKER FAILURE → R2 TRIP REQUEST → Q2 FAILS → BACKUP TIMER → Q0 TRIP → VERIFY FAULT CLEARED → RESTORE SYSTEM → DISCONNECT CTB FEEDBACK → DETECT SENSOR LOSS → SAFE INHIBIT → RECONNECT WIRE → RESET → RECALIBRATE → FINAL SELECTIVE FAULT TEST → 6/6 COMPLETE**
+
+## Suggested player-facing messages
+
+- `BUILD THE PROTECTION NETWORK`
+- `CONNECT ALL 38 WIRES`
+- `CALIBRATE CURRENT TRANSFORMERS`
+- `SET RELAY PICKUP CURRENTS`
+- `SET PROTECTION TIME MULTIPLIERS`
+- `VERIFY SELECTIVE COORDINATION`
+- `PROTECTION SYSTEM ARMED`
+- `ENERGIZE THREE FEEDERS`
+- `FEEDER A OVERLOAD DETECTED`
+- `R1 PICKUP ACTIVE`
+- `Q1 TRIPPED`
+- `HEALTHY FEEDERS REMAIN POWERED`
+- `RESTORE FEEDER A`
+- `BEGIN FEEDER B SHORT-CIRCUIT TEST`
+- `FAULT CURRENT DETECTED`
+- `FEEDER B FAULT LOCATED`
+- `Q2 TRIPPED`
+- `SELECTIVE FAULT ISOLATION VERIFIED`
+- `BEGIN BREAKER FAILURE TEST`
+- `Q2 FAILED TO OPEN`
+- `BACKUP PROTECTION TIMING`
+- `MAIN BREAKER Q0 TRIPPED`
+- `FAULT CURRENT CLEARED`
+- `CURRENT SENSOR B SIGNAL LOST`
+- `PROTECTION FEEDBACK INVALID`
+- `RESTORE SENSOR WIRING`
+- `RESET PROTECTION FAULT`
+- `RECALIBRATE CTB`
+- `FINAL SELECTIVITY CERTIFICATION`
+- `LEVEL 58 COMPLETE`
+
+---
+
+# 23. TESTING AND DIAGNOSTICS
+
+Implement exact diagnostics for:
+
+- Incorrect W01–W38 wiring
+- Missing terminal IDs
+- Duplicate terminal IDs
+- Incorrect component registration
+- Invalid 5 V source
+- Missing electrical return
+- Incorrect A/B/C phase routing
+- Main breaker disconnected
+- Feeder breaker disconnected
+- Invalid current-transformer ratio
+- Current-transformer saturation
+- Missing CT feedback
+- Invalid CT calibration
+- Incorrect relay-to-breaker association
+- Incorrect pickup settings
+- Invalid time multiplier
+- Inverse-time calculation error
+- Relay not picking up
+- Relay tripping too early
+- Relay failing to trip
+- Breaker mechanical delay invalid
+- Breaker failing to open
+- Breaker opening without a valid command
+- Fault current not clearing
+- Upstream breaker tripping prematurely
+- Healthy feeders losing unnecessary power
+- Fault locator identifying the wrong feeder
+- Short-circuit current not responding to impedance
+- Breaker-failure backup not operating
+- Backup delay not respected
+- Sensor loss not detected
+- Fault reset before repair
+- Historical objective progress disappearing
+- Manager stuck at 0/6 or 5/6
+- Scene restart/reload problems
+- Earlier-level regressions
+
+## Required test scenarios
+
+1. Correct 38-wire topology.
+2. All 60 terminals registered.
+3. Three-phase source valid.
+4. Main breaker Q0 operates.
+5. Q1/Q2/Q3 operate independently.
+6. All four CT groups return valid measurements.
+7. CT ratio calibration succeeds.
+8. Relay pickup calibration succeeds.
+9. Time-current curves behave correctly.
+10. Healthy operating currents do not cause nuisance trips.
+11. Feeder A overload produces actual current increase.
+12. R1 detects overload.
+13. Q1 opens after valid delay.
+14. Feeders B/C remain powered.
+15. Feeder B simulated short produces modeled fault current.
+16. R2 detects fault.
+17. Q2 clears fault.
+18. Q0 remains closed.
+19. Healthy loads remain powered.
+20. Q2 breaker failure can be simulated.
+21. Q2 remains electrically closed after failed trip.
+22. Fault current persists until backup clearing.
+23. Upstream backup detects breaker failure.
+24. Q0 opens after configured backup delay.
+25. Fault current clears.
+26. Disconnect designated CTB feedback.
+27. Measurement becomes invalid.
+28. Protection fault latches.
+29. Unsafe testing is inhibited.
+30. Reconnect sensor wire.
+31. Explicit reset succeeds.
+32. Calibration is restored.
+33. Final selective-protection test succeeds.
+34. Actual manager reaches 6/6.
+35. Level progression succeeds.
+36. Levels 1–57 remain functional.
+
+Only report tests as passed when actually executed.
+
+---
+
+# 24. REQUIRED DOWNLOADABLE DELIVERABLES
+
+Create a complete Level 58 Unity implementation ZIP containing:
+
+- Full Level 58 runtime C# source files
+- Three-phase protection network integration
+- Four current-transformer models
+- Voltage monitoring
+- Four protective-relay systems
+- Inverse-time relay calculations
+- Four circuit breaker controllers
+- Breaker mechanical-delay models
+- Selective protection coordinator
+- Fault injection system
+- Fault location analyzer
+- Feeder A overload scenario
+- Feeder B short-circuit scenario
+- Breaker-failure backup scenario
+- CTB feedback-loss scenario
+- Safety and fault recovery
+- Six-objective evaluator integration
+- Unity Editor Level 58 creator
+- Level definition creator or asset
+- Level layout prefab creator
+- Exact W01–W38 wiring manifest
+- 60-terminal binding manifest
+- Component binding manifest
+- Animation pivot mapping
+- Protection curve configuration
+- Relay-setting configuration
+- Breaker operating-time configuration
+- Inspector setup instructions
+- Player gameplay walkthrough
+- Objective verification checklist
+- Diagnostics and troubleshooting guide
+
+Reuse:
+
+`ProjectSpark_Level58_HD_AAA_Models.zip`
+
+Do not regenerate the approved 24-model collection unless a specific compatibility problem requires it.
+
+Only provide links to files actually created and verified.
+
+Do not claim successful Unity compilation, Play Mode validation or actual 6/6 completion unless those tests were performed.
+
+---
+
+# 25. FINAL EXECUTION REQUIREMENTS
+
+**IMPLEMENT LEVEL 58 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect my actual Project Spark Unity codebase and Level 58 model package.
+
+Then:
+
+1. Reuse compatible Level 57 three-phase network functionality.
+2. Integrate all 24 individual FBX models.
+3. Finalize exactly 38 player wires.
+4. Configure exactly 60 real terminal anchors.
+5. Implement real breaker-driven circuit topology.
+6. Implement four current-transformer systems.
+7. Implement genuine current measurement and calibration.
+8. Implement four configurable protective relays.
+9. Implement inverse-time overcurrent protection.
+10. Implement selective feeder coordination.
+11. Implement actual breaker operating delays.
+12. Implement controlled Feeder A overload.
+13. Implement Feeder B short-circuit modeling.
+14. Implement fault location analysis.
+15. Implement selective Q1/Q2/Q3 isolation.
+16. Implement Q2 breaker-failure detection.
+17. Implement upstream Q0 backup protection.
+18. Implement Feeder B current-sensor loss detection.
+19. Implement protected operation, repair and reset.
+20. Integrate all six authoritative objectives.
+21. Create the Unity Editor Level 58 creator.
+22. Connect all breaker animations to real state.
+23. Implement live diagnostics and event history.
+24. Provide comprehensive troubleshooting.
+25. Execute all feasible tests.
+26. Package and verify actual deliverables.
+
+Do not ask for approval of the already-approved Level 58 concept.
+
+Do not fabricate fault currents, relay trip times, breaker states, fault locations, sensor measurements or objective completion.
+
+If an existing Project Spark API cannot be verified, implement safely independent functionality and identify the exact missing integration dependency.
+
+---
+
+# 26. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect all 38 required wires.
+2. Verify 60 unique electrical terminals.
+3. Energize a valid three-phase distribution system.
+4. Calibrate four current-transformer groups.
+5. Configure relay pickup and inverse-time settings.
+6. Establish selective relay coordination.
+7. Simulate an overload on Feeder A.
+8. Observe R1 pickup and valid Q1 trip.
+9. Keep Feeders B and C operating.
+10. Simulate a Feeder B short circuit.
+11. Detect real fault current.
+12. Correctly identify Feeder B.
+13. Isolate Feeder B using Q2.
+14. Keep healthy feeders energized.
+15. Simulate failure of Q2 to open.
+16. Observe correct upstream backup protection through Q0.
+17. Restore safe electrical operation.
+18. Disconnect the designated current-feedback wire.
+19. Observe genuine sensor-loss protection.
+20. Restore wiring and explicitly reset the fault.
+21. Recalibrate and rearm the protection system.
+22. Complete a final selective fault-isolation test.
+23. Finish all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 58.**
+
+The player must learn genuine overcurrent protection, inverse-time relay operation, selective coordination, short-circuit detection, breaker failure backup, and industrial fault isolation through observable electrical simulation—not predetermined trip animations, fake measurements or artificial completion flags.
+
+**FINAL GOAL: A COMPLETE, POLISHED, AAA-QUALITY, UNITY-READY AND ACTUALLY PLAYABLE LEVEL 58 — ISOLATE THE FAULT.**

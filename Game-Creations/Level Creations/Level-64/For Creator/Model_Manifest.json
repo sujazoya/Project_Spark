@@ -1,0 +1,424 @@
+{
+  "level_id": "level_64",
+  "display_name": "Hold the Synchronism",
+  "subtitle": "Transient rotor-angle stability and critical fault clearing",
+  "asset_kind": "procedural modular art, AAA-inspired; not authored PBR texture polished",
+  "individual_models": 36,
+  "planned_player_wires": 62,
+  "planned_unique_terminals": 96,
+  "functional_terminals_included": false,
+  "transient_stability_physics_included": false,
+  "unity_play_mode_tested": false,
+  "coordinate_system": "X workstation width; Y vertical; Z front electronics; 1 unit=1 meter",
+  "models": [
+    {
+      "index": 0,
+      "name": "L64_IndustrialTransientStabilityBase",
+      "file": "00_L64_IndustrialTransientStabilityBase.fbx",
+      "glb": "00_L64_IndustrialTransientStabilityBase.glb",
+      "triangle_count": 7719,
+      "mesh_parts": 181,
+      "animation_pivots": {}
+    },
+    {
+      "index": 1,
+      "name": "L64_SynchronousGeneratorA",
+      "file": "01_L64_SynchronousGeneratorA.fbx",
+      "glb": "01_L64_SynchronousGeneratorA.glb",
+      "triangle_count": 4261,
+      "mesh_parts": 52,
+      "animation_pivots": {
+        "ANIM_GENERATOR_A": [
+          -5.2,
+          1.49,
+          -2.22
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "name": "L64_SynchronousGeneratorB",
+      "file": "02_L64_SynchronousGeneratorB.fbx",
+      "glb": "02_L64_SynchronousGeneratorB.glb",
+      "triangle_count": 4298,
+      "mesh_parts": 52,
+      "animation_pivots": {
+        "ANIM_GENERATOR_B": [
+          5.2,
+          1.49,
+          -2.22
+        ]
+      }
+    },
+    {
+      "index": 3,
+      "name": "L64_PrimeMoverA",
+      "file": "03_L64_PrimeMoverA.fbx",
+      "glb": "03_L64_PrimeMoverA.glb",
+      "triangle_count": 3428,
+      "mesh_parts": 47,
+      "animation_pivots": {
+        "ANIM_PRIME_MOVER_A": [
+          -3.3,
+          1.38,
+          -2.28
+        ]
+      }
+    },
+    {
+      "index": 4,
+      "name": "L64_PrimeMoverB",
+      "file": "04_L64_PrimeMoverB.fbx",
+      "glb": "04_L64_PrimeMoverB.glb",
+      "triangle_count": 3428,
+      "mesh_parts": 47,
+      "animation_pivots": {
+        "ANIM_PRIME_MOVER_B": [
+          3.3,
+          1.38,
+          -2.28
+        ]
+      }
+    },
+    {
+      "index": 5,
+      "name": "L64_GeneratorBreakerA",
+      "file": "05_L64_GeneratorBreakerA.fbx",
+      "glb": "05_L64_GeneratorBreakerA.glb",
+      "triangle_count": 1331,
+      "mesh_parts": 39,
+      "animation_pivots": {
+        "ANIM_BREAKER_HANDLE": [
+          -6.32,
+          1.11,
+          -0.20999999999999996
+        ]
+      }
+    },
+    {
+      "index": 6,
+      "name": "L64_GeneratorBreakerB",
+      "file": "06_L64_GeneratorBreakerB.fbx",
+      "glb": "06_L64_GeneratorBreakerB.glb",
+      "triangle_count": 1368,
+      "mesh_parts": 39,
+      "animation_pivots": {
+        "ANIM_BREAKER_HANDLE": [
+          6.32,
+          1.11,
+          -0.20999999999999996
+        ]
+      }
+    },
+    {
+      "index": 7,
+      "name": "L64_ThreePhaseBusA",
+      "file": "07_L64_ThreePhaseBusA.fbx",
+      "glb": "07_L64_ThreePhaseBusA.glb",
+      "triangle_count": 972,
+      "mesh_parts": 41,
+      "animation_pivots": {}
+    },
+    {
+      "index": 8,
+      "name": "L64_ThreePhaseBusB",
+      "file": "08_L64_ThreePhaseBusB.fbx",
+      "glb": "08_L64_ThreePhaseBusB.glb",
+      "triangle_count": 972,
+      "mesh_parts": 41,
+      "animation_pivots": {}
+    },
+    {
+      "index": 9,
+      "name": "L64_TransmissionFeederA",
+      "file": "09_L64_TransmissionFeederA.fbx",
+      "glb": "09_L64_TransmissionFeederA.glb",
+      "triangle_count": 899,
+      "mesh_parts": 52,
+      "animation_pivots": {}
+    },
+    {
+      "index": 10,
+      "name": "L64_TransmissionFeederB",
+      "file": "10_L64_TransmissionFeederB.fbx",
+      "glb": "10_L64_TransmissionFeederB.glb",
+      "triangle_count": 866,
+      "mesh_parts": 52,
+      "animation_pivots": {}
+    },
+    {
+      "index": 11,
+      "name": "L64_FeederBreakerA_In",
+      "file": "11_L64_FeederBreakerA_In.fbx",
+      "glb": "11_L64_FeederBreakerA_In.glb",
+      "triangle_count": 1256,
+      "mesh_parts": 39,
+      "animation_pivots": {
+        "ANIM_BREAKER_HANDLE": [
+          -3.58,
+          1.16,
+          0.9900000000000001
+        ]
+      }
+    },
+    {
+      "index": 12,
+      "name": "L64_FeederBreakerA_Out",
+      "file": "12_L64_FeederBreakerA_Out.fbx",
+      "glb": "12_L64_FeederBreakerA_Out.glb",
+      "triangle_count": 1288,
+      "mesh_parts": 39,
+      "animation_pivots": {
+        "ANIM_BREAKER_HANDLE": [
+          3.58,
+          1.16,
+          0.9900000000000001
+        ]
+      }
+    },
+    {
+      "index": 13,
+      "name": "L64_FeederBreakerB_In",
+      "file": "13_L64_FeederBreakerB_In.fbx",
+      "glb": "13_L64_FeederBreakerB_In.glb",
+      "triangle_count": 1293,
+      "mesh_parts": 39,
+      "animation_pivots": {
+        "ANIM_BREAKER_HANDLE": [
+          -3.58,
+          1.16,
+          2.31
+        ]
+      }
+    },
+    {
+      "index": 14,
+      "name": "L64_FeederBreakerB_Out",
+      "file": "14_L64_FeederBreakerB_Out.fbx",
+      "glb": "14_L64_FeederBreakerB_Out.glb",
+      "triangle_count": 1325,
+      "mesh_parts": 39,
+      "animation_pivots": {
+        "ANIM_BREAKER_HANDLE": [
+          3.58,
+          1.16,
+          2.31
+        ]
+      }
+    },
+    {
+      "index": 15,
+      "name": "L64_GeneratorEncoderA",
+      "file": "15_L64_GeneratorEncoderA.fbx",
+      "glb": "15_L64_GeneratorEncoderA.glb",
+      "triangle_count": 2308,
+      "mesh_parts": 68,
+      "animation_pivots": {
+        "ANIM_ENCODER_A": [
+          -4.06,
+          1.62,
+          -1.08
+        ]
+      }
+    },
+    {
+      "index": 16,
+      "name": "L64_GeneratorEncoderB",
+      "file": "16_L64_GeneratorEncoderB.fbx",
+      "glb": "16_L64_GeneratorEncoderB.glb",
+      "triangle_count": 2308,
+      "mesh_parts": 68,
+      "animation_pivots": {
+        "ANIM_ENCODER_B": [
+          4.06,
+          1.62,
+          -1.08
+        ]
+      }
+    },
+    {
+      "index": 17,
+      "name": "L64_SynchrophasorMeasurementUnitA",
+      "file": "17_L64_SynchrophasorMeasurementUnitA.fbx",
+      "glb": "17_L64_SynchrophasorMeasurementUnitA.glb",
+      "triangle_count": 1741,
+      "mesh_parts": 38,
+      "animation_pivots": {}
+    },
+    {
+      "index": 18,
+      "name": "L64_SynchrophasorMeasurementUnitB",
+      "file": "18_L64_SynchrophasorMeasurementUnitB.fbx",
+      "glb": "18_L64_SynchrophasorMeasurementUnitB.glb",
+      "triangle_count": 1778,
+      "mesh_parts": 38,
+      "animation_pivots": {}
+    },
+    {
+      "index": 19,
+      "name": "L64_CurrentTransformerBankA",
+      "file": "19_L64_CurrentTransformerBankA.fbx",
+      "glb": "19_L64_CurrentTransformerBankA.glb",
+      "triangle_count": 2749,
+      "mesh_parts": 8,
+      "animation_pivots": {}
+    },
+    {
+      "index": 20,
+      "name": "L64_CurrentTransformerBankB",
+      "file": "20_L64_CurrentTransformerBankB.fbx",
+      "glb": "20_L64_CurrentTransformerBankB.glb",
+      "triangle_count": 2786,
+      "mesh_parts": 8,
+      "animation_pivots": {}
+    },
+    {
+      "index": 21,
+      "name": "L64_DistanceProtectionRelayA",
+      "file": "21_L64_DistanceProtectionRelayA.fbx",
+      "glb": "21_L64_DistanceProtectionRelayA.glb",
+      "triangle_count": 1442,
+      "mesh_parts": 38,
+      "animation_pivots": {}
+    },
+    {
+      "index": 22,
+      "name": "L64_DistanceProtectionRelayB",
+      "file": "22_L64_DistanceProtectionRelayB.fbx",
+      "glb": "22_L64_DistanceProtectionRelayB.glb",
+      "triangle_count": 1479,
+      "mesh_parts": 38,
+      "animation_pivots": {}
+    },
+    {
+      "index": 23,
+      "name": "L64_DifferentialProtectionRelay",
+      "file": "23_L64_DifferentialProtectionRelay.fbx",
+      "glb": "23_L64_DifferentialProtectionRelay.glb",
+      "triangle_count": 1394,
+      "mesh_parts": 38,
+      "animation_pivots": {}
+    },
+    {
+      "index": 24,
+      "name": "L64_OutOfStepProtectionRelay",
+      "file": "24_L64_OutOfStepProtectionRelay.fbx",
+      "glb": "24_L64_OutOfStepProtectionRelay.glb",
+      "triangle_count": 1517,
+      "mesh_parts": 38,
+      "animation_pivots": {}
+    },
+    {
+      "index": 25,
+      "name": "L64_FaultInjectionChamber",
+      "file": "25_L64_FaultInjectionChamber.fbx",
+      "glb": "25_L64_FaultInjectionChamber.glb",
+      "triangle_count": 1256,
+      "mesh_parts": 20,
+      "animation_pivots": {}
+    },
+    {
+      "index": 26,
+      "name": "L64_CriticalClearingTimeAnalyzer",
+      "file": "26_L64_CriticalClearingTimeAnalyzer.fbx",
+      "glb": "26_L64_CriticalClearingTimeAnalyzer.glb",
+      "triangle_count": 1469,
+      "mesh_parts": 38,
+      "animation_pivots": {}
+    },
+    {
+      "index": 27,
+      "name": "L64_PowerAngleAnalyzer",
+      "file": "27_L64_PowerAngleAnalyzer.fbx",
+      "glb": "27_L64_PowerAngleAnalyzer.glb",
+      "triangle_count": 1494,
+      "mesh_parts": 38,
+      "animation_pivots": {}
+    },
+    {
+      "index": 28,
+      "name": "L64_GeneratorExcitationController",
+      "file": "28_L64_GeneratorExcitationController.fbx",
+      "glb": "28_L64_GeneratorExcitationController.glb",
+      "triangle_count": 1411,
+      "mesh_parts": 38,
+      "animation_pivots": {}
+    },
+    {
+      "index": 29,
+      "name": "L64_GeneratorGovernorController",
+      "file": "29_L64_GeneratorGovernorController.fbx",
+      "glb": "29_L64_GeneratorGovernorController.glb",
+      "triangle_count": 1535,
+      "mesh_parts": 38,
+      "animation_pivots": {}
+    },
+    {
+      "index": 30,
+      "name": "L64_PowerSystemStabilizer",
+      "file": "30_L64_PowerSystemStabilizer.fbx",
+      "glb": "30_L64_PowerSystemStabilizer.glb",
+      "triangle_count": 1547,
+      "mesh_parts": 38,
+      "animation_pivots": {}
+    },
+    {
+      "index": 31,
+      "name": "L64_IndustrialLoadBank",
+      "file": "31_L64_IndustrialLoadBank.fbx",
+      "glb": "31_L64_IndustrialLoadBank.glb",
+      "triangle_count": 1481,
+      "mesh_parts": 42,
+      "animation_pivots": {}
+    },
+    {
+      "index": 32,
+      "name": "L64_TransientStabilityMasterController",
+      "file": "32_L64_TransientStabilityMasterController.fbx",
+      "glb": "32_L64_TransientStabilityMasterController.glb",
+      "triangle_count": 1500,
+      "mesh_parts": 38,
+      "animation_pivots": {}
+    },
+    {
+      "index": 33,
+      "name": "L64_HolographicStabilityMonitor",
+      "file": "33_L64_HolographicStabilityMonitor.fbx",
+      "glb": "33_L64_HolographicStabilityMonitor.glb",
+      "triangle_count": 4353,
+      "mesh_parts": 308,
+      "animation_pivots": {
+        "ANIM_MONITOR_TILT": [
+          0.0,
+          3.74,
+          -3.03
+        ]
+      }
+    },
+    {
+      "index": 34,
+      "name": "L64_TransparentSafetyEnclosure",
+      "file": "34_L64_TransparentSafetyEnclosure.fbx",
+      "glb": "34_L64_TransparentSafetyEnclosure.glb",
+      "triangle_count": 644,
+      "mesh_parts": 15,
+      "animation_pivots": {
+        "ANIM_SAFETY_DOOR": [
+          -3.8,
+          2.79,
+          1.56
+        ]
+      }
+    },
+    {
+      "index": 35,
+      "name": "L64_Regulated5VControlSupply",
+      "file": "35_L64_Regulated5VControlSupply.fbx",
+      "glb": "35_L64_Regulated5VControlSupply.glb",
+      "triangle_count": 1535,
+      "mesh_parts": 38,
+      "animation_pivots": {}
+    }
+  ],
+  "triangle_count": 72431
+}

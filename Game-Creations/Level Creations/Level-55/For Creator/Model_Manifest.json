@@ -1,0 +1,424 @@
+{
+  "levelId": "level_55",
+  "displayName": "Float the Shaft",
+  "subtitle": "Intelligent Active Magnetic Bearing System",
+  "description": "Visual HD art kit; does not include simulated magnetic bearing physics or a playable Unity level.",
+  "individual_models": 20,
+  "wire_count": 28,
+  "distinct_socket_count": 48,
+  "triangle_count": 127214,
+  "coordinate_system": "X along the rotor, Y upward, Z toward the front control electronics; 1 source length unit corresponds to 1 Unity import unit if scale=1.",
+  "models": [
+    {
+      "file": "00_L55_IndustrialBase.fbx",
+      "model": "L55_IndustrialBase",
+      "triangle_count": 3068,
+      "mesh_part_count": 109,
+      "animation_pivots": {},
+      "socket_ids": []
+    },
+    {
+      "file": "01_L55_LevitationRotor.fbx",
+      "model": "L55_LevitationRotor",
+      "triangle_count": 15456,
+      "mesh_part_count": 54,
+      "animation_pivots": {
+        "ANIM_ROTOR_SPIN": [
+          0.0,
+          1.74,
+          0.0
+        ]
+      },
+      "socket_ids": []
+    },
+    {
+      "file": "02_L55_LeftMagneticBearing.fbx",
+      "model": "L55_LeftMagneticBearing",
+      "triangle_count": 18384,
+      "mesh_part_count": 59,
+      "animation_pivots": {
+        "ANIM_LEFT_COIL_LIGHTS": [
+          -1.55,
+          1.74,
+          0.0
+        ]
+      },
+      "socket_ids": [
+        "MAG_A_PWRPOS",
+        "MAG_A_PWRNEG"
+      ]
+    },
+    {
+      "file": "03_L55_RightMagneticBearing.fbx",
+      "model": "L55_RightMagneticBearing",
+      "triangle_count": 18384,
+      "mesh_part_count": 59,
+      "animation_pivots": {
+        "ANIM_RIGHT_COIL_LIGHTS": [
+          1.58,
+          1.74,
+          0.0
+        ]
+      },
+      "socket_ids": [
+        "MAG_B_PWRPOS",
+        "MAG_B_PWRNEG"
+      ]
+    },
+    {
+      "file": "04_L55_LeftTouchdownBearing.fbx",
+      "model": "L55_LeftTouchdownBearing",
+      "triangle_count": 4096,
+      "mesh_part_count": 23,
+      "animation_pivots": {},
+      "socket_ids": []
+    },
+    {
+      "file": "05_L55_RightTouchdownBearing.fbx",
+      "model": "L55_RightTouchdownBearing",
+      "triangle_count": 4656,
+      "mesh_part_count": 25,
+      "animation_pivots": {},
+      "socket_ids": [
+        "TOUCHDOWN_OUT"
+      ]
+    },
+    {
+      "file": "06_L55_DriveMotor.fbx",
+      "model": "L55_DriveMotor",
+      "triangle_count": 10536,
+      "mesh_part_count": 35,
+      "animation_pivots": {},
+      "socket_ids": [
+        "MOTOR_PLUS",
+        "MOTOR_MINUS"
+      ]
+    },
+    {
+      "file": "07_L55_EncoderABZ.fbx",
+      "model": "L55_EncoderABZ",
+      "triangle_count": 6668,
+      "mesh_part_count": 93,
+      "animation_pivots": {
+        "ANIM_ENCODER_DISC": [
+          -2.95,
+          1.74,
+          0.0
+        ]
+      },
+      "socket_ids": [
+        "ENC_A",
+        "ENC_B",
+        "ENC_Z"
+      ]
+    },
+    {
+      "file": "08_L55_PositionSensorHub.fbx",
+      "model": "L55_PositionSensorHub",
+      "triangle_count": 5832,
+      "mesh_part_count": 47,
+      "animation_pivots": {},
+      "socket_ids": [
+        "HUB_POS",
+        "HUB_GND",
+        "HUB_XL",
+        "HUB_YL",
+        "HUB_XR",
+        "HUB_YR"
+      ]
+    },
+    {
+      "file": "09_L55_LeftGapSensors.fbx",
+      "model": "L55_LeftGapSensors",
+      "triangle_count": 2052,
+      "mesh_part_count": 17,
+      "animation_pivots": {},
+      "socket_ids": []
+    },
+    {
+      "file": "10_L55_RightGapSensors.fbx",
+      "model": "L55_RightGapSensors",
+      "triangle_count": 2052,
+      "mesh_part_count": 17,
+      "animation_pivots": {},
+      "socket_ids": []
+    },
+    {
+      "file": "11_L55_LeftMagneticDriver.fbx",
+      "model": "L55_LeftMagneticDriver",
+      "triangle_count": 4249,
+      "mesh_part_count": 42,
+      "animation_pivots": {},
+      "socket_ids": [
+        "LD_POS",
+        "LD_GND",
+        "LD_CMD",
+        "LD_PWRPOS",
+        "LD_PWRNEG"
+      ]
+    },
+    {
+      "file": "12_L55_RightMagneticDriver.fbx",
+      "model": "L55_RightMagneticDriver",
+      "triangle_count": 4286,
+      "mesh_part_count": 42,
+      "animation_pivots": {},
+      "socket_ids": [
+        "RD_POS",
+        "RD_GND",
+        "RD_CMD",
+        "RD_PWRPOS",
+        "RD_PWRNEG"
+      ]
+    },
+    {
+      "file": "13_L55_MotorDriver.fbx",
+      "model": "L55_MotorDriver",
+      "triangle_count": 4290,
+      "mesh_part_count": 41,
+      "animation_pivots": {},
+      "socket_ids": [
+        "MD_POS",
+        "MD_GND",
+        "MD_PWM",
+        "MD_MPLUS",
+        "MD_MMINUS"
+      ]
+    },
+    {
+      "file": "14_L55_LevitationController.fbx",
+      "model": "L55_LevitationController",
+      "triangle_count": 9599,
+      "mesh_part_count": 64,
+      "animation_pivots": {},
+      "socket_ids": [
+        "CTRL_POS",
+        "CTRL_GND",
+        "CTRL_XL",
+        "CTRL_YL",
+        "CTRL_XR",
+        "CTRL_YR",
+        "CTRL_ENC_A",
+        "CTRL_ENC_B",
+        "CTRL_ENC_Z",
+        "CTRL_PWM",
+        "CTRL_CMD_LEFT",
+        "CTRL_CMD_RIGHT",
+        "CTRL_SAFE",
+        "CTRL_TOUCHDOWN"
+      ]
+    },
+    {
+      "file": "15_L55_HolographicMonitor.fbx",
+      "model": "L55_HolographicMonitor",
+      "triangle_count": 3527,
+      "mesh_part_count": 34,
+      "animation_pivots": {},
+      "socket_ids": []
+    },
+    {
+      "file": "16_L55_DisturbanceActuator.fbx",
+      "model": "L55_DisturbanceActuator",
+      "triangle_count": 4432,
+      "mesh_part_count": 15,
+      "animation_pivots": {
+        "ANIM_DISTURBANCE_PLUNGER": [
+          0.34,
+          1.75,
+          -0.82
+        ]
+      },
+      "socket_ids": []
+    },
+    {
+      "file": "17_L55_SafetyEnclosure.fbx",
+      "model": "L55_SafetyEnclosure",
+      "triangle_count": 1452,
+      "mesh_part_count": 24,
+      "animation_pivots": {
+        "ANIM_SAFETY_DOOR": [
+          0.0,
+          2.89,
+          1.3
+        ]
+      },
+      "socket_ids": [
+        "GUARD_NC_OUT"
+      ]
+    },
+    {
+      "file": "18_L55_AxialGuide.fbx",
+      "model": "L55_AxialGuide",
+      "triangle_count": 1968,
+      "mesh_part_count": 6,
+      "animation_pivots": {},
+      "socket_ids": []
+    },
+    {
+      "file": "19_L55_5VSupply.fbx",
+      "model": "L55_5VSupply",
+      "triangle_count": 2227,
+      "mesh_part_count": 22,
+      "animation_pivots": {},
+      "socket_ids": [
+        "SUPPLY_POS",
+        "SUPPLY_RET"
+      ]
+    }
+  ],
+  "wiring_file": "Exact_Wiring.csv",
+  "socket_file": "Terminal_Anchors.csv",
+  "animation_file": "Animation_Rigs.csv",
+  "material_palette": {
+    "titanium": [
+      0.27,
+      0.38,
+      0.46,
+      1.0
+    ],
+    "blue_steel": [
+      0.17,
+      0.29,
+      0.38,
+      1.0
+    ],
+    "navy": [
+      0.045,
+      0.093,
+      0.155,
+      1.0
+    ],
+    "carbon": [
+      0.035,
+      0.065,
+      0.095,
+      1.0
+    ],
+    "dark": [
+      0.065,
+      0.1,
+      0.145,
+      1.0
+    ],
+    "chrome": [
+      0.74,
+      0.85,
+      0.9,
+      1.0
+    ],
+    "silver": [
+      0.49,
+      0.65,
+      0.75,
+      1.0
+    ],
+    "silver_dark": [
+      0.32,
+      0.44,
+      0.54,
+      1.0
+    ],
+    "copper": [
+      0.77,
+      0.34,
+      0.12,
+      1.0
+    ],
+    "bronze": [
+      0.84,
+      0.49,
+      0.18,
+      1.0
+    ],
+    "gold": [
+      0.96,
+      0.68,
+      0.25,
+      1.0
+    ],
+    "amber": [
+      1.0,
+      0.66,
+      0.21,
+      1.0
+    ],
+    "cyan": [
+      0.18,
+      0.89,
+      1.0,
+      1.0
+    ],
+    "electric": [
+      0.05,
+      0.56,
+      0.98,
+      1.0
+    ],
+    "mint": [
+      0.2,
+      1.0,
+      0.72,
+      1.0
+    ],
+    "green": [
+      0.1,
+      0.93,
+      0.43,
+      1.0
+    ],
+    "red": [
+      1.0,
+      0.18,
+      0.27,
+      1.0
+    ],
+    "white": [
+      0.82,
+      0.95,
+      1.0,
+      1.0
+    ],
+    "acrylic": [
+      0.33,
+      0.71,
+      0.86,
+      0.15
+    ],
+    "acrylic_rim": [
+      0.43,
+      0.69,
+      0.83,
+      1.0
+    ],
+    "rubber": [
+      0.035,
+      0.05,
+      0.075,
+      1.0
+    ],
+    "display": [
+      0.017,
+      0.066,
+      0.106,
+      1.0
+    ],
+    "grid": [
+      0.08,
+      0.22,
+      0.29,
+      1.0
+    ],
+    "warning": [
+      0.95,
+      0.65,
+      0.08,
+      1.0
+    ],
+    "violet": [
+      0.55,
+      0.35,
+      0.93,
+      1.0
+    ]
+  }
+}

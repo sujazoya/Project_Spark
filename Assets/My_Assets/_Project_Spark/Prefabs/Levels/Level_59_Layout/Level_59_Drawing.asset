@@ -1,0 +1,141 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_59_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_59
+  levelTitle: Bring Back the Power
+  initialPage: 0
+  pages:
+  - title: 01 / Build the control network
+    explanation: Wire control power, battery paths and the ordered A/B/C connections.
+    caption: "42 WIRES  \u2022  66 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.59}
+      label: 5 V CONTROL
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.59, y: 0.59}
+      label: BATTERY
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.59}
+      label: ABC BUS
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.59}
+      - {x: 0.43, y: 0.59}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.59, y: 0.59}
+      - {x: 0.75, y: 0.59}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 02 / Energize the dead bus
+    explanation: Verify QG open. Enable BMS, precharge the DC link, then form the
+      island and restore the essential feeders.
+    caption: "BMS  \u2022  PRECHARGE  \u2022  50 HZ"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.59}
+      label: QG OPEN
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.59, y: 0.59}
+      label: PRECHARGE
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.59}
+      label: ESSENTIALS
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.59}
+      - {x: 0.43, y: 0.59}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.59, y: 0.59}
+      - {x: 0.75, y: 0.59}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 03 / Synchronize and restore
+    explanation: Start and synchronize the generator. Close QGEN within the relay
+      window, then bring on motor and auxiliary loads.
+    caption: "\u0394F \u2264 0.2 HZ  \u2022  \u0394PHASE \u2264 5\xB0"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.59}
+      label: START
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.59, y: 0.59}
+      label: MATCH
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.59}
+      label: RESTORE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.59}
+      - {x: 0.43, y: 0.59}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.59, y: 0.59}
+      - {x: 0.75, y: 0.59}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 04 / Recover and certify
+    explanation: Prove essential service after generator failure. Repair, reset,
+      resynchronize and restore full load before certifying.
+    caption: "ISOLATE  \u2022  SHED  \u2022  RESTORE"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.59}
+      label: FAILURE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.59, y: 0.59}
+      label: RECOVERY
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.59}
+      label: CERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.59}
+      - {x: 0.43, y: 0.59}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.59, y: 0.59}
+      - {x: 0.75, y: 0.59}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}

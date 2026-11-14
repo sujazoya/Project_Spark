@@ -1,0 +1,2234 @@
+# PROJECT SPARK — LEVEL 62 MASTER IMPLEMENTATION PROMPT
+
+## LEVEL 62: HOLD THE VOLTAGE
+### Advanced Dynamic Voltage Restoration, Three-Phase Voltage Sag & Swell Compensation, Voltage Unbalance Correction, Supercapacitor Energy Management and Industrial Ride-Through Protection
+
+Act as my senior Unity C# engineer, electrical simulation architect, three-phase power systems engineer, advanced power electronics engineer, dynamic voltage restorer specialist, transformer modeling engineer, electrical protection engineer, industrial automation specialist, gameplay programmer, and Unity Editor automation developer.
+
+**YOUR TASK IS TO CREATE THE COMPLETE, WORKING, PLAYABLE LEVEL 62 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+Do not stop at a design proposal, architecture diagram, pseudocode, disconnected example scripts, decorative waveform demonstration, or incomplete level prefab.
+
+Implement all safely achievable functionality using my actual Unity project source code and the previously generated Level 62 HD/AAA-inspired 3D asset collection.
+
+The Level 62 design and its 32 individual 3D models have already been approved.
+
+Do not redesign the level or regenerate its models unnecessarily.
+
+---
+
+# 1. CRITICAL PROJECT INTEGRATION RULES
+
+Project Spark is an existing Unity electrical engineering, electronics simulation, circuit-building and industrial automation game.
+
+Before implementing Level 62, inspect my actual source code.
+
+Pay particular attention to:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+- Existing DC electrical solver
+- Existing three-phase AC network implementation
+- Existing voltage and current sensors
+- Existing phase-locked-loop systems
+- Existing motor dynamics
+- Existing transformer and inductor components
+- Existing power converter and inverter systems
+- Existing capacitor and supercapacitor models
+- Existing battery/energy storage systems
+- Existing precharge systems
+- Existing contactor and circuit-breaker systems
+- Existing protection relays
+- Existing heat and damage systems
+- Existing cable and circuit-topology validation
+- Existing player interaction controls
+- Existing diagnostic dashboards
+- Existing Unity Editor level-creation utilities
+- Existing Level 57–61 power quality, inverter, protection and three-phase simulation systems, where available
+
+## NON-NEGOTIABLE RULES
+
+1. Inspect actual source files before using Project Spark APIs.
+2. Never invent existing classes, methods, properties, namespaces or events.
+3. Reuse compatible project infrastructure.
+4. Preserve Levels 1–61.
+5. Isolate Level 62 functionality wherever practical.
+6. Do not modify the shared DC electrical solver without demonstrated necessity.
+7. Do not inject arbitrary AC waveforms into a DC-only solver.
+8. Never fabricate electrical voltage, current, energy, power or frequency measurements.
+9. Do not directly set protected-load voltage to its target value.
+10. Do not implement voltage restoration as a decorative display animation.
+11. Do not bypass converter voltage, current, energy or thermal limits.
+12. Do not allow the DVR to produce unlimited energy.
+13. Do not directly force PLL phase to equal source phase.
+14. Do not bypass precharge requirements.
+15. Do not ignore transformer ratio or polarity.
+16. Do not mistake bypass-switch animation for actual electrical switching.
+17. Do not invent functional terminals inside the art package.
+18. Do not mark objectives complete through arbitrary Boolean flags.
+19. Do not bypass the authoritative level evaluator.
+20. Use consistent SI units and a consistent simulation timestep.
+21. Avoid duplicate electrical simulation owners.
+22. Avoid per-frame global scene searches.
+23. Handle subscriptions, initialization and cleanup correctly.
+24. Provide complete production-oriented C# source files.
+25. Report unsupported APIs and unresolved integration dependencies clearly.
+26. Never claim compilation or Play Mode success without actually running those tests.
+
+## CRITICAL LEVEL COMPLETION RULE
+
+The actual `LevelGamePlayManager` must reach **6/6**.
+
+A local Level 62 controller reporting Stage 6 is not sufficient.
+
+Inspect the real evaluator and implement compatible historical objective tracking.
+
+Objectives 1–5 must remain recorded during the deliberate final sensor-disconnection challenge.
+
+Objective 6 must remain incomplete until the player repairs the sensor feedback, explicitly resets the protection fault, recalibrates the system, and passes a fresh dynamic voltage-restoration certification.
+
+---
+
+# 2. LEVEL 62 CONFIGURATION
+
+**Level Number:** 62
+
+**Level ID:** `level_62`
+
+**Display Name:** `Hold the Voltage`
+
+**Subtitle:** `Dynamic Voltage Restoration and Industrial Ride-Through`
+
+**Difficulty:** Master / Expert
+
+**Control Supply:** 5 V DC
+
+**Electrical Network:** Simulated low-voltage three-phase AC
+
+**Nominal Frequency:** 50 Hz
+
+**Player-Created Wires:** 54
+
+**Unique Functional Terminals:** 84
+
+**Main Compensation Technology:** Three-phase Dynamic Voltage Restorer (DVR)
+
+**Compensation Topology:** Series voltage injection
+
+**Injection Transformers:** 3
+
+**Energy Buffer:** Supercapacitor bank
+
+**DC-Link Capacitor:** 1 module
+
+**Bidirectional DC Converter:** 1
+
+**Voltage Sensor Groups:** 3
+
+**Current Sensor Groups:** 1
+
+**Protected Loads:** Sensitive electronics and precision industrial motor
+
+**Disturbance Motor:** 1
+
+**Required Objectives:** 6
+
+## PROPOSED PERFORMANCE TARGETS
+
+- Normal source voltage: 1.00 pu
+- Nominal protected-load voltage: 1.00 pu
+- Deep sag test: 0.65 pu source voltage
+- Swell test: 1.15 pu source voltage
+- Three-phase unbalance test: unequal phase magnitudes
+- Protected-load voltage target: 0.95–1.05 pu
+- Nominal frequency: 50 Hz
+- Finite converter current limit
+- Finite supercapacitor energy reserve
+- Configurable thermal and voltage protection
+
+These are proposed educational balancing parameters.
+
+The final electrical ratings must be selected consistently with the actual Project Spark simulation architecture.
+
+Do not copy illustrative 400 V, 720 V or large kilowatt readings from the concept art unless the actual simulator supports them.
+
+## INITIAL LEVEL STATE
+
+At level start:
+
+- Three-phase source available.
+- Main input contactor open.
+- DVR disabled.
+- DC-link capacitor at defined safe initial voltage.
+- Supercapacitor bank available.
+- Precharge incomplete.
+- Injection contactors open.
+- Bypass path in a documented safe initial configuration.
+- Sensitive electronics not yet energized.
+- Precision motor stopped.
+- Heavy disturbance motor stopped.
+- Voltage sensors uncalibrated.
+- PLL unlocked.
+- Fault simulator idle.
+- Safety enclosure closed.
+- No critical latched fault.
+- Objectives 0/6.
+
+## PLAYER MISSION
+
+The player must:
+
+1. Connect 54 player wires.
+2. Verify 84 functional terminals.
+3. Establish valid three-phase wiring.
+4. Calibrate input/output/injection voltage sensors.
+5. Calibrate current feedback.
+6. Inspect supercapacitor energy availability.
+7. Precharge the DC link.
+8. Verify injection transformer connections.
+9. Enable the DVR converter.
+10. Acquire a valid PLL reference.
+11. Establish stable normal load voltage.
+12. Simulate a 35% voltage sag.
+13. Calculate required series-injection voltage.
+14. Restore protected-load voltage.
+15. Simulate a voltage swell.
+16. Inject appropriate opposing voltage.
+17. Correct phase-unbalanced source conditions.
+18. Start a heavy industrial motor.
+19. Observe the resulting voltage sag.
+20. Demonstrate DVR ride-through.
+21. Disconnect injection-voltage feedback.
+22. Detect the missing measurement through actual topology.
+23. Enter the defined safe DVR protection state.
+24. Restore the sensor wire.
+25. Explicitly reset the fault.
+26. Recalibrate and restart the DVR.
+27. Complete final voltage-restoration certification.
+
+---
+
+# 3. USE MY EXISTING LEVEL 62 HD/AAA FBX PACKAGE
+
+The approved asset collection exists:
+
+`ProjectSpark_Level62_HD_AAA_Models.zip`
+
+The package contains:
+
+- 32 individual FBX models
+- 32 matching GLB backups
+- One assembled FBX showcase
+- One assembled GLB showcase
+- Model manifest
+- Animation pivot manifest
+- Unity art-placement helper
+- Assembled preview
+- 32-model contact sheet
+- Verification report
+- Unity installation guide
+
+The reported individual-model triangle count is 176,252.
+
+## EXACT 32 FBX FILES
+
+Use these exact filenames:
+
+| FILE | PURPOSE |
+|---|---|
+| `00_L62_IndustrialVoltageRestorationBase.fbx` | Main industrial laboratory chassis |
+| `01_L62_ThreePhaseGridSource.fbx` | Three-phase source |
+| `02_L62_ThreePhaseInputBus.fbx` | Source distribution bus |
+| `03_L62_MainInputContactor.fbx` | Main incoming switching |
+| `04_L62_SeriesInjectionTransformerA.fbx` | Phase A series injection |
+| `05_L62_SeriesInjectionTransformerB.fbx` | Phase B series injection |
+| `06_L62_SeriesInjectionTransformerC.fbx` | Phase C series injection |
+| `07_L62_DVRPowerConverter.fbx` | Main DVR converter |
+| `08_L62_DVROutputFilter.fbx` | Injection output filtering |
+| `09_L62_DVRDCLinkCapacitor.fbx` | DC-link energy storage |
+| `10_L62_SupercapacitorEnergyBank.fbx` | Finite compensation energy buffer |
+| `11_L62_BidirectionalDCConverter.fbx` | DC energy transfer |
+| `12_L62_PrechargeProtectionUnit.fbx` | Controlled precharge |
+| `13_L62_SeriesBypassSwitch.fbx` | DVR bypass switching |
+| `14_L62_InjectionContactorBank.fbx` | Injection connection control |
+| `15_L62_InputVoltageSensor.fbx` | Incoming voltage measurement |
+| `16_L62_OutputVoltageSensor.fbx` | Protected voltage measurement |
+| `17_L62_InjectionVoltageSensor.fbx` | Injection feedback |
+| `18_L62_ThreePhaseCurrentSensor.fbx` | Electrical current measurement |
+| `19_L62_PhaseReferencePLL.fbx` | Fundamental phase tracking |
+| `20_L62_VoltageSagSwellDetector.fbx` | Voltage disturbance detection |
+| `21_L62_DVRMasterController.fbx` | Master restoration sequencing |
+| `22_L62_VoltageCompensationController.fbx` | Per-phase injection control |
+| `23_L62_SensitiveElectronicsLoad.fbx` | Protected electronics |
+| `24_L62_PrecisionIndustrialMotor.fbx` | Protected precision motor |
+| `25_L62_HeavyMotorDisturbanceLoad.fbx` | Motor-starting disturbance |
+| `26_L62_ProgrammableDisturbanceSimulator.fbx` | Controlled sag/swell/unbalance |
+| `27_L62_PowerQualityEventRecorder.fbx` | Event and waveform recording |
+| `28_L62_ThermalCoolingAssembly.fbx` | Converter cooling |
+| `29_L62_ProtectionRelayModule.fbx` | DVR protection |
+| `30_L62_HolographicVoltageMonitor.fbx` | Live voltage diagnostics |
+| `31_L62_TransparentSafetyEnclosure.fbx` | Protective enclosure |
+
+## ADDITIONAL FILES
+
+Reuse:
+
+- `Level62_Complete_ArtKit_Showcase.fbx`
+- `SparkLevel62ArtPlacementEditor.cs`
+- `Animation_Rigs.csv`
+- `Model_Manifest.json`
+- `README_Unity.txt`
+- `Verification_Report.json`
+
+## IMPORTANT ART INTEGRATION RULES
+
+1. Use all 32 individual FBX models.
+2. Use the assembled showcase as a reference only.
+3. Do not render the assembled showcase together with individual models.
+4. Preserve the authored common coordinate system.
+5. Verify model import scale.
+6. Keep equipment models individually addressable.
+7. Keep electrical terminal anchors stationary.
+8. Preserve independent animation pivots.
+9. Preserve named material regions.
+10. Do not treat decorative connectors as functional terminals.
+
+## COORDINATE SYSTEM
+
+The manifest specifies:
+
+- X: workstation width
+- Y: vertical
+- Z: front-facing electronics
+- 1 unit = 1 meter
+
+Create:
+
+`L62_HD_VISUAL_ART`
+
+Place the 32 individual FBX instances under this root.
+
+## QUALITY DISTINCTION
+
+The models contain actual procedural 3D geometry and material-color regions.
+
+They are AAA-inspired, but are not fully hand-authored AAA assets with finished 2K/4K PBR textures.
+
+Apply compatible Unity materials as required.
+
+Do not falsely claim that Unity HDRP/URP import or Play Mode has already been verified.
+
+---
+
+# 4. EXACT ANIMATION PIVOTS
+
+Use the actual supplied `Animation_Rigs.csv`.
+
+The eight verified pivots are:
+
+| MODEL | PIVOT |
+|---|---|
+| MainInputContactor | `ANIM_MAIN_CONTACTOR` |
+| SeriesBypassSwitch | `ANIM_BYPASS_HANDLE` |
+| InjectionContactorBank | `ANIM_INJECTION_CONTACTORS` |
+| PrecisionIndustrialMotor | `ANIM_PRECISION_MOTOR` |
+| HeavyMotorDisturbanceLoad | `ANIM_DISTURBANCE_MOTOR` |
+| ThermalCoolingAssembly | `ANIM_COOLING_FANS` |
+| HolographicVoltageMonitor | `ANIM_MONITOR_TILT` |
+| TransparentSafetyEnclosure | `ANIM_SAFETY_DOOR` |
+
+## REQUIRED ANIMATION BEHAVIOR
+
+### Main input contactor
+
+Open/close according to authoritative electrical state.
+
+### Series bypass switch
+
+Move according to the actual bypass switching state.
+
+### Injection contactors
+
+Animate according to actual injection connection status.
+
+### Precision industrial motor
+
+Rotate based on its actual motor simulation.
+
+### Heavy disturbance motor
+
+Rotate based on simulated motor acceleration.
+
+### Cooling fans
+
+Respond to actual cooling and thermal state.
+
+### Holographic monitor
+
+Use the supplied independent tilt pivot.
+
+### Safety enclosure
+
+Follow interaction and safety interlock state.
+
+## CRITICAL RULE
+
+The presence of an animation pivot does not establish electrical functionality.
+
+Do not animate the DVR into an ACTIVE state without a valid converter, current path, injection command and measurable protected-load response.
+
+Resolve every animation pivot beneath its owning FBX root.
+
+---
+
+# 5. ELECTRICAL WIRING — W01 TO W54
+
+The Level 62 design requires:
+
+**54 player-created wires and 84 unique functional terminal IDs.**
+
+The supplied art package does not include these functional terminals or an exact verified W01–W54 endpoint manifest.
+
+Create that complete specification during implementation.
+
+Do not fabricate an existing wiring CSV.
+
+## REQUIRED WIRING GROUPS
+
+### GROUP A — CONTROL POWER
+
+- Regulated 5 V control supply
+- Control return
+- DVR master controller power
+- Voltage compensation controller power
+- Sensor electronics
+- Protection controller
+- Disturbance control
+
+The control supply must be represented by a functional supply component, not inferred from artwork alone.
+
+### GROUP B — THREE-PHASE SOURCE
+
+- Phase A
+- Phase B
+- Phase C
+- Main contactor
+- Input bus
+- Input voltage sensing
+- Phase sequence
+
+### GROUP C — SERIES INJECTION
+
+- Transformer A primary/secondary interfaces
+- Transformer B interfaces
+- Transformer C interfaces
+- Injection contactor bank
+- Bypass path
+- Converter/output filter connections
+
+Keep the physical topology internally consistent.
+
+### GROUP D — DC ENERGY SYSTEM
+
+- Supercapacitor positive/negative
+- Bidirectional DC converter
+- DC-link capacitor
+- Precharge module
+- DC-link sensing
+- Converter enable
+
+### GROUP E — VOLTAGE MEASUREMENT
+
+- Input voltage sensor
+- Protected output voltage sensor
+- Injection voltage sensor
+- PLL reference
+- Compensation feedback
+
+### GROUP F — CURRENT MEASUREMENT
+
+- Three-phase current feedback
+- Load current
+- Injection current where represented
+- Overcurrent protection
+
+### GROUP G — PROTECTED LOADS
+
+- Sensitive electronics
+- Precision industrial motor
+- Protected feeder
+- Load availability/status
+
+### GROUP H — DISTURBANCE AND SAFETY
+
+- Heavy motor start command
+- Programmable sag/swell simulator
+- Protection relay signals
+- Safety enclosure feedback
+- Event recorder
+- Fault reset
+
+## WIRING REQUIREMENTS
+
+1. Create exactly 54 expected player wires.
+2. Create exactly 84 unique terminal IDs.
+3. Document all FROM endpoints.
+4. Document all TO endpoints.
+5. Register actual Project Spark terminals.
+6. Register functional component IDs.
+7. Validate correct phase routing.
+8. Validate control supply and return.
+9. Validate DC polarity.
+10. Validate precharge connections.
+11. Validate injection transformer polarity.
+12. Validate bypass topology.
+13. Validate sensor routing.
+14. Validate protected-load connections.
+15. Validate disturbance-motor connections.
+16. Detect incorrect or duplicate connections.
+17. Support wire removal and reconnection.
+18. Keep terminals physically accessible.
+
+## INTERNAL CONNECTIONS
+
+Fixed internal module wiring may be preinstalled where necessary.
+
+Document all fixed connections.
+
+Do not inflate player-created connections beyond 54.
+
+## FINAL FAULT CONNECTION
+
+Reserve one designated player wire for injection-voltage feedback.
+
+Conceptual endpoint roles:
+
+`INJECTION_VOLTAGE_SENSOR_OUTPUT → DVR_INJECTION_FEEDBACK_INPUT`
+
+Assign its final wire number only after the exact wiring manifest is completed.
+
+Disconnecting that wire must cause genuine topology-based measurement invalidation.
+
+---
+
+# 6. THREE-PHASE ELECTRICAL MODEL
+
+Level 62 requires a meaningful three-phase network.
+
+Reuse compatible implementations from Levels 57–61.
+
+## REQUIRED STATES
+
+- Phase A voltage
+- Phase B voltage
+- Phase C voltage
+- Phase angles
+- Fundamental frequency
+- Source impedance
+- Series transformer impedance
+- Injection voltages
+- Protected load voltages
+- Phase currents
+- Active power
+- Reactive power
+- Apparent power
+- RMS values
+- Converter voltage/current
+- DC-link energy
+- Protection states
+
+## IMPORTANT DISTINCTION
+
+The DVR compensates voltage in series with the protected load.
+
+It is not a shunt harmonic filter.
+
+Do not reuse Level 61's active harmonic filter as a drop-in replacement for the DVR.
+
+Reuse only compatible infrastructure such as phase measurement, converter switching and protection.
+
+## CORE VOLTAGE EQUATION
+
+For each phase:
+
+`Vload_phasor = Vsource_phasor + Vinjected_phasor - Vseries_losses`
+
+Where applicable:
+
+- `Vsource_phasor` is the disturbed source voltage.
+- `Vinjected_phasor` is the series compensation.
+- `Vseries_losses` represents transformer/filter and feeder drops.
+
+A simplified ideal transformer model may omit losses initially, but limitations must be documented.
+
+The output voltage must emerge from the network calculation.
+
+Do not do:
+
+`LoadVoltage = TargetVoltage`
+
+---
+
+# 7. DYNAMIC VOLTAGE RESTORER MODEL
+
+Use:
+
+- `07_L62_DVRPowerConverter.fbx`
+- `08_L62_DVROutputFilter.fbx`
+- Three injection transformers
+
+## REQUIRED PROPERTIES
+
+- DVR operating mode
+- Source voltage
+- Protected load voltage
+- Injection voltage
+- Injection current
+- Converter current
+- Converter voltage limit
+- Converter current limit
+- Filter inductance
+- Filter resistance
+- DC-link voltage
+- Available stored energy
+- Converter efficiency
+- Switching-loss approximation
+- Thermal state
+- Protection state
+
+## OPERATING MODES
+
+- OFF
+- PRECHARGE
+- STANDBY
+- READY
+- ACTIVE COMPENSATION
+- VOLTAGE LIMITED
+- CURRENT LIMITED
+- ENERGY LIMITED
+- BYPASS
+- FAULT
+
+## REQUIRED BEHAVIOR
+
+1. The DVR begins disabled.
+2. DC-link precharge must complete.
+3. Converter enable requires valid controls.
+4. Voltage sensors must be calibrated.
+5. PLL reference must be valid.
+6. Injection transformers must be connected correctly.
+7. Injection path must be valid.
+8. Converter must calculate bounded voltage references.
+9. Actual injection responds dynamically.
+10. Protected-load voltage is recalculated.
+11. Available energy and current limits constrain compensation.
+
+---
+
+# 8. SERIES INJECTION TRANSFORMERS
+
+Use:
+
+- `04_L62_SeriesInjectionTransformerA.fbx`
+- `05_L62_SeriesInjectionTransformerB.fbx`
+- `06_L62_SeriesInjectionTransformerC.fbx`
+
+Each transformer must be modeled separately.
+
+## REQUIRED PARAMETERS
+
+- Transformer turns ratio
+- Primary voltage
+- Secondary voltage
+- Winding polarity
+- Equivalent winding resistance
+- Leakage inductance
+- Rated current
+- Rated apparent power
+- Saturation approximation where appropriate
+- Thermal loss
+- Connection status
+
+## TRANSFORMER RELATION
+
+For an ideal transformer:
+
+`Vsecondary = TurnsRatio * Vprimary`
+
+Use a consistently defined turns ratio.
+
+Injection polarity is essential.
+
+An incorrect polarity may worsen a voltage sag or cause overvoltage.
+
+## PLAYER CHALLENGE
+
+The three transformer models must have distinct phase assignments.
+
+Incorrect A/B/C routing or polarity should be rejected or cause a realistic diagnostic fault.
+
+Do not treat all three transformers as one decorative block.
+
+---
+
+# 9. INPUT VOLTAGE MEASUREMENT
+
+Use:
+
+`15_L62_InputVoltageSensor.fbx`
+
+## REQUIRED OUTPUTS
+
+- Source voltage A/B/C
+- RMS voltage A/B/C
+- Phase reference
+- Frequency
+- Voltage sag status
+- Voltage swell status
+- Measurement validity
+- Calibration
+- Sample timestamp
+
+## CALIBRATION
+
+Require:
+
+- Valid source connection
+- Correct phase routing
+- Appropriate measurement scale
+- Acceptable offset
+- Valid timing
+- No unresolved sensor fault
+
+Do not calibrate missing or disconnected voltage sensors.
+
+---
+
+# 10. PROTECTED OUTPUT VOLTAGE MEASUREMENT
+
+Use:
+
+`16_L62_OutputVoltageSensor.fbx`
+
+This measurement is critical for verifying actual DVR success.
+
+## REQUIRED OUTPUTS
+
+- Load voltage A/B/C
+- RMS load voltage
+- Phase angles
+- Frequency
+- Unbalance measurement
+- Voltage deviation
+- Measurement validity
+
+## IMPORTANT
+
+The output voltage measurement must come from the actual load-side network state.
+
+Do not derive it directly from the desired setpoint.
+
+The DVR controller may use this measurement for feedback correction.
+
+---
+
+# 11. INJECTION VOLTAGE SENSOR
+
+Use:
+
+`17_L62_InjectionVoltageSensor.fbx`
+
+## REQUIRED OUTPUTS
+
+- Injection voltage A/B/C
+- Injection RMS
+- Injection phase reference
+- Injection feedback validity
+- Calibration state
+- Measurement timestamp
+- Connectivity status
+
+This sensor is the final deliberate fault target.
+
+## INVALID MEASUREMENT RULE
+
+A disconnected sensor is not equivalent to a valid 0 V injection reading.
+
+Use explicit invalid measurement state.
+
+The compensation controller must not continue normal closed-loop operation with missing feedback unless a separately defined, safe and validated fallback mode exists.
+
+---
+
+# 12. PHASE REFERENCE PLL
+
+Use:
+
+`19_L62_PhaseReferencePLL.fbx`
+
+Reuse compatible PLL functionality from prior levels.
+
+## REQUIRED PROPERTIES
+
+- Source phase angle
+- Estimated phase angle
+- Frequency estimate
+- Phase error
+- Frequency error
+- Lock status
+- Reference validity
+- Lock acquisition time
+
+## BEHAVIOR
+
+1. Acquire valid source voltage.
+2. Estimate fundamental phase.
+3. Track 50 Hz nominal frequency.
+4. Reduce phase error dynamically.
+5. Declare lock only after stable conditions.
+6. Detect loss of reference.
+7. Prevent unsupported compensation when reference is invalid.
+
+Do not directly assign PLL phase to the source phase.
+
+## PHASE JUMP
+
+For advanced disturbances, allow a configurable source phase-angle jump.
+
+The control system must distinguish source-angle change from voltage-magnitude variation.
+
+---
+
+# 13. SAG AND SWELL DETECTION
+
+Use:
+
+`20_L62_VoltageSagSwellDetector.fbx`
+
+## REQUIRED STATES
+
+- NORMAL
+- SAG DETECTED
+- SWELL DETECTED
+- UNBALANCE DETECTED
+- PHASE JUMP DETECTED
+- INVALID MEASUREMENT
+
+## SUGGESTED EDUCATIONAL THRESHOLDS
+
+- Normal reference: 1.00 pu
+- Sag detection below configurable threshold
+- Swell detection above configurable threshold
+- Restoration target: 0.95–1.05 pu
+
+The threshold settings must be internally consistent.
+
+## REQUIRED BEHAVIOR
+
+Detect disturbances using measured RMS values or a documented waveform-domain method.
+
+Support finite detection and response times.
+
+Do not claim instantaneous zero-latency detection unless the simulation specifically models it as an ideal controller.
+
+---
+
+# 14. DEEP VOLTAGE SAG TEST
+
+This is Objective 3.
+
+## PROPOSED TEST
+
+Reduce incoming source voltage to:
+
+`Vsource = 0.65 pu`
+
+For a simple in-phase ideal condition:
+
+`Vrequired_injection ≈ 0.35 pu`
+
+Actual phasor injection depends on phase angle and network drops.
+
+## REQUIRED SEQUENCE
+
+1. Begin with commissioned DVR.
+2. Record stable normal source/load voltage.
+3. Trigger source-voltage sag.
+4. Source RMS decreases.
+5. Input sensor detects the disturbance.
+6. Controller calculates phase-specific voltage correction.
+7. Converter responds within its modeled bandwidth.
+8. Injection transformer applies compensation.
+9. Protected-load RMS increases toward nominal.
+10. Converter current and energy are updated.
+11. Verify sustained voltage restoration.
+
+## PASS CONDITIONS
+
+- Source sag actually occurred.
+- DVR recognized the sag.
+- Valid PLL reference.
+- Valid voltage measurements.
+- Actual series voltage injected.
+- Protected voltage maintained within acceptable limits after permitted transient.
+- Converter current safe.
+- Supercapacitor energy sufficient.
+- DC-link voltage valid.
+- No critical protection fault.
+- Observation interval completed.
+
+Do not award success simply because SAG TEST was pressed.
+
+---
+
+# 15. VOLTAGE SWELL TEST
+
+This forms part of Objective 4.
+
+## PROPOSED TEST
+
+Increase source voltage to:
+
+`Vsource = 1.15 pu`
+
+The DVR must generate a suitable opposing series voltage, subject to capability and energy constraints.
+
+## REQUIRED BEHAVIOR
+
+- Detect source overvoltage.
+- Calculate correct injection magnitude and phase.
+- Apply compensation through the transformer.
+- Maintain output voltage near nominal.
+- Prevent overcompensation.
+- Respect converter voltage and current limits.
+- Manage DC-link energy appropriately.
+
+## IMPORTANT
+
+Negative series injection is not equivalent to assigning a negative scalar without considering phase.
+
+Use consistent phasor or time-domain representation.
+
+---
+
+# 16. THREE-PHASE VOLTAGE UNBALANCE
+
+This is the second part of Objective 4.
+
+## EXAMPLE DISTURBANCE
+
+- Phase A: 0.72 pu
+- Phase B: 0.85 pu
+- Phase C: 0.93 pu
+
+These values are proposed test parameters.
+
+## REQUIREMENTS
+
+The model must support independent phase voltage magnitudes.
+
+The controller must calculate:
+
+- Phase A compensation
+- Phase B compensation
+- Phase C compensation
+
+Do not apply one shared scalar correction to all three phases.
+
+## REQUIRED MEASUREMENTS
+
+- Phase A output voltage
+- Phase B output voltage
+- Phase C output voltage
+- Positive-sequence voltage
+- Negative-sequence voltage
+- Voltage unbalance percentage
+- Converter per-phase current
+- Transformer per-phase loading
+
+## SUCCESS
+
+The controller must restore acceptable per-phase voltage and sufficiently reduce unbalance without exceeding modeled capabilities.
+
+Use a documented voltage-unbalance metric.
+
+Do not fabricate a UNBALANCE CORRECTED indicator.
+
+---
+
+# 17. SUPERCAPACITOR ENERGY BANK
+
+Use:
+
+`10_L62_SupercapacitorEnergyBank.fbx`
+
+The DVR requires finite stored energy to support real-power exchange during compensation.
+
+## REQUIRED PROPERTIES
+
+- Capacitance
+- Terminal voltage
+- Stored energy
+- Charge current
+- Discharge current
+- Equivalent series resistance
+- Maximum voltage
+- Minimum operating voltage
+- Maximum current
+- Temperature
+- Energy availability
+- Protection state
+
+## ENERGY EQUATION
+
+`E = 0.5 * C * V²`
+
+Update energy based on actual power flow and losses.
+
+## REQUIRED BEHAVIOR
+
+- Energy decreases during net discharge.
+- Energy increases during valid charging.
+- Voltage changes according to stored energy.
+- Internal resistance produces losses.
+- Current limits constrain discharge power.
+- Low energy limits available compensation duration.
+- Protection prevents unsafe operation.
+
+Do not keep the bank at a fixed energy level during active compensation.
+
+---
+
+# 18. BIDIRECTIONAL DC CONVERTER
+
+Use:
+
+`11_L62_BidirectionalDCConverter.fbx`
+
+## REQUIRED MODES
+
+- OFF
+- CHARGE
+- DISCHARGE
+- STANDBY
+- CURRENT LIMITED
+- VOLTAGE LIMITED
+- FAULT
+
+## REQUIRED PROPERTIES
+
+- Input voltage
+- Output voltage
+- Input current
+- Output current
+- Power direction
+- Efficiency
+- Current limit
+- Power limit
+- Temperature
+- Protection status
+
+## ENERGY CONSERVATION
+
+The converter must respect:
+
+`OutputPower = InputPower - Losses`
+
+with a consistent sign convention.
+
+Do not create energy from a disconnected source.
+
+---
+
+# 19. DVR DC-LINK AND PRECHARGE
+
+Use:
+
+- `09_L62_DVRDCLinkCapacitor.fbx`
+- `12_L62_PrechargeProtectionUnit.fbx`
+
+## REQUIRED PROPERTIES
+
+- DC-link capacitance
+- DC-link voltage
+- Stored energy
+- Precharge resistance
+- Precharge current
+- Precharge contactor status
+- Main DC contactor status
+- Completion threshold
+- Timeout
+- Protection limits
+
+## BASIC PRECHARGE EQUATIONS
+
+`Iprecharge = (Vsupply - Vdc) / Rprecharge`
+
+`Cdc * dVdc/dt = Iprecharge`
+
+Use the actual supply and converter conditions.
+
+## STARTUP SEQUENCE
+
+1. Verify available energy source.
+2. Verify protection state.
+3. Close precharge path.
+4. Calculate charging current.
+5. Update capacitor voltage.
+6. Verify current limit.
+7. Reach defined voltage threshold.
+8. Close main DC path.
+9. Open/bypass precharge path.
+10. Declare DC link ready.
+
+Do not instantly set DC-link voltage to its target.
+
+Do not enable full converter operation before valid precharge.
+
+---
+
+# 20. DVR OUTPUT FILTER
+
+Use:
+
+`08_L62_DVROutputFilter.fbx`
+
+Model the filtering behavior between converter and series transformers.
+
+## REQUIRED PROPERTIES
+
+- Filter inductance
+- Filter capacitance if used
+- Equivalent resistance
+- Filter current
+- Filter voltage
+- Cutoff frequency
+- Losses
+- Rated current
+- Protection state
+
+## REQUIRED BEHAVIOR
+
+- Injection current changes dynamically.
+- Converter output voltage is bounded.
+- Filter limits affect transient compensation.
+- Excessive control gain can be rejected or constrained.
+- Numerical integration remains stable.
+- Filter losses contribute to heat.
+
+A simplified averaged model is acceptable.
+
+Do not claim detailed PWM switching simulation unless actually implemented.
+
+---
+
+# 21. VOLTAGE COMPENSATION CONTROLLER
+
+Use:
+
+`22_L62_VoltageCompensationController.fbx`
+
+## REQUIRED INPUTS
+
+- Target load voltage
+- Measured load voltage
+- Measured source voltage
+- Measured injection voltage
+- PLL phase
+- Converter capability
+- Available DC-link voltage
+- Supercapacitor energy
+- Transformer current limits
+- Protection state
+
+## REQUIRED OUTPUTS
+
+- Phase A injection command
+- Phase B injection command
+- Phase C injection command
+- Converter modulation reference
+- Compensation availability
+- Limited/saturated state
+- Fault response
+
+## CONTROL METHODS
+
+Use a verified and stable control method compatible with the simulator.
+
+Possible approaches include:
+
+- Feedforward voltage compensation
+- PI voltage feedback correction
+- Synchronous-reference-frame control
+- Phasor-domain voltage injection
+
+Choose an approach consistent with available network dynamics.
+
+## IMPORTANT
+
+The controller computes a requested injection.
+
+The actual applied injection must be limited by:
+
+- DC-link voltage
+- Converter voltage capability
+- Injection transformer ratio
+- Filter dynamics
+- Current limits
+- Available stored energy
+- Protection conditions
+
+Do not assume requested injection is always achieved.
+
+---
+
+# 22. SERIES BYPASS AND INJECTION CONTACTORS
+
+Use:
+
+- `13_L62_SeriesBypassSwitch.fbx`
+- `14_L62_InjectionContactorBank.fbx`
+
+## REQUIRED STATES
+
+- OPEN
+- CLOSED
+- TRANSITION
+- TRIPPED
+- LOCKED OUT
+
+## OPERATION
+
+The bypass and injection paths must follow a coherent switching sequence.
+
+Prevent unsafe short-circuit or conflicting switching states.
+
+When compensation is inhibited, select a defined safe response.
+
+Depending on the validated topology, that may involve a controlled bypass, isolation, or shutdown of the protected feeder.
+
+## CRITICAL SAFETY RULE
+
+Bypassing the DVR does not guarantee the sensitive load receives acceptable voltage.
+
+During a sag, bypassing the DVR may expose the load to the sag.
+
+Do not automatically mark load protection successful when entering bypass.
+
+---
+
+# 23. SENSITIVE ELECTRONICS LOAD
+
+Use:
+
+`23_L62_SensitiveElectronicsLoad.fbx`
+
+## REQUIRED PROPERTIES
+
+- Nominal voltage
+- Actual terminal voltage
+- Active power
+- Reactive power
+- Minimum operating voltage
+- Maximum operating voltage
+- Ride-through capability
+- Power-good status
+- Protection state
+
+## REQUIRED BEHAVIOR
+
+- Load operates normally within limits.
+- Sustained undervoltage produces an appropriate failure or interruption.
+- Overvoltage produces protection.
+- Successful DVR compensation preserves operation.
+- Power-good is derived from electrical measurements.
+
+Do not keep this load online merely because a green indicator is visible.
+
+---
+
+# 24. PRECISION INDUSTRIAL MOTOR
+
+Use:
+
+`24_L62_PrecisionIndustrialMotor.fbx`
+
+## REQUIRED PROPERTIES
+
+- Rotor inertia
+- Actual RPM
+- Torque
+- Electrical current
+- Voltage
+- Frequency
+- Load torque
+- Mechanical power
+- Electrical power
+- Protection limits
+
+## REQUIRED BEHAVIOR
+
+Motor performance responds to actual protected-load voltage.
+
+A severe sag without compensation may reduce torque, speed stability or operating availability according to the chosen model.
+
+With successful DVR compensation, operation should remain within configured ride-through limits.
+
+Use the actual rotor pivot:
+
+`ANIM_PRECISION_MOTOR`
+
+Do not drive rotation using an unrelated visual timer.
+
+---
+
+# 25. HEAVY MOTOR DISTURBANCE LOAD
+
+Use:
+
+`25_L62_HeavyMotorDisturbanceLoad.fbx`
+
+This is Objective 5's main disturbance source.
+
+## REQUIRED BEHAVIOR
+
+1. Motor starts from rest.
+2. Starting current increases.
+3. Motor accelerates according to mechanical dynamics.
+4. Current interacts with modeled source/feeder impedance.
+5. Source voltage experiences a transient sag.
+6. DVR detects the sag.
+7. DVR compensates within its capabilities.
+8. Sensitive electronics remain powered when sufficient compensation is available.
+
+## CRITICAL RULE
+
+Do not create the motor-start voltage sag solely by lowering a displayed source-voltage variable.
+
+The sag must be caused by the modeled increase in electrical demand acting through finite source/feeder impedance.
+
+The player must see the relationship between starting current and voltage sag.
+
+---
+
+# 26. PROGRAMMABLE DISTURBANCE SIMULATOR
+
+Use:
+
+`26_L62_ProgrammableDisturbanceSimulator.fbx`
+
+## REQUIRED TEST MODES
+
+- NORMAL
+- DEEP SAG
+- VOLTAGE SWELL
+- THREE-PHASE UNBALANCE
+- PHASE JUMP
+- MOTOR START
+- SENSOR FAILURE
+- RESET
+
+## REQUIRED PROPERTIES
+
+- Disturbance type
+- Disturbance magnitude
+- Start time
+- Duration
+- Phase selection
+- Recovery profile
+- Test state
+- Deterministic seed if needed
+
+## RULES
+
+- Disturbances must modify actual modeled network conditions.
+- Do not directly overwrite load voltage.
+- Faults must be reproducible.
+- Source voltage recovery should follow a defined profile.
+- Prevent contradictory test commands.
+- Record all disturbance events.
+
+---
+
+# 27. THERMAL AND ELECTRICAL PROTECTION
+
+Use:
+
+- `28_L62_ThermalCoolingAssembly.fbx`
+- `29_L62_ProtectionRelayModule.fbx`
+
+## REQUIRED PROTECTIONS
+
+- Converter overcurrent
+- Converter overvoltage
+- DC-link undervoltage
+- DC-link overvoltage
+- Supercapacitor overcurrent
+- Supercapacitor undervoltage
+- Transformer overload
+- Transformer overtemperature
+- Output filter overcurrent
+- Injection overvoltage
+- Invalid source reference
+- PLL unlock
+- Injection feedback loss
+- Output feedback loss
+- Unsafe bypass transition
+- Contactor failure
+- Excessive motor-start current
+- Protected-load undervoltage
+- Protected-load overvoltage
+- Safety enclosure interlock
+- Invalid numerical state
+
+## THERMAL MODEL
+
+For a simplified component:
+
+`Cthermal * dT/dt = ElectricalLosses - CoolingPower`
+
+Calculate thermal losses from electrical operating state.
+
+Fan speed follows actual thermal/cooling demand.
+
+Do not use a decorative temperature timer unrelated to current.
+
+## FAULT LATCHING
+
+Critical faults must remain latched until:
+
+1. Fault cause repaired.
+2. Safe state established.
+3. Measurements revalidated.
+4. Player explicitly requests reset.
+5. Reset eligibility verified.
+
+---
+
+# 28. FINAL SENSOR-FAILURE CHALLENGE
+
+This is the central Objective 6 mechanic.
+
+## FAULT
+
+The player disconnects the designated injection-voltage feedback wire.
+
+The wiring ID must come from the finalized W01–W54 manifest.
+
+## REQUIRED DETECTION
+
+- Actual player wire topology becomes invalid.
+- Injection-voltage measurement validity is lost.
+- Measurement freshness is invalid.
+- Closed-loop injection feedback becomes untrustworthy.
+
+## REQUIRED RESPONSE
+
+1. Detect feedback disconnection.
+2. Record exact fault cause.
+3. Mark injection measurement invalid.
+4. Reject unsafe injection commands.
+5. Ramp down or inhibit compensation as required.
+6. Execute safe contactor/bypass behavior.
+7. Protect converter/DC link.
+8. Record load power-quality outcome.
+9. Latch the fault.
+10. Prevent uncontrolled restart.
+
+## RECOVERY
+
+1. Player reconnects the designated wire.
+2. Actual topology becomes valid.
+3. Injection feedback is reacquired.
+4. Sensor calibration is restored.
+5. Player explicitly resets the fault.
+6. PLL reference is revalidated.
+7. DC-link condition is checked.
+8. Converter starts safely.
+9. Injection control is re-enabled.
+10. Final voltage-restoration test begins.
+11. Protected-load voltage is verified.
+12. No critical fault remains.
+13. Final certification succeeds.
+
+Reconnection alone must not award Objective 6.
+
+---
+
+# 29. SIX AUTHORITATIVE LEVEL OBJECTIVES
+
+Integrate all six with the real Project Spark evaluator.
+
+## OBJECTIVE 1 — BUILD THE VOLTAGE RESTORATION NETWORK
+
+Require:
+
+1. Exactly 54 required wires connected.
+2. All 84 terminal IDs registered.
+3. Valid control supply.
+4. Valid control return.
+5. Correct source phase routing.
+6. Main input contactor connected.
+7. Input bus valid.
+8. Transformer A connected correctly.
+9. Transformer B connected correctly.
+10. Transformer C connected correctly.
+11. Transformer polarities valid.
+12. DVR converter connected.
+13. Output filter connected.
+14. DC-link capacitor connected.
+15. Supercapacitor connected.
+16. Bidirectional converter connected.
+17. Precharge unit connected.
+18. Bypass and injection switching valid.
+19. Input/output/injection sensors connected.
+20. PLL connected.
+21. Current measurement valid.
+22. Protected loads connected.
+23. Disturbance motor connected.
+24. Protection and safety valid.
+25. No unsafe electrical topology.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — COMMISSION THE DVR
+
+Require:
+
+1. Valid wiring.
+2. Three-phase source available.
+3. Voltage sensors calibrated.
+4. Current measurement calibrated.
+5. PLL acquiring reference.
+6. Supercapacitor energy available.
+7. Precharge sequence started.
+8. DC-link voltage increases physically.
+9. Precharge completes.
+10. Converter ready.
+11. Injection transformer phases valid.
+12. Bypass switching valid.
+13. DVR enabled.
+14. Normal protected-load voltage established.
+15. Frequency near 50 Hz.
+16. Stable no-disturbance observation interval.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — SURVIVE A DEEP VOLTAGE SAG
+
+Require:
+
+1. Commissioned DVR.
+2. Deep sag test activated.
+3. Source voltage actually decreases to approximately 0.65 pu.
+4. Input sensor detects the sag.
+5. PLL reference remains valid or recovers.
+6. Controller calculates required compensation.
+7. Converter generates bounded injection.
+8. Series transformer injects voltage.
+9. Protected load remains electrically supplied.
+10. Protected voltage reaches 0.95–1.05 pu after permitted transient.
+11. Supercapacitor energy decreases consistently.
+12. Converter current within limits.
+13. No critical fault.
+14. Observation interval completed.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — CORRECT SWELL AND PHASE IMBALANCE
+
+Require:
+
+1. Deep sag objective certified.
+2. Source swell occurs.
+3. DVR detects swell.
+4. Appropriate opposing injection applied.
+5. Protected output remains within permitted voltage range.
+6. Three-phase unbalance test begins.
+7. Phase A/B/C disturbances occur independently.
+8. Per-phase injection references calculated.
+9. Output-voltage unbalance decreases.
+10. All phase voltages within selected tolerance.
+11. Transformer current limits respected.
+12. Converter/DC-link safe.
+13. No critical fault.
+14. Stable test intervals completed.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — PROTECT MOTOR STARTUP
+
+Require:
+
+1. Previous compensation objectives certified.
+2. Heavy disturbance motor starts from rest.
+3. Actual starting current increases.
+4. Source impedance causes measurable voltage sag.
+5. DVR detects the disturbance.
+6. Compensation activates.
+7. Sensitive electronics remain powered.
+8. Precision motor remains within operating limits.
+9. DVR injection current safe.
+10. Supercapacitor energy remains sufficient.
+11. DC link remains valid.
+12. Converter thermal state safe.
+13. Motor-start transient settles.
+14. Protected voltage meets recovery requirements.
+15. Observation interval completed.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — SENSOR FAULT AND FINAL CERTIFICATION
+
+Require:
+
+1. Historical Objectives 1–5 certified.
+2. Designated injection-feedback wire disconnected.
+3. Actual topology becomes invalid.
+4. Measurement becomes invalid.
+5. Controller detects feedback loss.
+6. Unsafe compensation is inhibited.
+7. Appropriate safe switching occurs.
+8. Fault becomes latched.
+9. Player reconnects actual wire.
+10. Measurement continuity restored.
+11. Player explicitly resets the fault.
+12. Sensor recalibrated.
+13. PLL revalidated.
+14. Precharge/DC-link readiness verified.
+15. Converter restarted safely.
+16. Normal voltage restored.
+17. Fresh sag test executed.
+18. Actual injection voltage measured.
+19. Protected output within acceptable limits.
+20. Current limits respected.
+21. Energy reserve sufficient.
+22. No unresolved critical fault.
+23. Final certification interval completed.
+
+Progress becomes **6/6**.
+
+## CRITICAL AUTHORITATIVE COMPLETION
+
+Do not implement only a local stage counter.
+
+Inspect:
+
+- `SparkLevelEvaluator`
+- `SparkLevelDefinition`
+- `LevelGamePlayManager`
+
+Use compatible historical objective recording.
+
+Objectives 1–5 remain certified during the final deliberate fault.
+
+Objective 6 must remain incomplete until successful repair and recertification.
+
+**The actual `LevelGamePlayManager` must report 6/6.**
+
+---
+
+# 30. RECOMMENDED UNITY C# ARCHITECTURE
+
+Inspect existing systems before creating new classes.
+
+Suggested responsibilities:
+
+- `SparkLevel62Coordinator.cs`
+- `SparkLevel62ThreePhaseNetwork.cs`
+- `SparkLevel62DisturbanceGenerator.cs`
+- `SparkLevel62VoltageSagSwellDetector.cs`
+- `SparkLevel62VoltageSensor.cs`
+- `SparkLevel62CurrentSensor.cs`
+- `SparkLevel62PhaseLockedLoop.cs`
+- `SparkLevel62SeriesInjectionTransformer.cs`
+- `SparkLevel62DVRPowerConverter.cs`
+- `SparkLevel62DVROutputFilter.cs`
+- `SparkLevel62DVRController.cs`
+- `SparkLevel62VoltageCompensation.cs`
+- `SparkLevel62SupercapacitorBank.cs`
+- `SparkLevel62BidirectionalDCConverter.cs`
+- `SparkLevel62DCLinkEnergy.cs`
+- `SparkLevel62PrechargeController.cs`
+- `SparkLevel62BypassController.cs`
+- `SparkLevel62ProtectedLoad.cs`
+- `SparkLevel62MotorStartingLoad.cs`
+- `SparkLevel62VoltageUnbalanceAnalyzer.cs`
+- `SparkLevel62PowerQualityRecorder.cs`
+- `SparkLevel62ThermalProtection.cs`
+- `SparkLevel62SafetyController.cs`
+- `SparkLevel62ObjectiveTracker.cs`
+- `SparkLevel62Dashboard.cs`
+- `SparkLevel62Interaction.cs`
+- `SparkLevel62VisualRig.cs`
+
+These are suggested responsibilities, not verified existing APIs.
+
+Reuse compatible implementations instead of creating duplicates.
+
+## REQUIRED UPDATE ORDER
+
+1. Validate topology.
+2. Read player inputs.
+3. Update contactor states.
+4. Update source disturbance.
+5. Update motor dynamics and load demand.
+6. Calculate source voltage/current.
+7. Acquire sensor feedback.
+8. Update PLL.
+9. Detect sag/swell/unbalance.
+10. Calculate voltage compensation commands.
+11. Apply converter voltage/current limits.
+12. Integrate output filter behavior.
+13. Apply transformer injection.
+14. Solve actual protected-load voltage.
+15. Calculate DVR real/reactive power.
+16. Update supercapacitor and DC-link energy.
+17. Calculate losses and thermal behavior.
+18. Evaluate protection.
+19. Record event history.
+20. Evaluate objectives.
+21. Update dashboard.
+22. Update visual animations.
+
+Use a consistent simulation timestep.
+
+Avoid repeated integration of the same physical interval.
+
+Avoid recursive electrical-solver calls.
+
+---
+
+# 31. LIVE AAA VOLTAGE RESTORATION DASHBOARD
+
+Use:
+
+- `27_L62_PowerQualityEventRecorder`
+- `30_L62_HolographicVoltageMonitor`
+
+Create functional TextMeshPro displays and dynamic graphs.
+
+## REQUIRED READINGS
+
+- MAIN POWER
+- THREE-PHASE SOURCE STATUS
+- DVR OPERATING MODE
+- SOURCE VOLTAGE A/B/C
+- LOAD VOLTAGE A/B/C
+- INJECTION VOLTAGE A/B/C
+- SOURCE FREQUENCY
+- LOAD FREQUENCY
+- PLL LOCK
+- SAG PERCENTAGE
+- SWELL PERCENTAGE
+- PHASE UNBALANCE
+- INJECTION CURRENT
+- DVR CONVERTER CURRENT
+- CONVERTER SATURATION
+- DC-LINK VOLTAGE
+- SUPERCAPACITOR VOLTAGE
+- SUPERCAPACITOR ENERGY
+- CONVERTER POWER
+- INJECTION TRANSFORMER LOADING
+- BYPASS STATE
+- INJECTION CONTACTOR STATE
+- SENSITIVE LOAD STATUS
+- PRECISION MOTOR RPM
+- DISTURBANCE MOTOR RPM
+- MOTOR START CURRENT
+- CONVERTER TEMPERATURE
+- PROTECTION STATUS
+- EVENT HISTORY
+- OBJECTIVES X/6
+
+## PLAYER CONTROLS
+
+- MAIN POWER
+- CALIBRATE SENSORS
+- CHECK ENERGY
+- PRECHARGE
+- ENABLE DVR
+- AUTO RESTORE
+- MANUAL INJECTION
+- SAG TEST
+- SWELL TEST
+- PHASE UNBALANCE TEST
+- PHASE JUMP TEST
+- MOTOR START
+- BYPASS DVR
+- RESET BYPASS
+- SENSOR FAULT TEST
+- RESET FAULT
+- FINAL CERTIFY
+
+Every player control must affect actual gameplay state.
+
+Do not create decorative buttons that simply change labels.
+
+---
+
+# 32. AAA VISUAL IMPLEMENTATION
+
+Create a Level 62 visual adapter that reads authoritative simulation state.
+
+## NORMAL OPERATION
+
+- Three-phase source indicators active.
+- DVR ready.
+- Protected load indicators green.
+- Converter in normal standby/compensation mode.
+- Transformer status reflects actual electrical state.
+
+## VOLTAGE SAG
+
+- Incoming voltage waveform decreases.
+- Input warning becomes amber.
+- DVR compensation activates.
+- Injection indicators illuminate.
+- Protected voltage waveform follows actual simulation.
+- DC-link energy responds.
+
+## VOLTAGE SWELL
+
+- Incoming voltage increases.
+- Opposing injection becomes visible on the monitor.
+- Output remains near reference only when control succeeds.
+
+## PHASE UNBALANCE
+
+- Independent A/B/C indicators show disturbed phases.
+- Individual compensation values are displayed.
+- Output balance follows actual simulation.
+
+## MOTOR STARTING
+
+- Heavy motor rotor accelerates.
+- Source current rises.
+- Voltage sag develops.
+- DVR responds.
+- Sensitive load status follows its actual supply.
+
+## SENSOR FAILURE
+
+- Injection feedback becomes invalid.
+- Protection status changes.
+- Converter enters safe state.
+- Fault is latched.
+- Reset disabled until repair conditions are satisfied.
+
+## RESTORATION
+
+- Feedback returns.
+- Fault reset succeeds.
+- DVR recalibrates.
+- Compensation resumes.
+- Final waveforms are calculated.
+- Certification is awarded only after objective validation.
+
+---
+
+# 33. UNITY EDITOR LEVEL CREATOR
+
+Create:
+
+`Tools/Project Spark/Levels/Create Level 62`
+
+The editor creator must safely generate or update:
+
+- `Level_62.asset`
+- `Level_62_Layout.prefab`
+- Level simulation configuration assets
+- Electrical binding manifests
+- Objective definitions
+- Validation report
+
+## REQUIRED EDITOR OPERATIONS
+
+1. Inspect actual Project Spark Editor infrastructure.
+2. Locate all 32 FBXs.
+3. Validate model paths.
+4. Validate import scale.
+5. Create/update Level 62 definition.
+6. Set Level ID to `level_62`.
+7. Configure display name and description.
+8. Create six authoritative objectives.
+9. Create/update layout prefab.
+10. Instantiate all 32 individual FBXs.
+11. Preserve shared coordinates.
+12. Create `L62_HD_VISUAL_ART`.
+13. Configure three-phase source.
+14. Configure input bus.
+15. Configure main contactor.
+16. Configure injection transformer A.
+17. Configure injection transformer B.
+18. Configure injection transformer C.
+19. Configure DVR converter.
+20. Configure output filter.
+21. Configure DC-link capacitor.
+22. Configure supercapacitor bank.
+23. Configure bidirectional DC converter.
+24. Configure precharge unit.
+25. Configure bypass switch.
+26. Configure injection contactors.
+27. Configure input voltage sensor.
+28. Configure output voltage sensor.
+29. Configure injection voltage sensor.
+30. Configure current sensor.
+31. Configure PLL.
+32. Configure sag/swell detector.
+33. Configure DVR master controller.
+34. Configure compensation controller.
+35. Configure sensitive electronics.
+36. Configure precision motor.
+37. Configure disturbance motor.
+38. Configure disturbance simulator.
+39. Configure event recorder.
+40. Configure thermal cooling.
+41. Configure protection relay.
+42. Configure holographic monitor.
+43. Configure safety enclosure.
+44. Register 84 functional terminal anchors.
+45. Create 54 player-wire declarations.
+46. Register component IDs.
+47. Register terminal IDs.
+48. Configure fixed internal connections.
+49. Configure transformer parameters.
+50. Configure converter parameters.
+51. Configure supercapacitor energy.
+52. Configure precharge thresholds.
+53. Configure sag/swell scenarios.
+54. Configure protection limits.
+55. Assign eight verified animation pivots.
+56. Configure dashboard and controls.
+57. Bind six authoritative objectives.
+58. Validate missing/duplicate references.
+59. Detect conflicting simulation owners.
+60. Generate diagnostics.
+61. Save level definition and prefab.
+
+## EDITOR RELIABILITY
+
+Reuse:
+
+`SparkLevel62ArtPlacementEditor.cs`
+
+The existing art helper supports placement but does not implement the playable level.
+
+Extend it safely or create a separate full level builder.
+
+Use verified `AssetDatabase` paths.
+
+Do not invent asset GUIDs.
+
+Use appropriate `PrefabUtility`, `SerializedObject`, Undo and asset-saving methods.
+
+Make the creator safe to rerun.
+
+Do not duplicate models, terminals, controllers or electrical connections.
+
+Do not silently destroy unrelated modifications.
+
+---
+
+# 34. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 54 WIRES → VERIFY 84 TERMINALS → CALIBRATE INPUT/OUTPUT/INJECTION SENSORS → CHECK SUPERCAPACITOR → PRECHARGE DC LINK → ENABLE DVR → ACQUIRE PLL LOCK → VERIFY NORMAL LOAD VOLTAGE → APPLY 35% VOLTAGE SAG → CALCULATE COMPENSATION → INJECT SERIES VOLTAGE → RESTORE PROTECTED VOLTAGE → APPLY VOLTAGE SWELL → APPLY OPPOSING INJECTION → CORRECT THREE-PHASE UNBALANCE → START HEAVY MOTOR → DETECT STARTING-CURRENT SAG → PROTECT SENSITIVE LOADS → DISCONNECT INJECTION FEEDBACK → DETECT SENSOR FAILURE → INHIBIT UNSAFE COMPENSATION → RECONNECT WIRE → RESET FAULT → RECALIBRATE → RESTART DVR → REPEAT RESTORATION TEST → FINAL CERTIFICATION → 6/6 COMPLETE**
+
+## SUGGESTED PLAYER-FACING MESSAGES
+
+- `BUILD THE VOLTAGE RESTORATION NETWORK`
+- `CONNECT ALL 54 WIRES`
+- `VERIFY 84 TERMINALS`
+- `CALIBRATE VOLTAGE SENSORS`
+- `CHECK SUPERCAPACITOR ENERGY`
+- `BEGIN DC-LINK PRECHARGE`
+- `DC LINK READY`
+- `ENABLE DYNAMIC VOLTAGE RESTORER`
+- `ACQUIRE PHASE REFERENCE`
+- `PLL LOCKED`
+- `NORMAL VOLTAGE VERIFIED`
+- `APPLY DEEP VOLTAGE SAG`
+- `SAG DETECTED`
+- `SERIES VOLTAGE INJECTION ACTIVE`
+- `PROTECTED VOLTAGE RECOVERING`
+- `VOLTAGE SAG COMPENSATED`
+- `APPLY VOLTAGE SWELL`
+- `OPPOSING INJECTION ACTIVE`
+- `APPLY PHASE UNBALANCE`
+- `THREE-PHASE COMPENSATION ACTIVE`
+- `PHASE VOLTAGES RESTORED`
+- `START HEAVY INDUSTRIAL MOTOR`
+- `MOTOR STARTING CURRENT DETECTED`
+- `VOLTAGE SAG COMPENSATION ACTIVE`
+- `SENSITIVE LOAD PROTECTED`
+- `INJECTION VOLTAGE FEEDBACK LOST`
+- `DVR PROTECTION ACTIVE`
+- `RESTORE SENSOR CONNECTION`
+- `RESET LATCHED FAULT`
+- `RECALIBRATE`
+- `RESTART DVR`
+- `FINAL VOLTAGE RESTORATION CERTIFICATION`
+- `LEVEL 62 COMPLETE`
+
+---
+
+# 35. TESTING AND DIAGNOSTICS
+
+Implement diagnostics for:
+
+- Incorrect W01–W54 wiring
+- Missing terminal IDs
+- Duplicate terminal IDs
+- Invalid 5 V control supply
+- Missing control return
+- Incorrect phase routing
+- Incorrect transformer polarity
+- Invalid main contactor
+- Invalid bypass topology
+- Injection contactor failure
+- Source voltage sensor disconnected
+- Protected output sensor disconnected
+- Injection feedback disconnected
+- Current sensor invalid
+- PLL unable to lock
+- Sag detector inactive
+- Swell detector inactive
+- Phase unbalance incorrectly calculated
+- DVR converter not enabled
+- DC-link precharge failure
+- DC-link voltage not rising
+- Supercapacitor energy unavailable
+- Converter overcurrent
+- Converter saturation
+- Injection transformer overload
+- Requested injection exceeding capability
+- Output voltage not responding to injection
+- Source/load voltage phasor mismatch
+- Motor-start current not affecting source voltage
+- Protected load incorrectly marked powered
+- Energy not decreasing during discharge
+- Converter thermal overload
+- Unsafe bypass transition
+- Fault not latching
+- Reset succeeding before repair
+- Historical objectives being erased
+- Manager stuck at 0/6 or 5/6
+- Scene reload problems
+- Regression in Levels 1–61
+
+## REQUIRED TESTS
+
+1. Correct 54-wire topology.
+2. All 84 terminals registered.
+3. Three-phase source valid.
+4. Main contactor operates.
+5. Correct transformer A/B/C routing.
+6. Correct transformer polarity.
+7. Voltage sensors calibrate.
+8. Current sensor calibrates.
+9. Supercapacitor energy initialized.
+10. DC precharge current calculated.
+11. DC-link voltage rises gradually.
+12. Precharge completes.
+13. PLL acquires lock.
+14. DVR enters READY.
+15. Normal protected voltage measured.
+16. Sag test changes actual source voltage.
+17. Sag detected.
+18. Converter generates injection.
+19. Transformer injection affects output.
+20. Protected voltage restores within target.
+21. Supercapacitor energy decreases correctly.
+22. Converter current limiting works.
+23. Swell test changes actual source voltage.
+24. Opposing injection corrects swell.
+25. Unbalance test changes three phases independently.
+26. Per-phase compensation responds.
+27. Protected voltage unbalance decreases.
+28. Heavy motor starts physically.
+29. Motor-start current increases.
+30. Source voltage sags due to modeled impedance.
+31. DVR compensates motor-start disturbance.
+32. Sensitive electronics remain powered when physically possible.
+33. Precision motor follows actual electrical state.
+34. Converter losses affect temperature.
+35. Disconnect injection feedback.
+36. Measurement becomes invalid.
+37. Unsafe compensation inhibited.
+38. Fault latches.
+39. Reconnect actual wire.
+40. Measurement validity restored.
+41. Explicit reset succeeds.
+42. DVR recalibrates.
+43. DVR restarts safely.
+44. Final compensation test succeeds.
+45. Authoritative manager reaches 6/6.
+46. Level progression succeeds.
+47. Levels 1–61 remain unaffected.
+
+Only report a test as passed when actually executed.
+
+---
+
+# 36. REQUIRED DOWNLOADABLE DELIVERABLES
+
+Create a complete Level 62 implementation ZIP containing:
+
+- Full Level 62 runtime C# scripts
+- Three-phase network integration
+- Source disturbance model
+- Series injection transformer models
+- DVR power converter
+- DVR output filter
+- DC-link capacitor simulation
+- Supercapacitor energy model
+- Bidirectional DC converter
+- Precharge controller
+- Input voltage sensor integration
+- Output voltage sensor integration
+- Injection voltage sensor integration
+- Three-phase current measurement
+- PLL controller
+- Sag/swell detector
+- Voltage compensation controller
+- Three-phase unbalance analyzer
+- Heavy motor-starting dynamics
+- Sensitive load simulation
+- Precision motor integration
+- Bypass switching
+- Injection contactor control
+- Thermal protection
+- Sensor fault detection
+- Fault repair/reset/recovery
+- Six-objective evaluator integration
+- Unity Editor Level 62 creator
+- Level definition creator or asset
+- Level layout prefab creator
+- Exact W01–W54 wiring manifest
+- 84-terminal binding manifest
+- Component binding manifest
+- Eight animation pivot mappings
+- Transformer configuration
+- DVR converter configuration
+- Supercapacitor configuration
+- DC-link/precharge configuration
+- Sag/swell test profiles
+- Phase unbalance profiles
+- Motor-start disturbance configuration
+- Protection thresholds
+- Inspector setup instructions
+- Player gameplay walkthrough
+- Objective verification checklist
+- Diagnostics and troubleshooting guide
+
+Reuse:
+
+`ProjectSpark_Level62_HD_AAA_Models.zip`
+
+Do not regenerate the existing 32-model collection unless a specific compatibility problem requires it.
+
+Only link files actually created and verified.
+
+Do not claim Unity compilation or Play Mode success unless those tests were performed.
+
+---
+
+# 37. FINAL EXECUTION REQUIREMENTS
+
+**IMPLEMENT LEVEL 62 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect my actual Project Spark source code and approved Level 62 asset package.
+
+Then:
+
+1. Reuse existing compatible electrical infrastructure.
+2. Integrate all 32 individual FBX models.
+3. Finalize exactly 54 player wires.
+4. Create exactly 84 functional terminals.
+5. Implement meaningful three-phase source simulation.
+6. Implement input/output voltage sensing.
+7. Implement injection-voltage feedback.
+8. Implement current measurement.
+9. Implement PLL phase tracking.
+10. Implement finite supercapacitor energy.
+11. Implement bidirectional DC conversion.
+12. Implement DC-link precharge.
+13. Implement actual DVR converter behavior.
+14. Implement output filter dynamics.
+15. Implement three series injection transformers.
+16. Implement real voltage sag detection.
+17. Implement measured sag compensation.
+18. Implement voltage swell correction.
+19. Implement independent per-phase unbalance correction.
+20. Implement heavy motor-starting disturbance.
+21. Implement sensitive-load ride-through.
+22. Implement bounded current and voltage limits.
+23. Implement thermal and electrical protection.
+24. Implement actual injection-feedback wire disconnection.
+25. Implement safe DVR inhibition.
+26. Implement repair and explicit reset.
+27. Implement final restoration recertification.
+28. Integrate six authoritative objectives.
+29. Create Unity Editor Level 62 builder.
+30. Integrate the eight verified animation pivots.
+31. Integrate the live holographic dashboard.
+32. Implement exact diagnostics.
+33. Run all feasible tests.
+34. Package and verify actual deliverables.
+
+Do not ask for approval of the already-approved Level 62 design.
+
+Do not fabricate source voltage, injected voltage, protected-load voltage, current, phase angle, converter power, stored energy, motor RPM, protection results or objective completion.
+
+If a Project Spark API cannot be verified, implement independent functionality where safe and clearly identify the exact missing integration dependency.
+
+---
+
+# 38. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect all 54 required wires.
+2. Validate all 84 functional terminals.
+3. Power the three-phase restoration network.
+4. Calibrate all voltage and current sensors.
+5. Precharge the DVR DC link.
+6. Verify supercapacitor energy.
+7. Acquire a valid PLL reference.
+8. Enable the DVR safely.
+9. Apply a deep 35% voltage sag.
+10. Restore protected-load voltage through actual series injection.
+11. Compensate a voltage swell.
+12. Correct independent three-phase voltage imbalance.
+13. Start the heavy industrial motor.
+14. Observe the actual motor-start voltage sag.
+15. Preserve sensitive-load operation using real DVR compensation.
+16. Remain within converter current and energy limits.
+17. Disconnect injection-voltage sensor feedback.
+18. Detect genuine signal loss.
+19. Enter a safe protected state.
+20. Reconnect the feedback wire.
+21. Explicitly reset the fault.
+22. Recalibrate and restart the DVR.
+23. Complete a fresh voltage-restoration certification.
+24. Finish all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 62.**
+
+The player must learn genuine dynamic voltage restoration, phasor-based series injection, converter energy limits, three-phase imbalance correction, industrial motor-start ride-through and electrical protection through observable simulation—not predetermined waveforms, fabricated measurements or artificial success flags.
+
+**FINAL GOAL: A COMPLETE, POLISHED, AAA-QUALITY, UNITY-READY AND ACTUALLY PLAYABLE LEVEL 62 — HOLD THE VOLTAGE.**

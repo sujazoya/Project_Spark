@@ -1,0 +1,2335 @@
+# PROJECT SPARK — LEVEL 64 MASTER IMPLEMENTATION PROMPT
+
+## LEVEL 64: HOLD THE SYNCHRONISM
+### Advanced Two-Machine Transient Stability, Generator Rotor-Angle Dynamics, Critical Fault Clearing, Distance Protection, Differential Protection, Breaker Failure, Power-System Stabilization and Out-of-Step Recovery
+
+Act as my senior Unity C# engineer, electrical simulation architect, three-phase power systems engineer, synchronous-machine dynamics specialist, electrical protection engineer, power-system stability researcher, industrial automation developer, gameplay programmer, and Unity Editor automation specialist.
+
+**YOUR TASK IS TO CREATE THE COMPLETE, WORKING, PLAYABLE LEVEL 64 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+Do not stop at a design proposal, pseudocode, an art-only scene, decorative generator animations, synthetic stability graphs, disconnected C# scripts, or a level coordinator with fake objectives.
+
+Implement all safely achievable functionality using my actual Unity project source code and the approved Level 64 3D asset collection.
+
+The level design and 36 individual FBX models are already approved.
+
+Do not redesign the laboratory or regenerate the models unnecessarily.
+
+**LEVEL 64 MUST TEACH REAL TRANSIENT ROTOR-ANGLE STABILITY THROUGH MEANINGFUL GENERATOR DYNAMICS, ELECTRICAL NETWORK SOLVING, FAULT ISOLATION, PROTECTION DELAYS AND POST-FAULT RECOVERY.**
+
+---
+
+# 1. CRITICAL EXISTING PROJECT INTEGRATION
+
+Project Spark is an existing Unity electrical engineering, circuit-building and industrial automation game.
+
+Before implementing Level 64, inspect the actual project.
+
+At minimum, locate and inspect the following classes if present:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+
+Also inspect existing implementations of:
+
+- Three-phase AC electrical networks
+- Phasor and frequency simulation
+- Synchronous generators
+- Motor and shaft dynamics
+- Rotor encoders
+- Generator governors
+- Generator excitation
+- Inverters and source synchronization
+- Power-system stabilizers
+- Current transformers
+- Voltage sensors
+- Synchrophasor measurements
+- Circuit breakers
+- Distance protection
+- Differential protection
+- Protection relays
+- Breaker failure
+- Overcurrent protection
+- Out-of-step protection
+- Electrical fault injection
+- Energy and power measurement
+- Circuit topology validation
+- Player-created wiring
+- Terminal and component binding
+- Thermal and failure systems
+- Historical level objectives
+- UI interaction controls
+- TextMeshPro diagnostics
+- Unity Editor level creation
+
+## Relevant previous levels
+
+Inspect and reuse compatible functionality from:
+
+**Level 54 — Cross the Critical**
+
+Rotor dynamics, mechanical sensing, vibration and rotor protection.
+
+**Level 55 — Float the Shaft**
+
+Advanced rotating machinery monitoring.
+
+**Level 56 — Harvest the Spin**
+
+Rotational kinetic energy, torque and electromechanical conversion.
+
+**Level 57 — Synchronize the Grid**
+
+Three-phase synchronization, voltage, frequency and phase measurements.
+
+**Level 58 — Isolate the Fault**
+
+Selective electrical protection, circuit breakers and fault clearing.
+
+**Level 59 — Bring Back the Power**
+
+Generator starting, synchronization and safe source reconnection.
+
+**Level 60 — The Grid Must Survive**
+
+Coordinated protection and multi-fault response.
+
+**Level 61 — Clean the Wave**
+
+AC measurement and power-quality infrastructure.
+
+**Level 62 — Hold the Voltage**
+
+Three-phase disturbance measurement and converter protection.
+
+**Level 63 — Catch the Frequency**
+
+Generator inertia, dynamic frequency response and electromechanical power balance.
+
+Reuse systems only when their implementation is actually present and compatible.
+
+Do not assume a level has functional gameplay merely because its art assets or implementation prompt exist.
+
+---
+
+# 2. NON-NEGOTIABLE ENGINEERING RULES
+
+1. Inspect the actual project source before referencing Project Spark APIs.
+2. Never invent existing methods, properties, components, namespaces or events.
+3. Preserve Levels 1–63.
+4. Keep Level 64 functionality level-local wherever practical.
+5. Do not modify the shared DC solver without demonstrated necessity.
+6. Do not approximate two independent synchronous generators with one decorative RPM value.
+7. Do not invent a second electrical network that conflicts with existing AC simulation.
+8. Do not hardcode rotor-angle trajectories.
+9. Do not simulate loss of synchronism using an arbitrary countdown.
+10. Do not display a fabricated critical clearing time.
+11. Do not force generator rotor speeds to remain synchronized.
+12. Do not bypass generator torque and inertia.
+13. Do not fabricate generator mechanical or electrical power.
+14. Do not disconnect a transmission feeder without changing the electrical topology.
+15. Do not create a fault solely by switching on a red light.
+16. Do not open breakers without updating network connectivity.
+17. Do not fabricate current-transformer measurements.
+18. Do not fabricate differential or distance-relay operation.
+19. Do not let breakers close onto an energized network without required synchronization checks.
+20. Do not allow invalid synchrophasor feedback to authorize automatic reclosing.
+21. Do not bypass circuit-breaker operating delays.
+22. Do not ignore fault current when a breaker fails.
+23. Do not mark a system stable solely because a display says STABLE.
+24. Do not bypass authoritative objectives through arbitrary completion calls.
+25. Use consistent physical units.
+26. Use a coherent simulation timestep.
+27. Prevent duplicate generator or network solvers.
+28. Avoid per-frame global scene searches.
+29. Use safe Unity component lifecycles and event cleanup.
+30. Make the Editor creator idempotent.
+31. Report unresolved integration dependencies precisely.
+32. Deliver complete C# source files.
+33. Only claim Unity compilation, Play Mode or objective completion when actually verified.
+
+## Authoritative completion
+
+The actual `LevelGamePlayManager` must reach **6/6**.
+
+A local Level 64 controller reporting Stage 6 is insufficient.
+
+Inspect `SparkLevelDefinition`, `SparkLevelEvaluator` and `LevelGamePlayManager`.
+
+Integrate six genuine evaluator objectives.
+
+Objectives 1–5 must remain historically certified during the final deliberate synchrophasor-sensor disconnection.
+
+Objective 6 must not pass until the sensor is repaired, recalibrated, the protection fault is explicitly reset, required feeder switching is performed safely, and a fresh transient-stability test succeeds.
+
+---
+
+# 3. LEVEL 64 CONFIGURATION
+
+**Level Number:** 64
+
+**Level ID:** `level_64`
+
+**Display Name:** `Hold the Synchronism`
+
+**Subtitle:** `Generator Transient Stability and Critical Fault Clearing`
+
+**Difficulty:** Master / Expert
+
+**Control Supply:** 5 V DC
+
+**Power Network:** Simulated low-voltage three-phase AC
+
+**Nominal Frequency:** 50 Hz
+
+**Player-Created Wires:** 62
+
+**Unique Functional Terminals:** 96
+
+**Individual FBX Models:** 36
+
+**Synchronous Generators:** 2
+
+**Generator Prime Movers:** 2
+
+**Generator Source Breakers:** 2
+
+**Transmission Feeders:** 2
+
+**Feeder End Breakers:** 4
+
+**Total Main Breakers:** 6
+
+**Generator Encoders:** 2
+
+**Synchrophasor Measurement Units:** 2
+
+**Current Transformer Banks:** 2
+
+**Distance Protection Relays:** 2
+
+**Differential Protection Relays:** 1
+
+**Out-of-Step Protection Relays:** 1
+
+**Fault Injection Chamber:** 1
+
+**Critical Clearing Time Analyzer:** 1
+
+**Power-Angle Analyzer:** 1
+
+**Required Objectives:** 6
+
+## Main electrical architecture
+
+Two synchronous generators operate through a dual-feeder three-phase transmission network.
+
+The two feeders provide parallel electrical transfer paths between Bus A and Bus B.
+
+Feeder A is the designated faultable path.
+
+Feeder B is the alternate healthy path.
+
+The network must meaningfully represent:
+
+- Generator internal electromotive forces
+- Generator rotor angles
+- Generator reactances
+- Sending and receiving buses
+- Feeder impedances
+- Bus voltages
+- Branch currents
+- Generator active and reactive power
+- Electrical losses where modeled
+- Protection zones
+- Breaker-controlled connectivity
+
+Use educational low-voltage simulation ratings consistent with the project.
+
+Do not copy the illustrative 11 kV or megawatt values from the generated concept artwork into a low-voltage simulator without a compatible scaling model.
+
+## Initial operating state
+
+- Control power available.
+- Generator A available.
+- Generator B available.
+- Prime movers initialized.
+- Source breakers in defined commissioning positions.
+- Feeder A initially healthy.
+- Feeder B initially healthy.
+- All four feeder breakers available.
+- Encoders require calibration.
+- PMUs require calibration.
+- CTs require configuration.
+- Protection relays require commissioning.
+- Fault injection disabled.
+- Power-system stabilizer initially disabled or untuned.
+- Out-of-step protection armed only after valid calibration.
+- Safety enclosure closed.
+- No active critical fault.
+- Objectives 0/6.
+
+---
+
+# 4. LEVEL 64 PLAYER MISSION
+
+The player must:
+
+1. Connect all 62 required wires.
+2. Verify all 96 terminals.
+3. Power and calibrate control modules.
+4. Validate Generator A and Generator B connections.
+5. Verify both source breakers.
+6. Verify the dual-feeder network.
+7. Calibrate both rotor encoders.
+8. Calibrate both synchrophasor units.
+9. Calibrate current transformer measurements.
+10. Configure protection relay settings.
+11. Start and stabilize Generator A.
+12. Start and stabilize Generator B.
+13. Synchronize the electrical sources.
+14. Establish stable parallel operation.
+15. Record baseline rotor-angle separation.
+16. Record baseline power transfer.
+17. Configure Feeder A fault protection.
+18. Determine a safe fault-clearing target.
+19. Apply a three-phase Feeder A fault.
+20. Detect the fault.
+21. Operate the correct breakers.
+22. Isolate the faulted feeder.
+23. Preserve transfer through Feeder B.
+24. Verify rotor synchronism is maintained.
+25. Tune excitation and oscillation damping.
+26. Perform the post-fault damping test.
+27. Apply a breaker-failure event.
+28. Detect persistent fault current.
+29. Execute backup protection.
+30. Avoid generator pole slipping.
+31. Disconnect designated Generator B synchrophasor feedback.
+32. Detect invalid angle measurements.
+33. Inhibit unsafe automatic reclosing.
+34. Reconnect and recalibrate the sensor.
+35. Explicitly reset protection.
+36. Restore the feeder under safe conditions.
+37. Perform fresh fault-clearing certification.
+38. Complete all six authoritative objectives.
+
+---
+
+# 5. USE MY EXISTING LEVEL 64 HD/AAA ART PACKAGE
+
+The approved package is:
+
+`ProjectSpark_Level64_HD_AAA_Models.zip`
+
+Its manifest confirms:
+
+- 36 individual FBX models.
+- 36 corresponding GLB backups.
+- One assembled reference FBX.
+- One assembled reference GLB.
+- 14 animation-pivot mappings.
+- An optional Unity art-placement editor.
+- Model and verification manifests.
+
+## Exact 36 FBX filenames
+
+Use these exact filenames:
+
+| FILE | FUNCTION |
+|---|---|
+| `00_L64_IndustrialTransientStabilityBase.fbx` | Laboratory workstation |
+| `01_L64_SynchronousGeneratorA.fbx` | Generator A |
+| `02_L64_SynchronousGeneratorB.fbx` | Generator B |
+| `03_L64_PrimeMoverA.fbx` | Generator A prime mover |
+| `04_L64_PrimeMoverB.fbx` | Generator B prime mover |
+| `05_L64_GeneratorBreakerA.fbx` | Generator A breaker |
+| `06_L64_GeneratorBreakerB.fbx` | Generator B breaker |
+| `07_L64_ThreePhaseBusA.fbx` | Bus A |
+| `08_L64_ThreePhaseBusB.fbx` | Bus B |
+| `09_L64_TransmissionFeederA.fbx` | Faultable feeder |
+| `10_L64_TransmissionFeederB.fbx` | Alternate healthy feeder |
+| `11_L64_FeederBreakerA_In.fbx` | Feeder A sending breaker |
+| `12_L64_FeederBreakerA_Out.fbx` | Feeder A receiving breaker |
+| `13_L64_FeederBreakerB_In.fbx` | Feeder B sending breaker |
+| `14_L64_FeederBreakerB_Out.fbx` | Feeder B receiving breaker |
+| `15_L64_GeneratorEncoderA.fbx` | Generator A encoder |
+| `16_L64_GeneratorEncoderB.fbx` | Generator B encoder |
+| `17_L64_SynchrophasorMeasurementUnitA.fbx` | Bus A PMU |
+| `18_L64_SynchrophasorMeasurementUnitB.fbx` | Bus B PMU |
+| `19_L64_CurrentTransformerBankA.fbx` | Feeder A CT bank |
+| `20_L64_CurrentTransformerBankB.fbx` | Feeder B CT bank |
+| `21_L64_DistanceProtectionRelayA.fbx` | Feeder A distance relay |
+| `22_L64_DistanceProtectionRelayB.fbx` | Feeder B distance relay |
+| `23_L64_DifferentialProtectionRelay.fbx` | Differential relay |
+| `24_L64_OutOfStepProtectionRelay.fbx` | Out-of-step protection |
+| `25_L64_FaultInjectionChamber.fbx` | Controlled fault source |
+| `26_L64_CriticalClearingTimeAnalyzer.fbx` | Clearing-time analysis |
+| `27_L64_PowerAngleAnalyzer.fbx` | Power-angle analysis |
+| `28_L64_GeneratorExcitationController.fbx` | Excitation control |
+| `29_L64_GeneratorGovernorController.fbx` | Prime-mover control |
+| `30_L64_PowerSystemStabilizer.fbx` | Rotor oscillation damping |
+| `31_L64_IndustrialLoadBank.fbx` | Controlled electrical demand |
+| `32_L64_TransientStabilityMasterController.fbx` | Level control |
+| `33_L64_HolographicStabilityMonitor.fbx` | Stability diagnostics |
+| `34_L64_TransparentSafetyEnclosure.fbx` | Safety housing |
+| `35_L64_Regulated5VControlSupply.fbx` | Control power |
+
+## Additional asset files
+
+Inspect and reuse:
+
+- `Level64_Complete_ArtKit_Showcase.fbx`
+- `SparkLevel64ArtPlacementEditor.cs`
+- `Model_Manifest.json`
+- `Animation_Rigs.csv`
+- `README_Unity.txt`
+- `Verification_Report.json`
+- Rendered assembled preview
+- 36-model contact sheet
+
+## Art placement rules
+
+1. Instantiate all 36 individual FBXs.
+2. Keep the assembled showcase for reference only.
+3. Do not overlay the showcase with individual models.
+4. Preserve shared common-origin placement.
+5. Verify imported model scale and orientation.
+6. Keep electrical equipment separately addressable.
+7. Keep real terminals stationary.
+8. Keep mechanical pivots independent.
+9. Preserve mesh material regions.
+10. Do not derive electrical measurements from visual animation.
+
+## Coordinate system
+
+The manifest specifies:
+
+- X: workstation width.
+- Y: vertical.
+- Z: front-facing electronics.
+- 1 art unit = 1 meter.
+
+Create the art root:
+
+`L64_HD_VISUAL_ART`
+
+The existing helper menu is:
+
+`Tools/Project Spark/Levels/64/Place HD Art Under Selected Layout`
+
+The helper is for art placement only.
+
+It does not create playable electrical functionality.
+
+---
+
+# 6. EXACT ANIMATION PIVOT INTEGRATION
+
+The supplied `Animation_Rigs.csv` defines 14 mappings.
+
+Use the following exact model/pivot assignments:
+
+| MODEL | ANIMATION PIVOT |
+|---|---|
+| SynchronousGeneratorA | `ANIM_GENERATOR_A` |
+| SynchronousGeneratorB | `ANIM_GENERATOR_B` |
+| PrimeMoverA | `ANIM_PRIME_MOVER_A` |
+| PrimeMoverB | `ANIM_PRIME_MOVER_B` |
+| GeneratorBreakerA | `ANIM_BREAKER_HANDLE` |
+| GeneratorBreakerB | `ANIM_BREAKER_HANDLE` |
+| FeederBreakerA_In | `ANIM_BREAKER_HANDLE` |
+| FeederBreakerA_Out | `ANIM_BREAKER_HANDLE` |
+| FeederBreakerB_In | `ANIM_BREAKER_HANDLE` |
+| FeederBreakerB_Out | `ANIM_BREAKER_HANDLE` |
+| GeneratorEncoderA | `ANIM_ENCODER_A` |
+| GeneratorEncoderB | `ANIM_ENCODER_B` |
+| HolographicStabilityMonitor | `ANIM_MONITOR_TILT` |
+| TransparentSafetyEnclosure | `ANIM_SAFETY_DOOR` |
+
+## Mechanical animation
+
+Generator A and Generator B must have independent actual shaft angles.
+
+Their rotation should follow authoritative mechanical dynamics.
+
+The prime movers follow their own modeled mechanical states.
+
+When mechanically coupled, prime mover and generator shaft animation must remain consistent with the coupling model.
+
+## Encoder animation
+
+Encoder A and B discs follow their respective shaft angles.
+
+Actual speed and angle measurement must come from the encoder/sensor simulation.
+
+Do not generate sensor measurements from independently animated decorative transforms.
+
+## Breaker animation
+
+Six breaker models share the name:
+
+`ANIM_BREAKER_HANDLE`
+
+Resolve each pivot relative to the correct FBX root.
+
+Do not globally bind all breakers to the first matching transform.
+
+The visual handle must follow authoritative breaker state.
+
+## Monitor and enclosure
+
+Use their documented independent pivots.
+
+Keep electrical terminal anchors outside rotating or moving pivot hierarchies unless specifically required by the verified art structure.
+
+---
+
+# 7. ELECTRICAL WIRING — W01 TO W62
+
+The approved design requires:
+
+**62 player-created wires and 96 unique functional terminal anchors.**
+
+The existing art package does not include exact validated W01–W62 endpoints or functional `SparkTerminal` registrations.
+
+Create those during implementation.
+
+Do not fabricate an existing exact wiring manifest.
+
+## GROUP A — CONTROL POWER
+
+- Regulated 5 V control supply.
+- Control return.
+- Main stability controller.
+- Protection relay supply.
+- Generator control electronics.
+- PMU and CT measurement electronics.
+- Fault-injection control supply.
+
+## GROUP B — GENERATOR A
+
+- Generator A three-phase interface.
+- Generator A breaker.
+- Prime mover A control.
+- Generator A encoder.
+- Excitation control signals.
+- Mechanical/electrical power feedback.
+- Protection feedback.
+
+## GROUP C — GENERATOR B
+
+- Generator B three-phase interface.
+- Generator B breaker.
+- Prime mover B control.
+- Generator B encoder.
+- Phase-angle measurement.
+- Excitation and governor signals.
+- Protection feedback.
+
+## GROUP D — BUS AND TRANSMISSION NETWORK
+
+- Bus A phase conductors.
+- Bus B phase conductors.
+- Feeder A sending end.
+- Feeder A receiving end.
+- Feeder B sending end.
+- Feeder B receiving end.
+- Feeder breaker commands and status.
+
+## GROUP E — CURRENT AND VOLTAGE MEASUREMENTS
+
+- Bus A PMU.
+- Bus B PMU.
+- Feeder A CT group.
+- Feeder B CT group.
+- Voltage reference.
+- Current transformer signal routing.
+- Measurement validity.
+
+## GROUP F — PROTECTION
+
+- Distance relay A.
+- Distance relay B.
+- Differential protection relay.
+- Out-of-step relay.
+- Trip output.
+- Breaker feedback.
+- Breaker-failure supervision.
+- Fault status.
+
+## GROUP G — CONTROL AND ANALYSIS
+
+- Critical clearing time analyzer.
+- Power-angle analyzer.
+- Excitation controller.
+- Governor controller.
+- Power-system stabilizer.
+- Stability master controller.
+- Event and certification signals.
+
+## GROUP H — DISTURBANCE AND SAFETY
+
+- Fault injection chamber.
+- Fault trigger.
+- Fault reset.
+- Breaker-failure test.
+- Industrial load bank.
+- Safety enclosure feedback.
+- Emergency protection signals.
+
+## Wiring requirements
+
+1. Create exactly 62 expected player-created wires.
+2. Create exactly 96 unique terminal IDs.
+3. Document every wire FROM endpoint.
+4. Document every wire TO endpoint.
+5. Register real functional terminals.
+6. Register real component IDs.
+7. Validate control supply and return.
+8. Validate A/B/C phase assignments.
+9. Validate both generator source paths.
+10. Validate both feeders.
+11. Validate all six breakers.
+12. Validate PMU references.
+13. Validate CT polarity.
+14. Validate protection-control signals.
+15. Detect invalid or duplicate connections.
+16. Detect disconnected measurement feedback.
+17. Support wire deletion and reconnection.
+18. Keep intended player sockets accessible.
+19. Prevent unsafe topology.
+20. Preserve fixed internal connections separately.
+
+## Fixed internal connections
+
+Where the complete power network needs more internal conductors than the player puzzle exposes, use documented preinstalled module connections.
+
+Do not increase the player-wire count beyond 62.
+
+## Final sensor fault
+
+Reserve one real player wire for Generator B synchrophasor/angle feedback.
+
+Conceptual roles:
+
+`PMU_B_ANGLE_VALID_OUT → STABILITY_CTRL_B_ANGLE_IN`
+
+Assign its final W-number only after the complete wiring manifest is finalized.
+
+During Objective 6, disconnect that actual wire.
+
+The measurement and control topology must become invalid accordingly.
+
+---
+
+# 8. TWO-MACHINE DYNAMIC POWER SYSTEM
+
+Level 64 requires a multi-machine electrical model.
+
+A single shared frequency state without independent generator rotor angles is insufficient.
+
+## Required electrical properties
+
+- Generator A internal voltage.
+- Generator B internal voltage.
+- Generator A rotor electrical angle.
+- Generator B rotor electrical angle.
+- Relative angle.
+- Bus A voltage phasor.
+- Bus B voltage phasor.
+- Branch impedances.
+- Branch currents.
+- Generator electrical power.
+- Generator reactive power.
+- Load active/reactive power.
+- Network power losses.
+- Breaker state.
+- Fault state.
+
+## Dynamic operation
+
+The model must support at least:
+
+- Pre-fault network.
+- Fault-on network.
+- Post-fault network.
+- Breaker-failure topology.
+- Restored healthy network.
+
+When topology changes, generator electrical power must change accordingly.
+
+## Modeling fidelity
+
+A reduced-order positive-sequence fundamental-frequency phasor model may be acceptable for an educational transient-stability level.
+
+Document its limitations.
+
+A balanced three-phase fault can be represented consistently in that approximation.
+
+Do not claim full electromagnetic-transient or unbalanced-fault accuracy if those models are not implemented.
+
+For distance and differential protection, use measurements and network equations consistent with the chosen approximation.
+
+---
+
+# 9. SYNCHRONOUS GENERATOR DYNAMICS
+
+Use:
+
+- `01_L64_SynchronousGeneratorA.fbx`
+- `02_L64_SynchronousGeneratorB.fbx`
+- `03_L64_PrimeMoverA.fbx`
+- `04_L64_PrimeMoverB.fbx`
+
+Each generator must have independent mechanical state.
+
+## Required properties
+
+- Rotor inertia.
+- Mechanical angle.
+- Electrical rotor angle.
+- Actual shaft speed.
+- Rotor speed deviation.
+- Mechanical torque.
+- Electrical electromagnetic torque.
+- Mechanical input power.
+- Electrical output power.
+- Damping.
+- Generator internal voltage.
+- Excitation state.
+- Current.
+- Generator breaker state.
+- Protection status.
+
+## Mechanical equation
+
+For each generator:
+
+`J_i * dOmega_i/dt = Tmechanical_i - Telectrical_i - Tdamping_i`
+
+## Rotor-angle relationship
+
+Define the electrical angle relative to a coherent synchronous reference frame.
+
+For a machine with pole-pair count p:
+
+`ElectricalAngularSpeed = p * MechanicalAngularSpeed`
+
+Use a consistent per-unit or SI formulation throughout.
+
+## Critical requirement
+
+A sudden fault changes electrical power transfer.
+
+Mechanical power does not automatically change instantaneously.
+
+The resulting torque imbalance must cause generator acceleration or deceleration.
+
+That mechanical change must influence rotor-angle stability.
+
+---
+
+# 10. GENERATOR SYNCHRONIZATION
+
+Before normal parallel operation, synchronize Generator A and Generator B to the common electrical system.
+
+## Required measurements
+
+- Generator A voltage.
+- Generator B voltage.
+- Frequency difference.
+- Phase-angle difference.
+- Phase sequence.
+- Generator speed.
+- Synchrophasor validity.
+- Synchronization stability interval.
+
+## Suggested commissioning thresholds
+
+- Frequency difference within configurable tolerance.
+- Phase-angle difference within configurable tolerance.
+- Voltage mismatch within configurable tolerance.
+- Correct phase sequence.
+- No critical protection fault.
+
+## Breaker closing
+
+A source breaker may close only when:
+
+1. Source available.
+2. Valid electrical voltage.
+3. Valid frequency.
+4. Valid phase.
+5. Correct phase sequence.
+6. Measurement feedback valid.
+7. Synchronization within limits.
+8. Breaker ready.
+9. Protection healthy.
+
+Do not synchronize by directly forcing the rotor angles equal.
+
+Do not award Objective 2 merely because both source breaker handles appear closed.
+
+---
+
+# 11. DUAL TRANSMISSION FEEDER MODEL
+
+Use:
+
+- `09_L64_TransmissionFeederA.fbx`
+- `10_L64_TransmissionFeederB.fbx`
+
+Each feeder must have its own electrical impedance and switching topology.
+
+## Required properties
+
+- Feeder ID.
+- Sending-end bus.
+- Receiving-end bus.
+- Series resistance.
+- Series reactance.
+- Shunt representation where appropriate.
+- Phase current.
+- Sending-end voltage.
+- Receiving-end voltage.
+- Active power transfer.
+- Reactive power transfer.
+- Breaker states.
+- Fault state.
+- Thermal/current limit.
+
+## Feeder A
+
+Designated faultable path.
+
+Both ends must be isolated for the normal fault-clearing objective.
+
+## Feeder B
+
+The healthy alternate path.
+
+After Feeder A isolation, the model must determine whether Feeder B can carry the redistributed power safely.
+
+Do not assume Feeder B always has unlimited capacity.
+
+## Power transfer
+
+For a simple lossless reduced network, a power-angle approximation may take the form:
+
+`P_electrical ≈ Pmax * sin(Delta)`
+
+where `Delta` represents the relevant rotor/network angle separation and `Pmax` depends on network configuration.
+
+Use this approximation only when justified by the chosen model.
+
+Recalculate transfer capability when Feeder A is isolated.
+
+---
+
+# 12. THREE-PHASE FAULT INJECTION
+
+Use:
+
+`25_L64_FaultInjectionChamber.fbx`
+
+This is a simulated educational fault.
+
+## Required properties
+
+- Fault type.
+- Faulted feeder.
+- Fault location.
+- Fault impedance.
+- Start timestamp.
+- Active duration.
+- Fault current.
+- Protection detection status.
+- Clearing status.
+- Reset status.
+
+## Primary fault
+
+Balanced three-phase fault on Feeder A.
+
+## Required behavior
+
+1. Begin from stable parallel operation.
+2. Record pre-fault state.
+3. Trigger Feeder A fault.
+4. Modify actual network electrical equations.
+5. Recalculate bus voltages.
+6. Recalculate fault and feeder currents.
+7. Recalculate generator electrical power.
+8. Mechanical/electrical power imbalance changes.
+9. Rotor angles begin responding.
+10. Protection relays receive actual simulated measurements.
+11. Breakers operate after modeled delays.
+12. Network changes to post-fault topology.
+
+Do not simulate the fault by displaying a red flash while preserving the original power-flow solution.
+
+---
+
+# 13. CRITICAL FAULT CLEARING TIME
+
+Use:
+
+`26_L64_CriticalClearingTimeAnalyzer.fbx`
+
+This is the central Level 64 learning mechanic.
+
+## Definition
+
+Critical clearing time is the maximum fault-on duration, under a specific initial condition and topology, for which the simulated system retains the chosen transient-stability criterion after clearing.
+
+## Critical distinction
+
+CCT is not universally fixed.
+
+It depends on:
+
+- Generator inertias.
+- Generator dispatch.
+- Initial rotor angles.
+- Mechanical input.
+- Generator internal voltage.
+- Feeder impedance.
+- Fault location.
+- Fault impedance.
+- Protection operation.
+- Post-fault network.
+- Damping.
+- Stability criterion.
+
+## Required implementation
+
+Prefer repeatable fault-duration studies on an isolated copy of the simulation state.
+
+For a selected fault scenario:
+
+1. Capture the initial stable operating state.
+2. Choose a trial clearing time.
+3. Simulate the fault-on interval.
+4. Apply the required breaker operations.
+5. Simulate the post-fault response.
+6. Determine stable or unstable outcome.
+7. Repeat with additional clearing times.
+8. Narrow the stability boundary.
+9. Record estimated CCT and numerical tolerance.
+
+## Important
+
+Do not run destructive trial simulations on the player's live scene unless state isolation and restoration are guaranteed.
+
+Prefer a separate deterministic simulation state.
+
+Do not hardcode CCT to an arbitrary value such as 0.38 seconds merely because it appears in concept art.
+
+Do not claim mathematical CCT precision beyond the chosen solver and time resolution.
+
+---
+
+# 14. TRANSIENT STABILITY CRITERION
+
+The level must determine stability from actual trajectories.
+
+## Required metrics
+
+- Relative rotor angle.
+- Relative rotor speed.
+- Maximum angle excursion.
+- Pole-slip events.
+- Post-fault angle oscillations.
+- Electrical power transfer.
+- Frequency deviations.
+- Stability observation duration.
+- Damping/settling behavior.
+
+## Stability test
+
+Implement a documented finite-horizon transient stability criterion.
+
+A stable run should show bounded relative angle behavior and acceptable post-fault operation.
+
+An unstable run may exhibit sustained angle divergence or pole slipping.
+
+Use the actual model's electrical angle reference and suitable unwrapping of relative angles.
+
+Do not classify the system as stable solely because an angle is below a universal fixed degree threshold.
+
+## Rotor angle wrapping
+
+Store continuous/unwrapped rotor-angle information for stability analysis.
+
+Use wrapped angles only where appropriate for visual display.
+
+Avoid falsely treating a 360-degree pole slip as a return to 0 degrees.
+
+---
+
+# 15. DISTANCE PROTECTION RELAYS
+
+Use:
+
+- `21_L64_DistanceProtectionRelayA.fbx`
+- `22_L64_DistanceProtectionRelayB.fbx`
+
+Implement appropriate educational distance protection.
+
+## Required measurements
+
+- Feeder voltage.
+- Feeder current.
+- Current direction where supported.
+- Apparent impedance.
+- Protection zone.
+- Time delay.
+- Pickup status.
+- Trip status.
+- Measurement validity.
+
+## Apparent impedance
+
+For a simplified correctly polarized phase/fault loop:
+
+`Zapparent = Vmeasured / Imeasured`
+
+Use phasor quantities and valid current magnitude.
+
+Do not divide by zero or interpret invalid current as a meaningful impedance.
+
+## Protection rules
+
+- Feeder A relay detects the designated fault in its protected zone.
+- Feeder B relay should not unnecessarily trip for a fault external to its zone.
+- Delay and reach settings affect selectivity and clearing time.
+- Relay operation must command actual breakers.
+
+## Important
+
+A balanced fault model may use a simplified positive-sequence distance element.
+
+Do not claim sophisticated directional or phase-selection capabilities unless implemented.
+
+---
+
+# 16. DIFFERENTIAL PROTECTION
+
+Use:
+
+`23_L64_DifferentialProtectionRelay.fbx`
+
+Implement a consistent differential protection zone.
+
+## Required inputs
+
+- Current at zone boundary A.
+- Current at zone boundary B.
+- CT polarity.
+- CT scaling.
+- Measurement timestamps.
+- Differential current.
+- Restraint current.
+- Pickup threshold.
+- Trip delay.
+
+## Differential concept
+
+For correctly oriented currents:
+
+`Idifferential = magnitude(Iin + Iout)`
+
+where the sign convention makes through-current cancel.
+
+Use a suitable restraint or percentage differential logic.
+
+## Required behavior
+
+- Internal fault produces appropriate differential condition.
+- External or through-fault should not cause an unjustified trip.
+- Missing CT feedback invalidates protection.
+- Trip output changes actual breaker state.
+
+Do not simply set DIFFERENTIAL TRIPPED when a fault button is pressed.
+
+---
+
+# 17. CIRCUIT BREAKER DYNAMICS
+
+All six breakers must have independent states.
+
+## Breaker IDs
+
+- QGA — Generator A
+- QGB — Generator B
+- QFA_IN — Feeder A sending end
+- QFA_OUT — Feeder A receiving end
+- QFB_IN — Feeder B sending end
+- QFB_OUT — Feeder B receiving end
+
+## Required states
+
+- OPEN
+- CLOSING
+- CLOSED
+- OPENING
+- TRIPPED
+- FAILED_TO_OPEN
+- LOCKED_OUT
+
+## Required properties
+
+- Commanded state.
+- Actual state.
+- Opening delay.
+- Closing delay.
+- Trip timing.
+- Auxiliary feedback.
+- Failure mode.
+- Current interruption status.
+- Reset eligibility.
+
+## Important
+
+A trip command is not the same as verified opening.
+
+The breaker must enter the correct transition state and update network topology only when its actual contacts open.
+
+For breaker failure, the contacts must remain connected despite a trip command.
+
+---
+
+# 18. BREAKER FAILURE PROTECTION
+
+This is Objective 5's main challenge.
+
+## Fault scenario
+
+Feeder A receives a three-phase fault.
+
+The player triggers a failure of its receiving-end breaker:
+
+`QFA_OUT`
+
+The breaker receives a trip command but fails to open.
+
+## Required response
+
+1. Fault begins.
+2. Primary relays detect fault.
+3. Trip commands are issued.
+4. QFA_IN opens normally.
+5. QFA_OUT remains electrically closed.
+6. Actual fault current persists through an available energized path where topology supports it.
+7. Breaker-failure supervision detects missing isolation.
+8. Backup breaker trip logic activates.
+9. The required adjacent breaker(s) open.
+10. Faulted equipment is isolated.
+11. Post-fault topology is recalculated.
+12. Rotor-angle stability is evaluated.
+
+## Critical protection rule
+
+Backup tripping must depend on actual topology.
+
+Do not automatically open a fixed unrelated breaker.
+
+Identify which energized source or bus can continue feeding the failed breaker location.
+
+Preserve the healthy feeder wherever a selective safe solution exists.
+
+If a selective safe solution is impossible, the model must report the necessary wider isolation.
+
+Do not guarantee success by ignoring persistent fault current.
+
+---
+
+# 19. OUT-OF-STEP PROTECTION
+
+Use:
+
+`24_L64_OutOfStepProtectionRelay.fbx`
+
+## Required measurements
+
+- Relative rotor-angle trajectory.
+- Relative speed.
+- Pole-slip detection.
+- Electrical impedance trajectory where supported.
+- Measurement validity.
+- Protection state.
+
+## Required behavior
+
+- Detect loss-of-synchronism conditions.
+- Distinguish stable oscillations from clearly unstable behavior using the defined model.
+- Issue appropriate protective action.
+- Record event history.
+- Prevent unsafe automatic reclosing after an out-of-step trip.
+
+## Important
+
+Do not use the out-of-step relay to falsely preserve synchronism.
+
+If synchronism is actually lost, the protection system should isolate the affected portion appropriately.
+
+An emergency trip can prevent equipment damage while still counting as a failed transient-stability test.
+
+---
+
+# 20. GENERATOR EXCITATION CONTROL
+
+Use:
+
+`28_L64_GeneratorExcitationController.fbx`
+
+Implement or reuse a simplified excitation system.
+
+## Required properties
+
+- Voltage reference.
+- Measured terminal voltage.
+- Excitation command.
+- Field voltage or internal EMF state.
+- Response time.
+- Gain.
+- Saturation.
+- Protection limits.
+
+## Required behavior
+
+Excitation must influence the modeled generator electrical state.
+
+It may affect internal voltage, reactive power and synchronizing torque depending on model fidelity.
+
+Do not change rotor-angle stability directly through a decorative EXCITATION setting.
+
+---
+
+# 21. GENERATOR GOVERNOR CONTROL
+
+Use:
+
+`29_L64_GeneratorGovernorController.fbx`
+
+Implement coherent prime-mover control.
+
+## Required properties
+
+- Power reference.
+- Speed/frequency feedback.
+- Mechanical power.
+- Governor droop.
+- Response delay.
+- Mechanical power ramp limit.
+- Saturation.
+- Protection status.
+
+## Required behavior
+
+Governor commands affect mechanical input torque or power.
+
+The governor cannot change shaft speed instantaneously.
+
+During the fault-on interval, mechanical input must respond according to the modeled prime-mover dynamics.
+
+Do not automatically force mechanical and electrical power equal.
+
+---
+
+# 22. POWER SYSTEM STABILIZER
+
+Use:
+
+`30_L64_PowerSystemStabilizer.fbx`
+
+This is Objective 4's central control mechanic.
+
+## Required signals
+
+- Rotor speed deviation.
+- Frequency deviation.
+- Electrical power deviation.
+- Stabilizer gain.
+- Washout/filter state.
+- Phase compensation where implemented.
+- Output limits.
+- Excitation modulation command.
+
+## Required behavior
+
+The PSS must influence generator excitation or another explicitly modeled stabilizing actuator.
+
+It must affect actual electromechanical oscillations.
+
+## Player settings
+
+- Stabilizer enable.
+- Gain.
+- Damping strength.
+- Response time.
+- Filter parameters within safe ranges.
+
+## Pass criteria
+
+Following a controlled fault-clearing event:
+
+- Relative rotor-angle oscillations remain bounded.
+- Oscillation amplitude decreases.
+- Settling occurs within the configured observation interval.
+- No unstable feedback develops.
+- Generator limits respected.
+- Electrical power remains valid.
+
+Do not implement damping by directly shrinking the displayed rotor-angle graph.
+
+---
+
+# 23. SYNCHROPHASOR MEASUREMENT UNITS
+
+Use:
+
+- `17_L64_SynchrophasorMeasurementUnitA.fbx`
+- `18_L64_SynchrophasorMeasurementUnitB.fbx`
+
+## Required properties
+
+- Local voltage phasor.
+- Local frequency.
+- Phase angle.
+- Timestamp.
+- Validity.
+- Calibration.
+- Measurement latency.
+- Signal freshness.
+- Communication/terminal connectivity.
+
+## Relative angle measurement
+
+The controller must compare angles with a common time reference.
+
+Do not compare unsynchronized PMU timestamps as though they were simultaneous.
+
+## Measurement behavior
+
+- Missing voltage reference invalidates the PMU.
+- Disconnected signal invalidates controller feedback.
+- Excessive latency may inhibit sensitive operations.
+- Invalid measurements must not be silently converted to zero.
+
+---
+
+# 24. GENERATOR ENCODERS
+
+Use:
+
+- `15_L64_GeneratorEncoderA.fbx`
+- `16_L64_GeneratorEncoderB.fbx`
+
+## Required outputs
+
+- Actual shaft angle measurement.
+- Speed.
+- Direction.
+- Pulse count where implemented.
+- Timestamp.
+- Validity.
+- Calibration.
+- Signal status.
+
+## Critical distinction
+
+A shaft encoder measures mechanical rotor position.
+
+A bus PMU measures electrical voltage phase.
+
+They are related but not interchangeable.
+
+The model must clearly distinguish generator electrical rotor angle from local bus-voltage phase.
+
+Do not directly treat PMU voltage angle as the generator shaft angle.
+
+---
+
+# 25. POWER-ANGLE ANALYZER
+
+Use:
+
+`27_L64_PowerAngleAnalyzer.fbx`
+
+## Required measurements
+
+- Generator A rotor angle.
+- Generator B rotor angle.
+- Relative rotor angle.
+- Generator electrical power.
+- Mechanical input power.
+- Accelerating power.
+- Transfer capability.
+- Post-fault power-angle relationship.
+- Synchronism status.
+
+## Required graph
+
+Display the actual simulated relationship between electrical power transfer and rotor-angle separation.
+
+When a simplified lossless model is used:
+
+`Ptransfer = Pmax * sin(Delta)`
+
+Recalculate `Pmax` when feeder topology changes.
+
+## Pre-fault versus post-fault
+
+Display distinct transfer characteristics for:
+
+- Both feeders healthy.
+- Fault-on condition.
+- Feeder A isolated.
+
+Do not reuse the same power-angle curve regardless of topology.
+
+---
+
+# 26. INDUSTRIAL LOAD BANK
+
+Use:
+
+`31_L64_IndustrialLoadBank.fbx`
+
+## Required properties
+
+- Requested load.
+- Actual active power.
+- Reactive power.
+- Connection state.
+- Voltage dependency.
+- Current.
+- Power factor.
+- Load-step setting.
+- Protection state.
+
+## Required behavior
+
+Changing load modifies real network demand.
+
+Generator electrical power and rotor-angle equilibrium must respond accordingly.
+
+Do not change rotor angle directly when the player adjusts the load.
+
+---
+
+# 27. FAULT CLEARING EVENT RECORDER
+
+Implement time-history recording for:
+
+- Fault application timestamp.
+- Relay pickup timestamp.
+- Relay trip command timestamp.
+- Breaker opening timestamp.
+- Total fault-clearing time.
+- Generator A rotor angle.
+- Generator B rotor angle.
+- Relative rotor angle.
+- Rotor speeds.
+- Generator active power.
+- Feeder currents.
+- Fault current.
+- Remaining feeder power.
+- Stabilizer output.
+- Out-of-step status.
+
+## Timing definitions
+
+Distinguish:
+
+- Fault detection delay.
+- Relay logic delay.
+- Breaker mechanical opening delay.
+- Total clearing time.
+
+Total clearing time must be measured from actual fault application until the fault is electrically isolated.
+
+Do not count the fault as cleared merely because a relay issued a trip command.
+
+---
+
+# 28. PROTECTION AND SAFETY
+
+Required faults include:
+
+- Generator overspeed.
+- Generator underfrequency.
+- Generator overfrequency.
+- Generator overcurrent.
+- Excessive rotor-angle separation.
+- Pole slip.
+- Feeder overcurrent.
+- Bus undervoltage.
+- Bus overvoltage.
+- Invalid CT feedback.
+- Invalid PMU feedback.
+- Encoder signal loss.
+- Distance relay malfunction.
+- Differential relay malfunction.
+- Breaker failure.
+- Unsafe breaker closing.
+- Incorrect phase sequence.
+- Unsafe source synchronization.
+- Fault clearing timeout.
+- Excessive power oscillation.
+- Excitation saturation.
+- Governor saturation.
+- Safety enclosure open.
+- Invalid numerical state.
+- Unexpected wiring topology changes.
+
+## Fault handling
+
+1. Identify exact fault cause.
+2. Record current operating state.
+3. Reject unsafe commands.
+4. Apply appropriate protection.
+5. Operate breakers according to actual topology.
+6. Recalculate the electrical network.
+7. Preserve healthy paths where possible.
+8. Update rotor dynamics.
+9. Latch critical faults.
+10. Require repair.
+11. Require explicit reset.
+12. Require new valid measurements.
+13. Revalidate synchronization.
+14. Permit restoration only when safe.
+15. Record recovery history.
+
+Do not preserve an electrically impossible healthy system simply to prevent an objective failure.
+
+---
+
+# 29. SIX AUTHORITATIVE LEVEL OBJECTIVES
+
+Integrate all six objectives into the real Project Spark evaluator.
+
+## OBJECTIVE 1 — BUILD THE TRANSIENT STABILITY NETWORK
+
+Require:
+
+1. All 62 expected player wires connected.
+2. All 96 terminals registered.
+3. Valid 5 V control power.
+4. Valid control return.
+5. Generator A connected.
+6. Generator B connected.
+7. Both prime movers connected.
+8. Both source breakers connected.
+9. Bus A and Bus B valid.
+10. Feeder A connected.
+11. Feeder B connected.
+12. All four feeder breakers connected.
+13. Generator encoders connected.
+14. PMUs connected.
+15. Current transformer banks connected.
+16. Distance relays connected.
+17. Differential relay connected.
+18. Out-of-step relay connected.
+19. Fault injection connected.
+20. Excitation/governor controllers connected.
+21. PSS connected.
+22. No unsafe electrical topology.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — SYNCHRONIZE BOTH GENERATORS
+
+Require:
+
+1. Objective 1 certified.
+2. Generator A mechanically available.
+3. Generator B mechanically available.
+4. Both generator encoders calibrated.
+5. Both PMUs calibrated.
+6. Voltage references valid.
+7. Phase sequence valid.
+8. Frequency mismatch within tolerance.
+9. Phase mismatch within tolerance.
+10. Voltage mismatch within tolerance.
+11. Source breakers close safely.
+12. Both feeders healthy.
+13. Generator powers measured.
+14. Rotor-angle separation bounded.
+15. Stable baseline operating interval recorded.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — CLEAR THE FAULT IN TIME
+
+Require:
+
+1. Stable synchronized baseline.
+2. Feeder A fault applied.
+3. Actual fault current produced.
+4. Generator electrical power changes.
+5. Rotor-angle dynamics respond.
+6. Protection correctly detects the Feeder A fault.
+7. Trip commands issued.
+8. QFA_IN opens.
+9. QFA_OUT opens.
+10. Fault current is interrupted.
+11. Total fault-clearing time recorded.
+12. Fault clearing occurs within the verified stability margin.
+13. Feeder B remains in service where safe.
+14. Post-fault network solves correctly.
+15. Generator synchronism preserved.
+16. Stable observation interval completed.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — STABILIZE ROTOR OSCILLATIONS
+
+Require:
+
+1. Objective 3 historically certified.
+2. Valid post-fault operating state.
+3. Stabilizer enabled.
+4. Excitation feedback valid.
+5. Controlled disturbance applied.
+6. Rotor-angle oscillation measured.
+7. PSS produces bounded real control output.
+8. Excitation model responds.
+9. Oscillation amplitude decreases.
+10. Relative rotor-angle behavior remains stable.
+11. Generator currents within limits.
+12. No protection fault.
+13. Acceptable settling interval completed.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — SURVIVE A BREAKER FAILURE
+
+Require:
+
+1. Prior stability tests certified.
+2. Valid baseline established.
+3. Feeder A fault applied.
+4. QFA_OUT designated failed.
+5. Primary relay detects fault.
+6. Normal trip command issued.
+7. QFA_OUT fails to open electrically.
+8. Persistent fault current detected.
+9. Breaker-failure timer operates.
+10. Correct backup isolation occurs.
+11. Fault current is interrupted.
+12. Electrical topology updates.
+13. Remaining feeder operation evaluated.
+14. Generator synchronism preserved if physically achievable under the configured scenario.
+15. No unsafe automatic reclose.
+16. Stable post-fault observation interval completed.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — RESTORE MEASUREMENT AND CERTIFY SYNCHRONISM
+
+Require:
+
+1. Objectives 1–5 historically certified.
+2. Designated Generator B PMU feedback wire disconnected.
+3. Actual topology invalidated.
+4. Phase-angle feedback marked invalid.
+5. Controller detects missing measurement.
+6. Unsafe automatic closing inhibited.
+7. Relevant fault latched.
+8. Player reconnects actual wire.
+9. Measurement validity restored.
+10. PMU B recalibrated.
+11. Player explicitly resets fault.
+12. Generator and bus references validated.
+13. Feeder condition verified clear.
+14. Required breaker restoration performed safely.
+15. Synchronism verified.
+16. New controlled Feeder A fault test performed.
+17. Actual protection clearing succeeds.
+18. Generator rotor angles remain stable.
+19. No unresolved critical fault.
+20. Final observation and certification complete.
+
+Progress becomes **6/6**.
+
+## Critical objective behavior
+
+Do not erase previous verified objectives merely because the final test deliberately disconnects a signal.
+
+Do not award Objective 6 simply because the signal is reconnected.
+
+Do not complete the level without the fresh certification.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6.**
+
+---
+
+# 30. RECOMMENDED UNITY C# ARCHITECTURE
+
+Inspect existing code before adding these classes.
+
+Suggested Level 64 responsibilities:
+
+- `SparkLevel64Coordinator.cs`
+- `SparkLevel64MultiMachineNetwork.cs`
+- `SparkLevel64GeneratorDynamics.cs`
+- `SparkLevel64RotorAngleSolver.cs`
+- `SparkLevel64TransmissionFeeder.cs`
+- `SparkLevel64FaultNetwork.cs`
+- `SparkLevel64DistanceProtection.cs`
+- `SparkLevel64DifferentialProtection.cs`
+- `SparkLevel64BreakerFailureProtection.cs`
+- `SparkLevel64OutOfStepProtection.cs`
+- `SparkLevel64CircuitBreaker.cs`
+- `SparkLevel64CriticalClearingTime.cs`
+- `SparkLevel64SynchrophasorMeasurement.cs`
+- `SparkLevel64GeneratorEncoder.cs`
+- `SparkLevel64ExcitationController.cs`
+- `SparkLevel64GovernorController.cs`
+- `SparkLevel64PowerSystemStabilizer.cs`
+- `SparkLevel64PowerAngleAnalyzer.cs`
+- `SparkLevel64FaultScenarioController.cs`
+- `SparkLevel64SafetyController.cs`
+- `SparkLevel64ObjectiveTracker.cs`
+- `SparkLevel64Dashboard.cs`
+- `SparkLevel64Interaction.cs`
+- `SparkLevel64VisualRig.cs`
+
+These names describe responsibilities, not verified project APIs.
+
+Reuse compatible implementations rather than duplicating them.
+
+## Runtime simulation sequence
+
+1. Validate wiring topology.
+2. Read player commands.
+3. Update protection settings.
+4. Update breaker mechanical transitions.
+5. Determine actual electrical topology.
+6. Update fault conditions.
+7. Solve electrical network for current state.
+8. Calculate generator electrical powers.
+9. Calculate prime-mover mechanical powers.
+10. Advance generator rotor dynamics.
+11. Update generator electrical phase states.
+12. Acquire encoder measurements.
+13. Acquire PMU measurements.
+14. Acquire CT measurements.
+15. Evaluate protection relays.
+16. Process trip commands.
+17. Evaluate breaker-failure conditions.
+18. Evaluate out-of-step conditions.
+19. Update excitation and governor controls.
+20. Update power-system stabilizer output.
+21. Record dynamic event histories.
+22. Evaluate stability criteria.
+23. Evaluate authoritative objectives.
+24. Update live dashboard.
+25. Update visual animations.
+
+## Numerical stability
+
+Use a consistent integration timestep.
+
+Use substeps where required by fault dynamics and breaker timing.
+
+Do not integrate one simulation interval twice.
+
+Do not recursively call a shared solver from its completion event.
+
+Document numerical tolerances and failure handling.
+
+---
+
+# 31. LIVE AAA TRANSIENT STABILITY DASHBOARD
+
+Use:
+
+- `26_L64_CriticalClearingTimeAnalyzer`
+- `27_L64_PowerAngleAnalyzer`
+- `33_L64_HolographicStabilityMonitor`
+
+Create live TextMeshPro displays and dynamic graphs.
+
+## Required readings
+
+- MAIN POWER
+- GENERATOR A STATUS
+- GENERATOR B STATUS
+- GENERATOR A RPM
+- GENERATOR B RPM
+- GENERATOR A ROTOR ANGLE
+- GENERATOR B ROTOR ANGLE
+- RELATIVE ROTOR ANGLE
+- ROTOR SPEED DIFFERENCE
+- GENERATOR A ACTIVE POWER
+- GENERATOR B ACTIVE POWER
+- GENERATOR MECHANICAL POWER
+- GENERATOR ACCELERATING POWER
+- GRID FREQUENCY
+- BUS A VOLTAGE
+- BUS B VOLTAGE
+- FEEDER A CURRENT
+- FEEDER B CURRENT
+- FEEDER A POWER
+- FEEDER B POWER
+- FAULT STATE
+- FAULT DETECTION TIME
+- RELAY TRIP TIME
+- BREAKER OPENING TIME
+- TOTAL FAULT CLEARING TIME
+- ESTIMATED CRITICAL CLEARING TIME
+- STABILITY MARGIN
+- DISTANCE RELAY A
+- DISTANCE RELAY B
+- DIFFERENTIAL PROTECTION
+- BREAKER FAILURE STATUS
+- OUT-OF-STEP STATUS
+- PSS GAIN
+- EXCITATION STATUS
+- GOVERNOR STATUS
+- PMU A VALIDITY
+- PMU B VALIDITY
+- PROTECTION EVENT LOG
+- OBJECTIVES X/6
+
+## Player controls
+
+- MAIN POWER
+- CALIBRATE ENCODERS
+- CALIBRATE PMUS
+- CALIBRATE CTS
+- START GENERATOR A
+- START GENERATOR B
+- SYNC CHECK
+- CLOSE GENERATOR BREAKERS
+- ENABLE DISTANCE RELAYS
+- ENABLE DIFFERENTIAL RELAY
+- SET RELAY DELAY
+- SET BREAKER DELAY
+- THREE-PHASE FAULT TEST
+- DELAY TEST
+- ENABLE PSS
+- TUNE EXCITATION
+- TUNE DAMPING
+- BREAKER FAILURE TEST
+- OUT-OF-STEP TEST
+- PMU SENSOR FAULT
+- RESET FAULT
+- RESTORE FEEDER
+- FINAL CERTIFY
+
+Every control must affect real gameplay state.
+
+Do not create decorative buttons that only update labels.
+
+---
+
+# 32. AAA VISUAL IMPLEMENTATION
+
+Create a Level 64 visual-only adapter.
+
+All visual states must come from the authoritative simulation.
+
+## Normal synchronized operation
+
+- Both generator rotors rotate according to actual shaft state.
+- Both generators report valid operating status.
+- Feeder A and B indicators active.
+- Both PMUs valid.
+- Stability monitor shows actual rotor angles and power transfer.
+
+## Fault on Feeder A
+
+- Fault chamber warning activates.
+- Feeder A fault state becomes visible.
+- Fault current and voltage measurements change.
+- Rotor-angle graph responds.
+- Protection relays display measured pickup/trip state.
+
+## Successful fault clearing
+
+- QFA_IN opens.
+- QFA_OUT opens.
+- Feeder A becomes isolated.
+- Feeder B remains active when supported.
+- Generator rotor-angle difference settles.
+- Stability monitor updates actual results.
+
+## Delayed clearing
+
+- Fault persists longer.
+- Rotor-angle excursion grows according to physics.
+- Out-of-step protection may activate.
+- The dashboard must report the real outcome.
+
+## Breaker failure
+
+- Failed breaker remains electrically connected.
+- Backup protection operates.
+- Associated switch animations follow actual state.
+- Fault remains active until genuinely isolated.
+
+## Sensor fault
+
+- PMU B validity becomes false.
+- Relevant control/protection functions become restricted.
+- Unsafe reclose controls disabled.
+- Fault indicator remains latched.
+
+## Recovery
+
+- Sensor reconnected.
+- Calibration completed.
+- Fault reset.
+- Safe breaker restoration performed.
+- Fresh transient test succeeds.
+- Final 6/6 appears only after evaluator certification.
+
+---
+
+# 33. UNITY EDITOR LEVEL CREATOR
+
+Create:
+
+`Tools/Project Spark/Levels/Create Level 64`
+
+The creator must safely create or update:
+
+- `Level_64.asset`
+- `Level_64_Layout.prefab`
+- Level-specific simulation configurations
+- Electrical wiring manifest
+- Terminal binding manifest
+- Component binding manifest
+- Six objective definitions
+- Animation mappings
+- Validation report
+
+## Required Editor operations
+
+1. Inspect existing Project Spark Editor infrastructure.
+2. Locate all 36 FBX models.
+3. Validate model paths.
+4. Validate import scale and orientation.
+5. Create/update Level 64 definition.
+6. Set ID to `level_64`.
+7. Set display name and subtitle.
+8. Create six authoritative objectives.
+9. Create/update layout prefab.
+10. Create `L64_HD_VISUAL_ART`.
+11. Instantiate all 36 FBXs.
+12. Preserve common-origin placement.
+13. Configure Generator A.
+14. Configure Generator B.
+15. Configure prime mover A.
+16. Configure prime mover B.
+17. Configure both generator breakers.
+18. Configure Bus A.
+19. Configure Bus B.
+20. Configure Feeder A.
+21. Configure Feeder B.
+22. Configure four feeder breakers.
+23. Configure both generator encoders.
+24. Configure both PMUs.
+25. Configure both current transformer banks.
+26. Configure distance relay A.
+27. Configure distance relay B.
+28. Configure differential protection.
+29. Configure out-of-step protection.
+30. Configure fault-injection chamber.
+31. Configure CCT analyzer.
+32. Configure power-angle analyzer.
+33. Configure excitation control.
+34. Configure governor control.
+35. Configure PSS.
+36. Configure industrial load bank.
+37. Configure stability master controller.
+38. Configure holographic monitor.
+39. Configure safety enclosure.
+40. Configure regulated 5 V supply.
+41. Register exactly 96 unique terminal anchors.
+42. Configure exactly 62 player-wire declarations.
+43. Register component IDs.
+44. Register terminal IDs.
+45. Configure fixed internal connections.
+46. Configure generator inertia.
+47. Configure generator reactances.
+48. Configure feeder impedances.
+49. Configure fault location and impedance.
+50. Configure relay pickup and delays.
+51. Configure breaker operating delays.
+52. Configure CCT calculation.
+53. Configure power-angle analysis.
+54. Configure out-of-step protection.
+55. Configure PSS settings.
+56. Configure backup breaker failure.
+57. Configure sensor fault scenario.
+58. Assign all 14 documented animation mappings.
+59. Create live dashboard displays.
+60. Configure gameplay buttons.
+61. Bind six authoritative objectives.
+62. Detect missing references.
+63. Detect duplicate IDs.
+64. Detect conflicting simulation ownership.
+65. Generate diagnostic report.
+66. Save level definition and prefab.
+
+## Editor reliability
+
+Reuse compatible functionality from:
+
+`SparkLevel64ArtPlacementEditor.cs`
+
+The existing helper places visual geometry only.
+
+It does not create playable electrical components, 96 functional terminals, 62 player wires, generator dynamics or objectives.
+
+Extend it safely or create a separate full level builder.
+
+Use actual `AssetDatabase` paths.
+
+Do not invent GUIDs.
+
+Use appropriate Unity editor APIs, Undo, `PrefabUtility`, `SerializedObject` and asset-saving operations.
+
+Make the creator safe to rerun.
+
+Do not duplicate model instances, controllers, components or terminal anchors.
+
+Do not silently destroy unrelated user modifications.
+
+---
+
+# 34. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 62 WIRES → VERIFY 96 TERMINALS → POWER CONTROL CIRCUITS → CALIBRATE ENCODERS → CALIBRATE PMUS → CALIBRATE CTS → CONFIGURE PROTECTION → START GENERATOR A → START GENERATOR B → SYNCHRONIZE SOURCES → ESTABLISH DUAL-FEEDER POWER FLOW → RECORD STABLE ROTOR ANGLES → CONFIGURE FAULT CLEARING → APPLY THREE-PHASE FEEDER A FAULT → DETECT FAULT → TRIP BOTH FEEDER A BREAKERS → CLEAR FAULT BEFORE STABILITY LIMIT → PRESERVE GENERATOR SYNCHRONISM → VERIFY FEEDER B OPERATION → ENABLE POWER SYSTEM STABILIZER → TUNE EXCITATION AND DAMPING → VERIFY OSCILLATION SETTLING → SIMULATE FEEDER BREAKER FAILURE → DETECT PERSISTENT FAULT CURRENT → ACTIVATE BACKUP ISOLATION → PRESERVE STABILITY → DISCONNECT GENERATOR B PMU FEEDBACK → DETECT INVALID ANGLE REFERENCE → INHIBIT UNSAFE RECLOSING → RECONNECT SIGNAL → RECALIBRATE PMU → RESET FAULT → RESTORE FEEDER SAFELY → REPEAT TRANSIENT FAULT TEST → FINAL SYNCHRONISM CERTIFICATION → 6/6 COMPLETE**
+
+## Suggested player-facing messages
+
+- `BUILD THE TRANSIENT STABILITY NETWORK`
+- `CONNECT ALL 62 WIRES`
+- `VERIFY 96 TERMINALS`
+- `CALIBRATE ROTOR ENCODERS`
+- `CALIBRATE SYNCHROPHASOR MEASUREMENTS`
+- `CONFIGURE PROTECTION RELAYS`
+- `START GENERATOR A`
+- `START GENERATOR B`
+- `MATCH FREQUENCY AND PHASE`
+- `SYNCHRONIZATION READY`
+- `CONNECT BOTH GENERATORS`
+- `DUAL FEEDERS ONLINE`
+- `RECORD ROTOR-ANGLE BASELINE`
+- `CONFIGURE FAULT CLEARING`
+- `APPLY THREE-PHASE FAULT`
+- `FEEDER A FAULT DETECTED`
+- `PROTECTION TRIP REQUESTED`
+- `FEEDER A BREAKERS OPEN`
+- `FAULT CLEARED`
+- `ROTOR-ANGLE STABILITY CHECK`
+- `SYNCHRONISM PRESERVED`
+- `ENABLE POWER SYSTEM STABILIZER`
+- `TUNE OSCILLATION DAMPING`
+- `POST-FAULT STABILITY VERIFIED`
+- `BEGIN BREAKER FAILURE TEST`
+- `BREAKER FAILED TO OPEN`
+- `BACKUP PROTECTION ACTIVE`
+- `FAULT ISOLATED`
+- `DISCONNECT GENERATOR B ANGLE FEEDBACK`
+- `SYNCHROPHASOR FEEDBACK LOST`
+- `AUTOMATIC RECLOSE INHIBITED`
+- `RESTORE PMU CONNECTION`
+- `RECALIBRATE`
+- `RESET LATCHED FAULT`
+- `RESTORE FEEDER`
+- `FINAL TRANSIENT STABILITY TEST`
+- `LEVEL 64 COMPLETE`
+
+---
+
+# 35. TESTING AND DIAGNOSTICS
+
+Implement exact diagnostic reporting for:
+
+- Incorrect W01–W62 wiring.
+- Missing terminal IDs.
+- Duplicate terminal IDs.
+- Invalid control power.
+- Missing control return.
+- Incorrect three-phase connections.
+- Generator A disconnected.
+- Generator B disconnected.
+- Invalid source breaker topology.
+- Incorrect feeder phase routing.
+- Feeder impedance invalid.
+- CT scaling incorrect.
+- CT polarity incorrect.
+- PMU timestamps invalid.
+- PMU B disconnected.
+- Rotor encoder invalid.
+- Generator mechanical power absent.
+- Generator electrical power absent.
+- Rotor-angle integration inconsistent.
+- Generator phase-angle reference incorrect.
+- Fault not affecting electrical network.
+- Fault current remaining zero unexpectedly.
+- Relay incorrectly detecting fault.
+- Distance relay reach incorrect.
+- Differential relay false trip.
+- Breaker trip command not changing actual state.
+- Breaker opening delay ignored.
+- Failed breaker incorrectly opening.
+- Backup protection not clearing fault.
+- Healthy feeder tripped unnecessarily.
+- Critical clearing time not recomputed.
+- CCT evaluation altering live player state.
+- Pole slip incorrectly hidden by angle wrapping.
+- Out-of-step detection missing.
+- PSS gain not affecting generator dynamics.
+- Post-fault oscillations not settling.
+- Synchronization check bypassed.
+- Unsafe reclosing permitted.
+- Fault reset without repair.
+- Historical objectives erased.
+- Manager stuck at 0/6 or 5/6.
+- Scene restart/reload problems.
+- Regression in Levels 1–63.
+
+## Required tests
+
+1. Correct 62-wire topology.
+2. Exactly 96 terminal IDs valid.
+3. Control power valid.
+4. Generator A mechanically operable.
+5. Generator B mechanically operable.
+6. Generator encoder A valid.
+7. Generator encoder B valid.
+8. PMU A calibrated.
+9. PMU B calibrated.
+10. CT measurements valid.
+11. Source synchronization succeeds.
+12. Invalid synchronization rejected.
+13. Both generator breakers operate.
+14. Feeder A conducts power.
+15. Feeder B conducts power.
+16. Baseline rotor angles stable.
+17. Pre-fault power transfer valid.
+18. Three-phase fault changes network voltage/current.
+19. Generator electrical power responds.
+20. Generator accelerating power changes.
+21. Rotor angles respond dynamically.
+22. Distance relay A detects designated fault.
+23. Distance relay B remains selective.
+24. Differential protection behaves correctly.
+25. Feeder A sending breaker opens.
+26. Feeder A receiving breaker opens.
+27. Total clearing time measured correctly.
+28. Fault current actually interrupted.
+29. Post-fault Feeder B power recalculated.
+30. Generator synchronism preserved for a suitable clearing time.
+31. Delayed clearing increases instability risk.
+32. Estimated CCT changes with model parameters.
+33. PSS modifies actual excitation/dynamics.
+34. Rotor oscillations damp when correctly tuned.
+35. Breaker failure is electrically real.
+36. Persistent fault current detected.
+37. Backup protection activates.
+38. Correct backup isolation occurs.
+39. Healthy feeder retained where topology permits.
+40. Out-of-step protection detects genuinely unstable behavior.
+41. Disconnect designated Generator B PMU wire.
+42. PMU feedback becomes invalid.
+43. Unsafe automatic closing inhibited.
+44. Fault latches.
+45. Reconnect actual wire.
+46. Measurement validity restored.
+47. Explicit reset succeeds.
+48. Safe feeder restoration succeeds.
+49. Fresh fault clearing succeeds.
+50. Final rotor-angle stability verified.
+51. Authoritative manager reaches 6/6.
+52. Level progression succeeds.
+53. Levels 1–63 remain unaffected.
+
+Only report tests as passed when actually executed.
+
+---
+
+# 36. REQUIRED DOWNLOADABLE DELIVERABLES
+
+Create a complete Level 64 Unity implementation ZIP containing:
+
+- Full Level 64 runtime C# scripts.
+- Two-machine dynamic electrical network.
+- Generator A dynamics.
+- Generator B dynamics.
+- Prime mover models.
+- Rotor-angle integration.
+- Generator synchronization.
+- Dual-feeder network.
+- Feeder electrical impedances.
+- Three-phase fault model.
+- Distance protection.
+- Differential protection.
+- Breaker failure protection.
+- Out-of-step protection.
+- Six independently operating circuit breakers.
+- Generator encoder integration.
+- PMU A integration.
+- PMU B integration.
+- Current transformer integration.
+- Critical clearing time analyzer.
+- Power-angle analyzer.
+- Generator excitation control.
+- Generator governor control.
+- Power-system stabilizer.
+- Industrial load-bank model.
+- Fault event recorder.
+- Sensor fault detection.
+- Fault repair/reset/recovery.
+- Six-objective evaluator integration.
+- Unity Editor Level 64 creator.
+- Level definition creator or asset.
+- Level layout prefab creator.
+- Exact W01–W62 wiring manifest.
+- 96-terminal binding manifest.
+- Component binding manifest.
+- All 14 animation pivot mappings.
+- Generator configuration.
+- Transmission-feeder configuration.
+- Fault profiles.
+- Relay settings.
+- Breaker operating delays.
+- CCT study settings.
+- Out-of-step settings.
+- PSS configuration.
+- Inspector setup instructions.
+- Player gameplay walkthrough.
+- Objective verification checklist.
+- Testing report.
+- Diagnostics and troubleshooting guide.
+
+Reuse:
+
+`ProjectSpark_Level64_HD_AAA_Models.zip`
+
+Do not regenerate the approved 36-model package unless a specific compatibility issue requires it.
+
+Only provide download links to files actually created and verified.
+
+Do not claim Unity compilation, Play Mode success or 6/6 completion without actually performing the tests.
+
+---
+
+# 37. FINAL EXECUTION REQUIREMENTS
+
+**IMPLEMENT LEVEL 64 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect my actual Project Spark Unity codebase and the approved Level 64 model package.
+
+Then:
+
+1. Reuse compatible electrical and mechanical infrastructure.
+2. Integrate all 36 individual FBX models.
+3. Finalize exactly 62 player-created wires.
+4. Register exactly 96 functional terminal anchors.
+5. Implement two independently simulated synchronous generators.
+6. Implement generator prime-mover dynamics.
+7. Implement actual source breaker topology.
+8. Implement two transmission feeders.
+9. Implement feeder impedance and power transfer.
+10. Implement generator rotor-angle dynamics.
+11. Implement valid source synchronization.
+12. Implement encoder and PMU measurements.
+13. Implement CT measurements.
+14. Implement balanced three-phase fault simulation.
+15. Implement fault-on and post-fault network transitions.
+16. Implement distance protection.
+17. Implement differential protection.
+18. Implement real breaker operating delays.
+19. Implement critical clearing time estimation.
+20. Implement dynamic stability evaluation.
+21. Implement power-angle analysis.
+22. Implement excitation control.
+23. Implement generator governor control.
+24. Implement PSS damping.
+25. Implement breaker failure.
+26. Implement selective backup protection.
+27. Implement out-of-step detection.
+28. Implement actual PMU feedback wire disconnection.
+29. Implement invalid feedback detection.
+30. Implement unsafe reclose inhibition.
+31. Implement fault repair and explicit reset.
+32. Implement safe feeder restoration.
+33. Implement final stability recertification.
+34. Integrate all six authoritative objectives.
+35. Create the Unity Editor Level 64 builder.
+36. Integrate all 14 verified animation mappings.
+37. Create the live holographic stability dashboard.
+38. Implement detailed diagnostics.
+39. Execute all feasible tests.
+40. Package and verify actual deliverables.
+
+Do not ask for approval of the already-approved Level 64 design.
+
+Do not fabricate rotor angles, RPM, frequency, fault current, relay states, clearing time, CCT, generator power, oscillation damping, breaker state or objective completion.
+
+If a Project Spark API cannot be verified, implement safely independent functionality where practical and clearly report the exact missing integration dependency.
+
+---
+
+# 38. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect all 62 required wires.
+2. Validate all 96 functional terminals.
+3. Commission both synchronous generators.
+4. Calibrate encoders, PMUs and CTs.
+5. Synchronize both generators.
+6. Establish stable parallel dual-feeder power transfer.
+7. Apply a genuine three-phase Feeder A fault.
+8. Observe actual fault current and electrical power disturbance.
+9. Observe the rotor-angle response of both generators.
+10. Configure protection clearing time.
+11. Trip the correct Feeder A breakers.
+12. Clear the fault before the stability boundary.
+13. Preserve generator synchronism.
+14. Maintain the healthy feeder where physically possible.
+15. Tune excitation and power-system damping.
+16. Stabilize post-fault rotor oscillations.
+17. Simulate a genuine breaker failure.
+18. Detect persistent fault current.
+19. Execute selective backup protection.
+20. Avoid loss of synchronism.
+21. Disconnect Generator B synchrophasor feedback.
+22. Detect invalid phase-angle measurement.
+23. Inhibit unsafe automatic reconnection.
+24. Reconnect and recalibrate the actual sensor.
+25. Explicitly reset the fault.
+26. Safely restore the feeder.
+27. Pass a fresh transient-stability certification.
+28. Complete all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 64.**
+
+The player must learn real multi-machine rotor-angle dynamics, generator synchronization, fault-on and post-fault power transfer, critical clearing time, selective protection, breaker-failure response, damping and out-of-step safety through meaningful simulation.
+
+**FINAL GOAL: A COMPLETE, POLISHED, UNITY-READY, AAA-QUALITY AND ACTUALLY PLAYABLE LEVEL 64 — HOLD THE SYNCHRONISM.**

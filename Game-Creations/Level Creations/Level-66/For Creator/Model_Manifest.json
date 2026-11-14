@@ -1,0 +1,406 @@
+{
+  "level_id": "level_66",
+  "display_name": "Save the Factory",
+  "asset_kind": "procedural 3D art only, no gameplay",
+  "individual_models": 40,
+  "planned_player_wires": 70,
+  "planned_unique_sockets": 110,
+  "real_terminals_included": false,
+  "physics_included": false,
+  "coordinate_system": "X bench width, Y up, Z front; 1 length unit = 1 Unity unit at scale 1",
+  "models": [
+    {
+      "file": "00_L66_IndustrialPredictiveMaintenanceBase.fbx",
+      "glb": "00_L66_IndustrialPredictiveMaintenanceBase.glb",
+      "name": "L66_IndustrialPredictiveMaintenanceBase",
+      "triangle_count": 1008,
+      "mesh_parts": 54,
+      "animation_pivots": {}
+    },
+    {
+      "file": "01_L66_IndustrialThreePhaseMotor.fbx",
+      "glb": "01_L66_IndustrialThreePhaseMotor.glb",
+      "name": "L66_IndustrialThreePhaseMotor",
+      "triangle_count": 1680,
+      "mesh_parts": 51,
+      "animation_pivots": {
+        "ANIM_MOTOR_ROTOR": [
+          -2.78,
+          1.53,
+          -0.05
+        ]
+      }
+    },
+    {
+      "file": "02_L66_MotorStatorCutaway.fbx",
+      "glb": "02_L66_MotorStatorCutaway.glb",
+      "name": "L66_MotorStatorCutaway",
+      "triangle_count": 1744,
+      "mesh_parts": 22,
+      "animation_pivots": {}
+    },
+    {
+      "file": "03_L66_MotorRotorShaft.fbx",
+      "glb": "03_L66_MotorRotorShaft.glb",
+      "name": "L66_MotorRotorShaft",
+      "triangle_count": 1568,
+      "mesh_parts": 10,
+      "animation_pivots": {
+        "ANIM_MOTOR_ROTOR": [
+          -2.75,
+          1.53,
+          -0.05
+        ]
+      }
+    },
+    {
+      "file": "04_L66_IndustrialGearboxHousing.fbx",
+      "glb": "04_L66_IndustrialGearboxHousing.glb",
+      "name": "L66_IndustrialGearboxHousing",
+      "triangle_count": 440,
+      "mesh_parts": 19,
+      "animation_pivots": {
+        "ANIM_GEARBOX_COVER": [
+          -2.05,
+          2.31,
+          -0.05
+        ]
+      }
+    },
+    {
+      "file": "05_L66_GearboxGearAssembly.fbx",
+      "glb": "05_L66_GearboxGearAssembly.glb",
+      "name": "L66_GearboxGearAssembly",
+      "triangle_count": 1488,
+      "mesh_parts": 63,
+      "animation_pivots": {
+        "ANIM_GEARBOX_GEARS": [
+          -1.56,
+          1.53,
+          -0.05
+        ]
+      }
+    },
+    {
+      "file": "06_L66_DriveShaftCoupling.fbx",
+      "glb": "06_L66_DriveShaftCoupling.glb",
+      "name": "L66_DriveShaftCoupling",
+      "triangle_count": 808,
+      "mesh_parts": 9,
+      "animation_pivots": {
+        "ANIM_SHAFT_COUPLING": [
+          -2.35,
+          1.53,
+          -0.05
+        ]
+      }
+    },
+    {
+      "file": "07_L66_DriveEndBearingCartridge.fbx",
+      "glb": "07_L66_DriveEndBearingCartridge.glb",
+      "name": "L66_DriveEndBearingCartridge",
+      "triangle_count": 1484,
+      "mesh_parts": 15,
+      "animation_pivots": {}
+    },
+    {
+      "file": "08_L66_NonDriveEndBearingCartridge.fbx",
+      "glb": "08_L66_NonDriveEndBearingCartridge.glb",
+      "name": "L66_NonDriveEndBearingCartridge",
+      "triangle_count": 1484,
+      "mesh_parts": 15,
+      "animation_pivots": {}
+    },
+    {
+      "file": "09_L66_DamagedBearingCartridge.fbx",
+      "glb": "09_L66_DamagedBearingCartridge.glb",
+      "name": "L66_DamagedBearingCartridge",
+      "triangle_count": 1520,
+      "mesh_parts": 18,
+      "animation_pivots": {}
+    },
+    {
+      "file": "10_L66_HealthyReplacementBearing.fbx",
+      "glb": "10_L66_HealthyReplacementBearing.glb",
+      "name": "L66_HealthyReplacementBearing",
+      "triangle_count": 1484,
+      "mesh_parts": 15,
+      "animation_pivots": {}
+    },
+    {
+      "file": "11_L66_IndustrialConveyorAssembly.fbx",
+      "glb": "11_L66_IndustrialConveyorAssembly.glb",
+      "name": "L66_IndustrialConveyorAssembly",
+      "triangle_count": 720,
+      "mesh_parts": 27,
+      "animation_pivots": {}
+    },
+    {
+      "file": "12_L66_ConveyorDriveRoller.fbx",
+      "glb": "12_L66_ConveyorDriveRoller.glb",
+      "name": "L66_ConveyorDriveRoller",
+      "triangle_count": 1152,
+      "mesh_parts": 8,
+      "animation_pivots": {
+        "ANIM_CONVEYOR_ROLLER": [
+          1.3,
+          1.42,
+          0.15
+        ]
+      }
+    },
+    {
+      "file": "13_L66_VariableFrequencyMotorDrive.fbx",
+      "glb": "13_L66_VariableFrequencyMotorDrive.glb",
+      "name": "L66_VariableFrequencyMotorDrive",
+      "triangle_count": 540,
+      "mesh_parts": 13,
+      "animation_pivots": {}
+    },
+    {
+      "file": "14_L66_MotorCurrentSensorBank.fbx",
+      "glb": "14_L66_MotorCurrentSensorBank.glb",
+      "name": "L66_MotorCurrentSensorBank",
+      "triangle_count": 992,
+      "mesh_parts": 16,
+      "animation_pivots": {}
+    },
+    {
+      "file": "15_L66_ThreeAxisVibrationSensor.fbx",
+      "glb": "15_L66_ThreeAxisVibrationSensor.glb",
+      "name": "L66_ThreeAxisVibrationSensor",
+      "triangle_count": 168,
+      "mesh_parts": 6,
+      "animation_pivots": {}
+    },
+    {
+      "file": "16_L66_SecondaryVibrationSensor.fbx",
+      "glb": "16_L66_SecondaryVibrationSensor.glb",
+      "name": "L66_SecondaryVibrationSensor",
+      "triangle_count": 104,
+      "mesh_parts": 4,
+      "animation_pivots": {}
+    },
+    {
+      "file": "17_L66_PrecisionShaftEncoder.fbx",
+      "glb": "17_L66_PrecisionShaftEncoder.glb",
+      "name": "L66_PrecisionShaftEncoder",
+      "triangle_count": 188,
+      "mesh_parts": 3,
+      "animation_pivots": {
+        "ANIM_ENCODER_DISC": [
+          -2.62,
+          1.53,
+          0.8600000000000001
+        ]
+      }
+    },
+    {
+      "file": "18_L66_BearingTemperatureProbe.fbx",
+      "glb": "18_L66_BearingTemperatureProbe.glb",
+      "name": "L66_BearingTemperatureProbe",
+      "triangle_count": 92,
+      "mesh_parts": 3,
+      "animation_pivots": {}
+    },
+    {
+      "file": "19_L66_MotorTemperatureProbe.fbx",
+      "glb": "19_L66_MotorTemperatureProbe.glb",
+      "name": "L66_MotorTemperatureProbe",
+      "triangle_count": 92,
+      "mesh_parts": 3,
+      "animation_pivots": {}
+    },
+    {
+      "file": "20_L66_InfraredThermalCamera.fbx",
+      "glb": "20_L66_InfraredThermalCamera.glb",
+      "name": "L66_InfraredThermalCamera",
+      "triangle_count": 184,
+      "mesh_parts": 4,
+      "animation_pivots": {}
+    },
+    {
+      "file": "21_L66_LubricationMonitoringModule.fbx",
+      "glb": "21_L66_LubricationMonitoringModule.glb",
+      "name": "L66_LubricationMonitoringModule",
+      "triangle_count": 212,
+      "mesh_parts": 4,
+      "animation_pivots": {}
+    },
+    {
+      "file": "22_L66_ShaftAlignmentSensor.fbx",
+      "glb": "22_L66_ShaftAlignmentSensor.glb",
+      "name": "L66_ShaftAlignmentSensor",
+      "triangle_count": 184,
+      "mesh_parts": 7,
+      "animation_pivots": {}
+    },
+    {
+      "file": "23_L66_GearWearSensorModule.fbx",
+      "glb": "23_L66_GearWearSensorModule.glb",
+      "name": "L66_GearWearSensorModule",
+      "triangle_count": 448,
+      "mesh_parts": 11,
+      "animation_pivots": {}
+    },
+    {
+      "file": "24_L66_VibrationFFTAnalyzer.fbx",
+      "glb": "24_L66_VibrationFFTAnalyzer.glb",
+      "name": "L66_VibrationFFTAnalyzer",
+      "triangle_count": 612,
+      "mesh_parts": 19,
+      "animation_pivots": {}
+    },
+    {
+      "file": "25_L66_ConditionMonitoringController.fbx",
+      "glb": "25_L66_ConditionMonitoringController.glb",
+      "name": "L66_ConditionMonitoringController",
+      "triangle_count": 612,
+      "mesh_parts": 19,
+      "animation_pivots": {}
+    },
+    {
+      "file": "26_L66_PredictiveMaintenanceAIUnit.fbx",
+      "glb": "26_L66_PredictiveMaintenanceAIUnit.glb",
+      "name": "L66_PredictiveMaintenanceAIUnit",
+      "triangle_count": 528,
+      "mesh_parts": 12,
+      "animation_pivots": {}
+    },
+    {
+      "file": "27_L66_IndustrialDigitalTwinDisplay.fbx",
+      "glb": "27_L66_IndustrialDigitalTwinDisplay.glb",
+      "name": "L66_IndustrialDigitalTwinDisplay",
+      "triangle_count": 332,
+      "mesh_parts": 22,
+      "animation_pivots": {
+        "ANIM_TWIN_MONITOR": [
+          3.65,
+          3.2,
+          -1.52
+        ]
+      }
+    },
+    {
+      "file": "28_L66_MotorProtectionRelay.fbx",
+      "glb": "28_L66_MotorProtectionRelay.glb",
+      "name": "L66_MotorProtectionRelay",
+      "triangle_count": 528,
+      "mesh_parts": 12,
+      "animation_pivots": {}
+    },
+    {
+      "file": "29_L66_MaintenancePLCRack.fbx",
+      "glb": "29_L66_MaintenancePLCRack.glb",
+      "name": "L66_MaintenancePLCRack",
+      "triangle_count": 728,
+      "mesh_parts": 23,
+      "animation_pivots": {}
+    },
+    {
+      "file": "30_L66_DigitalInputOutputModule.fbx",
+      "glb": "30_L66_DigitalInputOutputModule.glb",
+      "name": "L66_DigitalInputOutputModule",
+      "triangle_count": 608,
+      "mesh_parts": 13,
+      "animation_pivots": {}
+    },
+    {
+      "file": "31_L66_BearingRemovalTool.fbx",
+      "glb": "31_L66_BearingRemovalTool.glb",
+      "name": "L66_BearingRemovalTool",
+      "triangle_count": 276,
+      "mesh_parts": 6,
+      "animation_pivots": {
+        "ANIM_BEARING_EXTRACTOR": [
+          -4.25,
+          1.2999999999999998,
+          1.92
+        ]
+      }
+    },
+    {
+      "file": "32_L66_PrecisionAlignmentGauge.fbx",
+      "glb": "32_L66_PrecisionAlignmentGauge.glb",
+      "name": "L66_PrecisionAlignmentGauge",
+      "triangle_count": 84,
+      "mesh_parts": 7,
+      "animation_pivots": {}
+    },
+    {
+      "file": "33_L66_IndustrialTorqueTool.fbx",
+      "glb": "33_L66_IndustrialTorqueTool.glb",
+      "name": "L66_IndustrialTorqueTool",
+      "triangle_count": 148,
+      "mesh_parts": 3,
+      "animation_pivots": {}
+    },
+    {
+      "file": "34_L66_MaintenancePartsStorageRack.fbx",
+      "glb": "34_L66_MaintenancePartsStorageRack.glb",
+      "name": "L66_MaintenancePartsStorageRack",
+      "triangle_count": 132,
+      "mesh_parts": 11,
+      "animation_pivots": {}
+    },
+    {
+      "file": "35_L66_ActiveCoolingAssembly.fbx",
+      "glb": "35_L66_ActiveCoolingAssembly.glb",
+      "name": "L66_ActiveCoolingAssembly",
+      "triangle_count": 540,
+      "mesh_parts": 15,
+      "animation_pivots": {
+        "ANIM_COOLING_FANS": [
+          -5.69,
+          1.72,
+          1.04
+        ]
+      }
+    },
+    {
+      "file": "36_L66_EmergencyStopAndLockoutPanel.fbx",
+      "glb": "36_L66_EmergencyStopAndLockoutPanel.glb",
+      "name": "L66_EmergencyStopAndLockoutPanel",
+      "triangle_count": 132,
+      "mesh_parts": 4,
+      "animation_pivots": {
+        "ANIM_EMERGENCY_STOP": [
+          5.25,
+          1.24,
+          2.11
+        ]
+      }
+    },
+    {
+      "file": "37_L66_HolographicDiagnosticMonitor.fbx",
+      "glb": "37_L66_HolographicDiagnosticMonitor.glb",
+      "name": "L66_HolographicDiagnosticMonitor",
+      "triangle_count": 1100,
+      "mesh_parts": 20,
+      "animation_pivots": {}
+    },
+    {
+      "file": "38_L66_TransparentMachineSafetyEnclosure.fbx",
+      "glb": "38_L66_TransparentMachineSafetyEnclosure.glb",
+      "name": "L66_TransparentMachineSafetyEnclosure",
+      "triangle_count": 108,
+      "mesh_parts": 9,
+      "animation_pivots": {
+        "ANIM_SAFETY_DOOR": [
+          1.68,
+          2.2,
+          0.08
+        ]
+      }
+    },
+    {
+      "file": "39_L66_Regulated5VControlSupply.fbx",
+      "glb": "39_L66_Regulated5VControlSupply.glb",
+      "name": "L66_Regulated5VControlSupply",
+      "triangle_count": 528,
+      "mesh_parts": 12,
+      "animation_pivots": {}
+    }
+  ],
+  "triangle_count": 26780
+}

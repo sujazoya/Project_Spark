@@ -1,0 +1,1834 @@
+# PROJECT SPARK — LEVEL 61 MASTER IMPLEMENTATION PROMPT
+
+## LEVEL 61: CLEAN THE WAVE
+### Advanced Three-Phase Power Quality, Intelligent Active Harmonic Filtering, Reactive Power Compensation and Adaptive Grid Stabilization
+
+Act as my senior Unity C# engineer, electrical simulation architect, power electronics engineer, harmonic analysis specialist, active power filter control engineer, industrial automation developer, gameplay programmer, and Unity Editor automation specialist.
+
+**YOUR TASK IS TO CREATE THE COMPLETE, WORKING, PLAYABLE LEVEL 61 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+Do not stop at a design proposal, architecture diagram, pseudocode, disconnected example scripts, or decorative waveform demonstration.
+
+Implement all safely achievable functionality using my actual Unity project source code and the previously generated Level 61 HD/AAA-inspired model collection.
+
+The Level 61 design and its 30 individual 3D models are already approved.
+
+Do not redesign the level or regenerate its models unnecessarily.
+
+---
+
+# 1. CRITICAL PROJECT INTEGRATION RULES
+
+Project Spark is an existing Unity electronics simulation, electrical engineering and industrial automation game.
+
+Before implementing Level 61, inspect the actual project source code, especially:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+- Existing three-phase AC network simulation
+- Existing DC electrical solver
+- Existing inverter and PWM systems
+- Existing rectifier implementations
+- Existing capacitor and inductor components
+- Existing motor and variable-frequency drive systems
+- Existing voltage and current sensors
+- Existing current-transformer scaling
+- Existing PLL and frequency-measurement systems
+- Existing power and energy measurement
+- Existing circuit-topology validation
+- Existing protective relay and contactor systems
+- Existing component heat and damage systems
+- Existing player wiring and interaction systems
+- Existing TextMeshPro and diagnostic displays
+- Existing Unity Editor level-creation utilities
+- Existing Levels 57–60 three-phase grid, inverter, measurement and protection implementations, where available
+
+## Non-negotiable implementation rules
+
+1. Inspect actual source code before referencing existing Project Spark APIs.
+2. Never invent existing methods, properties, classes, events or namespaces.
+3. Reuse compatible project systems.
+4. Preserve Levels 1–60.
+5. Keep Level 61 functionality level-local wherever practical.
+6. Do not modify the shared DC solver without demonstrated necessity.
+7. Do not inject arbitrary harmonic voltages into a DC-only solver.
+8. Do not generate unrelated sine waves to fake harmonic simulation.
+9. Never fabricate THD, voltage, current, power factor, reactive power or harmonic spectrum measurements.
+10. Do not directly assign source current THD from the filter gain setting.
+11. Do not bypass the filter's current or voltage limits.
+12. Do not treat capacitor switching animations as actual reactive compensation.
+13. Do not fabricate PLL lock status.
+14. Do not ignore electrical power conservation.
+15. Do not create competing three-phase network simulators.
+16. Do not use visual effects as authoritative electrical states.
+17. Never bypass objectives through direct manager-completion calls.
+18. Use consistent electrical units and simulation time.
+19. Properly manage Unity lifecycle and event subscriptions.
+20. Avoid per-frame global scene searches.
+21. Provide complete C# source files instead of disconnected patches.
+22. Report all missing references and integration dependencies.
+23. Do not claim Unity compilation or Play Mode success unless actually tested.
+
+## Critical authoritative completion requirement
+
+The actual `LevelGamePlayManager` must reach **6/6**.
+
+A Level 61 script reporting Stage 6 does not mean the level is complete.
+
+Inspect the actual `SparkLevelEvaluator`.
+
+Implement a compatible historical objective-recording system so previous certified achievements remain recorded when the player disconnects the filter current sensor during Objective 6.
+
+However, Level 61 must not complete until the player restores the sensor, explicitly resets the protection fault, re-enables compensation and successfully completes final certification.
+
+---
+
+# 2. LEVEL CONFIGURATION
+
+**Level Number:** 61
+
+**Level ID:** `level_61`
+
+**Display Name:** `Clean the Wave`
+
+**Subtitle:** `Active Harmonic Filtering and Power Quality`
+
+**Difficulty:** Master / Expert
+
+**Control Supply:** 5 V DC
+
+**Electrical Network:** Simulated low-voltage three-phase AC
+
+**Fundamental Frequency:** 50 Hz
+
+**Player Wires:** 50
+
+**Unique Player Sockets:** 78
+
+**Main Compensation System:** Shunt Active Harmonic Filter
+
+**Secondary Compensation System:** Switched Power-Factor Capacitor Bank
+
+**Current Transformer Groups:** 3
+
+**Voltage Sensor Group:** 1
+
+**Nonlinear Load Groups:** 3
+
+**Industrial Motor Load:** 1
+
+**Harmonic Orders:** 3rd, 5th, 7th, 11th and 13th
+
+**Initial Source Current THD Target:** Approximately 25–35%
+
+**Filtered Source Current THD Target:** Below 5%
+
+**Displacement Power Factor Target:** At least 0.98
+
+**Required Objectives:** 6
+
+## Important electrical architecture
+
+The 5 V supply powers control electronics.
+
+The three-phase power system is simulated at a configurable low-voltage AC operating point.
+
+Do not copy illustrative 400 V or kilowatt readings from the approved visual into the actual electrical simulator without verifying that the project architecture supports those ratings.
+
+Use physically consistent voltage, current, impedance, power and thermal parameters.
+
+## Initial operating state
+
+- Three-phase source available.
+- Main contactor open.
+- Nonlinear loads initially disabled.
+- Active power filter disabled.
+- Filter DC link in safe initial state.
+- Power-factor capacitor bank disconnected.
+- Harmonic analyzer awaiting calibration.
+- Voltage sensor uncalibrated.
+- Source/load/filter current sensors uncalibrated.
+- PLL unlocked.
+- Safety enclosure closed.
+- No critical fault.
+- Objective progress 0/6.
+
+## Player mission
+
+The player must:
+
+1. Connect all 50 required wires.
+2. Verify 78 unique terminal anchors.
+3. Power the three-phase laboratory.
+4. Calibrate voltage and current sensors.
+5. Energize the nonlinear loads.
+6. Measure distorted three-phase currents.
+7. Record the baseline harmonic spectrum.
+8. Identify the dominant harmonic components.
+9. Acquire the fundamental voltage phase reference.
+10. Enable the active harmonic filter.
+11. Tune compensation gain and harmonic selection.
+12. Reduce actual source-current THD below 5%.
+13. Measure reactive power and displacement power factor.
+14. Configure the switched capacitor bank.
+15. Reach displacement power factor ≥ 0.98.
+16. Avoid reactive overcompensation and harmonic resonance.
+17. Apply a dynamic industrial load step.
+18. Demonstrate stable adaptive filtering.
+19. Disconnect the designated filter-current feedback signal.
+20. Detect the invalid measurement.
+21. Inhibit unsafe active-filter control.
+22. Restore the disconnected sensor.
+23. Explicitly reset the latched fault.
+24. Recalibrate and restart the filter.
+25. Complete a final power-quality certification.
+
+## Main learning objective
+
+Teach:
+
+- Fundamental frequency
+- Harmonic orders
+- Nonlinear load current
+- Rectifier-generated harmonics
+- Variable-frequency drive current distortion
+- Harmonic spectrum analysis
+- Total harmonic distortion
+- Current RMS and waveform distortion
+- Active power
+- Reactive power
+- Apparent power
+- Displacement power factor
+- True power factor
+- Phase-locked loops
+- Active harmonic filtering
+- Compensation current injection
+- Capacitor-based reactive compensation
+- Harmonic resonance
+- Converter current limits
+- Thermal losses
+- Dynamic load compensation
+- Sensor-loss protection
+
+**The player must learn to improve real simulated power quality through measured feedback and physically meaningful compensation—not by changing decorative waveform graphics.**
+
+---
+
+# 3. USE MY EXISTING LEVEL 61 HD/AAA FBX PACKAGE
+
+The approved asset package exists:
+
+`ProjectSpark_Level61_HD_AAA_Models.zip`
+
+Use these exact 30 individual FBX files:
+
+| FBX MODEL | PURPOSE |
+|---|---|
+| `00_L61_IndustrialPowerQualityBase.fbx` | Precision industrial laboratory chassis |
+| `01_L61_ThreePhaseGridSource.fbx` | Simulated three-phase AC source |
+| `02_L61_ThreePhaseDistributionBus.fbx` | Main A/B/C distribution bus |
+| `03_L61_MainPowerContactor.fbx` | Main source switching |
+| `04_L61_NonlinearVFDLoad.fbx` | Nonlinear variable-frequency drive |
+| `05_L61_IndustrialMotorLoad.fbx` | Dynamic motor load |
+| `06_L61_RectifierLoadModule.fbx` | Nonlinear rectifier load |
+| `07_L61_SwitchedModePowerLoad.fbx` | Electronic SMPS load |
+| `08_L61_ActiveHarmonicFilter.fbx` | Main active power filter assembly |
+| `09_L61_FilterPowerConverter.fbx` | Filter current-generation stage |
+| `10_L61_FilterInductorBank.fbx` | Three-phase filter output inductors |
+| `11_L61_FilterDCCapacitor.fbx` | Active-filter DC-link capacitance |
+| `12_L61_PowerFactorCapacitorBank.fbx` | Reactive compensation capacitor bank |
+| `13_L61_CapacitorSwitchingContactor.fbx` | Capacitor-bank switching |
+| `14_L61_CapacitorProtectionModule.fbx` | Capacitor protection |
+| `15_L61_GridVoltageSensor.fbx` | Grid voltage measurement |
+| `16_L61_SourceCurrentTransformerBank.fbx` | Source-side current measurement |
+| `17_L61_LoadCurrentTransformerBank.fbx` | Nonlinear load current measurement |
+| `18_L61_FilterCurrentTransformerBank.fbx` | Compensation current feedback |
+| `19_L61_HarmonicSpectrumAnalyzer.fbx` | Harmonic frequency-domain diagnostics |
+| `20_L61_PowerQualityMeter.fbx` | THD and electrical power measurements |
+| `21_L61_PhaseReferencePLL.fbx` | Fundamental phase tracking |
+| `22_L61_HarmonicDetectionController.fbx` | Harmonic extraction controller |
+| `23_L61_ActiveFilterController.fbx` | Active-filter current control |
+| `24_L61_ReactivePowerController.fbx` | Power-factor compensation control |
+| `25_L61_ThermalCoolingAssembly.fbx` | Converter cooling |
+| `26_L61_ProtectionRelayModule.fbx` | Electrical protection |
+| `27_L61_HolographicWaveformMonitor.fbx` | Live waveform and harmonic display |
+| `28_L61_TransparentSafetyEnclosure.fbx` | Protective transparent enclosure |
+| `29_L61_Regulated5VControlSupply.fbx` | Laboratory control power |
+
+## Additional supplied resources
+
+Inspect and reuse:
+
+- `Level61_Complete_ArtKit_Showcase.fbx`
+- `SparkLevel61ArtPlacementEditor.cs`
+- `Animation_Rigs.csv`
+- `Model_Manifest.json`
+- `README_Unity.txt`
+- `Verification_Report.json`
+- Individual GLB backups
+- Assembled laboratory preview
+- 30-model contact sheet
+
+## Critical asset integration rules
+
+- Use all 30 individual FBX models.
+- Use the assembled showcase only as a placement reference.
+- Do not render the assembled showcase together with the individual models.
+- Preserve the common model coordinate system.
+- Verify FBX import scale.
+- Preserve separate interactive equipment.
+- Keep circuit terminals stationary.
+- Preserve moving mechanical and switch components as independent transforms.
+- Do not mistake decorative connector geometry for functional terminals.
+
+## Coordinate system
+
+The verified model manifest specifies:
+
+- X: workstation width
+- Y: vertical
+- Z: toward the player/front controls
+- Nominal 1 art unit = 1 meter
+
+Place all 30 models under:
+
+`L61_HD_VISUAL_ART`
+
+Use the supplied art-placement editor when compatible.
+
+Do not independently reposition individual models without checking the assembled reference.
+
+## Production quality distinction
+
+The supplied models are actual procedural 3D geometry with named material regions.
+
+They are AAA-inspired, but are not completed hand-authored AAA PBR assets.
+
+Do not claim they already include final 2K/4K texture maps or verified Unity HDRP materials.
+
+Preserve the existing meshes and apply project-compatible materials as needed.
+
+---
+
+# 4. EXACT ANIMATION PIVOT INTEGRATION
+
+Use the actual `Animation_Rigs.csv`.
+
+The verified pivot entries are:
+
+| MODEL | ANIMATION PIVOT |
+|---|---|
+| MainPowerContactor | `ANIM_MAIN_CONTACTOR` |
+| IndustrialMotorLoad | `ANIM_MOTOR_SPIN` |
+| CapacitorSwitchingContactor | `ANIM_CAP_CONTACTOR` |
+| ThermalCoolingAssembly | `ANIM_COOLING_FANS` |
+| HolographicWaveformMonitor | `ANIM_MONITOR_TILT` |
+| TransparentSafetyEnclosure | `ANIM_SAFETY_DOOR` |
+
+## Pivot requirements
+
+Resolve each pivot beneath its owning FBX model root.
+
+Do not search the entire scene and blindly select the first matching transform.
+
+## Required animation behavior
+
+- Main contactor follows authoritative connection state.
+- Motor shaft follows actual motor rotation.
+- Capacitor contactor follows actual electrical switching state.
+- Cooling fan speed follows the selected cooling/thermal model.
+- Holographic monitor uses its independent tilt pivot.
+- Safety door follows actual interaction and interlock state.
+
+## Critical rule
+
+Do not use visual animations to simulate harmonic compensation.
+
+The active filter's electrical behavior must come from its current-control and network model.
+
+The waveform display is a visualization of that model, not the source of the physics.
+
+---
+
+# 5. ELECTRICAL WIRING — W01 TO W50
+
+The approved design requires:
+
+**50 player-created wires and 78 unique socket IDs.**
+
+The supplied Level 61 art package does not contain verified functional `SparkTerminal` instances or an exact 50-wire endpoint manifest.
+
+Therefore, create and validate those declarations during implementation.
+
+Do not fabricate an existing `Exact_Wiring.csv`.
+
+## Required electrical groups
+
+### Group A — Control power
+
+- Regulated 5 V supply
+- Control return
+- Power quality controller
+- PLL
+- Harmonic analyzer
+- Filter controller
+- Reactive power controller
+- Protection system
+
+### Group B — Three-phase source
+
+- Phase A
+- Phase B
+- Phase C
+- Main contactor
+- Distribution bus
+- Voltage sensing
+
+### Group C — Nonlinear loads
+
+- VFD power connection
+- Industrial motor/VFD relationship
+- Rectifier load
+- SMPS load
+- Load enable/control signals
+
+### Group D — Active harmonic filter
+
+- Three-phase compensation connection
+- Filter converter control
+- DC-link monitoring
+- Filter inductor path
+- Filter current feedback
+- Filter enable/safety
+
+### Group E — Current measurement
+
+- Source current transformer group
+- Load current transformer group
+- Filter current transformer group
+- Three-phase measurement assignments
+- Measurement validity signals
+
+### Group F — Reactive power compensation
+
+- Capacitor bank connection
+- Capacitor contactor
+- Reactive power controller
+- Capacitor protection feedback
+
+### Group G — Protection and diagnostics
+
+- Main safety interlock
+- Contactor status
+- Filter protection
+- Current feedback validity
+- Harmonic analyzer feedback
+- Power quality meter
+- Fault reset
+
+## Wiring requirements
+
+1. Define exactly 50 player-created wires.
+2. Define exactly 78 unique socket IDs.
+3. Document all FROM terminal IDs.
+4. Document all TO terminal IDs.
+5. Register actual Project Spark terminals.
+6. Register component IDs.
+7. Validate supply and returns.
+8. Validate phase A/B/C assignments.
+9. Validate source/load/filter branches.
+10. Validate current-transformer routing.
+11. Validate filter-current feedback.
+12. Validate capacitor contactor topology.
+13. Detect missing connections.
+14. Detect incorrect connections.
+15. Prevent duplicate bindings.
+16. Preserve wire deletion and reconnection.
+17. Keep all player sockets accessible.
+
+## Internal wiring
+
+If a module contains internal connections that are not intended for player interaction, implement those as fixed/internal module topology.
+
+Do not create additional player wires beyond 50.
+
+## Final sensor fault
+
+Reserve one specific player-created wire connecting the filter-current measurement provider to the active-filter controller.
+
+Example endpoint roles:
+
+`FILTER_CURRENT_FEEDBACK → APF_CURRENT_IN`
+
+Assign the final wire number only after the complete wiring manifest has been validated.
+
+During Objective 6, disconnect this actual wire.
+
+The controller must detect the loss through real topology.
+
+Do not merely turn on a decorative fault indicator.
+
+---
+
+# 6. THREE-PHASE HARMONIC NETWORK
+
+Reuse the verified Project Spark three-phase network architecture where possible.
+
+The previous levels primarily address fundamental AC power, source synchronization and load behavior.
+
+Level 61 adds harmonic-frequency behavior.
+
+## Required network properties
+
+- Source voltage
+- Fundamental frequency
+- Phase A/B/C
+- Source impedance
+- Distribution impedance
+- Nonlinear load currents
+- Filter injection currents
+- Capacitor reactive currents
+- Total source current
+- RMS voltage
+- RMS current
+- Active power
+- Reactive power
+- Apparent power
+- Harmonic coefficients
+- Current THD
+- Voltage THD, where supported
+
+## Harmonic representation
+
+Use a documented harmonic-domain or time-domain electrical model.
+
+For current:
+
+`i(t) = Sum[In_peak * sin(n * Omega * t + PhaseN)]`
+
+Support:
+
+- Fundamental
+- 3rd harmonic
+- 5th harmonic
+- 7th harmonic
+- 11th harmonic
+- 13th harmonic
+
+Include additional harmonics only when the model supports them.
+
+## Harmonic-domain model
+
+A simplified harmonic phasor approach is acceptable when:
+
+- Harmonic currents are derived from consistent load behavior.
+- Each harmonic uses an appropriate network impedance.
+- Harmonic phase relationships are maintained.
+- Source, load and filter currents obey Kirchhoff's current law.
+- Reported RMS values correspond to the harmonic representation.
+- The limitations of this approximation are documented.
+
+## Time-domain model
+
+If the existing project has suitable time-domain electrical simulation, reuse it.
+
+Ensure sampling and integration rates can resolve the selected harmonics.
+
+Do not claim precise switching-level behavior if the model only resolves averaged harmonic components.
+
+## Fundamental requirement
+
+A standard fundamental-frequency AC solver alone is insufficient for a meaningful harmonic-filtering challenge.
+
+Implement the missing harmonic layer safely rather than generating independent decorative waveforms.
+
+---
+
+# 7. NONLINEAR LOAD MODEL
+
+Implement three nonlinear load sources:
+
+1. Variable-frequency drive.
+2. Rectifier load.
+3. Switched-mode power supply.
+
+The industrial motor is powered through the VFD or another verified topology.
+
+## VFD model
+
+Required properties:
+
+- Motor demand
+- Input current
+- Fundamental input current
+- Harmonic current components
+- DC-link behavior where modeled
+- Input power factor
+- Load-dependent distortion
+- Current limit
+- Operating state
+
+## Rectifier model
+
+Support a simplified current-pulse or harmonic-coefficient representation.
+
+Its harmonic profile must vary meaningfully with operating load.
+
+## SMPS model
+
+Represent a bounded nonlinear input-current profile consistent with the selected educational approximation.
+
+## Requirements
+
+- All loads draw physically meaningful power.
+- Harmonic magnitudes depend on actual operating conditions.
+- Turning off a load removes its current contribution.
+- Increasing demand changes source-current behavior.
+- Loads respect source capacity and protection.
+- Harmonic magnitudes are not unrelated random values.
+
+## Baseline distortion target
+
+Configure the initial operating scenario to produce approximately 25–35% current THD.
+
+This value must emerge from the selected modeled load parameters.
+
+Do not overwrite the analyzer with a fixed 28.6% reading merely because it appears in the approved visual reference.
+
+---
+
+# 8. CURRENT AND VOLTAGE SENSOR SYSTEMS
+
+Use:
+
+- `15_L61_GridVoltageSensor.fbx`
+- `16_L61_SourceCurrentTransformerBank.fbx`
+- `17_L61_LoadCurrentTransformerBank.fbx`
+- `18_L61_FilterCurrentTransformerBank.fbx`
+
+## Voltage sensing
+
+Track:
+
+- Phase A voltage
+- Phase B voltage
+- Phase C voltage
+- RMS voltage
+- Fundamental phase
+- Frequency
+- Harmonic voltage components where modeled
+- Measurement validity
+- Calibration offset
+- Sample timestamp
+
+## Current sensing
+
+Each current-transformer group must provide:
+
+- Phase A current
+- Phase B current
+- Phase C current
+- RMS current
+- Fundamental current
+- Harmonic components
+- Measurement validity
+- Calibration
+- Saturation status
+- Signal connectivity
+- Sample history
+
+## Calibration
+
+Require:
+
+1. Correct topology.
+2. Valid power/reference.
+3. Correct phase association.
+4. Valid CT ratio.
+5. Correct current polarity.
+6. Valid measurement range.
+7. Acceptable sensor offsets.
+8. Valid timestamps.
+
+Do not calibrate disconnected sensors.
+
+Do not treat a missing sensor as a zero-current reading.
+
+---
+
+# 9. HARMONIC SPECTRUM ANALYZER
+
+Use:
+
+`19_L61_HarmonicSpectrumAnalyzer.fbx`
+
+Implement a functional harmonic analyzer.
+
+## Required measurements
+
+- Fundamental frequency
+- Fundamental RMS current
+- 3rd harmonic RMS
+- 5th harmonic RMS
+- 7th harmonic RMS
+- 11th harmonic RMS
+- 13th harmonic RMS
+- Other modeled harmonic components
+- Total RMS current
+- Source current THD
+- Load current THD
+- Filter current THD
+- Measurement-validity status
+
+## THD calculation
+
+`THD = sqrt(Sum(HarmonicCurrentRMS²)) / FundamentalCurrentRMS`
+
+Multiply by 100 for percent.
+
+Exclude the fundamental from the numerator.
+
+Validate that the fundamental magnitude is sufficiently nonzero before calculating THD.
+
+## FFT implementation
+
+If an FFT is necessary:
+
+- Use a consistent sample rate.
+- Use a known sample window.
+- Avoid aliasing.
+- Handle spectral leakage.
+- Use coherent sampling or suitable windowing.
+- Correct magnitude normalization.
+- Clearly distinguish RMS from peak amplitudes.
+
+If the network already stores harmonic coefficients, direct harmonic-domain analysis may be more accurate and efficient than reconstructing and re-analyzing synthetic samples.
+
+Do not add an FFT solely for visual complexity.
+
+---
+
+# 10. PHASE-LOCKED LOOP
+
+Use:
+
+`21_L61_PhaseReferencePLL.fbx`
+
+The PLL must track the actual grid fundamental phase.
+
+## Required properties
+
+- Grid frequency estimate
+- Grid phase estimate
+- Phase error
+- Frequency error
+- Lock status
+- Lock acquisition time
+- Signal validity
+- Measurement timestamp
+
+## Required behavior
+
+1. Acquire valid grid voltage.
+2. Estimate fundamental phase.
+3. Track the source frequency.
+4. Reduce phase error through controller dynamics.
+5. Declare lock after valid conditions persist.
+6. Lose lock when feedback becomes invalid.
+7. Prevent unsupported compensation when reference is invalid.
+
+Do not immediately force PLL phase to equal the grid phase.
+
+Reuse the Level 57 synchronization PLL if compatible.
+
+---
+
+# 11. ACTIVE HARMONIC FILTER
+
+Use:
+
+- `08_L61_ActiveHarmonicFilter.fbx`
+- `09_L61_FilterPowerConverter.fbx`
+- `10_L61_FilterInductorBank.fbx`
+- `11_L61_FilterDCCapacitor.fbx`
+
+This is the primary Level 61 mechanic.
+
+## Filter architecture
+
+Implement a simplified shunt active power filter.
+
+The filter measures nonlinear load current and injects compensating current at the point of common coupling.
+
+Use consistent current directions.
+
+For a suitable convention:
+
+`SourceCurrent = LoadCurrent - FilterCompensationCurrent`
+
+The actual sign must be defined and verified against the network implementation.
+
+## Required properties
+
+- Filter enabled state
+- Compensation gain
+- Harmonic reference currents
+- Actual filter currents
+- Converter current limits
+- Output voltage limits
+- Filter inductance
+- DC-link voltage
+- DC-link capacitance
+- Converter losses
+- Controller bandwidth
+- Current response dynamics
+- Thermal state
+- Saturation state
+- Protection state
+
+## Harmonic cancellation
+
+For selected harmonic components, calculate compensation references that oppose the nonlinear load harmonics at the source connection.
+
+Do not directly change the load's harmonic current.
+
+The active filter modifies the net source current through actual injected compensation.
+
+## Control options
+
+- OFF
+- CALIBRATION
+- MANUAL COMPENSATION
+- AUTO HARMONIC DETECTION
+- HARMONIC FILTERING
+- REACTIVE COMPENSATION
+- CURRENT LIMITED
+- FAULT
+
+## Filter gain
+
+The player must be able to adjust compensation gain.
+
+The resulting THD must emerge from modeled filter current and source-network response.
+
+Do not do:
+
+`DisplayedTHD = BaselineTHD * (1 - Gain)`
+
+## Current limiting
+
+The filter must have a finite current rating.
+
+When compensation demand exceeds its capacity:
+
+- Clamp the current command.
+- Record saturation.
+- Preserve power/energy consistency.
+- Report reduced compensation effectiveness.
+- Prevent unsafe overheating.
+
+---
+
+# 12. FILTER DC-LINK AND ENERGY MODEL
+
+Implement the active-filter DC-link capacitor.
+
+## Required properties
+
+- Capacitance
+- DC-link voltage
+- Stored energy
+- Charging/discharging current
+- ESR
+- Voltage limits
+- Converter losses
+- Precharge or startup requirements
+- Protection state
+
+## Capacitor energy
+
+`E_DC = 0.5 * C * Vdc²`
+
+## Requirements
+
+The filter must not provide unlimited real electrical power from an unexplained source.
+
+Its converter needs a consistent power balance.
+
+For ideal reactive/harmonic compensation, the average real power may be small, but converter and resistor losses require real input power.
+
+Account for those losses through the modeled network/DC link.
+
+Do not preserve DC-link voltage artificially without an energy source.
+
+---
+
+# 13. FILTER INDUCTOR AND CURRENT RESPONSE
+
+Use:
+
+`10_L61_FilterInductorBank.fbx`
+
+Model the filter output inductance using a suitable averaged electrical model.
+
+For each phase:
+
+`L * dI/dt = Vconverter - Vgrid - R * I`
+
+Where:
+
+- `L` = filter inductance
+- `R` = equivalent filter resistance
+- `I` = filter output current
+- `Vconverter` = averaged converter output voltage
+- `Vgrid` = point-of-connection voltage
+
+Use a stable numerical method.
+
+## Requirements
+
+- Current does not change instantaneously.
+- Converter voltage limits affect achievable current.
+- Filter bandwidth affects tracking.
+- Excessively high gain cannot create unlimited current.
+- Current-control instability is detected.
+- Losses produce heat.
+- Filter currents affect the modeled source network.
+
+---
+
+# 14. THD REDUCTION CHALLENGE
+
+This is Objective 3's central test.
+
+## Required sequence
+
+1. Record a valid unfiltered baseline.
+2. Verify the harmonic analyzer.
+3. Acquire valid PLL lock.
+4. Verify filter converter power.
+5. Enable active filtering.
+6. Select harmonic compensation.
+7. Adjust controller gain.
+8. Generate compensation-current references.
+9. Apply actual filter currents.
+10. Recalculate source-current harmonic components.
+11. Measure source-current THD.
+12. Continue until a stable acceptable result is achieved.
+
+## Pass target
+
+`SourceCurrentTHD < 0.05`
+
+Represent THD internally as a fraction or clearly document when using percent.
+
+## Additional pass conditions
+
+- Valid three-phase source.
+- Valid load current feedback.
+- Valid filter current feedback.
+- Valid PLL.
+- No unresolved safety fault.
+- Filter current within limits.
+- DC-link voltage valid.
+- Converter temperature safe.
+- Sufficient observation data.
+- Sustained THD improvement.
+
+Do not pass Objective 3 merely because FILTER ENABLED is true.
+
+Do not award it if the load was turned off to eliminate distortion without completing the intended filtering test.
+
+---
+
+# 15. REACTIVE POWER COMPENSATION
+
+Use:
+
+- `12_L61_PowerFactorCapacitorBank.fbx`
+- `13_L61_CapacitorSwitchingContactor.fbx`
+- `14_L61_CapacitorProtectionModule.fbx`
+- `24_L61_ReactivePowerController.fbx`
+
+Implement switched capacitor stages.
+
+## Required properties
+
+- Number of capacitor stages
+- Capacitance per stage
+- Stage connection state
+- Equivalent reactive power
+- Current
+- Voltage
+- Switching delay
+- Inrush limitation
+- Protection state
+
+## Capacitor reactive power
+
+For an ideal balanced three-phase wye-connected bank with per-phase capacitance C:
+
+`Qc = 3 * Omega * C * VphaseRMS²`
+
+Use the actual modeled connection configuration.
+
+## Player controls
+
+- CAPACITOR STAGE 1
+- CAPACITOR STAGE 2
+- CAPACITOR STAGE 3
+- AUTO POWER FACTOR
+- DISABLE CAPACITOR BANK
+- VERIFY REACTIVE POWER
+
+## Target
+
+`DisplacementPowerFactor >= 0.98`
+
+## Requirements
+
+- Actual reactive current changes.
+- Capacitor switching changes the network state.
+- Displacement PF is calculated from actual fundamental quantities.
+- Avoid excessive reactive compensation.
+- Avoid unsafe capacitor current.
+- Monitor switching transients where supported.
+- Protect against harmonic resonance when modeled.
+
+Do not use capacitor stages to directly overwrite the power-factor display.
+
+---
+
+# 16. TRUE POWER FACTOR VS DISPLACEMENT POWER FACTOR
+
+The dashboard must distinguish:
+
+- Displacement power factor
+- True power factor
+
+## Displacement power factor
+
+Derived from fundamental voltage/current phase relationship:
+
+`DPF = cos(FundamentalPhaseDifference)`
+
+## True power factor
+
+`TruePF = RealPower / ApparentPower`
+
+Use a consistent RMS and power calculation appropriate to the actual modeled waveform.
+
+## Important
+
+Harmonic distortion may reduce true power factor even when displacement power factor is high.
+
+The player should see how active harmonic filtering and reactive compensation contribute differently to power-quality improvement.
+
+Do not use the two values interchangeably.
+
+---
+
+# 17. DYNAMIC LOAD-STEP CHALLENGE
+
+This is Objective 5's advanced stability test.
+
+## Required sequence
+
+1. Begin with certified harmonic compensation.
+2. Verify capacitor compensation.
+3. Apply a controlled VFD/motor load increase.
+4. Increase actual electrical demand.
+5. Change nonlinear harmonic-current components.
+6. Measure source-current response.
+7. Allow filter controller to adapt.
+8. Monitor filter saturation.
+9. Monitor DC-link voltage.
+10. Monitor thermal response.
+11. Evaluate transient THD and settling.
+12. Verify stable final operating quality.
+
+## Pass requirements
+
+- Actual load increases.
+- Actual harmonic current changes.
+- Filter compensation responds.
+- Source THD returns below configured limit after the permitted transient.
+- Displacement PF remains acceptable or recovers.
+- Current limits respected.
+- No unsafe converter condition.
+- Stable observation interval completed.
+
+Do not pass simply because LOAD STEP was pressed.
+
+---
+
+# 18. THERMAL MODEL AND COOLING
+
+Use:
+
+`25_L61_ThermalCoolingAssembly.fbx`
+
+Implement a simplified thermal system for:
+
+- Active filter converter
+- Output inductors
+- Capacitor bank
+- Cooling assembly
+
+## Required properties
+
+- Converter conduction loss
+- Switching loss approximation
+- Inductor copper loss
+- Capacitor ESR loss
+- Thermal capacitance
+- Cooling effectiveness
+- Component temperature
+- Warning threshold
+- Shutdown threshold
+
+## Thermal equation
+
+`ThermalCapacity * dT/dt = PowerLoss - CoolingPower`
+
+Use a consistent timestep.
+
+## Requirements
+
+- Higher current increases thermal losses.
+- Cooling changes temperature dynamics.
+- Thermal state responds gradually.
+- Excess temperature causes protection.
+- Fan animation follows actual cooling activity.
+
+Do not make component temperature rise from an unrelated decorative timer.
+
+---
+
+# 19. SENSOR FAILURE AND PROTECTION
+
+The designated final fault is:
+
+**Disconnect the filter current-feedback signal.**
+
+The actual wire ID must be assigned from the validated W01–W50 manifest.
+
+## Required detection
+
+- Filter current feedback topology invalid.
+- Measurement freshness invalid.
+- Filter current measurement unavailable.
+- Closed-loop current control no longer trustworthy.
+
+## Required safety response
+
+1. Detect the missing signal.
+2. Invalidate the filter-current measurement.
+3. Record exact fault reason.
+4. Reject unsafe current-control commands.
+5. Disable or safely ramp down filter injection.
+6. Protect the DC-link converter.
+7. Preserve normal grid operation where possible.
+8. Latch the fault.
+9. Prevent automatic restart.
+10. Require repair and explicit reset.
+
+## Recovery sequence
+
+1. Player reconnects the filter-current feedback wire.
+2. Actual topology becomes valid.
+3. Sensor measurement is reacquired.
+4. Sensor calibration restored.
+5. Player explicitly resets the fault.
+6. PLL revalidated.
+7. Filter current controller reinitialized safely.
+8. DC link verified.
+9. Active filtering restarted.
+10. Final THD test performed.
+11. Reactive compensation verified.
+12. No unresolved protection fault.
+13. Final certification completed.
+
+Reconnecting the sensor alone must not complete the level.
+
+---
+
+# 20. SIX AUTHORITATIVE LEVEL OBJECTIVES
+
+Integrate all six objectives into the actual Project Spark level evaluation system.
+
+## OBJECTIVE 1 — BUILD THE POWER QUALITY NETWORK
+
+Require:
+
+1. All 50 required wires connected.
+2. All 78 unique terminals registered.
+3. Valid 5 V control power.
+4. Valid three-phase source.
+5. Correct phase A/B/C wiring.
+6. Main contactor connected.
+7. VFD load connected.
+8. Rectifier load connected.
+9. SMPS load connected.
+10. Motor load connected.
+11. Active filter connected.
+12. Filter inductor path valid.
+13. DC-link capacitor connected.
+14. Source CT connected.
+15. Load CT connected.
+16. Filter CT connected.
+17. Voltage sensor valid.
+18. Capacitor bank connected.
+19. Protection system valid.
+20. No unsafe electrical topology.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — DIAGNOSE HARMONIC DISTORTION
+
+Require:
+
+1. Three-phase source energized.
+2. Nonlinear loads operating.
+3. Sensors calibrated.
+4. PLL reference valid.
+5. Baseline waveform recorded.
+6. Harmonic spectrum calculated.
+7. Fundamental current measured.
+8. Dominant harmonics identified.
+9. Source THD recorded.
+10. Baseline power factor recorded.
+11. Valid observation interval completed.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — CLEAN THE SOURCE CURRENT
+
+Require:
+
+1. Valid baseline recorded.
+2. Filter powered.
+3. Filter DC link valid.
+4. PLL locked.
+5. Load current feedback valid.
+6. Filter current feedback valid.
+7. Harmonic current references calculated.
+8. Actual compensation current injected.
+9. Source harmonic current decreases.
+10. Source-current THD falls below 5%.
+11. Current limits respected.
+12. No thermal fault.
+13. Sustained observation interval completed.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — CORRECT POWER FACTOR
+
+Require:
+
+1. THD objective certified.
+2. Reactive power measured.
+3. Capacitor stages configured.
+4. Capacitor switching affects real electrical state.
+5. Reactive current compensated.
+6. Displacement PF reaches at least 0.98.
+7. No overcompensation fault.
+8. No unsafe capacitor current.
+9. No unresolved resonance issue.
+10. Stable observation interval completed.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — SURVIVE DYNAMIC LOAD CHANGE
+
+Require:
+
+1. Valid compensated reference.
+2. Player applies load step.
+3. Actual electrical demand increases.
+4. Harmonic spectrum changes.
+5. Filter controller responds.
+6. Filter current remains within limits.
+7. DC-link voltage stays safe.
+8. Source-current THD recovers below the configured limit.
+9. Displacement PF remains acceptable or recovers.
+10. No sustained oscillation.
+11. No thermal overload.
+12. Stable final observation succeeds.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — FILTER SENSOR FAILURE AND RECOVERY
+
+Require:
+
+1. Previous compensation certified.
+2. Filter-current feedback wire disconnected.
+3. Actual topology becomes invalid.
+4. Filter measurement marked invalid.
+5. Controller detects feedback loss.
+6. Unsafe filter operation inhibited.
+7. Fault latched.
+8. Player reconnects feedback wire.
+9. Measurement validity restored.
+10. Player explicitly resets fault.
+11. Calibration restored.
+12. PLL reference valid.
+13. DC-link voltage valid.
+14. Filter restarted safely.
+15. Harmonic compensation restored.
+16. Source THD below 5%.
+17. Displacement PF at least 0.98.
+18. Dynamic response verified.
+19. No unresolved safety fault.
+20. Final certification succeeds.
+
+Progress becomes **6/6**.
+
+## Critical authoritative evaluation
+
+Do not implement only a local stage counter.
+
+Inspect:
+
+- `SparkLevelEvaluator`
+- `SparkLevelDefinition`
+- `LevelGamePlayManager`
+
+Use supported methods for recording verified historical objectives.
+
+Objectives 1–5 must remain recorded during the deliberate final sensor-disconnection scenario.
+
+However, Objective 6 must not pass until the full final compensation certification succeeds.
+
+Do not fabricate LED states, electrical measurements, fake proxy components or artificial completion flags.
+
+**Final authoritative result must be 6/6.**
+
+---
+
+# 21. RECOMMENDED UNITY C# SYSTEMS
+
+Inspect the actual project codebase before creating new classes.
+
+Suggested responsibilities:
+
+- `SparkLevel61Coordinator.cs`
+- `SparkLevel61ThreePhaseHarmonicNetwork.cs`
+- `SparkLevel61NonlinearLoad.cs`
+- `SparkLevel61HarmonicProfile.cs`
+- `SparkLevel61HarmonicAnalyzer.cs`
+- `SparkLevel61FFTMeasurement.cs`
+- `SparkLevel61PhaseLockedLoop.cs`
+- `SparkLevel61CurrentTransformer.cs`
+- `SparkLevel61VoltageSensor.cs`
+- `SparkLevel61ActivePowerFilter.cs`
+- `SparkLevel61FilterConverter.cs`
+- `SparkLevel61FilterCurrentController.cs`
+- `SparkLevel61FilterDCLink.cs`
+- `SparkLevel61CapacitorBank.cs`
+- `SparkLevel61ReactivePowerController.cs`
+- `SparkLevel61PowerQualityMeter.cs`
+- `SparkLevel61ThermalModel.cs`
+- `SparkLevel61SafetyController.cs`
+- `SparkLevel61ObjectiveTracker.cs`
+- `SparkLevel61Dashboard.cs`
+- `SparkLevel61Interaction.cs`
+- `SparkLevel61VisualRig.cs`
+
+These are suggested names, not verified project APIs.
+
+Reuse compatible existing systems.
+
+Do not create duplicate functionality unnecessarily.
+
+## Runtime update sequence
+
+1. Validate electrical topology and supply.
+2. Read player commands.
+3. Evaluate contactor and protective states.
+4. Update nonlinear load operating conditions.
+5. Solve fundamental and harmonic network states.
+6. Acquire valid voltage/current measurements.
+7. Update fundamental phase reference.
+8. Calculate harmonic spectrum.
+9. Generate compensation references.
+10. Apply filter converter/current dynamics.
+11. Update DC-link energy.
+12. Solve resulting source/load/filter currents consistently.
+13. Update reactive compensation stages.
+14. Calculate RMS, THD, P, Q, S and PF.
+15. Integrate thermal losses.
+16. Evaluate sensor and converter protection.
+17. Record operating histories.
+18. Evaluate authoritative objectives.
+19. Update the dashboard.
+20. Update visual-only animations.
+
+Use a single consistent simulation timeline.
+
+Define any predictor/corrector or substep behavior explicitly.
+
+Do not inadvertently integrate the same physical interval twice.
+
+Do not recursively trigger the electrical solver from its completion callback.
+
+---
+
+# 22. LIVE AAA POWER QUALITY DASHBOARD
+
+Use:
+
+`19_L61_HarmonicSpectrumAnalyzer`
+
+`20_L61_PowerQualityMeter`
+
+`27_L61_HolographicWaveformMonitor`
+
+Create live TextMeshPro surfaces and dynamic graphs.
+
+## Required displays
+
+- MAIN POWER
+- CONTACTOR STATE
+- GRID FREQUENCY
+- PHASE A VOLTAGE
+- PHASE B VOLTAGE
+- PHASE C VOLTAGE
+- SOURCE CURRENT A/B/C
+- LOAD CURRENT A/B/C
+- FILTER CURRENT A/B/C
+- FUNDAMENTAL CURRENT
+- 3RD HARMONIC
+- 5TH HARMONIC
+- 7TH HARMONIC
+- 11TH HARMONIC
+- 13TH HARMONIC
+- SOURCE CURRENT THD
+- LOAD CURRENT THD
+- VOLTAGE THD
+- ACTIVE POWER
+- REACTIVE POWER
+- APPARENT POWER
+- DISPLACEMENT PF
+- TRUE PF
+- PLL LOCK
+- FILTER GAIN
+- FILTER CURRENT LIMIT
+- FILTER SATURATION
+- DC-LINK VOLTAGE
+- CAPACITOR STAGES
+- CONVERTER TEMPERATURE
+- PROTECTION STATUS
+- SENSOR VALIDITY
+- OBJECTIVES X/6
+
+## Player controls
+
+- MAIN POWER
+- CALIBRATE SENSORS
+- MEASURE BASELINE
+- ENABLE VFD LOAD
+- ENABLE RECTIFIER
+- ENABLE SMPS
+- ENABLE FILTER
+- AUTO HARMONIC DETECT
+- COMPENSATE 5TH
+- COMPENSATE 7TH
+- COMPENSATE HIGHER HARMONICS
+- ADJUST FILTER GAIN
+- SET CURRENT LIMIT
+- CAPACITOR STAGE 1
+- CAPACITOR STAGE 2
+- CAPACITOR STAGE 3
+- AUTO POWER FACTOR
+- LOAD STEP
+- VERIFY THD
+- VERIFY POWER FACTOR
+- SENSOR FAULT TEST
+- RESET FAULT
+- FINAL CERTIFY
+
+Every control must affect actual gameplay state.
+
+Do not create decorative buttons that simply change labels.
+
+---
+
+# 23. UNITY EDITOR LEVEL CREATOR
+
+Create:
+
+`Tools/Project Spark/Levels/Create Level 61`
+
+The Editor creator must safely generate or update:
+
+- `Level_61.asset`
+- `Level_61_Layout.prefab`
+- Level-specific simulation configuration assets
+- Electrical binding manifests
+- Harmonic-load profiles
+- Filter control configuration
+- Power-factor compensation settings
+- Six objective definitions
+- Validation report
+
+## Required Editor operations
+
+1. Inspect actual project editor infrastructure.
+2. Locate all 30 individual FBXs.
+3. Validate model paths.
+4. Validate model scale.
+5. Create/update Level 61 definition.
+6. Set Level ID to `level_61`.
+7. Configure display name and description.
+8. Create six authoritative objectives.
+9. Create/update Level 61 layout.
+10. Instantiate all 30 individual models.
+11. Preserve their shared coordinate system.
+12. Configure three-phase source.
+13. Configure distribution bus.
+14. Configure main contactor.
+15. Configure VFD and motor load.
+16. Configure rectifier.
+17. Configure SMPS.
+18. Configure active harmonic filter.
+19. Configure filter converter.
+20. Configure filter inductor bank.
+21. Configure filter DC link.
+22. Configure capacitor bank.
+23. Configure capacitor switching.
+24. Configure capacitor protection.
+25. Configure grid-voltage sensor.
+26. Configure source CT.
+27. Configure load CT.
+28. Configure filter CT.
+29. Configure harmonic analyzer.
+30. Configure power-quality meter.
+31. Configure PLL.
+32. Configure harmonic detection controller.
+33. Configure active-filter current controller.
+34. Configure reactive-power controller.
+35. Configure thermal cooling.
+36. Configure protection relay.
+37. Configure holographic display.
+38. Configure safety enclosure.
+39. Register all 78 real terminal anchors.
+40. Create exactly 50 player-wire declarations.
+41. Register component IDs.
+42. Register terminal IDs.
+43. Configure internal fixed connections.
+44. Configure harmonic-network parameters.
+45. Configure nonlinear-load harmonic profiles.
+46. Configure filter-current ratings.
+47. Configure DC-link parameters.
+48. Configure capacitor-stage ratings.
+49. Configure thermal and protection limits.
+50. Assign all verified animation pivots.
+51. Create live TextMeshPro displays.
+52. Configure gameplay buttons.
+53. Bind six authoritative objectives.
+54. Detect missing or duplicate bindings.
+55. Detect conflicting electrical simulation owners.
+56. Generate detailed validation diagnostics.
+57. Save level definition and prefab.
+
+## Editor reliability
+
+Reuse compatible functionality from:
+
+`SparkLevel61ArtPlacementEditor.cs`
+
+The existing helper places art only.
+
+It does not create functional electrical terminals or harmonic simulation.
+
+Extend it safely or create a separate complete level builder.
+
+Use actual `AssetDatabase` paths.
+
+Do not invent asset GUIDs.
+
+Use `PrefabUtility`, `SerializedObject`, Undo and appropriate asset-saving operations.
+
+Make the level creator safe to rerun.
+
+Prevent duplicate models, components, terminals, controllers and electrical connections.
+
+Do not silently destroy unrelated user modifications.
+
+---
+
+# 24. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 50 WIRES → VERIFY 78 TERMINALS → POWER THREE-PHASE SOURCE → CALIBRATE VOLTAGE/CURRENT SENSORS → ENABLE NONLINEAR LOADS → RECORD BASELINE WAVEFORMS → MEASURE HARMONIC SPECTRUM → IDENTIFY DOMINANT HARMONICS → ACQUIRE PLL LOCK → ENABLE ACTIVE FILTER → TUNE COMPENSATION CURRENT → REDUCE SOURCE THD BELOW 5% → MEASURE REACTIVE POWER → SWITCH CAPACITOR STAGES → REACH PF ≥ 0.98 → APPLY INDUSTRIAL LOAD STEP → VERIFY ADAPTIVE FILTER STABILITY → DISCONNECT FILTER CURRENT FEEDBACK → DETECT SIGNAL LOSS → INHIBIT FILTER → RECONNECT SENSOR → RESET FAULT → RECALIBRATE → RESTART FILTER → FINAL THD/PF CERTIFICATION → 6/6 COMPLETE**
+
+## Suggested player-facing messages
+
+- `BUILD THE POWER QUALITY NETWORK`
+- `CONNECT ALL 50 WIRES`
+- `CALIBRATE VOLTAGE AND CURRENT SENSORS`
+- `ENERGIZE THREE-PHASE BUS`
+- `ENABLE NONLINEAR LOADS`
+- `MEASURE BASELINE DISTORTION`
+- `HARMONIC SPECTRUM CAPTURED`
+- `IDENTIFY DOMINANT HARMONICS`
+- `ACQUIRE PHASE REFERENCE`
+- `PLL LOCKED`
+- `ENABLE ACTIVE HARMONIC FILTER`
+- `COMPENSATION CURRENT ACTIVE`
+- `SOURCE CURRENT DISTORTION REDUCING`
+- `THD TARGET ACHIEVED`
+- `MEASURE REACTIVE POWER`
+- `CONFIGURE CAPACITOR STAGES`
+- `POWER FACTOR TARGET ACHIEVED`
+- `APPLY INDUSTRIAL LOAD STEP`
+- `FILTER RESPONSE MEASURING`
+- `DYNAMIC STABILITY VERIFIED`
+- `FILTER CURRENT SIGNAL LOST`
+- `FILTER CONTROL INHIBITED`
+- `RESTORE CURRENT FEEDBACK`
+- `RESET PROTECTION FAULT`
+- `RECALIBRATE FILTER SENSOR`
+- `RESTART ACTIVE FILTER`
+- `FINAL POWER QUALITY CERTIFICATION`
+- `LEVEL 61 COMPLETE`
+
+---
+
+# 25. TESTING AND DIAGNOSTICS
+
+Implement exact diagnostics for:
+
+- Incorrect W01–W50 wiring
+- Missing terminal IDs
+- Duplicate terminal IDs
+- Invalid control supply
+- Missing return
+- Incorrect A/B/C phase routing
+- Invalid main contactor state
+- Source current sensor disconnected
+- Load current sensor disconnected
+- Filter current sensor disconnected
+- Incorrect CT scaling
+- Voltage sensor invalid
+- PLL unable to lock
+- Harmonic spectrum unavailable
+- Sampling aliasing
+- Incorrect harmonic RMS calculation
+- Invalid fundamental current
+- THD division by zero
+- Nonlinear load producing no distortion
+- Harmonic phase convention incorrect
+- Filter compensation direction reversed
+- Filter gain not affecting source current
+- Filter current saturation
+- Filter DC-link undervoltage
+- Filter DC-link overvoltage
+- Converter instability
+- Inductor model numerical instability
+- Capacitor bank not affecting reactive power
+- Capacitor overcompensation
+- Harmonic resonance
+- True PF confused with displacement PF
+- Thermal overload
+- Fault reset without repair
+- Final sensor recovery not detected
+- Historical objectives being erased
+- Manager stuck at 0/6 or 5/6
+- Scene restart/reload problems
+- Earlier-level regressions
+
+## Required tests
+
+1. Correct 50-wire topology.
+2. All 78 terminal IDs valid.
+3. Three-phase source starts safely.
+4. Correct phase sequence.
+5. Voltage/current sensors calibrate.
+6. VFD load produces modeled harmonic currents.
+7. Rectifier produces modeled harmonic currents.
+8. SMPS produces modeled harmonic currents.
+9. Baseline source THD within intended scenario range.
+10. Harmonic analyzer identifies selected harmonic orders.
+11. RMS and THD calculations validated.
+12. PLL acquires lock.
+13. Active filter starts safely.
+14. Compensation-current references generated.
+15. Filter current follows the reference within limits.
+16. Filter injection changes actual source current.
+17. THD decreases from real compensation.
+18. Source THD below 5% is achievable.
+19. DC-link energy remains physically consistent.
+20. Filter current limits work.
+21. Capacitor stages change reactive current.
+22. Displacement PF reaches 0.98 or higher.
+23. Reactive overcompensation is detected.
+24. Thermal response follows electrical losses.
+25. Dynamic load step changes harmonic demand.
+26. Active filter adapts.
+27. THD returns below target.
+28. Filter remains within safe current limits.
+29. Disconnect designated filter-feedback wire.
+30. Measurement becomes invalid.
+31. Current control safely inhibits.
+32. Fault latches.
+33. Reconnect feedback.
+34. Explicit reset succeeds.
+35. Calibration restored.
+36. Filter restarts safely.
+37. Final THD and PF certification succeeds.
+38. Actual manager reaches 6/6.
+39. Level progression succeeds.
+40. Levels 1–60 remain unaffected.
+
+Report tests as passed only when actually executed.
+
+---
+
+# 26. REQUIRED DOWNLOADABLE DELIVERABLES
+
+Create a complete Level 61 Unity implementation ZIP containing:
+
+- Full Level 61 runtime C# scripts
+- Three-phase harmonic-network integration
+- Nonlinear VFD load
+- Rectifier harmonic model
+- SMPS harmonic model
+- Industrial motor-load integration
+- Harmonic spectrum analyzer
+- FFT or harmonic-domain measurement
+- Voltage and current sensor integration
+- Phase-locked loop
+- Active harmonic filter
+- Filter power converter
+- Filter current controller
+- Filter inductor dynamics
+- DC-link capacitor model
+- Switched capacitor bank
+- Reactive-power controller
+- Power-quality meter
+- True/displacement power-factor calculations
+- Thermal cooling model
+- Electrical protection
+- Filter sensor-loss detection
+- Repair, reset and recertification
+- Six-objective evaluator integration
+- Unity Editor Level 61 creator
+- Level definition creator or asset
+- Level layout prefab creator
+- Exact W01–W50 wiring manifest
+- 78-terminal binding manifest
+- Component binding manifest
+- Animation pivot mappings
+- Harmonic profile configuration
+- Filter current/voltage parameter configuration
+- Capacitor-stage configuration
+- Inspector setup guide
+- Player gameplay walkthrough
+- Objective verification checklist
+- Diagnostics and troubleshooting guide
+
+Reuse:
+
+`ProjectSpark_Level61_HD_AAA_Models.zip`
+
+Do not regenerate the existing 30-model collection unless a specific compatibility issue requires it.
+
+Only provide download links to files actually created and verified.
+
+Do not claim Unity compilation, Play Mode validation or 6/6 completion unless those tests actually ran.
+
+---
+
+# 27. FINAL EXECUTION REQUIREMENTS
+
+**IMPLEMENT LEVEL 61 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect my actual Project Spark Unity codebase and Level 61 model package.
+
+Then:
+
+1. Reuse compatible three-phase electrical systems.
+2. Integrate all 30 approved FBX models.
+3. Finalize exactly 50 player-created wires.
+4. Create exactly 78 real terminal anchors.
+5. Implement meaningful nonlinear-load harmonic behavior.
+6. Implement three-phase harmonic current measurement.
+7. Implement valid harmonic spectrum analysis.
+8. Calculate actual RMS and current THD.
+9. Integrate fundamental phase tracking and PLL.
+10. Implement a functional shunt active power filter.
+11. Implement bounded compensation-current generation.
+12. Implement filter inductor/current dynamics.
+13. Implement DC-link energy accounting.
+14. Demonstrate measured THD reduction below 5%.
+15. Implement switched capacitor reactive compensation.
+16. Calculate displacement and true power factor separately.
+17. Achieve measured displacement PF at least 0.98.
+18. Implement dynamic industrial load steps.
+19. Implement adaptive filtering and thermal protection.
+20. Implement actual filter-current sensor-loss detection.
+21. Implement safe filter inhibition.
+22. Implement repair, explicit reset and final certification.
+23. Integrate all six authoritative objectives.
+24. Create the Unity Editor Level 61 builder.
+25. Connect live SCADA displays and animation pivots.
+26. Implement complete diagnostics.
+27. Execute all feasible tests.
+28. Package and verify actual deliverables.
+
+Do not ask for approval of the already-approved Level 61 concept.
+
+Do not fabricate harmonic currents, THD, power factor, reactive power, source voltage, compensation performance, thermal measurements or objective completion.
+
+If an existing Project Spark API cannot be verified, implement safely independent functionality and identify the exact missing integration dependency.
+
+---
+
+# 28. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect all 50 required wires.
+2. Validate all 78 functional terminals.
+3. Power the three-phase network.
+4. Calibrate voltage and current sensors.
+5. Operate nonlinear electrical loads.
+6. Measure genuine harmonic distortion.
+7. Identify dominant harmonic components.
+8. Acquire a valid PLL phase reference.
+9. Enable the active harmonic filter.
+10. Inject physically meaningful compensation current.
+11. Reduce measured source-current THD below 5%.
+12. Configure reactive-power compensation.
+13. Achieve displacement power factor at least 0.98.
+14. Respond safely to a dynamic industrial load step.
+15. Maintain compensation within current and thermal limits.
+16. Disconnect the filter current-feedback signal.
+17. Observe genuine sensor-loss detection and safe filter inhibition.
+18. Restore the missing feedback wire.
+19. Explicitly reset the latched fault.
+20. Recalibrate and restart the active filter.
+21. Complete final THD/PF certification.
+22. Finish all six authoritative level objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 61.**
+
+The player must learn genuine harmonic analysis, active power filtering, reactive compensation, power factor correction, dynamic current control and industrial protection through observable electrical simulation—not predetermined waveforms, hardcoded success readings or decorative animations.
+
+**FINAL GOAL: A COMPLETE, POLISHED, AAA-QUALITY, UNITY-READY AND ACTUALLY PLAYABLE LEVEL 61 — CLEAN THE WAVE.**

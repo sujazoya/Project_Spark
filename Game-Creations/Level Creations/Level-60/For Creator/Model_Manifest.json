@@ -1,0 +1,350 @@
+{
+  "level_id": "level_60",
+  "display_name": "The Grid Must Survive",
+  "asset_kind": "procedural modular 3D art; gameplay integration not included",
+  "individual_models": 28,
+  "planned_player_wires": 46,
+  "planned_unique_terminals": 72,
+  "functional_terminals_included": false,
+  "ac_network_simulation_included": false,
+  "coordinate_system": "X width Y up Z toward front electronics; scale 1",
+  "models": [
+    {
+      "index": 0,
+      "name": "L60_IndustrialResilienceBase",
+      "file": "00_L60_IndustrialResilienceBase.fbx",
+      "glb": "00_L60_IndustrialResilienceBase.glb",
+      "triangle_count": 6488,
+      "mesh_parts": 116,
+      "animation_pivots": {}
+    },
+    {
+      "index": 1,
+      "name": "L60_MainGridInterface",
+      "file": "01_L60_MainGridInterface.fbx",
+      "glb": "01_L60_MainGridInterface.glb",
+      "triangle_count": 1629,
+      "mesh_parts": 35,
+      "animation_pivots": {}
+    },
+    {
+      "index": 2,
+      "name": "L60_GridFormingInverter",
+      "file": "02_L60_GridFormingInverter.fbx",
+      "glb": "02_L60_GridFormingInverter.glb",
+      "triangle_count": 2918,
+      "mesh_parts": 58,
+      "animation_pivots": {}
+    },
+    {
+      "index": 3,
+      "name": "L60_BatteryStorageSystem",
+      "file": "03_L60_BatteryStorageSystem.fbx",
+      "glb": "03_L60_BatteryStorageSystem.glb",
+      "triangle_count": 3282,
+      "mesh_parts": 103,
+      "animation_pivots": {}
+    },
+    {
+      "index": 4,
+      "name": "L60_BatteryManagementUnit",
+      "file": "04_L60_BatteryManagementUnit.fbx",
+      "glb": "04_L60_BatteryManagementUnit.glb",
+      "triangle_count": 1874,
+      "mesh_parts": 39,
+      "animation_pivots": {}
+    },
+    {
+      "index": 5,
+      "name": "L60_BidirectionalPowerConverter",
+      "file": "05_L60_BidirectionalPowerConverter.fbx",
+      "glb": "05_L60_BidirectionalPowerConverter.glb",
+      "triangle_count": 2226,
+      "mesh_parts": 48,
+      "animation_pivots": {}
+    },
+    {
+      "index": 6,
+      "name": "L60_SolarPVSimulator",
+      "file": "06_L60_SolarPVSimulator.fbx",
+      "glb": "06_L60_SolarPVSimulator.glb",
+      "triangle_count": 396,
+      "mesh_parts": 33,
+      "animation_pivots": {
+        "ANIM_SOLAR_TILT": [
+          -3.84,
+          2.25,
+          -0.85
+        ]
+      }
+    },
+    {
+      "index": 7,
+      "name": "L60_SolarMPPTController",
+      "file": "07_L60_SolarMPPTController.fbx",
+      "glb": "07_L60_SolarMPPTController.glb",
+      "triangle_count": 1599,
+      "mesh_parts": 31,
+      "animation_pivots": {}
+    },
+    {
+      "index": 8,
+      "name": "L60_BackupGenerator",
+      "file": "08_L60_BackupGenerator.fbx",
+      "glb": "08_L60_BackupGenerator.glb",
+      "triangle_count": 1252,
+      "mesh_parts": 33,
+      "animation_pivots": {
+        "ANIM_GENERATOR_ROTOR": [
+          4.65,
+          1.39,
+          -2.17
+        ]
+      }
+    },
+    {
+      "index": 9,
+      "name": "L60_GeneratorStarter",
+      "file": "09_L60_GeneratorStarter.fbx",
+      "glb": "09_L60_GeneratorStarter.glb",
+      "triangle_count": 1688,
+      "mesh_parts": 32,
+      "animation_pivots": {
+        "ANIM_STARTER_PINION": [
+          3.4,
+          1.39,
+          -1.2
+        ]
+      }
+    },
+    {
+      "index": 10,
+      "name": "L60_ThreePhaseDistributionBus",
+      "file": "10_L60_ThreePhaseDistributionBus.fbx",
+      "glb": "10_L60_ThreePhaseDistributionBus.glb",
+      "triangle_count": 684,
+      "mesh_parts": 46,
+      "animation_pivots": {}
+    },
+    {
+      "index": 11,
+      "name": "L60_MainGridBreaker",
+      "file": "11_L60_MainGridBreaker.fbx",
+      "glb": "11_L60_MainGridBreaker.glb",
+      "triangle_count": 1304,
+      "mesh_parts": 25,
+      "animation_pivots": {
+        "ANIM_BREAKER_HANDLE": [
+          -5.03,
+          1.0,
+          1.5999999999999999
+        ]
+      }
+    },
+    {
+      "index": 12,
+      "name": "L60_GeneratorBreaker",
+      "file": "12_L60_GeneratorBreaker.fbx",
+      "glb": "12_L60_GeneratorBreaker.glb",
+      "triangle_count": 1247,
+      "mesh_parts": 25,
+      "animation_pivots": {
+        "ANIM_BREAKER_HANDLE": [
+          -3.78,
+          1.0,
+          1.5999999999999999
+        ]
+      }
+    },
+    {
+      "index": 13,
+      "name": "L60_BatteryInverterBreaker",
+      "file": "13_L60_BatteryInverterBreaker.fbx",
+      "glb": "13_L60_BatteryInverterBreaker.glb",
+      "triangle_count": 1184,
+      "mesh_parts": 25,
+      "animation_pivots": {
+        "ANIM_BREAKER_HANDLE": [
+          -2.53,
+          1.0,
+          1.5999999999999999
+        ]
+      }
+    },
+    {
+      "index": 14,
+      "name": "L60_RenewableSourceBreaker",
+      "file": "14_L60_RenewableSourceBreaker.fbx",
+      "glb": "14_L60_RenewableSourceBreaker.glb",
+      "triangle_count": 1201,
+      "mesh_parts": 25,
+      "animation_pivots": {
+        "ANIM_BREAKER_HANDLE": [
+          -1.28,
+          1.0,
+          1.5999999999999999
+        ]
+      }
+    },
+    {
+      "index": 15,
+      "name": "L60_EssentialLoadBreaker",
+      "file": "15_L60_EssentialLoadBreaker.fbx",
+      "glb": "15_L60_EssentialLoadBreaker.glb",
+      "triangle_count": 1270,
+      "mesh_parts": 25,
+      "animation_pivots": {
+        "ANIM_BREAKER_HANDLE": [
+          -0.03,
+          1.0,
+          1.5999999999999999
+        ]
+      }
+    },
+    {
+      "index": 16,
+      "name": "L60_PriorityLoadBreaker",
+      "file": "16_L60_PriorityLoadBreaker.fbx",
+      "glb": "16_L60_PriorityLoadBreaker.glb",
+      "triangle_count": 1278,
+      "mesh_parts": 25,
+      "animation_pivots": {
+        "ANIM_BREAKER_HANDLE": [
+          1.22,
+          1.0,
+          1.5999999999999999
+        ]
+      }
+    },
+    {
+      "index": 17,
+      "name": "L60_IndustrialLoadBreaker",
+      "file": "17_L60_IndustrialLoadBreaker.fbx",
+      "glb": "17_L60_IndustrialLoadBreaker.glb",
+      "triangle_count": 1267,
+      "mesh_parts": 25,
+      "animation_pivots": {
+        "ANIM_BREAKER_HANDLE": [
+          2.47,
+          1.0,
+          1.5999999999999999
+        ]
+      }
+    },
+    {
+      "index": 18,
+      "name": "L60_AuxiliaryLoadBreaker",
+      "file": "18_L60_AuxiliaryLoadBreaker.fbx",
+      "glb": "18_L60_AuxiliaryLoadBreaker.glb",
+      "triangle_count": 1127,
+      "mesh_parts": 25,
+      "animation_pivots": {
+        "ANIM_BREAKER_HANDLE": [
+          3.72,
+          1.0,
+          1.5999999999999999
+        ]
+      }
+    },
+    {
+      "index": 19,
+      "name": "L60_CriticalServiceLoad",
+      "file": "19_L60_CriticalServiceLoad.fbx",
+      "glb": "19_L60_CriticalServiceLoad.glb",
+      "triangle_count": 2339,
+      "mesh_parts": 39,
+      "animation_pivots": {}
+    },
+    {
+      "index": 20,
+      "name": "L60_IndustrialMotorLoad",
+      "file": "20_L60_IndustrialMotorLoad.fbx",
+      "glb": "20_L60_IndustrialMotorLoad.glb",
+      "triangle_count": 1868,
+      "mesh_parts": 41,
+      "animation_pivots": {
+        "ANIM_MOTOR_SPIN": [
+          0.18,
+          1.37,
+          1.9699999999999998
+        ]
+      }
+    },
+    {
+      "index": 21,
+      "name": "L60_SmartProgrammableLoad",
+      "file": "21_L60_SmartProgrammableLoad.fbx",
+      "glb": "21_L60_SmartProgrammableLoad.glb",
+      "triangle_count": 2077,
+      "mesh_parts": 38,
+      "animation_pivots": {}
+    },
+    {
+      "index": 22,
+      "name": "L60_ProtectionRelayBank",
+      "file": "22_L60_ProtectionRelayBank.fbx",
+      "glb": "22_L60_ProtectionRelayBank.glb",
+      "triangle_count": 2652,
+      "mesh_parts": 49,
+      "animation_pivots": {}
+    },
+    {
+      "index": 23,
+      "name": "L60_VoltageCurrentSensorHub",
+      "file": "23_L60_VoltageCurrentSensorHub.fbx",
+      "glb": "23_L60_VoltageCurrentSensorHub.glb",
+      "triangle_count": 3458,
+      "mesh_parts": 40,
+      "animation_pivots": {}
+    },
+    {
+      "index": 24,
+      "name": "L60_ResilienceMasterController",
+      "file": "24_L60_ResilienceMasterController.fbx",
+      "glb": "24_L60_ResilienceMasterController.glb",
+      "triangle_count": 2901,
+      "mesh_parts": 47,
+      "animation_pivots": {}
+    },
+    {
+      "index": 25,
+      "name": "L60_HolographicSCADAMonitor",
+      "file": "25_L60_HolographicSCADAMonitor.fbx",
+      "glb": "25_L60_HolographicSCADAMonitor.glb",
+      "triangle_count": 1123,
+      "mesh_parts": 26,
+      "animation_pivots": {
+        "ANIM_MONITOR_TILT": [
+          4.25,
+          2.62,
+          1.67
+        ]
+      }
+    },
+    {
+      "index": 26,
+      "name": "L60_FaultScenarioSimulator",
+      "file": "26_L60_FaultScenarioSimulator.fbx",
+      "glb": "26_L60_FaultScenarioSimulator.glb",
+      "triangle_count": 1932,
+      "mesh_parts": 37,
+      "animation_pivots": {}
+    },
+    {
+      "index": 27,
+      "name": "L60_TransparentSafetyEnclosure",
+      "file": "27_L60_TransparentSafetyEnclosure.fbx",
+      "glb": "27_L60_TransparentSafetyEnclosure.glb",
+      "triangle_count": 644,
+      "mesh_parts": 15,
+      "animation_pivots": {
+        "ANIM_SAFETY_DOOR": [
+          2.91,
+          2.66,
+          -1.306
+        ]
+      }
+    }
+  ],
+  "triangle_count": 52908
+}

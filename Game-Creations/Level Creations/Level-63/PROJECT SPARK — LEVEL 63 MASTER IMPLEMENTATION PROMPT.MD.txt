@@ -1,0 +1,2371 @@
+# PROJECT SPARK — LEVEL 63 MASTER IMPLEMENTATION PROMPT
+
+## LEVEL 63: CATCH THE FREQUENCY
+### Advanced Hybrid Flywheel Energy Storage, Virtual Synchronous Machine Control, Fast Frequency Response, Generator Trip Recovery, Frequency Droop and Power Oscillation Damping
+
+Act as my senior Unity C# engineer, electrical simulation architect, electromechanical systems engineer, three-phase power systems engineer, rotating machinery specialist, flywheel energy storage engineer, grid-forming inverter specialist, virtual synchronous machine control engineer, industrial automation developer, gameplay programmer, and Unity Editor automation specialist.
+
+**YOUR TASK IS TO IMPLEMENT THE COMPLETE, WORKING, PLAYABLE LEVEL 63 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+Do not stop at:
+
+- A design explanation.
+- A simulation proposal.
+- Pseudocode.
+- Decorative frequency graphs.
+- Disconnected C# examples.
+- An art-only prefab.
+- A local objective counter.
+- Unverified wiring manifests.
+- Unconnected animation controllers.
+
+Implement all safely achievable functionality using my real Project Spark Unity codebase and the existing Level 63 model package.
+
+The Level 63 gameplay design and 34 individual 3D models are approved.
+
+Do not redesign the laboratory or regenerate its models unnecessarily.
+
+**LEVEL 63 MUST TEACH REAL ELECTROMECHANICAL ENERGY TRANSFER AND GRID-FREQUENCY STABILIZATION THROUGH THE GAME'S AUTHORITATIVE SIMULATION.**
+
+---
+
+# 1. CRITICAL EXISTING PROJECT INTEGRATION
+
+Project Spark is an established Unity electrical engineering, electronics simulation and industrial automation game.
+
+Before implementing Level 63, inspect the actual source code.
+
+At minimum, inspect these classes if present:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+
+Also inspect existing implementations of:
+
+- Three-phase AC simulation
+- Grid-forming inverters
+- Generator dynamics
+- Motor dynamics
+- Shaft rotation
+- Encoders
+- RPM measurement
+- Vibration monitoring
+- Magnetic bearings
+- Flywheel mechanics
+- Regenerative braking
+- Battery storage
+- Battery management
+- Bidirectional power converters
+- DC-link capacitors
+- Source synchronization
+- Frequency and RoCoF measurement
+- Voltage and current sensors
+- Circuit breakers
+- Protection relays
+- Thermal damage
+- Player-created electrical wires
+- Circuit topology validation
+- Level objective evaluation
+- Historical objective completion
+- Unity Editor level creation
+- TextMeshPro diagnostic dashboards
+
+## Previous levels to inspect
+
+Reuse compatible systems from:
+
+**Level 54 — Cross the Critical**
+
+Rotor dynamics, shaft vibration and critical-speed safety.
+
+**Level 55 — Float the Shaft**
+
+Magnetic bearing behavior and rotor position monitoring.
+
+**Level 56 — Harvest the Spin**
+
+Rotational energy storage, regenerative power conversion and electrical energy recovery.
+
+**Level 57 — Synchronize the Grid**
+
+Three-phase AC synchronization, frequency and phase measurement.
+
+**Level 58 — Isolate the Fault**
+
+Protection relays, breakers and fault response.
+
+**Level 59 — Bring Back the Power**
+
+Generator starting, grid-forming inverter and source restoration.
+
+**Level 60 — The Grid Must Survive**
+
+Source coordination, battery reserve and load shedding.
+
+**Level 61 — Clean the Wave**
+
+Three-phase measurement and power quality.
+
+**Level 62 — Hold the Voltage**
+
+Converter current and voltage limitations and sensor-fault recovery.
+
+Reuse only functionality actually present in the codebase.
+
+Do not assume previous levels were implemented merely because designs or asset packs exist.
+
+---
+
+# 2. NON-NEGOTIABLE IMPLEMENTATION RULES
+
+1. Inspect real source files before referencing APIs.
+2. Never invent existing Project Spark methods, events or namespaces.
+3. Reuse working project infrastructure wherever practical.
+4. Preserve Levels 1–62.
+5. Keep Level 63 functionality level-local when possible.
+6. Do not modify the shared DC solver without demonstrated necessity.
+7. Do not represent a three-phase AC source as arbitrary DC resistor values.
+8. Do not implement multiple competing grid-frequency simulations.
+9. Do not fabricate generator power, RPM, battery SOC, flywheel energy, electrical current or frequency.
+10. Do not assign actual flywheel RPM directly from the target-speed setting.
+11. Do not change frequency using a predetermined animation curve.
+12. Do not force the system frequency to 50 Hz when the controller is enabled.
+13. Do not fabricate frequency nadir or RoCoF.
+14. Do not create virtual inertia power without an available electrical energy source.
+15. Do not permit unlimited flywheel electrical output.
+16. Do not allow the flywheel to release more energy than its usable kinetic-energy reserve.
+17. Do not bypass converter current or thermal limits.
+18. Do not ignore magnetic bearing or vibration protection.
+19. Do not infer valid encoder feedback from rotor animations.
+20. Do not continue closed-loop flywheel torque control using a disconnected encoder.
+21. Do not close source breakers without the required synchronization conditions.
+22. Do not mark an electrical load powered without actual simulated supply.
+23. Do not bypass objective evaluation using arbitrary completion flags.
+24. Do not replace real gameplay terminals with decorative art transforms.
+25. Use consistent physical units and simulation time.
+26. Prevent duplicate simulation ownership.
+27. Use safe Unity initialization and cleanup.
+28. Avoid per-frame global scene searches.
+29. Implement deterministic testing where possible.
+30. Provide complete C# source files.
+31. Clearly report missing integration dependencies.
+32. Do not claim compilation or Play Mode success unless actually tested.
+
+## AUTHORITATIVE COMPLETION REQUIREMENT
+
+**The actual `LevelGamePlayManager` must reach 6/6.**
+
+A local Level 63 script reporting Objective 6 complete is insufficient.
+
+Inspect the actual `SparkLevelEvaluator` and implement compatible historical objective tracking.
+
+Objectives 1–5 must remain certified during the deliberate final encoder-failure test.
+
+Objective 6 must not complete until the encoder is repaired, the fault is explicitly reset, the flywheel is safely recommissioned, and a fresh frequency-response test succeeds.
+
+---
+
+# 3. LEVEL 63 CONFIGURATION
+
+**Level Number:** 63
+
+**Level ID:** `level_63`
+
+**Display Name:** `Catch the Frequency`
+
+**Subtitle:** `Hybrid Flywheel Energy Storage and Virtual Inertia Control`
+
+**Difficulty:** Advanced / Master
+
+**Control Supply:** 5 V DC
+
+**Electrical Network:** Simulated low-voltage three-phase AC
+
+**Nominal Frequency:** 50 Hz
+
+**Player-Created Wires:** 58
+
+**Unique Functional Terminals:** 90
+
+**Individual 3D Models:** 34
+
+**Physical Energy Storage:** High-inertia flywheel
+
+**Electrical Energy Storage:** Battery buffer
+
+**Mechanical Conversion:** Bidirectional motor-generator
+
+**Power Conversion:** Flywheel converter and grid-forming inverter
+
+**Primary Control:** Virtual synchronous machine
+
+**Additional Controls:** Frequency droop and oscillation damping
+
+**Generator:** 1 synchronous generator with prime mover
+
+**Main Disturbances:** Generator trip, motor load step, renewable power collapse
+
+**Final Fault:** Flywheel encoder feedback disconnection
+
+**Authoritative Objectives:** 6
+
+## Proposed performance targets
+
+- Nominal frequency: 50.00 Hz.
+- Minimum frequency nadir in the designated generator-trip test: 49.50 Hz.
+- Steady-state recovery range: 49.90–50.10 Hz.
+- Maximum RoCoF: configurable according to test severity.
+- Flywheel reserve speed: configurable and physically bounded.
+- Flywheel overspeed limit: defined by simulated rotor rating.
+- Converter current limit: finite.
+- Battery reserve: finite.
+- Settling time: configurable.
+- Frequency oscillation limit: configurable.
+
+These are proposed educational settings.
+
+Calibrate disturbance magnitude, inertia, available source power, flywheel energy and response limits together.
+
+Do not assume that the selected frequency-nadir target is achievable without verifying the simulation.
+
+---
+
+# 4. INITIAL LEVEL STATE
+
+At level start:
+
+- Main microgrid source available.
+- Main grid breaker in its configured safe state.
+- Synchronous generator available.
+- Generator prime mover initialized.
+- Generator breaker in its intended initial state.
+- Flywheel stationary or at a defined safe initial RPM.
+- Flywheel energy reserve not yet commissioned.
+- Motor-generator disabled.
+- Flywheel converter disabled.
+- Battery buffer available.
+- Battery management ready subject to valid connections.
+- Grid-forming inverter in commissioning mode.
+- Virtual synchronous machine disabled.
+- Frequency droop controller not yet tuned.
+- Oscillation damper not yet tuned.
+- Speed encoder uncalibrated.
+- Vibration monitor awaiting validation.
+- Frequency sensor requiring calibration.
+- Disturbance simulator idle.
+- Safety enclosure closed.
+- No unresolved critical fault.
+- Objective progress 0/6.
+
+## Player mission
+
+The player must:
+
+1. Build the 58-wire network.
+2. Validate 90 functional terminal anchors.
+3. Verify electrical supply and return.
+4. Verify three-phase source connections.
+5. Verify synchronous generator connections.
+6. Verify flywheel motor-generator and converter topology.
+7. Calibrate flywheel speed feedback.
+8. Calibrate grid frequency and RoCoF measurements.
+9. Validate vibration and bearing monitoring.
+10. Energize the motor-generator.
+11. Accelerate the flywheel.
+12. Establish a usable kinetic-energy reserve.
+13. Commission the battery-supported inverter.
+14. Configure virtual inertia.
+15. Configure frequency droop.
+16. Configure damping.
+17. Enable fast frequency response.
+18. Trip the synchronous generator.
+19. Observe the actual frequency decline.
+20. Release flywheel kinetic energy.
+21. Inject battery-supported inverter power.
+22. Arrest the frequency decline.
+23. Recover toward 50 Hz.
+24. Apply a heavy motor load step.
+25. Tune stable frequency response.
+26. Reduce renewable generation.
+27. Maintain critical service with finite energy reserves.
+28. Disconnect flywheel speed feedback.
+29. Observe safe protection.
+30. Reconnect and recalibrate the encoder.
+31. Explicitly reset the fault.
+32. Restore flywheel reserve.
+33. Repeat the frequency-response certification.
+34. Complete 6/6.
+
+---
+
+# 5. USE MY EXISTING LEVEL 63 ASSET PACKAGE
+
+The approved collection is:
+
+`ProjectSpark_Level63_HD_AAA_Models.zip`
+
+The verified model manifest reports:
+
+- 34 individual FBX models.
+- 34 individual GLB backups.
+- One assembled FBX showcase.
+- One assembled GLB showcase.
+- 72,346 total individual-model triangles.
+- 12 animation-pivot mappings.
+- An optional Unity art-placement editor.
+
+## EXACT INDIVIDUAL FBX FILENAMES
+
+Use these exact 34 files:
+
+| FILE | PURPOSE |
+|---|---|
+| `00_L63_IndustrialFrequencyLabBase.fbx` | Industrial workstation chassis |
+| `01_L63_ThreePhaseMicrogridSource.fbx` | Main three-phase electrical source |
+| `02_L63_ThreePhaseDistributionBus.fbx` | Shared AC distribution |
+| `03_L63_MainGridBreaker.fbx` | Main grid breaker |
+| `04_L63_SynchronousGenerator.fbx` | Mechanical synchronous generator |
+| `05_L63_GeneratorPrimeMover.fbx` | Generator mechanical input |
+| `06_L63_GeneratorBreaker.fbx` | Generator breaker |
+| `07_L63_HighInertiaFlywheelRotor.fbx` | Main flywheel kinetic-energy storage |
+| `08_L63_FlywheelMotorGenerator.fbx` | Bidirectional motor-generator |
+| `09_L63_FlywheelMagneticBearing.fbx` | Rotor magnetic bearing assembly |
+| `10_L63_FlywheelShaftCoupling.fbx` | Mechanical coupling |
+| `11_L63_FlywheelSpeedEncoder.fbx` | Actual shaft-speed feedback |
+| `12_L63_FlywheelVibrationSensor.fbx` | Rotor health monitoring |
+| `13_L63_FlywheelPowerConverter.fbx` | Flywheel electrical power interface |
+| `14_L63_FlywheelDCEnergyLink.fbx` | DC-side electrical distribution |
+| `15_L63_BatteryEnergyBuffer.fbx` | Fast electrical energy reserve |
+| `16_L63_BatteryManagementModule.fbx` | Battery monitoring and protection |
+| `17_L63_GridFormingInverter.fbx` | AC grid support |
+| `18_L63_VirtualSynchronousMachineController.fbx` | Virtual inertia controller |
+| `19_L63_FrequencyDroopController.fbx` | Primary frequency response |
+| `20_L63_PowerOscillationDamper.fbx` | Frequency oscillation suppression |
+| `21_L63_FrequencyROCOFSensor.fbx` | Frequency and RoCoF measurement |
+| `22_L63_ThreePhaseVoltageSensor.fbx` | AC voltage/phase sensing |
+| `23_L63_CurrentTransformerBank.fbx` | Current measurements |
+| `24_L63_ProgrammableLoadBank.fbx` | Adjustable load demand |
+| `25_L63_IndustrialMotorLoad.fbx` | Dynamic motor load |
+| `26_L63_RenewableSourceSimulator.fbx` | Variable renewable power source |
+| `27_L63_GeneratorTripSimulator.fbx` | Controlled generator-trip testing |
+| `28_L63_FastFrequencyResponseRelay.fbx` | Emergency response and protection |
+| `29_L63_EnergyManagementController.fbx` | Source and energy coordination |
+| `30_L63_PowerQualityEventRecorder.fbx` | Frequency-event recording |
+| `31_L63_HolographicFrequencyMonitor.fbx` | Dynamic frequency diagnostics |
+| `32_L63_TransparentFlywheelSafetyEnclosure.fbx` | Reinforced rotor housing |
+| `33_L63_Regulated5VControlSupply.fbx` | Low-voltage control power |
+
+## Supplied integration files
+
+Inspect and reuse:
+
+- `Level63_Complete_ArtKit_Showcase.fbx`
+- `SparkLevel63ArtPlacementEditor.cs`
+- `Model_Manifest.json`
+- `Animation_Rigs.csv`
+- `README_Unity.txt`
+- `Verification_Report.json`
+- The assembled hero preview
+- The 34-model contact sheet
+
+## Art placement requirements
+
+1. Use all 34 individual FBXs.
+2. Use the assembled showcase only as a placement reference.
+3. Do not render the assembled showcase together with the 34 individual models.
+4. Preserve the common model coordinate system.
+5. Verify imported model scale.
+6. Keep gameplay equipment independent.
+7. Keep all electrical terminals stationary.
+8. Preserve mesh hierarchy and animation pivots.
+9. Preserve authored material-color regions.
+10. Do not create gameplay status from art-only events.
+
+## Coordinate system
+
+The manifest specifies:
+
+- X: workstation width.
+- Y: vertical.
+- Z: front-facing electronics.
+- Nominal scale: 1 unit = 1 meter.
+
+Create the root:
+
+`L63_HD_VISUAL_ART`
+
+Place the individual models under this root with their authored common alignment.
+
+---
+
+# 6. EXACT ANIMATION PIVOT INTEGRATION
+
+The supplied `Animation_Rigs.csv` contains 12 verified pivot mappings.
+
+Use these exact names:
+
+| MODEL | ANIMATION PIVOT |
+|---|---|
+| MainGridBreaker | `ANIM_BREAKER_HANDLE` |
+| SynchronousGenerator | `ANIM_GENERATOR_ROTOR` |
+| GeneratorPrimeMover | `ANIM_PRIME_MOVER` |
+| GeneratorBreaker | `ANIM_BREAKER_HANDLE` |
+| HighInertiaFlywheelRotor | `ANIM_FLYWHEEL_ROTOR` |
+| FlywheelMotorGenerator | `ANIM_FLYWHEEL_MG` |
+| FlywheelShaftCoupling | `ANIM_FLYWHEEL_COUPLING` |
+| FlywheelSpeedEncoder | `ANIM_ENCODER_DISC` |
+| IndustrialMotorLoad | `ANIM_INDUSTRIAL_MOTOR` |
+| RenewableSourceSimulator | `ANIM_SOLAR_TILT` |
+| HolographicFrequencyMonitor | `ANIM_MONITOR_TILT` |
+| TransparentFlywheelSafetyEnclosure | `ANIM_SAFETY_DOOR` |
+
+## Critical rotation requirements
+
+### Flywheel rotor
+
+`ANIM_FLYWHEEL_ROTOR` must follow the actual simulated flywheel shaft angle.
+
+The rotor must accelerate gradually when charging and decelerate when delivering electrical energy.
+
+### Flywheel motor-generator
+
+`ANIM_FLYWHEEL_MG` follows the shared electromechanical shaft state where mechanically coupled.
+
+### Shaft coupling
+
+`ANIM_FLYWHEEL_COUPLING` must remain synchronized with the actual shaft.
+
+Do not visually allow a rigidly connected coupling to rotate at a different RPM.
+
+### Encoder disc
+
+`ANIM_ENCODER_DISC` follows the simulated shaft angle.
+
+The speed measurement itself must come from the sensor model, not from a visual transform rotation performed independently.
+
+### Generator
+
+`ANIM_GENERATOR_ROTOR` and `ANIM_PRIME_MOVER` follow actual generator dynamics.
+
+### Breakers
+
+Both breaker models use `ANIM_BREAKER_HANDLE`.
+
+Resolve the pivot relative to the correct FBX model root.
+
+Do not globally assign both breakers to the first matching transform.
+
+### Motor load
+
+`ANIM_INDUSTRIAL_MOTOR` follows actual motor dynamics.
+
+### Solar simulator
+
+`ANIM_SOLAR_TILT` follows the appropriate simulated solar positioning state.
+
+### Monitor and safety door
+
+Use the named pivots without changing electrical terminal positions.
+
+---
+
+# 7. ELECTRICAL WIRING — W01 TO W58
+
+The approved design requires:
+
+**58 player-created wires and 90 unique functional terminals.**
+
+The art collection does not include a verified exact endpoint manifest or real `SparkTerminal` registrations.
+
+Create and validate these during implementation.
+
+Do not invent an existing `Exact_Wiring.csv`.
+
+## Wiring groups
+
+### GROUP A — CONTROL POWER
+
+- Regulated 5 V control supply
+- Control return
+- Generator control electronics
+- VSM controller supply
+- Droop controller supply
+- Damping controller supply
+- Protection relay supply
+
+### GROUP B — THREE-PHASE MICROGRID
+
+- Phase A
+- Phase B
+- Phase C
+- Main grid breaker
+- Main distribution bus
+- Source-voltage measurement
+- Source-frequency reference
+
+### GROUP C — SYNCHRONOUS GENERATOR
+
+- Generator electrical phase connections
+- Generator breaker
+- Prime mover control
+- Generator speed feedback
+- Generator active-power measurement
+- Generator trip command
+- Generator protection feedback
+
+### GROUP D — FLYWHEEL MECHANICAL SYSTEM
+
+- Motor-generator control signals
+- Speed encoder
+- Vibration sensor
+- Bearing-health feedback
+- Torque command
+- Mechanical safety interlock
+
+### GROUP E — FLYWHEEL POWER CONVERSION
+
+- Motor-generator electrical connection
+- Bidirectional converter
+- DC energy link
+- Converter enable
+- Current measurement
+- Converter protection
+- Energy reserve status
+
+### GROUP F — BATTERY AND GRID-FORMING INVERTER
+
+- Battery positive
+- Battery negative
+- Battery management
+- DC converter interface
+- Inverter enable
+- Inverter three-phase output
+- Power availability feedback
+
+### GROUP G — FREQUENCY CONTROLS
+
+- Frequency/RoCoF sensor
+- VSM controller input
+- Virtual inertia command
+- Droop controller input/output
+- Damping controller input/output
+- Fast frequency response relay
+
+### GROUP H — LOADS AND DISTURBANCES
+
+- Programmable load bank
+- Industrial motor
+- Renewable simulator
+- Generator-trip simulator
+- Protection and fault signals
+- Event recorder
+- Energy-management controller
+
+## Requirements
+
+1. Exactly 58 expected player-created connections.
+2. Exactly 90 unique socket IDs.
+3. Every FROM and TO terminal documented.
+4. Real `SparkTerminal` components registered.
+5. Functional component IDs registered.
+6. Control and power terminals correctly distinguished.
+7. Valid three-phase routing.
+8. Valid DC power polarity.
+9. Valid supply and return.
+10. Correct source breaker topology.
+11. Correct encoder feedback routing.
+12. Correct current measurement routing.
+13. Correct sensor/control signal routing.
+14. Valid inverter connection.
+15. Valid motor-generator connection.
+16. Detect incorrect wiring.
+17. Detect duplicate wiring.
+18. Detect missing wiring.
+19. Support player wire removal and reconnection.
+20. Preserve fixed/internal module connections separately.
+
+## Internal module wiring
+
+Some motor-generator, converter and three-phase equipment requires more physical conductors than the player puzzle exposes.
+
+Use documented fixed internal connections where appropriate.
+
+Do not add undocumented player-created wires beyond 58.
+
+## Final encoder-fault wire
+
+Reserve one designated player connection for flywheel speed feedback.
+
+Conceptual endpoint roles:
+
+`FLYWHEEL_ENCODER_SPEED_OUT → FLYWHEEL_CONTROLLER_SPEED_IN`
+
+Assign the final W-number only after the complete wiring manifest has been verified.
+
+The final objective must disconnect this actual player wire.
+
+Do not simulate the failure by merely toggling a fault Boolean.
+
+---
+
+# 8. ONE AUTHORITATIVE GRID-FREQUENCY MODEL
+
+This is the most important Level 63 simulation architecture requirement.
+
+Implement a coherent frequency state shared by:
+
+- Synchronous generator
+- Grid-forming inverter
+- Flywheel electrical converter
+- Battery-supported VSM
+- Frequency/RoCoF measurements
+- Source-power balance
+- Loads
+- Protection
+- Objectives
+
+## Required measurements
+
+- Nominal frequency
+- Actual grid frequency
+- Grid electrical phase angle
+- Frequency deviation
+- RoCoF
+- Frequency nadir
+- Maximum frequency excursion
+- Active-power deficit
+- Available active-power support
+- Effective inertia
+- Damping
+- Load demand
+- Source contributions
+
+## Frequency dynamics
+
+For a simplified aggregate power system, use a dimensionally consistent equation such as:
+
+`df/dt = f0 * (PmechanicalEquivalent - PelectricalLoad - DampingPower) / (2 * H * Sbase)`
+
+Define all quantities and power bases clearly.
+
+This equation is appropriate only for a consistent aggregate inertia model.
+
+If the existing AC model already simulates generator rotor angles and network frequency dynamically, integrate with that model instead.
+
+**Do not add a second independent frequency calculation that conflicts with existing generator dynamics.**
+
+## Critical behavior
+
+If generation suddenly becomes less than demand, grid frequency must respond.
+
+The flywheel and battery-support systems must modify the actual power imbalance.
+
+Do not directly change the displayed frequency to create the desired outcome.
+
+---
+
+# 9. SYNCHRONOUS GENERATOR MODEL
+
+Use:
+
+- `04_L63_SynchronousGenerator.fbx`
+- `05_L63_GeneratorPrimeMover.fbx`
+- `06_L63_GeneratorBreaker.fbx`
+
+Reuse validated generator dynamics from earlier levels.
+
+## Mechanical properties
+
+- Rotor inertia
+- Actual shaft angle
+- Actual angular speed
+- Actual RPM
+- Prime mover torque
+- Generator electromagnetic torque
+- Friction
+- Mechanical losses
+- Governor response
+
+## Electrical properties
+
+- Generator voltage
+- Frequency
+- Phase angle
+- Current
+- Active power
+- Reactive power
+- Apparent power
+- Power limit
+- Protection status
+
+## Dynamic equation
+
+`J * dOmega/dt = PrimeMoverTorque - ElectromagneticTorque - FrictionTorque`
+
+## Generator trip
+
+When the player initiates the generator-trip test:
+
+1. Trip command becomes active.
+2. Generator breaker begins opening.
+3. Electrical source disconnects through actual topology.
+4. Generator active-power contribution falls.
+5. Remaining generation/load imbalance changes.
+6. Grid frequency responds dynamically.
+7. Protection and energy systems respond.
+
+Do not simply set a GENERATOR TRIPPED indicator while allowing its electrical contribution to continue.
+
+---
+
+# 10. PHYSICAL FLYWHEEL DYNAMICS
+
+Use:
+
+`07_L63_HighInertiaFlywheelRotor.fbx`
+
+The flywheel is the mechanical centerpiece.
+
+## Required properties
+
+- Rotor moment of inertia
+- Shaft angle
+- Actual RPM
+- Angular speed
+- Angular acceleration
+- Stored kinetic energy
+- Minimum allowed speed
+- Maximum allowed speed
+- Maximum torque
+- Mechanical friction
+- Bearing losses
+- Vibration
+- Operating state
+
+## Energy equation
+
+`Eflywheel = 0.5 * J * Omega²`
+
+## Usable kinetic energy
+
+`Eusable = 0.5 * J * (OmegaCurrent² - OmegaMinimum²)`
+
+Clamp usable energy to zero when below the defined minimum operating speed.
+
+## Mechanical equation
+
+`J * dOmega/dt = Tmotor - Tgenerator - Tloss`
+
+Use a consistent torque sign convention.
+
+## Charging behavior
+
+- Electrical power drives the motor-generator in motoring mode.
+- Motor torque accelerates the flywheel.
+- Actual RPM increases gradually.
+- Kinetic energy increases.
+- Electrical losses are accounted for.
+- Overspeed protection remains active.
+
+## Discharging behavior
+
+- Motor-generator enters generating mode.
+- Electrical output comes from reduced rotor kinetic energy.
+- Actual RPM decreases.
+- Stored energy decreases.
+- Output power remains finite.
+- Minimum speed is respected.
+
+Do not assign flywheel energy independently of actual RPM.
+
+Do not let energy become negative.
+
+---
+
+# 11. FLYWHEEL MOTOR-GENERATOR
+
+Use:
+
+`08_L63_FlywheelMotorGenerator.fbx`
+
+Implement or reuse a bidirectional electromechanical conversion model.
+
+## Required properties
+
+- Motor-generator torque
+- Shaft RPM
+- Angular speed
+- Electrical current
+- Electrical voltage
+- Mechanical power
+- Electrical power
+- Conversion efficiency
+- Rated torque
+- Rated power
+- Temperature
+- Direction/mode
+- Fault state
+
+## Operating modes
+
+- OFF
+- STANDBY
+- MOTORING / CHARGING
+- GENERATING / DISCHARGING
+- TORQUE LIMITED
+- SPEED LIMITED
+- FAULT
+
+## Power relation
+
+`Pmechanical = Torque * AngularSpeed`
+
+Electrical input/output must be consistent with mechanical power and conversion losses.
+
+## Important
+
+Do not treat the flywheel motor-generator as an ideal infinite torque source.
+
+Torque and power limits must constrain acceleration and emergency response.
+
+---
+
+# 12. MAGNETIC BEARING AND VIBRATION PROTECTION
+
+Use:
+
+- `09_L63_FlywheelMagneticBearing.fbx`
+- `12_L63_FlywheelVibrationSensor.fbx`
+
+Reuse compatible magnetic-bearing functionality from Level 55 if it exists.
+
+## Bearing responsibilities
+
+- Support the flywheel rotor.
+- Monitor bearing health.
+- Apply simplified bearing loss.
+- Validate operating conditions.
+- Report unsafe clearance/position when modeled.
+
+## Vibration responsibilities
+
+- Monitor rotor vibration.
+- Detect excessive vibration.
+- Detect invalid sensor feedback.
+- Trigger appropriate safety action.
+- Record disturbance history.
+
+## Protection requirements
+
+- Overspeed
+- Excessive vibration
+- Bearing failure
+- Excessive shaft acceleration
+- Unexpected torque request
+- Unsafe safety-enclosure state
+
+## Important safety distinction
+
+Do not permit unsafe high-speed operation merely because frequency support is required.
+
+Mechanical protection has authority over supervisory dispatch.
+
+---
+
+# 13. FLYWHEEL SPEED ENCODER
+
+Use:
+
+`11_L63_FlywheelSpeedEncoder.fbx`
+
+## Required properties
+
+- Actual shaft angle
+- Encoder resolution
+- Pulse count
+- Timestamp
+- Measured RPM
+- Direction
+- Measurement validity
+- Calibration
+- Signal freshness
+- Connectivity state
+
+## Required behavior
+
+The encoder reads the authoritative shaft dynamics.
+
+Its measurement must not be inferred from decorative visual rotation.
+
+If the encoder reports pulses:
+
+`MeasuredRPM = 60 * PulseFrequency / PulsesPerRevolution`
+
+Use the actual encoder configuration.
+
+## Feedback validation
+
+- Correct terminal connection.
+- Correct resolution.
+- Valid timing.
+- Signal changing when expected.
+- No implausible sudden RPM jumps.
+- Sensor calibration complete.
+
+## Final fault
+
+Disconnect the actual encoder feedback wire.
+
+The speed measurement becomes invalid.
+
+Do not substitute the last known RPM indefinitely.
+
+The controller must transition to a safe operating state.
+
+---
+
+# 14. FLYWHEEL POWER CONVERTER
+
+Use:
+
+- `13_L63_FlywheelPowerConverter.fbx`
+- `14_L63_FlywheelDCEnergyLink.fbx`
+
+## Required properties
+
+- Converter mode
+- DC-link voltage
+- DC-link current
+- Motor-generator current
+- Electrical active power
+- Reactive power where applicable
+- Efficiency
+- Maximum current
+- Maximum voltage
+- Maximum power
+- Temperature
+- Fault state
+
+## Required behavior
+
+- Motoring consumes electrical energy.
+- Generating supplies electrical energy.
+- Converter current stays bounded.
+- Output power corresponds to shaft-energy change.
+- Losses are included.
+- DC-link voltage remains consistent with power flow.
+- Converter faults inhibit unsafe torque.
+
+## Energy consistency
+
+During discharge:
+
+`MechanicalEnergyDecrease >= ElectricalEnergyDelivered`
+
+with the difference accounted for by electrical and mechanical losses over the interval.
+
+During charging:
+
+`MechanicalEnergyIncrease <= ElectricalEnergyConsumed`
+
+again accounting for losses.
+
+Do not create energy during mode changes.
+
+---
+
+# 15. BATTERY ENERGY BUFFER
+
+Use:
+
+- `15_L63_BatteryEnergyBuffer.fbx`
+- `16_L63_BatteryManagementModule.fbx`
+
+The battery supplies fast electrical power for virtual inertia support.
+
+## Required properties
+
+- Rated energy
+- SOC
+- Available energy
+- Voltage
+- Current
+- Internal resistance
+- Maximum discharge current
+- Maximum charge current
+- Minimum SOC
+- Temperature
+- BMS state
+- Power availability
+
+## Energy update
+
+`BatteryEnergyNext = BatteryEnergyCurrent - BatteryDischargePower * DeltaTime`
+
+Use consistent signs and include losses.
+
+## Required behavior
+
+- Battery SOC decreases during inverter support.
+- Available power is limited.
+- Low SOC reduces available support.
+- BMS can inhibit discharge.
+- Battery cannot provide unlimited fast-response power.
+- Battery reserve settings affect controller decisions.
+
+## Critical distinction
+
+The physical flywheel and battery are separate energy stores.
+
+Their contributions must be measured separately.
+
+Do not combine them into one fake ENERGY RESERVE percentage.
+
+---
+
+# 16. GRID-FORMING INVERTER
+
+Use:
+
+`17_L63_GridFormingInverter.fbx`
+
+Reuse validated Level 57–60 inverter functionality where available.
+
+## Required properties
+
+- DC-link voltage
+- AC bus voltage
+- Frequency
+- Phase angle
+- Output current
+- Active power
+- Reactive power
+- Current limit
+- Power limit
+- Mode
+- Fault state
+
+## Required modes
+
+- OFF
+- STANDBY
+- GRID FOLLOWING
+- GRID FORMING
+- VIRTUAL INERTIA RESPONSE
+- CURRENT LIMITED
+- FAULT
+
+## Core rule
+
+The inverter may provide fast active-power support only when its DC-side battery/link can supply the required energy.
+
+Do not generate frequency response independently of electrical power availability.
+
+---
+
+# 17. VIRTUAL SYNCHRONOUS MACHINE CONTROLLER
+
+Use:
+
+`18_L63_VirtualSynchronousMachineController.fbx`
+
+This is the primary advanced controller.
+
+## Required player-adjustable parameters
+
+- Virtual inertia gain
+- Frequency reference
+- Frequency droop gain
+- Damping gain
+- Maximum active-power support
+- Response bandwidth
+- RoCoF filtering
+- Power ramp limit
+- Converter current limit
+
+## Simplified inertia-like control
+
+`PinertiaRequest = -Kinertia * df/dt`
+
+## Droop control
+
+`PdroopRequest = Kdroop * (fReference - fActual)`
+
+## Combined support request
+
+`Prequest = PinertiaRequest + PdroopRequest + PdampingRequest`
+
+These are conceptual control terms.
+
+Use a physically consistent implementation with the actual network and converter dynamics.
+
+## Limits
+
+The request must be constrained by:
+
+- Battery SOC
+- DC-link availability
+- Inverter current
+- Converter power
+- Thermal limits
+- Electrical network conditions
+
+## Important
+
+Virtual inertia is a control response, not an additional physical flywheel.
+
+Increasing its gain must not increase battery capacity or create new energy.
+
+---
+
+# 18. FREQUENCY DROOP CONTROLLER
+
+Use:
+
+`19_L63_FrequencyDroopController.fbx`
+
+## Required parameters
+
+- Nominal frequency
+- Measured frequency
+- Droop coefficient
+- Active-power reference
+- Available support power
+- Ramp limit
+- Deadband
+- Response state
+
+## Required behavior
+
+When frequency falls:
+
+- Controller requests additional active power.
+- Available sources respond within capability.
+- Frequency response changes dynamically.
+- Output power remains limited.
+
+When frequency rises:
+
+- Controller reduces support or absorbs power where appropriate and available.
+
+## Tuning challenge
+
+Aggressive droop can improve recovery but may lead to unnecessary control interactions or saturation.
+
+Insufficient droop may produce slow recovery or sustained frequency error.
+
+The player must tune the system using measured results.
+
+---
+
+# 19. POWER OSCILLATION DAMPER
+
+Use:
+
+`20_L63_PowerOscillationDamper.fbx`
+
+## Required parameters
+
+- Damping gain
+- Frequency deviation
+- Frequency-rate measurement
+- Filtered oscillation estimate
+- Power damping request
+- Output limit
+
+## Required behavior
+
+- Detect frequency oscillation.
+- Produce a bounded damping contribution.
+- Reduce sustained oscillation where appropriately tuned.
+- Avoid excessive phase lag and unstable feedback.
+- Respect converter current and energy limits.
+
+## Important
+
+Do not implement damping by directly multiplying down the displayed frequency oscillation.
+
+The damper must modify real power-control action.
+
+---
+
+# 20. FREQUENCY AND ROCOF SENSOR
+
+Use:
+
+`21_L63_FrequencyROCOFSensor.fbx`
+
+## Required measurements
+
+- Grid frequency
+- Frequency deviation
+- RoCoF
+- Measurement validity
+- Calibration
+- Measurement timestamp
+- Filtered frequency
+- Raw frequency estimate
+- Sensor freshness
+
+## RoCoF
+
+`RoCoF = dFrequency/dt`
+
+For discrete simulation:
+
+`RoCoF = (FrequencyCurrent - FrequencyPrevious) / DeltaTime`
+
+Use appropriate filtering and stable time intervals.
+
+## Requirements
+
+- Valid electrical reference required.
+- No divide-by-zero.
+- Invalid samples rejected.
+- Measurement delay represented consistently.
+- Filtering should not erase physically important transients.
+
+Do not report RoCoF from a random or fabricated value.
+
+---
+
+# 21. VOLTAGE AND CURRENT MEASUREMENT
+
+Use:
+
+- `22_L63_ThreePhaseVoltageSensor.fbx`
+- `23_L63_CurrentTransformerBank.fbx`
+
+## Required outputs
+
+- Phase A/B/C voltage
+- RMS voltage
+- Frequency reference
+- Phase angle
+- Phase A/B/C current
+- RMS current
+- Generator current
+- Inverter current
+- Load current
+- Measurement validity
+- Calibration
+
+## Requirements
+
+Actual electrical measurements must come from the authoritative network.
+
+Do not allow a disconnected current transformer to continue reporting valid current.
+
+Use correct CT ratios and measurement polarity.
+
+---
+
+# 22. PROGRAMMABLE LOAD BANK
+
+Use:
+
+`24_L63_ProgrammableLoadBank.fbx`
+
+## Required properties
+
+- Demand setpoint
+- Actual active power
+- Reactive power
+- Current
+- Voltage
+- Load step size
+- Ramp rate
+- Connection state
+- Protection state
+
+## Required behavior
+
+Increasing load demand must change actual electrical power.
+
+The resulting power imbalance must affect frequency according to the network model.
+
+Do not lower frequency directly when the LOAD STEP button is pressed.
+
+---
+
+# 23. INDUSTRIAL MOTOR LOAD
+
+Use:
+
+`25_L63_IndustrialMotorLoad.fbx`
+
+## Required properties
+
+- Rotor inertia
+- Actual RPM
+- Torque
+- Starting current
+- Electrical power
+- Reactive power
+- Mechanical load
+- Current limit
+- Operating state
+
+## Motor load-step test
+
+1. Begin stable operation.
+2. Command motor startup or increased load.
+3. Actual motor current increases.
+4. Electrical active-power demand changes.
+5. Grid-frequency response occurs.
+6. Flywheel and VSM controllers respond.
+7. Motor accelerates according to dynamics.
+8. Frequency eventually stabilizes.
+
+The motor's animation follows actual shaft speed.
+
+---
+
+# 24. RENEWABLE SOURCE SIMULATOR
+
+Use:
+
+`26_L63_RenewableSourceSimulator.fbx`
+
+## Required properties
+
+- Available renewable power
+- Actual renewable power
+- Ramp rate
+- Output current
+- Source availability
+- Generation-loss profile
+- Fault state
+
+## Renewable loss event
+
+The simulator reduces available renewable power.
+
+The actual network power balance changes.
+
+Remaining sources respond through the frequency-control system.
+
+Do not simply change a solar display while retaining its electrical output.
+
+---
+
+# 25. GENERATOR TRIP SIMULATOR
+
+Use:
+
+`27_L63_GeneratorTripSimulator.fbx`
+
+## Required behavior
+
+1. Verify valid initial operation.
+2. Record baseline generator power.
+3. Player activates generator-trip test.
+4. Trip command reaches the actual generator protection/breaker.
+5. Generator breaker opens.
+6. Generator power contribution falls.
+7. Frequency begins reacting to the power deficit.
+8. Fast frequency response activates.
+9. Flywheel energy decreases according to output.
+10. Battery energy changes according to inverter support.
+11. Frequency nadir is measured.
+12. Recovery and settling are evaluated.
+
+## Event recording
+
+Record:
+
+- Trip start time
+- Generator power before trip
+- Breaker opening time
+- Initial frequency
+- Initial RoCoF
+- Minimum frequency
+- Time to nadir
+- Flywheel peak power
+- Battery peak power
+- Recovery time
+- Protection events
+
+---
+
+# 26. FAST FREQUENCY RESPONSE RELAY
+
+Use:
+
+`28_L63_FastFrequencyResponseRelay.fbx`
+
+## Required states
+
+- READY
+- ARMED
+- FREQUENCY EVENT
+- SUPPORT ACTIVE
+- CURRENT LIMITED
+- ENERGY LIMITED
+- FAULT
+- RESET REQUIRED
+
+## Required behavior
+
+- Detect unacceptable frequency decline.
+- Detect excessive RoCoF.
+- Command available fast-response sources.
+- Respect response delays.
+- Prioritize source protection.
+- Coordinate with energy management.
+- Record response events.
+
+## Important
+
+The relay cannot override the battery BMS or flywheel overspeed/underspeed protection.
+
+---
+
+# 27. ENERGY MANAGEMENT CONTROLLER
+
+Use:
+
+`29_L63_EnergyManagementController.fbx`
+
+The controller must coordinate:
+
+- Physical flywheel reserve
+- Battery SOC
+- Generator availability
+- Renewable power
+- Load demand
+- Fast-response capacity
+- Frequency control settings
+- Protection states
+
+## Required functions
+
+- Charge flywheel to reserve RPM.
+- Avoid excessive pre-event energy use.
+- Prioritize emergency support.
+- Allocate flywheel and battery contributions.
+- Prevent converter overload.
+- Preserve a usable reserve for later tests.
+- Request generator recovery where appropriate.
+- Shed nonessential loads when necessary.
+- Recharge after successful disturbances.
+
+## Important
+
+Do not allow the controller to claim reserve energy that no longer exists.
+
+Use actual measured flywheel RPM and battery SOC.
+
+---
+
+# 28. POWER QUALITY EVENT RECORDER
+
+Use:
+
+`30_L63_PowerQualityEventRecorder.fbx`
+
+Record time histories of:
+
+- Frequency
+- RoCoF
+- Generator active power
+- Flywheel RPM
+- Flywheel stored energy
+- Flywheel output power
+- Battery power
+- Inverter current
+- Renewable output
+- Total load
+- Frequency nadir
+- Controller saturation
+- Protection states
+- Breaker transitions
+
+## Historical test records
+
+Each objective must use actual simulation histories to verify performance.
+
+Do not compare only a single instantaneous frequency sample.
+
+For generator-trip tests, use the measured minimum over the defined event window.
+
+For damping tests, evaluate settling and oscillations across a valid observation interval.
+
+---
+
+# 29. ADVANCED SAFETY AND PROTECTION
+
+Required protective functions:
+
+- Flywheel overspeed
+- Flywheel underspeed
+- Excessive acceleration
+- Excessive torque
+- Vibration overload
+- Magnetic bearing failure
+- Encoder signal loss
+- Encoder implausible measurement
+- Motor-generator overcurrent
+- Converter overcurrent
+- Converter overvoltage
+- DC-link undervoltage
+- Battery low SOC
+- BMS fault
+- Inverter saturation
+- Generator overfrequency
+- Generator underfrequency
+- Excessive RoCoF
+- Controller oscillation
+- Unexpected breaker state
+- Unsafe synchronization
+- Invalid sensor feedback
+- Safety enclosure opening
+- Invalid numerical simulation state
+
+## Critical fault response
+
+1. Identify the actual fault.
+2. Record operating conditions.
+3. Reject unsafe commands.
+4. Limit or inhibit affected converter torque.
+5. Protect rotating machinery.
+6. Update source availability.
+7. Coordinate remaining electrical support.
+8. Shed loads if physically necessary.
+9. Latch the fault.
+10. Prevent uncontrolled restart.
+11. Require repair.
+12. Require explicit reset.
+13. Revalidate sensors.
+14. Recommission affected equipment.
+15. Record recovery.
+
+Do not shut down the entire grid for every minor fault if safe partial operation is physically possible.
+
+Do not keep the flywheel operating unsafely solely to achieve an objective.
+
+---
+
+# 30. SIX AUTHORITATIVE LEVEL OBJECTIVES
+
+Integrate all six objectives with the actual Project Spark evaluator.
+
+## OBJECTIVE 1 — BUILD THE HYBRID INERTIA NETWORK
+
+Require:
+
+1. All 58 required wires connected.
+2. All 90 terminals registered.
+3. Valid 5 V control power.
+4. Valid control return.
+5. Three-phase source connected.
+6. Distribution bus valid.
+7. Generator connected.
+8. Prime mover connected.
+9. Generator breaker connected.
+10. Flywheel motor-generator connected.
+11. Flywheel converter connected.
+12. DC energy link valid.
+13. Battery and BMS connected.
+14. Grid-forming inverter connected.
+15. Encoder feedback valid.
+16. Vibration feedback valid.
+17. Frequency/RoCoF sensor connected.
+18. Voltage/current sensors connected.
+19. VSM controller connected.
+20. Droop and damping controllers connected.
+21. Protection relay connected.
+22. Load and disturbance systems connected.
+23. No unsafe electrical topology.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — CHARGE AND COMMISSION THE FLYWHEEL
+
+Require:
+
+1. Objective 1 certified.
+2. Safety enclosure closed.
+3. Bearing and vibration conditions valid.
+4. Speed encoder calibrated.
+5. Flywheel converter powered.
+6. Motor-generator enters motoring mode.
+7. Actual torque accelerates the rotor.
+8. Actual RPM increases.
+9. Stored kinetic energy increases.
+10. Reserve RPM reached.
+11. Flywheel remains below overspeed limit.
+12. Generator and frequency sensors valid.
+13. Battery buffer ready.
+14. Grid-forming inverter ready.
+15. Virtual inertia settings configured.
+16. Droop and damping configured.
+17. Stable commissioning interval completed.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — ARREST GENERATOR-TRIP FREQUENCY DROP
+
+Require:
+
+1. Flywheel commissioned.
+2. Sufficient kinetic energy reserve.
+3. Battery support available.
+4. Stable baseline frequency recorded.
+5. Generator initially supplying measured power.
+6. Generator-trip test activated.
+7. Generator breaker actually opens.
+8. Generator active power falls.
+9. Grid-frequency deviation occurs.
+10. Frequency/RoCoF measurements valid.
+11. Flywheel motor-generator enters generating mode.
+12. Flywheel delivers actual electrical power.
+13. Flywheel RPM and energy decrease consistently.
+14. Battery inverter contributes valid support where configured.
+15. Converter current limits respected.
+16. Frequency nadir remains above the configured threshold.
+17. Frequency recovers toward nominal.
+18. Stable observation interval completed.
+19. No unresolved critical fault.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — TUNE DROOP AND DAMPING
+
+Require:
+
+1. Previous frequency test certified.
+2. Stable baseline established.
+3. Motor load step activated.
+4. Actual electrical demand increases.
+5. Grid frequency responds.
+6. Droop controller requests support.
+7. Damping controller adjusts real power command.
+8. Converter power changes physically.
+9. Frequency oscillation decreases.
+10. Acceptable settling time achieved.
+11. No sustained instability.
+12. No excessive converter saturation.
+13. No unnecessary critical-load interruption.
+14. Stable final frequency within tolerance.
+15. Observation interval completed.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — SURVIVE RENEWABLE POWER COLLAPSE
+
+Require:
+
+1. Previous objectives certified.
+2. Renewable source initially contributing valid power.
+3. Renewable reduction test activated.
+4. Available renewable power decreases.
+5. Actual electrical generation decreases.
+6. Power imbalance measured.
+7. Flywheel contributes available kinetic energy.
+8. Battery inverter contributes available power.
+9. Source limits respected.
+10. Critical loads remain powered where physically supportable.
+11. Frequency remains within test limits.
+12. Flywheel RPM remains safe.
+13. Battery SOC remains above physical minimum.
+14. No critical protection failure.
+15. Sustained observation interval completed.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — FLYWHEEL ENCODER FAULT AND RECOVERY
+
+Require:
+
+1. Objectives 1–5 historically certified.
+2. Designated encoder feedback wire disconnected.
+3. Actual topology becomes invalid.
+4. Encoder measurement becomes invalid.
+5. Controller detects speed-feedback loss.
+6. Unsafe torque control is inhibited.
+7. Appropriate converter protection occurs.
+8. Fault becomes latched.
+9. Player reconnects the actual wire.
+10. Encoder feedback becomes valid.
+11. Player recalibrates the encoder.
+12. Player explicitly resets the fault.
+13. Flywheel mechanical health verified.
+14. Flywheel recharged if necessary.
+15. Grid frequency reference valid.
+16. VSM, droop and damping controllers recommissioned.
+17. A fresh generator-trip or designated frequency event occurs.
+18. Flywheel supplies physically valid response.
+19. Frequency nadir remains within the configured limit.
+20. Frequency recovers within tolerance.
+21. Energy and current limits respected.
+22. No unresolved critical fault remains.
+23. Final certification succeeds.
+
+Progress becomes **6/6**.
+
+## IMPORTANT HISTORICAL OBJECTIVE RULE
+
+Do not reset Objectives 1–5 when the player deliberately disconnects the encoder for Objective 6.
+
+However, final completion requires successful recovery and a fresh stability test.
+
+**The actual `LevelGamePlayManager` must report 6/6.**
+
+---
+
+# 31. RECOMMENDED UNITY C# ARCHITECTURE
+
+Inspect actual project code before creating new classes.
+
+Suggested responsibilities:
+
+- `SparkLevel63Coordinator.cs`
+- `SparkLevel63ThreePhaseFrequencyNetwork.cs`
+- `SparkLevel63FlywheelDynamics.cs`
+- `SparkLevel63FlywheelEnergy.cs`
+- `SparkLevel63FlywheelMotorGenerator.cs`
+- `SparkLevel63FlywheelConverter.cs`
+- `SparkLevel63SpeedEncoder.cs`
+- `SparkLevel63VibrationMonitor.cs`
+- `SparkLevel63BearingProtection.cs`
+- `SparkLevel63GeneratorDynamics.cs`
+- `SparkLevel63GeneratorTripController.cs`
+- `SparkLevel63BatterySupport.cs`
+- `SparkLevel63GridFormingInverter.cs`
+- `SparkLevel63VirtualSynchronousMachine.cs`
+- `SparkLevel63FrequencyDroop.cs`
+- `SparkLevel63PowerOscillationDamper.cs`
+- `SparkLevel63FrequencyROCOFSensor.cs`
+- `SparkLevel63FastFrequencyResponse.cs`
+- `SparkLevel63RenewableSource.cs`
+- `SparkLevel63LoadStepController.cs`
+- `SparkLevel63EnergyManagement.cs`
+- `SparkLevel63SafetyController.cs`
+- `SparkLevel63ObjectiveTracker.cs`
+- `SparkLevel63FrequencyDashboard.cs`
+- `SparkLevel63Interaction.cs`
+- `SparkLevel63VisualRig.cs`
+
+These are suggested responsibilities, not verified existing APIs.
+
+Reuse compatible implementations instead of duplicating working project systems.
+
+## Runtime update architecture
+
+1. Validate topology.
+2. Read player commands.
+3. Update source breaker states.
+4. Update generator prime mover and rotor dynamics.
+5. Update flywheel motor-generator torque.
+6. Integrate flywheel shaft speed and kinetic energy.
+7. Update battery availability.
+8. Update renewable generation.
+9. Update electrical load demand.
+10. Calculate source/load active-power balance.
+11. Advance authoritative grid frequency and electrical phase.
+12. Acquire frequency/RoCoF measurements.
+13. Acquire encoder and vibration feedback.
+14. Calculate virtual inertia request.
+15. Calculate droop response.
+16. Calculate damping response.
+17. Apply converter current and power limits.
+18. Solve consistent source power contributions.
+19. Update energy flows without double integration.
+20. Evaluate protection and faults.
+21. Record event histories.
+22. Evaluate authoritative objectives.
+23. Update dashboard.
+24. Update visual-only animations.
+
+The exact numerical scheduling may require prediction/correction or substeps.
+
+Use a consistent single simulation timeline.
+
+**Do not advance the same mechanical or electrical interval twice.**
+
+---
+
+# 32. LIVE AAA FREQUENCY DASHBOARD
+
+Use:
+
+- `30_L63_PowerQualityEventRecorder`
+- `31_L63_HolographicFrequencyMonitor`
+
+Create functional TextMeshPro displays and dynamic graphs.
+
+## Required live readings
+
+- MAIN POWER
+- GRID STATUS
+- GRID FREQUENCY
+- FREQUENCY REFERENCE
+- FREQUENCY DEVIATION
+- ROCOF
+- FREQUENCY NADIR
+- FREQUENCY RECOVERY TIME
+- ACTIVE-POWER IMBALANCE
+- GENERATOR RPM
+- GENERATOR OUTPUT POWER
+- GENERATOR BREAKER STATE
+- FLYWHEEL RPM
+- FLYWHEEL ANGULAR SPEED
+- FLYWHEEL STORED ENERGY
+- FLYWHEEL USABLE ENERGY
+- FLYWHEEL CHARGE/DISCHARGE POWER
+- FLYWHEEL MOTOR-GENERATOR TORQUE
+- FLYWHEEL VIBRATION
+- BEARING STATUS
+- SPEED ENCODER STATUS
+- FLYWHEEL CONVERTER CURRENT
+- DC-LINK VOLTAGE
+- BATTERY SOC
+- BATTERY POWER
+- INVERTER OUTPUT CURRENT
+- VIRTUAL INERTIA GAIN
+- FREQUENCY DROOP
+- DAMPING GAIN
+- RENEWABLE POWER
+- TOTAL LOAD POWER
+- INDUSTRIAL MOTOR RPM
+- FAST RESPONSE STATUS
+- CONVERTER SATURATION
+- PROTECTION STATUS
+- EVENT HISTORY
+- OBJECTIVES X/6
+
+## Player controls
+
+- MAIN POWER
+- CHECK SAFETY
+- CALIBRATE ENCODER
+- CALIBRATE FREQUENCY SENSOR
+- CHARGE FLYWHEEL
+- SET RESERVE RPM
+- ENABLE VIRTUAL INERTIA
+- SET INERTIA GAIN
+- SET DROOP
+- SET DAMPING
+- ENABLE FAST RESPONSE
+- GENERATOR TRIP TEST
+- MOTOR LOAD STEP
+- RENEWABLE POWER DROP
+- LOAD SHED
+- RECHARGE FLYWHEEL
+- ENCODER FAULT TEST
+- RESET FAULT
+- FINAL CERTIFY
+
+Every control must perform an actual gameplay action.
+
+Do not implement decorative buttons that only update status text.
+
+---
+
+# 33. AAA VISUAL IMPLEMENTATION
+
+Create a Level 63 visual adapter driven by the authoritative simulation.
+
+## Initial state
+
+- Flywheel rotor stationary or at safe initial RPM.
+- Generator visual state reflects actual operation.
+- Grid bus indicators show actual electrical availability.
+- Inverter standby.
+- Battery buffer status available.
+- Frequency monitor shows actual values.
+
+## Flywheel charging
+
+- Motor-generator engages.
+- Flywheel begins accelerating.
+- Encoder disc follows actual shaft rotation.
+- Stored-energy indicators increase.
+- Converter current changes.
+- Rotor RPM display follows sensor measurements.
+
+## Generator trip
+
+- Generator breaker opens.
+- Generator power falls.
+- Frequency begins declining.
+- Flywheel releases energy.
+- Flywheel RPM decreases.
+- Battery power may increase.
+- Frequency curve records the actual event.
+
+## Droop tuning
+
+- Controller settings change.
+- Real output power response changes.
+- Frequency settling behavior changes.
+- Damping effect appears through measured results.
+
+## Renewable collapse
+
+- Renewable power falls.
+- Remaining sources respond.
+- Flywheel energy and battery SOC change physically.
+
+## Encoder failure
+
+- Feedback validity becomes false.
+- Converter torque is inhibited as defined.
+- Protection state changes.
+- Fault indicator illuminates.
+- Unsafe commands are disabled.
+
+## Recovery
+
+- Sensor restored.
+- Calibration succeeds.
+- Explicit reset performed.
+- Flywheel reserve restored.
+- New frequency-response event succeeds.
+- Final completion display updates after authoritative certification.
+
+## Critical rule
+
+Do not rotate the flywheel using a decorative fixed-speed animation.
+
+Do not fake the frequency dip and recovery with a preauthored graph.
+
+Actual mechanical and electrical states must drive visual presentation.
+
+---
+
+# 34. UNITY EDITOR LEVEL CREATOR
+
+Create:
+
+`Tools/Project Spark/Levels/Create Level 63`
+
+The editor creator must generate or safely update:
+
+- `Level_63.asset`
+- `Level_63_Layout.prefab`
+- Level-specific simulation configuration
+- Electrical wiring manifest
+- Terminal binding manifest
+- Animation assignments
+- Objective definitions
+- Validation report
+
+## Required editor operations
+
+1. Inspect existing Project Spark editor infrastructure.
+2. Locate all 34 FBX models.
+3. Validate model paths.
+4. Validate import scale.
+5. Create/update Level 63 definition.
+6. Set Level ID to `level_63`.
+7. Configure display name and subtitle.
+8. Create six authoritative objectives.
+9. Create/update layout prefab.
+10. Instantiate all 34 individual FBXs.
+11. Preserve shared model coordinates.
+12. Create `L63_HD_VISUAL_ART`.
+13. Configure three-phase source.
+14. Configure AC bus.
+15. Configure main grid breaker.
+16. Configure synchronous generator.
+17. Configure generator prime mover.
+18. Configure generator breaker.
+19. Configure flywheel rotor.
+20. Configure motor-generator.
+21. Configure magnetic bearing.
+22. Configure shaft coupling.
+23. Configure speed encoder.
+24. Configure vibration sensor.
+25. Configure flywheel converter.
+26. Configure DC energy link.
+27. Configure battery storage.
+28. Configure BMS.
+29. Configure grid-forming inverter.
+30. Configure VSM controller.
+31. Configure droop controller.
+32. Configure damping controller.
+33. Configure frequency/RoCoF sensor.
+34. Configure voltage sensor.
+35. Configure current transformer bank.
+36. Configure programmable load bank.
+37. Configure industrial motor.
+38. Configure renewable source.
+39. Configure generator-trip simulator.
+40. Configure fast response relay.
+41. Configure energy management controller.
+42. Configure event recorder.
+43. Configure holographic monitor.
+44. Configure safety enclosure.
+45. Configure regulated control supply.
+46. Register all 90 real terminal anchors.
+47. Create 58 player-wire declarations.
+48. Register component IDs.
+49. Register terminal IDs.
+50. Configure fixed internal connections.
+51. Configure flywheel inertia and speed limits.
+52. Configure motor-generator torque limits.
+53. Configure converter current limits.
+54. Configure battery capacity.
+55. Configure generator dynamics.
+56. Configure VSM gain limits.
+57. Configure frequency droop.
+58. Configure damping.
+59. Configure RoCoF measurement.
+60. Configure disturbance scenarios.
+61. Configure protection.
+62. Assign all 12 verified animation pivots.
+63. Create live TextMeshPro displays.
+64. Configure gameplay controls.
+65. Bind six authoritative objectives.
+66. Detect missing and duplicate references.
+67. Detect conflicting simulator ownership.
+68. Generate validation diagnostics.
+69. Save definition and prefab.
+
+## Editor integration requirements
+
+Reuse compatible functionality from:
+
+`SparkLevel63ArtPlacementEditor.cs`
+
+The supplied art helper places models only.
+
+It does not create playable flywheel physics, circuit terminals or objectives.
+
+Extend it safely or create a separate full Level 63 builder.
+
+Use actual Unity `AssetDatabase` paths.
+
+Do not invent asset GUIDs.
+
+Use appropriate `PrefabUtility`, `SerializedObject`, Undo and asset-saving methods.
+
+Make the creator idempotent.
+
+Prevent duplicate models, terminals, components and controller instances.
+
+Do not silently destroy unrelated player/project modifications.
+
+---
+
+# 35. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 58 WIRES → VERIFY 90 TERMINALS → CALIBRATE GRID FREQUENCY SENSOR → CALIBRATE FLYWHEEL ENCODER → VERIFY ROTOR SAFETY → ENABLE FLYWHEEL CONVERTER → MOTOR FLYWHEEL → ACCELERATE TO RESERVE RPM → MEASURE KINETIC ENERGY → COMMISSION BATTERY INVERTER → CONFIGURE VIRTUAL INERTIA → CONFIGURE DROOP → CONFIGURE DAMPING → ENABLE FAST RESPONSE → TRIP GENERATOR → DETECT POWER DEFICIT → MEASURE ROCOF → RELEASE FLYWHEEL ENERGY → INJECT BATTERY SUPPORT → ARREST FREQUENCY FALL → RECOVER TOWARD 50 HZ → APPLY INDUSTRIAL MOTOR LOAD STEP → TUNE DROOP AND DAMPING → VERIFY STABILITY → REDUCE RENEWABLE POWER → MAINTAIN CRITICAL SERVICE → DISCONNECT SPEED ENCODER → DETECT INVALID FEEDBACK → INHIBIT UNSAFE TORQUE → RECONNECT ENCODER → RECALIBRATE → EXPLICITLY RESET FAULT → RECHARGE FLYWHEEL → REPEAT FREQUENCY EVENT → FINAL CERTIFICATION → 6/6 COMPLETE**
+
+## Suggested player-facing messages
+
+- `BUILD THE HYBRID INERTIA NETWORK`
+- `CONNECT ALL 58 WIRES`
+- `VERIFY 90 TERMINALS`
+- `CALIBRATE FLYWHEEL ENCODER`
+- `VERIFY ROTOR SAFETY`
+- `ENABLE FLYWHEEL CONVERTER`
+- `CHARGE FLYWHEEL`
+- `FLYWHEEL ACCELERATING`
+- `KINETIC ENERGY RESERVE READY`
+- `ENABLE VIRTUAL SYNCHRONOUS MACHINE`
+- `CONFIGURE INERTIA GAIN`
+- `CONFIGURE FREQUENCY DROOP`
+- `CONFIGURE OSCILLATION DAMPING`
+- `ENABLE FAST FREQUENCY RESPONSE`
+- `TRIP GENERATOR`
+- `GENERATOR POWER LOST`
+- `FREQUENCY FALLING`
+- `FLYWHEEL DISCHARGE ACTIVE`
+- `VIRTUAL INERTIA SUPPORT ACTIVE`
+- `FREQUENCY NADIR RECORDED`
+- `FREQUENCY RECOVERING`
+- `FREQUENCY RESPONSE VERIFIED`
+- `APPLY INDUSTRIAL LOAD STEP`
+- `DROOP RESPONSE ACTIVE`
+- `DAMPING RESPONSE ACTIVE`
+- `FREQUENCY STABILIZED`
+- `REDUCE RENEWABLE GENERATION`
+- `ENERGY RESERVE WARNING`
+- `CRITICAL SERVICE MAINTAINED`
+- `DISCONNECT ENCODER FEEDBACK`
+- `FLYWHEEL SPEED SIGNAL LOST`
+- `UNSAFE TORQUE CONTROL INHIBITED`
+- `RESTORE ENCODER CONNECTION`
+- `RECALIBRATE SPEED FEEDBACK`
+- `RESET LATCHED FAULT`
+- `RESTORE FLYWHEEL ENERGY`
+- `FINAL FREQUENCY CERTIFICATION`
+- `LEVEL 63 COMPLETE`
+
+---
+
+# 36. TESTING AND DIAGNOSTICS
+
+Implement exact diagnostic messages for:
+
+- Incorrect W01–W58 wiring.
+- Missing terminal IDs.
+- Duplicate terminal IDs.
+- Invalid 5 V supply.
+- Missing return.
+- Incorrect three-phase routing.
+- Invalid breaker topology.
+- Generator not supplying electrical power.
+- Generator trip not affecting power balance.
+- Flywheel converter disconnected.
+- Flywheel motor-generator not producing torque.
+- Flywheel RPM not changing.
+- Flywheel stored energy inconsistent with RPM.
+- Flywheel energy increasing without charging power.
+- Flywheel generating power without energy loss.
+- Encoder disconnected.
+- Encoder resolution incorrect.
+- Encoder stale data.
+- Invalid vibration feedback.
+- Magnetic bearing protection triggered.
+- Converter current limit exceeded.
+- Battery SOC invalid.
+- Inverter support unavailable.
+- VSM gain not affecting power response.
+- Droop controller producing incorrect response.
+- Damping controller unstable.
+- RoCoF invalid.
+- Frequency update being integrated twice.
+- Generator frequency inconsistent with network state.
+- Source/load power imbalance incorrect.
+- Load-step event not changing active demand.
+- Renewable drop not changing output power.
+- Frequency nadir not measured over event history.
+- Recovery window not completed.
+- Fault reset allowed before repair.
+- Historical objectives incorrectly erased.
+- Manager stuck at 0/6 or 5/6.
+- Unity scene reload problems.
+- Earlier-level regressions.
+
+## Required tests
+
+1. Correct 58-wire topology.
+2. All 90 terminals valid.
+3. Three-phase source connected.
+4. Correct breaker states.
+5. Generator dynamics valid.
+6. Generator electrical power measured.
+7. Flywheel encoder calibrated.
+8. Flywheel vibration sensor valid.
+9. Flywheel converter ready.
+10. Flywheel charging torque applied.
+11. Flywheel accelerates physically.
+12. Flywheel energy increases according to RPM.
+13. Reserve RPM reached.
+14. Overspeed protection functions.
+15. Battery SOC valid.
+16. Grid-forming inverter ready.
+17. VSM gains configured.
+18. Frequency/RoCoF sensor valid.
+19. Generator trip actually removes electrical power.
+20. Frequency responds to the resulting imbalance.
+21. Flywheel generating torque applied.
+22. Flywheel RPM decreases while discharging.
+23. Flywheel electrical output matches mechanical energy loss within modeled losses.
+24. Battery power support matches energy consumption.
+25. Frequency nadir measured correctly.
+26. Target frequency nadir achievable.
+27. Frequency recovers.
+28. Motor load step increases actual demand.
+29. Droop response changes real power.
+30. Damping reduces sustained oscillation when correctly tuned.
+31. Converter limits respected.
+32. Renewable power reduction affects actual balance.
+33. Fast response coordinates available sources.
+34. Critical loads remain supplied when physically possible.
+35. Disconnect designated encoder wire.
+36. Actual feedback becomes invalid.
+37. Torque control enters safe state.
+38. Fault latches.
+39. Reconnect encoder.
+40. Recalibration succeeds.
+41. Explicit reset succeeds.
+42. Flywheel recommissioning succeeds.
+43. Fresh generator-trip response succeeds.
+44. Final certification succeeds.
+45. Authoritative manager reaches 6/6.
+46. Level progression succeeds.
+47. Levels 1–62 remain unaffected.
+
+Only report tests as passed when actually executed.
+
+---
+
+# 37. REQUIRED DOWNLOADABLE DELIVERABLES
+
+Create a complete Level 63 Unity implementation ZIP containing:
+
+- Full Level 63 runtime C# scripts.
+- Three-phase frequency-network integration.
+- Generator dynamics and trip integration.
+- Flywheel rotor dynamics.
+- Flywheel stored-energy calculation.
+- Bidirectional motor-generator model.
+- Flywheel power converter.
+- Flywheel DC-link model.
+- Flywheel speed encoder.
+- Vibration monitoring.
+- Magnetic bearing safety.
+- Battery energy model.
+- BMS integration.
+- Grid-forming inverter integration.
+- Virtual synchronous machine control.
+- Frequency droop controller.
+- Power oscillation damping.
+- Frequency/RoCoF measurement.
+- Fast frequency response.
+- Renewable generation.
+- Industrial motor-load dynamics.
+- Programmable load-step behavior.
+- Generator-trip disturbance.
+- Energy-management controller.
+- Protection and safety system.
+- Encoder fault detection.
+- Repair, reset and recommissioning.
+- Six-objective evaluator integration.
+- Unity Editor Level 63 creator.
+- Level definition creator or asset.
+- Layout prefab creator.
+- Exact W01–W58 wiring manifest.
+- 90-terminal binding manifest.
+- Component binding manifest.
+- All 12 verified animation pivot mappings.
+- Flywheel parameter configuration.
+- Generator parameter configuration.
+- Converter parameter configuration.
+- Battery configuration.
+- VSM gain configuration.
+- Droop configuration.
+- Damping configuration.
+- Frequency/RoCoF configuration.
+- Disturbance scenario configuration.
+- Protection thresholds.
+- Inspector setup instructions.
+- Player gameplay walkthrough.
+- Objective verification checklist.
+- Diagnostics and troubleshooting guide.
+
+Reuse:
+
+`ProjectSpark_Level63_HD_AAA_Models.zip`
+
+Do not regenerate the existing 34-model collection unless a specific compatibility issue requires it.
+
+Only provide download links to files actually created and verified.
+
+Do not claim Unity compilation, Play Mode success or 6/6 completion unless those tests were actually performed.
+
+---
+
+# 38. FINAL EXECUTION REQUIREMENTS
+
+**IMPLEMENT LEVEL 63 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect my actual Project Spark Unity codebase and the approved Level 63 asset collection.
+
+Then:
+
+1. Reuse compatible electrical and mechanical infrastructure.
+2. Integrate all 34 individual FBX models.
+3. Finalize exactly 58 player-created wires.
+4. Register exactly 90 functional terminal anchors.
+5. Integrate the synchronous generator and prime mover.
+6. Implement actual generator-breaker topology.
+7. Implement high-inertia flywheel dynamics.
+8. Implement physically consistent flywheel energy.
+9. Implement bidirectional motor-generator torque.
+10. Implement flywheel converter current/power limits.
+11. Integrate the shaft coupling and encoder.
+12. Implement vibration and bearing protection.
+13. Integrate finite battery energy storage.
+14. Implement grid-forming inverter support.
+15. Implement one authoritative grid-frequency model.
+16. Implement valid frequency and RoCoF measurement.
+17. Implement virtual synchronous machine control.
+18. Implement frequency droop.
+19. Implement power oscillation damping.
+20. Implement fast frequency response.
+21. Implement generator-trip disturbances.
+22. Implement industrial motor load steps.
+23. Implement renewable power collapse.
+24. Implement safe flywheel/battery energy dispatch.
+25. Implement realistic frequency nadir and recovery measurements.
+26. Implement actual encoder-wire disconnection.
+27. Implement invalid-feedback detection.
+28. Implement safe flywheel torque inhibition.
+29. Implement fault repair and explicit reset.
+30. Implement final flywheel recommissioning.
+31. Implement fresh frequency-response certification.
+32. Integrate all six authoritative objectives.
+33. Create the one-click Unity Editor Level 63 builder.
+34. Connect all 12 verified animation pivots.
+35. Create the live frequency dashboard.
+36. Implement complete diagnostics.
+37. Execute all feasible tests.
+38. Package and verify actual deliverables.
+
+Do not ask for approval of the already-approved Level 63 design.
+
+Do not fabricate frequency, RoCoF, RPM, flywheel energy, motor torque, active power, battery SOC, generator contribution, protection events or objective completion.
+
+If an existing Project Spark API cannot be verified, implement safely independent functionality and clearly report the exact unresolved integration dependency.
+
+---
+
+# 39. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Build all 58 required connections.
+2. Validate all 90 functional terminals.
+3. Commission the frequency sensors.
+4. Calibrate the flywheel encoder.
+5. Verify rotor and bearing safety.
+6. Accelerate the flywheel physically.
+7. Build a measurable kinetic-energy reserve.
+8. Configure virtual inertia.
+9. Configure droop and damping.
+10. Enable fast frequency response.
+11. Trip the generator.
+12. Observe the actual generation deficit.
+13. Measure frequency decline and RoCoF.
+14. Release physical flywheel energy.
+15. Inject battery-supported inverter power.
+16. Arrest frequency decline within the configured limit.
+17. Recover toward 50 Hz.
+18. Apply a real industrial motor load step.
+19. Tune droop and damping to achieve stable recovery.
+20. Survive reduced renewable generation.
+21. Preserve critical loads using finite available energy.
+22. Disconnect actual encoder feedback.
+23. Detect invalid RPM feedback.
+24. Safely inhibit flywheel torque control.
+25. Reconnect and recalibrate the encoder.
+26. Explicitly reset the fault.
+27. Recharge and recommission the flywheel.
+28. Repeat a fresh frequency-response test.
+29. Complete all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 63.**
+
+The player must learn real flywheel kinetic energy, electromechanical conversion, frequency dynamics, virtual synchronous machines, frequency droop, damping, fast frequency response and machinery protection through physically meaningful simulation.
+
+**FINAL GOAL: A COMPLETE, POLISHED, UNITY-READY, AAA-QUALITY AND ACTUALLY PLAYABLE LEVEL 63 — CATCH THE FREQUENCY.**

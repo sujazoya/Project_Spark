@@ -1,0 +1,2732 @@
+# PROJECT SPARK — LEVEL 65 MASTER IMPLEMENTATION PROMPT
+
+## LEVEL 65: THE FACTORY THINKS
+### Advanced Industrial Robotics, PLC Automation, Six-Axis Robot Kinematics, Machine Vision, Conveyor Tracking, Intelligent Product Sorting, Pneumatic Rejection and Industrial Functional Safety
+
+Act as my senior Unity C# engineer, industrial robotics specialist, programmable logic controller engineer, manufacturing automation architect, machine-vision engineer, motion-control specialist, electromechanical simulation developer, industrial functional safety engineer, real-time systems programmer, gameplay engineer, Unity Editor automation developer, and technical artist.
+
+**YOUR TASK IS TO IMPLEMENT THE COMPLETE, WORKING, PLAYABLE LEVEL 65 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+Do not stop at:
+
+- A design proposal.
+- An architecture explanation.
+- Pseudocode.
+- Disconnected example scripts.
+- Decorative factory animations.
+- Fake conveyor motion.
+- Teleporting products.
+- A robot arm animated without joint control.
+- Random product classification without inspection logic.
+- A decorative PLC with no real scan cycle.
+- An art-only scene.
+- A local objective counter.
+- Unverified wiring manifests.
+- Unconnected animation pivots.
+- A fake production dashboard.
+
+Implement all safely achievable functionality using the real Project Spark Unity source code and the existing Level 65 HD/AAA-inspired asset collection.
+
+The Level 65 design and its 38 equipment models plus four product variants are already approved.
+
+Do not redesign the factory or regenerate its models unnecessarily.
+
+**LEVEL 65 MUST TEACH REAL INDUSTRIAL AUTOMATION THROUGH PHYSICALLY AND LOGICALLY CONSISTENT CONVEYOR MOTION, SENSOR MEASUREMENT, PLC CONTROL, ROBOT KINEMATICS, MACHINE VISION, PRODUCT TRACKING, PNEUMATICS AND SAFETY INTERLOCKS.**
+
+---
+
+# 1. CRITICAL EXISTING PROJECT INTEGRATION
+
+Project Spark is an existing Unity electrical engineering, electronics simulation, circuit-building and industrial automation game.
+
+Before implementing Level 65, inspect my actual project source files.
+
+At minimum, inspect these classes if present:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+
+Also inspect the existing:
+
+- Electrical component registration
+- Player-created wire connections
+- Circuit topology validation
+- Low-voltage power supply
+- Electrical signal propagation
+- Switch and relay logic
+- Motor control
+- Encoder models
+- Position sensors
+- Time-dependent simulation
+- Event-driven gameplay
+- Motor current and power calculation
+- Rotating mechanical components
+- Unity Rigidbody and collision handling
+- Player interaction controls
+- Pick-up and placement mechanics
+- Fault and damage systems
+- Safety and protection logic
+- Level definition assets
+- Objective tracking
+- Historical objective completion
+- UI control interfaces
+- TextMeshPro dashboards
+- Unity Editor level builders
+- Art-placement tools
+- Save/reload and level progression
+
+## Previous levels to inspect
+
+Reuse compatible implemented functionality from:
+
+**Level 54 — Cross the Critical**
+
+Rotating machinery, motor dynamics and sensor behavior.
+
+**Level 55 — Float the Shaft**
+
+Position feedback, electromagnetic control and safety monitoring.
+
+**Level 56 — Harvest the Spin**
+
+Mechanical energy conversion and controlled electrical power.
+
+**Level 58 — Isolate the Fault**
+
+Protection, relay states and safe system isolation.
+
+**Level 59 — Bring Back the Power**
+
+System commissioning, sequenced operations and recovery.
+
+**Level 60 — The Grid Must Survive**
+
+Multi-device automation and fault response.
+
+**Level 62 — Hold the Voltage**
+
+Sensor calibration, signal validity and recovery.
+
+**Level 63 — Catch the Frequency**
+
+Actual encoder measurements, shaft dynamics and control-loop integrity.
+
+**Level 64 — Hold the Synchronism**
+
+Event timing, protection and sensor-based certification.
+
+Only reuse functionality that is actually implemented.
+
+Do not assume a previous level has functioning gameplay merely because an asset pack or design exists.
+
+---
+
+# 2. NON-NEGOTIABLE IMPLEMENTATION RULES
+
+1. Inspect actual Project Spark source files before referencing APIs.
+2. Never invent existing classes, methods, properties, namespaces or events.
+3. Reuse working project infrastructure.
+4. Preserve Levels 1–64.
+5. Keep Level 65 systems isolated where practical.
+6. Do not modify the shared DC solver unnecessarily.
+7. Do not represent industrial control signals as arbitrary decorative wires.
+8. Do not fabricate conveyor encoder measurements.
+9. Do not directly assign measured belt speed from a control target.
+10. Do not teleport products between bins.
+11. Do not teleport the robot between poses.
+12. Do not animate robot joints without matching authoritative joint states.
+13. Do not claim a product is picked before grip conditions are satisfied.
+14. Do not attach products to the gripper without valid pickup conditions.
+15. Do not generate unlimited vacuum or pneumatic pressure.
+16. Do not bypass servomotor limits.
+17. Do not ignore robot joint limits.
+18. Do not permit the robot to move through collisions.
+19. Do not classify products using a guaranteed success flag.
+20. Do not fabricate machine-vision confidence.
+21. Do not treat product identity as equivalent to a valid camera measurement.
+22. Do not record sorted products before destination arrival is verified.
+23. Do not mark defective products rejected before they enter the reject zone.
+24. Do not let PLC outputs act before their configured scan or response latency.
+25. Do not bypass emergency-stop or light-curtain safety logic.
+26. Do not automatically restart dangerous movement after fault repair.
+27. Do not fake production throughput or accuracy.
+28. Do not bypass authoritative objective evaluation.
+29. Do not replace real functional terminals with decorative mesh connectors.
+30. Do not treat visual animation pivots as complete robot rigging.
+31. Use consistent SI units and simulation time.
+32. Prevent duplicate simulation owners.
+33. Use deterministic test batches.
+34. Avoid per-frame global scene searches.
+35. Handle Unity initialization and event cleanup correctly.
+36. Make all Editor generation operations safely rerunnable.
+37. Deliver complete C# source files, not pseudocode.
+38. Report any missing integration dependency clearly.
+39. Do not claim Unity compilation or Play Mode success without testing.
+40. Do not claim the level is complete until its real evaluator reaches 6/6.
+
+## AUTHORITATIVE COMPLETION REQUIREMENT
+
+**The actual `LevelGamePlayManager` must reach 6/6.**
+
+A Level 65 script displaying "6/6" is insufficient.
+
+Inspect:
+
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `LevelGamePlayManager`
+
+Integrate six genuine objectives using existing project architecture.
+
+Objectives 1–5 must remain historically certified when the player deliberately disconnects the conveyor encoder for the final fault.
+
+Objective 6 must not pass until the player reconnects the actual feedback wire, recalibrates the encoder, explicitly resets the fault, safely restarts the line, and successfully processes a fresh certification batch.
+
+---
+
+# 3. LEVEL 65 CONFIGURATION
+
+**Level Number:** 65
+
+**Level ID:** `level_65`
+
+**Display Name:** `The Factory Thinks`
+
+**Subtitle:** `Intelligent Robotic Manufacturing and Quality Control`
+
+**Difficulty:** Advanced / Expert
+
+**Control Supply:** 5 V DC educational circuit
+
+**Industrial I/O Convention:** Simulated 24 V-style digital signals where appropriate
+
+**Player-Created Wires:** 66
+
+**Unique Functional Terminals:** 104
+
+**Equipment Models:** 38
+
+**Additional Product Variants:** 4
+
+**Robot:** Six-axis articulated industrial arm
+
+**Conveyor Sections:** 4
+
+**Vision Inspection:** 1 main camera with illumination
+
+**Product Classes:** 3 accepted categories plus defective
+
+**Accepted Destination Bins:** 3
+
+**Reject Destination:** 1
+
+**Primary Controller:** PLC
+
+**Additional Controllers:** Robot motion and conveyor synchronization
+
+**Pneumatic System:** One controlled reject actuator
+
+**Gripper:** Vacuum pickup
+
+**Functional Safety:** Safety PLC, emergency stop, light curtain and enclosure
+
+**Final Fault:** Conveyor encoder feedback disconnection
+
+**Required Objectives:** 6
+
+## Important voltage architecture
+
+Project Spark already uses a 5 V DC educational electrical architecture.
+
+Industrial automation often uses other electrical signal conventions.
+
+For Level 65:
+
+- Preserve compatible 5 V educational control-power gameplay.
+- Represent industrial digital I/O using correctly separated virtual signal domains where necessary.
+- Use explicit interfaces between electrical circuit states and logical PLC inputs.
+- Model servo drive and motor energy using supported electrical/mechanical abstractions.
+- Do not pass actual physical 24 V power through an incompatible 5 V solver.
+- Do not make disconnected or unpowered sensors report valid values.
+
+---
+
+# 4. INITIAL LEVEL STATE
+
+At level start:
+
+- Main educational control power available but not enabled.
+- All production conveyors stopped.
+- Product feeder disabled.
+- Conveyor encoder uncalibrated.
+- Optical entry sensor uncalibrated.
+- Vision camera uncalibrated.
+- Inspection lighting disabled.
+- Vision processor in standby.
+- Robot disabled.
+- Robot joints at defined home positions.
+- Robot servo drives uncommissioned.
+- Vacuum pump off.
+- Vacuum pressure zero or at modeled initial condition.
+- Gripper empty.
+- Pneumatic reject gate retracted.
+- Pneumatic supply unpressurized or awaiting validation.
+- Three destination conveyors stopped.
+- Product bins empty.
+- Reject bin empty.
+- PLC in IDLE.
+- Safety PLC awaiting validation.
+- Emergency stop released.
+- Light curtain clear.
+- Safety enclosure closed.
+- No unresolved critical faults.
+- Production counters zero.
+- Objectives 0/6.
+
+## Player mission
+
+The player must:
+
+1. Build the 66-wire factory control network.
+2. Validate 104 real terminal anchors.
+3. Verify control supply and return.
+4. Connect PLC digital inputs and outputs.
+5. Connect motor and conveyor controls.
+6. Connect the conveyor encoder.
+7. Connect optical detection.
+8. Connect machine-vision interfaces.
+9. Connect six robot servodrive controls.
+10. Connect robot encoder feedback.
+11. Connect vacuum pump and pressure sensor.
+12. Connect pneumatic reject gate.
+13. Connect reject-gate position feedback.
+14. Connect emergency stop and light curtain.
+15. Calibrate conveyor motion.
+16. Calibrate the vision system.
+17. Home all six robot axes.
+18. Commission robotic pickup.
+19. Sort product types A, B and C.
+20. Detect and reject defective products.
+21. Tune conveyor/robot timing.
+22. Meet throughput and accuracy targets.
+23. Disconnect the conveyor encoder signal.
+24. Detect real tracking-feedback loss.
+25. Stop affected machinery safely.
+26. Reconnect the wire.
+27. Recalibrate encoder position.
+28. Explicitly reset the fault.
+29. Safely restart production.
+30. Pass a fresh 20-product certification batch.
+31. Complete all six authoritative objectives.
+
+---
+
+# 5. USE MY EXISTING LEVEL 65 HD/AAA ASSET PACKAGE
+
+The approved art package is:
+
+`ProjectSpark_Level65_HD_AAA_Models.zip`
+
+The inspected manifest reports:
+
+- 38 individual equipment FBX models.
+- 38 matching equipment GLB models.
+- Four additional product variants.
+- One assembled showcase FBX.
+- One assembled showcase GLB.
+- 16,144 individual-equipment triangles.
+- 12 documented animation-pivot mappings.
+- Unity art-placement helper.
+- Model manifest.
+- Animation pivot CSV.
+- Readme and verification report.
+
+## EXACT 38 INDIVIDUAL FBX FILENAMES
+
+Use these exact files:
+
+| FILE | PURPOSE |
+|---|---|
+| `00_L65_IndustrialSmartFactoryBase.fbx` | Main industrial chassis |
+| `01_L65_MainFeedConveyor.fbx` | Product input conveyor |
+| `02_L65_ConveyorMotorDrive.fbx` | Main conveyor motor |
+| `03_L65_ConveyorRotaryEncoder.fbx` | Belt position/speed feedback |
+| `04_L65_ProductFeederMagazine.fbx` | Product input magazine |
+| `05_L65_OpticalEntrySensor.fbx` | Product arrival detection |
+| `06_L65_VisionInspectionCamera.fbx` | Vision acquisition |
+| `07_L65_InspectionLightingModule.fbx` | Controlled inspection lighting |
+| `08_L65_VisionProcessingController.fbx` | Vision classification processor |
+| `09_L65_SixAxisIndustrialRobot.fbx` | Six-axis articulated robot |
+| `10_L65_RobotServoDriveBank.fbx` | Individual joint drive control |
+| `11_L65_RobotJointEncoderModule.fbx` | Joint position feedback |
+| `12_L65_VacuumGripperAssembly.fbx` | Product suction pickup |
+| `13_L65_VacuumPumpModule.fbx` | Vacuum generation |
+| `14_L65_VacuumPressureSensor.fbx` | Vacuum feedback |
+| `15_L65_RobotPickupPlatform.fbx` | Robot pickup area |
+| `16_L65_SortingConveyorA.fbx` | Category A sorting lane |
+| `17_L65_SortingConveyorB.fbx` | Category B sorting lane |
+| `18_L65_SortingConveyorC.fbx` | Category C sorting lane |
+| `19_L65_PneumaticRejectGate.fbx` | Defective-product diversion |
+| `20_L65_PneumaticSolenoidValve.fbx` | Gate valve control |
+| `21_L65_AirPressureRegulator.fbx` | Pneumatic supply |
+| `22_L65_RejectGatePositionSensors.fbx` | Gate position feedback |
+| `23_L65_ProductCollectionBinA.fbx` | Category A collection |
+| `24_L65_ProductCollectionBinB.fbx` | Category B collection |
+| `25_L65_ProductCollectionBinC.fbx` | Category C collection |
+| `26_L65_DefectiveProductRejectBin.fbx` | Rejected product collection |
+| `27_L65_IndustrialPLCRack.fbx` | PLC controller |
+| `28_L65_DigitalInputOutputModule.fbx` | PLC I/O interface |
+| `29_L65_RobotMotionController.fbx` | Robot trajectory control |
+| `30_L65_ConveyorSynchronizationController.fbx` | Conveyor/robot tracking |
+| `31_L65_SafetyPLCModule.fbx` | Functional safety logic |
+| `32_L65_EmergencyStopStation.fbx` | Emergency stop |
+| `33_L65_SafetyLightCurtain.fbx` | Safety intrusion detection |
+| `34_L65_HolographicFactoryMonitor.fbx` | Factory SCADA/HMI |
+| `35_L65_ProductQualityScanner.fbx` | Defect verification |
+| `36_L65_TransparentRobotSafetyEnclosure.fbx` | Robot safety enclosure |
+| `37_L65_Regulated5VControlSupply.fbx` | Low-voltage control supply |
+
+## EXACT PRODUCT FILES
+
+Use the four additional product FBX variants:
+
+- `Product_1_A_RedCube.fbx`
+- `Product_2_B_BlueCylinder.fbx`
+- `Product_3_C_YellowGear.fbx`
+- `Product_4_D_DefectivePart.fbx`
+
+These are dynamic gameplay objects.
+
+Create reusable Unity product prefabs from them.
+
+Do not include these in the 38-equipment-model count.
+
+## ADDITIONAL SUPPLIED FILES
+
+Inspect and reuse:
+
+- `Level65_Complete_ArtKit_Showcase.fbx`
+- `SparkLevel65ArtPlacementEditor.cs`
+- `Model_Manifest.json`
+- `Animation_Rigs.csv`
+- `README_Unity.txt`
+- `Verification_Report.json`
+- Level 65 assembled preview
+- Level 65 38-model contact sheet
+
+## ART PLACEMENT RULES
+
+1. Use all 38 independent equipment FBXs.
+2. Use the assembled showcase only as reference.
+3. Never render the assembled showcase and all individual models together.
+4. Preserve the authored common coordinate system.
+5. Verify imported model scale.
+6. Keep moving robot equipment independently addressable.
+7. Keep circuit terminal anchors stationary where appropriate.
+8. Preserve existing visual mesh groups.
+9. Preserve material-color regions.
+10. Create separate runtime transforms for gameplay animation.
+11. Keep spawned products separate from static laboratory art.
+12. Do not assume the procedural meshes already contain a finished production-ready robot skeleton.
+
+## COORDINATE SYSTEM
+
+The manifest specifies:
+
+- X: workstation width.
+- Y: vertical.
+- Z: front-facing electronics.
+- 1 art unit = 1 Unity unit at scale 1.
+
+Create:
+
+`L65_HD_VISUAL_ART`
+
+Place the 38 individual equipment FBX models under this root.
+
+## QUALITY DISTINCTION
+
+The existing models are genuine procedural 3D geometry with material-color regions.
+
+They are AAA-inspired visual assets.
+
+They are not fully artist-authored PBR production assets.
+
+Do not claim final 2K/4K textures, finished rigging, actual servo joints or validated Unity materials unless implemented and tested.
+
+---
+
+# 6. EXACT ANIMATION PIVOT INTEGRATION
+
+The supplied `Animation_Rigs.csv` contains 12 documented pivot mappings.
+
+Use the exact names and positions from the CSV.
+
+| MODEL | PIVOT | WORLD-REFERENCE POSITION |
+|---|---|---|
+| ConveyorRotaryEncoder | `ANIM_ENCODER_DISC` | (-4.70, 1.32, 0.45) |
+| SixAxisIndustrialRobot | `ANIM_ROBOT_J1` | (0.60, 1.55, -0.48) |
+| SixAxisIndustrialRobot | `ANIM_ROBOT_J2` | (0.95, 2.27, -0.34) |
+| SixAxisIndustrialRobot | `ANIM_ROBOT_J3` | (0.23, 2.78, -0.25) |
+| SixAxisIndustrialRobot | `ANIM_ROBOT_J4` | (-0.14, 2.25, -0.17) |
+| SixAxisIndustrialRobot | `ANIM_ROBOT_J5` | (-0.08, 1.91, -0.05) |
+| SixAxisIndustrialRobot | `ANIM_ROBOT_J6` | (-0.08, 1.91, -0.05) |
+| VacuumGripperAssembly | `ANIM_GRIPPER_LIFT` | (-0.08, 1.69, -0.05) |
+| PneumaticRejectGate | `ANIM_REJECT_GATE` | (1.64, 1.52, 1.70) |
+| EmergencyStopStation | `ANIM_EMERGENCY_STOP` | (-5.15, 0.83, 2.65) |
+| HolographicFactoryMonitor | `ANIM_MONITOR_TILT` | (3.76, 2.70, 2.37) |
+| TransparentRobotSafetyEnclosure | `ANIM_SAFETY_DOOR` | (-0.90, 1.90, -1.70) |
+
+## CRITICAL ROBOT RIGGING REQUIREMENT
+
+The six robot pivot names and approximate pivot locations are documented.
+
+However, the art manifest does not prove that the FBX already contains a correctly nested six-joint robot rig.
+
+Inspect the actual imported model.
+
+If the mesh pieces are not separated appropriately:
+
+1. Identify the visual components corresponding to each joint.
+2. Determine whether the existing geometry can be reparented.
+3. Construct a correct six-axis hierarchy where feasible.
+4. Preserve mesh appearance.
+5. Preserve source FBX files.
+6. Create joint transforms using the documented pivot positions.
+7. Assign correct local joint axes.
+8. Validate parent-child relationships.
+9. Verify each joint rotates without dragging incorrect geometry.
+10. Report any geometry separation that cannot be completed without authoring changes.
+
+Do not rotate the entire robot model around six different points and claim it is a functional six-axis robot.
+
+## ROBOT JOINT HIERARCHY
+
+Suggested logical hierarchy:
+
+`RobotRoot`
+
+`J1_Base`
+
+`J2_Shoulder`
+
+`J3_Elbow`
+
+`J4_WristRoll`
+
+`J5_WristPitch`
+
+`J6_ToolRotation`
+
+`ToolCenterPoint`
+
+The exact hierarchy must reflect the geometry and kinematic convention actually used.
+
+## OTHER ANIMATION RULES
+
+- Encoder disc follows actual encoder shaft state.
+- Vacuum gripper follows robot tool pose.
+- Reject gate follows actual actuator position.
+- Emergency stop actuator follows physical button state.
+- Monitor tilt is visual only.
+- Safety door follows its validated interaction/interlock state.
+
+---
+
+# 7. ELECTRICAL WIRING — W01 TO W66
+
+The approved Level 65 design requires:
+
+**66 player-created wires and 104 unique functional terminal anchors.**
+
+The art package does not include a verified W01–W66 endpoint map or actual Project Spark terminals.
+
+Create them during Unity implementation.
+
+Do not fabricate an existing wiring CSV.
+
+## GROUP A — CONTROL POWER
+
+- Regulated 5 V output.
+- Control return.
+- PLC supply.
+- Digital I/O module supply.
+- Vision controller supply.
+- Motion controller supply.
+- Conveyor controller supply.
+- Safety monitoring supply.
+
+## GROUP B — CONVEYOR MOTOR
+
+- Main motor power.
+- Motor return.
+- Motor enable.
+- Motor speed command.
+- Motor status.
+- Motor fault.
+- Conveyor direction.
+
+## GROUP C — CONVEYOR ENCODER
+
+- Encoder supply.
+- Encoder return.
+- Encoder A/pulse feedback.
+- Direction feedback where supported.
+- Encoder validity.
+- Encoder calibration/control.
+
+## GROUP D — PRODUCT DETECTION
+
+- Optical sensor power.
+- Optical sensor return.
+- Product detect output.
+- Vision trigger.
+- Camera ready.
+- Inspection result valid.
+
+## GROUP E — MACHINE VISION
+
+- Inspection lighting enable.
+- Camera trigger.
+- Classification output.
+- Classification confidence/validity.
+- Defect flag.
+- Vision processor ready.
+- Vision fault.
+
+## GROUP F — ROBOT SERVO CONTROL
+
+- Robot enable.
+- Six-axis drive interface.
+- Joint feedback interface.
+- Motion-start command.
+- Motion-complete signal.
+- Home-reference status.
+- Servo fault.
+- Robot emergency stop.
+
+Use multi-channel logical interfaces where necessary while preserving exactly 66 intended player wires.
+
+## GROUP G — VACUUM GRIPPER
+
+- Vacuum pump enable.
+- Vacuum sensor.
+- Grip-confirm signal.
+- Vacuum release.
+- Pump fault.
+
+## GROUP H — PNEUMATIC SORTING
+
+- Solenoid command.
+- Pneumatic supply status.
+- Reject gate extended sensor.
+- Reject gate retracted sensor.
+- Gate fault.
+
+## GROUP I — SAFETY AND PRODUCTION
+
+- Emergency stop.
+- Safety light curtain.
+- Safety door interlock.
+- Safety reset.
+- PLC start.
+- PLC stop.
+- Alarm.
+- Production-ready status.
+- Conveyor synchronization feedback.
+
+## WIRING REQUIREMENTS
+
+1. Create exactly 66 expected player connections.
+2. Create exactly 104 unique terminal IDs.
+3. Document every FROM endpoint.
+4. Document every TO endpoint.
+5. Register real `SparkTerminal` components.
+6. Register functional component IDs.
+7. Validate electrical supply and return.
+8. Validate sensor output types.
+9. Validate digital input/output direction.
+10. Validate motor power connections.
+11. Validate encoder wiring.
+12. Validate robot control wiring.
+13. Validate vacuum feedback.
+14. Validate pneumatic feedback.
+15. Validate safety interlocks.
+16. Detect wrong connections.
+17. Detect missing connections.
+18. Detect duplicate connections.
+19. Support player disconnection and reconnection.
+20. Preserve internal fixed connections separately.
+
+## IMPORTANT WIRING BUDGET
+
+Not every internal joint motor or camera signal must be individually exposed to the player.
+
+Use documented internally connected subassemblies for complex equipment.
+
+The 66 wires are the player puzzle.
+
+The underlying functional system may have additional fixed internal connections.
+
+Do not inflate the player-wire count.
+
+## FINAL ENCODER FAULT
+
+Reserve one player wire for conveyor encoder feedback.
+
+Conceptual endpoints:
+
+`CONVEYOR_ENCODER_PULSE_OUT → CONVEYOR_SYNC_ENCODER_IN`
+
+Assign its final W-number only after the exact endpoint manifest has been completed.
+
+Disconnecting this physical gameplay wire must invalidate actual measured belt position.
+
+Do not create the failure by merely setting a Boolean while leaving topology valid.
+
+---
+
+# 8. SINGLE AUTHORITATIVE FACTORY SIMULATION
+
+Level 65 requires a coherent production simulation.
+
+The factory must have one authoritative state containing:
+
+- PLC scan state.
+- Conveyor motor state.
+- Conveyor belt position.
+- Conveyor belt velocity.
+- Encoder pulse count.
+- Product feeder state.
+- Product tracking.
+- Vision results.
+- Robot joint positions.
+- Robot joint velocities.
+- Robot motion commands.
+- Gripper state.
+- Vacuum pressure.
+- Pneumatic gate position.
+- Destination bin occupancy.
+- Product classification history.
+- Fault status.
+- Safety state.
+- Production metrics.
+- Objective evidence.
+
+## CRITICAL RULE
+
+Do not create unrelated independent systems that each believe they control the conveyor or robot.
+
+The PLC requests operations.
+
+The actuator/motor simulation executes physically possible behavior.
+
+Sensors measure the resulting state.
+
+The PLC reads the measurements on the configured scan cycle.
+
+The objective evaluator reads authoritative results.
+
+---
+
+# 9. CONVEYOR MOTOR DYNAMICS
+
+Use:
+
+- `01_L65_MainFeedConveyor.fbx`
+- `02_L65_ConveyorMotorDrive.fbx`
+
+## REQUIRED PROPERTIES
+
+- Motor enabled.
+- Desired conveyor speed.
+- Actual conveyor speed.
+- Motor torque.
+- Maximum acceleration.
+- Maximum speed.
+- Conveyor displacement.
+- Mechanical drag.
+- Product loading.
+- Jam state.
+- Electrical current where supported.
+- Fault state.
+
+## BASIC DYNAMICS
+
+For a simplified linear belt:
+
+`dv/dt = clamp((vTarget - vActual) / ResponseTime, -MaxDecel, MaxAccel)`
+
+`dx/dt = vActual`
+
+For a motor/roller model, relate motor shaft rotation to belt travel.
+
+## IMPORTANT
+
+Do not instantly assign actual speed to the target.
+
+Conveyor acceleration and deceleration must take finite time.
+
+When emergency stop occurs, apply the defined safety-stop behavior rather than continuing normal motion.
+
+---
+
+# 10. CONVEYOR ENCODER SIMULATION
+
+Use:
+
+`03_L65_ConveyorRotaryEncoder.fbx`
+
+This is one of the most important Level 65 systems.
+
+## REQUIRED PROPERTIES
+
+- Roller radius.
+- Encoder pulses per revolution.
+- Actual roller angle.
+- Pulse count.
+- Measured direction.
+- Measured belt speed.
+- Measured displacement.
+- Calibration status.
+- Connectivity.
+- Measurement validity.
+- Timestamp.
+- Signal freshness.
+
+## ENCODER DISTANCE EQUATION
+
+For N pulses:
+
+`Distance = (2 * PI * RollerRadius * PulseCount) / PulsesPerRevolution`
+
+## ENCODER SPEED
+
+`MeasuredSpeed = DeltaDistance / DeltaTime`
+
+Use valid sample intervals.
+
+## REQUIRED BEHAVIOR
+
+- Actual belt movement causes roller rotation.
+- Roller rotation causes encoder pulses.
+- Encoder pulse count determines measured displacement.
+- Measured speed responds to pulse rate.
+- Missing pulses while motion is expected can trigger a fault.
+- Disconnection makes measurement invalid.
+- Stale measurements cannot be treated as valid zero speed.
+
+## CALIBRATION
+
+Require:
+
+1. Valid encoder supply.
+2. Valid feedback wiring.
+3. Correct roller radius.
+4. Correct pulse resolution.
+5. Correct direction.
+6. Stable measurement interval.
+7. Valid comparison with known motion.
+
+Do not allow calibration when feedback is missing.
+
+---
+
+# 11. PRODUCT FEEDER MAGAZINE
+
+Use:
+
+`04_L65_ProductFeederMagazine.fbx`
+
+## REQUIRED PROPERTIES
+
+- Available product inventory.
+- Feed request.
+- Feeding state.
+- Feed cycle duration.
+- Product spacing.
+- Mechanical obstruction.
+- Jam state.
+- Product type distribution.
+
+## REQUIRED BEHAVIOR
+
+1. PLC requests product feed.
+2. Feeder checks safe conditions.
+3. Feeder mechanism actuates.
+4. One product is released.
+5. Product appears at the physically appropriate feeder position.
+6. Product enters the conveyor.
+7. Entry sensor detects it.
+8. Product becomes trackable.
+9. Feeder waits for permitted spacing before releasing another.
+
+Do not spawn products directly into their destination bins.
+
+---
+
+# 12. PRODUCT PREFABS AND IDENTITY
+
+Use:
+
+- `Product_1_A_RedCube.fbx`
+- `Product_2_B_BlueCylinder.fbx`
+- `Product_3_C_YellowGear.fbx`
+- `Product_4_D_DefectivePart.fbx`
+
+## REQUIRED PRODUCT COMPONENT
+
+Implement a compatible runtime component such as:
+
+`SparkLevel65Product`
+
+## REQUIRED PROPERTIES
+
+- Unique product ID.
+- True product type.
+- Visible product features.
+- Defect state.
+- Spawn timestamp.
+- Current conveyor/lane.
+- Current transform position.
+- Current velocity.
+- Encoder-tracked position.
+- Latest inspection result.
+- Classification confidence.
+- Assigned destination.
+- Current ownership.
+- Gripper attachment state.
+- Final destination.
+- Completion status.
+- Failure reason.
+
+## PRODUCT STATES
+
+- IN_MAGAZINE
+- FEEDING
+- ON_INPUT_CONVEYOR
+- DETECTED
+- INSPECTION_PENDING
+- INSPECTED
+- TRACKED
+- PICK_RESERVED
+- GRIPPED
+- IN_ROBOT_MOTION
+- RELEASED
+- ON_OUTPUT_CONVEYOR
+- REJECTED
+- DELIVERED
+- LOST
+- JAMMED
+- FAILED
+
+## CRITICAL REQUIREMENT
+
+Each product must retain its unique identity throughout the production process.
+
+Do not count a product twice.
+
+Do not silently delete a lost product and treat production as successful.
+
+---
+
+# 13. OPTICAL ENTRY SENSOR
+
+Use:
+
+`05_L65_OpticalEntrySensor.fbx`
+
+## REQUIRED PROPERTIES
+
+- Sensor detection range.
+- Beam state.
+- Product present.
+- Rising edge timestamp.
+- Falling edge timestamp.
+- Measurement validity.
+- Calibration.
+- Electrical connectivity.
+- Fault state.
+
+## REQUIRED BEHAVIOR
+
+A product crossing the sensor's detection region causes a measured input transition.
+
+The PLC receives that transition according to the scan cycle.
+
+Do not trigger detection merely because the feeder command was activated.
+
+A sensor must not detect products outside its valid detection range.
+
+---
+
+# 14. MACHINE VISION CAMERA
+
+Use:
+
+- `06_L65_VisionInspectionCamera.fbx`
+- `07_L65_InspectionLightingModule.fbx`
+
+## REQUIRED PROPERTIES
+
+- Camera field of view.
+- Image acquisition trigger.
+- Acquisition delay.
+- Exposure configuration.
+- Lighting intensity.
+- Product visibility.
+- Product orientation.
+- Inspection result availability.
+- Calibration.
+- Fault state.
+
+## REQUIRED PROCESS
+
+1. Product enters inspection region.
+2. Optical sensor or position condition requests an image.
+3. Camera checks readiness.
+4. Camera acquires a valid observation.
+5. Illumination and visibility influence observation quality.
+6. Processing delay begins.
+7. Vision processor returns measured classification.
+8. PLC receives result after normal signal/scan latency.
+
+## IMPORTANT
+
+The camera must inspect the product actually present in its field of view.
+
+Do not issue a classification for an item that has already passed out of view unless the image was acquired while it was present.
+
+---
+
+# 15. VISION PROCESSING CONTROLLER
+
+Use:
+
+`08_L65_VisionProcessingController.fbx`
+
+## REQUIRED OUTPUTS
+
+- Classified product type.
+- Defect detected.
+- Classification confidence.
+- Measurement validity.
+- Product ID.
+- Inspection timestamp.
+- Processing duration.
+- Error state.
+
+## PRODUCT CLASSES
+
+- A — Red cube.
+- B — Blue cylinder.
+- C — Yellow gear.
+- D — Defective product.
+
+## IMPLEMENTATION OPTIONS
+
+Prefer an existing project-supported image classification system if one is available and appropriate.
+
+Otherwise implement a deterministic synthetic vision model using:
+
+- Product visible features.
+- Product orientation.
+- Camera visibility.
+- Inspection lighting.
+- Acquisition quality.
+- Defined defects.
+- Processing latency.
+
+A synthetic vision model is acceptable for this educational simulation.
+
+However, it must not simply copy the true product class and report 100% accuracy regardless of camera conditions.
+
+## IMPORTANT DISTINCTION
+
+Store separately:
+
+`TrueProductType`
+
+`MeasuredProductType`
+
+`ClassificationConfidence`
+
+`MeasurementValid`
+
+The PLC can act only on valid observations.
+
+---
+
+# 16. PRODUCT QUALITY SCANNER
+
+Use:
+
+`35_L65_ProductQualityScanner.fbx`
+
+## REQUIRED FUNCTIONS
+
+- Inspect surface defects.
+- Inspect geometric conformity.
+- Detect missing-feature status.
+- Verify dimensional tolerance.
+- Produce defect classification.
+- Report measurement validity.
+
+## DEFECT MODES
+
+- Missing feature.
+- Incorrect shape.
+- Damage.
+- Invalid dimension.
+- Surface defect.
+
+Use supported representations compatible with the product models.
+
+## IMPORTANT
+
+Do not send all defective products to the reject bin automatically before inspection.
+
+The scanner must produce a valid defect result.
+
+The PLC must then command the correct action.
+
+---
+
+# 17. SIX-AXIS INDUSTRIAL ROBOT
+
+Use:
+
+`09_L65_SixAxisIndustrialRobot.fbx`
+
+## REQUIRED JOINTS
+
+- J1 — Base.
+- J2 — Shoulder.
+- J3 — Elbow.
+- J4 — Wrist rotation.
+- J5 — Wrist pitch.
+- J6 — Tool rotation.
+
+## REQUIRED PROPERTIES PER JOINT
+
+- Actual angle.
+- Target angle.
+- Angular velocity.
+- Angular acceleration.
+- Minimum angle.
+- Maximum angle.
+- Maximum velocity.
+- Maximum acceleration.
+- Maximum torque or simplified drive limit.
+- Encoder feedback.
+- Homing state.
+- Fault state.
+
+## REQUIRED ROBOT STATES
+
+- OFF
+- INITIALIZING
+- HOMING
+- IDLE
+- READY
+- MOVING_TO_PICK
+- PICKING
+- MOVING_TO_PLACE
+- PLACING
+- RETURNING_HOME
+- PAUSED
+- PROTECTIVE_STOP
+- EMERGENCY_STOP
+- FAULT
+
+## IMPORTANT
+
+The robot must move using actual joint transforms and kinematic relationships.
+
+Do not teleport the end effector to a target.
+
+Do not simply translate the entire robot prefab.
+
+---
+
+# 18. ROBOT FORWARD AND INVERSE KINEMATICS
+
+Implement a coherent six-axis kinematic system.
+
+## FORWARD KINEMATICS
+
+The tool pose must be derived from the actual joint configuration.
+
+Conceptually:
+
+`ToolTransform = T1(q1) * T2(q2) * T3(q3) * T4(q4) * T5(q5) * T6(q6) * Ttool`
+
+Use valid local axes, offsets and transform order.
+
+## INVERSE KINEMATICS
+
+The motion controller must determine reachable joint configurations for the requested tool pose.
+
+Acceptable approaches include:
+
+- Validated analytic inverse kinematics.
+- Iterative damped least-squares solver.
+- Constrained iterative IK.
+- Verified preconfigured joint poses and interpolated joint-space motion where full IK is impractical.
+
+## REQUIRED SAFEGUARDS
+
+- Joint limits.
+- Unreachable target rejection.
+- Singular configuration handling.
+- Maximum velocity.
+- Maximum acceleration.
+- Collision avoidance.
+- Tool orientation constraints.
+- Safe stopping.
+
+## IMPORTANT
+
+If full six-axis IK cannot be implemented reliably, use a documented joint-space pose library and valid continuous trajectories.
+
+Never claim unrestricted six-axis IK when using only fixed predefined movements.
+
+---
+
+# 19. ROBOT SERVO DRIVE BANK
+
+Use:
+
+`10_L65_RobotServoDriveBank.fbx`
+
+## REQUIRED PROPERTIES
+
+For each axis:
+
+- Enable.
+- Actual angle.
+- Target angle.
+- Drive mode.
+- Velocity.
+- Acceleration.
+- Torque estimate.
+- Current estimate where supported.
+- Following error.
+- Home status.
+- Fault status.
+
+## REQUIRED BEHAVIOR
+
+- Servo commands alter joint dynamics.
+- Position feedback follows actual joint movement.
+- Acceleration is bounded.
+- Following-error limits are enforced.
+- Drive faults stop relevant motion.
+- Emergency stop overrides normal commands.
+
+## IMPORTANT
+
+A displayed servo READY status is not sufficient.
+
+Each axis must have an actual usable drive state.
+
+---
+
+# 20. ROBOT JOINT ENCODER MODULE
+
+Use:
+
+`11_L65_RobotJointEncoderModule.fbx`
+
+## REQUIRED BEHAVIOR
+
+- Measure actual joint positions.
+- Report angular position.
+- Report measurement validity.
+- Support calibration and homing.
+- Detect missing or stale feedback.
+- Detect implausible changes.
+
+The module must not report desired joint positions as though they were actual measured positions.
+
+---
+
+# 21. ROBOT MOTION CONTROLLER
+
+Use:
+
+`29_L65_RobotMotionController.fbx`
+
+## REQUIRED COMMANDS
+
+- HOME
+- MOVE_TO_SAFE_POSE
+- MOVE_TO_PICK
+- FOLLOW_CONVEYOR
+- ACTIVATE_GRIPPER
+- VERIFY_GRIP
+- LIFT_PRODUCT
+- MOVE_TO_DESTINATION
+- RELEASE_PRODUCT
+- VERIFY_RELEASE
+- RETURN_READY
+- STOP
+- RESET_FAULT
+
+## REQUIRED SEQUENCE
+
+1. Validate safety.
+2. Validate robot drives.
+3. Validate joint feedback.
+4. Validate product tracking.
+5. Validate pickup target.
+6. Compute or select valid joint trajectory.
+7. Move through intermediate configurations.
+8. Reach pickup pose.
+9. Apply vacuum.
+10. Confirm product grip.
+11. Lift product.
+12. Move to assigned destination.
+13. Release product.
+14. Confirm release.
+15. Return to ready pose.
+
+## CRITICAL REQUIREMENT
+
+Do not mark PICK COMPLETE merely when the robot reaches the pickup position.
+
+Require actual grip confirmation.
+
+---
+
+# 22. VACUUM GRIPPER AND PUMP
+
+Use:
+
+- `12_L65_VacuumGripperAssembly.fbx`
+- `13_L65_VacuumPumpModule.fbx`
+- `14_L65_VacuumPressureSensor.fbx`
+
+## REQUIRED PROPERTIES
+
+- Pump enabled.
+- Vacuum target.
+- Actual vacuum pressure.
+- Pump response time.
+- Leak rate.
+- Grip threshold.
+- Product contact.
+- Holding capacity.
+- Measurement validity.
+- Fault state.
+
+## SIMPLIFIED VACUUM DYNAMICS
+
+Model pressure response with a bounded finite-rate system.
+
+For example:
+
+`dVacuum/dt = PumpGeneration - Leakage`
+
+Use appropriate pressure and flow conventions.
+
+## REQUIRED PICKUP
+
+A successful pickup requires:
+
+1. Tool reaches product.
+2. Gripper makes valid contact.
+3. Vacuum pump enabled.
+4. Actual vacuum reaches the grip threshold.
+5. Pressure feedback valid.
+6. Product attachment created.
+7. Robot motion proceeds.
+
+## PRODUCT RELEASE
+
+Release requires the grip command to deactivate and the product to separate physically at the target.
+
+Do not permanently parent products to the tool after release.
+
+---
+
+# 23. PNEUMATIC REJECT GATE
+
+Use:
+
+- `19_L65_PneumaticRejectGate.fbx`
+- `20_L65_PneumaticSolenoidValve.fbx`
+- `21_L65_AirPressureRegulator.fbx`
+- `22_L65_RejectGatePositionSensors.fbx`
+
+## REQUIRED PROPERTIES
+
+- Supply pressure.
+- Solenoid state.
+- Actuator position.
+- Actuator velocity.
+- Stroke length.
+- Extension time.
+- Retraction time.
+- Gate-open feedback.
+- Gate-closed feedback.
+- Actuation fault.
+- Pressure fault.
+
+## REQUIRED BEHAVIOR
+
+1. Vision detects defective product.
+2. PLC identifies reject destination.
+3. Product tracking predicts arrival.
+4. PLC schedules gate actuation.
+5. Solenoid changes state.
+6. Pneumatic pressure drives actuator.
+7. Gate moves through its stroke.
+8. Position sensor reports actual position.
+9. Product is diverted into reject path.
+10. Destination arrival is verified.
+11. Gate retracts before the next product.
+
+## IMPORTANT
+
+Do not directly move defective products into the reject bin.
+
+The gate must physically perform the diversion or the simulation must accurately represent the contact/actuation event and product trajectory.
+
+---
+
+# 24. THREE SORTING CONVEYORS
+
+Use:
+
+- `16_L65_SortingConveyorA.fbx`
+- `17_L65_SortingConveyorB.fbx`
+- `18_L65_SortingConveyorC.fbx`
+
+Each output conveyor must have an independent operational state.
+
+## REQUIRED PROPERTIES
+
+- Belt speed.
+- Actual displacement.
+- Start/stop state.
+- Occupancy.
+- Product list.
+- Jam status.
+- Fault status.
+- Destination bin association.
+
+## REQUIRED BEHAVIOR
+
+Category A products travel to Bin A.
+
+Category B products travel to Bin B.
+
+Category C products travel to Bin C.
+
+Products must remain physically represented until valid delivery.
+
+Do not mark sorting successful immediately when the robot releases a product.
+
+---
+
+# 25. PRODUCT COLLECTION BINS
+
+Use:
+
+- `23_L65_ProductCollectionBinA.fbx`
+- `24_L65_ProductCollectionBinB.fbx`
+- `25_L65_ProductCollectionBinC.fbx`
+- `26_L65_DefectiveProductRejectBin.fbx`
+
+## REQUIRED PROPERTIES
+
+- Capacity.
+- Current occupancy.
+- Product IDs.
+- Accepted product types.
+- Full state.
+- Delivered count.
+- Misplaced count.
+
+## REQUIRED BEHAVIOR
+
+A product is counted only after entering the correct destination volume and satisfying the selected arrival conditions.
+
+Wrong-bin placement must be recorded as a sorting error.
+
+Products cannot be counted in more than one destination.
+
+---
+
+# 26. CONVEYOR SYNCHRONIZATION CONTROLLER
+
+Use:
+
+`30_L65_ConveyorSynchronizationController.fbx`
+
+This is one of Level 65's central advanced mechanics.
+
+## REQUIRED INPUTS
+
+- Actual belt speed.
+- Measured encoder speed.
+- Encoder displacement.
+- Product detection timestamp.
+- Camera trigger timestamp.
+- Inspection latency.
+- Product tracked position.
+- Robot estimated travel time.
+- Robot pickup availability.
+
+## PRODUCT POSITION PREDICTION
+
+For constant speed:
+
+`PredictedPosition = PositionAtMeasurement + BeltSpeed * PredictionTime`
+
+For variable speed, integrate the measured or estimated belt velocity.
+
+## REQUIRED BEHAVIOR
+
+- Track each product independently.
+- Account for product spacing.
+- Account for camera-processing delay.
+- Account for robot travel time.
+- Predict pickup intercept.
+- Update predictions when belt speed changes.
+- Reject stale position estimates.
+- Detect missing encoder feedback.
+- Pause or stop tracking-dependent motion safely when feedback becomes invalid.
+
+## IMPORTANT
+
+Do not always move a product to a fixed pickup coordinate.
+
+The pickup position must depend on actual product movement and robot timing.
+
+---
+
+# 27. INDUSTRIAL PLC SCAN CYCLE
+
+Use:
+
+`27_L65_IndustrialPLCRack.fbx`
+
+The PLC is the central automation controller.
+
+## REQUIRED PLC SCAN PHASES
+
+1. Read input image.
+2. Evaluate control logic.
+3. Update timers/counters.
+4. Evaluate state transitions.
+5. Write output image.
+6. Publish diagnostics.
+
+Use a defined cycle period.
+
+## REQUIRED PLC STATES
+
+- OFF
+- IDLE
+- INITIALIZING
+- HOMING
+- READY
+- FEEDING
+- INSPECTING
+- TRACKING
+- PICKING
+- SORTING
+- REJECTING
+- VERIFYING
+- RUNNING
+- PAUSED
+- PROTECTIVE_STOP
+- EMERGENCY_STOP
+- FAULT
+- RESET_REQUIRED
+
+## REQUIRED LOGIC
+
+The PLC must use actual input signals.
+
+For example:
+
+- Product detected.
+- Camera ready.
+- Classification valid.
+- Robot ready.
+- Vacuum confirmed.
+- Gate extended.
+- Gate retracted.
+- Conveyor speed valid.
+- Encoder valid.
+- Safety clear.
+
+Outputs must depend on actual logic conditions.
+
+Do not create a PLC that simply advances states on a timer regardless of sensor feedback.
+
+---
+
+# 28. DIGITAL INPUT/OUTPUT MODULE
+
+Use:
+
+`28_L65_DigitalInputOutputModule.fbx`
+
+## REQUIRED INPUTS
+
+- Entry sensor.
+- Encoder validity.
+- Camera result ready.
+- Vision fault.
+- Robot ready.
+- Robot motion complete.
+- Vacuum pressure valid.
+- Gate retracted.
+- Gate extended.
+- Safety light curtain.
+- Emergency stop.
+- Enclosure closed.
+
+## REQUIRED OUTPUTS
+
+- Conveyor enable.
+- Conveyor speed reference.
+- Product feeder command.
+- Inspection trigger.
+- Inspection lighting.
+- Robot motion request.
+- Vacuum enable.
+- Reject solenoid.
+- Alarm.
+- Production ready.
+
+## IMPORTANT
+
+Represent actual I/O addressing consistently.
+
+Do not leave unassigned inputs silently reporting false while the PLC treats them as safely connected.
+
+Differentiate:
+
+- FALSE
+- TRUE
+- INVALID / DISCONNECTED
+
+where needed for safe operation.
+
+---
+
+# 29. FUNCTIONAL SAFETY CONTROLLER
+
+Use:
+
+- `31_L65_SafetyPLCModule.fbx`
+- `32_L65_EmergencyStopStation.fbx`
+- `33_L65_SafetyLightCurtain.fbx`
+- `36_L65_TransparentRobotSafetyEnclosure.fbx`
+
+## REQUIRED SAFETY STATES
+
+- SAFETY_NOT_READY
+- SAFETY_READY
+- SAFETY_ACTIVE
+- PROTECTIVE_STOP
+- EMERGENCY_STOP
+- RESET_REQUIRED
+
+## REQUIRED SAFETY INPUTS
+
+- Emergency stop state.
+- Light-curtain interruption.
+- Enclosure door state.
+- Robot joint limits.
+- Robot collision.
+- Servo drive fault.
+- Pneumatic hazard state.
+- Conveyor jam.
+- Motion-area occupancy.
+
+## REQUIRED BEHAVIOR
+
+Safety faults override normal PLC production requests.
+
+The selected safe-stop model must be documented.
+
+Hazardous robot motion must not continue when a protective stop is required.
+
+## RESET SEQUENCE
+
+1. Remove fault cause.
+2. Restore required interlock conditions.
+3. Confirm safe state.
+4. Request explicit safety reset.
+5. Validate motion readiness.
+6. Require a separate production start command.
+
+Do not automatically restart the factory merely because the emergency stop was released.
+
+---
+
+# 30. HMI / PRODUCTION DASHBOARD
+
+Use:
+
+`34_L65_HolographicFactoryMonitor.fbx`
+
+Create live TextMeshPro and graph displays.
+
+## REQUIRED READINGS
+
+- MAIN POWER
+- PLC STATE
+- FACTORY MODE
+- SAFETY STATUS
+- CONVEYOR TARGET SPEED
+- CONVEYOR ACTUAL SPEED
+- ENCODER PULSES
+- ENCODER MEASURED DISPLACEMENT
+- PRODUCT ENTRY DETECT
+- CAMERA READY
+- INSPECTION STATUS
+- MEASURED PRODUCT CLASS
+- CLASSIFICATION CONFIDENCE
+- DEFECT RESULT
+- ROBOT MODE
+- JOINT J1 ANGLE
+- JOINT J2 ANGLE
+- JOINT J3 ANGLE
+- JOINT J4 ANGLE
+- JOINT J5 ANGLE
+- JOINT J6 ANGLE
+- ROBOT TOOL POSITION
+- ROBOT MOTION COMPLETE
+- VACUUM PRESSURE
+- GRIPPER STATE
+- PNEUMATIC PRESSURE
+- REJECT GATE POSITION
+- PRODUCTS PROCESSED
+- CATEGORY A COUNT
+- CATEGORY B COUNT
+- CATEGORY C COUNT
+- REJECTED COUNT
+- MISCLASSIFIED COUNT
+- WRONG BIN COUNT
+- MISSED PICK COUNT
+- THROUGHPUT
+- SORTING ACCURACY
+- CURRENT BATCH PROGRESS
+- ENCODER FAULT
+- ROBOT FAULT
+- SAFETY FAULT
+- EVENT HISTORY
+- OBJECTIVES X/6
+
+## PLAYER CONTROLS
+
+- MAIN POWER
+- SAFETY CHECK
+- CALIBRATE ENCODER
+- CALIBRATE ENTRY SENSOR
+- CALIBRATE CAMERA
+- ENABLE INSPECTION LIGHTING
+- HOME ROBOT
+- ENABLE SERVO DRIVES
+- CALIBRATE VACUUM
+- CALIBRATE PNEUMATICS
+- SET CONVEYOR SPEED
+- ENABLE AUTO SORT
+- START PRODUCTION
+- STOP PRODUCTION
+- PAUSE
+- RESET
+- MANUAL ROBOT TEST
+- MANUAL GATE TEST
+- START MIXED BATCH
+- START DEFECT TEST
+- THROUGHPUT TEST
+- ENCODER FAULT TEST
+- SAFETY RESET
+- FINAL CERTIFY
+
+Every control must affect actual runtime state.
+
+Do not implement decorative buttons that merely change text.
+
+---
+
+# 31. PRODUCTION METRICS
+
+The factory must calculate real production statistics.
+
+## REQUIRED METRICS
+
+- Products fed.
+- Products inspected.
+- Products classified.
+- Correctly sorted products.
+- Wrongly sorted products.
+- Defective products detected.
+- Defective products rejected.
+- Defective product escapes.
+- Missed robot pickups.
+- Robot grip failures.
+- Product collisions.
+- Conveyor jams.
+- Safety stops.
+- Average robot cycle time.
+- Production throughput.
+- Sorting accuracy.
+
+## THROUGHPUT
+
+`Throughput = CompletedProducts / ElapsedProductionTime`
+
+Convert to products per minute where appropriate.
+
+## SORTING ACCURACY
+
+`SortingAccuracy = CorrectlyDeliveredProducts / TotalDeliveredProducts`
+
+Define denominator carefully.
+
+Products lost, rejected incorrectly or never delivered must be included in appropriate failure metrics.
+
+Do not hide failed products by excluding them from all counters.
+
+## DESIGN CERTIFICATION TARGETS
+
+- 20-product final batch.
+- Three accepted product categories.
+- Defective products included.
+- 100% correct disposition on certification batch.
+- Zero defective escapes.
+- Zero robot collisions.
+- Zero safety violations.
+- At least 12 products/minute in the selected time-scaled educational simulation.
+
+These are gameplay-balancing targets.
+
+Verify that the actual factory layout and robotic cycle time make them achievable.
+
+Do not artificially increase counted throughput.
+
+---
+
+# 32. FINAL CONVEYOR ENCODER FAULT
+
+This is Objective 6's main challenge.
+
+## FAULT
+
+Disconnect the designated conveyor encoder feedback wire.
+
+The exact W-number must come from the finalized W01–W66 manifest.
+
+## REQUIRED DETECTION
+
+1. Player removes the actual wire.
+2. Circuit topology becomes invalid.
+3. Encoder measurement validity is lost.
+4. Position tracking becomes unreliable.
+5. Conveyor synchronization controller detects invalid feedback.
+6. PLC detects tracking-feedback fault.
+7. New robot pickups are inhibited.
+8. Active motion enters defined safe state.
+9. Fault becomes latched.
+10. Event is recorded.
+
+## IMPORTANT
+
+Do not continue normal tracking by silently substituting target conveyor speed for measured encoder speed.
+
+Do not reuse a stale position indefinitely.
+
+## RECOVERY
+
+1. Player reconnects the actual wire.
+2. Connectivity becomes valid.
+3. Sensor supply and signal verified.
+4. Encoder feedback reacquired.
+5. Encoder recalibrated.
+6. Belt position reference restored.
+7. Robot joint positions revalidated.
+8. Product tracking state safely reconciled.
+9. Player explicitly resets fault.
+10. Safety controller allows recommissioning.
+11. Production controller returns to READY.
+12. Player starts production again.
+13. Fresh mixed batch begins.
+14. All products physically processed.
+15. Sorting and defect metrics verified.
+16. Final certification succeeds.
+
+Reconnecting the wire alone must not complete the level.
+
+---
+
+# 33. SIX AUTHORITATIVE LEVEL 65 OBJECTIVES
+
+Integrate all six with the real Project Spark evaluator.
+
+## OBJECTIVE 1 — BUILD THE SMART FACTORY
+
+Require:
+
+1. Exactly 66 player wires connected.
+2. All 104 terminals registered.
+3. Valid 5 V control power.
+4. Valid control return.
+5. PLC connected.
+6. I/O module connected.
+7. Main conveyor drive connected.
+8. Conveyor encoder connected.
+9. Product feeder connected.
+10. Optical sensor connected.
+11. Camera connected.
+12. Inspection lighting connected.
+13. Vision processor connected.
+14. Robot servo bank connected.
+15. Robot encoder feedback connected.
+16. Motion controller connected.
+17. Vacuum pump connected.
+18. Vacuum sensor connected.
+19. Three destination conveyors configured.
+20. Pneumatic reject valve connected.
+21. Gate feedback connected.
+22. Safety PLC connected.
+23. Emergency stop connected.
+24. Light curtain connected.
+25. Safety enclosure interlock connected.
+26. No unsafe topology.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — COMMISSION CONVEYOR AND VISION
+
+Require:
+
+1. Objective 1 certified.
+2. PLC initialized.
+3. Safety controller ready.
+4. Conveyor motor enabled.
+5. Belt accelerates dynamically.
+6. Encoder produces valid pulses.
+7. Encoder calibrated.
+8. Actual belt speed measured.
+9. Optical entry sensor calibrated.
+10. Camera calibrated.
+11. Inspection lighting available.
+12. Vision processor ready.
+13. Test product enters conveyor.
+14. Entry sensor detects real product.
+15. Camera acquires valid observation.
+16. Product classification completed.
+17. Product tracked through inspection zone.
+18. Stable commissioning interval completed.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — PERFORM ROBOTIC SORTING
+
+Require:
+
+1. Previous objective certified.
+2. All six robot axes available.
+3. Robot homing completed.
+4. Joint encoders valid.
+5. Servo drives enabled.
+6. Safety system ready.
+7. Robot controller ready.
+8. Vacuum pump available.
+9. Vacuum pressure sensor valid.
+10. Pickup target calculated.
+11. Robot moves through valid joint trajectory.
+12. Tool reaches product.
+13. Vacuum grip confirmed.
+14. Product physically attached.
+15. Robot moves to correct destination.
+16. Product released correctly.
+17. Bin arrival verified.
+18. Products A, B and C successfully delivered.
+19. No collisions.
+20. No critical fault.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — DETECT AND REJECT DEFECTS
+
+Require:
+
+1. Previous objective certified.
+2. Defective products introduced.
+3. Camera observations valid.
+4. Quality scanner active.
+5. Defect classification valid.
+6. Defect decision recorded.
+7. Reject gate ready.
+8. Pneumatic pressure sufficient.
+9. Solenoid commanded correctly.
+10. Gate moves physically.
+11. Gate position confirmed.
+12. Defective product diverted.
+13. Reject bin arrival verified.
+14. Gate retracts safely.
+15. No defective product enters accepted bins.
+16. Required defect test batch completed.
+17. No critical fault.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — OPTIMIZE PRODUCTION THROUGHPUT
+
+Require:
+
+1. Previous objectives certified.
+2. Stable factory operating state.
+3. Mixed-product batch started.
+4. Conveyor encoder valid.
+5. Vision system valid.
+6. Robot motion controller valid.
+7. Product tracking valid.
+8. Conveyor speed within safe range.
+9. Robot trajectories within limits.
+10. Vacuum grip reliable.
+11. Pneumatic gate reliable.
+12. Every product assigned valid destination.
+13. Products processed through actual motion.
+14. Correct sorting accuracy achieved.
+15. No defective escapes.
+16. Required throughput achieved.
+17. Zero safety violations.
+18. No robot collisions.
+19. Stable production interval completed.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — RECOVER FROM ENCODER FAILURE
+
+Require:
+
+1. Objectives 1–5 historically certified.
+2. Designated conveyor encoder wire disconnected.
+3. Actual topology becomes invalid.
+4. Encoder measurement becomes invalid.
+5. Conveyor synchronization detects signal loss.
+6. PLC recognizes tracking failure.
+7. Unsafe robot pickups inhibited.
+8. Safe motion-stop sequence completed.
+9. Fault latched.
+10. Player reconnects actual wire.
+11. Feedback connectivity restored.
+12. Encoder recalibrated.
+13. Position tracking revalidated.
+14. Robot state revalidated.
+15. Safety conditions verified.
+16. Explicit fault reset performed.
+17. Production restarted by player command.
+18. Fresh 20-product certification batch started.
+19. All required products inspected.
+20. Correct products delivered.
+21. Defective products rejected.
+22. No defective escapes.
+23. Required throughput achieved.
+24. No collision or safety violation.
+25. No unresolved critical fault.
+26. Final certification interval completed.
+
+Progress becomes **6/6**.
+
+## HISTORICAL OBJECTIVE RULE
+
+Do not reset Objectives 1–5 merely because the final deliberate encoder fault occurs.
+
+However, Objective 6 requires actual repair and a fresh production batch.
+
+**The actual `LevelGamePlayManager` must report 6/6.**
+
+---
+
+# 34. RECOMMENDED UNITY C# ARCHITECTURE
+
+Inspect existing project code before creating new classes.
+
+Suggested responsibilities:
+
+- `SparkLevel65Coordinator.cs`
+- `SparkLevel65FactorySimulation.cs`
+- `SparkLevel65PLCController.cs`
+- `SparkLevel65PLCScanCycle.cs`
+- `SparkLevel65DigitalIO.cs`
+- `SparkLevel65ConveyorDynamics.cs`
+- `SparkLevel65ConveyorMotor.cs`
+- `SparkLevel65ConveyorEncoder.cs`
+- `SparkLevel65ProductFeeder.cs`
+- `SparkLevel65Product.cs`
+- `SparkLevel65ProductTracker.cs`
+- `SparkLevel65OpticalSensor.cs`
+- `SparkLevel65VisionCamera.cs`
+- `SparkLevel65VisionInspection.cs`
+- `SparkLevel65QualityScanner.cs`
+- `SparkLevel65RobotKinematics.cs`
+- `SparkLevel65RobotIK.cs`
+- `SparkLevel65RobotTrajectoryPlanner.cs`
+- `SparkLevel65ServoDrive.cs`
+- `SparkLevel65JointEncoder.cs`
+- `SparkLevel65RobotMotionController.cs`
+- `SparkLevel65VacuumGripper.cs`
+- `SparkLevel65VacuumPump.cs`
+- `SparkLevel65PneumaticActuator.cs`
+- `SparkLevel65SortingController.cs`
+- `SparkLevel65ConveyorSynchronization.cs`
+- `SparkLevel65ProductionMetrics.cs`
+- `SparkLevel65SafetyController.cs`
+- `SparkLevel65FaultRecovery.cs`
+- `SparkLevel65ObjectiveTracker.cs`
+- `SparkLevel65Dashboard.cs`
+- `SparkLevel65Interaction.cs`
+- `SparkLevel65VisualRig.cs`
+
+These are suggested responsibilities, not verified existing classes.
+
+Reuse compatible systems rather than duplicating them.
+
+## RUNTIME SIMULATION ORDER
+
+1. Validate wiring topology.
+2. Read player commands.
+3. Update electrical/control power.
+4. Evaluate safety inputs.
+5. Update safety permissions.
+6. Read current sensor states into PLC input image.
+7. Advance PLC scan when due.
+8. Write PLC output commands.
+9. Update conveyor motor commands.
+10. Integrate conveyor dynamics.
+11. Advance encoder shaft and pulses.
+12. Update optical detection.
+13. Update product feeder.
+14. Update product positions.
+15. Trigger vision acquisition where appropriate.
+16. Advance vision processing.
+17. Update classified product records.
+18. Predict conveyor tracking positions.
+19. Plan robot trajectories.
+20. Integrate robot joint motion.
+21. Update joint encoders.
+22. Integrate vacuum/pneumatic behavior.
+23. Update gripper attachment/release.
+24. Update reject gate position.
+25. Detect destination arrivals.
+26. Update production metrics.
+27. Evaluate faults and protection.
+28. Record event history.
+29. Evaluate authoritative objectives.
+30. Update dashboard.
+31. Update visual-only animations.
+
+Use an explicit and consistent update schedule.
+
+Avoid updating the same physical interval twice.
+
+The PLC scan cycle and fixed-step mechanical simulation may operate at different rates, but their interface must be deterministic.
+
+---
+
+# 35. AAA VISUAL IMPLEMENTATION
+
+Create a Level 65 visual adapter driven by authoritative simulation state.
+
+## INITIAL STATE
+
+- Conveyors stopped.
+- Robot in home pose.
+- Gripper inactive.
+- Camera idle.
+- Product feeder standby.
+- Reject gate retracted.
+- Bin counters zero.
+- Safety indicators show actual state.
+
+## CONVEYOR OPERATION
+
+- Conveyor rollers rotate based on actual motor speed.
+- Products move according to belt state.
+- Encoder disc follows actual roller rotation.
+- Optical sensor indicator changes with detection.
+- No fake preauthored conveyor movement.
+
+## MACHINE VISION
+
+- Camera visually acquires product.
+- Inspection lighting activates.
+- Classification display updates after valid processing.
+- Detection confidence reflects the implemented vision model.
+
+## ROBOT SORTING
+
+- J1–J6 move according to actual joint trajectories.
+- Robot tool reaches tracked product.
+- Gripper activates.
+- Product attaches after grip confirmation.
+- Robot moves to the correct lane.
+- Product releases physically.
+- Destination count updates after delivery.
+
+## DEFECT REJECTION
+
+- Defect recognized.
+- Solenoid activates.
+- Gate extends.
+- Defective product enters reject route.
+- Gate retracts.
+- Reject count updates after verification.
+
+## ENCODER FAILURE
+
+- Encoder feedback becomes invalid.
+- PLC faults.
+- Conveyor tracking becomes unavailable.
+- Robot pickups stop.
+- Fault indicator activates.
+- Safety state follows actual logic.
+
+## RECOVERY
+
+- Wire reconnected.
+- Encoder recalibrated.
+- Fault reset.
+- Factory recommissioned.
+- Fresh production batch begins.
+- Live metrics show actual progress.
+- Completion appears only after evaluator validation.
+
+---
+
+# 36. UNITY EDITOR LEVEL CREATOR
+
+Create the menu item:
+
+`Tools/Project Spark/Levels/Create Level 65`
+
+The builder must safely generate or update:
+
+- `Level_65.asset`
+- `Level_65_Layout.prefab`
+- Level 65 configuration assets
+- Robot configuration assets
+- Conveyor configuration assets
+- Vision inspection configuration
+- PLC I/O manifest
+- Wiring manifest
+- Terminal binding manifest
+- Product prefab registrations
+- Animation assignments
+- Six objective definitions
+- Diagnostic report
+
+## REQUIRED EDITOR OPERATIONS
+
+1. Inspect existing Project Spark Editor infrastructure.
+2. Locate all 38 individual FBXs.
+3. Locate all four product FBXs.
+4. Validate exact filenames.
+5. Validate model import scale.
+6. Create/update Level 65 definition.
+7. Set ID to `level_65`.
+8. Set display name.
+9. Set subtitle.
+10. Create six objectives.
+11. Create/update layout prefab.
+12. Create `L65_HD_VISUAL_ART`.
+13. Instantiate all 38 equipment models.
+14. Preserve shared coordinate alignment.
+15. Create four product prefabs.
+16. Configure product type metadata.
+17. Configure main conveyor.
+18. Configure conveyor motor.
+19. Configure rotary encoder.
+20. Configure feeder magazine.
+21. Configure optical sensor.
+22. Configure vision camera.
+23. Configure inspection lighting.
+24. Configure vision processor.
+25. Configure six-axis robot.
+26. Construct valid robot joint hierarchy.
+27. Configure six servo drives.
+28. Configure joint feedback.
+29. Configure gripper.
+30. Configure vacuum pump.
+31. Configure vacuum sensor.
+32. Configure pickup platform.
+33. Configure three sorting conveyors.
+34. Configure pneumatic reject gate.
+35. Configure solenoid valve.
+36. Configure pressure regulator.
+37. Configure gate position sensors.
+38. Configure destination bins.
+39. Configure reject bin.
+40. Configure PLC rack.
+41. Configure digital I/O.
+42. Configure robot motion controller.
+43. Configure conveyor synchronization controller.
+44. Configure safety PLC.
+45. Configure emergency stop.
+46. Configure light curtain.
+47. Configure factory monitor.
+48. Configure quality scanner.
+49. Configure enclosure.
+50. Configure regulated control supply.
+51. Register exactly 104 terminal anchors.
+52. Configure exactly 66 player wires.
+53. Register functional component IDs.
+54. Register terminal IDs.
+55. Configure fixed internal connections.
+56. Configure product detection zones.
+57. Configure robot pickup and placement poses.
+58. Configure collision boundaries.
+59. Configure joint limits.
+60. Configure conveyor speeds and acceleration.
+61. Configure encoder resolution.
+62. Configure inspection rules.
+63. Configure vision latency.
+64. Configure gripper pressure limits.
+65. Configure pneumatic dynamics.
+66. Configure PLC scan interval.
+67. Configure safety interlocks.
+68. Configure production test batches.
+69. Configure throughput target.
+70. Configure final encoder fault.
+71. Assign the 12 documented animation pivots.
+72. Create live TextMeshPro displays.
+73. Bind six authoritative objectives.
+74. Validate missing references.
+75. Detect duplicate simulation components.
+76. Detect duplicate terminals.
+77. Generate diagnostics.
+78. Save level assets and prefab.
+
+## EDITOR RELIABILITY
+
+Reuse:
+
+`SparkLevel65ArtPlacementEditor.cs`
+
+The existing helper places visual geometry only.
+
+It does not implement functional terminals, PLC simulation, robot kinematics, vision, conveyor mechanics or objectives.
+
+Extend it safely or create a separate full level builder.
+
+Use actual Unity `AssetDatabase` paths.
+
+Do not invent GUIDs.
+
+Use appropriate `PrefabUtility`, `SerializedObject`, Undo and asset-saving APIs.
+
+Make the creator idempotent.
+
+Do not duplicate robots, conveyors, controllers, terminals or product prefabs.
+
+Do not silently destroy unrelated modifications.
+
+---
+
+# 37. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 66 WIRES → VERIFY 104 TERMINALS → VALIDATE CONTROL POWER → COMMISSION PLC → CALIBRATE CONVEYOR MOTOR → CALIBRATE ENCODER → CALIBRATE OPTICAL SENSOR → CALIBRATE CAMERA → ENABLE INSPECTION LIGHTING → VERIFY PRODUCT CLASSIFICATION → HOME SIX ROBOT JOINTS → ENABLE SERVO DRIVES → COMMISSION VACUUM → COMMISSION PNEUMATICS → ENABLE PRODUCT TRACKING → FEED PRODUCT A → DETECT PRODUCT → INSPECT PRODUCT → PREDICT PICKUP POSITION → MOVE ROBOT → GRIP PRODUCT → PLACE IN BIN A → VERIFY ARRIVAL → SORT PRODUCT B → SORT PRODUCT C → INTRODUCE DEFECTIVE PRODUCT → DETECT DEFECT → ACTUATE REJECT GATE → VERIFY REJECTION → RUN MIXED BATCH → TUNE CONVEYOR SPEED → TUNE ROBOT CYCLE → ACHIEVE THROUGHPUT AND ACCURACY → DISCONNECT ENCODER FEEDBACK → DETECT SIGNAL LOSS → STOP UNSAFE MOTION → RECONNECT WIRE → RECALIBRATE ENCODER → RESET FAULT → SAFELY RESTART → RUN FRESH 20-PRODUCT CERTIFICATION → FINAL 6/6 COMPLETION**
+
+## PLAYER-FACING MESSAGES
+
+- `BUILD THE SMART FACTORY`
+- `CONNECT ALL 66 WIRES`
+- `VERIFY 104 TERMINALS`
+- `POWER THE PLC`
+- `CALIBRATE CONVEYOR MOTOR`
+- `CALIBRATE ROTARY ENCODER`
+- `CALIBRATE ENTRY SENSOR`
+- `ENABLE MACHINE VISION`
+- `VISION INSPECTION READY`
+- `HOME ROBOT AXES`
+- `ROBOT SERVO DRIVES READY`
+- `CALIBRATE VACUUM GRIPPER`
+- `VERIFY PNEUMATIC PRESSURE`
+- `START PRODUCT FEED`
+- `PRODUCT DETECTED`
+- `INSPECTION COMPLETE`
+- `PRODUCT CLASSIFIED`
+- `TRACKING PRODUCT POSITION`
+- `ROBOT PICKUP READY`
+- `VACUUM GRIP CONFIRMED`
+- `PRODUCT SORTED TO BIN A`
+- `PRODUCT SORTED TO BIN B`
+- `PRODUCT SORTED TO BIN C`
+- `DEFECT DETECTED`
+- `REJECT GATE ACTIVE`
+- `DEFECTIVE PRODUCT REJECTED`
+- `START THROUGHPUT TEST`
+- `OPTIMIZE CONVEYOR SPEED`
+- `OPTIMIZE ROBOT CYCLE`
+- `SORTING ACCURACY VERIFIED`
+- `PRODUCTION TARGET ACHIEVED`
+- `DISCONNECT ENCODER FEEDBACK`
+- `CONVEYOR POSITION SIGNAL LOST`
+- `TRACKING FAULT DETECTED`
+- `UNSAFE MOTION INHIBITED`
+- `RESTORE ENCODER CONNECTION`
+- `RECALIBRATE POSITION FEEDBACK`
+- `RESET LATCHED FAULT`
+- `SAFETY CHECK COMPLETE`
+- `RESTART PRODUCTION`
+- `FINAL 20-PRODUCT CERTIFICATION`
+- `LEVEL 65 COMPLETE`
+
+---
+
+# 38. TESTING AND DIAGNOSTICS
+
+Implement diagnostic messages for:
+
+- Incorrect W01–W66 wiring.
+- Missing terminal IDs.
+- Duplicate terminal IDs.
+- Invalid control supply.
+- Missing control return.
+- PLC not powered.
+- I/O module disconnected.
+- Conveyor motor disconnected.
+- Conveyor target speed not affecting actual speed.
+- Conveyor movement not affecting encoder pulses.
+- Encoder resolution incorrect.
+- Encoder disconnected.
+- Encoder stale measurement.
+- Optical sensor not detecting real product.
+- Camera not acquiring valid observation.
+- Vision processing not completing.
+- Classification invalid.
+- Vision confidence fabricated.
+- Product ID lost.
+- Duplicate product IDs.
+- Product leaving tracking region.
+- Product feeder jam.
+- Conveyor jam.
+- Robot joint hierarchy invalid.
+- Robot joint axis incorrect.
+- Robot joint limit exceeded.
+- Robot IK target unreachable.
+- Robot trajectory collision.
+- Servo feedback stale.
+- Robot homing incomplete.
+- Vacuum pressure insufficient.
+- Gripper claiming pickup without contact.
+- Product not attached after valid grip.
+- Product not released at target.
+- Pneumatic supply unavailable.
+- Reject solenoid disconnected.
+- Gate not extending.
+- Gate not retracting.
+- Gate feedback invalid.
+- Defective product entering accepted bin.
+- Accepted product entering reject bin.
+- Bin destination incorrect.
+- Product counted twice.
+- Throughput incorrect.
+- Safety light curtain ignored.
+- Emergency stop ignored.
+- Unsafe automatic restart.
+- PLC scan cycle not honored.
+- Multiple simulation owners.
+- Fault reset allowed before repair.
+- Historical objectives erased.
+- Manager stuck at 0/6 or 5/6.
+- Level restart state invalid.
+- Regression in Levels 1–64.
+
+## REQUIRED TESTS
+
+1. Correct 66-wire topology.
+2. Exactly 104 terminals valid.
+3. Control power valid.
+4. PLC initializes.
+5. PLC scan cycle runs.
+6. Digital inputs update correctly.
+7. PLC output commands update correctly.
+8. Conveyor motor accelerates physically.
+9. Belt displacement changes.
+10. Encoder produces pulses.
+11. Encoder speed calculation valid.
+12. Encoder calibration succeeds.
+13. Optical sensor detects physical product.
+14. Product feeder releases one item.
+15. Camera captures valid observation.
+16. Vision classification completes.
+17. Product A recognized.
+18. Product B recognized.
+19. Product C recognized.
+20. Defective product recognized.
+21. Inspection latency affects tracking.
+22. Product tracking follows conveyor movement.
+23. Robot J1 operates.
+24. Robot J2 operates.
+25. Robot J3 operates.
+26. Robot J4 operates.
+27. Robot J5 operates.
+28. Robot J6 operates.
+29. Joint limits enforced.
+30. Robot homing succeeds.
+31. Robot pickup pose reachable.
+32. Robot moves through continuous trajectory.
+33. Robot avoids collision.
+34. Vacuum pump responds.
+35. Pressure sensor reports actual vacuum.
+36. Gripper picks real product.
+37. Robot moves with attached product.
+38. Product released physically.
+39. Bin A arrival verified.
+40. Bin B arrival verified.
+41. Bin C arrival verified.
+42. Pneumatic gate extends.
+43. Gate position feedback valid.
+44. Defective product physically rejected.
+45. Gate retracts.
+46. Wrong-bin placement detected.
+47. Product counts accurate.
+48. Throughput calculated from actual completion times.
+49. Mixed batch completes.
+50. Emergency stop inhibits unsafe motion.
+51. Light curtain inhibits unsafe motion.
+52. Enclosure interlock operates.
+53. Safety reset requires correct conditions.
+54. Disconnect actual encoder feedback.
+55. Encoder measurement becomes invalid.
+56. PLC detects tracking fault.
+57. Unsafe robot pickup inhibited.
+58. Safe stop performed.
+59. Fault latches.
+60. Reconnect encoder wire.
+61. Measurement continuity restored.
+62. Recalibration succeeds.
+63. Explicit reset succeeds.
+64. Safe production restart succeeds.
+65. Fresh 20-product certification begins.
+66. All certification products processed.
+67. Sorting accuracy target met.
+68. Defective escapes remain zero.
+69. Throughput target met.
+70. No robot collision.
+71. No safety violation.
+72. Authoritative evaluator reaches 6/6.
+73. Level progression succeeds.
+74. Levels 1–64 remain unaffected.
+
+Only report a test as passed when actually executed.
+
+---
+
+# 39. REQUIRED DOWNLOADABLE DELIVERABLES
+
+Create a complete Level 65 Unity implementation ZIP containing:
+
+- Full Level 65 runtime C# scripts.
+- Factory coordinator.
+- PLC scan-cycle implementation.
+- Digital I/O integration.
+- Conveyor motor dynamics.
+- Conveyor encoder model.
+- Optical sensor integration.
+- Product feeder.
+- Product runtime component.
+- Product tracking.
+- Four product prefabs.
+- Machine-vision camera integration.
+- Synthetic or actual supported vision classification.
+- Quality inspection logic.
+- Six-axis robot joint hierarchy.
+- Robot forward kinematics.
+- Robot inverse kinematics or documented validated alternative.
+- Robot joint trajectory planner.
+- Six servo-drive controllers.
+- Joint encoder integration.
+- Robot motion controller.
+- Vacuum pump.
+- Vacuum gripper.
+- Vacuum pressure feedback.
+- Pneumatic pressure regulator.
+- Pneumatic solenoid valve.
+- Reject gate dynamics.
+- Gate position sensing.
+- Three sorting conveyor systems.
+- Destination bin logic.
+- Reject bin logic.
+- Conveyor synchronization controller.
+- Production statistics.
+- Functional safety controller.
+- Emergency stop.
+- Light curtain.
+- Safety enclosure interlock.
+- Encoder fault detection.
+- Safe stop.
+- Fault repair/reset/recovery.
+- Six-objective evaluator integration.
+- Unity Editor Level 65 creator.
+- Level definition creator or asset.
+- Level layout prefab creator.
+- Exact W01–W66 wiring manifest.
+- 104-terminal binding manifest.
+- Component binding manifest.
+- PLC I/O manifest.
+- Robot axis configuration.
+- Twelve documented animation pivot mappings.
+- Conveyor calibration configuration.
+- Machine-vision rules.
+- Product batch configurations.
+- Production performance targets.
+- Safety configuration.
+- Inspector setup instructions.
+- Player gameplay walkthrough.
+- Objective verification checklist.
+- Diagnostics and troubleshooting guide.
+- Actual test report.
+
+Reuse:
+
+`ProjectSpark_Level65_HD_AAA_Models.zip`
+
+Do not regenerate the approved 38 equipment models unless a specific compatibility problem requires it.
+
+Only provide download links to files actually created and verified.
+
+Do not claim Unity compilation, Play Mode success or 6/6 completion without actually performing the tests.
+
+---
+
+# 40. FINAL EXECUTION REQUIREMENTS
+
+**IMPLEMENT LEVEL 65 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect the real Project Spark Unity source code and the approved Level 65 art collection.
+
+Then:
+
+1. Reuse compatible Project Spark infrastructure.
+2. Integrate all 38 equipment FBXs.
+3. Integrate all four product variants.
+4. Finalize exactly 66 player wires.
+5. Create exactly 104 functional terminals.
+6. Implement educational control power.
+7. Implement PLC digital I/O.
+8. Implement PLC scan-cycle sequencing.
+9. Implement main conveyor motor dynamics.
+10. Implement encoder pulses and measurements.
+11. Implement optical product detection.
+12. Implement product feeder sequencing.
+13. Implement real product tracking.
+14. Implement camera inspection.
+15. Implement classification latency and validity.
+16. Implement product defect detection.
+17. Construct a valid six-axis robot hierarchy.
+18. Implement six independent joint states.
+19. Implement robot kinematics.
+20. Implement bounded trajectories.
+21. Implement servo drives.
+22. Implement joint feedback.
+23. Implement robot pickup positioning.
+24. Implement vacuum pump and pressure.
+25. Implement valid physical gripping.
+26. Implement controlled product transport.
+27. Implement three destination conveyors.
+28. Implement pneumatic rejection.
+29. Implement gate position feedback.
+30. Implement correct product counting.
+31. Implement production throughput.
+32. Implement sorting accuracy.
+33. Implement functional safety.
+34. Implement emergency stop.
+35. Implement safety light curtain.
+36. Implement enclosure interlock.
+37. Implement genuine conveyor encoder wire disconnection.
+38. Implement invalid-feedback detection.
+39. Implement safe tracking/motion shutdown.
+40. Implement encoder repair and recalibration.
+41. Implement explicit fault reset.
+42. Implement controlled production restart.
+43. Implement final 20-product certification.
+44. Integrate six authoritative objectives.
+45. Create Unity Editor Level 65 builder.
+46. Connect all 12 documented pivots.
+47. Implement live factory dashboard.
+48. Implement diagnostics.
+49. Run all feasible tests.
+50. Package and verify actual deliverables.
+
+Do not ask for approval of the already-approved Level 65 design.
+
+Do not fabricate conveyor position, encoder pulses, product identity, vision confidence, robot joint angles, gripping state, pneumatic pressure, destination arrival, sorting accuracy, throughput, safety state or objective completion.
+
+If an existing API cannot be verified, implement safely independent functionality where practical and clearly identify the unresolved integration dependency.
+
+---
+
+# 41. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect all 66 required player wires.
+2. Validate all 104 terminals.
+3. Commission the PLC.
+4. Calibrate the conveyor encoder.
+5. Calibrate the optical sensor.
+6. Commission the camera and lighting.
+7. Classify products through a real inspection model.
+8. Home all six robot joints.
+9. Enable the robot servo drives.
+10. Track moving products.
+11. Predict robot pickup positions.
+12. Move the robot through valid joint trajectories.
+13. Confirm vacuum pickup.
+14. Physically transport products.
+15. Sort Category A into Bin A.
+16. Sort Category B into Bin B.
+17. Sort Category C into Bin C.
+18. Identify defective products.
+19. Actuate the pneumatic reject gate.
+20. Verify defective products reach the reject bin.
+21. Optimize conveyor and robot timing.
+22. Meet throughput and accuracy goals.
+23. Operate without collisions or safety violations.
+24. Disconnect the actual encoder feedback wire.
+25. Detect genuine position-feedback loss.
+26. Inhibit unsafe robot pickup.
+27. Stop affected motion safely.
+28. Reconnect the encoder.
+29. Recalibrate actual encoder feedback.
+30. Explicitly reset the fault.
+31. Revalidate robot and safety conditions.
+32. Restart production through player command.
+33. Process a fresh 20-product certification batch.
+34. Verify all products and defects are correctly handled.
+35. Complete all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 65.**
+
+The player must learn real industrial robotics, PLC sequencing, conveyor synchronization, encoder measurement, machine-vision classification, six-axis motion control, pneumatic actuation, vacuum handling, safe automation and production quality through observable gameplay systems.
+
+**FINAL GOAL: A COMPLETE, POLISHED, UNITY-READY, AAA-QUALITY AND ACTUALLY PLAYABLE LEVEL 65 — THE FACTORY THINKS.**

@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_55_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_55
+  levelTitle: Float the Shaft
+  initialPage: 0
+  pages:
+  - title: 01 / Build the bearing system
+    explanation: Wire the two magnetic drivers and four independent sensors. Install
+      W13 last.
+    caption: "28 WIRES  \u2022  48 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.55}
+      label: SUPPLY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.55, y: 0.55}
+      label: FEEDBACK
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.55}
+      label: COILS
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.55}
+      - {x: 0.43, y: 0.55}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.55}
+      - {x: 0.75, y: 0.55}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 02 / Calibrate and lift
+    explanation: Calibrate on the resting journals. The magnetic forces must overcome
+      gravity before the shaft clears its supports.
+    caption: "TOUCHDOWN  \u2022  CLOSED LOOP"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.55}
+      label: CALIBRATE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.55, y: 0.55}
+      label: LIFT
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.55}
+      label: 45 RPM
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.55}
+      - {x: 0.43, y: 0.55}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.55}
+      - {x: 0.75, y: 0.55}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 03 / Tune and certify
+    explanation: Apply the two disturbances at 45 RPM. Compare peak gap error and
+      settling time, then certify at 75 RPM.
+    caption: "LEFT AND RIGHT DISTURBANCES  \u2022  75 RPM"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.55}
+      label: DISTURB
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.55, y: 0.55}
+      label: RECOVER
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.55}
+      label: 75 RPM
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.55}
+      - {x: 0.43, y: 0.55}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.55}
+      - {x: 0.75, y: 0.55}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 04 / Touchdown and recovery
+    explanation: Observe the fault and touchdown, restore W13, reset, recalibrate,
+      relift, and certify again.
+    caption: "W13 RIGHT X  \u2022  SAFE STOP"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.55}
+      label: W13
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.55, y: 0.55}
+      label: TOUCHDOWN
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.55}
+      label: RELIFT
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.55}
+      - {x: 0.43, y: 0.55}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.55}
+      - {x: 0.75, y: 0.55}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}

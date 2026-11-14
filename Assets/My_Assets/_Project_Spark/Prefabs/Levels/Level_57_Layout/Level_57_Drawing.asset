@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_57_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_57
+  levelTitle: Synchronize the Grid
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the microgrid
+    explanation: Connect the 5 V rails, three ordered phases and the sensing and
+      protection signals. Install W24 last.
+    caption: "34 WIRES  \u2022  54 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.57}
+      label: 5 V DC
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.57, y: 0.57}
+      label: ABC BUS
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.57}
+      label: FEEDBACK
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.57}
+      - {x: 0.43, y: 0.57}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.57}
+      - {x: 0.75, y: 0.57}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 02 / Synchronize the sources
+    explanation: Match frequency, phase and voltage before closing the three-pole
+      contactor.
+    caption: "\xB10.2 HZ  \u2022  \xB15\xB0  \u2022  \xB15% VOLTAGE"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.57}
+      label: GRID A
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.57, y: 0.57}
+      label: SYNC WINDOW
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.57}
+      label: INVERTER B
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.57}
+      - {x: 0.43, y: 0.57}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.57}
+      - {x: 0.75, y: 0.57}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 03 / Share and island
+    explanation: Apply a load step. Check both source powers, then isolate A and
+      sustain essential loads on B.
+    caption: "40\u201360% SHARE  \u2022  B FORMS THE ISLAND"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.57}
+      label: LOAD STEP
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.57, y: 0.57}
+      label: SHARING
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.57}
+      label: ISLAND
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.57}
+      - {x: 0.43, y: 0.57}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.57}
+      - {x: 0.75, y: 0.57}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 04 / Repair and recertify
+    explanation: After restoration, disconnect W24. Reconnect, reset, calibrate and
+      resynchronize before final certification.
+    caption: "W24  \u2022  GRID VOLTAGE"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.57}
+      label: FEEDBACK LOST
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.57, y: 0.57}
+      label: OPEN TIE
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.57}
+      label: RECERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.57}
+      - {x: 0.43, y: 0.57}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.57, y: 0.57}
+      - {x: 0.75, y: 0.57}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}

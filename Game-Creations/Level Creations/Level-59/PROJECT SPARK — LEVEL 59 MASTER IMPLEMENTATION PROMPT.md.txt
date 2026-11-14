@@ -1,0 +1,2025 @@
+# PROJECT SPARK — LEVEL 59 MASTER IMPLEMENTATION PROMPT
+
+## LEVEL 59: BRING BACK THE POWER
+### Intelligent Microgrid Black-Start, Grid-Forming Inverter Control, Generator Synchronization, Battery Energy Management and Sequential Load Restoration
+
+Act as my senior Unity C# engineer, electrical simulation architect, three-phase power systems engineer, battery energy storage specialist, generator dynamics engineer, power electronics developer, industrial automation specialist, gameplay programmer, and Unity Editor automation developer.
+
+**YOUR TASK IS TO CREATE THE COMPLETE, WORKING, PLAYABLE LEVEL 59 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+Do not stop at a design proposal, explanation, architecture diagram, pseudocode, disconnected scripts, or visual demonstration.
+
+Implement all safely achievable functionality using my actual Unity project source code and the previously generated Level 59 HD/AAA model collection.
+
+The Level 59 design and 26 individual 3D models are already approved.
+
+Do not redesign the level or regenerate its models unnecessarily.
+
+---
+
+# 1. CRITICAL PROJECT INTEGRATION RULES
+
+Project Spark is an existing Unity electronics simulation, electrical engineering and industrial automation game.
+
+Before implementing Level 59, inspect the actual Unity project source files, especially:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+- Existing battery and capacitor simulations
+- Existing DC power-supply systems
+- Existing inverter implementations
+- Existing three-phase AC simulation
+- Existing generator and motor models
+- Existing encoder and shaft-speed systems
+- Existing voltage and current sensors
+- Existing synchronization and PLL systems
+- Existing circuit breaker and contactor implementations
+- Existing load-sharing and droop-control systems
+- Existing protection relays
+- Existing electrical fault and damage systems
+- Existing circuit-topology validation
+- Existing player wiring and interaction systems
+- Existing diagnostic dashboards
+- Existing Unity Editor creation utilities
+- Existing Levels 56–58 power conversion, microgrid and protection implementations, where available
+
+## Non-negotiable implementation rules
+
+1. Inspect actual source code before referencing Project Spark APIs.
+2. Never invent existing classes, methods, properties, events or namespaces.
+3. Reuse compatible functionality from previous levels.
+4. Preserve Levels 1–58.
+5. Keep Level 59-specific functionality isolated wherever practical.
+6. Do not modify the shared DC electrical solver without demonstrated necessity.
+7. Do not inject arbitrary three-phase AC waveforms into a DC-only solver.
+8. Never fabricate battery voltage, current, state of charge, energy, generator RPM, frequency, phase angle or load power.
+9. Do not energize the AC bus merely by toggling a decorative indicator.
+10. Do not allow an unpowered inverter to establish an AC grid.
+11. Do not bypass DC-link precharge.
+12. Do not directly assign actual generator RPM from a target-speed setting.
+13. Do not bypass generator synchronization conditions.
+14. Do not connect loads without calculating their electrical demand.
+15. Do not provide unlimited battery energy or generator output.
+16. Never bypass objectives through direct manager-completion calls.
+17. Prevent duplicate motor, generator and grid simulators.
+18. Use consistent physical units, electrical references and simulation time.
+19. Properly manage Unity lifecycle and event subscriptions.
+20. Avoid per-frame global scene searches.
+21. Provide complete C# source files rather than disconnected patches.
+22. Do not claim compilation, Play Mode or completion success unless those tests actually ran.
+
+## Critical authoritative completion requirement
+
+The actual `LevelGamePlayManager` must reach **6/6**.
+
+A local Level 59 coordinator reporting Stage 6 does not mean the level is complete.
+
+Inspect the actual authoritative evaluator.
+
+Implement compatible historical objective tracking so earlier achievements remain recorded during the final deliberate generator-failure challenge.
+
+However, Level 59 must not complete until the player restores the generator, resynchronizes it, restores the required loads and completes a fresh final certification.
+
+---
+
+# 2. LEVEL CONFIGURATION
+
+**Level Number:** 59
+
+**Level ID:** `level_59`
+
+**Display Name:** `Bring Back the Power`
+
+**Subtitle:** `Intelligent Microgrid Black-Start and Power Restoration`
+
+**Difficulty:** Advanced / Expert
+
+**Control Supply:** 5 V DC
+
+**Simulated Electrical Network:** Low-voltage three-phase AC
+
+**Nominal AC Frequency:** 50 Hz
+
+**Player Wires:** 42
+
+**Unique Player Sockets:** 66
+
+**Battery Energy Storage System:** 1
+
+**Battery Management System:** 1
+
+**Grid-Forming Inverter:** 1
+
+**DC-Link Precharge System:** 1
+
+**Backup Generator:** 1
+
+**Generator Starter:** 1
+
+**Synchronization Relay:** 1
+
+**Main Grid Breaker:** 1
+
+**Generator Breaker:** 1
+
+**Essential Load Feeders:** 3
+
+**Nonessential Load Feeders:** 2
+
+**Total Load Branches:** 5
+
+**Required Objectives:** 6
+
+## Important electrical architecture
+
+The 5 V source provides laboratory control power.
+
+The approved artwork also includes a battery storage system and simulated three-phase power equipment.
+
+Do not confuse the 5 V control supply with the battery's energy capacity or the AC bus voltage.
+
+Use configurable, documented electrical parameters compatible with the existing Project Spark simulation architecture.
+
+All three-phase generation and power restoration occur inside the simulated educational network.
+
+No external utility mains or physical generator hardware is controlled.
+
+## Initial level state
+
+At the beginning:
+
+- Utility grid unavailable.
+- Main grid breaker open.
+- Generator stopped.
+- Generator breaker open.
+- AC distribution bus de-energized.
+- Grid-forming inverter disabled.
+- DC-link capacitor discharged or at its defined safe initial voltage.
+- All five load breakers open.
+- Battery available but subject to BMS limits.
+- Restoration controller in BLACKOUT mode.
+- Safety system active.
+- Objective progress 0/6.
+
+## Player mission
+
+The player must:
+
+1. Wire the complete 42-wire black-start system.
+2. Validate all 66 terminal registrations.
+3. Inspect battery state and BMS readiness.
+4. Verify the main grid breaker is open.
+5. Check that all load breakers are initially open.
+6. Precharge the DC link.
+7. Enable the grid-forming inverter.
+8. Establish stable three-phase AC voltage.
+9. Stabilize frequency at 50 Hz.
+10. Restore emergency lighting.
+11. Restore control and instrumentation.
+12. Restore critical cooling.
+13. Start the backup generator.
+14. Accelerate the generator gradually.
+15. Measure generator voltage, frequency and phase.
+16. Synchronize the generator with the live AC bus.
+17. Close the generator breaker safely.
+18. Transfer part of the load to the generator.
+19. Restore the industrial motor load.
+20. Restore auxiliary equipment.
+21. Verify stable full-load operation.
+22. Simulate generator power loss.
+23. Detect the failure.
+24. Isolate the generator.
+25. Shed nonessential loads where required.
+26. Preserve essential electrical service.
+27. Restore the generator.
+28. Explicitly reset the failure condition.
+29. Resynchronize and reconnect.
+30. Complete final full-load restoration certification.
+
+## Main learning objective
+
+Teach the relationship between:
+
+- Black-start capability
+- Battery state of charge
+- Stored electrical energy
+- DC-link precharge
+- Grid-forming inverter operation
+- Three-phase voltage generation
+- Frequency regulation
+- Generator mechanical dynamics
+- Generator synchronization
+- Electrical load priority
+- Cold-load pickup
+- Motor inrush current
+- Source capacity
+- Power sharing
+- Automatic load shedding
+- Protection coordination
+- Restoration sequencing
+- Emergency recovery
+
+**The goal is not simply to switch every load ON. The player must rebuild a stable electrical system from a blackout without exhausting the battery or overloading the available sources.**
+
+---
+
+# 3. USE MY EXISTING LEVEL 59 HD/AAA FBX PACKAGE
+
+The approved asset collection already exists:
+
+`ProjectSpark_Level59_HD_AAA_Models.zip`
+
+Use these exact 26 individual FBX models:
+
+| FBX MODEL | PURPOSE |
+|---|---|
+| `00_L59_IndustrialBlackStartBase.fbx` | Precision industrial restoration workstation |
+| `01_L59_BatteryStorageBank.fbx` | Black-start battery energy storage |
+| `02_L59_BatteryManagementSystem.fbx` | Battery protection and monitoring |
+| `03_L59_GridFormingInverter.fbx` | Establishes standalone three-phase voltage |
+| `04_L59_DCPrechargeModule.fbx` | Controlled DC-link energization |
+| `05_L59_DCPowerDistributionBus.fbx` | Battery-side DC distribution |
+| `06_L59_ThreePhaseACBus.fbx` | Main three-phase AC bus |
+| `07_L59_BackupGenerator.fbx` | Backup rotating generator |
+| `08_L59_GeneratorStarter.fbx` | Generator starter mechanism |
+| `09_L59_GeneratorSynchronizationRelay.fbx` | Generator synchronization validation |
+| `10_L59_MainGridBreaker.fbx` | Main utility isolation breaker QG |
+| `11_L59_GeneratorBreaker.fbx` | Generator breaker QGEN |
+| `12_L59_EssentialLoadBreakerA.fbx` | Emergency lighting feeder breaker |
+| `13_L59_EssentialLoadBreakerB.fbx` | Control/instrumentation feeder breaker |
+| `14_L59_EssentialLoadBreakerC.fbx` | Critical cooling feeder breaker |
+| `15_L59_NonessentialLoadBreakerA.fbx` | Industrial motor feeder breaker |
+| `16_L59_NonessentialLoadBreakerB.fbx` | Auxiliary equipment feeder breaker |
+| `17_L59_EmergencyLightingLoad.fbx` | Emergency lighting demonstration |
+| `18_L59_CriticalCoolingLoad.fbx` | Essential cooling hardware |
+| `19_L59_IndustrialMotorLoad.fbx` | Dynamic motor load |
+| `20_L59_VoltageFrequencySensorHub.fbx` | Three-phase electrical measurements |
+| `21_L59_PowerEnergyMeter.fbx` | Real-time source and load energy measurements |
+| `22_L59_RestorationSequencer.fbx` | Black-start coordination controller |
+| `23_L59_HolographicRestorationMonitor.fbx` | Advanced restoration diagnostics |
+| `24_L59_TransparentSafetyEnclosure.fbx` | Protective generator enclosure |
+| `25_L59_Regulated5VControlSupply.fbx` | Low-voltage control supply |
+
+## Important functional distinction
+
+The approved model set contains 26 visual assets.
+
+It does not contain a separate modeled control/instrumentation load or auxiliary load appliance beyond their breaker and workstation representations.
+
+Implement these electrical loads through verified runtime modules attached to the appropriate feeder objects.
+
+Do not claim additional FBX models exist.
+
+## Additional supplied resources
+
+Inspect and reuse:
+
+- `Level59_Complete_ArtKit_Showcase.fbx`
+- `SparkLevel59ArtPlacementEditor.cs`
+- `Animation_Rigs.csv`
+- `Model_Manifest.json`
+- `README_Unity.txt`
+- Individual GLB backups
+- Level 59 assembled preview
+- Level 59 individual-model contact sheet
+
+## Asset placement rules
+
+Use all 26 individual FBX models in the playable level.
+
+Use the assembled model only as a placement reference.
+
+Do not instantiate the assembled model together with all 26 individual models as overlapping visible geometry.
+
+The model manifest specifies:
+
+- X: workstation width
+- Y: vertical direction
+- Z: front-facing controls
+- 1 art unit: 1 Unity unit at import scale 1
+
+Verify imported scale and mesh bounds.
+
+Create the root:
+
+`L59_HD_VISUAL_ART`
+
+Place all individual FBXs using their authored common coordinate system.
+
+Do not independently reposition them without validating the assembled layout.
+
+---
+
+# 4. EXACT ANIMATION PIVOT INTEGRATION
+
+Preserve the actual animation pivots supplied in `Animation_Rigs.csv`.
+
+## Mechanical pivots
+
+- Backup generator: `ANIM_GENERATOR_ROTOR`
+- Generator starter: `ANIM_STARTER_PINION`
+- Critical cooling: `ANIM_FAN_SPIN`
+- Industrial motor load: `ANIM_MOTOR_SPIN`
+
+## Breaker pivots
+
+- Main grid breaker: `ANIM_BREAKER_HANDLE`
+- Generator breaker: `ANIM_BREAKER_HANDLE`
+- Essential Load A: `ANIM_BREAKER_HANDLE`
+- Essential Load B: `ANIM_BREAKER_HANDLE`
+- Essential Load C: `ANIM_BREAKER_HANDLE`
+- Nonessential Load A: `ANIM_BREAKER_HANDLE`
+- Nonessential Load B: `ANIM_BREAKER_HANDLE`
+
+Each breaker pivot belongs to a separate FBX.
+
+Do not globally search for the first object named `ANIM_BREAKER_HANDLE` and accidentally assign every breaker to the same transform.
+
+Resolve pivots relative to their specific model roots.
+
+## Other pivots
+
+- Holographic monitor: `ANIM_MONITOR_TILT`
+- Safety enclosure: `ANIM_SAFETY_DOOR`
+
+## Critical visual requirements
+
+The generator rotor must rotate according to actual simulated generator shaft angle.
+
+The starter pinion must engage according to the starter mechanism state.
+
+The cooling fan must follow actual cooling-load operation.
+
+The industrial motor must accelerate according to its authoritative motor model.
+
+Breaker animations must follow real electrical breaker states.
+
+Keep electrical terminals stationary.
+
+Do not use visual animation as proof that the electrical bus is energized.
+
+---
+
+# 5. ELECTRICAL WIRING — W01 TO W42
+
+The approved Level 59 design requires:
+
+**42 player-created wires and 66 unique terminal anchors.**
+
+The existing art package does not include a verified exact 42-wire endpoint manifest or functional `SparkTerminal` registrations.
+
+Therefore, create the exact wiring specification during implementation.
+
+Do not fabricate an existing `Exact_Wiring.csv`.
+
+## Required wiring groups
+
+### Group A — Control power
+
+- 5 V control supply
+- Control return
+- Battery management system
+- Restoration controller
+- Sensor hub
+- Protection/interlock power
+
+### Group B — Battery and DC distribution
+
+- Battery positive
+- Battery negative
+- BMS-controlled battery output
+- DC precharge path
+- DC bus
+- Grid-forming inverter DC input
+
+### Group C — Grid-forming inverter
+
+- Inverter enable
+- Three-phase output A
+- Three-phase output B
+- Three-phase output C
+- Voltage/frequency feedback
+- Inverter protection feedback
+
+### Group D — Generator
+
+- Generator starter command
+- Starter power
+- Generator A/B/C output
+- Generator voltage feedback
+- Generator frequency/phase feedback
+- Synchronization relay
+- Generator breaker command/status
+
+### Group E — Main grid and distribution
+
+- Main grid breaker
+- AC distribution bus
+- Main utility reference
+- Main breaker auxiliary feedback
+
+### Group F — Essential loads
+
+- Emergency lighting branch
+- Control/instrumentation branch
+- Critical cooling branch
+- Associated breaker controls and status
+
+### Group G — Nonessential loads
+
+- Industrial motor feeder
+- Auxiliary equipment feeder
+- Load breaker controls
+- Load status feedback
+
+### Group H — Monitoring and safety
+
+- Power energy meter
+- Battery status
+- Generator status
+- Source availability
+- Load shedding
+- Safety enclosure feedback
+- Restoration sequence commands
+
+## Wiring requirements
+
+1. Create exactly 42 expected player wires.
+2. Create exactly 66 unique terminal IDs.
+3. Document every FROM terminal.
+4. Document every TO terminal.
+5. Register all real terminal components.
+6. Register required component IDs.
+7. Preserve player wire creation/deletion.
+8. Support reconnection and fault recovery.
+9. Validate supply and return.
+10. Validate phase A/B/C routing.
+11. Validate generator-breaker topology.
+12. Validate battery polarity.
+13. Validate precharge connections.
+14. Validate sensor/control connections.
+15. Prevent duplicate terminal IDs.
+16. Preserve fixed internal module connections separately.
+17. Keep all player sockets accessible.
+
+## Special implementation rule
+
+A 42-wire player puzzle cannot necessarily expose every internal conductor of a complete three-phase microgrid.
+
+Represent fixed internal module wiring explicitly as preinstalled connections.
+
+Do not add undocumented player wires beyond 42.
+
+The final exact wiring manifest must be validated against the actual Project Spark circuit architecture before gameplay integration.
+
+---
+
+# 6. BATTERY ENERGY STORAGE MODEL
+
+This is the initial energy source for black start.
+
+Implement or reuse a physically meaningful battery model.
+
+## Required properties
+
+- Nominal voltage
+- Open-circuit voltage
+- Terminal voltage
+- State of charge
+- Rated energy capacity
+- Available electrical energy
+- Charge current
+- Discharge current
+- Internal resistance
+- Maximum charge current
+- Maximum discharge current
+- Temperature
+- Minimum allowed SOC
+- Maximum allowed SOC
+- BMS enable status
+- Protection state
+
+## Energy model
+
+`BatteryEnergyNext = BatteryEnergyCurrent - BatteryOutputPower * DeltaTime`
+
+Use the correct sign convention.
+
+Account for internal resistance and conversion losses.
+
+For a simplified battery:
+
+`TerminalVoltage = OpenCircuitVoltage - Current * InternalResistance`
+
+with positive current defined as discharge.
+
+## Required behavior
+
+- Battery energy decreases when supplying the inverter.
+- Battery voltage responds to current draw.
+- High load causes increased battery discharge.
+- Low SOC limits available power.
+- BMS can inhibit unsafe discharge.
+- Battery cannot deliver unlimited power.
+- Battery cannot provide energy after reaching the modeled minimum usable SOC.
+
+## Initial condition
+
+Configure a documented battery starting SOC suitable for the educational scenario.
+
+The battery must have enough usable energy to perform the intended black-start sequence when the player operates correctly.
+
+Do not simply refill the battery when an objective begins.
+
+---
+
+# 7. BATTERY MANAGEMENT SYSTEM
+
+Use:
+
+`02_L59_BatteryManagementSystem.fbx`
+
+Implement:
+
+- Battery voltage monitoring
+- Current monitoring
+- SOC validity
+- Maximum discharge current
+- Minimum voltage
+- Overtemperature
+- Short-circuit protection
+- Enable/disable logic
+- Fault latching
+- Reset eligibility
+
+## BMS readiness
+
+Before black start:
+
+1. Verify battery topology.
+2. Verify battery voltage.
+3. Verify SOC.
+4. Verify discharge limits.
+5. Verify temperature limits.
+6. Verify sensor validity.
+7. Verify no critical fault.
+8. Permit the precharge sequence.
+
+A BMS READY indicator must reflect actual model state.
+
+---
+
+# 8. DC-LINK PRECHARGE
+
+Use:
+
+`04_L59_DCPrechargeModule.fbx`
+
+This is a required new Level 59 mechanic.
+
+Implement a simplified DC-link capacitor and precharge resistor/contactor system.
+
+## Required properties
+
+- DC-link capacitance
+- DC-link voltage
+- Battery voltage
+- Precharge resistance
+- Precharge current
+- Precharge contactor state
+- Main DC contactor state
+- Precharge completion threshold
+- Precharge timeout
+- Overcurrent protection
+- Precharge fault state
+
+## Basic charging model
+
+`C * dVdc/dt = I_precharge`
+
+For a simplified resistor-limited precharge path:
+
+`I_precharge = (BatteryVoltage - DCLinkVoltage) / PrechargeResistance`
+
+Use the actual modeled battery terminal voltage.
+
+## Required sequence
+
+1. Verify BMS ready.
+2. Verify main DC contactor initially open.
+3. Close precharge path.
+4. Calculate charging current.
+5. Update DC-link voltage gradually.
+6. Verify current within limits.
+7. Reach the configured precharge threshold.
+8. Close main DC contactor.
+9. Open/bypass precharge path.
+10. Declare DC link ready.
+
+Do not instantly set DC-link voltage equal to battery voltage.
+
+Do not permit inverter operation from an uncharged DC link.
+
+---
+
+# 9. GRID-FORMING INVERTER
+
+Use:
+
+`03_L59_GridFormingInverter.fbx`
+
+The inverter must create the first active AC voltage on the dead microgrid.
+
+## Required properties
+
+- DC input voltage
+- DC input current
+- DC-link voltage
+- Three-phase AC output voltage
+- Frequency
+- Phase angle
+- Output current
+- Active power
+- Reactive power
+- Apparent power
+- Power factor
+- Output impedance
+- Current limit
+- Converter efficiency
+- Temperature
+- Enable status
+- Grid-forming mode
+- Fault status
+
+## Three-phase reference
+
+For a balanced simplified output:
+
+`Va = Vpeak * sin(omega * t + theta)`
+
+`Vb = Vpeak * sin(omega * t + theta - 120 degrees)`
+
+`Vc = Vpeak * sin(omega * t + theta + 120 degrees)`
+
+Where:
+
+`omega = 2 * PI * Frequency`
+
+## Required behavior
+
+- Initially inverter OFF.
+- DC precharge must complete before enabling.
+- Inverter establishes voltage gradually.
+- Frequency stabilizes near 50 Hz.
+- Phase sequence remains correct.
+- Load connection changes actual output current.
+- Battery power draw follows inverter output power and losses.
+- Current limits constrain available load.
+- Severe faults disable unsafe operation.
+
+Do not create AC power without accounting for its DC-side energy source.
+
+---
+
+# 10. DEAD-BUS ENERGIZATION
+
+The microgrid starts completely de-energized.
+
+## Required black-start conditions
+
+- Main utility breaker open.
+- Generator breaker open.
+- Five load breakers initially open.
+- BMS ready.
+- DC link precharged.
+- Inverter ready.
+- Valid safety conditions.
+- No unexpected energized source connected to the dead bus.
+
+## Energization sequence
+
+1. Player activates BLACK START.
+2. Controller validates preconditions.
+3. Inverter begins grid-forming operation.
+4. AC bus voltage rises toward target.
+5. Frequency stabilizes near 50 Hz.
+6. Three-phase sequence is verified.
+7. Voltage and current measurements become valid.
+8. No-load stability interval begins.
+9. Bus readiness is recorded.
+
+## Objective pass requirements
+
+- Actual simulated bus voltage established.
+- Actual 50 Hz reference established.
+- Correct phase sequence.
+- Valid sensor feedback.
+- No current overload.
+- Battery discharge within BMS limits.
+- Stable observation interval completed.
+- No unresolved safety fault.
+
+The dashboard showing BUS ENERGIZED is not sufficient by itself.
+
+---
+
+# 11. ESSENTIAL LOAD RESTORATION
+
+Restore essential load branches in priority order.
+
+## Priority 1 — Emergency Lighting
+
+Use:
+
+`17_L59_EmergencyLightingLoad.fbx`
+
+Associated breaker:
+
+`12_L59_EssentialLoadBreakerA.fbx`
+
+Require:
+
+- Valid AC bus.
+- Breaker ready.
+- Load within inverter capacity.
+- Player closes breaker.
+- Real electrical load becomes energized.
+- Measured load power increases.
+- Bus remains stable.
+
+## Priority 2 — Control and Instrumentation
+
+Associated breaker:
+
+`13_L59_EssentialLoadBreakerB.fbx`
+
+The approved asset package does not include a separate control-load appliance model.
+
+Represent the electrical load through a runtime load component and appropriate workstation indicators.
+
+Require:
+
+- Emergency lighting already restored.
+- Valid bus stability.
+- Breaker closes.
+- Additional electrical load appears.
+- System remains stable.
+
+## Priority 3 — Critical Cooling
+
+Use:
+
+`18_L59_CriticalCoolingLoad.fbx`
+
+Associated breaker:
+
+`14_L59_EssentialLoadBreakerC.fbx`
+
+Require:
+
+- Previous priorities restored.
+- Cooling breaker closed.
+- Cooling system receives power.
+- Actual fan state updates.
+- Electrical power consumption measured.
+- Bus voltage/frequency remain within limits.
+
+## Essential restoration success
+
+All three essential branches must remain powered for a configured observation period.
+
+Battery SOC and discharge current must remain within allowed limits.
+
+Do not pass Objective 3 merely because all three breaker handles are visually closed.
+
+---
+
+# 12. GENERATOR STARTER AND ROTATIONAL DYNAMICS
+
+Use:
+
+- `07_L59_BackupGenerator.fbx`
+- `08_L59_GeneratorStarter.fbx`
+
+Implement real generator acceleration.
+
+## Required mechanical properties
+
+- Rotor inertia
+- Shaft angle
+- Actual RPM
+- Angular acceleration
+- Starter torque
+- Prime-mover torque
+- Electromagnetic load torque
+- Friction
+- Mechanical losses
+- Generator operating state
+
+## Required electrical properties
+
+- Starter current
+- Generator output voltage
+- Generator frequency
+- Output phase
+- Active power
+- Reactive power
+- Output current
+- Power limit
+- Protection state
+
+## Mechanical equation
+
+`J * dOmega/dt = StarterTorque + PrimeMoverTorque - GeneratorLoadTorque - FrictionTorque`
+
+Use compatible units.
+
+The generator cannot jump instantly from 0 RPM to operating speed.
+
+## Starter sequence
+
+1. Verify battery/starting power available.
+2. Verify safety guard closed.
+3. Verify generator breaker open.
+4. Engage starter.
+5. Apply bounded starter torque.
+6. Advance generator speed.
+7. Detect start threshold.
+8. Enable prime-mover operation.
+9. Disengage starter appropriately.
+10. Stabilize generator speed.
+11. Establish electrical output.
+12. Begin synchronization preparation.
+
+## Important
+
+The starter's electrical energy consumption must be accounted for.
+
+Generator mechanical energy must come from an explicitly modeled prime-mover energy source.
+
+Do not create an unlimited generator output without documented source capacity.
+
+---
+
+# 13. GENERATOR SYNCHRONIZATION
+
+Reuse verified Level 57 synchronization systems wherever possible.
+
+Use:
+
+`09_L59_GeneratorSynchronizationRelay.fbx`
+
+## Required measurements
+
+- AC bus voltage
+- Generator voltage
+- AC bus frequency
+- Generator frequency
+- Frequency difference
+- Bus phase angle
+- Generator phase angle
+- Phase-angle difference
+- Phase-sequence validity
+- Synchronization-ready status
+
+## Suggested tolerances
+
+Use configurable educational limits:
+
+- Frequency difference within ±0.2 Hz.
+- Phase difference within ±5°.
+- Voltage mismatch within ±5%.
+- Correct A/B/C phase sequence.
+
+Validate these against the chosen simulator timestep and generator dynamics.
+
+## Required behavior
+
+The player adjusts generator speed/voltage controls or enables automatic synchronization.
+
+The controller gradually reduces frequency and phase mismatch.
+
+Do not directly force generator phase equal to bus phase.
+
+## Closing conditions
+
+Allow generator breaker QGEN to close only when:
+
+1. Generator running.
+2. Valid output voltage.
+3. Valid AC bus reference.
+4. Valid frequency measurements.
+5. Frequency mismatch within tolerance.
+6. Phase mismatch within tolerance.
+7. Voltage mismatch within tolerance.
+8. Correct phase sequence.
+9. Stable synchronization dwell satisfied.
+10. No protection fault.
+11. Generator breaker ready.
+
+## Electrical connection
+
+When QGEN closes, the generator must actually join the bus network model.
+
+Do not merely animate the breaker handle.
+
+---
+
+# 14. GENERATOR-BATTERY LOAD SHARING
+
+Once the generator is synchronized:
+
+- The generator may supply a significant part of the load.
+- The battery inverter may continue supporting the bus.
+- The BMS and inverter must remain within limits.
+- Source contributions must arise from modeled controls and network behavior.
+
+## Required measurements
+
+- Generator active power
+- Generator reactive power
+- Inverter active power
+- Inverter reactive power
+- Battery discharge power
+- Total load power
+- Bus frequency
+- Bus voltage
+- Source current limits
+- Generator loading percentage
+
+## Control architecture
+
+Use a compatible droop-control or supervisory power-sharing strategy.
+
+Do not arbitrarily assign all power to the generator without accounting for transients and source limits.
+
+Avoid conflicting independent grid-forming voltage/frequency controllers.
+
+Use a coherent shared AC bus solution.
+
+---
+
+# 15. FULL LOAD RESTORATION
+
+After generator synchronization, restore the remaining two loads.
+
+## Priority 4 — Industrial Motor
+
+Use:
+
+`19_L59_IndustrialMotorLoad.fbx`
+
+Associated breaker:
+
+`15_L59_NonessentialLoadBreakerA.fbx`
+
+## Required properties
+
+- Motor inertia
+- Motor speed
+- Starting current
+- Load torque
+- Power factor
+- Electrical power
+- Mechanical power
+- Current limit
+- Running state
+
+## Motor startup
+
+The player closes the motor feeder breaker only when sufficient electrical capacity is available.
+
+Calculate actual starting current and its effect on the bus.
+
+Support soft-start or controlled acceleration if the existing project provides it.
+
+## Priority 5 — Auxiliary Equipment
+
+Associated breaker:
+
+`16_L59_NonessentialLoadBreakerB.fbx`
+
+Implement the electrical load using a compatible runtime model.
+
+The approved art pack does not contain a dedicated auxiliary appliance FBX.
+
+## Full restoration requirements
+
+- All five load branches powered.
+- Generator synchronized.
+- Bus voltage within limits.
+- Frequency within limits.
+- Source currents safe.
+- Battery reserve sufficient.
+- No active protection fault.
+- Stable observation interval completed.
+
+---
+
+# 16. COLD-LOAD PICKUP AND INRUSH
+
+Implement realistic simplified load transients.
+
+## Required effects
+
+- Motor starting current
+- DC-link charging demand
+- Temporary load pickup
+- Source voltage sag
+- Frequency response
+- Inverter current limiting
+- Generator acceleration/torque response
+
+Do not simply increase a decorative CURRENT indicator when a motor starts.
+
+Actual source current and power must change.
+
+## Player challenge
+
+Starting high-demand loads too early should cause a meaningful, recoverable electrical problem.
+
+Possible responses:
+
+- Inverter current limiting.
+- Bus voltage sag.
+- Frequency deviation.
+- Nonessential load rejection.
+- Protection trip.
+- Controlled blackout if available capacity is insufficient.
+
+Use safe simulated operating limits.
+
+Do not make arbitrary penalties unrelated to real electrical demand.
+
+---
+
+# 17. INTELLIGENT LOAD SHEDDING
+
+This is a major Level 59 advanced mechanic.
+
+The restoration controller must distinguish essential and nonessential loads.
+
+## Priority policy
+
+Highest priority:
+
+1. Emergency lighting
+2. Control/instrumentation
+3. Critical cooling
+
+Lower priority:
+
+4. Industrial motor
+5. Auxiliary equipment
+
+When power capacity becomes insufficient, shed lower-priority loads first.
+
+The shedding order among nonessential loads must be configurable and consistent with their actual demands.
+
+## Required behavior
+
+- Monitor total electrical demand.
+- Monitor inverter power capacity.
+- Monitor generator availability.
+- Monitor battery SOC.
+- Monitor battery current.
+- Monitor bus voltage/frequency.
+- Detect insufficient source capacity.
+- Open appropriate nonessential breakers.
+- Preserve essential loads when physically possible.
+- Record shedding events.
+
+## Important
+
+Do not assume essential loads can always remain powered.
+
+If the remaining power source truly cannot support them, the simulator must report an unavoidable loss-of-supply condition.
+
+Do not fabricate energy to preserve the objectives.
+
+---
+
+# 18. GENERATOR FAILURE AND RECOVERY
+
+This is Objective 6's central challenge.
+
+## Initial state
+
+Before the fault:
+
+- Generator synchronized.
+- Generator breaker closed.
+- Full system restored.
+- All essential loads powered.
+- Nonessential loads powered when capacity permits.
+- Battery reserve above configured emergency threshold.
+- Protection system ready.
+
+## Fault injection
+
+The player activates:
+
+`GENERATOR FAILURE TEST`
+
+Use the approved gameplay fault controller.
+
+Simulate loss of generator prime-mover power or an equivalent explicitly modeled failure.
+
+## Required physical response
+
+1. Generator mechanical/electrical power becomes unavailable or declines according to the fault model.
+2. Controller detects generator output abnormality.
+3. Fault is identified and latched.
+4. Generator breaker opens under an appropriate protection sequence.
+5. Remaining battery inverter assumes the required supply contribution.
+6. Nonessential loads are shed when needed.
+7. Essential loads remain energized if available battery/inverter capacity supports them.
+8. Bus voltage and frequency are monitored continuously.
+9. Fault and shedding histories are recorded.
+
+Do not simply toggle the generator display to OFF while retaining its electrical output.
+
+## Player repair/recovery
+
+The player must:
+
+1. Confirm a safe generator state.
+2. Restore the simulated generator failure condition.
+3. Explicitly reset the fault.
+4. Restart the generator.
+5. Re-establish valid generator voltage.
+6. Reacquire frequency and phase reference.
+7. Synchronize with the still-running island bus.
+8. Close QGEN safely.
+9. Restore generator power contribution.
+10. Reconnect nonessential loads in a safe order.
+11. Verify battery reserve.
+12. Verify stable full-load operation.
+13. Complete final certification.
+
+Restoring the generator fault condition alone must not automatically complete Level 59.
+
+---
+
+# 19. SAFETY INTERLOCKS AND PROTECTION
+
+Implement protection for:
+
+- Safety enclosure open
+- Incorrect control supply
+- Missing electrical return
+- Battery undervoltage
+- Battery overcurrent
+- Battery insufficient SOC
+- BMS fault
+- DC-link precharge failure
+- DC-link overvoltage
+- DC-link undervoltage
+- Inverter overcurrent
+- Inverter overheating
+- AC bus undervoltage
+- AC bus overvoltage
+- Overfrequency
+- Underfrequency
+- Incorrect phase sequence
+- Generator failed start
+- Starter overcurrent
+- Generator overspeed
+- Generator undervoltage
+- Generator synchronization mismatch
+- Unsafe generator-breaker closing
+- Source overload
+- Motor starting overload
+- Critical load loss
+- Incorrect load restoration order
+- Excessive battery discharge
+- Unexpected grid-breaker closing
+- Invalid voltage/frequency feedback
+- Invalid numerical state
+- Unexpected wiring topology changes
+
+## Critical fault response
+
+1. Identify exact fault reason.
+2. Record current source/load state.
+3. Reject unsafe commands.
+4. Open appropriate breakers.
+5. Shed nonessential loads if required.
+6. Preserve essential service when physically supportable.
+7. Maintain battery and inverter protection.
+8. Latch the fault.
+9. Prevent uncontrolled automatic restart.
+10. Require repair.
+11. Require explicit reset.
+12. Revalidate electrical references.
+13. Require synchronization before reconnection.
+14. Record recovery history.
+
+Do not clear faults automatically when a disconnected component becomes available.
+
+---
+
+# 20. SIX AUTHORITATIVE LEVEL OBJECTIVES
+
+Integrate all six objectives into the actual Project Spark evaluator.
+
+## OBJECTIVE 1 — BUILD THE BLACK-START NETWORK
+
+Player connects all 42 required player wires.
+
+Verify:
+
+1. All 66 unique terminals registered.
+2. Valid 5 V control power.
+3. Correct battery polarity.
+4. BMS connected.
+5. DC precharge connected.
+6. DC bus valid.
+7. Grid-forming inverter connected.
+8. Three-phase AC bus connected.
+9. Generator and starter connected.
+10. Synchronization relay connected.
+11. Main grid breaker connected.
+12. Generator breaker connected.
+13. All five load breakers connected.
+14. Voltage/frequency sensors connected.
+15. Power energy meter connected.
+16. Restoration controller connected.
+17. Safety feedback valid.
+18. No source short.
+19. No unsafe component state.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — ENERGIZE THE DEAD BUS
+
+Player performs black start.
+
+Require:
+
+1. Main utility unavailable.
+2. Main grid breaker open.
+3. Load breakers initially open.
+4. Battery BMS ready.
+5. Battery SOC sufficient.
+6. DC precharge begins.
+7. DC-link voltage rises physically.
+8. Precharge completes safely.
+9. Grid-forming inverter enables.
+10. Three-phase voltage established.
+11. Frequency stabilizes near 50 Hz.
+12. Phase sequence valid.
+13. Bus remains stable for the required interval.
+14. No critical fault.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — RESTORE ESSENTIAL LOADS
+
+Require:
+
+1. Stable AC bus.
+2. Emergency lighting feeder closes.
+3. Lighting receives actual electrical power.
+4. Control/instrumentation feeder closes.
+5. Control load becomes powered.
+6. Cooling feeder closes.
+7. Cooling receives electrical power.
+8. Restoration order valid.
+9. Inverter current remains safe.
+10. Battery SOC remains above minimum.
+11. Bus frequency remains stable.
+12. Bus voltage remains stable.
+13. Essential loads remain powered for the observation interval.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — START AND SYNCHRONIZE GENERATOR
+
+Require:
+
+1. Essential loads restored.
+2. Starter receives valid power.
+3. Generator physically accelerates.
+4. Actual operating speed achieved.
+5. Generator voltage established.
+6. Generator frequency valid.
+7. Generator phase sequence correct.
+8. Synchronization relay measures phase difference.
+9. Frequency mismatch within tolerance.
+10. Voltage mismatch within tolerance.
+11. Phase mismatch within tolerance.
+12. Stable synchronization readiness.
+13. Generator breaker closes safely.
+14. Generator joins the AC bus.
+15. Power contribution measured.
+16. No unsafe circulating current.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — COMPLETE FULL LOAD RESTORATION
+
+Require:
+
+1. Generator synchronized.
+2. All three essential loads powered.
+3. Available source capacity sufficient.
+4. Industrial motor feeder closes.
+5. Motor starting transient simulated.
+6. Motor acceleration succeeds.
+7. Bus remains stable.
+8. Auxiliary feeder closes.
+9. Auxiliary load powered.
+10. All five load branches energized.
+11. Generator loading within limits.
+12. Inverter loading within limits.
+13. Battery reserve sufficient.
+14. No unresolved fault.
+15. Full-load observation interval completed.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — GENERATOR FAILURE AND RECOVERY
+
+Player performs the designated generator-failure test.
+
+Require:
+
+1. Valid previously certified full-restoration state.
+2. Generator failure actually occurs.
+3. Generator electrical contribution decreases or becomes invalid.
+4. Controller detects the failure.
+5. Fault becomes latched.
+6. Generator breaker isolates the failed generator.
+7. Battery inverter assumes appropriate support.
+8. Nonessential loads are shed if required.
+9. Essential loads remain powered when physically supportable.
+10. Safe island operation is verified.
+11. Player restores the generator fault condition.
+12. Player explicitly resets the fault.
+13. Generator restarts physically.
+14. Generator voltage/frequency recover.
+15. Synchronization reference is reacquired.
+16. Generator synchronizes to the live bus.
+17. Generator breaker closes safely.
+18. Generator resumes measured power contribution.
+19. Shed loads are restored in a safe order.
+20. Full system reaches stable operation.
+21. No unresolved critical fault remains.
+22. Final certification succeeds.
+
+Only then award Objective 6.
+
+## Critical authoritative evaluation
+
+Do not implement a local stage counter as the only completion system.
+
+Inspect:
+
+- `SparkLevelEvaluator`
+- `SparkLevelDefinition`
+- `LevelGamePlayManager`
+
+Use compatible historical objective recording.
+
+Objectives 1–5 must remain certified during the deliberate generator-failure test.
+
+However, Objective 6 must remain incomplete until the player successfully demonstrates the full recovery sequence.
+
+Do not fabricate voltage measurements, generator phase, battery SOC, load power or success flags.
+
+**Final authoritative result must be 6/6.**
+
+---
+
+# 21. RECOMMENDED UNITY C# SYSTEMS
+
+Inspect the actual project codebase before creating new classes.
+
+Suggested responsibilities:
+
+- `SparkLevel59Coordinator.cs`
+- `SparkLevel59BatteryModel.cs`
+- `SparkLevel59BatteryManagement.cs`
+- `SparkLevel59DCPrecharge.cs`
+- `SparkLevel59GridFormingInverter.cs`
+- `SparkLevel59ThreePhaseBus.cs`
+- `SparkLevel59GeneratorDynamics.cs`
+- `SparkLevel59GeneratorStarter.cs`
+- `SparkLevel59SynchronizationController.cs`
+- `SparkLevel59CircuitBreaker.cs`
+- `SparkLevel59EssentialLoad.cs`
+- `SparkLevel59MotorLoad.cs`
+- `SparkLevel59ColdLoadPickup.cs`
+- `SparkLevel59PowerSharing.cs`
+- `SparkLevel59LoadRestoration.cs`
+- `SparkLevel59LoadShedding.cs`
+- `SparkLevel59EnergyMeter.cs`
+- `SparkLevel59SafetyController.cs`
+- `SparkLevel59ObjectiveTracker.cs`
+- `SparkLevel59Dashboard.cs`
+- `SparkLevel59Interaction.cs`
+- `SparkLevel59VisualRig.cs`
+
+These are suggested responsibilities, not claims that those classes already exist.
+
+Reuse compatible existing Project Spark systems instead of duplicating them.
+
+## Runtime simulation update sequence
+
+1. Validate topology and source availability.
+2. Read player commands.
+3. Validate battery and BMS state.
+4. Update DC precharge and DC-link state.
+5. Update inverter control state.
+6. Update generator starter and mechanical dynamics.
+7. Advance generator phase/frequency state.
+8. Update synchronization and breaker interlocks.
+9. Solve the active AC network.
+10. Calculate individual source powers.
+11. Calculate load demand and cold-load pickup.
+12. Update source load sharing.
+13. Integrate battery energy consumption.
+14. Update voltage/frequency measurements.
+15. Evaluate load shedding and protection.
+16. Update breaker states and network topology.
+17. Record operational histories.
+18. Evaluate safety and fault recovery.
+19. Evaluate authoritative objectives.
+20. Update dashboard and visual animations.
+
+Use a consistent simulation timestep.
+
+Avoid solving the same physical interval twice.
+
+Do not recursively invoke the electrical solver from its own completion callback.
+
+---
+
+# 22. AAA VISUAL IMPLEMENTATION
+
+Create a Level 59 visual-only adapter.
+
+Use the exact supplied animation pivots.
+
+## Required animations
+
+- Generator rotor spin
+- Starter pinion engagement
+- Main grid breaker opening/closing
+- Generator breaker opening/closing
+- Essential load breaker A
+- Essential load breaker B
+- Essential load breaker C
+- Nonessential load breaker A
+- Nonessential load breaker B
+- Critical cooling fan rotation
+- Industrial motor rotation
+- Holographic monitor movement
+- Safety enclosure door
+
+## Visual state transitions
+
+### Initial blackout
+
+- AC bus dark.
+- Generator stopped.
+- Main grid unavailable.
+- Inverter disabled.
+- Load indicators OFF.
+- Battery monitoring active.
+
+### DC precharge
+
+- Precharge module active.
+- DC-link indicator rises according to actual voltage.
+- Inverter remains inhibited until precharge valid.
+
+### Black-start energized
+
+- Inverter status active.
+- Three-phase bus indicators illuminate.
+- Frequency and voltage display actual values.
+
+### Essential restoration
+
+- Emergency lighting turns on.
+- Control/instrumentation indicators become active.
+- Cooling fan begins rotating according to load state.
+
+### Generator startup
+
+- Starter engages.
+- Generator shaft accelerates.
+- Synchronization monitor begins measuring phase error.
+
+### Full restoration
+
+- Generator breaker closes.
+- Generator contributes actual electrical power.
+- Industrial motor accelerates.
+- Auxiliary feeder energizes.
+- Restoration dashboard reports valid operating state.
+
+### Generator failure
+
+- Generator output abnormal.
+- Protection activates.
+- Generator breaker opens.
+- Nonessential load indicators switch off if shed.
+- Essential loads remain powered only when the electrical model supports them.
+
+## Critical visual rule
+
+The art must follow authoritative simulation.
+
+Do not create a fake blackout or restoration solely by changing material emission.
+
+The actual network state must determine which loads appear powered.
+
+Do not rotate the generator at a decorative preset RPM.
+
+Do not illuminate the synchronizer READY state unless measured conditions support it.
+
+---
+
+# 23. LIVE BLACK-START DASHBOARD
+
+Use:
+
+`22_L59_RestorationSequencer`
+
+`23_L59_HolographicRestorationMonitor`
+
+Create live TextMeshPro displays and dynamic diagnostic graphics.
+
+## Required measurements
+
+- MAIN POWER
+- UTILITY GRID STATUS
+- BLACK-START MODE
+- BATTERY SOC
+- BATTERY VOLTAGE
+- BATTERY CURRENT
+- BATTERY ENERGY
+- BMS STATUS
+- DC-LINK VOLTAGE
+- PRECHARGE CURRENT
+- PRECHARGE STATUS
+- INVERTER STATUS
+- INVERTER OUTPUT VOLTAGE
+- INVERTER OUTPUT CURRENT
+- INVERTER ACTIVE POWER
+- AC BUS VOLTAGE
+- AC BUS FREQUENCY
+- PHASE A/B/C STATUS
+- GENERATOR RPM
+- GENERATOR VOLTAGE
+- GENERATOR FREQUENCY
+- GENERATOR PHASE DIFFERENCE
+- GENERATOR ACTIVE POWER
+- GENERATOR REACTIVE POWER
+- SYNCHRONIZATION STATUS
+- MAIN GRID BREAKER STATE
+- GENERATOR BREAKER STATE
+- ESSENTIAL LOAD A STATUS
+- ESSENTIAL LOAD B STATUS
+- ESSENTIAL LOAD C STATUS
+- NONESSENTIAL LOAD A STATUS
+- NONESSENTIAL LOAD B STATUS
+- TOTAL ELECTRICAL LOAD
+- SOURCE CAPACITY
+- LOAD SHEDDING STATUS
+- PROTECTION STATUS
+- FAULT HISTORY
+- OBJECTIVES X/6
+
+## Player controls
+
+- MAIN POWER
+- CHECK BATTERY
+- ENABLE BMS
+- PRECHARGE
+- ENABLE INVERTER
+- ENERGIZE BUS
+- RESTORE LIGHTING
+- RESTORE CONTROL LOAD
+- RESTORE COOLING
+- START GENERATOR
+- STOP GENERATOR
+- SYNC CHECK
+- AUTO SYNCHRONIZE
+- CLOSE GENERATOR BREAKER
+- RESTORE MOTOR LOAD
+- RESTORE AUXILIARY LOAD
+- AUTO LOAD SHED
+- GENERATOR FAILURE TEST
+- RESET FAULT
+- RESTART GENERATOR
+- FINAL CERTIFY
+
+All controls must have meaningful gameplay effects.
+
+Do not create decorative buttons that merely change status labels.
+
+---
+
+# 24. UNITY EDITOR LEVEL CREATOR
+
+Create the menu command:
+
+`Tools/Project Spark/Levels/Create Level 59`
+
+The Editor creator must safely generate or update:
+
+- `Level_59.asset`
+- `Level_59_Layout.prefab`
+- Level-specific simulation configuration assets
+- Electrical wiring manifests
+- Component and terminal binding manifests
+- Objective definitions
+- Validation report
+
+## Required Editor operations
+
+1. Inspect existing Project Spark editor infrastructure.
+2. Locate all 26 FBX models.
+3. Validate model paths.
+4. Validate import scale.
+5. Create/update Level 59 definition.
+6. Set Level ID to `level_59`.
+7. Configure display name and description.
+8. Create six authoritative objectives.
+9. Create/update Level 59 layout.
+10. Instantiate all 26 individual FBXs.
+11. Preserve common-origin placement.
+12. Configure battery storage.
+13. Configure BMS.
+14. Configure grid-forming inverter.
+15. Configure DC precharge.
+16. Configure DC distribution bus.
+17. Configure three-phase AC bus.
+18. Configure generator dynamics.
+19. Configure generator starter.
+20. Configure synchronization relay.
+21. Configure main grid breaker.
+22. Configure generator breaker.
+23. Configure three essential load breakers.
+24. Configure two nonessential load breakers.
+25. Configure emergency lighting load.
+26. Configure control/instrumentation runtime load.
+27. Configure critical cooling load.
+28. Configure industrial motor load.
+29. Configure auxiliary runtime load.
+30. Configure voltage/frequency sensors.
+31. Configure energy meter.
+32. Configure restoration sequencer.
+33. Configure holographic monitor.
+34. Configure safety enclosure.
+35. Register 66 real terminal anchors.
+36. Configure 42 player-wire declarations.
+37. Register fixed and runtime component IDs.
+38. Register fixed and runtime terminal IDs.
+39. Configure internal module connections.
+40. Configure battery/BMS parameters.
+41. Configure DC precharge.
+42. Configure inverter voltage/frequency limits.
+43. Configure generator startup parameters.
+44. Configure synchronization tolerances.
+45. Configure source power sharing.
+46. Configure cold-load pickup.
+47. Configure load shedding.
+48. Configure safety protection.
+49. Assign animation pivots.
+50. Create live TextMeshPro display surfaces.
+51. Configure gameplay buttons.
+52. Bind six authoritative objectives.
+53. Detect missing/duplicate references.
+54. Detect conflicting simulation ownership.
+55. Generate detailed creation diagnostics.
+56. Save definition and prefab.
+
+## Editor reliability
+
+Reuse compatible functionality from:
+
+`SparkLevel59ArtPlacementEditor.cs`
+
+The existing art placement helper does not create the complete playable level.
+
+Extend it safely or create a separate full level builder.
+
+Use actual `AssetDatabase` paths.
+
+Do not invent asset GUIDs.
+
+Use `PrefabUtility`, `SerializedObject`, Undo and appropriate asset-saving operations.
+
+Make the creator safe to rerun.
+
+Prevent duplicate model instances, components, terminals and controllers.
+
+Do not silently destroy unrelated user modifications.
+
+---
+
+# 25. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 42 WIRES → VERIFY 66 TERMINALS → CHECK BATTERY SOC → ENABLE BMS → VERIFY MAIN GRID OPEN → PRECHARGE DC LINK → ENABLE GRID-FORMING INVERTER → ENERGIZE DEAD AC BUS → ESTABLISH 50 HZ → RESTORE EMERGENCY LIGHTING → RESTORE CONTROL/INSTRUMENTATION → RESTORE CRITICAL COOLING → START BACKUP GENERATOR → ACCELERATE GENERATOR → MEASURE VOLTAGE/FREQUENCY/PHASE → SYNCHRONIZE → CLOSE GENERATOR BREAKER → ESTABLISH POWER SHARING → RESTORE MOTOR LOAD → RESTORE AUXILIARY LOAD → VERIFY FULL RESTORATION → SIMULATE GENERATOR FAILURE → ISOLATE GENERATOR → SHED NONESSENTIAL LOADS → KEEP ESSENTIAL LOADS POWERED → REPAIR GENERATOR → RESET FAULT → RESTART GENERATOR → RESYNCHRONIZE → RECONNECT → RESTORE ALL LOADS → FINAL CERTIFICATION → 6/6 COMPLETE**
+
+## Suggested player-facing messages
+
+- `BUILD THE BLACK-START NETWORK`
+- `CONNECT ALL 42 WIRES`
+- `VERIFY BATTERY HEALTH`
+- `BATTERY MANAGEMENT READY`
+- `MAIN GRID UNAVAILABLE`
+- `BEGIN DC-LINK PRECHARGE`
+- `DC LINK CHARGING`
+- `PRECHARGE COMPLETE`
+- `ENABLE GRID-FORMING INVERTER`
+- `ENERGIZING DEAD AC BUS`
+- `50 HZ REFERENCE ESTABLISHED`
+- `RESTORE EMERGENCY LIGHTING`
+- `RESTORE CONTROL AND INSTRUMENTATION`
+- `RESTORE CRITICAL COOLING`
+- `ESSENTIAL LOADS ONLINE`
+- `START BACKUP GENERATOR`
+- `GENERATOR ACCELERATING`
+- `GENERATOR VOLTAGE READY`
+- `MATCH FREQUENCY AND PHASE`
+- `SYNCHRONIZATION READY`
+- `CLOSE GENERATOR BREAKER`
+- `GENERATOR CONNECTED`
+- `RESTORE INDUSTRIAL MOTOR`
+- `RESTORE AUXILIARY EQUIPMENT`
+- `FULL POWER RESTORED`
+- `BEGIN GENERATOR FAILURE TEST`
+- `GENERATOR OUTPUT LOST`
+- `GENERATOR BREAKER OPEN`
+- `NONESSENTIAL LOAD SHEDDING`
+- `ESSENTIAL SERVICES MAINTAINED`
+- `RESTORE GENERATOR`
+- `RESET LATCHED FAULT`
+- `RESTART AND RESYNCHRONIZE`
+- `RESTORE FULL LOAD`
+- `FINAL RESTORATION CERTIFICATION`
+- `LEVEL 59 COMPLETE`
+
+---
+
+# 26. TESTING AND DIAGNOSTICS
+
+Implement exact diagnostic reporting for:
+
+- Incorrect W01–W42 wiring
+- Missing terminal IDs
+- Duplicate bindings
+- Invalid control supply
+- Missing return
+- Incorrect battery polarity
+- BMS not ready
+- Battery SOC too low
+- Battery overcurrent
+- Battery energy inconsistency
+- DC precharge not starting
+- DC-link voltage not increasing
+- Precharge timeout
+- Inverter enabled before precharge
+- AC bus failing to energize
+- Incorrect phase sequence
+- Frequency not stabilizing
+- Source power exceeding input energy
+- Essential load restoration order incorrect
+- Excessive inverter current
+- Generator starter failure
+- Generator RPM not increasing
+- Generator voltage invalid
+- Generator frequency invalid
+- Phase difference not converging
+- Unsafe generator breaker closure
+- Source power-sharing instability
+- Industrial motor inrush excessive
+- Auxiliary load exceeding capacity
+- Battery reserve insufficient
+- Load shedding not activating
+- Generator failure not detected
+- Generator breaker failing to isolate
+- Essential load lost unexpectedly
+- Fault reset before repair
+- Generator failing to resynchronize
+- Historical objectives being erased
+- Manager stuck at 0/6 or 5/6
+- Restart/reload problems
+- Regressions in earlier levels
+
+## Required tests
+
+1. Correct 42-wire topology.
+2. All 66 terminals registered.
+3. Initial main grid unavailable.
+4. Main grid breaker open.
+5. Battery BMS ready.
+6. Battery energy finite and valid.
+7. DC precharge current calculated.
+8. DC-link voltage rises gradually.
+9. Precharge completes.
+10. Inverter starts only after precharge.
+11. Three-phase bus energizes.
+12. Frequency stabilizes at 50 Hz.
+13. Correct phase sequence verified.
+14. Emergency lighting restored.
+15. Control/instrumentation load restored.
+16. Critical cooling restored.
+17. Essential load power measured.
+18. Generator starter engages.
+19. Generator accelerates physically.
+20. Generator electrical output becomes valid.
+21. Frequency and phase mismatch measured.
+22. Synchronization converges.
+23. Unsafe breaker closing rejected.
+24. Safe generator breaker closing succeeds.
+25. Generator contributes real electrical power.
+26. Source load sharing remains stable.
+27. Industrial motor starts with modeled inrush.
+28. Auxiliary load restores safely.
+29. All five loads remain powered.
+30. Generator failure changes actual electrical output.
+31. Failure detected.
+32. Generator isolated.
+33. Nonessential load shedding functions.
+34. Essential services remain supplied when physically possible.
+35. Generator fault restored.
+36. Explicit reset succeeds.
+37. Generator restarts.
+38. Resynchronization succeeds.
+39. Generator reconnects safely.
+40. All required loads restored.
+41. Final certification succeeds.
+42. Actual manager reaches 6/6.
+43. Level progression succeeds.
+44. Levels 1–58 remain unaffected.
+
+Only report tests as passed when actually executed.
+
+---
+
+# 27. REQUIRED DOWNLOADABLE DELIVERABLES
+
+Create a complete Level 59 Unity implementation ZIP containing:
+
+- Full Level 59 runtime C# scripts
+- Battery energy model
+- Battery management system
+- DC-link precharge
+- Grid-forming inverter
+- Three-phase AC bus integration
+- Generator mechanical dynamics
+- Generator starter controller
+- Generator electrical model
+- Synchronization controller
+- Main/grid breaker integration
+- Generator breaker integration
+- Five load breaker controllers
+- Emergency lighting load
+- Control/instrumentation runtime load
+- Critical cooling load
+- Industrial motor load
+- Auxiliary runtime load
+- Cold-load pickup system
+- Source power sharing
+- Load restoration sequencer
+- Intelligent load shedding
+- Generator failure detection
+- Safety and fault recovery
+- Six-objective evaluator integration
+- Unity Editor Level 59 creator
+- Level definition creator or asset
+- Level layout prefab creator
+- Exact W01–W42 wiring manifest
+- 66-terminal binding manifest
+- Component binding manifest
+- Animation pivot mappings
+- Battery configuration
+- Precharge configuration
+- Generator configuration
+- Synchronization configuration
+- Load priority configuration
+- Protection configuration
+- Inspector setup guide
+- Player gameplay walkthrough
+- Objective verification checklist
+- Diagnostics and troubleshooting guide
+
+Reuse:
+
+`ProjectSpark_Level59_HD_AAA_Models.zip`
+
+Do not regenerate the approved 26-model collection unless a specific compatibility issue requires it.
+
+Only link files that have actually been created and verified.
+
+Do not claim Unity compilation, Play Mode success or level completion without performing those tests.
+
+---
+
+# 28. FINAL EXECUTION REQUIREMENTS
+
+**IMPLEMENT LEVEL 59 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect my actual Project Spark Unity codebase and Level 59 model package.
+
+Then:
+
+1. Reuse compatible existing electrical infrastructure.
+2. Integrate all 26 individual FBX models.
+3. Finalize exactly 42 player wires.
+4. Create exactly 66 functional terminal anchors.
+5. Implement finite battery energy storage.
+6. Implement realistic BMS monitoring and protection.
+7. Implement DC-link precharge.
+8. Implement genuine grid-forming inverter behavior.
+9. Implement three-phase dead-bus energization.
+10. Implement essential load restoration.
+11. Implement generator starter dynamics.
+12. Implement physically meaningful generator acceleration.
+13. Implement generator AC voltage/frequency output.
+14. Implement PLL or compatible generator synchronization.
+15. Implement safe generator breaker closure.
+16. Implement source power sharing.
+17. Implement industrial motor starting demand.
+18. Implement full five-load restoration.
+19. Implement battery reserve monitoring.
+20. Implement intelligent nonessential load shedding.
+21. Implement generator-failure detection.
+22. Implement protected generator isolation.
+23. Implement safe battery-supported island operation.
+24. Implement generator repair, reset and restart.
+25. Implement final resynchronization.
+26. Integrate six authoritative objectives.
+27. Create the Unity Editor Level 59 creator.
+28. Connect live dashboard and art animations.
+29. Implement complete diagnostics.
+30. Execute all feasible tests.
+31. Package and verify actual deliverables.
+
+Do not ask for approval of the already-approved Level 59 concept.
+
+Do not fabricate battery energy, generator RPM, electrical voltage, load current, synchronization results, protection events or objective completion.
+
+If a Project Spark API cannot be verified, implement safely independent functionality and clearly identify the exact missing integration dependency.
+
+---
+
+# 29. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect all 42 required wires.
+2. Verify all 66 functional terminals.
+3. Inspect battery and BMS readiness.
+4. Precharge the inverter DC link.
+5. Energize a completely dead three-phase bus.
+6. Establish stable 50 Hz operation.
+7. Restore emergency lighting.
+8. Restore control and instrumentation.
+9. Restore critical cooling.
+10. Start the backup generator.
+11. Observe real generator acceleration.
+12. Measure frequency, voltage and phase difference.
+13. Synchronize the generator with the active bus.
+14. Close the generator breaker safely.
+15. Establish valid source power sharing.
+16. Restore the industrial motor.
+17. Restore auxiliary equipment.
+18. Verify all five loads operating safely.
+19. Simulate generator power loss.
+20. Detect the failure and isolate the generator.
+21. Shed nonessential loads when necessary.
+22. Maintain essential loads using available battery power.
+23. Repair and explicitly reset the generator fault.
+24. Restart and resynchronize the generator.
+25. Reconnect the generator safely.
+26. Restore all required loads.
+27. Complete final black-start restoration certification.
+28. Finish all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 59.**
+
+The player must learn genuine black-start operation, battery energy management, DC-link precharge, generator synchronization, sequential load recovery, power sharing and emergency load shedding through observable electrical and mechanical simulation—not predetermined animations, fake measurements or artificial success flags.
+
+**FINAL GOAL: A COMPLETE, POLISHED, AAA-QUALITY, UNITY-READY AND ACTUALLY PLAYABLE LEVEL 59 — BRING BACK THE POWER.**

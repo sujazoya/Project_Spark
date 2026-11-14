@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_61_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_61
+  levelTitle: Clean the Wave
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the power-quality cell
+    explanation: Connect the control rails, three phases, nonlinear loads and CT
+      feedback. Install W50 last.
+    caption: "50 WIRES  \u2022  78 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.61}
+      label: 5 V
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.61, y: 0.61}
+      label: ABC NETWORK
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.61}
+      label: CT FEEDBACK
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.61}
+      - {x: 0.43, y: 0.61}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.61, y: 0.61}
+      - {x: 0.75, y: 0.61}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 02 / Measure distortion
+    explanation: Energize, calibrate, enable loads and lock the PLL. Record the baseline
+      source current and spectrum.
+    caption: "5TH  \u2022  7TH  \u2022  11TH  \u2022  13TH"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.61}
+      label: WAVEFORM
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.61, y: 0.61}
+      label: SPECTRUM
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.61}
+      label: BASELINE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.61}
+      - {x: 0.43, y: 0.61}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.61, y: 0.61}
+      - {x: 0.75, y: 0.61}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 03 / Compensate and test
+    explanation: Enable and tune current cancellation. Switch the capacitor bank
+      and apply the industrial load step.
+    caption: "THD < 5%  \u2022  DPF \u2265 0.98"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.61}
+      label: CANCEL
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.61, y: 0.61}
+      label: CORRECT
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.61}
+      label: STEP LOAD
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.61}
+      - {x: 0.43, y: 0.61}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.61, y: 0.61}
+      - {x: 0.75, y: 0.61}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 04 / Repair and certify
+    explanation: Disconnect W50. Reconnect, reset, calibrate and reacquire PLL. Verify
+      low THD and corrected power factor before certifying.
+    caption: "W50  \u2022  FILTER CT FEEDBACK"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.61}
+      label: SIGNAL LOST
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.61, y: 0.61}
+      label: RECOVER
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.61}
+      label: CERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.61}
+      - {x: 0.43, y: 0.61}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.61, y: 0.61}
+      - {x: 0.75, y: 0.61}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}

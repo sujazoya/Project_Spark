@@ -1,0 +1,2715 @@
+# PROJECT SPARK — LEVEL 66 MASTER IMPLEMENTATION PROMPT
+
+## LEVEL 66: SAVE THE FACTORY
+### Advanced Predictive Maintenance, Industrial Digital Twin Diagnostics, Motor and Gearbox Dynamics, Rolling-Element Bearing Failure, Vibration FFT Analysis, Thermal Monitoring, Safe Mechanical Repair and Machine Recovery
+
+Act as my senior Unity C# engineer, electrical simulation architect, rotating machinery engineer, industrial maintenance engineer, vibration analysis specialist, motor and gearbox dynamics engineer, signal processing engineer, predictive maintenance researcher, industrial digital twin developer, industrial automation programmer, functional safety engineer, gameplay programmer, Unity Editor automation specialist and technical artist.
+
+**YOUR TASK IS TO IMPLEMENT THE COMPLETE, WORKING, PLAYABLE LEVEL 66 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+Do not stop at:
+
+- A design explanation.
+- Pseudocode.
+- Generic implementation suggestions.
+- An art-only scene.
+- A spinning motor with no physical model.
+- A fake vibration waveform.
+- A prerecorded FFT image.
+- A temperature gauge driven by arbitrary animation.
+- A decorative digital twin.
+- A maintenance button that magically repairs the motor.
+- A replacement bearing that is only decorative.
+- An unsafe maintenance sequence.
+- A local-only objective counter.
+- Disconnected C# examples.
+- Unverified wiring or terminal manifests.
+- A misleading claim that the project compiles.
+
+Implement all safely achievable functionality by inspecting and using the actual Project Spark Unity source code and approved Level 66 model package.
+
+The Level 66 design and its 40 individual 3D models are already approved.
+
+Do not redesign the laboratory or regenerate its models unnecessarily.
+
+**LEVEL 66 MUST TEACH REAL PREDICTIVE MAINTENANCE THROUGH COHERENT MOTOR DYNAMICS, GEARBOX MECHANICS, BEARING DEGRADATION, SENSOR MEASUREMENTS, VIBRATION SIGNAL ANALYSIS, THERMAL BEHAVIOR, FAULT DIAGNOSIS, SAFE ISOLATION, ACTUAL COMPONENT REPLACEMENT AND VERIFIED MACHINE RECOVERY.**
+
+---
+
+# 1. CRITICAL EXISTING PROJECT INTEGRATION
+
+Project Spark is an established Unity electrical engineering, circuit-building and industrial automation game.
+
+Before implementing Level 66, inspect the actual source files.
+
+At minimum, inspect these classes if present:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+
+Also inspect the real implementations of:
+
+- Motor electrical dynamics.
+- Motor shaft dynamics.
+- Rotational inertia.
+- Torque and mechanical power.
+- Motor startup.
+- Motor temperature.
+- Encoder feedback.
+- RPM measurement.
+- Vibration sensing.
+- Thermal measurement.
+- Current measurement.
+- Electrical power measurement.
+- Bearing simulation.
+- Mechanical couplings.
+- Gear ratios.
+- Variable-frequency drives.
+- PLC input/output signals.
+- Safety interlocks.
+- Emergency stop.
+- Circuit protection.
+- Player-created electrical wires.
+- Circuit topology validation.
+- Connected component identification.
+- Workstation part registration.
+- Component replacement and interaction.
+- Inventory and shelf-managed components.
+- Level objectives.
+- Historical objective completion.
+- Unity Editor level creators.
+- Live diagnostic dashboards.
+
+## Previous levels to inspect
+
+**Level 54 — Cross the Critical**
+
+Rotating-machine dynamics, critical speed, vibration and rotor protection.
+
+**Level 55 — Float the Shaft**
+
+Advanced sensor feedback and bearing-related machinery control.
+
+**Level 56 — Harvest the Spin**
+
+Rotational energy, torque, angular velocity and electromechanical conversion.
+
+**Level 58 — Isolate the Fault**
+
+Protection and safe isolation.
+
+**Level 59 — Bring Back the Power**
+
+Commissioning and sequenced restoration.
+
+**Level 60 — The Grid Must Survive**
+
+Coordinated monitoring, automation and fault recovery.
+
+**Level 63 — Catch the Frequency**
+
+Rotor speed, kinetic energy and actual encoder measurement.
+
+**Level 65 — The Factory Thinks**
+
+Factory automation, conveyor drives, PLC control, product handling, industrial safety and sensor feedback.
+
+Reuse only functionality actually present and working.
+
+Do not assume these levels are implemented merely because asset packs or design prompts exist.
+
+---
+
+# 2. NON-NEGOTIABLE IMPLEMENTATION RULES
+
+1. Inspect actual Unity project files before referencing existing APIs.
+2. Never invent existing Project Spark methods or class members.
+3. Preserve Levels 1–65.
+4. Reuse compatible project infrastructure.
+5. Keep Level 66 systems level-local where practical.
+6. Avoid unnecessary modifications to the shared electrical solver.
+7. Do not represent an industrial three-phase motor as an arbitrary DC resistor.
+8. Do not fabricate RPM, torque, mechanical power or current.
+9. Do not assign actual RPM directly from the motor speed setting.
+10. Do not render a vibration waveform unrelated to actual simulated mechanical states.
+11. Do not use a prerecorded spectrum as live FFT data.
+12. Do not invent FFT peaks independently of the sampled signal.
+13. Do not assign bearing temperature directly from a fault severity percentage.
+14. Do not fabricate thermal-camera measurements.
+15. Do not confuse hidden fault ground truth with measured diagnostic information.
+16. Do not give the digital twin access to hidden fault labels unless explicitly implementing a documented diagnostic interface.
+17. Do not claim real trained AI when only using rules or thresholds.
+18. Do not make a bearing recover spontaneously without a supported maintenance action.
+19. Do not magically repair a motor by clicking RESET.
+20. Do not permit bearing replacement while the shaft is moving dangerously.
+21. Do not bypass lockout and verified isolation.
+22. Do not permit an automatic motor restart following maintenance.
+23. Do not mark a maintenance action successful without verifying the installed component.
+24. Do not bypass component compatibility checks.
+25. Do not let a disconnected vibration sensor continue reporting valid measurements.
+26. Do not use decorative visual rotation as the source of encoder readings.
+27. Do not alter historical objectives during the final deliberate sensor fault.
+28. Do not fabricate health certification.
+29. Do not create a duplicate competing machine simulation.
+30. Do not advance one simulation interval twice.
+31. Use consistent units and timestamps.
+32. Implement stable numerical integration.
+33. Use actual `SparkTerminal` components where required.
+34. Provide accurate diagnostics.
+35. Deliver complete C# source files.
+36. Make Editor generation idempotent.
+37. Only report compilation or Play Mode success when actually tested.
+38. Only claim objective completion when the authoritative evaluator confirms it.
+
+## AUTHORITATIVE COMPLETION REQUIREMENT
+
+**The actual `LevelGamePlayManager` must reach 6/6.**
+
+A Level 66 UI saying COMPLETE is not sufficient.
+
+Inspect the actual objective architecture and integrate with `SparkLevelEvaluator`.
+
+Objectives 1–5 must remain historically certified during Objective 6's deliberate vibration-sensor wire disconnection.
+
+Objective 6 must require sensor restoration, recalibration, explicit fault reset and a fresh successful machine-health test.
+
+---
+
+# 3. LEVEL 66 CONFIGURATION
+
+**Level Number:** 66
+
+**Level ID:** `level_66`
+
+**Display Name:** `Save the Factory`
+
+**Subtitle:** `Predictive Maintenance and Digital Twin Diagnostics`
+
+**Difficulty:** Advanced / Expert
+
+**Control Supply:** 5 V DC
+
+**Industrial Power Model:** Simulated low-voltage motor-drive system
+
+**Player-Created Wires:** 70
+
+**Unique Functional Terminals:** 110
+
+**Individual Equipment Models:** 40
+
+**Motor:** Industrial three-phase motor model
+
+**Drive:** Variable-frequency motor drive
+
+**Gearbox:** Multi-gear transmission
+
+**Conveyor:** Motor-driven mechanical load
+
+**Main Sensors:** Vibration, current, temperature, shaft encoder
+
+**Additional Sensors:** Alignment, gear wear, lubrication, infrared temperature
+
+**Diagnostic Technique:** Time-domain analysis and FFT
+
+**Digital Twin:** Live state estimation and condition monitoring
+
+**Maintenance Action:** Damaged bearing replacement
+
+**Additional Maintenance:** Shaft alignment and assembly verification
+
+**Main Fault:** Progressive rolling-element bearing deterioration
+
+**Secondary Faults:** Shaft misalignment and gear wear
+
+**Final Deliberate Fault:** Vibration sensor feedback wire disconnection
+
+**Authoritative Objectives:** 6
+
+## Proposed educational parameters
+
+- Motor nominal diagnostic speed: 1,200 RPM.
+- Motor speed range: configurable within simulated rating.
+- Motor acceleration: finite.
+- Mechanical torque: finite.
+- Gear ratio: configurable.
+- Gearbox efficiency: below or equal to unity.
+- Bearing friction: dependent on condition.
+- Bearing fault progression: controlled.
+- Bearing thermal behavior: dynamic.
+- Sensor sample rate: configurable.
+- FFT size: suitable for simulation resolution and performance.
+- Vibration thresholds: calibrated to generated vibration model.
+- Temperature thresholds: calibrated to thermal model.
+- Repair verification: multiple speed/load conditions.
+
+These are proposed gameplay settings, not universal industrial standards.
+
+Do not hardcode arbitrary vibration and temperature thresholds without verifying their relationship to the chosen simulated equipment.
+
+---
+
+# 4. INITIAL LEVEL STATE
+
+At level start:
+
+- Motor stopped.
+- Motor drive disabled.
+- Gearbox stationary.
+- Conveyor stopped.
+- Motor encoder uncalibrated.
+- Vibration sensors uncalibrated.
+- Temperature probes uncalibrated.
+- Current measurement uncalibrated.
+- Alignment sensor uncalibrated.
+- Condition monitoring controller disabled.
+- FFT analyzer awaiting samples.
+- Digital twin waiting for baseline.
+- Healthy baseline not yet recorded.
+- Bearing fault scenario initially inactive.
+- Damaged bearing available as a faulted replacement state or mounted fault component according to the scenario.
+- Healthy replacement bearing in parts storage.
+- Maintenance tools available.
+- Cooling system in standby.
+- Safety enclosure closed.
+- Emergency stop released.
+- Maintenance lockout disengaged.
+- No unresolved critical fault.
+- Objectives 0/6.
+
+## Player mission
+
+1. Connect the 70-wire condition-monitoring network.
+2. Validate 110 real terminal anchors.
+3. Power the control system.
+4. Commission the VFD.
+5. Commission the motor and mechanical drive.
+6. Calibrate shaft encoder.
+7. Calibrate vibration sensors.
+8. Calibrate temperature probes.
+9. Calibrate motor current measurement.
+10. Establish a healthy reference run.
+11. Record baseline vibration.
+12. Record baseline temperature.
+13. Record baseline motor current.
+14. Synchronize the digital twin.
+15. Introduce controlled bearing degradation.
+16. Observe actual mechanical consequences.
+17. Collect vibration samples.
+18. Perform FFT.
+19. Compare frequency components.
+20. Diagnose the damaged bearing.
+21. Stop production.
+22. Isolate motor power.
+23. Verify shaft stopped.
+24. Engage maintenance lockout.
+25. Open the enclosure safely.
+26. Remove the damaged bearing.
+27. Install a healthy compatible bearing.
+28. Align the shaft.
+29. Verify assembly conditions.
+30. Close the enclosure.
+31. Restore operation safely.
+32. Repeat multi-speed and load tests.
+33. Verify real condition improvement.
+34. Disconnect vibration sensor feedback.
+35. Detect invalid condition monitoring.
+36. Repair the wire.
+37. Recalibrate the sensor.
+38. Explicitly reset the fault.
+39. Perform fresh machine-health certification.
+40. Reach authoritative 6/6.
+
+---
+
+# 5. USE MY EXISTING LEVEL 66 ASSET PACKAGE
+
+The approved asset package is:
+
+`ProjectSpark_Level66_HD_AAA_Models.zip`
+
+The actual supplied manifest reports:
+
+- 40 independent binary FBX models.
+- 40 matching GLB backups.
+- One assembled FBX showcase.
+- One assembled GLB showcase.
+- 26,780 total equipment triangles.
+- 12 animation-pivot mappings.
+- Unity visual art placement helper.
+- Model manifest.
+- README.
+- Verification report.
+- Procedural source scripts.
+
+## EXACT 40 INDIVIDUAL FBX FILENAMES
+
+Use these exact files:
+
+| FILE | PURPOSE |
+|---|---|
+| `00_L66_IndustrialPredictiveMaintenanceBase.fbx` | Laboratory chassis |
+| `01_L66_IndustrialThreePhaseMotor.fbx` | Main rotating machine |
+| `02_L66_MotorStatorCutaway.fbx` | Motor internal stator |
+| `03_L66_MotorRotorShaft.fbx` | Independently modeled rotor shaft |
+| `04_L66_IndustrialGearboxHousing.fbx` | Gearbox enclosure |
+| `05_L66_GearboxGearAssembly.fbx` | Mechanical gearset |
+| `06_L66_DriveShaftCoupling.fbx` | Mechanical coupling |
+| `07_L66_DriveEndBearingCartridge.fbx` | Drive-end bearing |
+| `08_L66_NonDriveEndBearingCartridge.fbx` | Non-drive-end bearing |
+| `09_L66_DamagedBearingCartridge.fbx` | Faulted bearing item |
+| `10_L66_HealthyReplacementBearing.fbx` | Replacement bearing |
+| `11_L66_IndustrialConveyorAssembly.fbx` | Conveyor load |
+| `12_L66_ConveyorDriveRoller.fbx` | Conveyor drive roller |
+| `13_L66_VariableFrequencyMotorDrive.fbx` | Motor VFD |
+| `14_L66_MotorCurrentSensorBank.fbx` | Electrical-current sensing |
+| `15_L66_ThreeAxisVibrationSensor.fbx` | Main X/Y/Z vibration sensor |
+| `16_L66_SecondaryVibrationSensor.fbx` | Comparison vibration sensor |
+| `17_L66_PrecisionShaftEncoder.fbx` | Rotor angle and speed |
+| `18_L66_BearingTemperatureProbe.fbx` | Bearing temperature |
+| `19_L66_MotorTemperatureProbe.fbx` | Motor temperature |
+| `20_L66_InfraredThermalCamera.fbx` | Infrared inspection |
+| `21_L66_LubricationMonitoringModule.fbx` | Lubrication condition |
+| `22_L66_ShaftAlignmentSensor.fbx` | Alignment measurement |
+| `23_L66_GearWearSensorModule.fbx` | Gear condition |
+| `24_L66_VibrationFFTAnalyzer.fbx` | Spectral analysis |
+| `25_L66_ConditionMonitoringController.fbx` | Condition signal processing |
+| `26_L66_PredictiveMaintenanceAIUnit.fbx` | Fault diagnosis |
+| `27_L66_IndustrialDigitalTwinDisplay.fbx` | Digital twin monitoring |
+| `28_L66_MotorProtectionRelay.fbx` | Motor protection |
+| `29_L66_MaintenancePLCRack.fbx` | PLC maintenance control |
+| `30_L66_DigitalInputOutputModule.fbx` | PLC I/O |
+| `31_L66_BearingRemovalTool.fbx` | Bearing extraction |
+| `32_L66_PrecisionAlignmentGauge.fbx` | Shaft alignment verification |
+| `33_L66_IndustrialTorqueTool.fbx` | Controlled assembly tool |
+| `34_L66_MaintenancePartsStorageRack.fbx` | Replacement parts |
+| `35_L66_ActiveCoolingAssembly.fbx` | Mechanical cooling |
+| `36_L66_EmergencyStopAndLockoutPanel.fbx` | Stop and lockout control |
+| `37_L66_HolographicDiagnosticMonitor.fbx` | Diagnostic dashboard |
+| `38_L66_TransparentMachineSafetyEnclosure.fbx` | Machine enclosure |
+| `39_L66_Regulated5VControlSupply.fbx` | Educational control power |
+
+## INCLUDED SUPPORTING FILES
+
+Inspect:
+
+- `Level66_Complete_ArtKit_Showcase.fbx`
+- `Level66_Complete_ArtKit_Showcase.glb`
+- `SparkLevel66ArtPlacementEditor.cs`
+- `Model_Manifest.json`
+- `Animation_Rigs.csv`
+- `README_Unity.txt`
+- `Verification_Report.json`
+- `Source/` procedural source files
+- Preview renders
+
+## ART PLACEMENT RULES
+
+1. Instantiate all 40 individual equipment FBXs.
+2. Use the assembled FBX only as placement reference.
+3. Never duplicate the assembled model with the 40 individual models.
+4. Preserve the authored common-origin coordinate system.
+5. Verify imported model scale.
+6. Preserve material-color regions.
+7. Keep gearbox and motor components separately addressable.
+8. Keep functional terminals independent of decorative art.
+9. Keep bearing replacement objects separate from fixed machine mounts.
+10. Preserve named animation pivot coordinates.
+11. Do not create physics using visual animation alone.
+12. Do not claim final PBR art quality unless separately implemented.
+
+## COORDINATE SYSTEM
+
+The supplied README states:
+
+- X = workstation width.
+- Y = vertical.
+- Z = front.
+- One modeled unit = one Unity unit.
+
+Create:
+
+`L66_HD_VISUAL_ART`
+
+Place all individual assets under this root at their common local origin.
+
+## IMPORTANT QUALITY DISTINCTION
+
+These models are genuine procedural triangulated 3D geometry.
+
+They contain modeled parts and material-color regions.
+
+They are AAA-inspired, not final artist-polished AAA geometry with fully authored PBR textures.
+
+Unity materials, transparent shaders and moving-mesh hierarchy may need additional work.
+
+---
+
+# 6. EXACT ANIMATION PIVOT INTEGRATION
+
+The actual `Animation_Rigs.csv` contains 12 mappings.
+
+Use these exact values:
+
+| MODEL | PIVOT | REFERENCE COORDINATES |
+|---|---|---|
+| IndustrialThreePhaseMotor | `ANIM_MOTOR_ROTOR` | (-2.78, 1.53, -0.05) |
+| MotorRotorShaft | `ANIM_MOTOR_ROTOR` | (-2.75, 1.53, -0.05) |
+| IndustrialGearboxHousing | `ANIM_GEARBOX_COVER` | (-2.05, 2.31, -0.05) |
+| GearboxGearAssembly | `ANIM_GEARBOX_GEARS` | (-1.56, 1.53, -0.05) |
+| DriveShaftCoupling | `ANIM_SHAFT_COUPLING` | (-2.35, 1.53, -0.05) |
+| ConveyorDriveRoller | `ANIM_CONVEYOR_ROLLER` | (1.30, 1.42, 0.15) |
+| PrecisionShaftEncoder | `ANIM_ENCODER_DISC` | (-2.62, 1.53, 0.86) |
+| IndustrialDigitalTwinDisplay | `ANIM_TWIN_MONITOR` | (3.65, 3.20, -1.52) |
+| BearingRemovalTool | `ANIM_BEARING_EXTRACTOR` | (-4.25, 1.30, 1.92) |
+| ActiveCoolingAssembly | `ANIM_COOLING_FANS` | (-5.69, 1.72, 1.04) |
+| EmergencyStopAndLockoutPanel | `ANIM_EMERGENCY_STOP` | (5.25, 1.24, 2.11) |
+| TransparentMachineSafetyEnclosure | `ANIM_SAFETY_DOOR` | (1.68, 2.20, 0.08) |
+
+## MOTOR ROTOR
+
+`ANIM_MOTOR_ROTOR` must follow actual motor shaft angular position.
+
+The motor rotor and shaft assembly must remain mechanically consistent.
+
+## GEARBOX GEARS
+
+`ANIM_GEARBOX_GEARS` is a reference pivot.
+
+A functional gearbox may contain multiple gears rotating at different speeds and directions.
+
+Inspect mesh separation.
+
+Create separate gear transforms where needed.
+
+Apply the actual gear ratio.
+
+Do not rotate the entire gearbox gear assembly at one speed if its individual gear meshes require different speeds.
+
+## DRIVE COUPLING
+
+`ANIM_SHAFT_COUPLING` follows the associated shaft state.
+
+## CONVEYOR ROLLER
+
+`ANIM_CONVEYOR_ROLLER` follows gearbox output speed and belt drive geometry.
+
+## ENCODER DISC
+
+`ANIM_ENCODER_DISC` follows actual shaft motion.
+
+Do not calculate measured RPM by reading a decorative animation transform controlled independently.
+
+## MAINTENANCE TOOL
+
+`ANIM_BEARING_EXTRACTOR` follows actual maintenance interaction.
+
+Do not treat tool animation as sufficient evidence that a bearing was removed.
+
+## SAFETY ENCLOSURE
+
+`ANIM_SAFETY_DOOR` must reflect actual door/interlock state.
+
+Do not permit opening during unsafe rotating operation.
+
+## IMPORTANT
+
+The supplied pivot CSV provides reference coordinates, not proof of fully rigged FBX joint hierarchies.
+
+Inspect imported geometry and create appropriate moving subhierarchies where necessary.
+
+---
+
+# 7. ELECTRICAL WIRING — W01 TO W70
+
+The Level 66 design requires:
+
+**70 player-created wires and 110 unique functional terminal anchors.**
+
+The existing art package does not include real `SparkTerminal` registrations or a complete endpoint map.
+
+Create them during Unity implementation.
+
+Do not invent an existing `Exact_Wiring.csv`.
+
+## GROUP A — CONTROL POWER
+
+- Regulated 5 V output.
+- Control return.
+- PLC supply.
+- Condition-monitoring controller supply.
+- FFT analyzer supply.
+- Digital twin controller supply.
+- Sensor supply.
+
+## GROUP B — MOTOR DRIVE
+
+- Motor electrical power interface.
+- Motor drive enable.
+- Speed command.
+- Motor direction command.
+- Drive status.
+- Drive fault.
+- Motor protection.
+
+## GROUP C — ROTATING MACHINERY
+
+- Motor shaft encoder.
+- Shaft speed feedback.
+- Gearbox status.
+- Mechanical drive validation.
+- Coupling health.
+- Conveyor speed feedback.
+
+## GROUP D — VIBRATION MONITORING
+
+- Main triaxial sensor power.
+- Main sensor return.
+- Vibration X signal.
+- Vibration Y signal.
+- Vibration Z signal.
+- Secondary sensor feedback.
+- Sensor validity.
+
+## GROUP E — THERMAL MONITORING
+
+- Bearing temperature probe.
+- Motor temperature probe.
+- Infrared thermal camera.
+- Sensor measurement validity.
+- Cooling control.
+- Thermal alarm.
+
+## GROUP F — ADDITIONAL DIAGNOSTICS
+
+- Motor current sensing.
+- Shaft alignment.
+- Gear wear.
+- Lubrication monitoring.
+- FFT acquisition.
+- Condition monitoring.
+- Digital twin data.
+
+## GROUP G — MAINTENANCE CONTROL
+
+- Maintenance request.
+- Motor stop.
+- Power isolation status.
+- Shaft zero-speed verification.
+- Maintenance lockout.
+- Safety door interlock.
+- Repair status.
+- Maintenance reset.
+
+## GROUP H — PROTECTION AND OPERATION
+
+- Emergency stop.
+- Motor protection relay.
+- PLC status.
+- Alarm.
+- Cooling status.
+- Restart permission.
+- Condition monitoring ready.
+- Final certification signals.
+
+## REQUIREMENTS
+
+1. Exactly 70 expected player connections.
+2. Exactly 110 unique socket IDs.
+3. Document each FROM endpoint.
+4. Document each TO endpoint.
+5. Register real functional `SparkTerminal` components.
+6. Validate electrical supply.
+7. Validate return paths.
+8. Validate sensor channel types.
+9. Validate motor drive topology.
+10. Validate protection wiring.
+11. Validate temperature sensors.
+12. Validate vibration sensors.
+13. Validate encoder wiring.
+14. Validate safety interlocks.
+15. Validate measurement routing.
+16. Detect incorrect connections.
+17. Detect duplicate connections.
+18. Detect missing connections.
+19. Support player wire removal and reconnection.
+20. Preserve fixed internal module connections separately.
+
+## INTERNAL CONNECTIONS
+
+Use fixed documented internal connections where complex modules have more conductors than the player puzzle exposes.
+
+Do not add undocumented player-created wires beyond 70.
+
+## FINAL VIBRATION SENSOR FAULT
+
+Reserve one player-created wire for the designated primary vibration feedback channel.
+
+Conceptual endpoints:
+
+`PRIMARY_VIBRATION_SENSOR_X_OUT → CONDITION_MONITOR_VIBRATION_X_IN`
+
+Assign the exact W-number after the complete endpoint manifest is validated.
+
+Disconnecting the wire must invalidate the actual measured channel.
+
+Do not simulate failure by merely changing an unrelated Boolean.
+
+---
+
+# 8. SINGLE AUTHORITATIVE MACHINE MODEL
+
+Create a coherent machine state shared by:
+
+- Motor.
+- VFD.
+- Rotor shaft.
+- Gearbox.
+- Coupling.
+- Bearings.
+- Conveyor.
+- Shaft encoder.
+- Vibration signal generation.
+- Thermal model.
+- Current measurement.
+- Protection.
+- Condition monitoring.
+- Digital twin.
+- Objectives.
+
+## REQUIRED AUTHORITATIVE STATES
+
+- Motor shaft angle.
+- Motor angular speed.
+- Motor RPM.
+- Motor torque.
+- Gearbox input speed.
+- Gearbox output speed.
+- Gearbox ratio.
+- Gearbox efficiency.
+- Conveyor speed.
+- Mechanical load.
+- Bearing health.
+- Bearing friction.
+- Gear wear.
+- Shaft alignment.
+- Motor temperature.
+- Bearing temperature.
+- Current.
+- Vibration signals.
+- Safety state.
+- Maintenance state.
+
+## CRITICAL RULE
+
+Do not implement separate unrelated RPM states for the motor, gearbox, encoder and digital twin.
+
+Each measurement must derive from the appropriate authoritative mechanical state plus the defined sensor model.
+
+---
+
+# 9. MOTOR ELECTROMECHANICAL DYNAMICS
+
+Use:
+
+- `01_L66_IndustrialThreePhaseMotor.fbx`
+- `02_L66_MotorStatorCutaway.fbx`
+- `03_L66_MotorRotorShaft.fbx`
+
+## REQUIRED PROPERTIES
+
+- Stator supply state.
+- Motor drive frequency.
+- Motor terminal voltage.
+- Motor current.
+- Actual RPM.
+- Rotor angle.
+- Angular velocity.
+- Torque.
+- Rotor inertia.
+- Mechanical losses.
+- Electrical losses.
+- Temperature.
+- Maximum speed.
+- Maximum torque.
+- Rated power.
+- Fault state.
+
+## ROTATIONAL EQUATION
+
+`J * dOmega/dt = Tmotor - Tload - Tloss`
+
+Use a consistent sign convention.
+
+## MOTOR POWER
+
+`Pmechanical = Torque * AngularSpeed`
+
+Electrical input must account for modeled efficiency and losses.
+
+## REQUIRED BEHAVIOR
+
+- Start command causes acceleration over finite time.
+- Load changes affect motor torque/speed.
+- Bearing degradation increases mechanical losses where modeled.
+- Current may rise when additional torque is demanded.
+- Thermal state responds to losses.
+- Protection limits apply.
+
+## IMPORTANT
+
+Do not make current increase directly because the fault state says DAMAGED.
+
+Motor current must change through a defined electrical/mechanical relationship.
+
+---
+
+# 10. VARIABLE-FREQUENCY DRIVE
+
+Use:
+
+`13_L66_VariableFrequencyMotorDrive.fbx`
+
+## REQUIRED PROPERTIES
+
+- Enable state.
+- Frequency command.
+- Voltage command.
+- Output frequency.
+- Acceleration ramp.
+- Deceleration ramp.
+- Current limit.
+- Torque limit.
+- Drive temperature.
+- Fault state.
+
+## REQUIRED BEHAVIOR
+
+- Drive command changes electrical excitation.
+- Motor responds according to chosen motor model.
+- Ramp limits apply.
+- Excess current triggers defined limiting/protection.
+- Drive is disabled during maintenance isolation.
+
+## MODELING FIDELITY
+
+A validated simplified motor-drive model is acceptable if the existing Project Spark electrical solver does not support a full induction motor.
+
+Document assumptions.
+
+Do not claim full electromagnetic motor behavior if implementing only an equivalent mechanical torque-speed response.
+
+---
+
+# 11. GEARBOX DYNAMICS
+
+Use:
+
+- `04_L66_IndustrialGearboxHousing.fbx`
+- `05_L66_GearboxGearAssembly.fbx`
+- `06_L66_DriveShaftCoupling.fbx`
+
+## REQUIRED PROPERTIES
+
+- Gear ratio.
+- Input angular speed.
+- Output angular speed.
+- Input torque.
+- Output torque.
+- Efficiency.
+- Gear wear.
+- Backlash where modeled.
+- Mechanical losses.
+- Temperature contribution.
+- Fault state.
+
+## GEAR RATIO
+
+For a reduction gearbox:
+
+`OmegaOutput = OmegaInput / GearRatio`
+
+## TORQUE RELATION
+
+For forward power transfer:
+
+`TorqueOutput ≈ TorqueInput * GearRatio * Efficiency`
+
+Use consistent power directions and signs.
+
+## REQUIRED BEHAVIOR
+
+- Gearbox output speed responds to input shaft.
+- Conveyor drive responds to gearbox output.
+- Gear wear modifies losses/vibration where modeled.
+- Shaft misalignment changes coupling condition.
+- Severe faults can cause protection activation.
+
+## IMPORTANT
+
+Do not create output mechanical power greater than input power without a legitimate additional energy source.
+
+---
+
+# 12. CONVEYOR LOAD DYNAMICS
+
+Use:
+
+- `11_L66_IndustrialConveyorAssembly.fbx`
+- `12_L66_ConveyorDriveRoller.fbx`
+
+## REQUIRED PROPERTIES
+
+- Roller radius.
+- Roller speed.
+- Belt speed.
+- Conveyor load.
+- Rolling resistance.
+- Mechanical drag.
+- Jam status.
+- Belt displacement.
+
+## BELT SPEED
+
+`BeltSpeed = RollerAngularSpeed * RollerRadius`
+
+Use consistent speed conversion.
+
+## REQUIRED BEHAVIOR
+
+- Actual motor/gearbox motion drives conveyor.
+- Load affects motor torque.
+- Conveyor stops when drive stops.
+- Jam increases resistance.
+- Protection detects unsafe operation.
+
+---
+
+# 13. BEARING PHYSICAL CONDITION MODEL
+
+Use:
+
+- `07_L66_DriveEndBearingCartridge.fbx`
+- `08_L66_NonDriveEndBearingCartridge.fbx`
+- `09_L66_DamagedBearingCartridge.fbx`
+- `10_L66_HealthyReplacementBearing.fbx`
+
+The bearing is the central gameplay component.
+
+## REQUIRED PROPERTIES
+
+- Bearing ID.
+- Installation location.
+- Bearing type.
+- Inner race condition.
+- Outer race condition.
+- Rolling element condition.
+- Lubrication condition.
+- Friction coefficient.
+- Mechanical loading.
+- Damage severity.
+- Temperature.
+- Vibration contribution.
+- Replaceability.
+- Installation validity.
+
+## BEARING HEALTH
+
+Represent damage with a bounded state variable.
+
+For example:
+
+`Damage ∈ [0,1]`
+
+where zero represents the modeled healthy state and one represents severe damage.
+
+## REQUIRED BEHAVIOR
+
+As damage increases:
+
+- Mechanical friction can increase.
+- Vibration amplitude changes.
+- Fault frequencies become more pronounced.
+- Mechanical losses may increase.
+- Temperature can increase through additional losses.
+- Motor torque demand can rise.
+- Protection may activate.
+
+## IMPORTANT
+
+Do not directly set all measurements to arbitrary high values whenever damage exceeds a threshold.
+
+The bearing state must influence physical and measurement models consistently.
+
+---
+
+# 14. BEARING FAULT FREQUENCIES
+
+Implement optional rolling-element bearing fault-frequency calculations.
+
+Use bearing geometry parameters:
+
+- Number of rolling elements.
+- Rolling element diameter.
+- Pitch diameter.
+- Contact angle.
+- Shaft rotational frequency.
+
+## BALL PASS FREQUENCY — OUTER RACE
+
+`BPFO = (n/2) * fr * (1 - (d/D) * cos(theta))`
+
+## BALL PASS FREQUENCY — INNER RACE
+
+`BPFI = (n/2) * fr * (1 + (d/D) * cos(theta))`
+
+## BALL SPIN FREQUENCY
+
+`BSF = (D/(2*d)) * fr * (1 - ((d/D)*cos(theta))^2)`
+
+## FUNDAMENTAL TRAIN FREQUENCY
+
+`FTF = (fr/2) * (1 - (d/D) * cos(theta))`
+
+where:
+
+- `n` = rolling element count.
+- `fr` = shaft rotational frequency.
+- `d` = rolling element diameter.
+- `D` = pitch diameter.
+- `theta` = contact angle.
+
+Use appropriate assumptions about rolling contact and slip.
+
+## REQUIRED BEHAVIOR
+
+Fault-frequency components must shift with shaft speed.
+
+Do not hardcode bearing damage to a fixed 80 Hz tone at all RPM values.
+
+Use these expressions as an educational approximation, not a universal exact diagnosis.
+
+---
+
+# 15. VIBRATION SIGNAL GENERATION
+
+Use:
+
+- `15_L66_ThreeAxisVibrationSensor.fbx`
+- `16_L66_SecondaryVibrationSensor.fbx`
+
+Implement meaningful vibration time signals.
+
+## REQUIRED SOURCES
+
+- Rotor imbalance.
+- Shaft misalignment.
+- Bearing defects.
+- Gear mesh.
+- Mechanical load.
+- Machine mounting.
+- Measurement noise.
+- Sensor orientation.
+
+## SIMPLIFIED SIGNAL
+
+A synthetic vibration axis may be generated by combining condition-dependent components:
+
+`x(t) = A1*sin(2*pi*f1*t + phase1) + A2*sin(2*pi*f2*t + phase2) + ... + noise(t)`
+
+Amplitudes and frequencies must depend on real machine state.
+
+## IMPORTANT
+
+Noise should be deterministic or reproducibly seeded for tests where practical.
+
+Do not create unrelated random vibration values every frame.
+
+## TRIXIAL MEASUREMENT
+
+Implement distinct X, Y and Z channels.
+
+Different fault types may produce different directional patterns.
+
+Do not simply copy the same signal into all three axes without explanation.
+
+---
+
+# 16. RMS VIBRATION MEASUREMENT
+
+For sampled values:
+
+`RMS = sqrt(sum(x[i]^2) / N)`
+
+Use a valid sample window.
+
+## REQUIRED OUTPUTS
+
+- Axis X RMS.
+- Axis Y RMS.
+- Axis Z RMS.
+- Combined vibration indicator.
+- Measurement timestamp.
+- Sample window duration.
+- Validity.
+- Calibration state.
+
+## IMPORTANT
+
+Distinguish acceleration, velocity and displacement measurement units.
+
+Do not display acceleration data as millimeters per second without performing a documented conversion or integration.
+
+Use consistent units throughout the diagnostic UI.
+
+---
+
+# 17. FFT SPECTRAL ANALYSIS
+
+Use:
+
+`24_L66_VibrationFFTAnalyzer.fbx`
+
+The FFT analyzer must process real generated vibration samples.
+
+## REQUIRED FEATURES
+
+- Configurable sample rate.
+- Configurable FFT length.
+- Sample buffer.
+- Window function.
+- Frequency bins.
+- Magnitude spectrum.
+- Peak detection.
+- Signal validity.
+- Diagnostic timestamp.
+
+## FFT REQUIREMENTS
+
+1. Acquire samples at a defined simulation sampling rate.
+2. Maintain correct sample timestamps.
+3. Use a stable buffer.
+4. Apply a suitable window function.
+5. Execute an FFT implementation.
+6. Compute meaningful magnitude normalization.
+7. Report frequency-bin positions.
+8. Detect relevant peaks.
+9. Compare peaks with expected fault frequencies.
+10. Update the display only after valid acquisition.
+
+## NYQUIST REQUIREMENT
+
+The sampling rate must support the selected frequency range.
+
+Do not display fault-frequency components above the Nyquist frequency as though they were reliably measured.
+
+## IMPORTANT
+
+Do not fabricate spectrum bars.
+
+The spectrum must come from the actual time-domain samples.
+
+---
+
+# 18. SHAFT ENCODER
+
+Use:
+
+`17_L66_PrecisionShaftEncoder.fbx`
+
+## REQUIRED PROPERTIES
+
+- Encoder resolution.
+- Actual shaft angle.
+- Pulse count.
+- Rotation direction.
+- Measured RPM.
+- Timestamp.
+- Signal freshness.
+- Calibration.
+- Connectivity.
+- Fault state.
+
+## RPM
+
+`RPM = 60 * PulseFrequency / PulsesPerRevolution`
+
+## REQUIRED BEHAVIOR
+
+- Encoder follows actual shaft.
+- Measured RPM changes with motor dynamics.
+- Fault frequencies depend on measured or valid shaft-speed information where appropriate.
+- Invalid encoder feedback affects diagnostic confidence.
+- Stale RPM samples are not treated as perfect measurements.
+
+---
+
+# 19. MOTOR CURRENT MONITORING
+
+Use:
+
+`14_L66_MotorCurrentSensorBank.fbx`
+
+## REQUIRED OUTPUTS
+
+- Motor current.
+- Supply voltage.
+- Electrical power estimate.
+- Current waveform or simplified equivalent.
+- Measurement validity.
+- Fault state.
+
+## REQUIRED BEHAVIOR
+
+- Mechanical load influences electrical demand.
+- Bearing friction can increase torque demand.
+- Current responds according to motor/drive model.
+- Current measurement reflects actual modeled current.
+- Sensor disconnection invalidates measurement.
+
+Do not simply multiply bearing damage by an arbitrary current constant without a coherent mechanical/electrical model.
+
+---
+
+# 20. THERMAL MODEL
+
+Use:
+
+- `18_L66_BearingTemperatureProbe.fbx`
+- `19_L66_MotorTemperatureProbe.fbx`
+- `20_L66_InfraredThermalCamera.fbx`
+- `35_L66_ActiveCoolingAssembly.fbx`
+
+## REQUIRED STATES
+
+- Ambient temperature.
+- Motor winding/case temperature as supported.
+- Bearing temperature.
+- Gearbox temperature.
+- Heat generation.
+- Heat loss.
+- Cooling status.
+- Thermal capacitance.
+- Thermal resistance.
+
+## SIMPLIFIED THERMAL DYNAMICS
+
+`Cthermal * dT/dt = Ploss - (T - Tambient)/Rthermal - Pcooling`
+
+Use physically consistent units.
+
+## REQUIRED BEHAVIOR
+
+- Motor losses generate heat.
+- Bearing friction generates heat.
+- Temperature rises gradually.
+- Cooling lowers temperature gradually.
+- Thermal sensor tracks real temperature.
+- Thermal protection can limit or stop operation.
+
+## IMPORTANT
+
+Do not make temperature instantly return to ambient when a bearing is replaced.
+
+The physical machine must cool according to the thermal model.
+
+---
+
+# 21. INFRARED THERMAL CAMERA
+
+Use:
+
+`20_L66_InfraredThermalCamera.fbx`
+
+## REQUIRED BEHAVIOR
+
+- Read estimated surface temperature.
+- Check field of view.
+- Respect measurement validity.
+- Represent emissivity assumptions.
+- Show temperature differences between machine regions.
+- Report timestamp and confidence/quality.
+
+## IMPORTANT
+
+Do not report internal bearing temperature as a direct camera measurement if the bearing is hidden inside opaque housing.
+
+Use surface temperature or a documented estimated value.
+
+---
+
+# 22. LUBRICATION MONITORING
+
+Use:
+
+`21_L66_LubricationMonitoringModule.fbx`
+
+## REQUIRED PROPERTIES
+
+- Lubrication condition.
+- Lubricant availability.
+- Contamination state where modeled.
+- Friction influence.
+- Measurement validity.
+
+## REQUIRED BEHAVIOR
+
+Poor lubrication increases bearing damage risk or friction through the implemented model.
+
+Correct lubrication may reduce progression of damage.
+
+It must not magically undo an already damaged bearing.
+
+---
+
+# 23. SHAFT ALIGNMENT MEASUREMENT
+
+Use:
+
+`22_L66_ShaftAlignmentSensor.fbx`
+
+## REQUIRED PROPERTIES
+
+- Angular misalignment.
+- Parallel offset.
+- Measurement tolerance.
+- Calibration.
+- Measurement validity.
+- Corrected state.
+
+## REQUIRED BEHAVIOR
+
+Misalignment may increase coupling stress and vibration according to the mechanical model.
+
+Alignment adjustments must change the authoritative alignment state.
+
+Do not clear MISALIGNMENT merely because the player clicks VERIFY.
+
+---
+
+# 24. GEAR WEAR MONITORING
+
+Use:
+
+`23_L66_GearWearSensorModule.fbx`
+
+## REQUIRED PROPERTIES
+
+- Gear wear severity.
+- Gear mesh frequency.
+- Mechanical transmission error.
+- Gear vibration contribution.
+- Gearbox losses.
+- Measurement validity.
+
+## GEAR MESH FREQUENCY
+
+`GearMeshFrequency = GearTeethCount * ShaftRotationalFrequency`
+
+Use the appropriate gear shaft.
+
+## REQUIRED BEHAVIOR
+
+Gear wear affects measured vibration around gear-mesh frequency and sidebands as represented by the selected model.
+
+Do not confuse gear wear with bearing damage merely because both increase total vibration RMS.
+
+---
+
+# 25. CONDITION MONITORING CONTROLLER
+
+Use:
+
+`25_L66_ConditionMonitoringController.fbx`
+
+## REQUIRED INPUTS
+
+- Motor current.
+- Motor RPM.
+- Vibration X/Y/Z.
+- Bearing temperature.
+- Motor temperature.
+- Gear wear.
+- Alignment.
+- Lubrication.
+- Sensor validity.
+- Measurement timestamps.
+
+## REQUIRED FUNCTIONS
+
+- Sensor validation.
+- Time synchronization.
+- Baseline recording.
+- RMS vibration calculation.
+- FFT acquisition requests.
+- Trend analysis.
+- Alarm thresholds.
+- Diagnostic event recording.
+- Fault classification inputs.
+- Health certification inputs.
+
+## IMPORTANT
+
+The controller must distinguish:
+
+- SENSOR INVALID
+- SENSOR STALE
+- MACHINE HEALTHY
+- MACHINE WARNING
+- MACHINE CRITICAL
+
+A disconnected sensor is not proof that the machine is healthy.
+
+---
+
+# 26. PREDICTIVE MAINTENANCE DIAGNOSTICS
+
+Use:
+
+`26_L66_PredictiveMaintenanceAIUnit.fbx`
+
+## REQUIRED FUNCTIONS
+
+- Compare current measurements against healthy baseline.
+- Evaluate vibration trend.
+- Evaluate frequency peaks.
+- Evaluate bearing-related frequencies.
+- Evaluate gear-mesh indicators.
+- Evaluate alignment indicators.
+- Evaluate temperature trend.
+- Evaluate motor current changes.
+- Estimate likely fault type.
+- Report diagnostic uncertainty.
+
+## DIAGNOSIS CATEGORIES
+
+- HEALTHY
+- BEARING_DAMAGE
+- SHAFT_MISALIGNMENT
+- GEAR_WEAR
+- LUBRICATION_WARNING
+- MOTOR_OVERLOAD
+- SENSOR_FAULT
+- INCONCLUSIVE
+
+## IMPORTANT DISTINCTION
+
+A rule-based diagnostic system is acceptable.
+
+If using thresholds, spectra and logical inference, describe it accurately as rule-based condition diagnosis.
+
+Do not claim neural-network training unless a real trained model is integrated.
+
+## NO HIDDEN GROUND-TRUTH CHEATING
+
+Keep the true fault state separately from the diagnostic controller's inferred fault.
+
+The controller must not simply read a hidden `faultType` field and display it as a diagnosis.
+
+It must infer from available valid measurements.
+
+---
+
+# 27. INDUSTRIAL DIGITAL TWIN
+
+Use:
+
+`27_L66_IndustrialDigitalTwinDisplay.fbx`
+
+The digital twin must reflect actual simulation states and valid measurements.
+
+## REQUIRED LIVE STATES
+
+- Motor RPM.
+- Motor torque.
+- Motor current.
+- Motor temperature.
+- Gearbox speed.
+- Gearbox efficiency.
+- Conveyor speed.
+- Bearing health estimate.
+- Bearing temperature.
+- Vibration RMS.
+- FFT spectrum.
+- Alignment estimate.
+- Gear wear estimate.
+- Lubrication status.
+- Protection status.
+- Sensor validity.
+- Maintenance status.
+
+## REQUIRED BEHAVIOR
+
+- Live measurements update the twin.
+- Invalid sensors reduce twin confidence.
+- Trend history is recorded.
+- Fault diagnosis changes based on evidence.
+- Repaired components change machine dynamics.
+- Certification uses post-repair measurements.
+
+## IMPORTANT
+
+Do not create a decorative holographic motor that remains HEALTHY while actual simulation reports severe bearing damage.
+
+Do not create hidden twin values unrelated to the authoritative machine simulation.
+
+---
+
+# 28. MOTOR PROTECTION RELAY
+
+Use:
+
+`28_L66_MotorProtectionRelay.fbx`
+
+## REQUIRED PROTECTIONS
+
+- Overcurrent.
+- Excess motor temperature.
+- Excess bearing temperature.
+- Excessive vibration.
+- Overspeed.
+- Shaft/gearbox mechanical fault.
+- Drive fault.
+- Invalid essential sensor feedback.
+- Safety enclosure condition.
+- Maintenance lockout.
+
+## REQUIRED STATES
+
+- READY
+- RUNNING
+- WARNING
+- TRIP_PENDING
+- TRIPPED
+- LOCKED_OUT
+- RESET_REQUIRED
+
+## REQUIRED BEHAVIOR
+
+Protection must affect the actual motor drive.
+
+Do not simply illuminate a warning lamp.
+
+---
+
+# 29. MAINTENANCE PLC
+
+Use:
+
+- `29_L66_MaintenancePLCRack.fbx`
+- `30_L66_DigitalInputOutputModule.fbx`
+
+## REQUIRED PLC STATES
+
+- OFF
+- IDLE
+- INITIALIZING
+- READY
+- TEST_RUNNING
+- MONITORING
+- FAULT_WARNING
+- SHUTDOWN_REQUESTED
+- STOPPING
+- SAFE_TO_ISOLATE
+- ISOLATED
+- LOCKED_OUT
+- MAINTENANCE_ACTIVE
+- REASSEMBLY_CHECK
+- READY_FOR_RESTART
+- RECOMMISSIONING
+- CERTIFICATION
+- FAULT
+
+## REQUIRED LOGIC
+
+PLC commands must depend on actual inputs.
+
+For example:
+
+- Shaft speed.
+- Drive power.
+- Isolation feedback.
+- Lockout status.
+- Safety door.
+- Bearing installed.
+- Alignment verified.
+- Tool operation completed.
+- Motor protection healthy.
+
+Do not allow maintenance state transitions without required evidence.
+
+---
+
+# 30. SAFE MAINTENANCE LOCKOUT
+
+Use:
+
+- `36_L66_EmergencyStopAndLockoutPanel.fbx`
+- `38_L66_TransparentMachineSafetyEnclosure.fbx`
+
+## REQUIRED MAINTENANCE SEQUENCE
+
+1. Player requests maintenance.
+2. Production is stopped.
+3. Motor drive receives stop command.
+4. Motor decelerates.
+5. Actual RPM reaches safe threshold.
+6. Electrical drive is isolated.
+7. Isolation status is verified.
+8. Residual stored energy is addressed in the simulated safety model.
+9. Maintenance lockout is engaged.
+10. Unauthorized restart is inhibited.
+11. Safety enclosure can be opened.
+12. Repair interactions become available.
+
+## IMPORTANT
+
+Emergency stop is not equivalent to maintenance isolation.
+
+Model separate emergency-stop and lockout/verified-isolation states.
+
+Do not permit bearing removal merely because the motor visually appears stationary.
+
+---
+
+# 31. PHYSICAL BEARING REMOVAL AND REPLACEMENT
+
+Use:
+
+- `09_L66_DamagedBearingCartridge.fbx`
+- `10_L66_HealthyReplacementBearing.fbx`
+- `31_L66_BearingRemovalTool.fbx`
+- `32_L66_PrecisionAlignmentGauge.fbx`
+- `33_L66_IndustrialTorqueTool.fbx`
+- `34_L66_MaintenancePartsStorageRack.fbx`
+
+## REQUIRED COMPONENT STATES
+
+- INSTALLED
+- MOUNTED_DAMAGED
+- READY_FOR_REMOVAL
+- REMOVING
+- REMOVED
+- STORED
+- READY_FOR_INSTALLATION
+- INSTALLING
+- INSTALLED_UNVERIFIED
+- INSTALLED_VERIFIED
+
+## REMOVAL REQUIREMENTS
+
+1. Machine safely stopped.
+2. Drive isolated.
+3. Lockout active.
+4. Enclosure open.
+5. Correct bearing identified.
+6. Bearing tool available.
+7. Tool positioned correctly.
+8. Removal interaction performed.
+9. Bearing physically removed from mount.
+10. Faulted bearing remains a real item.
+
+## INSTALLATION REQUIREMENTS
+
+1. Compatible replacement available.
+2. Correct bearing mount selected.
+3. Replacement moved into mount.
+4. Installation interaction completed.
+5. Bearing attachment registered.
+6. Alignment checked.
+7. Torque requirement verified.
+8. Mount status becomes valid.
+
+## IMPORTANT
+
+The replacement must change the authoritative bearing condition model.
+
+Do not clear the damaged bearing state while leaving the damaged component installed.
+
+Do not give the player an unlimited invisible stock of replacement bearings.
+
+---
+
+# 32. REASSEMBLY AND RESTART
+
+## REQUIRED CHECKS
+
+- Bearing installed.
+- Bearing compatible.
+- Alignment within tolerance.
+- Assembly torque verified.
+- Gearbox cover closed.
+- Safety enclosure closed.
+- Maintenance tools removed from danger area.
+- Lockout release procedure valid.
+- Drive ready.
+- Motor protection reset.
+- Sensors calibrated.
+- PLC ready.
+
+## RESTART
+
+The player must explicitly command restart after all conditions are satisfied.
+
+The motor must accelerate physically.
+
+The conveyor must begin moving according to gearbox output.
+
+Do not instantly restore full speed.
+
+---
+
+# 33. POST-REPAIR HEALTH CERTIFICATION
+
+This is Objective 5's principal proof.
+
+## REQUIRED TESTS
+
+Run the repaired machine at multiple valid operating conditions.
+
+Suggested:
+
+- Low-speed test.
+- Nominal-speed test.
+- Higher-load test.
+
+Use parameters consistent with the chosen motor and mechanical limits.
+
+## REQUIRED MEASUREMENTS
+
+- Motor RPM.
+- Current.
+- Bearing temperature.
+- Motor temperature.
+- Vibration RMS.
+- FFT fault-frequency peaks.
+- Gearbox speed.
+- Alignment.
+- Lubrication condition.
+- Protection status.
+
+## REQUIRED OUTCOME
+
+- Bearing fault indicators reduced.
+- Mechanical losses within expected range.
+- Thermal behavior stable.
+- Vibration within modeled tolerance.
+- No unsafe protection fault.
+- Machine operation stable through observation interval.
+
+## IMPORTANT
+
+Do not complete certification immediately after the bearing is installed.
+
+The physical and measured condition must be verified during a fresh operating test.
+
+---
+
+# 34. FINAL VIBRATION FEEDBACK FAULT
+
+Objective 6 deliberately introduces a real sensor wiring fault.
+
+## FAULT
+
+Disconnect the designated primary vibration sensor feedback wire.
+
+## REQUIRED RESPONSE
+
+1. Actual wire removed.
+2. Circuit topology invalidated.
+3. Sensor feedback becomes invalid.
+4. Condition monitoring detects stale/disconnected data.
+5. FFT analysis marks affected data invalid.
+6. Diagnostic confidence decreases.
+7. Machine health certification becomes unavailable.
+8. Defined safe operating restrictions apply.
+9. Fault is latched.
+10. Event recorded.
+
+## IMPORTANT
+
+Do not fabricate a valid vibration signal after disconnection.
+
+Do not automatically substitute a healthy zero-vibration value.
+
+## RECOVERY
+
+1. Player reconnects the actual wire.
+2. Connectivity becomes valid.
+3. Sensor supply checked.
+4. Sensor feedback reacquired.
+5. Calibration performed.
+6. Healthy measurement window collected.
+7. FFT data regenerated.
+8. Condition monitoring revalidated.
+9. Player explicitly resets fault.
+10. Machine restart permitted where safe.
+11. New health test begins.
+12. Post-repair measurements verified.
+13. Final certification succeeds.
+
+---
+
+# 35. SIX AUTHORITATIVE LEVEL 66 OBJECTIVES
+
+Integrate all six with the actual Project Spark evaluator.
+
+## OBJECTIVE 1 — BUILD THE DIAGNOSTIC NETWORK
+
+Require:
+
+1. All 70 player wires connected.
+2. All 110 terminals registered.
+3. Valid 5 V control power.
+4. Valid control return.
+5. VFD connected.
+6. Motor connected.
+7. Motor protection connected.
+8. PLC connected.
+9. I/O module connected.
+10. Shaft encoder connected.
+11. Primary vibration sensor connected.
+12. Secondary vibration sensor connected.
+13. Motor temperature probe connected.
+14. Bearing temperature probe connected.
+15. Current measurement connected.
+16. Thermal camera connected.
+17. Alignment sensor connected.
+18. Gear wear sensor connected.
+19. Lubrication monitoring connected.
+20. FFT analyzer connected.
+21. Condition monitoring connected.
+22. Digital twin connected.
+23. Safety interlocks connected.
+24. No unsafe topology.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — ESTABLISH HEALTHY BASELINE
+
+Require:
+
+1. Objective 1 certified.
+2. Safety enclosure closed.
+3. Motor protection valid.
+4. VFD ready.
+5. Encoder calibrated.
+6. Vibration sensors calibrated.
+7. Temperature probes calibrated.
+8. Current measurement calibrated.
+9. Motor starts physically.
+10. Actual RPM reaches baseline range.
+11. Gearbox output speed valid.
+12. Conveyor responds.
+13. Vibration samples collected.
+14. Baseline RMS calculated.
+15. FFT baseline calculated.
+16. Baseline thermal data recorded.
+17. Baseline current recorded.
+18. Digital twin synchronization valid.
+19. Stable observation interval completed.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — DETECT AND DIAGNOSE BEARING FAULT
+
+Require:
+
+1. Objective 2 historically certified.
+2. Progressive bearing fault activated.
+3. Actual bearing condition deteriorates.
+4. Vibration changes.
+5. Fault-related spectral components emerge.
+6. Mechanical losses update.
+7. Thermal state responds.
+8. Motor current responds where modeled.
+9. Sensor measurements valid.
+10. FFT successfully computed.
+11. Fault-frequency estimates compared.
+12. Bearing diagnosis generated.
+13. Diagnosis correctly identifies damaged bearing.
+14. Misalignment and gear-wear alternatives evaluated.
+15. Fault detected before modeled catastrophic failure.
+16. Diagnostic evidence recorded.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — PERFORM SAFE PREDICTIVE MAINTENANCE
+
+Require:
+
+1. Previous objectives certified.
+2. Maintenance requested.
+3. Production stopped.
+4. Motor receives stop command.
+5. Shaft actually decelerates.
+6. Safe speed verified.
+7. Drive power isolated.
+8. Isolation verified.
+9. Maintenance lockout engaged.
+10. Safety enclosure opened legally.
+11. Correct bearing selected.
+12. Removal tool used.
+13. Damaged bearing removed.
+14. Healthy replacement obtained.
+15. Compatible bearing installed.
+16. Mount verified.
+17. Shaft alignment checked.
+18. Assembly torque verified.
+19. Enclosure closed.
+20. Lockout release performed safely.
+21. Restart conditions valid.
+22. No safety violation.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — PROVE MACHINE HEALTH UNDER LOAD
+
+Require:
+
+1. Repair historically certified.
+2. Healthy replacement installed.
+3. Safety system ready.
+4. Motor restarted.
+5. Valid encoder feedback.
+6. Low-speed test completed.
+7. Nominal-speed test completed.
+8. Load test completed.
+9. Gearbox speed valid.
+10. Conveyor speed valid.
+11. Vibration RMS within configured limits.
+12. Bearing defect spectral energy reduced.
+13. Bearing temperature stable.
+14. Motor temperature acceptable.
+15. Current within modeled limits.
+16. Alignment valid.
+17. Protection healthy.
+18. Digital twin updated.
+19. Stable observation interval completed.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — RECOVER LOST CONDITION FEEDBACK
+
+Require:
+
+1. Objectives 1–5 historically certified.
+2. Designated vibration feedback wire disconnected.
+3. Actual topology invalidated.
+4. Sensor data becomes invalid.
+5. Condition monitoring detects lost measurement.
+6. FFT analysis rejects invalid samples.
+7. Certification is inhibited.
+8. Safe operating response occurs.
+9. Fault latched.
+10. Player reconnects actual wire.
+11. Connectivity restored.
+12. Sensor recalibrated.
+13. Valid fresh samples acquired.
+14. FFT recalculated.
+15. Player explicitly resets fault.
+16. Safety status valid.
+17. Fresh operating test begins.
+18. Motor and gearbox operate correctly.
+19. Bearing vibration remains within tolerance.
+20. Thermal behavior acceptable.
+21. Digital twin measurements valid.
+22. No critical fault remains.
+23. Fresh certification observation interval completed.
+
+Progress becomes **6/6**.
+
+## HISTORICAL OBJECTIVE REQUIREMENT
+
+Do not erase Objectives 1–5 during the deliberate final feedback disconnection.
+
+Do not award Objective 6 immediately after reconnecting the sensor.
+
+**The actual `LevelGamePlayManager` must report 6/6.**
+
+---
+
+# 36. RECOMMENDED UNITY C# ARCHITECTURE
+
+Inspect real code before creating these classes.
+
+Suggested Level 66 responsibilities:
+
+- `SparkLevel66Coordinator.cs`
+- `SparkLevel66MachineSimulation.cs`
+- `SparkLevel66MotorDynamics.cs`
+- `SparkLevel66VariableFrequencyDrive.cs`
+- `SparkLevel66GearboxDynamics.cs`
+- `SparkLevel66ConveyorDynamics.cs`
+- `SparkLevel66BearingCondition.cs`
+- `SparkLevel66BearingFaultModel.cs`
+- `SparkLevel66GearWearModel.cs`
+- `SparkLevel66ShaftAlignment.cs`
+- `SparkLevel66LubricationModel.cs`
+- `SparkLevel66VibrationGenerator.cs`
+- `SparkLevel66VibrationSensor.cs`
+- `SparkLevel66FFTAnalyzer.cs`
+- `SparkLevel66ThermalModel.cs`
+- `SparkLevel66ShaftEncoder.cs`
+- `SparkLevel66MotorCurrentMonitor.cs`
+- `SparkLevel66ConditionMonitoring.cs`
+- `SparkLevel66FaultDiagnosis.cs`
+- `SparkLevel66DigitalTwin.cs`
+- `SparkLevel66MotorProtection.cs`
+- `SparkLevel66MaintenancePLC.cs`
+- `SparkLevel66SafetyController.cs`
+- `SparkLevel66LockoutController.cs`
+- `SparkLevel66BearingReplacement.cs`
+- `SparkLevel66MaintenanceController.cs`
+- `SparkLevel66HealthCertification.cs`
+- `SparkLevel66ObjectiveTracker.cs`
+- `SparkLevel66DiagnosticDashboard.cs`
+- `SparkLevel66Interaction.cs`
+- `SparkLevel66VisualRig.cs`
+
+These are suggested responsibilities, not verified APIs.
+
+Reuse existing working systems wherever possible.
+
+## SIMULATION UPDATE ORDER
+
+1. Validate topology.
+2. Read player commands.
+3. Evaluate control power.
+4. Evaluate safety inputs.
+5. Evaluate maintenance lockout.
+6. Process PLC commands.
+7. Update VFD output.
+8. Calculate motor torque.
+9. Calculate mechanical load.
+10. Integrate motor shaft speed.
+11. Integrate shaft angle.
+12. Calculate gearbox output speed and torque.
+13. Update conveyor motion.
+14. Update bearing condition.
+15. Update alignment and gear wear.
+16. Calculate mechanical losses.
+17. Update electrical current estimate.
+18. Update thermal states.
+19. Generate vibration samples.
+20. Update encoder measurements.
+21. Update temperature measurements.
+22. Update current measurements.
+23. Update vibration sensor buffers.
+24. Run FFT when a valid acquisition window is ready.
+25. Update condition monitoring.
+26. Generate fault diagnosis.
+27. Update digital twin estimates.
+28. Evaluate protection.
+29. Evaluate maintenance interactions.
+30. Record event history.
+31. Evaluate authoritative objectives.
+32. Update UI.
+33. Update visual animations.
+
+Use a consistent simulation timeline.
+
+Do not update the same mechanical state twice for one timestep.
+
+---
+
+# 37. LIVE AAA DIAGNOSTIC DASHBOARD
+
+Use:
+
+- `24_L66_VibrationFFTAnalyzer.fbx`
+- `26_L66_PredictiveMaintenanceAIUnit.fbx`
+- `27_L66_IndustrialDigitalTwinDisplay.fbx`
+- `37_L66_HolographicDiagnosticMonitor.fbx`
+
+Create live TextMeshPro displays and graphs.
+
+## REQUIRED READINGS
+
+- MAIN POWER
+- MOTOR STATUS
+- MOTOR DRIVE FREQUENCY
+- MOTOR RPM
+- MOTOR TORQUE
+- MOTOR CURRENT
+- ELECTRICAL POWER
+- GEARBOX INPUT RPM
+- GEARBOX OUTPUT RPM
+- GEAR RATIO
+- CONVEYOR SPEED
+- BEARING HEALTH ESTIMATE
+- DRIVE-END BEARING CONDITION
+- NON-DRIVE-END BEARING CONDITION
+- VIBRATION X RMS
+- VIBRATION Y RMS
+- VIBRATION Z RMS
+- FFT SPECTRUM
+- ROTATIONAL FREQUENCY
+- BPFO ESTIMATE
+- BPFI ESTIMATE
+- BSF ESTIMATE
+- FTF ESTIMATE
+- GEAR MESH FREQUENCY
+- MOTOR TEMPERATURE
+- BEARING TEMPERATURE
+- THERMAL CAMERA READING
+- SHAFT ALIGNMENT
+- GEAR WEAR ESTIMATE
+- LUBRICATION STATUS
+- DIAGNOSTIC CONFIDENCE
+- SENSOR VALIDITY
+- FAULT SEVERITY ESTIMATE
+- MAINTENANCE STATUS
+- DRIVE ISOLATION
+- SHAFT ZERO SPEED
+- LOCKOUT STATUS
+- REPLACEMENT BEARING STATUS
+- MOTOR PROTECTION
+- EVENT HISTORY
+- OBJECTIVES X/6
+
+## PLAYER CONTROLS
+
+- MAIN POWER
+- START MOTOR
+- STOP MOTOR
+- SET MOTOR RPM
+- SET MECHANICAL LOAD
+- CALIBRATE ENCODER
+- CALIBRATE VIBRATION SENSOR
+- CALIBRATE TEMPERATURE
+- RECORD BASELINE
+- ENABLE FFT
+- RUN DIAGNOSTIC TEST
+- ENABLE DIGITAL TWIN
+- INTRODUCE BEARING FAULT
+- RUN FAULT DIAGNOSIS
+- REQUEST MAINTENANCE
+- ISOLATE DRIVE
+- VERIFY ZERO SPEED
+- ENGAGE LOCKOUT
+- OPEN ENCLOSURE
+- REMOVE BEARING
+- INSTALL REPLACEMENT
+- CHECK ALIGNMENT
+- VERIFY ASSEMBLY TORQUE
+- CLOSE ENCLOSURE
+- RELEASE LOCKOUT
+- RESET PROTECTION
+- RESTART MOTOR
+- RUN HEALTH TEST
+- DISCONNECT VIBRATION FEEDBACK
+- RECALIBRATE SENSOR
+- RESET FAULT
+- FINAL CERTIFY
+
+Every button must perform an actual action.
+
+Do not create decorative controls that merely change labels.
+
+---
+
+# 38. AAA VISUAL IMPLEMENTATION
+
+Create a Level 66 visual adapter driven by authoritative gameplay state.
+
+## INITIAL MACHINE
+
+- Motor stationary.
+- Gearbox stationary.
+- Conveyor stopped.
+- Displays awaiting calibration.
+- Bearing modules installed.
+- Maintenance enclosure closed.
+- Diagnostic status IDLE.
+
+## HEALTHY BASELINE
+
+- Motor accelerates.
+- Rotor and coupling rotate.
+- Gearbox gears rotate at modeled ratios.
+- Conveyor moves.
+- Encoder disc rotates.
+- Vibration spectrum shows generated healthy signal.
+- Temperature evolves gradually.
+
+## BEARING DEGRADATION
+
+- Bearing condition worsens.
+- Additional vibration appears.
+- Fault-frequency peaks grow.
+- Friction and heat increase where modeled.
+- Motor load/current respond.
+- Digital twin reports warning based on evidence.
+
+## MAINTENANCE
+
+- Motor stops.
+- Drive isolates.
+- Lockout engages.
+- Safety door opens.
+- Bearing tool moves.
+- Damaged bearing is removed.
+- Replacement is installed.
+- Assembly and alignment are verified.
+
+## RECOVERY
+
+- Enclosure closes.
+- Safe restart occurs.
+- Motor accelerates.
+- Gearbox resumes operation.
+- Vibration decreases.
+- Temperature gradually returns toward normal.
+- Digital twin reflects valid measurements.
+
+## SENSOR FAILURE
+
+- Vibration feedback becomes invalid.
+- Condition monitor displays loss of feedback.
+- FFT analyzer rejects invalid data.
+- Required safety response occurs.
+- Certification becomes unavailable until repaired.
+
+## IMPORTANT
+
+Do not animate the physical machine independently of the simulation.
+
+Do not use a preauthored green HEALTHY animation as proof of repair.
+
+---
+
+# 39. UNITY EDITOR LEVEL CREATOR
+
+Create the menu item:
+
+`Tools/Project Spark/Levels/Create Level 66`
+
+The editor creator must generate or safely update:
+
+- `Level_66.asset`
+- `Level_66_Layout.prefab`
+- Level 66 machine configuration
+- Electrical wiring manifest
+- Terminal binding manifest
+- Component binding manifest
+- Motor/gearbox configuration
+- Bearing condition configuration
+- Diagnostic configuration
+- Maintenance interaction configuration
+- Safety configuration
+- Six objective definitions
+- Animation mappings
+- Validation report
+
+## REQUIRED EDITOR OPERATIONS
+
+1. Inspect existing Project Spark Editor infrastructure.
+2. Locate all 40 FBX models.
+3. Validate exact filenames.
+4. Validate import scale.
+5. Create/update level definition.
+6. Set ID to `level_66`.
+7. Set display name.
+8. Set subtitle.
+9. Create six authoritative objectives.
+10. Create/update layout prefab.
+11. Create `L66_HD_VISUAL_ART`.
+12. Instantiate all 40 FBXs.
+13. Preserve common-origin placement.
+14. Configure main motor.
+15. Configure motor stator/rotor visual structure.
+16. Configure gearbox.
+17. Configure gear assembly.
+18. Configure drive coupling.
+19. Configure both bearing locations.
+20. Configure damaged bearing item.
+21. Configure healthy replacement item.
+22. Configure conveyor.
+23. Configure drive roller.
+24. Configure VFD.
+25. Configure motor current sensing.
+26. Configure triaxial vibration sensor.
+27. Configure secondary vibration sensor.
+28. Configure shaft encoder.
+29. Configure bearing temperature.
+30. Configure motor temperature.
+31. Configure infrared camera.
+32. Configure lubrication monitoring.
+33. Configure alignment sensor.
+34. Configure gear wear sensor.
+35. Configure FFT analyzer.
+36. Configure condition monitoring.
+37. Configure diagnosis module.
+38. Configure digital twin.
+39. Configure motor protection.
+40. Configure maintenance PLC.
+41. Configure digital I/O.
+42. Configure bearing removal tool.
+43. Configure alignment gauge.
+44. Configure torque tool.
+45. Configure parts rack.
+46. Configure cooling system.
+47. Configure emergency stop/lockout.
+48. Configure diagnostic monitor.
+49. Configure safety enclosure.
+50. Configure regulated 5 V supply.
+51. Register exactly 110 terminal anchors.
+52. Create exactly 70 player-wire declarations.
+53. Register functional component IDs.
+54. Register terminal IDs.
+55. Configure fixed internal connections.
+56. Configure motor inertia.
+57. Configure torque/speed limits.
+58. Configure gearbox ratio.
+59. Configure mechanical losses.
+60. Configure bearing geometry.
+61. Configure bearing fault frequencies.
+62. Configure fault progression.
+63. Configure vibration sample rate.
+64. Configure FFT parameters.
+65. Configure thermal parameters.
+66. Configure current measurement.
+67. Configure baseline calibration.
+68. Configure diagnostic thresholds.
+69. Configure fault diagnosis rules.
+70. Configure replacement compatibility.
+71. Configure maintenance lockout.
+72. Configure safety interlocks.
+73. Configure final sensor feedback fault.
+74. Assign all 12 verified pivot mappings.
+75. Create live TextMeshPro displays.
+76. Configure gameplay controls.
+77. Bind six authoritative objectives.
+78. Detect missing references.
+79. Detect duplicate IDs.
+80. Detect conflicting simulation ownership.
+81. Generate validation report.
+82. Save definition and prefab.
+
+## EDITOR INTEGRATION
+
+Reuse:
+
+`SparkLevel66ArtPlacementEditor.cs`
+
+The supplied helper performs visual art placement only.
+
+It does not implement functional electrical terminals, mechanical dynamics, maintenance interactions, FFT analysis or objectives.
+
+Extend it safely or create a separate full level builder.
+
+Use actual Unity asset paths.
+
+Do not invent GUIDs.
+
+Use appropriate `AssetDatabase`, `PrefabUtility`, `SerializedObject`, Undo and asset-saving APIs.
+
+Make the builder idempotent.
+
+Do not duplicate equipment, terminal anchors or simulation controllers.
+
+---
+
+# 40. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 70 WIRES → VERIFY 110 TERMINALS → COMMISSION MOTOR DRIVE → CALIBRATE SHAFT ENCODER → CALIBRATE VIBRATION SENSORS → CALIBRATE THERMAL PROBES → CALIBRATE CURRENT MEASUREMENT → START MOTOR → ACCELERATE SHAFT → VERIFY GEARBOX POWER TRANSFER → RUN CONVEYOR → ACQUIRE HEALTHY VIBRATION SIGNAL → CALCULATE FFT → RECORD BASELINE → SYNCHRONIZE DIGITAL TWIN → INTRODUCE BEARING DEGRADATION → MEASURE VIBRATION INCREASE → MEASURE THERMAL RESPONSE → ANALYZE FAULT FREQUENCIES → IDENTIFY DAMAGED BEARING → REQUEST MAINTENANCE → STOP PRODUCTION → DECELERATE MOTOR → VERIFY ZERO SPEED → ISOLATE POWER → ENGAGE LOCKOUT → OPEN SAFETY ENCLOSURE → REMOVE DAMAGED BEARING → INSTALL HEALTHY REPLACEMENT → VERIFY ALIGNMENT → VERIFY ASSEMBLY TORQUE → CLOSE ENCLOSURE → RELEASE LOCKOUT SAFELY → RESET PROTECTION → RESTART MOTOR → RUN MULTI-SPEED TEST → VERIFY REDUCED VIBRATION → VERIFY THERMAL STABILITY → VERIFY GEARBOX OPERATION → CERTIFY MACHINE HEALTH → DISCONNECT VIBRATION SENSOR FEEDBACK → DETECT INVALID DATA → INHIBIT CERTIFICATION → RECONNECT SIGNAL → RECALIBRATE SENSOR → EXPLICITLY RESET FAULT → RUN FRESH HEALTH TEST → COMPLETE 6/6**
+
+## PLAYER-FACING MESSAGES
+
+- `BUILD THE DIAGNOSTIC NETWORK`
+- `CONNECT ALL 70 WIRES`
+- `VERIFY 110 TERMINALS`
+- `COMMISSION MOTOR DRIVE`
+- `CALIBRATE SHAFT ENCODER`
+- `CALIBRATE VIBRATION SENSORS`
+- `CALIBRATE THERMAL MEASUREMENT`
+- `START BASELINE TEST`
+- `MOTOR ACCELERATING`
+- `GEARBOX RUNNING`
+- `CONVEYOR OPERATION VERIFIED`
+- `ACQUIRING VIBRATION SAMPLES`
+- `FFT ANALYSIS READY`
+- `HEALTHY BASELINE RECORDED`
+- `DIGITAL TWIN SYNCHRONIZED`
+- `BEARING DEGRADATION DETECTED`
+- `VIBRATION INCREASING`
+- `BEARING TEMPERATURE RISING`
+- `COMPARE FAULT FREQUENCIES`
+- `DIAGNOSE FAILED COMPONENT`
+- `DAMAGED BEARING IDENTIFIED`
+- `REQUEST MAINTENANCE`
+- `STOP THE MACHINE`
+- `VERIFY ZERO SHAFT SPEED`
+- `ISOLATE DRIVE POWER`
+- `ENGAGE MAINTENANCE LOCKOUT`
+- `OPEN SAFETY ENCLOSURE`
+- `REMOVE DAMAGED BEARING`
+- `INSTALL REPLACEMENT BEARING`
+- `VERIFY SHAFT ALIGNMENT`
+- `VERIFY ASSEMBLY TORQUE`
+- `CLOSE SAFETY ENCLOSURE`
+- `RELEASE LOCKOUT`
+- `RESTART MOTOR`
+- `RUN MACHINE HEALTH TEST`
+- `VIBRATION RETURNING TO NORMAL`
+- `BEARING TEMPERATURE STABILIZING`
+- `MACHINE HEALTH VERIFIED`
+- `DISCONNECT VIBRATION FEEDBACK`
+- `VIBRATION SENSOR SIGNAL LOST`
+- `CONDITION MONITORING INVALID`
+- `RESTORE SENSOR CONNECTION`
+- `RECALIBRATE SENSOR`
+- `RESET LATCHED FAULT`
+- `FINAL HEALTH CERTIFICATION`
+- `LEVEL 66 COMPLETE`
+
+---
+
+# 41. TESTING AND DIAGNOSTICS
+
+Implement exact diagnostic messages for:
+
+- Incorrect W01–W70 wiring.
+- Missing terminal IDs.
+- Duplicate terminal IDs.
+- Invalid control power.
+- Missing control return.
+- Motor drive disconnected.
+- Motor not producing torque.
+- Motor RPM not changing.
+- Gearbox output inconsistent.
+- Conveyor not moving.
+- Encoder disconnected.
+- Encoder RPM invalid.
+- Vibration sensor disconnected.
+- Vibration sample timing invalid.
+- RMS calculation invalid.
+- FFT buffer incomplete.
+- FFT bins incorrect.
+- FFT frequency peaks inconsistent with signal.
+- Bearing frequency model invalid.
+- Bearing damage not influencing mechanical behavior.
+- Friction increasing without corresponding mechanical loss.
+- Motor current inconsistent with load.
+- Thermal model violating expected behavior.
+- Temperature probe disconnected.
+- IR measurement invalid.
+- Alignment sensor invalid.
+- Gear wear sensor invalid.
+- Digital twin using stale measurements.
+- Fault diagnosis reading hidden truth directly.
+- Healthy bearing misidentified.
+- Damaged bearing not detected.
+- Motor stop not completed.
+- Maintenance isolation invalid.
+- Shaft still rotating.
+- Lockout missing.
+- Enclosure opened unsafely.
+- Incorrect bearing removed.
+- Wrong replacement installed.
+- Replacement not mounted.
+- Alignment not verified.
+- Assembly torque invalid.
+- Motor restarted while locked out.
+- Sensor feedback lost.
+- Fault reset without repair.
+- Historical objectives incorrectly erased.
+- Manager stuck at 0/6 or 5/6.
+- Unity scene reload problems.
+- Earlier-level regressions.
+
+## REQUIRED TESTS
+
+1. Correct 70-wire topology.
+2. Exactly 110 terminals valid.
+3. Control power valid.
+4. Motor drive enabled.
+5. Motor produces actual torque.
+6. Motor shaft accelerates.
+7. Motor RPM measured.
+8. Gearbox input speed valid.
+9. Gearbox output speed valid.
+10. Gearbox ratio applied.
+11. Conveyor responds.
+12. Encoder pulses valid.
+13. Encoder RPM valid.
+14. Vibration X sensor valid.
+15. Vibration Y sensor valid.
+16. Vibration Z sensor valid.
+17. Secondary vibration sensor valid.
+18. Current sensor valid.
+19. Bearing temperature probe valid.
+20. Motor temperature probe valid.
+21. Thermal camera valid.
+22. Alignment sensor valid.
+23. Gear wear sensor valid.
+24. Lubrication sensor valid.
+25. Vibration samples collected.
+26. FFT calculated.
+27. FFT peak frequencies verified.
+28. Healthy baseline recorded.
+29. Digital twin synchronized.
+30. Bearing damage activated.
+31. Bearing vibration changes.
+32. Fault-related spectral components appear.
+33. Bearing mechanical losses change.
+34. Thermal behavior responds.
+35. Motor current responds consistently.
+36. Fault diagnosis identifies correct bearing.
+37. Alternative faults distinguishable.
+38. Maintenance requested.
+39. Motor stops physically.
+40. Zero-speed condition verified.
+41. Power isolation verified.
+42. Lockout engaged.
+43. Unsafe maintenance blocked.
+44. Safety enclosure opens only when permitted.
+45. Damaged bearing removable.
+46. Wrong component rejected.
+47. Replacement bearing inventory valid.
+48. Healthy bearing installed.
+49. Bearing mount verified.
+50. Alignment corrected.
+51. Assembly torque verified.
+52. Enclosure closes.
+53. Lockout released safely.
+54. Motor restart requires new command.
+55. Motor accelerates after repair.
+56. Vibration improves.
+57. Bearing fault-frequency energy decreases.
+58. Temperature stabilizes.
+59. Gearbox operates correctly.
+60. Multi-speed test succeeds.
+61. Load test succeeds.
+62. Health certification succeeds.
+63. Disconnect actual vibration feedback wire.
+64. Measurement becomes invalid.
+65. Condition monitoring reports fault.
+66. FFT rejects invalid data.
+67. Fault latches.
+68. Reconnect actual wire.
+69. Recalibrate sensor.
+70. Explicit reset succeeds.
+71. Fresh health test succeeds.
+72. Objective evaluator reaches 6/6.
+73. Level progression succeeds.
+74. Levels 1–65 remain unaffected.
+
+Only report tests as passed when actually executed.
+
+---
+
+# 42. REQUIRED DOWNLOADABLE DELIVERABLES
+
+Create a complete Level 66 Unity implementation ZIP containing:
+
+- Full Level 66 runtime C# scripts.
+- Authoritative machine simulation.
+- Motor dynamics.
+- VFD control.
+- Gearbox dynamics.
+- Conveyor load.
+- Bearing condition model.
+- Bearing degradation model.
+- Gear wear model.
+- Shaft alignment model.
+- Lubrication state model.
+- Vibration signal generator.
+- Triaxial vibration sensing.
+- Secondary vibration sensing.
+- RMS vibration calculation.
+- FFT analyzer.
+- Fault-frequency calculations.
+- Shaft encoder.
+- Motor current measurement.
+- Thermal model.
+- Bearing temperature sensing.
+- Motor temperature sensing.
+- Infrared camera integration.
+- Condition monitoring.
+- Diagnostic inference.
+- Digital twin.
+- Motor protection.
+- Maintenance PLC.
+- Digital I/O.
+- Emergency stop.
+- Lockout isolation.
+- Safety enclosure interaction.
+- Bearing removal interaction.
+- Bearing replacement interaction.
+- Replacement inventory integration.
+- Alignment verification.
+- Assembly torque verification.
+- Recommissioning.
+- Post-repair health certification.
+- Final sensor disconnection.
+- Sensor repair/recalibration.
+- Fault reset.
+- Six-objective evaluator integration.
+- Unity Editor Level 66 creator.
+- Level definition creator or asset.
+- Layout prefab creator.
+- Exact W01–W70 wiring manifest.
+- 110-terminal binding manifest.
+- Component binding manifest.
+- Twelve verified animation pivot mappings.
+- Motor configuration.
+- Gearbox configuration.
+- Bearing configuration.
+- FFT configuration.
+- Thermal configuration.
+- Diagnosis configuration.
+- Maintenance configuration.
+- Safety configuration.
+- Inspector setup instructions.
+- Player gameplay walkthrough.
+- Objective verification checklist.
+- Diagnostics and troubleshooting guide.
+- Actual test report.
+
+Reuse:
+
+`ProjectSpark_Level66_HD_AAA_Models.zip`
+
+Do not regenerate the approved 40-model art collection without a specific compatibility need.
+
+Only provide download links to files actually created and verified.
+
+Do not claim Unity compilation, Play Mode success or 6/6 completion unless actually tested.
+
+---
+
+# 43. FINAL EXECUTION REQUIREMENTS
+
+**IMPLEMENT LEVEL 66 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect my actual Project Spark Unity source code and Level 66 art package.
+
+Then:
+
+1. Reuse compatible electrical and mechanical systems.
+2. Integrate all 40 individual FBX models.
+3. Finalize exactly 70 player-created wires.
+4. Create exactly 110 functional terminals.
+5. Implement motor electrical/mechanical dynamics.
+6. Implement actual shaft speed and torque.
+7. Implement VFD control.
+8. Implement gearbox power transfer.
+9. Implement conveyor load.
+10. Implement shaft encoder.
+11. Implement bearing condition.
+12. Implement bearing damage progression.
+13. Implement shaft misalignment.
+14. Implement gear wear.
+15. Implement lubrication influence.
+16. Implement vibration signal generation.
+17. Implement triaxial vibration sensing.
+18. Implement RMS vibration.
+19. Implement FFT analysis.
+20. Implement bearing fault-frequency calculations.
+21. Implement current sensing.
+22. Implement thermal dynamics.
+23. Implement temperature probes.
+24. Implement infrared measurement.
+25. Implement condition monitoring.
+26. Implement rule-based or properly supported AI diagnosis.
+27. Implement live digital twin.
+28. Implement motor protection.
+29. Implement maintenance PLC.
+30. Implement emergency stop.
+31. Implement verified isolation.
+32. Implement lockout.
+33. Implement safety enclosure.
+34. Implement actual damaged-bearing removal.
+35. Implement physical replacement item installation.
+36. Implement shaft alignment verification.
+37. Implement assembly torque verification.
+38. Implement safe recommissioning.
+39. Implement post-repair certification.
+40. Implement actual vibration sensor wire disconnection.
+41. Implement invalid-feedback detection.
+42. Implement fault repair and recalibration.
+43. Implement explicit reset.
+44. Implement final fresh machine-health test.
+45. Integrate all six authoritative objectives.
+46. Create one-click Unity Editor Level 66 builder.
+47. Integrate all 12 verified animation pivots.
+48. Create live diagnostic dashboard.
+49. Implement detailed diagnostics.
+50. Run feasible automated and Play Mode tests.
+51. Package and verify deliverables.
+
+Do not ask for approval of the already-approved Level 66 design.
+
+Do not fabricate RPM, torque, gearbox speed, motor current, vibration samples, FFT peaks, bearing fault frequencies, temperature, machine diagnosis, maintenance completion, safety state or objective completion.
+
+If an existing Project Spark API cannot be verified, implement safely independent functionality where practical and clearly report the unresolved integration dependency.
+
+---
+
+# 44. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect all 70 required wires.
+2. Validate all 110 functional terminals.
+3. Commission the motor and VFD.
+4. Calibrate the shaft encoder.
+5. Calibrate vibration sensors.
+6. Calibrate thermal and current measurements.
+7. Start the motor and conveyor.
+8. Establish an actual healthy baseline.
+9. Acquire vibration samples.
+10. Calculate real FFT spectra.
+11. Synchronize the digital twin.
+12. Introduce bearing degradation.
+13. Observe real simulated vibration changes.
+14. Observe bearing-related spectral components.
+15. Observe thermal response.
+16. Observe additional mechanical losses.
+17. Diagnose the correct fault.
+18. Stop the motor safely.
+19. Verify zero hazardous motion.
+20. Isolate drive power.
+21. Engage maintenance lockout.
+22. Open the safety enclosure.
+23. Remove the actual damaged bearing.
+24. Install the healthy replacement.
+25. Verify shaft alignment.
+26. Verify assembly torque.
+27. Restore the safety enclosure.
+28. Safely release lockout.
+29. Restart the motor.
+30. Perform multiple speed/load tests.
+31. Verify measured vibration improvement.
+32. Verify thermal stabilization.
+33. Verify gearbox and conveyor operation.
+34. Certify repaired machine health.
+35. Disconnect the actual vibration feedback wire.
+36. Detect invalid sensor measurements.
+37. Inhibit unsafe certification.
+38. Reconnect the wire.
+39. Recalibrate the sensor.
+40. Explicitly reset the fault.
+41. Perform a fresh successful health test.
+42. Complete all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 66.**
+
+The player must learn real motor dynamics, gearbox mechanics, bearing degradation, vibration measurement, signal processing, FFT spectral diagnosis, condition monitoring, digital twins, safe maintenance and verified repair through meaningful engineering gameplay.
+
+**FINAL GOAL: A COMPLETE, POLISHED, UNITY-READY, AAA-QUALITY AND ACTUALLY PLAYABLE LEVEL 66 — SAVE THE FACTORY.**
