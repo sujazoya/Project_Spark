@@ -146,7 +146,7 @@ namespace ProjectSpark.EditorTools
         private static readonly Dictionary<string, string> Palette = new()
         {
             {"red","EE485C"},{"blue","1671E2"},{"amber","FFA82B"},{"violet","A282FF"},
-            {"mint","34F6C5"},{"cyan","23DAFD"},{"void","07111C"},{"white","D4F5FF"}
+            {"mint","34F6C5"},{"cyan","23DAFD"},{"void","07111C"},{"white","D4F5FF"},{"glass","498BA8"}
         };
 
         [MenuItem("Tools/Project Spark/Levels/Create Level 66")]
@@ -524,13 +524,19 @@ namespace ProjectSpark.EditorTools
                 existing.GetColor("_BaseColor") == savedColor) return existing;
             ColorUtility.TryParseHtmlString("#" + (Palette.TryGetValue(key, out var tint) ? tint : "9FB3C8"), out var color);
             var material = existing != null ? existing : new Material(shader) { name = "L66 " + key };
-            bool metal = key is "chrome" or "titanium" or "steel" or "gold" or "copper" or "aluminum";
+            bool metal = key is "chrome" or "titanium" or "steel" or "gold" or "copper" or "aluminum" or "tintCFDCE2" or "tintA4B8C4" or "tintE36C27" or "tintDC9C2F";
             material.SetFloat("_Metallic", metal ? .66f : .02f);
             material.SetFloat("_Smoothness", metal ? .66f : key == "glass" ? .12f : .35f);
             if (key is "green" or "cyan" or "red" or "blue" or "orange" or "amber" or "mint" or "warm" or "ice")
             {
                 material.EnableKeyword("_EMISSION");
                 material.SetColor("_EmissionColor", color * .66f);
+            }
+            else if (key.StartsWith("tint", StringComparison.Ordinal))
+            {
+                material.EnableKeyword("_EMISSION");
+                float strength = key is "tint19CCEF" or "tint27D680" or "tintFFCE34" ? .30f : .12f;
+                material.SetColor("_EmissionColor", color * strength);
             }
             if (key is "glass" or "glass_body" or "glass_soft" or "acrylic" or "glassblue" or "film" or "Glass" or "guardglass")
             {
@@ -555,6 +561,7 @@ namespace ProjectSpark.EditorTools
     }
 }
 #endif
+
 
 
 
