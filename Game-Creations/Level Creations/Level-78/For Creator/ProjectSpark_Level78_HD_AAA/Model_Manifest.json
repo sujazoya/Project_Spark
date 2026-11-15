@@ -1,0 +1,1681 @@
+{
+  "level_id": "level_78",
+  "title": "Seal the Signal",
+  "individual_models": 64,
+  "individual_glbs": 64,
+  "assembled_fbx": "Models/Level78_Complete_ArtKit_Showcase.fbx",
+  "assembled_glb": "GLB/Level78_Complete_ArtKit_Showcase.glb",
+  "animation_parent_pivot_groups": 46,
+  "planned_player_wires": 118,
+  "planned_unique_functional_terminals": 182,
+  "critical_feedback_wire": "W083",
+  "critical_feedback_source": "L78_DielectricLeakageCurrentElectrometer",
+  "critical_feedback_destination": "L78_DielectricReliabilityController",
+  "workstation_nominal_width_m": 21.2,
+  "actual_equipment_bbox_m": [
+    [
+      -10.575,
+      -0.088,
+      -6.17
+    ],
+    [
+      10.575,
+      6.5822,
+      6.1
+    ]
+  ],
+  "actual_equipment_width_m": 21.15,
+  "individual_triangle_count": 180996,
+  "individual_mesh_parts": 5621,
+  "models": [
+    {
+      "index": 0,
+      "name": "L78_IndustrialDielectricProtectionBase",
+      "file": "00_L78_IndustrialDielectricProtectionBase.fbx",
+      "glb": "00_L78_IndustrialDielectricProtectionBase.glb",
+      "triangle_count": 3216,
+      "mesh_parts": 115,
+      "bbox_min": [
+        -10.575,
+        0.04,
+        -6.1
+      ],
+      "bbox_max": [
+        10.575,
+        1.73,
+        6.1
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 1,
+      "name": "L78_TransparentMultichamberSafetyEnclosure",
+      "file": "01_L78_TransparentMultichamberSafetyEnclosure.fbx",
+      "glb": "01_L78_TransparentMultichamberSafetyEnclosure.glb",
+      "triangle_count": 2104,
+      "mesh_parts": 106,
+      "bbox_min": [
+        -10.0,
+        0.87,
+        -5.8
+      ],
+      "bbox_max": [
+        10.0,
+        5.2,
+        4.2747
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 2,
+      "name": "L78_InterconnectWaferCassette",
+      "file": "02_L78_InterconnectWaferCassette.fbx",
+      "glb": "02_L78_InterconnectWaferCassette.glb",
+      "triangle_count": 6612,
+      "mesh_parts": 45,
+      "bbox_min": [
+        -9.825,
+        -0.088,
+        2.675
+      ],
+      "bbox_max": [
+        -8.175,
+        2.385,
+        4.225
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 3,
+      "name": "L78_PlanarizedCopperInterconnectWafer",
+      "file": "03_L78_PlanarizedCopperInterconnectWafer.fbx",
+      "glb": "03_L78_PlanarizedCopperInterconnectWafer.glb",
+      "triangle_count": 1932,
+      "mesh_parts": 115,
+      "bbox_min": [
+        -8.39,
+        2.02,
+        2.38
+      ],
+      "bbox_max": [
+        -6.85,
+        2.0725,
+        3.92
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 4,
+      "name": "L78_CopperInterconnectLayerHologram",
+      "file": "04_L78_CopperInterconnectLayerHologram.fbx",
+      "glb": "04_L78_CopperInterconnectLayerHologram.glb",
+      "triangle_count": 3024,
+      "mesh_parts": 72,
+      "bbox_min": [
+        -6.15,
+        4.22,
+        2.7925
+      ],
+      "bbox_max": [
+        -4.15,
+        5.72,
+        2.9025
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 5,
+      "name": "L78_HighVacuumWaferLoadLock",
+      "file": "05_L78_HighVacuumWaferLoadLock.fbx",
+      "glb": "05_L78_HighVacuumWaferLoadLock.glb",
+      "triangle_count": 1944,
+      "mesh_parts": 50,
+      "bbox_min": [
+        -9.39,
+        1.35,
+        0.16
+      ],
+      "bbox_max": [
+        -7.11,
+        2.945,
+        2.44
+      ],
+      "rig_groups": [
+        "ANIM_LOADLOCK_DOOR"
+      ],
+      "animation_pivots": {
+        "ANIM_LOADLOCK_DOOR": [
+          -8.45,
+          2.0,
+          1.55
+        ]
+      }
+    },
+    {
+      "index": 6,
+      "name": "L78_PrecisionVacuumGateValve",
+      "file": "06_L78_PrecisionVacuumGateValve.fbx",
+      "glb": "06_L78_PrecisionVacuumGateValve.glb",
+      "triangle_count": 684,
+      "mesh_parts": 11,
+      "bbox_min": [
+        -6.795,
+        1.41,
+        -1.49
+      ],
+      "bbox_max": [
+        -6.105,
+        3.7,
+        0.39
+      ],
+      "rig_groups": [
+        "ANIM_GATE_VALVE"
+      ],
+      "animation_pivots": {
+        "ANIM_GATE_VALVE": [
+          -6.45,
+          2.35,
+          -0.55
+        ]
+      }
+    },
+    {
+      "index": 7,
+      "name": "L78_CentralVacuumTransferHub",
+      "file": "07_L78_CentralVacuumTransferHub.fbx",
+      "glb": "07_L78_CentralVacuumTransferHub.glb",
+      "triangle_count": 2000,
+      "mesh_parts": 18,
+      "bbox_min": [
+        -1.68,
+        1.41,
+        -2.23
+      ],
+      "bbox_max": [
+        1.68,
+        3.425,
+        1.13
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 8,
+      "name": "L78_MultiAxisVacuumTransferRobot",
+      "file": "08_L78_MultiAxisVacuumTransferRobot.fbx",
+      "glb": "08_L78_MultiAxisVacuumTransferRobot.glb",
+      "triangle_count": 856,
+      "mesh_parts": 21,
+      "bbox_min": [
+        -0.6,
+        1.59,
+        -1.14671
+      ],
+      "bbox_max": [
+        1.865,
+        2.395,
+        0.04671
+      ],
+      "rig_groups": [
+        "ANIM_TRANSFER_ROBOT_BASE",
+        "ANIM_TRANSFER_ROBOT_ARM",
+        "ANIM_TRANSFER_ROBOT_BLADE"
+      ],
+      "animation_pivots": {
+        "ANIM_TRANSFER_ROBOT_BASE": [
+          0,
+          1.7,
+          -0.55
+        ],
+        "ANIM_TRANSFER_ROBOT_ARM": [
+          0.25,
+          2.2,
+          -0.55
+        ],
+        "ANIM_TRANSFER_ROBOT_BLADE": [
+          1.2,
+          2.3,
+          -0.55
+        ]
+      }
+    },
+    {
+      "index": 9,
+      "name": "L78_OpticalWaferAlignmentStage",
+      "file": "09_L78_OpticalWaferAlignmentStage.fbx",
+      "glb": "09_L78_OpticalWaferAlignmentStage.glb",
+      "triangle_count": 5008,
+      "mesh_parts": 209,
+      "bbox_min": [
+        -8.66027,
+        0.2475,
+        1.18
+      ],
+      "bbox_max": [
+        -6.43973,
+        2.4674,
+        2.92
+      ],
+      "rig_groups": [
+        "ANIM_WAFER_ALIGNER"
+      ],
+      "animation_pivots": {
+        "ANIM_WAFER_ALIGNER": [
+          -7.55,
+          2.04,
+          2.05
+        ]
+      }
+    },
+    {
+      "index": 10,
+      "name": "L78_InterconnectSurfaceConditionScanner",
+      "file": "10_L78_InterconnectSurfaceConditionScanner.fbx",
+      "glb": "10_L78_InterconnectSurfaceConditionScanner.glb",
+      "triangle_count": 1076,
+      "mesh_parts": 45,
+      "bbox_min": [
+        -7.845,
+        0.175,
+        2.725
+      ],
+      "bbox_max": [
+        -6.495,
+        2.2105,
+        3.9426
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 11,
+      "name": "L78_CopperSurfacePreconditioningModule",
+      "file": "11_L78_CopperSurfacePreconditioningModule.fbx",
+      "glb": "11_L78_CopperSurfacePreconditioningModule.glb",
+      "triangle_count": 920,
+      "mesh_parts": 13,
+      "bbox_min": [
+        -7.66,
+        1.4,
+        1.16
+      ],
+      "bbox_max": [
+        -5.98,
+        3.1453,
+        2.84
+      ],
+      "rig_groups": [
+        "ANIM_PRECONDITION_SHUTTER"
+      ],
+      "animation_pivots": {
+        "ANIM_PRECONDITION_SHUTTER": [
+          -6.82,
+          2.4,
+          2.0
+        ]
+      }
+    },
+    {
+      "index": 12,
+      "name": "L78_CopperCapPECVDReactor",
+      "file": "12_L78_CopperCapPECVDReactor.fbx",
+      "glb": "12_L78_CopperCapPECVDReactor.glb",
+      "triangle_count": 15036,
+      "mesh_parts": 440,
+      "bbox_min": [
+        -7.4768,
+        0.055,
+        -2.50943
+      ],
+      "bbox_max": [
+        -3.2232,
+        3.9875,
+        1.40943
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 13,
+      "name": "L78_CopperCapReactorLid",
+      "file": "13_L78_CopperCapReactorLid.fbx",
+      "glb": "13_L78_CopperCapReactorLid.glb",
+      "triangle_count": 1552,
+      "mesh_parts": 34,
+      "bbox_min": [
+        -7.19,
+        3.76,
+        -2.39
+      ],
+      "bbox_max": [
+        -3.51,
+        4.4,
+        1.29
+      ],
+      "rig_groups": [
+        "ANIM_CAP_CHAMBER_LID"
+      ],
+      "animation_pivots": {
+        "ANIM_CAP_CHAMBER_LID": [
+          -5.35,
+          3.95,
+          -0.55
+        ]
+      }
+    },
+    {
+      "index": 14,
+      "name": "L78_CeramicCapGasShowerhead",
+      "file": "14_L78_CeramicCapGasShowerhead.fbx",
+      "glb": "14_L78_CeramicCapGasShowerhead.glb",
+      "triangle_count": 3056,
+      "mesh_parts": 82,
+      "bbox_min": [
+        -6.67,
+        2.9975,
+        -1.87
+      ],
+      "bbox_max": [
+        -4.03,
+        3.26,
+        0.77
+      ],
+      "rig_groups": [
+        "ANIM_CAP_SHOWERHEAD"
+      ],
+      "animation_pivots": {
+        "ANIM_CAP_SHOWERHEAD": [
+          -5.35,
+          3.14,
+          -0.55
+        ]
+      }
+    },
+    {
+      "index": 15,
+      "name": "L78_CapPlasmaRFSourceAssembly",
+      "file": "15_L78_CapPlasmaRFSourceAssembly.fbx",
+      "glb": "15_L78_CapPlasmaRFSourceAssembly.glb",
+      "triangle_count": 2128,
+      "mesh_parts": 30,
+      "bbox_min": [
+        -6.59,
+        2.67062,
+        -1.79
+      ],
+      "bbox_max": [
+        -4.11,
+        3.115,
+        0.69
+      ],
+      "rig_groups": [
+        "ANIM_CAP_RF_PLASMA"
+      ],
+      "animation_pivots": {
+        "ANIM_CAP_RF_PLASMA": [
+          -5.35,
+          2.85,
+          -0.55
+        ]
+      }
+    },
+    {
+      "index": 16,
+      "name": "L78_CapRFMatchingNetwork",
+      "file": "16_L78_CapRFMatchingNetwork.fbx",
+      "glb": "16_L78_CapRFMatchingNetwork.glb",
+      "triangle_count": 5540,
+      "mesh_parts": 160,
+      "bbox_min": [
+        -8.969,
+        0.7,
+        -2.7528
+      ],
+      "bbox_max": [
+        -6.931,
+        2.3525,
+        -1.406
+      ],
+      "rig_groups": [
+        "ANIM_CAP_RF_MATCHING"
+      ],
+      "animation_pivots": {
+        "ANIM_CAP_RF_MATCHING": [
+          -7.95,
+          1.82,
+          -1.95
+        ]
+      }
+    },
+    {
+      "index": 17,
+      "name": "L78_CapElectrodeDistributionAssembly",
+      "file": "17_L78_CapElectrodeDistributionAssembly.fbx",
+      "glb": "17_L78_CapElectrodeDistributionAssembly.glb",
+      "triangle_count": 1288,
+      "mesh_parts": 26,
+      "bbox_min": [
+        -6.53,
+        2.745,
+        -1.73
+      ],
+      "bbox_max": [
+        -4.17,
+        3.127,
+        0.63
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 18,
+      "name": "L78_CapHeatedWaferSusceptor",
+      "file": "18_L78_CapHeatedWaferSusceptor.fbx",
+      "glb": "18_L78_CapHeatedWaferSusceptor.glb",
+      "triangle_count": 2520,
+      "mesh_parts": 66,
+      "bbox_min": [
+        -6.43,
+        1.935,
+        -1.63
+      ],
+      "bbox_max": [
+        -4.27,
+        2.39025,
+        0.53
+      ],
+      "rig_groups": [
+        "ANIM_CAP_HEATED_SUSCEPTOR",
+        "ANIM_CAP_WAFER_ROTATION"
+      ],
+      "animation_pivots": {
+        "ANIM_CAP_HEATED_SUSCEPTOR": [
+          -5.35,
+          2.12,
+          -0.55
+        ],
+        "ANIM_CAP_WAFER_ROTATION": [
+          -5.35,
+          2.23,
+          -0.55
+        ]
+      }
+    },
+    {
+      "index": 19,
+      "name": "L78_CapVacuumExhaustThrottle",
+      "file": "19_L78_CapVacuumExhaustThrottle.fbx",
+      "glb": "19_L78_CapVacuumExhaustThrottle.glb",
+      "triangle_count": 708,
+      "mesh_parts": 18,
+      "bbox_min": [
+        -7.8068,
+        0.99787,
+        -1.47
+      ],
+      "bbox_max": [
+        -6.73,
+        2.31639,
+        -0.23801
+      ],
+      "rig_groups": [
+        "ANIM_CAP_EXHAUST_THROTTLE"
+      ],
+      "animation_pivots": {
+        "ANIM_CAP_EXHAUST_THROTTLE": [
+          -7.05,
+          1.4,
+          -1.15
+        ]
+      }
+    },
+    {
+      "index": 20,
+      "name": "L78_CapPlasmaSheathVisualization",
+      "file": "20_L78_CapPlasmaSheathVisualization.fbx",
+      "glb": "20_L78_CapPlasmaSheathVisualization.glb",
+      "triangle_count": 544,
+      "mesh_parts": 17,
+      "bbox_min": [
+        -6.55653,
+        2.3966,
+        -1.77208
+      ],
+      "bbox_max": [
+        -4.12287,
+        2.8534,
+        0.67208
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 21,
+      "name": "L78_VirtualCapPrecursorCartridge",
+      "file": "21_L78_VirtualCapPrecursorCartridge.fbx",
+      "glb": "21_L78_VirtualCapPrecursorCartridge.glb",
+      "triangle_count": 2856,
+      "mesh_parts": 60,
+      "bbox_min": [
+        -9.363,
+        0.9875,
+        -3.35
+      ],
+      "bbox_max": [
+        -7.9,
+        2.62,
+        -1.9926
+      ],
+      "rig_groups": [
+        "ANIM_CAP_PRECURSOR_VALVE"
+      ],
+      "animation_pivots": {
+        "ANIM_CAP_PRECURSOR_VALVE": [
+          -8.55,
+          2.35,
+          -2.7
+        ]
+      }
+    },
+    {
+      "index": 22,
+      "name": "L78_CapPrecursorDeliveryManifold",
+      "file": "22_L78_CapPrecursorDeliveryManifold.fbx",
+      "glb": "22_L78_CapPrecursorDeliveryManifold.glb",
+      "triangle_count": 9932,
+      "mesh_parts": 267,
+      "bbox_min": [
+        -8.4125,
+        0.91,
+        -3.07
+      ],
+      "bbox_max": [
+        -6.5075,
+        3.305,
+        -2.0086
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 23,
+      "name": "L78_CapGasMassFlowController",
+      "file": "23_L78_CapGasMassFlowController.fbx",
+      "glb": "23_L78_CapGasMassFlowController.glb",
+      "triangle_count": 3144,
+      "mesh_parts": 139,
+      "bbox_min": [
+        -8.03653,
+        2.07363,
+        -2.59625
+      ],
+      "bbox_max": [
+        -6.366,
+        3.52,
+        -0.966
+      ],
+      "rig_groups": [
+        "ANIM_CAP_GAS_FLOW"
+      ],
+      "animation_pivots": {
+        "ANIM_CAP_GAS_FLOW": [
+          -7.6,
+          2.7,
+          -2.15
+        ]
+      }
+    },
+    {
+      "index": 24,
+      "name": "L78_CapFilmThicknessInterferometer",
+      "file": "24_L78_CapFilmThicknessInterferometer.fbx",
+      "glb": "24_L78_CapFilmThicknessInterferometer.glb",
+      "triangle_count": 1408,
+      "mesh_parts": 44,
+      "bbox_min": [
+        -6.35,
+        3.7925,
+        0.58
+      ],
+      "bbox_max": [
+        -4.35,
+        4.552,
+        1.1102
+      ],
+      "rig_groups": [
+        "ANIM_CAP_THICKNESS_SCAN"
+      ],
+      "animation_pivots": {
+        "ANIM_CAP_THICKNESS_SCAN": [
+          -5.35,
+          4.3,
+          0.72
+        ]
+      }
+    },
+    {
+      "index": 25,
+      "name": "L78_CapDepositionUniformityMonitor",
+      "file": "25_L78_CapDepositionUniformityMonitor.fbx",
+      "glb": "25_L78_CapDepositionUniformityMonitor.glb",
+      "triangle_count": 3216,
+      "mesh_parts": 88,
+      "bbox_min": [
+        -6.25,
+        3.95,
+        2.0225
+      ],
+      "bbox_max": [
+        -4.25,
+        5.45,
+        2.287
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 26,
+      "name": "L78_CapContinuityInspectionModule",
+      "file": "26_L78_CapContinuityInspectionModule.fbx",
+      "glb": "26_L78_CapContinuityInspectionModule.glb",
+      "triangle_count": 1744,
+      "mesh_parts": 85,
+      "bbox_min": [
+        -7.885,
+        1.103,
+        1.5784
+      ],
+      "bbox_max": [
+        -6.615,
+        2.6505,
+        2.632
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 27,
+      "name": "L78_HolographicCopperDiffusionShield",
+      "file": "27_L78_HolographicCopperDiffusionShield.fbx",
+      "glb": "27_L78_HolographicCopperDiffusionShield.glb",
+      "triangle_count": 3276,
+      "mesh_parts": 93,
+      "bbox_min": [
+        -6.5,
+        4.15,
+        2.6525
+      ],
+      "bbox_max": [
+        -4.5,
+        5.65,
+        2.7985
+      ],
+      "rig_groups": [
+        "ANIM_CAP_COVERAGE_HOLOGRAM"
+      ],
+      "animation_pivots": {
+        "ANIM_CAP_COVERAGE_HOLOGRAM": [
+          -5.5,
+          4.9,
+          2.68
+        ]
+      }
+    },
+    {
+      "index": 28,
+      "name": "L78_LowKPECVDReactor",
+      "file": "28_L78_LowKPECVDReactor.fbx",
+      "glb": "28_L78_LowKPECVDReactor.glb",
+      "triangle_count": 15156,
+      "mesh_parts": 450,
+      "bbox_min": [
+        3.1732,
+        0.055,
+        -2.50943
+      ],
+      "bbox_max": [
+        7.4268,
+        4.1225,
+        1.40943
+      ],
+      "rig_groups": [
+        "ANIM_LOWK_CHAMBER_LID"
+      ],
+      "animation_pivots": {
+        "ANIM_LOWK_CHAMBER_LID": [
+          5.3,
+          3.95,
+          -0.55
+        ]
+      }
+    },
+    {
+      "index": 29,
+      "name": "L78_LowKDielectricGasShowerhead",
+      "file": "29_L78_LowKDielectricGasShowerhead.fbx",
+      "glb": "29_L78_LowKDielectricGasShowerhead.glb",
+      "triangle_count": 3184,
+      "mesh_parts": 86,
+      "bbox_min": [
+        3.89,
+        2.994,
+        -1.96
+      ],
+      "bbox_max": [
+        6.71,
+        3.305,
+        0.86
+      ],
+      "rig_groups": [
+        "ANIM_LOWK_SHOWERHEAD"
+      ],
+      "animation_pivots": {
+        "ANIM_LOWK_SHOWERHEAD": [
+          5.3,
+          3.14,
+          -0.55
+        ]
+      }
+    },
+    {
+      "index": 30,
+      "name": "L78_LowKPlasmaSource",
+      "file": "30_L78_LowKPlasmaSource.fbx",
+      "glb": "30_L78_LowKPlasmaSource.glb",
+      "triangle_count": 2048,
+      "mesh_parts": 31,
+      "bbox_min": [
+        4.1,
+        2.61524,
+        -1.75
+      ],
+      "bbox_max": [
+        6.5,
+        3.078,
+        0.65
+      ],
+      "rig_groups": [
+        "ANIM_LOWK_RF_PLASMA"
+      ],
+      "animation_pivots": {
+        "ANIM_LOWK_RF_PLASMA": [
+          5.3,
+          2.86,
+          -0.55
+        ]
+      }
+    },
+    {
+      "index": 31,
+      "name": "L78_LowKRFMatchingAssembly",
+      "file": "31_L78_LowKRFMatchingAssembly.fbx",
+      "glb": "31_L78_LowKRFMatchingAssembly.glb",
+      "triangle_count": 5540,
+      "mesh_parts": 160,
+      "bbox_min": [
+        6.847,
+        0.7,
+        -2.718
+      ],
+      "bbox_max": [
+        8.853,
+        2.3525,
+        -1.406
+      ],
+      "rig_groups": [
+        "ANIM_LOWK_MATCHING"
+      ],
+      "animation_pivots": {
+        "ANIM_LOWK_MATCHING": [
+          7.85,
+          1.82,
+          -1.95
+        ]
+      }
+    },
+    {
+      "index": 32,
+      "name": "L78_LowKHeatedWaferChuck",
+      "file": "32_L78_LowKHeatedWaferChuck.fbx",
+      "glb": "32_L78_LowKHeatedWaferChuck.glb",
+      "triangle_count": 2280,
+      "mesh_parts": 48,
+      "bbox_min": [
+        4.13601,
+        1.66896,
+        -1.71437
+      ],
+      "bbox_max": [
+        6.46399,
+        2.27878,
+        0.61437
+      ],
+      "rig_groups": [
+        "ANIM_LOWK_SUSCEPTOR"
+      ],
+      "animation_pivots": {
+        "ANIM_LOWK_SUSCEPTOR": [
+          5.3,
+          2.1,
+          -0.55
+        ]
+      }
+    },
+    {
+      "index": 33,
+      "name": "L78_VirtualLowKPrecursorCartridge",
+      "file": "33_L78_VirtualLowKPrecursorCartridge.fbx",
+      "glb": "33_L78_VirtualLowKPrecursorCartridge.glb",
+      "triangle_count": 2984,
+      "mesh_parts": 60,
+      "bbox_min": [
+        7.837,
+        1.0075,
+        -3.37
+      ],
+      "bbox_max": [
+        9.3,
+        2.595,
+        -2.0126
+      ],
+      "rig_groups": [
+        "ANIM_LOWK_PRECURSOR_VALVE"
+      ],
+      "animation_pivots": {
+        "ANIM_LOWK_PRECURSOR_VALVE": [
+          8.65,
+          2.37,
+          -2.72
+        ]
+      }
+    },
+    {
+      "index": 34,
+      "name": "L78_VirtualPorogenCartridge",
+      "file": "34_L78_VirtualPorogenCartridge.fbx",
+      "glb": "34_L78_VirtualPorogenCartridge.glb",
+      "triangle_count": 2984,
+      "mesh_parts": 60,
+      "bbox_min": [
+        8.737,
+        1.0075,
+        -3.37
+      ],
+      "bbox_max": [
+        10.2,
+        2.595,
+        -2.0126
+      ],
+      "rig_groups": [
+        "ANIM_LOWK_POROGEN_VALVE"
+      ],
+      "animation_pivots": {
+        "ANIM_LOWK_POROGEN_VALVE": [
+          9.55,
+          2.37,
+          -2.72
+        ]
+      }
+    },
+    {
+      "index": 35,
+      "name": "L78_DualChannelLowKGasManifold",
+      "file": "35_L78_DualChannelLowKGasManifold.fbx",
+      "glb": "35_L78_DualChannelLowKGasManifold.glb",
+      "triangle_count": 1824,
+      "mesh_parts": 55,
+      "bbox_min": [
+        6.529,
+        0.73,
+        -2.611
+      ],
+      "bbox_max": [
+        8.9,
+        3.145,
+        -1.229
+      ],
+      "rig_groups": [
+        "ANIM_LOWK_GAS_FLOW"
+      ],
+      "animation_pivots": {
+        "ANIM_LOWK_GAS_FLOW": [
+          8.05,
+          2.68,
+          -2.05
+        ]
+      }
+    },
+    {
+      "index": 36,
+      "name": "L78_LowKGasFlowController",
+      "file": "36_L78_LowKGasFlowController.fbx",
+      "glb": "36_L78_LowKGasFlowController.glb",
+      "triangle_count": 3256,
+      "mesh_parts": 161,
+      "bbox_min": [
+        6.91111,
+        2.00363,
+        -2.1966
+      ],
+      "bbox_max": [
+        8.74027,
+        3.35117,
+        -1.36438
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 37,
+      "name": "L78_PlasmaIonEnergyMonitor",
+      "file": "37_L78_PlasmaIonEnergyMonitor.fbx",
+      "glb": "37_L78_PlasmaIonEnergyMonitor.glb",
+      "triangle_count": 1736,
+      "mesh_parts": 80,
+      "bbox_min": [
+        7.015,
+        0.9095,
+        0.9921
+      ],
+      "bbox_max": [
+        8.145,
+        2.67,
+        1.9105
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 38,
+      "name": "L78_LowKSurfaceChargingSensor",
+      "file": "38_L78_LowKSurfaceChargingSensor.fbx",
+      "glb": "38_L78_LowKSurfaceChargingSensor.glb",
+      "triangle_count": 1060,
+      "mesh_parts": 49,
+      "bbox_min": [
+        5.82913,
+        2.45363,
+        0.35166
+      ],
+      "bbox_max": [
+        6.48027,
+        3.2674,
+        0.83802
+      ],
+      "rig_groups": [
+        "ANIM_LOWK_CHARGE_MONITOR"
+      ],
+      "animation_pivots": {
+        "ANIM_LOWK_CHARGE_MONITOR": [
+          6.25,
+          3.0,
+          0.64
+        ]
+      }
+    },
+    {
+      "index": 39,
+      "name": "L78_LowKFTIRBondingAnalyzer",
+      "file": "39_L78_LowKFTIRBondingAnalyzer.fbx",
+      "glb": "39_L78_LowKFTIRBondingAnalyzer.glb",
+      "triangle_count": 3016,
+      "mesh_parts": 131,
+      "bbox_min": [
+        8.563,
+        0.59,
+        0.5568
+      ],
+      "bbox_max": [
+        10.537,
+        2.2425,
+        1.444
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 40,
+      "name": "L78_LowKFilmGrowthOpticalMonitor",
+      "file": "40_L78_LowKFilmGrowthOpticalMonitor.fbx",
+      "glb": "40_L78_LowKFilmGrowthOpticalMonitor.glb",
+      "triangle_count": 1488,
+      "mesh_parts": 46,
+      "bbox_min": [
+        4.235,
+        3.8125,
+        0.62
+      ],
+      "bbox_max": [
+        6.365,
+        4.559,
+        1.163
+      ],
+      "rig_groups": [
+        "ANIM_LOWK_FILM_SCAN"
+      ],
+      "animation_pivots": {
+        "ANIM_LOWK_FILM_SCAN": [
+          5.3,
+          4.32,
+          0.76
+        ]
+      }
+    },
+    {
+      "index": 41,
+      "name": "L78_UVThermalCureReactor",
+      "file": "41_L78_UVThermalCureReactor.fbx",
+      "glb": "41_L78_UVThermalCureReactor.glb",
+      "triangle_count": 2360,
+      "mesh_parts": 56,
+      "bbox_min": [
+        -1.57,
+        0.055,
+        -5.62
+      ],
+      "bbox_max": [
+        1.57,
+        3.695,
+        -2.24
+      ],
+      "rig_groups": [
+        "ANIM_UV_CURE_DOOR"
+      ],
+      "animation_pivots": {
+        "ANIM_UV_CURE_DOOR": [
+          0,
+          2.32,
+          -2.63
+        ]
+      }
+    },
+    {
+      "index": 42,
+      "name": "L78_MultiZoneUVLampArray",
+      "file": "42_L78_MultiZoneUVLampArray.fbx",
+      "glb": "42_L78_MultiZoneUVLampArray.glb",
+      "triangle_count": 5648,
+      "mesh_parts": 72,
+      "bbox_min": [
+        -1.05,
+        3.2325,
+        -5.11
+      ],
+      "bbox_max": [
+        1.05,
+        3.53,
+        -2.99
+      ],
+      "rig_groups": [
+        "ANIM_UV_LAMP_ARRAY"
+      ],
+      "animation_pivots": {
+        "ANIM_UV_LAMP_ARRAY": [
+          0,
+          3.43,
+          -4.05
+        ]
+      }
+    },
+    {
+      "index": 43,
+      "name": "L78_PrecisionUVCureShutter",
+      "file": "43_L78_PrecisionUVCureShutter.fbx",
+      "glb": "43_L78_PrecisionUVCureShutter.glb",
+      "triangle_count": 228,
+      "mesh_parts": 19,
+      "bbox_min": [
+        -1.03,
+        3.18,
+        -5.075
+      ],
+      "bbox_max": [
+        1.03,
+        3.50275,
+        -3.025
+      ],
+      "rig_groups": [
+        "ANIM_UV_SHUTTER"
+      ],
+      "animation_pivots": {
+        "ANIM_UV_SHUTTER": [
+          0,
+          3.25,
+          -4.05
+        ]
+      }
+    },
+    {
+      "index": 44,
+      "name": "L78_RotatingCureWaferPlaten",
+      "file": "44_L78_RotatingCureWaferPlaten.fbx",
+      "glb": "44_L78_RotatingCureWaferPlaten.glb",
+      "triangle_count": 1928,
+      "mesh_parts": 48,
+      "bbox_min": [
+        -1.13,
+        1.98,
+        -5.18
+      ],
+      "bbox_max": [
+        1.13,
+        2.36564,
+        -2.92
+      ],
+      "rig_groups": [
+        "ANIM_CURE_ROTATING_PLATEN"
+      ],
+      "animation_pivots": {
+        "ANIM_CURE_ROTATING_PLATEN": [
+          0,
+          2.08,
+          -4.05
+        ]
+      }
+    },
+    {
+      "index": 45,
+      "name": "L78_CureWaferTemperatureSensor",
+      "file": "45_L78_CureWaferTemperatureSensor.fbx",
+      "glb": "45_L78_CureWaferTemperatureSensor.glb",
+      "triangle_count": 752,
+      "mesh_parts": 19,
+      "bbox_min": [
+        -1.18,
+        1.675,
+        -5.23
+      ],
+      "bbox_max": [
+        1.18,
+        2.065,
+        -2.87
+      ],
+      "rig_groups": [
+        "ANIM_CURE_THERMAL_PLATEN"
+      ],
+      "animation_pivots": {
+        "ANIM_CURE_THERMAL_PLATEN": [
+          0,
+          1.81,
+          -4.05
+        ]
+      }
+    },
+    {
+      "index": 46,
+      "name": "L78_CureOutgassingMonitor",
+      "file": "46_L78_CureOutgassingMonitor.fbx",
+      "glb": "46_L78_CureOutgassingMonitor.glb",
+      "triangle_count": 848,
+      "mesh_parts": 29,
+      "bbox_min": [
+        -0.80133,
+        2.62461,
+        -4.85068
+      ],
+      "bbox_max": [
+        1.29932,
+        3.80422,
+        -3.24932
+      ],
+      "rig_groups": [
+        "ANIM_CURE_OUTGAS"
+      ],
+      "animation_pivots": {
+        "ANIM_CURE_OUTGAS": [
+          0.85,
+          3.68,
+          -4.05
+        ]
+      }
+    },
+    {
+      "index": 47,
+      "name": "L78_HolographicLowKPoreNetwork",
+      "file": "47_L78_HolographicLowKPoreNetwork.fbx",
+      "glb": "47_L78_HolographicLowKPoreNetwork.glb",
+      "triangle_count": 3680,
+      "mesh_parts": 94,
+      "bbox_min": [
+        -1.0,
+        4.46,
+        2.7225
+      ],
+      "bbox_max": [
+        1.0,
+        5.96,
+        2.8685
+      ],
+      "rig_groups": [
+        "ANIM_PORE_NETWORK_HOLOGRAM"
+      ],
+      "animation_pivots": {
+        "ANIM_PORE_NETWORK_HOLOGRAM": [
+          0,
+          5.21,
+          2.75
+        ]
+      }
+    },
+    {
+      "index": 48,
+      "name": "L78_WaferStressBowScanner",
+      "file": "48_L78_WaferStressBowScanner.fbx",
+      "glb": "48_L78_WaferStressBowScanner.glb",
+      "triangle_count": 1240,
+      "mesh_parts": 66,
+      "bbox_min": [
+        3.21,
+        -0.0605,
+        2.55
+      ],
+      "bbox_max": [
+        4.39,
+        3.0674,
+        3.85
+      ],
+      "rig_groups": [
+        "ANIM_FILM_BOW_SCAN"
+      ],
+      "animation_pivots": {
+        "ANIM_FILM_BOW_SCAN": [
+          3.8,
+          2.8,
+          3.2
+        ]
+      }
+    },
+    {
+      "index": 49,
+      "name": "L78_DielectricEllipsometryStation",
+      "file": "49_L78_DielectricEllipsometryStation.fbx",
+      "glb": "49_L78_DielectricEllipsometryStation.glb",
+      "triangle_count": 748,
+      "mesh_parts": 40,
+      "bbox_min": [
+        4.34,
+        -0.0605,
+        2.55
+      ],
+      "bbox_max": [
+        5.52,
+        2.9875,
+        3.85
+      ],
+      "rig_groups": [
+        "ANIM_ELLIPSOMETRY_HEAD"
+      ],
+      "animation_pivots": {
+        "ANIM_ELLIPSOMETRY_HEAD": [
+          4.93,
+          2.85,
+          3.2
+        ]
+      }
+    },
+    {
+      "index": 50,
+      "name": "L78_InterlineCombTestFixture",
+      "file": "50_L78_InterlineCombTestFixture.fbx",
+      "glb": "50_L78_InterlineCombTestFixture.glb",
+      "triangle_count": 728,
+      "mesh_parts": 48,
+      "bbox_min": [
+        5.33,
+        -0.0605,
+        2.6
+      ],
+      "bbox_max": [
+        6.51,
+        2.775,
+        3.9
+      ],
+      "rig_groups": [
+        "ANIM_LEAKAGE_TEST_PROBE"
+      ],
+      "animation_pivots": {
+        "ANIM_LEAKAGE_TEST_PROBE": [
+          5.92,
+          2.64,
+          3.25
+        ]
+      }
+    },
+    {
+      "index": 51,
+      "name": "L78_DielectricLeakageCurrentElectrometer",
+      "file": "51_L78_DielectricLeakageCurrentElectrometer.fbx",
+      "glb": "51_L78_DielectricLeakageCurrentElectrometer.glb",
+      "triangle_count": 3076,
+      "mesh_parts": 136,
+      "bbox_min": [
+        5.225,
+        0.6,
+        4.5368
+      ],
+      "bbox_max": [
+        7.135,
+        2.2525,
+        5.424
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 52,
+      "name": "L78_AcceleratedBiasStressTestSource",
+      "file": "52_L78_AcceleratedBiasStressTestSource.fbx",
+      "glb": "52_L78_AcceleratedBiasStressTestSource.glb",
+      "triangle_count": 3160,
+      "mesh_parts": 143,
+      "bbox_min": [
+        6.0866,
+        0.59,
+        3.11
+      ],
+      "bbox_max": [
+        8.0734,
+        2.5875,
+        5.424
+      ],
+      "rig_groups": [
+        "ANIM_BIAS_STRESS_GUARD"
+      ],
+      "animation_pivots": {
+        "ANIM_BIAS_STRESS_GUARD": [
+          7.02,
+          2.45,
+          3.25
+        ]
+      }
+    },
+    {
+      "index": 53,
+      "name": "L78_DielectricReliabilityController",
+      "file": "53_L78_DielectricReliabilityController.fbx",
+      "glb": "53_L78_DielectricReliabilityController.glb",
+      "triangle_count": 3100,
+      "mesh_parts": 134,
+      "bbox_min": [
+        7.021,
+        0.67,
+        4.5368
+      ],
+      "bbox_max": [
+        9.059,
+        2.3225,
+        5.424
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 54,
+      "name": "L78_HolographicTDDBReliabilityGraph",
+      "file": "54_L78_HolographicTDDBReliabilityGraph.fbx",
+      "glb": "54_L78_HolographicTDDBReliabilityGraph.glb",
+      "triangle_count": 1308,
+      "mesh_parts": 109,
+      "bbox_min": [
+        5.72,
+        3.71,
+        2.41
+      ],
+      "bbox_max": [
+        8.58,
+        5.292,
+        2.734
+      ],
+      "rig_groups": [
+        "ANIM_TDDB_GRAPH"
+      ],
+      "animation_pivots": {
+        "ANIM_TDDB_GRAPH": [
+          7.2,
+          4.42,
+          2.6
+        ]
+      }
+    },
+    {
+      "index": 55,
+      "name": "L78_SurfaceMoistureInspectionAnalyzer",
+      "file": "55_L78_SurfaceMoistureInspectionAnalyzer.fbx",
+      "glb": "55_L78_SurfaceMoistureInspectionAnalyzer.glb",
+      "triangle_count": 1304,
+      "mesh_parts": 69,
+      "bbox_min": [
+        7.79,
+        -0.0605,
+        2.45
+      ],
+      "bbox_max": [
+        8.97,
+        2.7274,
+        3.75
+      ],
+      "rig_groups": [
+        "ANIM_MOISTURE_PROBE"
+      ],
+      "animation_pivots": {
+        "ANIM_MOISTURE_PROBE": [
+          8.38,
+          2.46,
+          3.1
+        ]
+      }
+    },
+    {
+      "index": 56,
+      "name": "L78_InterconnectRCDelayAnalyzer",
+      "file": "56_L78_InterconnectRCDelayAnalyzer.fbx",
+      "glb": "56_L78_InterconnectRCDelayAnalyzer.glb",
+      "triangle_count": 632,
+      "mesh_parts": 40,
+      "bbox_min": [
+        8.53,
+        -0.0605,
+        2.5
+      ],
+      "bbox_max": [
+        9.71,
+        2.635,
+        3.8
+      ],
+      "rig_groups": [
+        "ANIM_RC_TIMING_PROBE"
+      ],
+      "animation_pivots": {
+        "ANIM_RC_TIMING_PROBE": [
+          9.12,
+          2.5,
+          3.15
+        ]
+      }
+    },
+    {
+      "index": 57,
+      "name": "L78_EmergencyIsolationSafetyStation",
+      "file": "57_L78_EmergencyIsolationSafetyStation.fbx",
+      "glb": "57_L78_EmergencyIsolationSafetyStation.glb",
+      "triangle_count": 1136,
+      "mesh_parts": 38,
+      "bbox_min": [
+        9.35,
+        0.97,
+        4.32
+      ],
+      "bbox_max": [
+        10.25,
+        2.1749,
+        5.074
+      ],
+      "rig_groups": [
+        "ANIM_EMERGENCY_ISOLATION"
+      ],
+      "animation_pivots": {
+        "ANIM_EMERGENCY_ISOLATION": [
+          9.8,
+          1.55,
+          4.62
+        ]
+      }
+    },
+    {
+      "index": 58,
+      "name": "L78_TurbomolecularVacuumPump",
+      "file": "58_L78_TurbomolecularVacuumPump.fbx",
+      "glb": "58_L78_TurbomolecularVacuumPump.glb",
+      "triangle_count": 1252,
+      "mesh_parts": 32,
+      "bbox_min": [
+        -4.6,
+        0.565,
+        -4.37
+      ],
+      "bbox_max": [
+        -2.58,
+        2.87,
+        -3.03
+      ],
+      "rig_groups": [
+        "ANIM_TURBO_ROTOR"
+      ],
+      "animation_pivots": {
+        "ANIM_TURBO_ROTOR": [
+          -3.25,
+          1.3,
+          -3.7
+        ]
+      }
+    },
+    {
+      "index": 59,
+      "name": "L78_VacuumBackingPump",
+      "file": "59_L78_VacuumBackingPump.fbx",
+      "glb": "59_L78_VacuumBackingPump.glb",
+      "triangle_count": 2616,
+      "mesh_parts": 38,
+      "bbox_min": [
+        -3.3,
+        0.5495,
+        -5.0368
+      ],
+      "bbox_max": [
+        -0.955,
+        1.735,
+        -4.1632
+      ],
+      "rig_groups": [
+        "ANIM_BACKING_ROTOR"
+      ],
+      "animation_pivots": {
+        "ANIM_BACKING_ROTOR": [
+          -2.3,
+          1.0,
+          -4.6
+        ]
+      }
+    },
+    {
+      "index": 60,
+      "name": "L78_PrecisionChamberPressureGauge",
+      "file": "60_L78_PrecisionChamberPressureGauge.fbx",
+      "glb": "60_L78_PrecisionChamberPressureGauge.glb",
+      "triangle_count": 2292,
+      "mesh_parts": 75,
+      "bbox_min": [
+        -4.78,
+        0.86,
+        4.515
+      ],
+      "bbox_max": [
+        -3.68,
+        2.24,
+        5.2543
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 61,
+      "name": "L78_DielectricProcessPLCRack",
+      "file": "61_L78_DielectricProcessPLCRack.fbx",
+      "glb": "61_L78_DielectricProcessPLCRack.glb",
+      "triangle_count": 3304,
+      "mesh_parts": 147,
+      "bbox_min": [
+        -2.983,
+        0.8,
+        4.5668
+      ],
+      "bbox_max": [
+        -0.817,
+        2.58,
+        5.454
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 62,
+      "name": "L78_HolographicDielectricSCADA",
+      "file": "62_L78_HolographicDielectricSCADA.fbx",
+      "glb": "62_L78_HolographicDielectricSCADA.glb",
+      "triangle_count": 2508,
+      "mesh_parts": 135,
+      "bbox_min": [
+        -3.465,
+        4.15,
+        -6.17
+      ],
+      "bbox_max": [
+        3.465,
+        6.5822,
+        -5.78
+      ],
+      "rig_groups": [
+        "ANIM_DIELECTRIC_SCADA"
+      ],
+      "animation_pivots": {
+        "ANIM_DIELECTRIC_SCADA": [
+          0,
+          5.3,
+          -6.0
+        ]
+      }
+    },
+    {
+      "index": 63,
+      "name": "L78_Regulated5VControlSupply",
+      "file": "63_L78_Regulated5VControlSupply.fbx",
+      "glb": "63_L78_Regulated5VControlSupply.glb",
+      "triangle_count": 3268,
+      "mesh_parts": 148,
+      "bbox_min": [
+        -9.823,
+        0.68,
+        4.5868
+      ],
+      "bbox_max": [
+        -7.817,
+        2.3325,
+        5.474
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    }
+  ],
+  "actual_player_wires_included": false,
+  "functional_spark_terminals_included": false,
+  "dielectric_pecvd_physics_included": false,
+  "six_authoritative_objectives_implemented": false,
+  "unity_compilation_tested": false,
+  "unity_play_mode_tested": false,
+  "art_scope": "procedural HD/AAA-inspired mesh art with preview material colors; geometry only"
+}

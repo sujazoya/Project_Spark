@@ -1,0 +1,2940 @@
+# PROJECT SPARK — LEVEL 77 MASTER UNITY IMPLEMENTATION PROMPT
+
+## LEVEL 77 — REVEAL THE CIRCUIT
+
+### Advanced Triple-Stage Copper Damascene CMP, Precision Metal Removal, Copper/Barrier/Dielectric Selectivity, Eddy-Current Thickness Measurement, Optical Endpoint Detection, Copper Dishing, Dielectric Erosion, Post-CMP Cleaning, Electrical Isolation, Industrial PLC Protection and Critical Optical Feedback Recovery
+
+Act as my **senior Unity C# engineer, semiconductor manufacturing process engineer, chemical-mechanical planarization specialist, precision instrumentation engineer, industrial electrical engineer, control-systems engineer, industrial PLC programmer, functional safety engineer, semiconductor electrical metrology specialist, AAA technical artist, gameplay systems architect and Unity Editor automation developer**.
+
+# 1. PRIMARY IMPLEMENTATION TASK
+
+**IMPLEMENT THE COMPLETE, FUNCTIONAL, PLAYABLE LEVEL 77 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+This is not another level-design request.
+
+Level 77 — REVEAL THE CIRCUIT — has already been designed.
+
+The actual modular HD/AAA-inspired 3D art package has already been generated and structurally verified.
+
+Use:
+
+`ProjectSpark_Level77_HD_AAA_Models.zip`
+
+Do not regenerate the existing 3D models unless a genuine integration or geometry defect requires correction.
+
+## MAIN MISSION
+
+In Level 76, the player filled patterned semiconductor trenches and vias with copper.
+
+The wafer now contains the necessary metal, but excess blanket copper still covers the dielectric surface.
+
+Level 77 must challenge the player to:
+
+1. Build the complete three-station CMP electrical network.
+2. Connect 114 real player-created wires.
+3. Register 176 functional terminals.
+4. Commission three independently controlled polishing systems.
+5. Inspect the incoming electroplated wafer.
+6. Calibrate servo drives, force sensors, fluid delivery and endpoint instruments.
+7. Remove bulk copper without destroying useful embedded conductors.
+8. Perform controlled soft landing.
+9. Remove exposed barrier material.
+10. Prevent excessive copper dishing.
+11. Prevent dielectric erosion.
+12. Detect residual copper bridges.
+13. Clean, rinse and dry the wafer.
+14. Verify via continuity and interline electrical isolation.
+15. Recover from three industrial disturbances.
+16. Deliberately disconnect the real W055 optical endpoint feedback wire.
+17. Detect loss of trusted measurement.
+18. Safely stop the active polishing system.
+19. Reconnect and recalibrate the spectrometer.
+20. Explicitly reset protection.
+21. Process a fresh copper-plated wafer.
+22. Certify all six gameplay objectives.
+
+**THE REAL PROJECT SPARK `LevelGamePlayManager` MUST REACH 6/6.**
+
+No fake circuit connectivity, removal rates, polishing endpoints, electrical measurements, fault recovery or objective completion.
+
+---
+
+# 2. INSPECT THE EXISTING PROJECT SPARK ARCHITECTURE
+
+Before implementing anything, inspect the actual Unity project.
+
+Find these classes where present:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+
+Study their real code and public APIs.
+
+Inspect the existing mechanisms for:
+
+- Player-created wire connections.
+- Wire removal.
+- Electrical graph updates.
+- Supply and return connections.
+- Analog measurements.
+- Sensor sampling.
+- Sensor calibration.
+- Measurement validity.
+- Stale measurements.
+- Digital inputs and outputs.
+- Motor and actuator controls.
+- PLC state machines.
+- PID control.
+- Emergency stops.
+- Safety interlocks.
+- Fault latching.
+- Operator resets.
+- Wafer handling.
+- Level scene bindings.
+- Objective certification.
+- Historical completion.
+- Inventory and workstations.
+- Editor-created levels.
+- Visual animation.
+- VFX integration.
+
+## REUSE EARLIER LEVEL IMPLEMENTATIONS
+
+Examine existing, actually implemented systems from Levels 58–76 where relevant.
+
+Important predecessors:
+
+**Level 58 — Isolate the Fault:** Circuit fault isolation.
+
+**Level 59 — Bring Back the Power:** Controlled equipment restart.
+
+**Level 60 — The Grid Must Survive:** Coordinated protection.
+
+**Level 63 — Catch the Frequency:** Sensor measurements and feedback recovery.
+
+**Level 65 — The Factory Thinks:** Industrial PLC logic.
+
+**Level 67 — Master the Flow:** Pump, fluid and flow-control systems.
+
+**Level 68 — Tame the Heat:** Thermal dynamics.
+
+**Level 70 — Guard the Air:** Manufacturing conditions and equipment interlocks.
+
+**Level 71 — Etch the Future:** Patterned surface processing.
+
+**Level 72 — Layer by Layer:** Thin-film material states.
+
+**Level 73 — Polish to Perfection:** General CMP, downforce, pad behavior and wafer surface metrics.
+
+**Level 74 — Align the Light:** Patterned geometries and metrology.
+
+**Level 75 — Write the Silicon:** Fault recovery and certified wafer processing.
+
+**Level 76 — Forge the Connections:** Copper-filled trenches, vias, blanket copper and incoming wafer state.
+
+Do not assume any previous design prompt proves that a class already exists.
+
+Use verified source code rather than inventing method signatures.
+
+---
+
+# 3. NON-NEGOTIABLE DEVELOPMENT RULES
+
+1. Preserve Levels 1–76.
+2. Inspect real source APIs before coding.
+3. Do not invent existing Unity classes or namespaces.
+4. Do not replace the core electrical system.
+5. Implement real player-created wires.
+6. Create actual functional `SparkTerminal` components.
+7. Do not use decorative wire meshes as gameplay connections.
+8. Keep electrical control power separate from industrial machine power.
+9. Do not turn slurry pipes into electrical conductors.
+10. Do not treat disconnected sensors as connected.
+11. Do not reuse stale measurements for endpoint certification.
+12. Do not assign actual motor RPM directly from its command.
+13. Do not instantly raise or retract carrier heads.
+14. Do not assign actual downforce directly from requested pressure.
+15. Do not create infinite slurry.
+16. Do not make actual flow equal commanded flow.
+17. Do not instantly restore worn pads.
+18. Do not remove copper when the wafer is not actually polishing.
+19. Do not remove material using time alone.
+20. Do not use one universal removal rate for copper, barrier and dielectric.
+21. Do not generate negative layer thickness.
+22. Do not fabricate a successful polishing endpoint.
+23. Do not ignore variation across the wafer.
+24. Do not ignore pattern density.
+25. Do not confuse copper dishing with dielectric erosion.
+26. Do not ignore residual conductive bridges.
+27. Do not fabricate electrical isolation.
+28. Do not fabricate via continuity.
+29. Do not certify a contaminated wafer.
+30. Do not ignore copper corrosion.
+31. Do not allow polishing after critical endpoint feedback loss.
+32. Do not instantly zero motor speeds when electrical feedback disconnects.
+33. Do not instantly erase wafer material state when a fault occurs.
+34. Do not automatically clear a latched safety fault.
+35. Do not create a fake objective counter.
+36. Do not erase historical Objectives 1–5 during the final deliberate fault.
+37. Do not complete Objective 6 merely because W055 is reconnected.
+38. Use one authoritative simulation state.
+39. Use deterministic or consistently scheduled simulation timesteps.
+40. Use meaningful units and bounded educational process factors.
+41. Prevent double integration of material removal.
+42. Make Editor creation safe to rerun.
+43. Validate all imported models and animation pivots.
+44. Test in the actual Unity project where available.
+45. Report unresolved dependencies honestly.
+46. Never claim Play Mode success without testing it.
+47. Never claim `LevelGamePlayManager` reached 6/6 unless the real game confirms it.
+
+---
+
+# 4. ACTUAL LEVEL 77 PACKAGE AND CONFIGURATION
+
+Use the existing:
+
+`ProjectSpark_Level77_HD_AAA_Models.zip`
+
+## VERIFIED PACKAGE
+
+- 62 individual binary FBX models.
+- 62 matching GLB files.
+- One assembled FBX workstation.
+- One assembled GLB workstation.
+- 124,548 equipment triangles.
+- 3,554 mesh parts.
+- 44 named animation parent groups.
+- Approximately 20.4-metre workstation width.
+- Common-origin modular equipment.
+- Preview material palette.
+- Model manifest.
+- Pivot manifest.
+- Art assembly data.
+- Component-role data.
+- Wiring budget.
+- W001–W114 conceptual connection plan.
+- P001–P176 proposed terminal positions.
+- Six-objective certification plan.
+- W055 critical feedback recovery plan.
+- Unity art-placement Editor.
+- Unity material upgrade Editor.
+- Unity asset validator.
+- Unity visual rig.
+- Procedural geometry source.
+- Structural verification report.
+
+## LEVEL DATA
+
+| Property | Required setting |
+|---|---|
+| Level | 77 |
+| Level ID | `level_77` |
+| Title | Reveal the Circuit |
+| Subtitle | Advanced Copper Damascene Planarization and Electrical Isolation |
+| Difficulty | Expert / Master |
+| Machine | Triple-stage copper CMP |
+| Stage A | Bulk copper removal |
+| Stage B | Soft landing |
+| Stage C | Selective barrier clearing |
+| Control power | 5 V DC |
+| Industrial drives | Separate simulated machine-power domain |
+| Wafer regions | 16 |
+| FBX assets | 62 |
+| GLB backups | 62 |
+| Actual pivot groups | 44 |
+| Player wires | 114 |
+| Functional terminals | 176 |
+| Objectives | 6 |
+| Critical wire | W055 |
+
+## FICTIONAL EDUCATIONAL TARGETS
+
+- Residual blanket copper below configured clearance threshold.
+- Exposed-field barrier residue below configured clearance threshold.
+- Copper dishing ≤5 nm.
+- Dielectric erosion ≤4 nm.
+- Wafer nonuniformity ≤2.5%.
+- Required via continuity tests pass.
+- Adjacent copper line isolation passes.
+- Corrosion within configured limits.
+- Surface particle and defect counts acceptable.
+- Six authoritative objectives certified.
+
+These targets are for fictional gameplay balance, not real industrial polishing recipes.
+
+---
+
+# 5. EXACT 62 VERIFIED FBX MODEL FILENAMES
+
+Use the actual filenames from `Model_Manifest.json`.
+
+| # | Exact FBX filename |
+|---|---|
+| 00 | `00_L77_IndustrialCopperPlanarizationBase.fbx` |
+| 01 | `01_L77_TransparentTripleCMPEnclosure.fbx` |
+| 02 | `02_L77_CopperPlatedWaferCassette.fbx` |
+| 03 | `03_L77_AutomatedWaferHandlingRobot.fbx` |
+| 04 | `04_L77_PreCMPWaferInspectionScanner.fbx` |
+| 05 | `05_L77_ElectroplatedDamasceneWafer.fbx` |
+| 06 | `06_L77_CopperDielectricLayerCrossSection.fbx` |
+| 07 | `07_L77_HolographicCopperOverburdenMap.fbx` |
+| 08 | `08_L77_BulkCopperPolishingPlaten.fbx` |
+| 09 | `09_L77_BulkCopperPolishingPad.fbx` |
+| 10 | `10_L77_BulkPlatenServoDrive.fbx` |
+| 11 | `11_L77_BulkWaferCarrierHead.fbx` |
+| 12 | `12_L77_BulkCarrierVerticalActuator.fbx` |
+| 13 | `13_L77_BulkDownforceLoadCell.fbx` |
+| 14 | `14_L77_MultiZonePressureControlBank.fbx` |
+| 15 | `15_L77_BulkCopperSlurryReservoir.fbx` |
+| 16 | `16_L77_BulkSlurryDeliveryPump.fbx` |
+| 17 | `17_L77_BulkSlurryFlowTransmitter.fbx` |
+| 18 | `18_L77_MotorizedBulkSlurryArm.fbx` |
+| 19 | `19_L77_BulkSlurryDispenseNozzle.fbx` |
+| 20 | `20_L77_BulkPadConditioningAssembly.fbx` |
+| 21 | `21_L77_BulkPadWearMeasurementProbe.fbx` |
+| 22 | `22_L77_OpticalCopperRemovalEndpointSensor.fbx` |
+| 23 | `23_L77_EddyCurrentCopperThicknessGauge.fbx` |
+| 24 | `24_L77_BulkCopperEndpointController.fbx` |
+| 25 | `25_L77_OverheadWaferTransferGantry.fbx` |
+| 26 | `26_L77_SoftLandingPolishingPlaten.fbx` |
+| 27 | `27_L77_SoftLandingPrecisionPad.fbx` |
+| 28 | `28_L77_SoftLandingCarrierHead.fbx` |
+| 29 | `29_L77_SoftLandingForceRegulator.fbx` |
+| 30 | `30_L77_SelectiveProcessFluidManifold.fbx` |
+| 31 | `31_L77_BarrierClearingPolishingPlaten.fbx` |
+| 32 | `32_L77_BarrierSelectivePolishingPad.fbx` |
+| 33 | `33_L77_BarrierClearingCarrierHead.fbx` |
+| 34 | `34_L77_BarrierProcessFluidReservoir.fbx` |
+| 35 | `35_L77_BarrierFluidMeteringPump.fbx` |
+| 36 | `36_L77_BarrierFluidFlowSensor.fbx` |
+| 37 | `37_L77_BarrierFluidDispenseNozzle.fbx` |
+| 38 | `38_L77_DualWavelengthBarrierEndpointSpectrometer.fbx` |
+| 39 | `39_L77_TransparentOpticalEndpointViewport.fbx` |
+| 40 | `40_L77_BarrierClearanceTomographyMonitor.fbx` |
+| 41 | `41_L77_MaterialSelectivityAnalyzer.fbx` |
+| 42 | `42_L77_PolishingMotorTorqueAnalyzer.fbx` |
+| 43 | `43_L77_WaferInterfaceTemperatureSensor.fbx` |
+| 44 | `44_L77_CopperCorrosionPotentialMonitor.fbx` |
+| 45 | `45_L77_CopperSurfaceProtectionModule.fbx` |
+| 46 | `46_L77_PostCMPBrushCleaningChamber.fbx` |
+| 47 | `47_L77_PrecisionMegasonicCleaningModule.fbx` |
+| 48 | `48_L77_CopperResidueChemistryMonitor.fbx` |
+| 49 | `49_L77_UltrapureRinseWaterModule.fbx` |
+| 50 | `50_L77_HighSpeedWaferSpinDryer.fbx` |
+| 51 | `51_L77_WaferSurfaceDefectInspectionCamera.fbx` |
+| 52 | `52_L77_3DCopperDishingErosionScanner.fbx` |
+| 53 | `53_L77_ResidualCopperInspectionScanner.fbx` |
+| 54 | `54_L77_InterlineLeakageTestInstrument.fbx` |
+| 55 | `55_L77_ViaContinuityKelvinProbe.fbx` |
+| 56 | `56_L77_DielectricIntegrityAnalyzer.fbx` |
+| 57 | `57_L77_ThreeStageCMPProcessController.fbx` |
+| 58 | `58_L77_CopperPlanarizationPLCRack.fbx` |
+| 59 | `59_L77_CMPEmergencySafetyStation.fbx` |
+| 60 | `60_L77_HolographicCopperInterconnectSCADA.fbx` |
+| 61 | `61_L77_Regulated5VControlSupply.fbx` |
+
+Do not rename these files unnecessarily.
+
+Use matching GLBs as backups, not simultaneous duplicate models.
+
+---
+
+# 6. WORKSTATION SCALE, IMPORT AND ASSEMBLY
+
+The verified asset package uses:
+
+- X = width.
+- Y = up.
+- Z = front.
+- FBX numeric vertex coordinates = centimetres.
+- FBX UnitScaleFactor = 1.
+- GLB numeric vertex coordinates = metres.
+- Common origin.
+- Approximate total width = 20.4 metres.
+
+## REQUIRED IMPORT CHECK
+
+The fully imported workstation must measure approximately 20.4 Unity units wide when one Unity unit represents one metre.
+
+Check actual bounds.
+
+Do not apply centimetre-to-metre conversion twice.
+
+## ART ROOT
+
+Create:
+
+`L77_HD_VISUAL_ART`
+
+Place all 62 numbered FBX instances beneath it using common-origin coordinates.
+
+Use local:
+
+- Position `(0,0,0)`.
+- Rotation identity.
+- Scale `(1,1,1)` after correct FBX import conversion.
+
+## ASSEMBLED REFERENCE
+
+`Models/Level77_Complete_ArtKit_Showcase.fbx`
+
+`GLB/Level77_Complete_ArtKit_Showcase.glb`
+
+Do not place the complete showcase and all 62 modular FBXs in the same visible scene.
+
+---
+
+# 7. REUSE ACTUAL UNITY EDITOR ART HELPERS
+
+These are already included in the package.
+
+## ART PLACEMENT
+
+`SparkLevel77ArtPlacementEditor.cs`
+
+Namespace:
+
+`ProjectSpark.EditorTools`
+
+Actual menu:
+
+`Tools/Project Spark/Levels/77/Place HD Art Under Selected Layout`
+
+This creates:
+
+`L77_HD_VISUAL_ART`
+
+It places the 62 origin-aligned modular models.
+
+## MATERIALS
+
+`SparkLevel77MaterialUpgradeEditor.cs`
+
+Namespace:
+
+`ProjectSpark.EditorTools`
+
+Actual menu:
+
+`Tools/Project Spark/Levels/77/Create & Apply HD Materials To Selected Art`
+
+Material output folder:
+
+`Assets/ProjectSpark/Level77/Materials`
+
+The helper searches for:
+
+- URP Lit.
+- HDRP Lit.
+- Standard.
+
+It assigns preview copper, steel, glass, slurry, pad, ceramic, status and emissive-style colors.
+
+## ASSET VALIDATION
+
+`SparkLevel77AssetValidatorEditor.cs`
+
+Namespace:
+
+`ProjectSpark.EditorTools`
+
+Actual menu:
+
+`Tools/Project Spark/Levels/77/Validate Imported HD Art`
+
+## IMPORTANT
+
+These three scripts are art helpers, not gameplay creators.
+
+Place them in a Unity `Editor` folder.
+
+Place `SparkLevel77VisualRig.cs` in runtime scripts.
+
+Build a separate full level menu:
+
+`Tools/Project Spark/Levels/Create Level 77`
+
+## EDITOR IMPROVEMENT
+
+The current art placement helper replaces an existing `L77_HD_VISUAL_ART` root.
+
+Avoid destroying customized gameplay child objects during a rebuild.
+
+Keep gameplay components, terminals and authored wiring outside the disposable visual art root, or implement safe preservation.
+
+---
+
+# 8. USE THE EXISTING VISUAL RIG — REAL PUBLIC API
+
+Actual file:
+
+`SparkLevel77VisualRig.cs`
+
+Namespace:
+
+`ProjectSpark.Visuals`
+
+Class:
+
+`SparkLevel77VisualRig`
+
+The following public methods are verified in the actual file.
+
+```csharp
+SetActualPlatenRPM(
+    float bulk,
+    float softLanding,
+    float barrierClear
+);
+
+SetActualCarrierRPM(
+    float bulk,
+    float softLanding,
+    float barrierClear
+);
+
+SetActualCarrierLift(
+    float bulk01,
+    float soft01,
+    float barrier01
+);
+
+SetGantryPosition(
+    float actualXMeters,
+    float actualZMeters,
+    float actualGripperDrop01
+);
+
+SetWaferHandlingPose(
+    float actualRobotBaseDegrees,
+    float actualRobotArmDegrees,
+    float actualRobotToolDegrees
+);
+
+SetActualProcessState(
+    float bulkRemoval01,
+    float softLandingClear01,
+    float barrierClear01,
+    float actualDishing01,
+    float actualDielectricErosion01,
+    bool actualPolishingAuthorized,
+    bool actualEndpointMeasurementValid,
+    bool actualCriticalFault
+);
+
+SetFluidActuators(
+    float actualBulkNozzle01,
+    float actualSoftNozzle01,
+    float actualBarrierNozzle01
+);
+
+SetCleaningAndInspection(
+    float actualCleaningProgress01,
+    float actualDryingProgress01,
+    float actualMetrologyProgress01,
+    float actualOpticalConfidence01
+);
+```
+
+## IMPORTANT LIFT SEMANTICS
+
+The supplied rig defines normalized carrier lift as:
+
+- 0 = engaged.
+- 1 = retracted.
+
+Respect this convention.
+
+## ACTUAL RIG CAPABILITIES
+
+The visual rig animates:
+
+- Three platen rotations.
+- Three pad rotations.
+- Three carrier rotations.
+- Carrier lifts.
+- Downforce-related visual movement.
+- Transfer gantry.
+- Wafer robot.
+- Fluid nozzles.
+- Spectrometer head.
+- Cleaning mechanisms.
+- Drying.
+- Inspection movement.
+- Optical status light.
+- Critical alarm light.
+- Optional slurry particle systems.
+
+## LIMITATION
+
+The rig does not calculate:
+
+- Copper thickness.
+- Barrier thickness.
+- Dielectric erosion.
+- Downforce physics.
+- Optical measurements.
+- Electrical topology.
+- Wafer quality.
+- PLC state.
+- Objectives.
+
+Feed it authoritative values only.
+
+---
+
+# 9. EXACT 44 VERIFIED ANIMATION PIVOTS
+
+Use the actual `Animation_Rigs.csv`.
+
+These parent groups exist in the exported FBX/GLB hierarchies.
+
+World-position references below are in metres.
+
+| # | Pivot | XYZ | Type |
+|---|---|---|---|
+| 01 | `ANIM_WAFER_ROBOT_BASE` | (-8.15,1.00,2.20) | Rotate Y |
+| 02 | `ANIM_WAFER_ROBOT_ARM` | (-8.03,1.90,2.20) | Rotate Z |
+| 03 | `ANIM_WAFER_ROBOT_TOOL` | (-7.25,2.20,2.20) | Rotate Y |
+| 04 | `ANIM_LAYER_CROSS_SECTION` | (0.00,4.40,3.35) | Indicator |
+| 05 | `ANIM_BULK_PLATEN_ROTATION` | (-5.35,1.66,-1.46) | Rotate Y |
+| 06 | `ANIM_BULK_PAD_ROTATION` | (-5.35,1.74,-1.46) | Rotate Y |
+| 07 | `ANIM_BULK_CARRIER_SPIN` | (-5.35,3.28,-1.46) | Rotate Y |
+| 08 | `ANIM_BULK_CARRIER_LIFT` | (-5.35,3.90,-1.46) | Translate Y |
+| 09 | `ANIM_BULK_PRESSURE_RING` | (-5.35,3.05,-1.46) | Translate Y |
+| 10 | `ANIM_BULK_SLURRY_PUMP` | (-8.40,1.20,-2.97) | Rotate X |
+| 11 | `ANIM_BULK_SLURRY_NOZZLE` | (-6.48,2.04,-0.72) | Translate Z |
+| 12 | `ANIM_BULK_PAD_CONDITIONER` | (-4.25,2.90,-2.80) | Rotate Y |
+| 13 | `ANIM_BULK_OPTICAL_SENSOR` | (-6.28,2.10,-0.53) | Translate Y |
+| 14 | `ANIM_EDDY_CURRENT_SENSOR` | (-5.67,2.24,-0.55) | Translate Y |
+| 15 | `ANIM_TRANSFER_GANTRY_X` | (0.00,4.77,-1.46) | Translate X |
+| 16 | `ANIM_TRANSFER_GANTRY_Z` | (0.00,4.77,-1.46) | Translate Z |
+| 17 | `ANIM_TRANSFER_GRIPPER` | (0.00,4.20,-1.46) | Translate Y |
+| 18 | `ANIM_SOFT_PLATEN_ROTATION` | (0.00,1.66,-1.46) | Rotate Y |
+| 19 | `ANIM_SOFT_PAD_ROTATION` | (0.00,1.74,-1.46) | Rotate Y |
+| 20 | `ANIM_SOFT_CARRIER_SPIN` | (0.00,3.28,-1.46) | Rotate Y |
+| 21 | `ANIM_SOFT_CARRIER_LIFT` | (0.00,3.90,-1.46) | Translate Y |
+| 22 | `ANIM_SOFT_PRESSURE_ACTUATOR` | (0.00,3.31,-1.46) | Translate Y |
+| 23 | `ANIM_SOFT_PROCESS_FLUID_NOZZLE` | (-1.12,2.10,-0.65) | Translate Z |
+| 24 | `ANIM_BARRIER_PLATEN_ROTATION` | (5.35,1.66,-1.46) | Rotate Y |
+| 25 | `ANIM_BARRIER_PAD_ROTATION` | (5.35,1.74,-1.46) | Rotate Y |
+| 26 | `ANIM_BARRIER_CARRIER_SPIN` | (5.35,3.28,-1.46) | Rotate Y |
+| 27 | `ANIM_BARRIER_CARRIER_LIFT` | (5.35,3.90,-1.46) | Translate Y |
+| 28 | `ANIM_BARRIER_SLURRY_PUMP` | (8.50,1.08,-3.06) | Rotate X |
+| 29 | `ANIM_BARRIER_SLURRY_NOZZLE` | (4.13,2.10,-0.64) | Translate Z |
+| 30 | `ANIM_BARRIER_SPECTROMETER_HEAD` | (6.25,2.64,-0.64) | Translate Y |
+| 31 | `ANIM_BARRIER_OPTICAL_WINDOW` | (6.08,2.04,-0.64) | Indicator |
+| 32 | `ANIM_BARRIER_TOMOGRAPHY` | (7.80,3.20,1.82) | Indicator |
+| 33 | `ANIM_SELECTIVITY_MANIFOLD` | (8.05,1.40,-0.05) | Translate X |
+| 34 | `ANIM_CORROSION_POTENTIAL_PROBE` | (7.78,2.35,3.10) | Translate Y |
+| 35 | `ANIM_BRUSH_CLEANER` | (7.52,1.98,2.10) | Rotate Y |
+| 36 | `ANIM_MEGASONIC_CLEANING` | (8.35,2.00,2.20) | Indicator |
+| 37 | `ANIM_RINSE_VALVE` | (8.92,2.04,1.26) | Rotate Y |
+| 38 | `ANIM_SPIN_DRYER` | (8.60,1.56,3.32) | Rotate Y |
+| 39 | `ANIM_DISHING_EROSION_SCANNER` | (4.12,2.73,3.20) | Translate X |
+| 40 | `ANIM_COPPER_RESIDUE_CAMERA` | (5.07,2.68,3.20) | Translate X |
+| 41 | `ANIM_INTERLINE_ISOLATION_PROBE` | (6.10,2.57,3.18) | Translate Y |
+| 42 | `ANIM_VIA_KELVIN_PROBE` | (7.09,2.55,3.16) | Translate Y |
+| 43 | `ANIM_ESTOP` | (9.15,1.80,4.52) | Translate Z |
+| 44 | `ANIM_INTERCONNECT_SCADA` | (0.00,5.22,-3.96) | Indicator |
+
+## REQUIRED BEHAVIOR
+
+Use actual parent transforms, not mesh-name guesses.
+
+Do not double-rotate nested visual parts.
+
+Do not create animated motion on indicator-only pivots.
+
+The original package contains parent hierarchies, not baked animation clips.
+
+---
+
+# 10. REAL PLAYER WIRING REQUIREMENT
+
+Implement exactly:
+
+**114 player-created connections.**
+
+**176 unique functional terminal anchors.**
+
+Read:
+
+`Gameplay_Wiring_Concept_W001_W114.csv`
+
+and:
+
+`Terminal_Anchor_Plan_176.csv`
+
+## SOURCE STATUS
+
+The CSV contains conceptual equipment-to-equipment connections.
+
+Wires do not yet exist inside the FBXs or Unity scene.
+
+The terminal CSV contains proposed coordinates and equipment assignments.
+
+It does not contain active `SparkTerminal` components.
+
+## REQUIRED UNITY OUTPUT
+
+Create a real functional connection manifest for W001–W114 defining:
+
+- Wire ID.
+- Source equipment.
+- Source terminal ID.
+- Destination equipment.
+- Destination terminal ID.
+- Electrical domain.
+- Analog/digital/power type.
+- Signal direction.
+- Signal validity rules.
+- Disconnection consequences.
+- Required protection response.
+
+## IMPORTANT TERMINAL RELATIONSHIP
+
+114 wires require 228 endpoint references.
+
+Exactly 176 unique terminals are planned.
+
+Use legitimate shared terminals and supported junctions.
+
+Do not fabricate 228 different sockets.
+
+---
+
+# 11. VERIFIED WIRING BUDGET
+
+| Group | Wires | IDs |
+|---|---:|---|
+| Educational 5 V power and returns | 10 | W001–W010 |
+| Three-stage motion and downforce | 18 | W011–W028 |
+| Process-fluid pumps, flow and cleaning | 18 | W029–W046 |
+| Copper thickness and endpoint sensing | 16 | W047–W062 |
+| Barrier selectivity and fluid condition | 14 | W063–W076 |
+| Corrosion protection and cleaning | 12 | W077–W088 |
+| Electrical isolation and metrology | 12 | W089–W100 |
+| PLC, safety and SCADA | 14 | W101–W114 |
+| **TOTAL** | **114** | **W001–W114** |
+
+Keep the wire IDs consistent with the actual CSV.
+
+---
+
+# 12. W001–W010 — CONTROL POWER
+
+Implement the following conceptual power connections:
+
+| Wire | Function |
+|---|---|
+| W001 | PLC control power |
+| W002 | Three-stage CMP controller power |
+| W003 | SCADA control power |
+| W004 | Bulk endpoint controller power |
+| W005 | Downforce instrument interface supply |
+| W006 | Slurry flow instrument supply |
+| W007 | Eddy-current instrument interface supply |
+| W008 | Barrier spectrometer electronics supply |
+| W009 | Emergency safety logic supply |
+| W010 | Interline leakage test interface supply |
+
+Use a real 5 V educational control circuit.
+
+Implement appropriate returns or fixed internal power references.
+
+Do not power industrial polishing motors directly from the educational supply.
+
+---
+
+# 13. W011–W028 — MOTION AND DOWNFORCE
+
+Implement:
+
+- W011 — Bulk servo RPM request.
+- W012 — Bulk servo actual RPM.
+- W013 — Bulk carrier spin command.
+- W014 — Bulk carrier measured RPM.
+- W015 — Bulk carrier lift request.
+- W016 — Actual bulk lift position.
+- W017 — Actual bulk downforce feedback.
+- W018 — Multi-zone force command.
+- W019 — Multi-zone force status.
+- W020 — Soft platen speed command.
+- W021 — Soft platen speed feedback.
+- W022 — Soft carrier spin command.
+- W023 — Soft landing force feedback.
+- W024 — Barrier platen speed command.
+- W025 — Barrier platen actual RPM.
+- W026 — Barrier carrier motion request.
+- W027 — Barrier carrier position feedback.
+- W028 — Polishing motor torque feedback.
+
+## REQUIRED BEHAVIOR
+
+Requested speed must differ from actual speed during acceleration.
+
+Requested pressure must differ from measured force during transients.
+
+A motor fault must affect the physical motion state.
+
+Polishing cannot occur correctly without contact, finite sliding speed and valid process fluid.
+
+---
+
+# 14. W029–W046 — PROCESS FLUIDS AND CLEANING
+
+Implement:
+
+- W029 — Bulk slurry pump enable.
+- W030 — Bulk pump actual status.
+- W031 — Measured bulk slurry flow.
+- W032 — Bulk dispensing arm command.
+- W033 — Bulk nozzle status.
+- W034 — Bulk pad conditioner enable.
+- W035 — Pad conditioner ready.
+- W036 — Barrier fluid pump enable.
+- W037 — Barrier pump actual drive feedback.
+- W038 — Measured barrier fluid flow.
+- W039 — Barrier nozzle valid.
+- W040 — Soft landing manifold request.
+- W041 — Soft landing flow response.
+- W042 — Brush cleaner enable.
+- W043 — Actual brush cleaning RPM.
+- W044 — Megasonic cleaning enable.
+- W045 — Rinse supply status.
+- W046 — Spin dryer actual RPM.
+
+## IMPORTANT
+
+Use separate process-fluid physics.
+
+Slurry transport is not electrical conduction.
+
+The electrical connections carry commands, measured flow, pump state and safety feedback.
+
+The fluid model determines actual reservoir inventory and material delivery.
+
+---
+
+# 15. W047–W062 — THICKNESS AND ENDPOINT SENSING
+
+| Wire | Verified conceptual purpose |
+|---|---|
+| W047 | Eddy-current copper thickness to bulk endpoint controller |
+| W048 | Bulk optical copper clearing signal |
+| W049 | Bulk downforce feedback for endpoint |
+| W050 | Bulk pad wear measurement |
+| W051 | Conductive thickness telemetry to CMP controller |
+| W052 | Motor torque process response |
+| W053 | Wafer interface thermal feedback |
+| W054 | Barrier clearance tomography status |
+| **W055** | **CRITICAL barrier optical spectral feedback** |
+| W056 | Optical viewport health validity |
+| W057 | Barrier spectral telemetry to SCADA |
+| W058 | Dishing/erosion measurement |
+| W059 | Residual conductive copper inspection |
+| W060 | Bulk endpoint stage transition |
+| W061 | Barrier optical feedback validity to PLC |
+| W062 | Safe barrier carrier retract request |
+
+## CRITICAL DESIGN RULE
+
+W055 is the actual protected endpoint measurement path.
+
+W057 supplies SCADA telemetry.
+
+W061 provides optical feedback validity/safety status.
+
+W056 provides viewport health.
+
+W054 provides an independent tomography/status association.
+
+**None of these is permitted to silently replace the missing W055 signal.**
+
+After W055 disconnects, the controller must not continue certified barrier polishing merely because another telemetry or health wire remains connected.
+
+---
+
+# 16. W063–W076 — BARRIER SELECTIVITY
+
+Implement:
+
+- W063 — Selectivity analysis request.
+- W064 — Selectivity measurement.
+- W065 — Barrier fluid readiness.
+- W066 — Barrier fluid feed command.
+- W067 — Actual barrier flow for selectivity.
+- W068 — Soft landing fluid state.
+- W069 — Process selectivity alarm.
+- W070 — Barrier clearance map for selectivity.
+- W071 — Copper thickness comparison.
+- W072 — Thermal selectivity measurement.
+- W073 — Selectivity trend telemetry.
+- W074 — Soft landing finishing mode.
+- W075 — Copper/barrier/dielectric removal ratio.
+- W076 — Barrier stage enable permission.
+
+The process selectivity model must operate on actual layer-removal state.
+
+Do not invent real chemical recipes or proprietary slurry parameters.
+
+Use fictional normalized process-fluid settings.
+
+---
+
+# 17. W077–W088 — CORROSION, RESIDUE AND CLEANING
+
+Implement:
+
+- W077 — Copper corrosion potential.
+- W078 — Surface protection enable.
+- W079 — Surface protection state.
+- W080 — Residue condition measurement.
+- W081 — Brush cleaning command.
+- W082 — Brush cleaning completion.
+- W083 — Megasonic cleaning command.
+- W084 — Megasonic cleaning completion.
+- W085 — Rinse delivery availability.
+- W086 — Spin drying completion.
+- W087 — Final surface defect count.
+- W088 — Cleaning and corrosion telemetry.
+
+Cleaned and protected wafer state must derive from actual processing.
+
+Do not automatically remove corrosion merely by clicking PROTECT.
+
+---
+
+# 18. W089–W100 — ELECTRICAL AND SURFACE METROLOGY
+
+Implement:
+
+- W089 — Interline leakage measurement.
+- W090 — Via Kelvin continuity measurement.
+- W091 — Dielectric integrity result.
+- W092 — Post-CMP surface defects.
+- W093 — Dishing/erosion map.
+- W094 — Conductive copper residue map.
+- W095 — Incoming plated wafer inspection.
+- W096 — Via resistance telemetry.
+- W097 — Adjacent-line isolation telemetry.
+- W098 — Dielectric quality telemetry.
+- W099 — Final geometry/electrical wafer certification.
+- W100 — Electrical metrology calibration request.
+
+The electrical tests must derive from the actual wafer geometry and circuit connectivity model.
+
+No fabricated PASS state.
+
+---
+
+# 19. W101–W114 — PLC, SAFETY AND SCADA
+
+Implement:
+
+- W101 — Emergency-stop input.
+- W102 — Bulk motor safety disable.
+- W103 — Soft landing motor safety disable.
+- W104 — Barrier motor safety disable.
+- W105 — Bulk carrier retract safety.
+- W106 — Soft carrier retract safety.
+- W107 — Barrier carrier retract safety.
+- W108 — Critical optical sensing health.
+- W109 — CMP process stage command.
+- W110 — PLC safe state telemetry.
+- W111 — SCADA operator command.
+- W112 — PLC state telemetry.
+- W113 — Objective state event.
+- W114 — Wafer certification result.
+
+The safety system must retain independent authority over ordinary process controls.
+
+---
+
+# 20. BUILD 176 FUNCTIONAL TERMINALS
+
+Use:
+
+`Terminal_Anchor_Plan_176.csv`
+
+The CSV provides:
+
+- PlannedAnchorID.
+- Model.
+- WorldX_m.
+- WorldY_m.
+- WorldZ_m.
+- Purpose.
+- Status.
+
+Planned IDs run from:
+
+`P001` to `P176`.
+
+All are currently marked as proposed-only anchors.
+
+## REQUIRED UNITY WORK
+
+1. Inspect the real `SparkTerminal` class.
+2. Create exactly 176 functional terminal components.
+3. Assign unique stable IDs.
+4. Match each terminal to the correct equipment.
+5. Assign electrical/signal types.
+6. Assign input/output directions.
+7. Define valid shared buses and junctions.
+8. Create appropriate visual terminal sockets.
+9. Position sockets for player interaction.
+10. Register all terminal components with the real circuit system.
+11. Create real W001–W114 wire endpoints.
+12. Validate all endpoint references.
+
+The electrical system must reflect actual player connections.
+
+Do not satisfy the terminal count using empty GameObjects.
+
+---
+
+# 21. INITIAL LEVEL 77 STATE
+
+At level start:
+
+- Main control supply off.
+- PLC idle.
+- Three polishing stations stopped.
+- All carrier heads retracted.
+- Polishing pads stationary.
+- Slurry pumps stopped.
+- Bulk and barrier process fluids available.
+- Pad conditioning not yet verified.
+- Downforce sensors uncalibrated.
+- Eddy-current sensor uncalibrated.
+- Optical bulk sensor uncalibrated.
+- Barrier spectrometer uncalibrated.
+- Viewport health not yet verified.
+- Wafer transfer robot at home.
+- Incoming electroplated wafer available.
+- Wafer surface contains copper overburden.
+- Exposed-field barrier not yet cleared.
+- Useful copper remains in trenches/vias.
+- Wafer has not been cleaned.
+- Electrical isolation not yet certified.
+- No current critical fault.
+- Objectives 0/6.
+
+The player must commission the system.
+
+No instant machine readiness.
+
+---
+
+# 22. WAFER CONTINUITY FROM LEVEL 76
+
+Level 76 produces a copper-electroplated wafer with filled trenches and vias.
+
+Its surface still contains excess blanket copper.
+
+Level 77 begins with that wafer condition.
+
+## REQUIRED STATE TRANSFER
+
+If Level 76 has actual persistent wafer data, reuse the real API.
+
+If not, provide a deterministic incoming wafer preset containing:
+
+- Patterned dielectric.
+- Copper-filled trenches.
+- Copper-filled vias.
+- Barrier/liner regions.
+- Blanket copper overburden.
+- Local thickness variation.
+- Initial feature geometry.
+- Initial defect parameters.
+- Wafer inspection metadata.
+
+Do not invent an existing inter-level data transfer system.
+
+Document the chosen integration.
+
+---
+
+# 23. SINGLE AUTHORITATIVE WAFER MATERIAL MODEL
+
+Use 16 wafer regions.
+
+Each region must represent multiple characteristic copper features.
+
+Track:
+
+- Blanket copper thickness.
+- Field barrier thickness.
+- Dielectric surface height.
+- Copper conductor cross-section.
+- Copper line recess.
+- Via metal volume.
+- Copper dishing.
+- Dielectric erosion.
+- Residual copper bridges.
+- Surface contamination.
+- Corrosion fraction.
+- Local roughness.
+- Particle defects.
+- Electrical continuity.
+- Electrical isolation.
+
+## IMPORTANT
+
+Do not store only one global "polishing progress" float.
+
+A wafer may be correctly polished in one region but damaged elsewhere.
+
+The final wafer certification must evaluate regional conditions.
+
+---
+
+# 24. THREE DISTINCT POLISHING STATIONS
+
+Implement three separate machines.
+
+## STATION A — BULK COPPER
+
+Models:
+
+- `L77_BulkCopperPolishingPlaten`
+- `L77_BulkCopperPolishingPad`
+- `L77_BulkPlatenServoDrive`
+- `L77_BulkWaferCarrierHead`
+- `L77_BulkCarrierVerticalActuator`
+- `L77_BulkDownforceLoadCell`
+- `L77_MultiZonePressureControlBank`
+
+Purpose:
+
+Remove most of the unwanted blanket copper.
+
+## STATION B — SOFT LANDING
+
+Models:
+
+- `L77_SoftLandingPolishingPlaten`
+- `L77_SoftLandingPrecisionPad`
+- `L77_SoftLandingCarrierHead`
+- `L77_SoftLandingForceRegulator`
+- `L77_SelectiveProcessFluidManifold`
+
+Purpose:
+
+Clear remaining copper with reduced risk of damaging useful metal.
+
+## STATION C — BARRIER CLEAR
+
+Models:
+
+- `L77_BarrierClearingPolishingPlaten`
+- `L77_BarrierSelectivePolishingPad`
+- `L77_BarrierClearingCarrierHead`
+- `L77_BarrierProcessFluidReservoir`
+- `L77_BarrierFluidMeteringPump`
+- `L77_DualWavelengthBarrierEndpointSpectrometer`
+
+Purpose:
+
+Remove exposed barrier from dielectric field regions.
+
+## REQUIRED BEHAVIOR
+
+Each station must have independent:
+
+- Actual platen speed.
+- Actual carrier speed.
+- Lift state.
+- Contact state.
+- Pressure state.
+- Pad condition.
+- Fluid delivery.
+- Removal response.
+- Endpoint readiness.
+- Safety permission.
+
+Do not treat the three stages as one machine with changing labels.
+
+---
+
+# 25. POLISHING MOTOR DYNAMICS
+
+For each platen and carrier:
+
+Track:
+
+- Requested RPM.
+- Actual RPM.
+- Motor acceleration.
+- Rotational inertia.
+- Torque demand.
+- Motor load.
+- Motor temperature or simplified stress.
+- Brake/deceleration state.
+- Fault status.
+
+## REQUIRED BEHAVIOR
+
+Motor speed changes gradually.
+
+Motor current/torque responds to load.
+
+An emergency command causes safe deceleration.
+
+The polishing model uses actual relative sliding motion.
+
+If motor motion stops, mechanical polishing removal must stop accordingly.
+
+---
+
+# 26. DOWNFORCE AND CARRIER CONTACT
+
+Implement:
+
+- Actual lift position.
+- Contact gap.
+- Requested downforce.
+- Actual downforce.
+- Regional carrier pressure.
+- Contact area.
+- Contact validity.
+- Load-cell measurement.
+- Sensor calibration.
+- Contact failure state.
+
+## REQUIRED BEHAVIOR
+
+Carrier force must respond dynamically.
+
+Actual force must not equal requested force instantly.
+
+The polishing process must depend on contact.
+
+A retracted wafer cannot continue material removal.
+
+The multi-zone pressure controller affects regional polishing rates.
+
+---
+
+# 27. PAD WEAR AND CONDITIONING
+
+Use:
+
+- `L77_BulkPadConditioningAssembly`
+- `L77_BulkPadWearMeasurementProbe`
+
+Track:
+
+- Pad wear.
+- Pad surface condition.
+- Effective friction.
+- Conditioning progress.
+- Pad contact response.
+- Measurement validity.
+
+## REQUIRED BEHAVIOR
+
+Polishing gradually changes pad condition.
+
+Conditioning affects the usable polishing surface.
+
+Worn pads change removal uniformity or efficiency.
+
+Do not reset pad wear instantly when the conditioner is enabled.
+
+---
+
+# 28. FICTIONAL PROCESS-FLUID SIMULATION
+
+Track for each relevant station:
+
+- Reservoir inventory.
+- Requested pump speed.
+- Actual pump speed.
+- Actual fluid flow.
+- Dispense nozzle position.
+- Process-fluid availability.
+- Flow sensor reading.
+- Temperature effect.
+- Material selectivity factor.
+
+Use a finite inventory model.
+
+## IMPORTANT
+
+The game must be educational and fictional.
+
+Do not implement real industrial chemical formulations.
+
+Use normalized polishing-fluid types:
+
+- Bulk copper fluid.
+- Soft landing fluid.
+- Barrier-selective finishing fluid.
+
+These have game-calibrated removal factors.
+
+---
+
+# 29. MATERIAL-SELECTIVE REMOVAL PHYSICS
+
+Implement a simplified pressure/velocity material removal model.
+
+For material m and region i:
+
+`RemovalRate(i,m) = K(m) * Pressure(i) * SlidingSpeed(i) * Selectivity(i,m)`
+
+Apply physical gating for:
+
+- Wafer contact.
+- Fluid availability.
+- Pad condition.
+- Motor motion.
+- Safety authorization.
+
+## THREE MATERIAL FAMILIES
+
+- Copper.
+- Barrier/liner.
+- Dielectric.
+
+Each must respond differently.
+
+## REQUIRED BEHAVIOR
+
+Remove only material currently exposed to the polishing surface.
+
+Do not remove buried copper through intact upper layers.
+
+Do not remove dielectric while the blanket copper still fully covers it unless a defensible local exposure model allows that region to be exposed.
+
+Preserve material-volume accounting.
+
+Never allow negative thickness.
+
+---
+
+# 30. STAGE A — BULK COPPER REMOVAL
+
+## REQUIRED PROCESS
+
+1. Wafer loaded.
+2. Wafer carrier clamped.
+3. Bulk pad ready.
+4. Bulk slurry flow established.
+5. Platen commissioned.
+6. Carrier rotation commissioned.
+7. Downforce calibrated.
+8. Eddy-current sensor calibrated.
+9. Bulk optical sensor calibrated.
+10. Safe polishing authorized.
+11. Copper overburden decreases over time.
+12. Regional thickness changes.
+13. Endpoint confidence rises as measurements support clearing.
+14. Controller stops bulk removal before unacceptable line damage.
+15. Wafer retracts.
+16. Stage A certificate recorded.
+
+## FAILURE CONDITIONS
+
+- Insufficient fluid.
+- Invalid downforce feedback.
+- Excessive RPM.
+- Uneven copper removal.
+- Invalid thickness sensor.
+- Excessive pad wear.
+- Overpolishing.
+
+No timer-only success.
+
+---
+
+# 31. STAGE B — SOFT LANDING
+
+## REQUIRED PROCESS
+
+1. Wafer transferred using actual gantry.
+2. Soft landing pad ready.
+3. Force regulator commissioned.
+4. Finishing fluid delivered.
+5. Contact conditions validated.
+6. Copper thickness measured.
+7. Low-damage removal begins.
+8. Remaining blanket copper decreases.
+9. Copper line recess tracked.
+10. Endpoint evidence evaluated.
+11. Residual copper clearance reached.
+12. Soft landing stops safely.
+13. Wafer retracts.
+14. Stage B certificate recorded.
+
+## FAILURE CONDITIONS
+
+- Incomplete blanket copper removal.
+- Excessive copper dishing.
+- Excessive nonuniformity.
+- Invalid endpoint evidence.
+- Unsafe contact force.
+
+---
+
+# 32. STAGE C — SELECTIVE BARRIER CLEAR
+
+## REQUIRED PROCESS
+
+1. Wafer transferred to Stage C.
+2. Barrier pad qualified.
+3. Barrier-selective fictional process fluid ready.
+4. Actual fluid flow established.
+5. Spectrometer calibrated.
+6. Viewport clean.
+7. Optical signal valid.
+8. Barrier clearing authorized.
+9. Exposed-field barrier thickness decreases.
+10. Copper and dielectric removal remain within selectivity limits.
+11. Spectral transition detected.
+12. Clearance tomography evaluated.
+13. All required wafer regions satisfy barrier clearance.
+14. Controller commands polishing stop.
+15. Carrier pressure decreases safely.
+16. Carrier retracts.
+17. Barrier-clear certificate recorded.
+
+## IMPORTANT
+
+A spectral signal transition in one region does not prove complete wafer-wide clearance.
+
+Evaluate configured coverage, confidence and regional wafer evidence.
+
+---
+
+# 33. EDDY-CURRENT THICKNESS MODEL
+
+Use:
+
+`23_L77_EddyCurrentCopperThicknessGauge.fbx`
+
+Implement:
+
+- True conductive copper thickness.
+- Measurement sensitivity.
+- Calibration factor.
+- Measurement noise.
+- Sensor sample timestamp.
+- Sensor validity.
+- Signal confidence.
+- Measurement range.
+
+## REQUIRED BEHAVIOR
+
+The measured thickness must derive from actual copper geometry.
+
+Signal quality must change when the underlying measurement is no longer reliable.
+
+Do not display perfectly accurate thickness at every moment unless supported by the configured idealized scenario.
+
+---
+
+# 34. OPTICAL BULK ENDPOINT SENSING
+
+Use:
+
+`22_L77_OpticalCopperRemovalEndpointSensor.fbx`
+
+Track:
+
+- Surface reflectance abstraction.
+- Exposed copper fraction.
+- Local material transition.
+- Optical intensity.
+- Calibration.
+- Measurement validity.
+- Endpoint confidence.
+
+## REQUIRED BEHAVIOR
+
+Optical readings must reflect actual material exposure.
+
+Do not make the endpoint sensor a simple success switch.
+
+It must provide meaningful feedback to the bulk endpoint controller.
+
+---
+
+# 35. DUAL-WAVELENGTH BARRIER SPECTROMETER
+
+Use:
+
+`38_L77_DualWavelengthBarrierEndpointSpectrometer.fbx`
+
+Track:
+
+- Virtual wavelength A response.
+- Virtual wavelength B response.
+- Surface material mixture.
+- Reflected signal.
+- Spectral ratio/feature.
+- Viewport transmission.
+- Calibration validity.
+- Measurement timestamp.
+- Confidence.
+- Electrical feedback connectivity.
+
+## REQUIRED BEHAVIOR
+
+The spectral response must change as barrier material is cleared and dielectric becomes exposed.
+
+A fouled viewport must reduce measurement confidence or alter signal quality.
+
+The controller must require valid calibration.
+
+W055 must be the actual trusted feedback path.
+
+---
+
+# 36. ENDPOINT SENSOR FUSION
+
+Build a process endpoint evaluator using:
+
+- Eddy-current thickness.
+- Bulk optical reflectance.
+- Barrier spectral measurement.
+- Tomography/coverage evidence.
+- Motor torque response.
+- Actual process stage.
+
+## REQUIRED BEHAVIOR
+
+Stage A and Stage B use suitable copper-thickness evidence.
+
+Stage C uses trusted barrier optical feedback and region-aware clearance evidence.
+
+A stale sample cannot certify completion.
+
+A valid optical-health wire cannot substitute for missing spectral measurement.
+
+The endpoint logic must identify:
+
+- Before endpoint.
+- Approaching endpoint.
+- Endpoint supported.
+- Measurement uncertain.
+- Invalid feedback.
+- Unsafe continued polishing.
+
+---
+
+# 37. COPPER DISHING MODEL
+
+Track local copper line geometry.
+
+## REQUIRED VARIABLES
+
+- Initial copper line height.
+- Remaining line height.
+- Neighboring dielectric level.
+- Copper line width.
+- Pattern density.
+- Local copper removal.
+- Dishing depth.
+
+## REQUIRED BEHAVIOR
+
+After blanket copper clears, further polishing can recess exposed copper.
+
+Wider features may respond differently from dense narrow features in the simplified model.
+
+Dishing must increase when the relevant removal conditions persist.
+
+Do not assign dishing directly from a preset success flag.
+
+Target:
+
+`CopperDishing <= 5 nm`
+
+Educational scenario threshold only.
+
+---
+
+# 38. DIELECTRIC EROSION MODEL
+
+Track local dielectric surface loss.
+
+## REQUIRED VARIABLES
+
+- Initial dielectric surface height.
+- Local exposed dielectric fraction.
+- Pattern density.
+- Actual contact pressure.
+- Relative velocity.
+- Dielectric selectivity.
+- Local erosion depth.
+
+## REQUIRED BEHAVIOR
+
+If dielectric becomes exposed and polishing continues, the model must allow dielectric removal according to its rate factor.
+
+Copper dishing and dielectric erosion must remain separate measurements.
+
+Target:
+
+`DielectricErosion <= 4 nm`
+
+Educational scenario threshold only.
+
+---
+
+# 39. RESIDUAL COPPER AND ELECTRICAL BRIDGES
+
+Use:
+
+`53_L77_ResidualCopperInspectionScanner.fbx`
+
+## REQUIRED STATES
+
+- Field copper residue.
+- Residual bridge locations.
+- Bridge connectivity.
+- Inspection measurement.
+- Measurement uncertainty.
+- Scanner validity.
+
+## REQUIRED BEHAVIOR
+
+Residual blanket copper or bridging metal can electrically short adjacent patterned lines.
+
+A wafer with acceptable surface flatness but residual conductive bridges must fail isolation testing.
+
+Do not certify electrical isolation from polishing progress alone.
+
+---
+
+# 40. ELECTRICAL INTERCONNECT METROLOGY
+
+Use:
+
+- `54_L77_InterlineLeakageTestInstrument.fbx`
+- `55_L77_ViaContinuityKelvinProbe.fbx`
+- `56_L77_DielectricIntegrityAnalyzer.fbx`
+
+## REQUIRED TESTS
+
+1. Via continuity.
+2. Copper line continuity.
+3. Electrical path resistance.
+4. Adjacent-line isolation.
+5. Short-circuit detection.
+6. Open-circuit detection.
+7. Dielectric leakage.
+8. Dielectric integrity.
+
+## REQUIRED BEHAVIOR
+
+Create a small representative electrical network from the patterned wafer topology.
+
+Intended metal pathways are conductive.
+
+Separated copper lines should not have unintended conductive bridges.
+
+A broken via can create an open circuit.
+
+Residual copper can create a short circuit.
+
+Excessive conductor removal can increase resistance.
+
+Damaged dielectric can reduce isolation.
+
+Measurements must derive from authoritative wafer geometry and test configuration.
+
+---
+
+# 41. POST-CMP CLEANING
+
+Use:
+
+- `46_L77_PostCMPBrushCleaningChamber.fbx`
+- `47_L77_PrecisionMegasonicCleaningModule.fbx`
+- `48_L77_CopperResidueChemistryMonitor.fbx`
+- `49_L77_UltrapureRinseWaterModule.fbx`
+- `50_L77_HighSpeedWaferSpinDryer.fbx`
+
+## REQUIRED STATES
+
+- Slurry residue.
+- Particles.
+- Fictional surface contamination.
+- Brush cleaning progress.
+- Megasonic cleaning progress.
+- Rinse flow.
+- Actual dryer RPM.
+- Remaining surface liquid.
+- Dryness.
+- Cleaning validity.
+
+## REQUIRED BEHAVIOR
+
+Cleaning removes contaminants gradually.
+
+Rinsing dilutes and removes modeled residues.
+
+Drying removes remaining liquid over time.
+
+The wafer cannot pass final certification while contaminated or inadequately dried.
+
+---
+
+# 42. COPPER CORROSION PROTECTION
+
+Use:
+
+- `44_L77_CopperCorrosionPotentialMonitor.fbx`
+- `45_L77_CopperSurfaceProtectionModule.fbx`
+
+## REQUIRED STATES
+
+- Copper surface condition.
+- Fictional residue exposure.
+- Environmental exposure time.
+- Protection effectiveness.
+- Corrosion fraction.
+- Corrosion measurement.
+- Measurement validity.
+
+## REQUIRED BEHAVIOR
+
+Prolonged exposure to adverse fictional residue conditions may degrade copper quality.
+
+Correct cleaning and surface protection reduce future degradation.
+
+Do not instantly erase already accumulated material damage when protection is enabled.
+
+Final electrical measurements must reflect significant corrosion damage where appropriate.
+
+---
+
+# 43. DISTURBANCE A — OPTICAL VIEWPORT FOULING
+
+## FAULT
+
+Introduce increasing residue on the barrier endpoint viewport.
+
+## REQUIRED EFFECTS
+
+- Optical transmission decreases.
+- Spectral response degrades.
+- Endpoint confidence decreases.
+- Measurement uncertainty increases.
+- Safety may inhibit polishing.
+- SCADA identifies viewport contamination.
+
+## PLAYER RECOVERY
+
+1. Detect degraded optical quality.
+2. Stop unsafe polishing.
+3. Clean the viewport through a fictional maintenance action.
+4. Verify optical transmission.
+5. Recalibrate the spectrometer.
+6. Requalify endpoint sensing.
+7. Complete a fresh acceptable wafer.
+
+No warning-label-only recovery.
+
+---
+
+# 44. DISTURBANCE B — BARRIER SELECTIVITY DRIFT
+
+## FAULT
+
+Alter the fictional barrier finishing-fluid condition.
+
+## REQUIRED EFFECTS
+
+- Copper removal rate changes.
+- Barrier removal rate changes.
+- Dielectric removal rate changes.
+- Relative selectivity changes.
+- Copper dishing or erosion risk increases.
+- Material selectivity analyzer detects deviation.
+
+## PLAYER RECOVERY
+
+1. Detect material-selectivity mismatch.
+2. Stop polishing.
+3. Diagnose fictional finishing-fluid condition.
+4. Restore the process setting.
+5. Verify actual selectivity response.
+6. Recalibrate affected instruments.
+7. Requalify processing.
+8. Produce a fresh wafer.
+
+---
+
+# 45. DISTURBANCE C — POST-CMP CORROSION
+
+## FAULT
+
+Introduce a cleaning or surface-protection failure.
+
+## REQUIRED EFFECTS
+
+- Residual contamination persists.
+- Corrosion risk rises.
+- Surface condition degrades.
+- Corrosion potential instrument responds.
+- Electrical quality may deteriorate.
+- Final inspection can fail.
+
+## PLAYER RECOVERY
+
+1. Diagnose contamination.
+2. Restore brush/rinse process.
+3. Restore protection equipment.
+4. Verify cleaning effectiveness.
+5. Verify surface condition.
+6. Perform appropriate inspection.
+7. Certify a fresh acceptable wafer.
+
+All three disturbances must genuinely change the wafer/process state.
+
+---
+
+# 46. MAIN LEVEL 77 PLC STATE MACHINE
+
+Use:
+
+`58_L77_CopperPlanarizationPLCRack.fbx`
+
+Suggested states:
+
+- OFF.
+- INITIALIZING.
+- IDLE.
+- CONTROL_POWER_CHECK.
+- SAFETY_CHECK.
+- WAFER_INSPECTION.
+- WAFER_LOADING.
+- BULK_STATION_COMMISSIONING.
+- BULK_SENSOR_CALIBRATION.
+- BULK_PAD_CHECK.
+- BULK_FLUID_READY.
+- BULK_MOTOR_READY.
+- BULK_CARRIER_ENGAGING.
+- BULK_POLISHING.
+- BULK_ENDPOINT_EVALUATION.
+- BULK_SAFE_STOP.
+- BULK_COMPLETE.
+- GANTRY_TRANSFER_TO_SOFT.
+- SOFT_STATION_COMMISSIONING.
+- SOFT_FORCE_CALIBRATION.
+- SOFT_FLUID_READY.
+- SOFT_POLISHING.
+- COPPER_CLEARANCE_EVALUATION.
+- SOFT_SAFE_STOP.
+- SOFT_COMPLETE.
+- GANTRY_TRANSFER_TO_BARRIER.
+- BARRIER_STATION_COMMISSIONING.
+- BARRIER_SPECTROMETER_CALIBRATION.
+- BARRIER_VIEWPORT_CHECK.
+- BARRIER_FLUID_READY.
+- BARRIER_POLISHING.
+- BARRIER_ENDPOINT_EVALUATION.
+- BARRIER_SAFE_STOP.
+- BARRIER_COMPLETE.
+- WAFER_UNLOAD.
+- POST_CMP_BRUSH_CLEANING.
+- MEGASONIC_CLEANING.
+- RINSING.
+- SPIN_DRYING.
+- SURFACE_INSPECTION.
+- DISHING_EROSION_METROLOGY.
+- COPPER_RESIDUE_INSPECTION.
+- VIA_CONTINUITY_TEST.
+- INTERLINE_ISOLATION_TEST.
+- DIELECTRIC_INTEGRITY_TEST.
+- FINAL_CERTIFICATION.
+- SAFE_HOLD.
+- CRITICAL_FAULT.
+- RESET_REQUIRED.
+
+## REQUIRED BEHAVIOR
+
+PLC transitions depend on actual:
+
+- Motor state.
+- Force.
+- Fluid flow.
+- Sensors.
+- Material removal.
+- Wafer geometry.
+- Safety.
+- Metrology results.
+
+Do not advance all stages solely from elapsed time.
+
+---
+
+# 47. INDUSTRIAL SAFETY CONTROLLER
+
+Use:
+
+`59_L77_CMPEmergencySafetyStation.fbx`
+
+## REQUIRED PROTECTIVE CONDITIONS
+
+- Valid 5 V control supply.
+- Emergency stop released.
+- Equipment guards safe.
+- Wafer present.
+- Carrier clamp valid.
+- Platen motion permitted.
+- Carrier motion permitted.
+- Contact force feedback valid.
+- Process-fluid availability valid.
+- No severe motor fault.
+- No excessive wafer interface temperature.
+- Endpoint feedback valid when required.
+- No unresolved critical fault.
+
+## REQUIRED SAFE STOP
+
+For a serious endpoint or safety fault:
+
+1. Inhibit new polishing.
+2. Disable normal process commands.
+3. Command motor deceleration.
+4. Reduce downforce through actuator dynamics.
+5. Retract carrier when mechanically safe.
+6. Stop uncontrolled material removal.
+7. Preserve wafer geometry.
+8. Record fault.
+9. Latch protection.
+10. Require actual repair.
+11. Require necessary recalibration.
+12. Require explicit operator reset.
+
+## IMPORTANT
+
+Do not instantly set all motor RPM to zero merely because a wire disconnects.
+
+Model safe deceleration.
+
+The material-removal integrator must use actual remaining contact/motion and stop appropriately as the system transitions to the protected state.
+
+---
+
+# 48. OBJECTIVE 1 — BUILD THE TRIPLE-STAGE CMP NETWORK
+
+Require:
+
+1. Exactly 114 player-created wires connected.
+2. Exactly 176 unique functional terminals.
+3. Control supply valid.
+4. Electrical returns valid.
+5. PLC power valid.
+6. Main CMP controller power valid.
+7. Bulk drive connected.
+8. Bulk carrier connected.
+9. Bulk downforce sensor connected.
+10. Multi-zone pressure bank connected.
+11. Bulk slurry pump connected.
+12. Slurry flow transmitter connected.
+13. Pad conditioner connected.
+14. Eddy-current thickness sensor connected.
+15. Bulk optical sensor connected.
+16. Soft landing platen connected.
+17. Soft carrier controls connected.
+18. Soft force feedback connected.
+19. Selective fluid manifold connected.
+20. Barrier platen connected.
+21. Barrier carrier connected.
+22. Barrier fluid pump connected.
+23. Barrier flow measurement connected.
+24. Barrier spectrometer connected.
+25. W055 valid.
+26. Safety circuits connected.
+27. Cleaning and rinsing connected.
+28. Electrical metrology connected.
+29. SCADA connected.
+30. No unsafe topology.
+
+Progress becomes:
+
+**1/6**
+
+---
+
+# 49. OBJECTIVE 2 — COMMISSION THE THREE STATIONS
+
+Require:
+
+1. Objective 1 certified.
+2. Incoming plated wafer inspected.
+3. Blanket copper state verified.
+4. Wafer handling robot ready.
+5. Transfer gantry ready.
+6. Bulk pad inspected.
+7. Bulk pad wear acceptable.
+8. Bulk motor calibrated.
+9. Bulk carrier motion calibrated.
+10. Downforce calibrated.
+11. Multi-zone pressure verified.
+12. Bulk fluid pump commissioned.
+13. Actual bulk slurry flow measured.
+14. Eddy-current sensor calibrated.
+15. Bulk optical sensor calibrated.
+16. Soft platen commissioned.
+17. Soft landing force regulator calibrated.
+18. Soft finishing-fluid manifold ready.
+19. Barrier platen commissioned.
+20. Barrier carrier commissioned.
+21. Barrier fluid delivery ready.
+22. Barrier spectrometer calibrated.
+23. Viewport health verified.
+24. Safety interlocks valid.
+25. No critical fault.
+
+Progress becomes:
+
+**2/6**
+
+---
+
+# 50. OBJECTIVE 3 — REMOVE COPPER WITHOUT DESTROYING THE LINES
+
+Require:
+
+1. Previous objectives certified.
+2. Valid copper-plated wafer loaded.
+3. Stage A enabled.
+4. Actual bulk platen motion.
+5. Actual bulk carrier motion.
+6. Actual downforce.
+7. Actual slurry flow.
+8. Copper removal integrated over time.
+9. Eddy-current thickness decreases.
+10. Optical bulk endpoint responds.
+11. Regional removal monitored.
+12. Bulk endpoint successfully detected.
+13. Bulk stage stopped safely.
+14. Wafer transferred to Stage B.
+15. Soft landing force valid.
+16. Soft finishing fluid valid.
+17. Actual soft landing polishing occurs.
+18. Residual blanket copper decreases.
+19. Copper clearance evidence valid.
+20. Copper dishing within threshold.
+21. Dielectric erosion within allowed range.
+22. Useful copper line/via geometry preserved.
+23. Stage B stopped safely.
+24. No critical fault.
+
+Progress becomes:
+
+**3/6**
+
+---
+
+# 51. OBJECTIVE 4 — REVEAL AND ISOLATE THE CIRCUITS
+
+Require:
+
+1. Previous objectives certified.
+2. Wafer transferred to Stage C.
+3. Barrier process fluid valid.
+4. Barrier pad ready.
+5. Spectrometer calibrated.
+6. W055 connected.
+7. Optical feedback valid.
+8. Viewport healthy.
+9. Actual barrier polishing begins.
+10. Exposed-field barrier decreases.
+11. Spectral response changes with actual material exposure.
+12. Barrier clearance evidence valid.
+13. Required wafer regions meet barrier clearance.
+14. Carrier safely retracts at endpoint.
+15. Residual blanket copper below threshold.
+16. Exposed-field barrier below threshold.
+17. Copper dishing ≤5 nm.
+18. Dielectric erosion ≤4 nm.
+19. Nonuniformity ≤2.5%.
+20. No unacceptable copper residue bridges.
+21. Wafer unloaded safely.
+22. Brush cleaning completed.
+23. Megasonic cleaning completed.
+24. Rinsing completed.
+25. Spin drying completed.
+26. Surface defects acceptable.
+27. Corrosion within limits.
+28. Dishing/erosion inspection passes.
+29. Via Kelvin continuity passes.
+30. Copper line continuity passes.
+31. Interline isolation passes.
+32. Dielectric integrity passes.
+33. No critical fault.
+
+Progress becomes:
+
+**4/6**
+
+---
+
+# 52. OBJECTIVE 5 — SURVIVE COPPER FINISHING DISTURBANCES
+
+Require:
+
+1. Previous objectives certified.
+2. Stable baseline recorded.
+3. Viewport fouling activated.
+4. Actual optical signal quality decreases.
+5. Endpoint uncertainty increases.
+6. Fouling detected.
+7. Polishing safely inhibited.
+8. Viewport cleaned.
+9. Spectrometer recalibrated.
+10. Optical feedback requalified.
+11. Selectivity drift activated.
+12. Material removal factors change.
+13. Dishing/erosion risk responds.
+14. Selectivity fault detected.
+15. Fictional finishing process restored.
+16. Selectivity requalified.
+17. Corrosion disturbance activated.
+18. Residue/surface condition changes.
+19. Corrosion monitoring responds.
+20. Cleaning/protection fault diagnosed.
+21. Cleaning restored.
+22. Surface protection verified.
+23. Wafer handling recommissioned.
+24. Fresh plated wafer loaded.
+25. Fresh bulk copper removal completed.
+26. Fresh soft landing completed.
+27. Fresh barrier clear completed.
+28. Fresh cleaning/drying completed.
+29. Fresh geometry inspection passes.
+30. Fresh electrical isolation passes.
+31. No critical fault.
+
+Progress becomes:
+
+**5/6**
+
+---
+
+# 53. OBJECTIVE 6 — RESTORE CRITICAL OPTICAL ENDPOINT FEEDBACK
+
+This is the final deliberate repair challenge.
+
+## CRITICAL WIRE
+
+`W055`
+
+Actual conceptual connection:
+
+`L77_DualWavelengthBarrierEndpointSpectrometer`
+
+to:
+
+`L77_ThreeStageCMPProcessController`
+
+Signal:
+
+`CRITICAL barrier optical endpoint spectral feedback`
+
+## PROPOSED FUNCTIONAL TERMINAL IDS
+
+`BARRIER_ENDPOINT_SPECTROMETER_SIGNAL_OUT`
+
+to:
+
+`THREE_STAGE_CMP_CONTROLLER_ENDPOINT_IN`
+
+These terminal IDs are proposed and must be implemented using the real Project Spark circuit architecture.
+
+## FAULT SEQUENCE
+
+1. Objectives 1–5 historically certified.
+2. Player physically removes W055.
+3. Circuit graph changes.
+4. Trusted spectral feedback becomes invalid.
+5. Previous measurements become stale.
+6. Spectrometer power may remain available.
+7. W057 SCADA telemetry does not substitute for W055.
+8. W061 safety-health feedback does not substitute for W055.
+9. Endpoint controller detects signal loss.
+10. Polishing permission becomes false.
+11. Stage C controller enters safe stop.
+12. Platen decelerates.
+13. Carrier rotation decelerates.
+14. Downforce ramps down.
+15. Carrier retracts safely.
+16. Further material removal stops.
+17. Critical fault latches.
+18. SCADA records the event.
+
+## RECONNECTION
+
+19. Player reconnects actual W055.
+20. Electrical topology becomes valid.
+21. Sensor electronics supply verified.
+22. Fresh spectral samples acquired.
+23. Measurement remains uncalibrated until recalibration.
+24. Player performs spectrometer calibration.
+25. Viewport transmission verified.
+26. Optical confidence requalified.
+27. Player explicitly resets fault.
+28. Safety conditions validated.
+29. Controller returns to operational readiness.
+
+## FRESH QUALIFICATION
+
+30. Load a new copper-plated wafer.
+31. Inspect incoming overburden.
+32. Recommission bulk stage.
+33. Complete bulk copper removal.
+34. Transfer wafer to soft landing.
+35. Complete soft landing.
+36. Transfer wafer to barrier stage.
+37. Verify W055 feedback.
+38. Complete barrier clearing.
+39. Stop at valid endpoint.
+40. Inspect copper residue.
+41. Inspect dishing and erosion.
+42. Clean wafer.
+43. Rinse and dry wafer.
+44. Verify surface corrosion.
+45. Verify via continuity.
+46. Verify interline isolation.
+47. Verify dielectric integrity.
+48. Confirm no unresolved critical fault.
+49. Certify Objective 6.
+
+Final progress:
+
+**6/6**
+
+## HISTORICAL COMPLETION
+
+Objectives 1–5 must remain certified after the deliberate W055 disconnection.
+
+The level must not revert to 0/6.
+
+Objective 6 must not complete on reconnection alone.
+
+The player must complete a new post-repair manufacturing cycle.
+
+---
+
+# 54. LIVE HOLOGRAPHIC SCADA
+
+Use:
+
+`60_L77_HolographicCopperInterconnectSCADA.fbx`
+
+## STATION A PANEL
+
+Display:
+
+- Requested platen RPM.
+- Actual platen RPM.
+- Carrier RPM.
+- Requested downforce.
+- Actual downforce.
+- Regional pressure distribution.
+- Slurry flow.
+- Copper thickness.
+- Removal rate.
+- Pad wear.
+- Bulk endpoint confidence.
+
+## STATION B PANEL
+
+Display:
+
+- Actual platen RPM.
+- Carrier RPM.
+- Actual contact force.
+- Finishing-fluid flow.
+- Remaining blanket copper.
+- Copper clearance.
+- Dishing trend.
+- Endpoint validity.
+
+## STATION C PANEL
+
+Display:
+
+- Actual platen RPM.
+- Carrier RPM.
+- Carrier lift.
+- Barrier fluid flow.
+- Virtual spectral responses.
+- Viewport health.
+- Spectrometer calibration.
+- W055 signal status.
+- Barrier thickness.
+- Dielectric exposure.
+- Removal selectivity.
+- Optical endpoint confidence.
+
+## WAFER MAP PANEL
+
+Display:
+
+- 16-region copper thickness.
+- Copper residue.
+- Barrier residue.
+- Copper dishing.
+- Dielectric erosion.
+- Surface roughness.
+- Corrosion.
+- Electrical defects.
+
+## ELECTRICAL METROLOGY PANEL
+
+Display:
+
+- Via resistance.
+- Line continuity.
+- Adjacent-line leakage.
+- Short-circuit locations.
+- Dielectric integrity.
+- Final electrical certification.
+
+## SAFETY PANEL
+
+Display:
+
+- Control power.
+- PLC state.
+- Motor safety.
+- Downforce validity.
+- Optical feedback validity.
+- Emergency stop.
+- Active interlocks.
+- Fault history.
+- Reset availability.
+
+## OBJECTIVES
+
+Display authoritative:
+
+0/6 through 6/6.
+
+No fake status indicators.
+
+---
+
+# 55. RECOMMENDED UNITY C# CLASS ARCHITECTURE
+
+Inspect existing code before creating these suggested files.
+
+Suggested responsibilities:
+
+- `SparkLevel77Coordinator.cs`
+- `SparkLevel77ProcessState.cs`
+- `SparkLevel77ElectricalBindings.cs`
+- `SparkLevel77WaferMaterialMap.cs`
+- `SparkLevel77WaferGeometry.cs`
+- `SparkLevel77CopperLayerModel.cs`
+- `SparkLevel77BarrierLayerModel.cs`
+- `SparkLevel77DielectricLayerModel.cs`
+- `SparkLevel77PatternDensityModel.cs`
+- `SparkLevel77CMPMotorDynamics.cs`
+- `SparkLevel77CarrierMotion.cs`
+- `SparkLevel77DownforceController.cs`
+- `SparkLevel77PadWearModel.cs`
+- `SparkLevel77SlurryNetwork.cs`
+- `SparkLevel77SlurryPumpDynamics.cs`
+- `SparkLevel77ProcessFluidModel.cs`
+- `SparkLevel77MaterialSelectiveRemoval.cs`
+- `SparkLevel77BulkCopperController.cs`
+- `SparkLevel77SoftLandingController.cs`
+- `SparkLevel77BarrierClearController.cs`
+- `SparkLevel77EddyCurrentSensor.cs`
+- `SparkLevel77BulkOpticalSensor.cs`
+- `SparkLevel77BarrierSpectrometer.cs`
+- `SparkLevel77OpticalViewportModel.cs`
+- `SparkLevel77EndpointFusion.cs`
+- `SparkLevel77DishingModel.cs`
+- `SparkLevel77ErosionModel.cs`
+- `SparkLevel77CopperResidueModel.cs`
+- `SparkLevel77InterconnectTopology.cs`
+- `SparkLevel77ElectricalContinuityModel.cs`
+- `SparkLevel77LeakageIsolationModel.cs`
+- `SparkLevel77DielectricIntegrityModel.cs`
+- `SparkLevel77CleaningController.cs`
+- `SparkLevel77CorrosionModel.cs`
+- `SparkLevel77WaferHandling.cs`
+- `SparkLevel77Metrology.cs`
+- `SparkLevel77SafetyController.cs`
+- `SparkLevel77CMPPLC.cs`
+- `SparkLevel77DisturbanceController.cs`
+- `SparkLevel77FaultRecovery.cs`
+- `SparkLevel77EventRecorder.cs`
+- `SparkLevel77ObjectiveTracker.cs`
+- `SparkLevel77SCADADashboard.cs`
+- `SparkLevel77PlayerInteractions.cs`
+- `SparkLevel77VisualRigAdapter.cs`
+
+These are proposed classes, not verified existing Project Spark APIs.
+
+Do not create redundant classes where compatible systems are already implemented.
+
+---
+
+# 56. ONE-CLICK LEVEL 77 UNITY EDITOR BUILDER
+
+Create:
+
+`Tools/Project Spark/Levels/Create Level 77`
+
+The builder must generate or safely update:
+
+- `Level_77.asset`
+- `Level_77_Layout.prefab`
+- 62 modular FBX instances.
+- `L77_HD_VISUAL_ART`.
+- Exactly 176 functional terminals.
+- Exactly 114 player wire declarations.
+- All required internal electrical connections.
+- Educational 5 V control domain.
+- Separate machine-power domain.
+- Three polishing stations.
+- Three sets of motor dynamics.
+- Three carrier motion systems.
+- Downforce sensing.
+- Multi-zone pressure control.
+- Pad wear.
+- Bulk slurry circulation.
+- Barrier fluid delivery.
+- Wafer robot.
+- Transfer gantry.
+- Copper wafer geometry.
+- Barrier/liner geometry.
+- Dielectric geometry.
+- Material-selective removal.
+- Eddy-current sensing.
+- Bulk optical endpoint sensing.
+- Dual-wavelength barrier endpoint.
+- Optical viewport contamination.
+- Sensor calibration and validity.
+- Copper dishing.
+- Dielectric erosion.
+- Residual copper bridges.
+- Corrosion.
+- Brush/megasonic cleaning.
+- Rinsing.
+- Spin drying.
+- Dishing/erosion metrology.
+- Residual copper inspection.
+- Via continuity.
+- Interline leakage.
+- Dielectric integrity.
+- PLC state machine.
+- Safety interlocks.
+- Three disturbances.
+- W055 feedback disconnection.
+- Safe polishing shutdown.
+- Reconnection and recalibration.
+- Explicit reset.
+- Fresh wafer certification.
+- Six authoritative objectives.
+- All 44 visual pivot bindings.
+- Holographic SCADA.
+- VFX.
+- Validation report.
+
+## REQUIRED BUILDER PROCEDURE
+
+1. Inspect actual Editor architecture.
+2. Find all 62 numbered FBXs.
+3. Verify filenames.
+4. Verify correct import scale.
+5. Validate approximately 20.4 m width.
+6. Create/update level definition.
+7. Set ID `level_77`.
+8. Set title `Reveal the Circuit`.
+9. Create six objective definitions.
+10. Create/update layout prefab.
+11. Place all 62 models.
+12. Preserve common-origin positions.
+13. Add gameplay colliders.
+14. Create 176 functional terminal components.
+15. Assign terminal types and IDs.
+16. Match P001–P176 proposed positions.
+17. Create W001–W114 connection definitions.
+18. Validate player-wire endpoints.
+19. Configure control power.
+20. Configure industrial drive domain.
+21. Configure mechanical process.
+22. Configure wafer material layers.
+23. Configure slurry and finishing fluids.
+24. Configure sensors.
+25. Configure calibration.
+26. Configure three CMP stations.
+27. Configure selective removal.
+28. Configure endpoint logic.
+29. Configure dishing.
+30. Configure erosion.
+31. Configure copper residue.
+32. Configure corrosion.
+33. Configure cleaning and drying.
+34. Configure electrical metrology.
+35. Configure viewport fouling.
+36. Configure selectivity drift.
+37. Configure corrosion disturbance.
+38. Configure W055 deliberate fault.
+39. Configure safe-stop behavior.
+40. Configure recalibration/reset.
+41. Configure six authoritative objectives.
+42. Bind 44 pivots.
+43. Configure SCADA.
+44. Configure VFX.
+45. Validate all machine references.
+46. Validate unique terminal IDs.
+47. Validate 114 wires.
+48. Validate electrical domains.
+49. Validate critical safety paths.
+50. Generate validation report.
+51. Save assets and prefab.
+
+The builder must be safe to rerun.
+
+Preserve Levels 1–76.
+
+Do not invent Unity asset GUIDs.
+
+---
+
+# 57. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement the following full playable progression:
+
+**CONNECT 114 WIRES → VALIDATE 176 TERMINALS → ENABLE CONTROL POWER → COMMISSION CMP PLC → INSPECT LEVEL 76 COPPER-PLATED WAFER → VERIFY OVERBURDEN → CALIBRATE BULK MOTOR → CALIBRATE DOWNFORCE → CALIBRATE EDDY-CURRENT SENSOR → CALIBRATE BULK OPTICAL SENSOR → INSPECT BULK PAD → START SLURRY FLOW → VERIFY ACTUAL FLOW → LOAD WAFER → CLAMP CARRIER → ENGAGE BULK STATION → START BULK POLISHING → INTEGRATE COPPER REMOVAL → MONITOR THICKNESS → DETECT BULK ENDPOINT → STOP BULK POLISHING → RETRACT CARRIER → TRANSFER WAFER TO SOFT LANDING → CALIBRATE SOFT DOWNFORCE → ENABLE FINISHING FLUID → START SOFT POLISH → REMOVE REMAINING BLANKET COPPER → MONITOR DISHING → VERIFY COPPER CLEARANCE → STOP SOFT POLISHING → TRANSFER WAFER TO BARRIER STATION → CALIBRATE BARRIER SPECTROMETER → VERIFY OPTICAL VIEWPORT → VERIFY BARRIER FLUID → START BARRIER POLISHING → TRACK SPECTRAL MATERIAL TRANSITION → MONITOR DIELECTRIC EROSION → VERIFY BARRIER CLEARANCE → STOP AT VALID ENDPOINT → RETRACT WAFER → UNLOAD WAFER → BRUSH CLEAN → MEGASONIC CLEAN → RINSE → SPIN DRY → INSPECT RESIDUAL COPPER → INSPECT DISHING → INSPECT EROSION → INSPECT CORROSION → VERIFY VIA CONTINUITY → TEST INTERLINE ISOLATION → TEST DIELECTRIC INTEGRITY → CERTIFY WAFER → TRIGGER VIEWPORT FOULING → DETECT DEGRADED OPTICAL FEEDBACK → CLEAN VIEWPORT → RECALIBRATE SENSOR → TRIGGER SELECTIVITY DRIFT → DETECT INCORRECT MATERIAL REMOVAL → CORRECT PROCESS FLUID → TRIGGER CORROSION DISTURBANCE → RESTORE CLEANING/PROTECTION → PROCESS A FRESH CERTIFIED WAFER → DISCONNECT REAL W055 → INVALIDATE SPECTRAL ENDPOINT → SAFE STOP BARRIER POLISHING → DECELERATE MOTORS → RELEASE DOWNFORCE → RETRACT WAFER → LATCH CRITICAL FAULT → RECONNECT REAL W055 → ACQUIRE FRESH SPECTRAL SAMPLES → RECALIBRATE SPECTROMETER → EXPLICITLY RESET PROTECTION → RECOMMISSION THREE STATIONS → LOAD FRESH COPPER-PLATED WAFER → COMPLETE BULK REMOVAL → COMPLETE SOFT LANDING → COMPLETE BARRIER CLEAR → CLEAN AND DRY → PASS GEOMETRIC METROLOGY → PASS ELECTRICAL CONTINUITY → PASS INTERLINE ISOLATION → PASS DIELECTRIC INTEGRITY → AUTHORITATIVE 6/6**
+
+---
+
+# 58. REQUIRED DIAGNOSTICS
+
+Implement clear actionable diagnostic messages for:
+
+- Missing wire W001–W114.
+- Duplicate wire ID.
+- Duplicate terminal ID.
+- Incorrect signal type.
+- Missing control return.
+- Incorrect power domain.
+- Missing PLC supply.
+- Motor command disconnected.
+- Actual motor speed unavailable.
+- Carrier lift feedback unavailable.
+- Downforce signal invalid.
+- Pad worn.
+- Pad conditioner not ready.
+- Slurry pump not accelerating.
+- Slurry reservoir empty.
+- Slurry flow below acceptable level.
+- Eddy-current sensor uncalibrated.
+- Eddy-current signal stale.
+- Optical bulk sensor invalid.
+- Viewport contaminated.
+- Barrier spectrometer uncalibrated.
+- W055 disconnected.
+- Cached spectral sample invalid.
+- Barrier endpoint confidence too low.
+- Bulk copper not cleared.
+- Soft landing overpolished.
+- Exposed-field barrier remains.
+- Copper dishing excessive.
+- Dielectric erosion excessive.
+- Copper residue bridges present.
+- Electrical continuity failed.
+- Interline short circuit detected.
+- Via open circuit detected.
+- Dielectric integrity failed.
+- Wafer contamination excessive.
+- Cleaning incomplete.
+- Rinsing incomplete.
+- Drying incomplete.
+- Copper corrosion excessive.
+- Critical interlock ignored.
+- Carrier not retracting after fault.
+- Motor not decelerating after fault.
+- Fault reset attempted before repair.
+- Objective history accidentally erased.
+- `LevelGamePlayManager` stuck at 0/6.
+- `LevelGamePlayManager` stuck at 5/6.
+- Missing FBX model.
+- Incorrect import scale.
+- Missing animation pivot.
+- Duplicate visual art root.
+- Unity compilation error.
+- Previous-level regression.
+
+---
+
+# 59. REQUIRED FUNCTIONAL TESTS
+
+Execute as many of the following as possible in the actual project.
+
+1. All 62 individual FBXs detected.
+2. All 62 GLB backups present.
+3. Combined width approximately 20.4 m.
+4. All 44 pivot groups found.
+5. Exactly 114 player-wire definitions.
+6. Exactly 176 registered functional terminals.
+7. All wire IDs unique.
+8. All terminal IDs unique.
+9. Valid 5 V control supply.
+10. Valid returns and junctions.
+11. PLC starts correctly.
+12. Safety controller starts.
+13. Bulk platen accelerates.
+14. Bulk carrier accelerates.
+15. Bulk lift responds.
+16. Downforce responds dynamically.
+17. Multi-zone pressure changes regional contact.
+18. Slurry pump accelerates.
+19. Slurry flow responds.
+20. Pad wear changes gradually.
+21. Pad conditioning works.
+22. Eddy-current sensor calibrates.
+23. Eddy-current measurement follows copper thickness.
+24. Bulk optical measurement responds to surface exposure.
+25. Bulk polishing removes copper over time.
+26. No removal without contact.
+27. No removal without mechanical motion.
+28. No invalid negative layer thickness.
+29. Bulk endpoint stops process.
+30. Gantry transfers wafer.
+31. Soft platen operates independently.
+32. Soft force responds.
+33. Soft finishing fluid works.
+34. Soft landing reduces remaining blanket copper.
+35. Excessive soft polishing increases dishing.
+36. Soft endpoint works.
+37. Barrier platen operates independently.
+38. Barrier carrier responds.
+39. Barrier fluid pump works.
+40. Barrier flow measurement works.
+41. Barrier spectrometer calibrates.
+42. Spectral response changes as barrier clears.
+43. Viewport health affects measurement quality.
+44. W055 delivers trusted endpoint feedback.
+45. Wafer-wide barrier clearance is evaluated.
+46. Barrier endpoint safely stops Stage C.
+47. Continued polishing can cause erosion.
+48. Dishing and erosion remain separate variables.
+49. Pattern density affects modeled removal.
+50. Residual copper detection works.
+51. Copper bridge can create an electrical short.
+52. Damaged via can create an open.
+53. Electrical resistance derives from geometry.
+54. Dielectric integrity measurement works.
+55. Brush cleaning removes residue.
+56. Megasonic cleaning changes contamination state.
+57. Rinse removes remaining residues.
+58. Spin dryer reduces surface liquid.
+59. Corrosion model responds to contamination/exposure.
+60. Wafer surface inspection reflects real defects.
+61. Correctly processed wafer can pass.
+62. Underpolished wafer fails.
+63. Overpolished wafer fails.
+64. Excessive dishing fails.
+65. Excessive erosion fails.
+66. Copper bridge fails isolation.
+67. Via open fails continuity.
+68. Corroded wafer can fail.
+69. Viewport fouling reduces spectral confidence.
+70. Viewport recovery succeeds.
+71. Selectivity drift changes removal rates.
+72. Selectivity recovery succeeds.
+73. Cleaning/corrosion disturbance changes wafer state.
+74. Cleaning/corrosion recovery succeeds.
+75. Fresh post-disturbance wafer passes.
+76. W055 physically disconnects.
+77. Circuit topology changes.
+78. Spectral feedback becomes invalid.
+79. Old samples become stale.
+80. W057 does not bypass missing W055.
+81. W061 does not bypass missing W055.
+82. W108 does not bypass missing W055.
+83. Endpoint controller detects signal loss.
+84. Polishing authorization becomes false.
+85. Platen decelerates.
+86. Carrier decelerates.
+87. Downforce decreases.
+88. Carrier retracts.
+89. Further removal stops.
+90. Critical fault latches.
+91. W055 physically reconnects.
+92. Circuit topology restores.
+93. New samples acquired.
+94. Calibration still required.
+95. Spectrometer recalibration succeeds.
+96. Explicit fault reset succeeds.
+97. All three stations recommission.
+98. Fresh plated wafer loads.
+99. Fresh bulk copper removal passes.
+100. Fresh soft landing passes.
+101. Fresh barrier clearing passes.
+102. Fresh cleaning/drying passes.
+103. Fresh dishing and erosion inspection passes.
+104. Fresh residual copper inspection passes.
+105. Fresh via continuity passes.
+106. Fresh interline isolation passes.
+107. Fresh dielectric integrity passes.
+108. No unresolved critical fault remains.
+109. Objectives 1–5 remain historically complete.
+110. Objective 6 certifies.
+111. Actual `LevelGamePlayManager` reaches 6/6.
+112. Level progression works.
+113. Levels 1–76 remain unaffected.
+
+Do not report tests as PASSED unless executed.
+
+---
+
+# 60. REQUIRED DELIVERABLES
+
+Create a complete Level 77 Unity implementation package containing:
+
+- Runtime C# source code.
+- Complete Level 77 coordinator.
+- Shared authoritative process state.
+- Electrical bindings.
+- 114 functional player wire definitions.
+- 176 functional terminal bindings.
+- Wafer material layers.
+- 16-region wafer map.
+- Copper geometry model.
+- Barrier/liner model.
+- Dielectric model.
+- Motor dynamics.
+- Carrier motion.
+- Downforce control.
+- Pad wear.
+- Slurry flow.
+- Fluid inventory.
+- Material-selective removal.
+- Bulk copper controller.
+- Soft landing controller.
+- Barrier clear controller.
+- Eddy-current measurement.
+- Bulk optical measurement.
+- Dual-wavelength spectral measurement.
+- Measurement calibration and validity.
+- Endpoint sensor fusion.
+- Copper dishing.
+- Dielectric erosion.
+- Residual copper bridges.
+- Copper corrosion.
+- Wafer cleaning.
+- Rinsing.
+- Spin drying.
+- Surface metrology.
+- Via continuity.
+- Interline leakage.
+- Dielectric integrity.
+- Industrial PLC.
+- Safety controller.
+- Viewport fouling disturbance.
+- Selectivity drift disturbance.
+- Corrosion disturbance.
+- W055 actual circuit disconnection.
+- Invalid optical feedback detection.
+- Safe-stop logic.
+- Fault latching.
+- W055 reconnection.
+- Spectrometer recalibration.
+- Explicit fault reset.
+- Fresh post-repair wafer certification.
+- Six authoritative objectives.
+- One-click Level 77 Editor builder.
+- `Level_77.asset`.
+- `Level_77_Layout.prefab`.
+- Functional wiring endpoint manifest.
+- Terminal anchor manifest.
+- Equipment bindings.
+- 44 actual pivot bindings.
+- Visual rig adapter.
+- AAA polishing VFX.
+- Holographic SCADA.
+- Calibration configurations.
+- Diagnostics.
+- Gameplay walkthrough.
+- Objective certification checklist.
+- Verification report.
+- Actual executed test results.
+
+Use the supplied asset package as the visual art foundation.
+
+Do not regenerate models unless necessary.
+
+Do not claim the level is Unity-tested without actually compiling and running it.
+
+---
+
+# 61. FINAL IMPLEMENTATION EXECUTION
+
+**IMPLEMENT LEVEL 77 — DO NOT STOP AT THE DESIGN STAGE.**
+
+First inspect the real Project Spark codebase and the actual Level 77 package.
+
+Then:
+
+1. Preserve Levels 1–76.
+2. Import all 62 modular FBXs.
+3. Verify scale.
+4. Use the existing Level 77 art helper scripts.
+5. Place models under `L77_HD_VISUAL_ART`.
+6. Create 176 functional terminals.
+7. Create 114 real player wires.
+8. Validate signal types.
+9. Validate control supply and returns.
+10. Implement three independent CMP stations.
+11. Implement three sets of motor dynamics.
+12. Implement carrier motion.
+13. Implement force feedback.
+14. Implement pad wear.
+15. Implement slurry/finishing-fluid flow.
+16. Implement incoming copper-plated wafer state.
+17. Implement material layer geometry.
+18. Implement selective material removal.
+19. Implement bulk copper endpoint sensing.
+20. Implement soft landing control.
+21. Implement barrier optical endpoint sensing.
+22. Implement measurement calibration and validity.
+23. Implement region-aware endpoint certification.
+24. Implement copper dishing.
+25. Implement dielectric erosion.
+26. Implement residual metal bridges.
+27. Implement post-CMP cleaning.
+28. Implement copper corrosion.
+29. Implement thickness/residue metrology.
+30. Implement via continuity.
+31. Implement interline isolation.
+32. Implement dielectric integrity.
+33. Implement main PLC.
+34. Implement industrial safety protection.
+35. Implement optical viewport fouling.
+36. Implement selectivity drift.
+37. Implement corrosion disturbance.
+38. Implement all three disturbance recoveries.
+39. Implement actual W055 physical wire disconnection.
+40. Implement invalid spectral feedback.
+41. Implement motor-safe deceleration.
+42. Implement downforce release.
+43. Implement carrier retraction.
+44. Implement latched critical fault.
+45. Implement W055 reconnection.
+46. Implement spectrometer recalibration.
+47. Implement explicit fault reset.
+48. Implement fresh three-stage CMP processing.
+49. Implement fresh electrical/metrology certification.
+50. Integrate six authoritative objectives.
+51. Build the one-click Level 77 Editor creator.
+52. Bind all 44 verified pivots.
+53. Create simulation-driven VFX.
+54. Build live SCADA.
+55. Implement diagnostics.
+56. Execute available tests.
+57. Package all implementation files.
+58. Provide a truthful verification report.
+
+Do not ask to redesign the approved Level 77 concept.
+
+Do not fake machine operation, polishing completion or objective progress.
+
+If any Project Spark source API is missing, explain the exact missing dependency and use the closest existing architecture where technically valid.
+
+---
+
+# 62. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect all 114 wires.
+2. Validate all 176 functional terminals.
+3. Commission the control system.
+4. Calibrate polishing motors.
+5. Calibrate force sensors.
+6. Calibrate fluid-flow instruments.
+7. Calibrate the eddy-current gauge.
+8. Calibrate optical endpoint sensing.
+9. Load the copper-plated wafer.
+10. Start bulk copper removal.
+11. Observe actual copper thickness decreasing.
+12. Detect the bulk copper endpoint.
+13. Stop Stage A safely.
+14. Transfer to soft landing.
+15. Remove remaining blanket copper.
+16. Prevent excessive copper dishing.
+17. Stop Stage B correctly.
+18. Transfer to barrier clearing.
+19. Validate spectral endpoint measurement.
+20. Remove exposed-field barrier material.
+21. Prevent dielectric erosion.
+22. Stop Stage C at a valid endpoint.
+23. Unload the wafer.
+24. Clean the wafer.
+25. Rinse the wafer.
+26. Dry the wafer.
+27. Inspect residual copper.
+28. Inspect dishing.
+29. Inspect erosion.
+30. Verify via continuity.
+31. Verify interline isolation.
+32. Verify dielectric integrity.
+33. Certify the finished copper interconnect layer.
+34. Diagnose optical viewport fouling.
+35. Restore optical measurement.
+36. Diagnose selectivity drift.
+37. Restore material selectivity.
+38. Diagnose corrosion disturbance.
+39. Restore cleaning and protection.
+40. Complete a fresh qualified wafer.
+41. Disconnect actual W055.
+42. Detect invalid optical feedback.
+43. Command safe polishing shutdown.
+44. Decelerate motors.
+45. Release downforce.
+46. Retract carrier.
+47. Latch critical fault.
+48. Reconnect W055.
+49. Recalibrate the spectrometer.
+50. Explicitly reset protection.
+51. Recommission all three stations.
+52. Process a fresh plated wafer.
+53. Pass bulk copper removal.
+54. Pass soft landing.
+55. Pass barrier clearance.
+56. Pass final surface metrology.
+57. Pass via continuity.
+58. Pass interline isolation.
+59. Pass dielectric integrity.
+60. Finish all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 77.**
+
+The player must learn the engineering relationships between mechanical polishing, force, rotational speed, pad condition, fluid delivery, material selectivity, copper thickness, optical endpoint measurement, dishing, erosion, residual metal, corrosion and electrical isolation.
+
+# FINAL GOAL
+
+**DELIVER A COMPLETE, POLISHED, UNITY-READY, AAA-QUALITY, ACTUALLY PLAYABLE LEVEL 77 — REVEAL THE CIRCUIT — USING MY EXISTING 62 FBX MODELS, 114 PLAYER-CREATED WIRES, 176 FUNCTIONAL TERMINALS, 44 VERIFIED ANIMATION PIVOTS, REAL MULTI-STAGE COPPER CMP SIMULATION, ELECTRICAL INTERCONNECT METROLOGY AND SIX AUTHORITATIVE GAMEPLAY OBJECTIVES.**

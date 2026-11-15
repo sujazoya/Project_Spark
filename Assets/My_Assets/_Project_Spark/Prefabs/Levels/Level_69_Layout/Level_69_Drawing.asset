@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_69_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_69
+  levelTitle: Keep It Cold
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the refrigeration network
+    explanation: Connect the pressure and temperature sensors, drives, EEVs and protection.
+      Install W82 last.
+    caption: "82 WIRES  \u2022  128 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.69}
+      label: POWER
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.69, y: 0.69}
+      label: SENSORS
+      color: {r: 1, g: 0.69, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.69}
+      label: SAFETY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.69}
+      - {x: 0.43, y: 0.69}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.69, y: 0.69}
+      - {x: 0.75, y: 0.69}
+      energized: 0
+      color: {r: 1, g: 0.69, b: 0.31, a: 1}
+  - title: 02 / Commission and cool
+    explanation: Validate both feedback channels. Tune superheat and both zone loops.
+      Check actual refrigerant states.
+    caption: "4\xB0C / 2\xB0C  \u2022  5\u20138 K SUPERHEAT"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.69}
+      label: PRESSURE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.69, y: 0.69}
+      label: SUPERHEAT
+      color: {r: 1, g: 0.69, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.69}
+      label: ZONES
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.69}
+      - {x: 0.43, y: 0.69}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.69, y: 0.69}
+      - {x: 0.75, y: 0.69}
+      energized: 0
+      color: {r: 1, g: 0.69, b: 0.31, a: 1}
+  - title: 03 / Defrost and protect
+    explanation: Isolate and defrost B. Verify condensate. Apply the door load and
+      fan failure, then compare optimized COP.
+    caption: "FROST  \u2022  CONDENSER  \u2022  COP"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.69}
+      label: DEFROST
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.69, y: 0.69}
+      label: PROTECT
+      color: {r: 1, g: 0.69, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.69}
+      label: OPTIMIZE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.69}
+      - {x: 0.43, y: 0.69}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.69, y: 0.69}
+      - {x: 0.75, y: 0.69}
+      energized: 0
+      color: {r: 1, g: 0.69, b: 0.31, a: 1}
+  - title: 04 / Restore Evaporator A
+    explanation: Remove the actual temperature feedback wire. Reconnect, recalibrate
+      and reset before a fresh disturbance test.
+    caption: "W82  \u2022  RECALIBRATE  \u2022  VERIFY"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.69}
+      label: ISOLATE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.69, y: 0.69}
+      label: RECONNECT
+      color: {r: 1, g: 0.69, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.69}
+      label: CERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.69}
+      - {x: 0.43, y: 0.69}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.69, y: 0.69}
+      - {x: 0.75, y: 0.69}
+      energized: 0
+      color: {r: 1, g: 0.69, b: 0.31, a: 1}

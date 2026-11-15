@@ -1,0 +1,1382 @@
+{
+  "level_id": "level_73",
+  "display_name": "Polish to Perfection",
+  "asset_kind": "Procedural HD / AAA-inspired, modular, actual 3D geometry; not artist-authored PBR textures",
+  "individual_models": 54,
+  "individual_glbs": 54,
+  "assembled_models": [
+    "Models/Level73_Complete_ArtKit_Showcase.fbx",
+    "GLB/Level73_Complete_ArtKit_Showcase.glb"
+  ],
+  "individual_triangle_count": 174012,
+  "individual_mesh_parts": 4137,
+  "animation_parent_pivot_groups": 35,
+  "planned_player_wires": 98,
+  "planned_unique_functional_terminals": 152,
+  "actual_player_wires_included": false,
+  "functional_spark_terminals_included": false,
+  "cmp_physics_included": false,
+  "six_authoritative_objectives_implemented": false,
+  "fbx_units": "Numeric centimeters (UnitScaleFactor=1); Unity must import at meter-equivalent scale",
+  "glb_units": "numeric meters",
+  "axes": "X horizontal width, Y up, Z front",
+  "approx_workstation_width_m": 17.15,
+  "common_origin_for_all_individual_models": true,
+  "rig_hierarchy": "Animated movable subassemblies organized under explicitly named FBX/GLB parent Null nodes at reference pivot positions. No baked clips or runtime animation.",
+  "models": [
+    {
+      "index": 0,
+      "name": "L73_IndustrialCMPWorkstationBase",
+      "file": "00_L73_IndustrialCMPWorkstationBase.fbx",
+      "glb": "00_L73_IndustrialCMPWorkstationBase.glb",
+      "triangle_count": 4844,
+      "mesh_parts": 181,
+      "bbox_min": [
+        -8.575,
+        -0.205,
+        -4.45
+      ],
+      "bbox_max": [
+        8.575,
+        0.7675,
+        4.5154
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 1,
+      "name": "L73_TransparentCMPSafetyEnclosure",
+      "file": "01_L73_TransparentCMPSafetyEnclosure.fbx",
+      "glb": "01_L73_TransparentCMPSafetyEnclosure.glb",
+      "triangle_count": 612,
+      "mesh_parts": 39,
+      "bbox_min": [
+        -3.65,
+        0.55,
+        -3.675
+      ],
+      "bbox_max": [
+        3.65,
+        4.315,
+        2.575
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 2,
+      "name": "L73_RotatingPolishingPlaten",
+      "file": "02_L73_RotatingPolishingPlaten.fbx",
+      "glb": "02_L73_RotatingPolishingPlaten.glb",
+      "triangle_count": 9136,
+      "mesh_parts": 163,
+      "bbox_min": [
+        -2.6543,
+        0.695,
+        -3.2043
+      ],
+      "bbox_max": [
+        2.6543,
+        1.4535,
+        2.1043
+      ],
+      "rig_groups": [
+        "ANIM_PLATEN_ROTATION"
+      ],
+      "animation_pivots": {
+        "ANIM_PLATEN_ROTATION": [
+          0,
+          1.23,
+          -0.55
+        ]
+      }
+    },
+    {
+      "index": 3,
+      "name": "L73_GroovedPolishingPad",
+      "file": "03_L73_GroovedPolishingPad.fbx",
+      "glb": "03_L73_GroovedPolishingPad.glb",
+      "triangle_count": 12944,
+      "mesh_parts": 80,
+      "bbox_min": [
+        -2.4348,
+        1.4975,
+        -2.9848
+      ],
+      "bbox_max": [
+        2.4348,
+        1.6525,
+        1.8848
+      ],
+      "rig_groups": [
+        "ANIM_PAD_ROTATION"
+      ],
+      "animation_pivots": {
+        "ANIM_PAD_ROTATION": [
+          0,
+          1.61,
+          -0.55
+        ]
+      }
+    },
+    {
+      "index": 4,
+      "name": "L73_PlatenServoMotorDrive",
+      "file": "04_L73_PlatenServoMotorDrive.fbx",
+      "glb": "04_L73_PlatenServoMotorDrive.glb",
+      "triangle_count": 3976,
+      "mesh_parts": 85,
+      "bbox_min": [
+        -0.91,
+        0.495,
+        -1.4811
+      ],
+      "bbox_max": [
+        1.6004,
+        1.43,
+        0.49
+      ],
+      "rig_groups": [
+        "ANIM_PLATEN_SERVO_ROTOR"
+      ],
+      "animation_pivots": {
+        "ANIM_PLATEN_SERVO_ROTOR": [
+          0,
+          0.95,
+          -0.55
+        ]
+      }
+    },
+    {
+      "index": 5,
+      "name": "L73_PrecisionWaferCarrierHead",
+      "file": "05_L73_PrecisionWaferCarrierHead.fbx",
+      "glb": "05_L73_PrecisionWaferCarrierHead.glb",
+      "triangle_count": 5604,
+      "mesh_parts": 86,
+      "bbox_min": [
+        -1.621,
+        1.765,
+        -1.751
+      ],
+      "bbox_max": [
+        3.19,
+        3.976,
+        0.1509
+      ],
+      "rig_groups": [
+        "ANIM_CARRIER_ROTATION",
+        "ANIM_CARRIER_Z"
+      ],
+      "animation_pivots": {
+        "ANIM_CARRIER_ROTATION": [
+          -0.67,
+          2.44,
+          -0.8
+        ],
+        "ANIM_CARRIER_Z": [
+          -0.67,
+          3.34,
+          -0.8
+        ]
+      }
+    },
+    {
+      "index": 6,
+      "name": "L73_CarrierGimbalAssembly",
+      "file": "06_L73_CarrierGimbalAssembly.fbx",
+      "glb": "06_L73_CarrierGimbalAssembly.glb",
+      "triangle_count": 14832,
+      "mesh_parts": 260,
+      "bbox_min": [
+        -1.387,
+        2.354,
+        -1.517
+      ],
+      "bbox_max": [
+        0.0469,
+        3.506,
+        -0.083
+      ],
+      "rig_groups": [
+        "ANIM_CARRIER_GIMBAL"
+      ],
+      "animation_pivots": {
+        "ANIM_CARRIER_GIMBAL": [
+          -0.67,
+          2.86,
+          -0.8
+        ]
+      }
+    },
+    {
+      "index": 7,
+      "name": "L73_MultiZonePressureBladder",
+      "file": "07_L73_MultiZonePressureBladder.fbx",
+      "glb": "07_L73_MultiZonePressureBladder.glb",
+      "triangle_count": 2376,
+      "mesh_parts": 45,
+      "bbox_min": [
+        -1.5825,
+        1.9625,
+        -1.5909
+      ],
+      "bbox_max": [
+        0.2425,
+        2.144,
+        -0.0091
+      ],
+      "rig_groups": [
+        "ANIM_PRESSURE_ZONE_INDICATOR"
+      ],
+      "animation_pivots": {
+        "ANIM_PRESSURE_ZONE_INDICATOR": [
+          -0.67,
+          2.03,
+          -0.8
+        ]
+      }
+    },
+    {
+      "index": 8,
+      "name": "L73_WaferRetainingRing",
+      "file": "08_L73_WaferRetainingRing.fbx",
+      "glb": "08_L73_WaferRetainingRing.glb",
+      "triangle_count": 2832,
+      "mesh_parts": 57,
+      "bbox_min": [
+        -1.52,
+        1.835,
+        -1.65
+      ],
+      "bbox_max": [
+        0.18,
+        2.0645,
+        0.05
+      ],
+      "rig_groups": [
+        "ANIM_RETAINING_RING"
+      ],
+      "animation_pivots": {
+        "ANIM_RETAINING_RING": [
+          -0.67,
+          1.99,
+          -0.8
+        ]
+      }
+    },
+    {
+      "index": 9,
+      "name": "L73_SiliconWaferSubstrate",
+      "file": "09_L73_SiliconWaferSubstrate.fbx",
+      "glb": "09_L73_SiliconWaferSubstrate.glb",
+      "triangle_count": 2984,
+      "mesh_parts": 20,
+      "bbox_min": [
+        -1.412,
+        1.804,
+        -1.542
+      ],
+      "bbox_max": [
+        0.0719,
+        1.8798,
+        -0.0581
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 10,
+      "name": "L73_PatternedThinFilmLayer",
+      "file": "10_L73_PatternedThinFilmLayer.fbx",
+      "glb": "10_L73_PatternedThinFilmLayer.glb",
+      "triangle_count": 2056,
+      "mesh_parts": 58,
+      "bbox_min": [
+        -1.36,
+        1.777,
+        -1.49
+      ],
+      "bbox_max": [
+        0.02,
+        1.802,
+        -0.11
+      ],
+      "rig_groups": [
+        "ANIM_FILM_THICKNESS"
+      ],
+      "animation_pivots": {
+        "ANIM_FILM_THICKNESS": [
+          -0.67,
+          1.797,
+          -0.8
+        ]
+      }
+    },
+    {
+      "index": 11,
+      "name": "L73_MicroscopicSurfaceTopography",
+      "file": "11_L73_MicroscopicSurfaceTopography.fbx",
+      "glb": "11_L73_MicroscopicSurfaceTopography.glb",
+      "triangle_count": 3384,
+      "mesh_parts": 282,
+      "bbox_min": [
+        -1.04,
+        2.615,
+        2.65
+      ],
+      "bbox_max": [
+        1.94,
+        4.165,
+        2.803
+      ],
+      "rig_groups": [
+        "ANIM_TOPOGRAPHY_DISPLAY"
+      ],
+      "animation_pivots": {
+        "ANIM_TOPOGRAPHY_DISPLAY": [
+          0.45,
+          3.39,
+          2.7
+        ]
+      }
+    },
+    {
+      "index": 12,
+      "name": "L73_WaferCarrierCassette",
+      "file": "12_L73_WaferCarrierCassette.fbx",
+      "glb": "12_L73_WaferCarrierCassette.glb",
+      "triangle_count": 456,
+      "mesh_parts": 38,
+      "bbox_min": [
+        -7.5,
+        0.555,
+        -1.33
+      ],
+      "bbox_max": [
+        -6.0,
+        1.88,
+        0.33
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 13,
+      "name": "L73_AutomatedWaferTransferRobot",
+      "file": "13_L73_AutomatedWaferTransferRobot.fbx",
+      "glb": "13_L73_AutomatedWaferTransferRobot.glb",
+      "triangle_count": 4904,
+      "mesh_parts": 49,
+      "bbox_min": [
+        -5.775,
+        0.66,
+        -1.21
+      ],
+      "bbox_max": [
+        -3.0,
+        2.2128,
+        0.0092
+      ],
+      "rig_groups": [
+        "ANIM_WAFER_ROBOT_BASE",
+        "ANIM_WAFER_ROBOT_ARM",
+        "ANIM_WAFER_ROBOT_TOOL"
+      ],
+      "animation_pivots": {
+        "ANIM_WAFER_ROBOT_BASE": [
+          -5.1,
+          1.15,
+          -0.61
+        ],
+        "ANIM_WAFER_ROBOT_ARM": [
+          -4.69,
+          1.9,
+          -0.61
+        ],
+        "ANIM_WAFER_ROBOT_TOOL": [
+          -3.69,
+          2.02,
+          -0.49
+        ]
+      }
+    },
+    {
+      "index": 14,
+      "name": "L73_WaferLiftAndAlignmentAssembly",
+      "file": "14_L73_WaferLiftAndAlignmentAssembly.fbx",
+      "glb": "14_L73_WaferLiftAndAlignmentAssembly.glb",
+      "triangle_count": 1252,
+      "mesh_parts": 25,
+      "bbox_min": [
+        -4.73,
+        0.685,
+        0.515
+      ],
+      "bbox_max": [
+        -3.31,
+        1.5125,
+        1.9656
+      ],
+      "rig_groups": [
+        "ANIM_WAFER_LIFT"
+      ],
+      "animation_pivots": {
+        "ANIM_WAFER_LIFT": [
+          -4.02,
+          1.25,
+          1.23
+        ]
+      }
+    },
+    {
+      "index": 15,
+      "name": "L73_VirtualSlurrySupplyCabinet",
+      "file": "15_L73_VirtualSlurrySupplyCabinet.fbx",
+      "glb": "15_L73_VirtualSlurrySupplyCabinet.glb",
+      "triangle_count": 3100,
+      "mesh_parts": 124,
+      "bbox_min": [
+        -7.17,
+        0.4411,
+        2.2041
+      ],
+      "bbox_max": [
+        -5.63,
+        2.389,
+        3.37
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 16,
+      "name": "L73_AbrasiveSlurryMixingTank",
+      "file": "16_L73_AbrasiveSlurryMixingTank.fbx",
+      "glb": "16_L73_AbrasiveSlurryMixingTank.glb",
+      "triangle_count": 13088,
+      "mesh_parts": 63,
+      "bbox_min": [
+        -8.18,
+        0.78,
+        1.47
+      ],
+      "bbox_max": [
+        -6.56,
+        2.55,
+        2.39
+      ],
+      "rig_groups": [
+        "ANIM_SLURRY_MIXER"
+      ],
+      "animation_pivots": {
+        "ANIM_SLURRY_MIXER": [
+          -7.72,
+          1.63,
+          1.93
+        ]
+      }
+    },
+    {
+      "index": 17,
+      "name": "L73_PrecisionSlurryMeteringPump",
+      "file": "17_L73_PrecisionSlurryMeteringPump.fbx",
+      "glb": "17_L73_PrecisionSlurryMeteringPump.glb",
+      "triangle_count": 2544,
+      "mesh_parts": 27,
+      "bbox_min": [
+        -6.49,
+        0.61,
+        1.3654
+      ],
+      "bbox_max": [
+        -4.66,
+        2.1296,
+        2.4215
+      ],
+      "rig_groups": [
+        "ANIM_SLURRY_PUMP"
+      ],
+      "animation_pivots": {
+        "ANIM_SLURRY_PUMP": [
+          -5.64,
+          0.94,
+          2.03
+        ]
+      }
+    },
+    {
+      "index": 18,
+      "name": "L73_SlurryMassFlowTransmitter",
+      "file": "18_L73_SlurryMassFlowTransmitter.fbx",
+      "glb": "18_L73_SlurryMassFlowTransmitter.glb",
+      "triangle_count": 1272,
+      "mesh_parts": 41,
+      "bbox_min": [
+        -5.0436,
+        0.8012,
+        1.84
+      ],
+      "bbox_max": [
+        -4.4164,
+        1.9168,
+        2.2985
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 19,
+      "name": "L73_MotorizedSlurryDispensingArm",
+      "file": "19_L73_MotorizedSlurryDispensingArm.fbx",
+      "glb": "19_L73_MotorizedSlurryDispensingArm.glb",
+      "triangle_count": 3396,
+      "mesh_parts": 42,
+      "bbox_min": [
+        -3.7216,
+        0.625,
+        0.12
+      ],
+      "bbox_max": [
+        -1.18,
+        2.884,
+        1.0115
+      ],
+      "rig_groups": [
+        "ANIM_SLURRY_ARM"
+      ],
+      "animation_pivots": {
+        "ANIM_SLURRY_ARM": [
+          -3.35,
+          2.32,
+          0.62
+        ]
+      }
+    },
+    {
+      "index": 20,
+      "name": "L73_PrecisionSlurryNozzle",
+      "file": "20_L73_PrecisionSlurryNozzle.fbx",
+      "glb": "20_L73_PrecisionSlurryNozzle.glb",
+      "triangle_count": 960,
+      "mesh_parts": 18,
+      "bbox_min": [
+        -1.454,
+        1.647,
+        0.12
+      ],
+      "bbox_max": [
+        -1.11,
+        2.325,
+        0.44
+      ],
+      "rig_groups": [
+        "ANIM_SLURRY_NOZZLE"
+      ],
+      "animation_pivots": {
+        "ANIM_SLURRY_NOZZLE": [
+          -1.27,
+          2.06,
+          0.28
+        ]
+      }
+    },
+    {
+      "index": 21,
+      "name": "L73_SlurryConcentrationSensor",
+      "file": "21_L73_SlurryConcentrationSensor.fbx",
+      "glb": "21_L73_SlurryConcentrationSensor.glb",
+      "triangle_count": 852,
+      "mesh_parts": 44,
+      "bbox_min": [
+        -5.4936,
+        0.8912,
+        3.13
+      ],
+      "bbox_max": [
+        -4.8664,
+        2.0068,
+        3.7019
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 22,
+      "name": "L73_SlurryTemperatureSensor",
+      "file": "22_L73_SlurryTemperatureSensor.fbx",
+      "glb": "22_L73_SlurryTemperatureSensor.glb",
+      "triangle_count": 852,
+      "mesh_parts": 44,
+      "bbox_min": [
+        -4.5036,
+        0.8912,
+        3.13
+      ],
+      "bbox_max": [
+        -3.8764,
+        2.0068,
+        3.7019
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 23,
+      "name": "L73_PadConditioningSwingArm",
+      "file": "23_L73_PadConditioningSwingArm.fbx",
+      "glb": "23_L73_PadConditioningSwingArm.glb",
+      "triangle_count": 2636,
+      "mesh_parts": 26,
+      "bbox_min": [
+        1.64,
+        0.845,
+        -0.71
+      ],
+      "bbox_max": [
+        3.8762,
+        2.9404,
+        0.43
+      ],
+      "rig_groups": [
+        "ANIM_CONDITIONER_ARM"
+      ],
+      "animation_pivots": {
+        "ANIM_CONDITIONER_ARM": [
+          3.31,
+          2.54,
+          -0.25
+        ]
+      }
+    },
+    {
+      "index": 24,
+      "name": "L73_PadConditionerAbrasiveDisc",
+      "file": "24_L73_PadConditionerAbrasiveDisc.fbx",
+      "glb": "24_L73_PadConditionerAbrasiveDisc.glb",
+      "triangle_count": 3648,
+      "mesh_parts": 68,
+      "bbox_min": [
+        1.338,
+        1.6815,
+        -0.2821
+      ],
+      "bbox_max": [
+        2.362,
+        2.0425,
+        0.742
+      ],
+      "rig_groups": [
+        "ANIM_CONDITIONER_DISC"
+      ],
+      "animation_pivots": {
+        "ANIM_CONDITIONER_DISC": [
+          1.85,
+          1.79,
+          0.23
+        ]
+      }
+    },
+    {
+      "index": 25,
+      "name": "L73_PadConditionerMotorDrive",
+      "file": "25_L73_PadConditionerMotorDrive.fbx",
+      "glb": "25_L73_PadConditionerMotorDrive.glb",
+      "triangle_count": 2584,
+      "mesh_parts": 39,
+      "bbox_min": [
+        2.98,
+        1.67,
+        -0.695
+      ],
+      "bbox_max": [
+        3.8,
+        2.585,
+        0.199
+      ],
+      "rig_groups": [
+        "ANIM_CONDITIONER_MOTOR"
+      ],
+      "animation_pivots": {
+        "ANIM_CONDITIONER_MOTOR": [
+          3.4,
+          2.06,
+          -0.28
+        ]
+      }
+    },
+    {
+      "index": 26,
+      "name": "L73_PadWearMeasurementSensor",
+      "file": "26_L73_PadWearMeasurementSensor.fbx",
+      "glb": "26_L73_PadWearMeasurementSensor.glb",
+      "triangle_count": 920,
+      "mesh_parts": 49,
+      "bbox_min": [
+        2.3197,
+        0.8,
+        -2.1
+      ],
+      "bbox_max": [
+        2.7803,
+        2.3874,
+        -1.632
+      ],
+      "rig_groups": [
+        "ANIM_PAD_WEAR_PROBE"
+      ],
+      "animation_pivots": {
+        "ANIM_PAD_WEAR_PROBE": [
+          2.55,
+          2.01,
+          -1.83
+        ]
+      }
+    },
+    {
+      "index": 27,
+      "name": "L73_PadGrooveInspectionScanner",
+      "file": "27_L73_PadGrooveInspectionScanner.fbx",
+      "glb": "27_L73_PadGrooveInspectionScanner.glb",
+      "triangle_count": 276,
+      "mesh_parts": 23,
+      "bbox_min": [
+        2.4928,
+        2.145,
+        0.175
+      ],
+      "bbox_max": [
+        3.1872,
+        2.85,
+        1.425
+      ],
+      "rig_groups": [
+        "ANIM_PAD_SCANNER"
+      ],
+      "animation_pivots": {
+        "ANIM_PAD_SCANNER": [
+          2.68,
+          2.66,
+          0.84
+        ]
+      }
+    },
+    {
+      "index": 28,
+      "name": "L73_CarrierDownforceLoadCell",
+      "file": "28_L73_CarrierDownforceLoadCell.fbx",
+      "glb": "28_L73_CarrierDownforceLoadCell.glb",
+      "triangle_count": 1256,
+      "mesh_parts": 16,
+      "bbox_min": [
+        -1.5962,
+        3.17,
+        -1.22
+      ],
+      "bbox_max": [
+        -0.25,
+        3.6476,
+        0.2124
+      ],
+      "rig_groups": [
+        "ANIM_DOWNFORCE_INDICATOR"
+      ],
+      "animation_pivots": {
+        "ANIM_DOWNFORCE_INDICATOR": [
+          -0.67,
+          3.36,
+          -0.8
+        ]
+      }
+    },
+    {
+      "index": 29,
+      "name": "L73_CarrierPressureRegulator",
+      "file": "29_L73_CarrierPressureRegulator.fbx",
+      "glb": "29_L73_CarrierPressureRegulator.glb",
+      "triangle_count": 3036,
+      "mesh_parts": 95,
+      "bbox_min": [
+        2.4238,
+        0.4247,
+        2.73
+      ],
+      "bbox_max": [
+        3.755,
+        1.7368,
+        3.607
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 30,
+      "name": "L73_PlatenSpeedEncoder",
+      "file": "30_L73_PlatenSpeedEncoder.fbx",
+      "glb": "30_L73_PlatenSpeedEncoder.glb",
+      "triangle_count": 1288,
+      "mesh_parts": 35,
+      "bbox_min": [
+        2.1188,
+        0.72,
+        -2.41
+      ],
+      "bbox_max": [
+        3.007,
+        1.23,
+        -1.7291
+      ],
+      "rig_groups": [
+        "ANIM_PLATEN_ENCODER_DISC"
+      ],
+      "animation_pivots": {
+        "ANIM_PLATEN_ENCODER_DISC": [
+          2.38,
+          1.05,
+          -2.05
+        ]
+      }
+    },
+    {
+      "index": 31,
+      "name": "L73_CarrierSpeedEncoder",
+      "file": "31_L73_CarrierSpeedEncoder.fbx",
+      "glb": "31_L73_CarrierSpeedEncoder.glb",
+      "triangle_count": 768,
+      "mesh_parts": 34,
+      "bbox_min": [
+        -1.0028,
+        3.63,
+        -1.1
+      ],
+      "bbox_max": [
+        -0.25,
+        3.89,
+        -0.4844
+      ],
+      "rig_groups": [
+        "ANIM_CARRIER_ENCODER_DISC"
+      ],
+      "animation_pivots": {
+        "ANIM_CARRIER_ENCODER_DISC": [
+          -0.67,
+          3.74,
+          -0.8
+        ]
+      }
+    },
+    {
+      "index": 32,
+      "name": "L73_MotorTorqueCurrentAnalyzer",
+      "file": "32_L73_MotorTorqueCurrentAnalyzer.fbx",
+      "glb": "32_L73_MotorTorqueCurrentAnalyzer.glb",
+      "triangle_count": 3296,
+      "mesh_parts": 122,
+      "bbox_min": [
+        3.83,
+        0.406,
+        2.64
+      ],
+      "bbox_max": [
+        5.03,
+        1.495,
+        3.5574
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 33,
+      "name": "L73_PolishingVibrationSensor",
+      "file": "33_L73_PolishingVibrationSensor.fbx",
+      "glb": "33_L73_PolishingVibrationSensor.glb",
+      "triangle_count": 848,
+      "mesh_parts": 39,
+      "bbox_min": [
+        1.7197,
+        1.0636,
+        -2.9566
+      ],
+      "bbox_max": [
+        2.225,
+        1.89,
+        -2.49
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 34,
+      "name": "L73_AcousticEmissionSensor",
+      "file": "34_L73_AcousticEmissionSensor.fbx",
+      "glb": "34_L73_AcousticEmissionSensor.glb",
+      "triangle_count": 992,
+      "mesh_parts": 38,
+      "bbox_min": [
+        -2.77,
+        1.0536,
+        -2.7083
+      ],
+      "bbox_max": [
+        -2.2997,
+        1.8674,
+        -2.342
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 35,
+      "name": "L73_InterfaceTemperatureProbe",
+      "file": "35_L73_InterfaceTemperatureProbe.fbx",
+      "glb": "35_L73_InterfaceTemperatureProbe.glb",
+      "triangle_count": 928,
+      "mesh_parts": 40,
+      "bbox_min": [
+        -0.5203,
+        1.232,
+        -3.1466
+      ],
+      "bbox_max": [
+        -0.0597,
+        2.0574,
+        -2.2869
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 36,
+      "name": "L73_PolishingCoolingLoop",
+      "file": "36_L73_PolishingCoolingLoop.fbx",
+      "glb": "36_L73_PolishingCoolingLoop.glb",
+      "triangle_count": 1196,
+      "mesh_parts": 48,
+      "bbox_min": [
+        2.8327,
+        0.62,
+        -3.005
+      ],
+      "bbox_max": [
+        5.0,
+        1.6518,
+        -1.825
+      ],
+      "rig_groups": [
+        "ANIM_COOLING_FAN"
+      ],
+      "animation_pivots": {
+        "ANIM_COOLING_FAN": [
+          4.27,
+          1.23,
+          -2.48
+        ]
+      }
+    },
+    {
+      "index": 37,
+      "name": "L73_TransparentSlurrySplashGuard",
+      "file": "37_L73_TransparentSlurrySplashGuard.fbx",
+      "glb": "37_L73_TransparentSlurrySplashGuard.glb",
+      "triangle_count": 4096,
+      "mesh_parts": 115,
+      "bbox_min": [
+        -2.91,
+        1.21,
+        -3.46
+      ],
+      "bbox_max": [
+        2.91,
+        2.0175,
+        2.36
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 38,
+      "name": "L73_WasteSlurryCollectionModule",
+      "file": "38_L73_WasteSlurryCollectionModule.fbx",
+      "glb": "38_L73_WasteSlurryCollectionModule.glb",
+      "triangle_count": 2300,
+      "mesh_parts": 47,
+      "bbox_min": [
+        2.3244,
+        0.585,
+        -1.57
+      ],
+      "bbox_max": [
+        5.14,
+        1.7848,
+        -0.4111
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 39,
+      "name": "L73_CMPEmergencySafetyStation",
+      "file": "39_L73_CMPEmergencySafetyStation.fbx",
+      "glb": "39_L73_CMPEmergencySafetyStation.glb",
+      "triangle_count": 1576,
+      "mesh_parts": 54,
+      "bbox_min": [
+        7.09,
+        0.4655,
+        3.005
+      ],
+      "bbox_max": [
+        8.03,
+        1.525,
+        4.008
+      ],
+      "rig_groups": [
+        "ANIM_ESTOP"
+      ],
+      "animation_pivots": {
+        "ANIM_ESTOP": [
+          7.59,
+          1.03,
+          3.75
+        ]
+      }
+    },
+    {
+      "index": 40,
+      "name": "L73_PostCMPRinseChamber",
+      "file": "40_L73_PostCMPRinseChamber.fbx",
+      "glb": "40_L73_PostCMPRinseChamber.glb",
+      "triangle_count": 1540,
+      "mesh_parts": 41,
+      "bbox_min": [
+        4.775,
+        0.69,
+        -1.835
+      ],
+      "bbox_max": [
+        7.225,
+        3.04,
+        0.44
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 41,
+      "name": "L73_WaferBrushCleaningAssembly",
+      "file": "41_L73_WaferBrushCleaningAssembly.fbx",
+      "glb": "41_L73_WaferBrushCleaningAssembly.glb",
+      "triangle_count": 2552,
+      "mesh_parts": 74,
+      "bbox_min": [
+        5.14,
+        1.07,
+        -1.565
+      ],
+      "bbox_max": [
+        6.86,
+        1.895,
+        -0.0401
+      ],
+      "rig_groups": [
+        "ANIM_CLEANING_BRUSH"
+      ],
+      "animation_pivots": {
+        "ANIM_CLEANING_BRUSH": [
+          5.92,
+          1.39,
+          -0.7
+        ]
+      }
+    },
+    {
+      "index": 42,
+      "name": "L73_SpinRinseDryer",
+      "file": "42_L73_SpinRinseDryer.fbx",
+      "glb": "42_L73_SpinRinseDryer.glb",
+      "triangle_count": 2212,
+      "mesh_parts": 57,
+      "bbox_min": [
+        6.205,
+        0.61,
+        -0.49
+      ],
+      "bbox_max": [
+        8.055,
+        2.13,
+        1.4535
+      ],
+      "rig_groups": [
+        "ANIM_SPIN_DRYER"
+      ],
+      "animation_pivots": {
+        "ANIM_SPIN_DRYER": [
+          7.13,
+          1.27,
+          0.47
+        ]
+      }
+    },
+    {
+      "index": 43,
+      "name": "L73_InSituOpticalEndpointSensor",
+      "file": "43_L73_InSituOpticalEndpointSensor.fbx",
+      "glb": "43_L73_InSituOpticalEndpointSensor.glb",
+      "triangle_count": 1132,
+      "mesh_parts": 45,
+      "bbox_min": [
+        2.4497,
+        1.18,
+        -2.519
+      ],
+      "bbox_max": [
+        3.3906,
+        2.7981,
+        -1.902
+      ],
+      "rig_groups": [
+        "ANIM_ENDPOINT_SENSOR"
+      ],
+      "animation_pivots": {
+        "ANIM_ENDPOINT_SENSOR": [
+          2.68,
+          2.63,
+          -2.1
+        ]
+      }
+    },
+    {
+      "index": 44,
+      "name": "L73_EddyCurrentThicknessSensor",
+      "file": "44_L73_EddyCurrentThicknessSensor.fbx",
+      "glb": "44_L73_EddyCurrentThicknessSensor.glb",
+      "triangle_count": 17312,
+      "mesh_parts": 293,
+      "bbox_min": [
+        3.03,
+        1.25,
+        0.43
+      ],
+      "bbox_max": [
+        3.639,
+        2.64,
+        0.93
+      ],
+      "rig_groups": [
+        "ANIM_EDDY_CURRENT_HEAD"
+      ],
+      "animation_pivots": {
+        "ANIM_EDDY_CURRENT_HEAD": [
+          3.28,
+          2.47,
+          0.68
+        ]
+      }
+    },
+    {
+      "index": 45,
+      "name": "L73_OpticalSurfaceProfilometer",
+      "file": "45_L73_OpticalSurfaceProfilometer.fbx",
+      "glb": "45_L73_OpticalSurfaceProfilometer.glb",
+      "triangle_count": 360,
+      "mesh_parts": 18,
+      "bbox_min": [
+        4.75,
+        1.08,
+        1.05
+      ],
+      "bbox_max": [
+        6.7,
+        3.255,
+        2.35
+      ],
+      "rig_groups": [
+        "ANIM_PROFILOMETER"
+      ],
+      "animation_pivots": {
+        "ANIM_PROFILOMETER": [
+          5.72,
+          2.87,
+          1.7
+        ]
+      }
+    },
+    {
+      "index": 46,
+      "name": "L73_WaferDefectInspectionCamera",
+      "file": "46_L73_WaferDefectInspectionCamera.fbx",
+      "glb": "46_L73_WaferDefectInspectionCamera.glb",
+      "triangle_count": 912,
+      "mesh_parts": 24,
+      "bbox_min": [
+        7.0992,
+        1.17,
+        1.48
+      ],
+      "bbox_max": [
+        7.6208,
+        2.562,
+        1.9749
+      ],
+      "rig_groups": [
+        "ANIM_DEFECT_CAMERA"
+      ],
+      "animation_pivots": {
+        "ANIM_DEFECT_CAMERA": [
+          7.36,
+          2.34,
+          1.72
+        ]
+      }
+    },
+    {
+      "index": 47,
+      "name": "L73_DishingErosionAnalyzer",
+      "file": "47_L73_DishingErosionAnalyzer.fbx",
+      "glb": "47_L73_DishingErosionAnalyzer.glb",
+      "triangle_count": 1724,
+      "mesh_parts": 81,
+      "bbox_min": [
+        5.105,
+        0.3614,
+        2.84
+      ],
+      "bbox_max": [
+        6.455,
+        1.3919,
+        3.7372
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 48,
+      "name": "L73_MultiZonePressurePIDController",
+      "file": "48_L73_MultiZonePressurePIDController.fbx",
+      "glb": "48_L73_MultiZonePressurePIDController.glb",
+      "triangle_count": 3632,
+      "mesh_parts": 120,
+      "bbox_min": [
+        2.615,
+        0.3455,
+        2.845
+      ],
+      "bbox_max": [
+        3.905,
+        1.3668,
+        3.7523
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 49,
+      "name": "L73_PlatenCarrierMotionController",
+      "file": "49_L73_PlatenCarrierMotionController.fbx",
+      "glb": "49_L73_PlatenCarrierMotionController.glb",
+      "triangle_count": 1728,
+      "mesh_parts": 64,
+      "bbox_min": [
+        1.085,
+        0.3455,
+        2.835
+      ],
+      "bbox_max": [
+        2.435,
+        1.39,
+        3.7423
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 50,
+      "name": "L73_CMPProcessPLCRack",
+      "file": "50_L73_CMPProcessPLCRack.fbx",
+      "glb": "50_L73_CMPProcessPLCRack.glb",
+      "triangle_count": 4656,
+      "mesh_parts": 207,
+      "bbox_min": [
+        -6.045,
+        0.5102,
+        -3.8226
+      ],
+      "bbox_max": [
+        -3.595,
+        2.8557,
+        -2.873
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 51,
+      "name": "L73_CMPDigitalIOModule",
+      "file": "51_L73_CMPDigitalIOModule.fbx",
+      "glb": "51_L73_CMPDigitalIOModule.glb",
+      "triangle_count": 2604,
+      "mesh_parts": 99,
+      "bbox_min": [
+        -7.535,
+        0.465,
+        -3.575
+      ],
+      "bbox_max": [
+        -6.265,
+        1.6283,
+        -2.64
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    },
+    {
+      "index": 52,
+      "name": "L73_HolographicCMPSCADA",
+      "file": "52_L73_HolographicCMPSCADA.fbx",
+      "glb": "52_L73_HolographicCMPSCADA.glb",
+      "triangle_count": 2244,
+      "mesh_parts": 187,
+      "bbox_min": [
+        3.52,
+        1.5,
+        -4.065
+      ],
+      "bbox_max": [
+        7.78,
+        4.8055,
+        -3.535
+      ],
+      "rig_groups": [
+        "ANIM_CMP_SCADA"
+      ],
+      "animation_pivots": {
+        "ANIM_CMP_SCADA": [
+          5.65,
+          3.6,
+          -3.7
+        ]
+      }
+    },
+    {
+      "index": 53,
+      "name": "L73_Regulated5VControlSupply",
+      "file": "53_L73_Regulated5VControlSupply.fbx",
+      "glb": "53_L73_Regulated5VControlSupply.glb",
+      "triangle_count": 1504,
+      "mesh_parts": 68,
+      "bbox_min": [
+        6.99,
+        0.466,
+        -3.475
+      ],
+      "bbox_max": [
+        7.93,
+        1.49,
+        -2.6081
+      ],
+      "rig_groups": [],
+      "animation_pivots": {}
+    }
+  ]
+}

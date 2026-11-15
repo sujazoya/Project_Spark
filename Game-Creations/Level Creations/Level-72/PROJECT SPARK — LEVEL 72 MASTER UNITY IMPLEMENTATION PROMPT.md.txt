@@ -1,0 +1,3082 @@
+# PROJECT SPARK — LEVEL 72 MASTER UNITY IMPLEMENTATION PROMPT
+
+## LEVEL 72: LAYER BY LAYER
+### Advanced Atomic Layer Deposition, Self-Limiting Surface Reactions, Vacuum and Purge Control, Ultra-Thin Film Growth, Wafer Conformality, Multi-Zone Temperature PID, In-Situ Metrology, Industrial PLC Automation and Critical Purge-Feedback Recovery
+
+Act as my senior Unity C# gameplay engineer, semiconductor manufacturing simulation engineer, atomic layer deposition specialist, vacuum systems engineer, gas-flow simulation architect, surface-reaction modeling specialist, thermal-control engineer, industrial instrumentation developer, PID control specialist, PLC automation programmer, functional safety engineer, SCADA developer, Unity Editor automation engineer and AAA technical artist.
+
+**YOUR TASK IS TO IMPLEMENT THE COMPLETE, FUNCTIONAL, PLAYABLE LEVEL 72 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+This is a full implementation request.
+
+The Level 72 design and the existing 52 modular 3D equipment models are approved.
+
+Do not redesign the level or regenerate its models unnecessarily.
+
+### Main gameplay objective
+
+Create a realistic educational simulation of a single-wafer atomic layer deposition system.
+
+The player must:
+
+1. Build the electrical control network.
+2. Commission vacuum pumps.
+3. Establish stable chamber pressure.
+4. Load and secure a silicon wafer.
+5. Commission multi-zone wafer heating.
+6. Calibrate fictional precursor and purge systems.
+7. Execute a valid A–purge–B–purge sequence.
+8. Demonstrate self-limiting surface reactions.
+9. Produce a precisely controlled thin film.
+10. Verify thickness, uniformity and conformality.
+11. Diagnose process disturbances.
+12. Recover from critical purge-feedback disconnection.
+13. Complete all six authoritative objectives.
+
+**IMPLEMENT REAL INTERCONNECTED GAMEPLAY SIMULATION, NOT DECORATIVE EQUIPMENT OR FABRICATED INDICATORS.**
+
+Do not stop at:
+
+- A design proposal.
+- Pseudocode.
+- Unconnected C# examples.
+- A decorative ALD chamber.
+- Static cyan and magenta effects.
+- A vacuum gauge with prerecorded pressure.
+- Gas-flow displays unrelated to actual throughput.
+- Pulse valves with no functional effect.
+- A purge phase that finishes after a timer regardless of residual vapor.
+- An ALD cycle that adds a fixed thickness without checking process conditions.
+- Film growth simply proportional to gas exposure time.
+- A surface-coverage value set directly to 100%.
+- A wafer temperature equal to its PID setpoint.
+- Perfect conformality regardless of trench geometry and exposure.
+- A metrology display that directly copies target thickness.
+- A contamination fault that does not affect process quality.
+- A safety relay with no control authority.
+- A disconnected purge sensor that still supplies valid measurements.
+- A fake local 6/6 objective counter.
+
+The actual Project Spark `LevelGamePlayManager` must reach 6/6.
+
+---
+
+# 1. INSPECT MY EXISTING PROJECT SPARK UNITY CODEBASE
+
+Before writing Level 72 scripts, inspect the actual project files and architecture.
+
+At minimum, inspect these classes if present:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+
+Also inspect existing systems for:
+
+- Player-created electrical wires.
+- Terminal IDs.
+- Electrical connectivity.
+- Control power and signal returns.
+- Component registration.
+- Analog and digital signals.
+- Sensor calibration.
+- Sensor validity and timestamps.
+- Wire removal and reconnection.
+- Motor dynamics.
+- Pumps.
+- Flow measurement.
+- Valves and actuators.
+- Vacuum or fluid networks.
+- PID control.
+- Temperature control.
+- PLC state machines.
+- Safety relays.
+- Fault latching and resets.
+- Robotics.
+- Level objectives.
+- Historical objective completion.
+- Unity Editor level creators.
+- Workstation component bindings.
+- Object shelf and recycling.
+- Runtime diagnostic UI.
+- TextMeshPro dashboards.
+- Particle effects.
+- Material animation.
+- Visual rig adapters.
+
+## REUSE PREVIOUS LEVEL INFRASTRUCTURE
+
+Inspect compatible existing implementations from:
+
+**Level 54 — Cross the Critical**
+
+Motor dynamics and protection.
+
+**Level 58 — Isolate the Fault**
+
+Safety relays and electrical faults.
+
+**Level 59 — Bring Back the Power**
+
+Startup and staged commissioning.
+
+**Level 60 — The Grid Must Survive**
+
+Supervisory coordination and fault handling.
+
+**Level 63 — Catch the Frequency**
+
+Dynamic feedback and controller validity.
+
+**Level 65 — The Factory Thinks**
+
+Robotics, industrial I/O and PLC automation.
+
+**Level 66 — Save the Factory**
+
+Condition monitoring and measurement-based diagnostics.
+
+**Level 67 — Master the Flow**
+
+Flow controllers, pressure feedback and fluid networking.
+
+**Level 68 — Tame the Heat**
+
+Thermal energy conservation and temperature PID.
+
+**Level 69 — Keep It Cold**
+
+Pressure-related thermodynamics and equipment protection.
+
+**Level 70 — Guard the Air**
+
+Cleanroom control, filtration, sensor validity and wafer handling.
+
+**Level 71 — Etch the Future**
+
+Vacuum pumps, load-locks, wafer robotics, thin-film metrology, process pressure and semiconductor manufacturing automation.
+
+Level 71 is particularly relevant.
+
+Reuse its implemented vacuum and wafer-handling infrastructure if genuinely present and compatible.
+
+Do not assume earlier prompts have already been implemented.
+
+---
+
+# 2. NON-NEGOTIABLE IMPLEMENTATION RULES
+
+1. Inspect real Project Spark source before calling existing APIs.
+2. Never invent existing methods, components or namespaces.
+3. Preserve Levels 1–71.
+4. Reuse compatible gameplay infrastructure.
+5. Keep Level 72 runtime logic separate from visual-only art helpers.
+6. Do not modify the global electrical solver unnecessarily.
+7. Use actual `SparkTerminal` objects.
+8. Make every required player-created wire functional.
+9. Do not fabricate sensor signals.
+10. Do not ignore signal connectivity.
+11. Do not treat a disconnected wire as connected.
+12. Do not use the 5 V educational supply as unlimited heater or pump power.
+13. Do not fabricate vacuum pressure.
+14. Do not fabricate gas throughput.
+15. Do not create gas inventory from nothing.
+16. Do not allow negative gas inventory.
+17. Do not instantly change pump RPM to its target.
+18. Do not ignore valve movement or pump operating limits.
+19. Do not introduce actual hazardous reactant recipes.
+20. Use two fictional, nonhazardous virtual precursor species.
+21. Do not calculate film thickness directly from the number of button presses.
+22. Do not make unlimited film growth from prolonged precursor A exposure.
+23. Do not allow normal B exposure while purge conditions are invalid.
+24. Do not declare a purge complete solely because a timer expired.
+25. Do not ignore residual precursor concentrations.
+26. Do not treat contamination and legitimate ALD growth as identical mechanisms.
+27. Do not give every wafer region identical coverage without a justified model.
+28. Do not ignore trench depth and transport limitations.
+29. Do not force perfect conformality.
+30. Do not force film thickness to a target value.
+31. Do not fabricate QCM readings.
+32. Do not fabricate ellipsometer measurements.
+33. Do not use metrology target values as actual measurements.
+34. Do not directly set wafer temperature from the heater setpoint.
+35. Do not use an unbounded PID integrator.
+36. Do not permit heater operation outside safety limits.
+37. Do not permit unsafe load-lock and reactor operations.
+38. Do not bypass the purge safety interlock.
+39. Do not ignore a stuck valve.
+40. Do not let normal PLC control override protection trips.
+41. Do not fabricate objective evidence.
+42. Do not reset historical objectives during the deliberate final fault.
+43. Do not build a disconnected local-only 6/6 counter.
+44. Do not run multiple conflicting ALD simulators.
+45. Use consistent SI units and simulation time.
+46. Make simulation updates numerically stable.
+47. Make Unity Editor generation idempotent.
+48. Provide complete source files.
+49. Provide real diagnostics.
+50. Report unverified integration honestly.
+51. Do not claim Unity compilation without testing.
+52. Do not claim Play Mode success without testing.
+
+## ABSOLUTE COMPLETION REQUIREMENT
+
+**THE REAL `LevelGamePlayManager` MUST REACH 6/6.**
+
+Objectives 1–5 must remain historically certified during Objective 6's deliberate purge-feedback disconnection.
+
+Objective 6 must require:
+
+- Actual wire disconnection.
+- Actual sensor-signal invalidation.
+- Purge interlock response.
+- Safe exposure inhibition.
+- Actual wire reconnection.
+- Sensor recalibration.
+- Explicit protection reset.
+- Safe process recommissioning.
+- Fresh successful deposition.
+- Fresh metrology certification.
+
+---
+
+# 3. LEVEL 72 CONFIGURATION
+
+**Level Number:** 72
+
+**Level ID:** `level_72`
+
+**Display Name:** `Layer by Layer`
+
+**Subtitle:** `Precision Atomic Layer Deposition and Thin-Film Control`
+
+**Difficulty:** Master / Expert
+
+**Main Process:** Fictional single-wafer thermal ALD
+
+**Educational Control Power:** 5 V DC
+
+**Pump/Heater Power:** Separately simulated virtual power domains
+
+**Individual FBX Models:** 52
+
+**Matching GLB Backups:** 52
+
+**Animation Reference Pivots:** 24
+
+**Player-Created Wires:** 94
+
+**Unique Functional Terminals:** 146
+
+**Authoritative Objectives:** 6
+
+**Reactor:** One main ALD chamber
+
+**Load-Lock:** One
+
+**Virtual Process Sources:** Fictional precursor A and precursor B
+
+**Purge Source:** Fictional inert purge medium
+
+**Pulse Valves:** Three
+
+**Mass-Flow Controllers:** Two precursor controllers
+
+**Purge Flow Measurement:** One critical transmitter
+
+**Vacuum Pumps:** Backing and turbomolecular
+
+**Vacuum Control:** Motorized throttle valve and PID
+
+**Wafer Heating:** Multi-zone heater bank
+
+**Main Sequencer:** Four-stage ALD controller
+
+**Thickness Monitoring:** QCM and optical ellipsometry
+
+**Final Film Verification:** Regional film and conformality metrology
+
+**Disturbances:** Purge restriction, heater-zone drift, sticking A valve
+
+**Final Fault:** Purge-flow transmitter feedback disconnection
+
+## PROPOSED GAMEPLAY TARGETS
+
+- Film target: 12.0 nm.
+- Thickness tolerance: ±0.3 nm.
+- Nominal growth per successful cycle: approximately 0.10 nm.
+- Nominal successful cycles: approximately 120.
+- Wafer nonuniformity target: ≤3%.
+- Trench bottom/top conformality target: ≥95%.
+- Chamber pressure: configurable fictional process range.
+- Wafer temperature: configurable fictional process window.
+- Reactant flow and inventory: finite.
+- Pumping and purge capacity: finite.
+- Valve movement and response time: finite.
+- Residual contamination threshold: calibrated for the synthetic process.
+
+All process chemistry is virtual and educational.
+
+Do not present these values as real manufacturing recipes or validated operating instructions.
+
+---
+
+# 4. USE MY ACTUAL LEVEL 72 3D ASSET PACKAGE
+
+The approved existing package is:
+
+`ProjectSpark_Level72_HD_AAA_Models.zip`
+
+The verified asset manifest reports:
+
+- 52 independent binary FBX models.
+- 52 corresponding GLB models.
+- One assembled workstation FBX.
+- One assembled workstation GLB.
+- 166,676 triangles across individual equipment models.
+- 3,889 mesh parts.
+- 24 animation-pivot reference mappings.
+- Unity art-placement helper.
+- Unity material-upgrade helper.
+- Visual-only animation adapter.
+- Material palette.
+- Model manifest.
+- Art assembly CSV.
+- Component roles CSV.
+- Wiring-budget CSV.
+- Gameplay integration plan.
+- README.
+- Export verification report.
+- Procedural geometry-generation source.
+
+## IMPORTANT
+
+This is an **art package**, not a completed gameplay package.
+
+The actual manifest explicitly marks these as not included:
+
+- 94 working player wires.
+- 146 `SparkTerminal` components.
+- ALD process physics.
+- Four-stage runtime sequencer.
+- Real purge-signal behavior.
+- Six authoritative objectives.
+
+Implement these in Unity.
+
+---
+
+# 5. EXACT 52 FBX FILENAMES
+
+Use the following filenames exactly.
+
+Do not rename them unless there is a specific verified compatibility issue.
+
+| # | Actual FBX filename | Equipment role |
+|---|---|---|
+| 00 | `00_L72_IndustrialAtomicDepositionBase.fbx` | Main workstation |
+| 01 | `01_L72_TransparentALDReactorChamber.fbx` | ALD chamber |
+| 02 | `02_L72_ReactorServiceLid.fbx` | Reactor lid |
+| 03 | `03_L72_QuartzObservationViewport.fbx` | Quartz viewport |
+| 04 | `04_L72_MultiZoneHeatedWaferChuck.fbx` | Heated wafer chuck |
+| 05 | `05_L72_PrecisionSiliconWafer.fbx` | Wafer substrate |
+| 06 | `06_L72_AtomicThinFilmVisualization.fbx` | Deposited film visualization |
+| 07 | `07_L72_HighAspectRatioTrenchSample.fbx` | Conformality sample |
+| 08 | `08_L72_WaferLiftPinAssembly.fbx` | Wafer lift |
+| 09 | `09_L72_WaferCarrierCassette.fbx` | Wafer storage |
+| 10 | `10_L72_TransparentVacuumLoadLock.fbx` | Vacuum load-lock |
+| 11 | `11_L72_LoadLockGateValve.fbx` | Transfer gate |
+| 12 | `12_L72_AutomatedWaferTransferRobot.fbx` | Wafer robot |
+| 13 | `13_L72_VirtualPrecursorSupplyA.fbx` | Virtual precursor A |
+| 14 | `14_L72_VirtualPrecursorSupplyB.fbx` | Virtual precursor B |
+| 15 | `15_L72_InertPurgeGasSupply.fbx` | Purge source |
+| 16 | `16_L72_HighSpeedPulseValveA.fbx` | A pulse valve |
+| 17 | `17_L72_HighSpeedPulseValveB.fbx` | B pulse valve |
+| 18 | `18_L72_HighSpeedPurgeValve.fbx` | Purge valve |
+| 19 | `19_L72_MassFlowControllerA.fbx` | Precursor A MFC |
+| 20 | `20_L72_MassFlowControllerB.fbx` | Precursor B MFC |
+| 21 | `21_L72_PurgeMassFlowTransmitter.fbx` | Critical purge feedback |
+| 22 | `22_L72_SequentialGasDistributionManifold.fbx` | Gas routing |
+| 23 | `23_L72_PrecisionDepositionShowerhead.fbx` | Gas distribution |
+| 24 | `24_L72_HeatedGasDeliveryPipeline.fbx` | Delivery piping |
+| 25 | `25_L72_TurbomolecularVacuumPump.fbx` | Turbo pump |
+| 26 | `26_L72_VacuumBackingPump.fbx` | Backing pump |
+| 27 | `27_L72_AutomaticVacuumThrottleValve.fbx` | Pressure throttle |
+| 28 | `28_L72_VacuumIsolationValve.fbx` | Vacuum isolation |
+| 29 | `29_L72_IndustrialVacuumForeline.fbx` | Vacuum piping |
+| 30 | `30_L72_CapacitancePressureManometer.fbx` | Chamber pressure |
+| 31 | `31_L72_RoughVacuumPressureGauge.fbx` | Pumpdown pressure |
+| 32 | `32_L72_HeatedDeliveryLineSensor.fbx` | Delivery temperature |
+| 33 | `33_L72_WaferChuckTemperatureSensor.fbx` | Chuck temperature |
+| 34 | `34_L72_MultiZoneHeaterPowerBank.fbx` | Heating power |
+| 35 | `35_L72_QuartzCrystalMicrobalance.fbx` | Deposited mass measurement |
+| 36 | `36_L72_InSituOpticalEllipsometer.fbx` | Optical thickness measurement |
+| 37 | `37_L72_OpticalThicknessViewport.fbx` | Optical measurement path |
+| 38 | `38_L72_ConformalFilmMetrologyScanner.fbx` | Conformality inspection |
+| 39 | `39_L72_SurfaceCoverageMonitor.fbx` | Surface saturation display |
+| 40 | `40_L72_ResidualVaporAnalyzer.fbx` | Residual precursor measurement |
+| 41 | `41_L72_ReactantOverlapMonitor.fbx` | Unwanted overlap detection |
+| 42 | `42_L72_GrowthPerCycleAnalyzer.fbx` | GPC analysis |
+| 43 | `43_L72_FourStageALDCycleSequencer.fbx` | ALD sequencing |
+| 44 | `44_L72_AtomicDepositionPLCRack.fbx` | Main PLC |
+| 45 | `45_L72_WaferTemperaturePIDController.fbx` | Temperature PID |
+| 46 | `46_L72_VacuumPressurePIDController.fbx` | Vacuum PID |
+| 47 | `47_L72_PurgeInterlockProtectionRelay.fbx` | Purge safety |
+| 48 | `48_L72_VirtualExhaustTreatmentModule.fbx` | Virtual exhaust |
+| 49 | `49_L72_EmergencyDepositionSafetyStation.fbx` | Emergency shutdown |
+| 50 | `50_L72_HolographicAtomicDepositionSCADA.fbx` | SCADA |
+| 51 | `51_L72_Regulated5VControlSupply.fbx` | Educational control power |
+
+## SUPPORTING FILES
+
+Read and preserve:
+
+- `Model_Manifest.json`
+- `Animation_Rigs.csv`
+- `Art_Assembly.csv`
+- `Component_Roles.csv`
+- `Material_Palette.json`
+- `Gameplay_Wiring_Budget.csv`
+- `Gameplay_Integration_Plan.md`
+- `README_Unity.txt`
+- `Verification_Report.json`
+
+Use the generation-source files only when investigating compatibility or rebuilding art.
+
+---
+
+# 6. IMPORT SCALE AND EQUIPMENT PLACEMENT
+
+The actual Level 72 manifest specifies:
+
+- X = workstation width.
+- Y = up.
+- Z = front.
+- Original geometry construction in metres.
+- GLB numeric coordinates in metres.
+- FBX numeric coordinates in centimetres.
+- FBX `UnitScaleFactor=1`.
+- All models share one world origin.
+- Approximate assembled workstation width: 16.1 m.
+
+## CRITICAL UNITY SCALE REQUIREMENT
+
+Verify Unity's automatic FBX unit conversion.
+
+The complete workstation should be approximately 16.1 Unity units wide when one Unity unit equals one metre.
+
+If FBX models import approximately 100 times too large, inspect the ModelImporter settings and correct the conversion once.
+
+Do not apply a second transformation that rescales the models incorrectly.
+
+## VISUAL ART ROOT
+
+Create:
+
+`L72_HD_VISUAL_ART`
+
+Instantiate all 52 numbered FBXs at the common origin.
+
+Do not manually reposition every model using arbitrary offsets.
+
+Do not instantiate the assembled showcase together with all 52 modular objects.
+
+## ASSEMBLED REFERENCE
+
+Use:
+
+`Level72_Complete_ArtKit_Showcase.fbx`
+
+and:
+
+`Level72_Complete_ArtKit_Showcase.glb`
+
+for visual reference only.
+
+The playable level should use the modular models.
+
+---
+
+# 7. EXACT 24 VERIFIED ANIMATION PIVOTS
+
+The actual `Animation_Rigs.csv` contains 24 references.
+
+Use these names and positions.
+
+Coordinates below are world-space references in the correctly scaled common-origin layout.
+
+| Model | Exact pivot name | X, Y, Z |
+|---|---|---|
+| ReactorServiceLid | `ANIM_REACTOR_LID` | (0.00, 3.51, -0.80) |
+| LoadLockGateValve | `ANIM_LOADLOCK_GATE` | (-2.69, 1.66, -0.80) |
+| AutomatedWaferTransferRobot | `ANIM_WAFER_ROBOT_BASE` | (-4.63, 1.03, -0.65) |
+| AutomatedWaferTransferRobot | `ANIM_WAFER_ROBOT_ARM` | (-4.11, 2.13, -0.65) |
+| AutomatedWaferTransferRobot | `ANIM_WAFER_ROBOT_TOOL` | (-3.29, 2.15, -0.68) |
+| WaferLiftPinAssembly | `ANIM_WAFER_LIFT` | (0.00, 1.46, -0.80) |
+| MultiZoneHeatedWaferChuck | `ANIM_WAFER_CHUCK` | (0.00, 1.65, -0.80) |
+| HighSpeedPulseValveA | `ANIM_PULSE_VALVE_A` | (-5.58, 2.30, 0.55) |
+| HighSpeedPulseValveB | `ANIM_PULSE_VALVE_B` | (-4.67, 2.30, 0.55) |
+| HighSpeedPurgeValve | `ANIM_PURGE_VALVE` | (-3.76, 2.30, 0.55) |
+| MassFlowControllerA | `ANIM_MFC_A` | (-5.72, 1.12, 2.43) |
+| MassFlowControllerB | `ANIM_MFC_B` | (-4.61, 1.12, 2.43) |
+| TurbomolecularVacuumPump | `ANIM_TURBO_ROTOR` | (4.08, 1.30, -1.15) |
+| VacuumBackingPump | `ANIM_BACKING_ROTOR` | (6.43, 1.20, -1.24) |
+| AutomaticVacuumThrottleValve | `ANIM_THROTTLE_VALVE` | (2.06, 1.78, -1.02) |
+| VacuumIsolationValve | `ANIM_VACUUM_ISOLATION` | (2.48, 1.77, -1.45) |
+| PrecisionDepositionShowerhead | `ANIM_SHOWERHEAD_SERVICE` | (0.00, 3.11, -0.80) |
+| InSituOpticalEllipsometer | `ANIM_ELLIPSOMETER_HEAD` | (5.68, 1.56, 2.44) |
+| ConformalFilmMetrologyScanner | `ANIM_METROLOGY_SCANNER` | (6.88, 1.72, 0.68) |
+| EmergencyDepositionSafetyStation | `ANIM_ESTOP` | (6.92, 0.76, 3.99) |
+| HolographicAtomicDepositionSCADA | `ANIM_ALD_SCADA` | (4.99, 3.63, -3.43) |
+| AtomicThinFilmVisualization | `ANIM_ATOMIC_LAYER_GROWTH` | (0.00, 1.85, -0.80) |
+| FourStageALDCycleSequencer | `ANIM_FOUR_STAGE_DISPLAY` | (-4.86, 0.86, 3.90) |
+| HighAspectRatioTrenchSample | `ANIM_TRENCH_CONFORMALITY` | (2.37, 3.27, 0.41) |
+
+## IMPORTANT
+
+These are animation reference points, not completed animation clips or guaranteed moving mesh joints.
+
+Inspect the imported FBX hierarchy.
+
+Create appropriate child transforms around the actual moving equipment parts.
+
+Do not rotate an entire reactor when only its lid should move.
+
+## REQUIRED ANIMATION BEHAVIOR
+
+- Vacuum rotors follow actual RPM.
+- Pulse valves follow actual opening.
+- Purge valve follows actual opening.
+- Load-lock gate follows actual interlock state.
+- Wafer robot follows actual transfer state.
+- Wafer lift follows actual position.
+- Heated chuck visuals follow operating state.
+- Metrology heads follow inspection sequence.
+- Thin-film visualization follows actual modeled thickness.
+- Four-stage display follows authoritative sequencer state.
+- Trench visualization follows regional film coverage.
+
+---
+
+# 8. EXISTING UNITY HELPERS
+
+The approved package includes:
+
+## ART PLACEMENT EDITOR
+
+`SparkLevel72ArtPlacementEditor.cs`
+
+Namespace:
+
+`ProjectSpark.EditorTools`
+
+Menu:
+
+`Tools/Project Spark/Levels/72/Place HD Art Under Selected Layout`
+
+This is an art-placement helper.
+
+It is not a complete level builder.
+
+## MATERIAL UPGRADE EDITOR
+
+`SparkLevel72MaterialUpgradeEditor.cs`
+
+Namespace:
+
+`ProjectSpark.EditorTools`
+
+Menu:
+
+`Tools/Project Spark/Levels/72/Create & Apply HD Materials To Selected Art`
+
+Use this as a starting point for compatible Unity materials.
+
+Validate Built-in/URP/HDRP shader compatibility.
+
+## VISUAL RIG ADAPTER
+
+`SparkLevel72VisualRig.cs`
+
+Namespace:
+
+`ProjectSpark.Visuals`
+
+Class:
+
+`SparkLevel72VisualRig`
+
+The verified public methods include:
+
+`SetVacuumRPM(float turbo, float backing)`
+
+`SetValveOpenFractions(float loadLock, float isolationFraction, float throttleFraction, float precursorA, float precursorB, float purgeFraction)`
+
+`SetWaferHandlingPose(float lidOpen, float liftPosition, float baseDeg, float armDeg, float toolDeg)`
+
+`SetCycleVisualization(int currentStage, float actualLayerProgress01)`
+
+`SetMetrologyPosition(float normalizedPosition)`
+
+Use these actual signatures where appropriate.
+
+## CRITICAL VISUAL RULE
+
+This visual rig does not calculate:
+
+- Vacuum pressure.
+- Gas flow.
+- Valve flow.
+- Surface saturation.
+- Film thickness.
+- Purge completion.
+- Temperature.
+- Process safety.
+- Objectives.
+
+Feed real gameplay values into the rig.
+
+Do not use the rig as the authoritative simulation.
+
+---
+
+# 9. ELECTRICAL CONTROL SYSTEM — EXACTLY 94 WIRES
+
+The Level 72 wiring design requires:
+
+**94 player-created wires.**
+
+**146 unique functional terminal anchors.**
+
+The asset package includes a verified wiring budget, but no complete W01–W94 endpoint map.
+
+Create the actual endpoint manifest in Unity.
+
+## VERIFIED WIRING GROUP BUDGET
+
+| Group | Required player wires |
+|---|---:|
+| Control power and returns | 10 |
+| Vacuum pumps and pressure | 14 |
+| Virtual precursors and pulse valves | 18 |
+| Purge flow and sensing | 14 |
+| Wafer heating and load-lock | 12 |
+| In-situ metrology | 12 |
+| PLC, safety and SCADA | 14 |
+| **TOTAL** | **94** |
+
+## GROUP A — W01–W10
+
+Control power and returns.
+
+Connect educational 5 V supply, return and control interfaces for:
+
+- Main PLC.
+- Process sequencer.
+- Vacuum PID.
+- Wafer temperature PID.
+- Sensor interface.
+- Protection relay.
+
+Use documented shared supply/return connections where supported.
+
+## GROUP B — W11–W24
+
+Vacuum control and measurement.
+
+Include:
+
+- Backing pump enable.
+- Backing pump status.
+- Turbo pump enable.
+- Turbo pump status.
+- Pump readiness.
+- Isolation valve command.
+- Isolation valve feedback.
+- Throttle valve command.
+- Throttle feedback.
+- Chamber pressure signal.
+- Rough pressure signal.
+- Pressure measurement validity.
+- Vacuum-ready permissive.
+- Vacuum fault.
+
+## GROUP C — W25–W42
+
+Virtual precursor delivery.
+
+Include:
+
+- Precursor A supply enable.
+- Precursor B supply enable.
+- MFC A command.
+- MFC A measured flow.
+- MFC A validity.
+- MFC B command.
+- MFC B measured flow.
+- MFC B validity.
+- A pulse valve command.
+- A pulse valve position.
+- B pulse valve command.
+- B pulse valve position.
+- Delivery manifold permission.
+- Delivery-line temperature.
+- Precursor A availability.
+- Precursor B availability.
+- Gas delivery fault.
+- Sequencer reactant-permission feedback.
+
+## GROUP D — W43–W56
+
+Purge system and critical sensing.
+
+Include:
+
+- Purge source enable.
+- Purge valve command.
+- Purge valve feedback.
+- Purge flow transmitter power.
+- Purge flow transmitter return.
+- Purge flow measurement.
+- Purge flow validity.
+- Purge controller enable.
+- Residual vapor measurement.
+- Residual analyzer validity.
+- Reactant overlap alarm.
+- Purge completion permission.
+- Purge protection status.
+- Purge fault reset request.
+
+One of these signals must be the designated critical final-feedback wire.
+
+## GROUP E — W57–W68
+
+Wafer heating and load-lock.
+
+Include:
+
+- Load-lock gate command.
+- Gate position feedback.
+- Wafer robot enable.
+- Robot status.
+- Wafer lift command.
+- Lift position feedback.
+- Chuck enable.
+- Chuck ready.
+- Heater zone command interface.
+- Wafer temperature feedback.
+- Heater status.
+- Thermal safety status.
+
+Document fixed internal heater-zone channels if the 12-wire external interface uses an aggregate module.
+
+## GROUP F — W69–W80
+
+In-situ metrology.
+
+Include:
+
+- QCM enable.
+- QCM measured mass signal.
+- QCM validity.
+- Ellipsometer enable.
+- Optical measurement signal.
+- Optical validity.
+- Surface coverage monitoring.
+- Residual concentration monitor.
+- Overlap monitoring.
+- Growth-per-cycle output.
+- Conformality scanner status.
+- Film certification result.
+
+## GROUP G — W81–W94
+
+PLC, safety and SCADA.
+
+Include:
+
+- Sequencer enable.
+- Sequencer stage/status.
+- Reactor-lid interlock.
+- Vacuum safety permission.
+- Purge safety permission.
+- Heater safety permission.
+- Emergency stop.
+- Critical-fault latch.
+- Fault reset authorization.
+- PLC status.
+- SCADA operator request.
+- SCADA process measurement summary.
+- Process completion event.
+- Objective certification event.
+
+## REQUIREMENTS FOR EVERY WIRE
+
+Define:
+
+- Unique W-number.
+- Source component.
+- Source terminal ID.
+- Destination component.
+- Destination terminal ID.
+- Signal type.
+- Electrical domain.
+- Expected direction.
+- Valid connection rules.
+- Mandatory status.
+- Fault behavior when disconnected.
+- Diagnostics.
+
+## EXACT TERMINAL COUNT
+
+Register exactly 146 unique functional `SparkTerminal` IDs.
+
+Because 94 wires have 188 endpoint references, legitimate terminal sharing or dedicated junctions may be necessary.
+
+Use the actual wiring system's supported fan-out rules.
+
+Do not create fake terminals or duplicate IDs.
+
+If shared terminals are not supported, create appropriate junction components and reconcile the endpoint map while retaining the approved wire and terminal counts.
+
+## IMPORTANT
+
+No wire may exist only as a decorative mesh.
+
+Every required connection must participate in gameplay topology and verification.
+
+---
+
+# 10. FINAL PURGE FEEDBACK WIRE
+
+Reserve one actual player-created wire for:
+
+`PURGE_FLOW_TRANSMITTER_SIGNAL_OUT → ALD_SEQUENCER_PURGE_FEEDBACK_IN`
+
+Assign the exact W-number only when the complete endpoint manifest is finalized.
+
+The signal must participate in:
+
+- Purge measurement validity.
+- Purge completion certification.
+- Sequencer stage transitions.
+- Safety interlock.
+- Fault diagnostics.
+
+## WHEN DISCONNECTED
+
+The system must:
+
+1. Detect actual topology change.
+2. Invalidate the purge-flow feedback measurement.
+3. Reject stale feedback.
+4. Prevent purge completion from being certified using that invalid signal.
+5. Inhibit unsafe subsequent reactant exposure.
+6. Enter documented safe process state.
+7. Latch the fault.
+8. Require actual reconnection and recalibration.
+
+Do not implement the final fault as a standalone Boolean while leaving the wire connected.
+
+---
+
+# 11. ONE AUTHORITATIVE ALD PROCESS MODEL
+
+Create a coherent, synchronized simulation.
+
+## REQUIRED PROCESS STATES
+
+- Reactor pressure.
+- Load-lock pressure.
+- Chamber temperature.
+- Wafer temperature by region.
+- Heater-zone temperatures.
+- Backing pump RPM.
+- Turbo pump RPM.
+- Effective pumping speed.
+- Throttle valve opening.
+- Isolation valve opening.
+- Precursor A actual flow.
+- Precursor B actual flow.
+- Purge actual flow.
+- Pulse valve positions.
+- Virtual gas A inventory.
+- Virtual gas B inventory.
+- Purge gas inventory.
+- Residual A concentration.
+- Residual B concentration.
+- By-product inventory.
+- Surface site coverage.
+- Completed surface reactions.
+- Film thickness by region.
+- Trench sidewall thickness.
+- Trench bottom thickness.
+- Cycle count.
+- QCM measurement.
+- Optical thickness estimate.
+- Film quality.
+- Process safety state.
+
+## IMPORTANT
+
+Do not create multiple scripts that independently write to film thickness or chamber pressure.
+
+Use one authoritative simulation owner or a correctly synchronized subsystem architecture.
+
+---
+
+# 12. VACUUM CHAMBER PHYSICS
+
+Use:
+
+- `01_L72_TransparentALDReactorChamber.fbx`
+- `25_L72_TurbomolecularVacuumPump.fbx`
+- `26_L72_VacuumBackingPump.fbx`
+- `27_L72_AutomaticVacuumThrottleValve.fbx`
+- `28_L72_VacuumIsolationValve.fbx`
+- `29_L72_IndustrialVacuumForeline.fbx`
+
+## VACUUM EQUATION
+
+For an approximately isothermal, lumped-parameter model:
+
+`V * dP/dt = Qin + Qleak - Seffective * P`
+
+Ensure pressure, pumping speed and throughput units are consistent.
+
+## REQUIRED BEHAVIOR
+
+- Backing pump starts dynamically.
+- Turbo rotor accelerates.
+- Effective pumping capacity increases.
+- Chamber pressure decreases according to gas load.
+- Gas pulse admission increases load.
+- Purge gas increases load.
+- Throttle movement affects pressure.
+- Isolation valve changes vacuum topology.
+- Pump capacity is finite.
+- Unsafe pump operation is inhibited.
+
+## IMPORTANT
+
+Do not assign target chamber pressure directly when the player enables the vacuum PID.
+
+---
+
+# 13. VACUUM INSTRUMENTATION
+
+Use:
+
+- `30_L72_CapacitancePressureManometer.fbx`
+- `31_L72_RoughVacuumPressureGauge.fbx`
+
+Required states:
+
+- Actual pressure.
+- Measured pressure.
+- Measurement range.
+- Calibration.
+- Response time.
+- Sampling interval.
+- Measurement validity.
+- Fault status.
+
+Do not report a sensor as valid outside its modeled operating range.
+
+---
+
+# 14. VACUUM PRESSURE PID
+
+Use:
+
+`46_L72_VacuumPressurePIDController.fbx`
+
+## REQUIRED INPUTS
+
+- Pressure target.
+- Measured chamber pressure.
+- Pressure feedback validity.
+- Pump readiness.
+- Throttle-valve position.
+- Gas throughput.
+- Safety status.
+
+## REQUIRED OUTPUT
+
+A bounded throttle-valve command.
+
+## REQUIRED BEHAVIOR
+
+- Pressure PID commands a real actuator.
+- Actuator changes effective pumping conductance.
+- Chamber pressure responds physically.
+- Controller handles gas pulses.
+- Integral anti-windup prevents excessive output accumulation.
+- Feedback failure disables normal automatic control.
+
+Do not directly overwrite the chamber pressure.
+
+---
+
+# 15. FICTIONAL PRECURSOR SOURCES
+
+Use:
+
+- `13_L72_VirtualPrecursorSupplyA.fbx`
+- `14_L72_VirtualPrecursorSupplyB.fbx`
+- `15_L72_InertPurgeGasSupply.fbx`
+
+## IMPORTANT
+
+Use fictional nonhazardous virtual reactants.
+
+Do not introduce operational instructions for real reactive industrial chemicals.
+
+## REQUIRED PROPERTIES
+
+- Source availability.
+- Virtual gas inventory.
+- Supply state.
+- Flow limitation.
+- Pressure/throughput contribution.
+- Fault status.
+
+The player cannot draw unlimited reactant mass from a finite configured source.
+
+---
+
+# 16. MASS-FLOW CONTROLLERS
+
+Use:
+
+- `19_L72_MassFlowControllerA.fbx`
+- `20_L72_MassFlowControllerB.fbx`
+
+## REQUIRED STATES
+
+- Requested flow.
+- Actual flow.
+- Maximum flow.
+- Response time.
+- Measurement calibration.
+- Signal validity.
+- Fault condition.
+
+## REQUIRED BEHAVIOR
+
+- MFC command changes actual flow through finite dynamics.
+- The process pressure changes due to throughput.
+- The surface-exposure model receives actual flow.
+- Source depletion or availability affects flow.
+- Measured flow is not automatically identical to the requested value.
+
+---
+
+# 17. HIGH-SPEED PULSE VALVES
+
+Use:
+
+- `16_L72_HighSpeedPulseValveA.fbx`
+- `17_L72_HighSpeedPulseValveB.fbx`
+- `18_L72_HighSpeedPurgeValve.fbx`
+
+## REQUIRED PROPERTIES
+
+- Commanded open fraction.
+- Actual open fraction.
+- Opening time.
+- Closing time.
+- Leakage rate.
+- Position feedback.
+- Stuck-valve state.
+- Safety permission.
+
+## REQUIRED BEHAVIOR
+
+- An A pulse changes actual A delivery.
+- A B pulse changes actual B delivery.
+- Purge opening changes purge throughput.
+- Actuator movement is finite.
+- A stuck valve does not follow its command correctly.
+- Safety control can inhibit new commanded exposure.
+
+## IMPORTANT
+
+The sequencer must use actual valve position and valid flow feedback, not only valve commands.
+
+---
+
+# 18. GAS DISTRIBUTION AND DELIVERY
+
+Use:
+
+- `22_L72_SequentialGasDistributionManifold.fbx`
+- `23_L72_PrecisionDepositionShowerhead.fbx`
+- `24_L72_HeatedGasDeliveryPipeline.fbx`
+
+## REQUIRED PROPERTIES
+
+- Delivery path state.
+- Actual throughput.
+- Delivery temperature.
+- Gas inventory/holdup.
+- Mixing volume.
+- Transport delay.
+- Spatial exposure distribution.
+
+## REQUIRED BEHAVIOR
+
+A commanded pulse should not reach every wafer region at infinite speed.
+
+A simplified finite transport delay and distribution efficiency are acceptable.
+
+These effects provide meaningful challenges for wafer uniformity and trench conformality.
+
+---
+
+# 19. RESIDUAL VAPOR INVENTORY
+
+Use:
+
+`40_L72_ResidualVaporAnalyzer.fbx`
+
+## REQUIRED STATES
+
+- Residual A inventory.
+- Residual B inventory.
+- Chamber gas volume.
+- Gas removal rate.
+- Analyzer measurement.
+- Signal validity.
+- Sample timestamp.
+
+## RESIDUAL GAS BALANCE
+
+For a well-mixed chamber, use a consistent mass-balance model:
+
+`dMassA/dt = InflowA - ExhaustRemovalA - SurfaceConsumptionA`
+
+`dMassB/dt = InflowB - ExhaustRemovalB - SurfaceConsumptionB`
+
+The exact model may be reduced-order.
+
+## REQUIRED BEHAVIOR
+
+During purge, residual concentrations decrease gradually according to actual purge and pumping conditions.
+
+Residual concentrations do not become zero immediately when a pulse valve closes.
+
+---
+
+# 20. PURGE-FLOW TRANSMITTER
+
+Use:
+
+`21_L72_PurgeMassFlowTransmitter.fbx`
+
+## REQUIRED PROPERTIES
+
+- True purge flow.
+- Measured purge flow.
+- Calibration.
+- Sensor range.
+- Response time.
+- Signal timestamp.
+- Signal validity.
+- Wire connectivity.
+- Fault status.
+
+## REQUIRED BEHAVIOR
+
+Measured purge flow derives from actual purge flow.
+
+A disconnected transmitter can retain a physically meaningful true flow in the simulation, but its measurement must no longer be available to the sequencer.
+
+Do not confuse physical purge flow with measurement validity.
+
+---
+
+# 21. AUTHORITATIVE PURGE-COMPLETION LOGIC
+
+A valid purge must depend on:
+
+- Purge-flow feedback validity.
+- Actual purge flow.
+- Required chamber throughput.
+- Residual vapor concentration.
+- Pressure state.
+- Time-integrated removal.
+- Valve state.
+- Safety conditions.
+
+## IMPORTANT
+
+Purge completion must not depend on a timer alone.
+
+A timer may impose a minimum duration, but passing requires actual modeled conditions.
+
+## FAILED PURGE
+
+If residual reactant is too high:
+
+- Do not certify the purge.
+- Do not advance to the next normal exposure.
+- Display the specific reason.
+- Permit corrective action.
+- Reevaluate the actual process state.
+
+---
+
+# 22. FOUR-STAGE ALD SEQUENCER
+
+Use:
+
+`43_L72_FourStageALDCycleSequencer.fbx`
+
+This is the central gameplay controller.
+
+## REQUIRED STATES
+
+- OFF.
+- IDLE.
+- INITIALIZING.
+- VACUUM_READY.
+- TEMPERATURE_READY.
+- GAS_READY.
+- A_DOSE_PREPARE.
+- A_DOSE_ACTIVE.
+- A_SURFACE_SATURATION_CHECK.
+- A_PURGE_ACTIVE.
+- A_PURGE_VALIDATION.
+- B_DOSE_PREPARE.
+- B_DOSE_ACTIVE.
+- B_REACTION_CHECK.
+- B_PURGE_ACTIVE.
+- B_PURGE_VALIDATION.
+- CYCLE_COMPLETE.
+- NEXT_CYCLE_READY.
+- DEPOSITION_COMPLETE.
+- SAFE_HOLD.
+- FAULT.
+- RESET_REQUIRED.
+
+## STAGE 1 — A EXPOSURE
+
+Require:
+
+- Chamber pressure valid.
+- Wafer temperature valid.
+- No unresolved purge contamination.
+- A source available.
+- B valve safely closed.
+- Pulse valve A enabled.
+- Actual A flow established.
+- Surface A coverage evolving.
+
+## STAGE 2 — PURGE A
+
+Require:
+
+- A valve closed or within safe leakage limits.
+- Purge valve operating.
+- Purge-flow feedback valid.
+- Residual A decreasing.
+- Residual A below configured limit.
+- Chamber pressure acceptable.
+
+## STAGE 3 — B EXPOSURE
+
+Require:
+
+- A purge certified.
+- A residual concentration acceptable.
+- A valve closed.
+- B flow valid.
+- B half-reaction proceeds.
+- Surface reaction completion measurable.
+
+## STAGE 4 — PURGE B
+
+Require:
+
+- B valve closed.
+- Purge flow valid.
+- Residual B decreasing.
+- Residual B below configured limit.
+- Pressure acceptable.
+- No overlap fault.
+
+## CYCLE COMPLETION
+
+Award one successful cycle only when all four stages are validated.
+
+Do not count aborted or unsafe cycles as successful.
+
+---
+
+# 23. SELF-LIMITING SURFACE REACTION MODEL
+
+Implement a fictional educational surface reaction.
+
+## SURFACE COVERAGE A
+
+A simple model:
+
+`dThetaA/dt = kA * ExposureA * (1 - ThetaA)`
+
+with:
+
+`0 <= ThetaA <= 1`
+
+## SURFACE REACTION B
+
+Implement a corresponding conversion model where B reacts with available A-prepared sites.
+
+## REQUIRED STATES
+
+- Available sites.
+- A-covered sites.
+- Converted/reacted sites.
+- Reaction completion.
+- Local growth increment.
+- Surface contamination.
+- Temperature factor.
+- Exposure factor.
+
+## REQUIRED BEHAVIOR
+
+- A coverage approaches saturation.
+- More A dosing after saturation provides diminishing benefit.
+- Inadequate A exposure leaves unreacted sites.
+- B cannot create a complete ideal layer if the required prior A reaction has not occurred.
+- Purge quality affects cross-contamination risk.
+- Completed reactions contribute finite growth.
+
+## CRITICAL RULE
+
+**Do not make film thickness increase indefinitely during prolonged A exposure.**
+
+This is the central educational lesson of ALD.
+
+---
+
+# 24. FILM GROWTH PER CYCLE
+
+Use:
+
+`42_L72_GrowthPerCycleAnalyzer.fbx`
+
+## REQUIRED VALUES
+
+- Completed successful cycles.
+- Growth increment for current cycle.
+- Rolling average growth per cycle.
+- Total film thickness.
+- Growth variation.
+- Film quality.
+- Process efficiency.
+
+## FILM GROWTH
+
+For wafer region i:
+
+`Thickness_i = Sum(Growth_i_for_each_valid_cycle)`
+
+## PROPOSED TARGETS
+
+- Nominal GPC approximately 0.10 nm.
+- Target thickness 12 nm.
+- Nominal 120 successful cycles.
+- Tolerance ±0.3 nm.
+
+## IMPORTANT
+
+The nominal 0.10 nm is a balancing parameter.
+
+Actual growth must depend on the fictional surface reaction, not be blindly added every time a sequence timer finishes.
+
+A successful cycle may produce less growth than nominal if exposure is incomplete.
+
+---
+
+# 25. REGIONAL WAFER THICKNESS
+
+Use:
+
+- `05_L72_PrecisionSiliconWafer.fbx`
+- `06_L72_AtomicThinFilmVisualization.fbx`
+
+Track several wafer regions.
+
+Suggested arrangement:
+
+- Center.
+- Mid-radius.
+- Edge.
+- Multiple angular sectors.
+
+Each region stores:
+
+- Surface A coverage.
+- Surface B reaction completion.
+- Local temperature.
+- Actual exposure.
+- Film thickness.
+- Surface contamination.
+- Defect estimate.
+
+## REQUIRED BEHAVIOR
+
+Different process conditions can produce different local growth rates.
+
+Film thickness cannot become negative.
+
+No region should exceed physically justified model growth.
+
+The visual shader must follow the actual thickness map.
+
+---
+
+# 26. HIGH-ASPECT-RATIO TRENCH CONFORMALITY
+
+Use:
+
+`07_L72_HighAspectRatioTrenchSample.fbx`
+
+This is a distinctive Level 72 advanced mechanic.
+
+## TRACK
+
+- Top surface thickness.
+- Upper sidewall thickness.
+- Lower sidewall thickness.
+- Trench bottom thickness.
+- Local surface coverage.
+- Local reactant transport.
+- Local reaction completion.
+
+## CONFORMALITY METRIC
+
+`Conformality = BottomThickness / TopThickness * 100%`
+
+Define the metric consistently.
+
+## PROPOSED SUCCESS TARGET
+
+At least 95% bottom/top conformality.
+
+## REQUIRED BEHAVIOR
+
+Insufficient exposure may cause the top region to saturate while deeper surfaces remain underexposed.
+
+Longer exposure beyond top-surface saturation may help reach deeper sites within the synthetic transport model.
+
+The player must achieve conformal coverage through valid process conditions.
+
+Do not simply multiply every region by one identical growth value.
+
+---
+
+# 27. MULTI-ZONE WAFER HEATING
+
+Use:
+
+- `04_L72_MultiZoneHeatedWaferChuck.fbx`
+- `34_L72_MultiZoneHeaterPowerBank.fbx`
+
+## REQUIRED STATES
+
+- Heater zone temperatures.
+- Heater zone commands.
+- Actual heating power.
+- Maximum power per zone.
+- Wafer thermal capacity.
+- Chuck thermal capacity.
+- Heat losses.
+- Thermal coupling.
+- Safety limits.
+
+## ENERGY BALANCE
+
+For each modeled zone:
+
+`Czone * dT/dt = Pheater + Qneighbor - Qloss - Qprocess`
+
+## REQUIRED BEHAVIOR
+
+- Heating is gradual.
+- Actual power is bounded.
+- Zone temperatures may differ.
+- Thermal coupling affects neighboring regions.
+- A heater-zone drift fault creates a real temperature gradient.
+- Surface reaction kinetics respond to local temperature.
+
+---
+
+# 28. WAFER TEMPERATURE PID
+
+Use:
+
+`45_L72_WaferTemperaturePIDController.fbx`
+
+## REQUIRED FEATURES
+
+- Temperature setpoint.
+- Valid measured temperatures.
+- Multi-zone control.
+- Proportional gain.
+- Integral gain.
+- Filtered derivative where used.
+- Heater power limits.
+- Anti-windup.
+- Controller enable.
+- Safety override.
+
+## REQUIRED BEHAVIOR
+
+The PID commands heater outputs.
+
+Heater outputs alter thermal energy.
+
+Wafer temperature responds.
+
+Do not directly assign measured wafer temperature to the setpoint.
+
+---
+
+# 29. TEMPERATURE INSTRUMENTATION
+
+Use:
+
+- `32_L72_HeatedDeliveryLineSensor.fbx`
+- `33_L72_WaferChuckTemperatureSensor.fbx`
+
+## REQUIRED STATES
+
+- Actual temperature.
+- Measured temperature.
+- Calibration.
+- Response time.
+- Measurement timestamp.
+- Signal validity.
+- Fault status.
+
+## IMPORTANT
+
+Do not allow uncalibrated or disconnected measurements to certify safe process temperatures.
+
+---
+
+# 30. QUARTZ CRYSTAL MICROBALANCE
+
+Use:
+
+`35_L72_QuartzCrystalMicrobalance.fbx`
+
+## REQUIRED PROPERTIES
+
+- Deposited mass per unit area on QCM.
+- Measurement sensitivity.
+- Sensor calibration.
+- Frequency-shift estimate.
+- Measurement noise.
+- Signal validity.
+- Estimated growth.
+- Accumulated sensor deposition.
+
+## REQUIRED BEHAVIOR
+
+Generate QCM observations from actual synthetic deposition on its sensing surface.
+
+Do not simply copy wafer thickness into the QCM display.
+
+Account for possible differences between QCM exposure and wafer exposure.
+
+---
+
+# 31. IN-SITU OPTICAL ELLIPSOMETER
+
+Use:
+
+- `36_L72_InSituOpticalEllipsometer.fbx`
+- `37_L72_OpticalThicknessViewport.fbx`
+
+## REQUIRED PROPERTIES
+
+- Optical measurement enabled.
+- Optical path valid.
+- Calibration.
+- Synthetic optical response.
+- Estimated film thickness.
+- Measurement uncertainty.
+- Timestamp.
+- Fault status.
+
+## REQUIRED BEHAVIOR
+
+Create a documented simplified optical model.
+
+Measured thickness estimates must derive from actual simulated film state and modeled optical effects.
+
+Do not display exactly 12.0 nm when the film is only 10 nm thick.
+
+---
+
+# 32. FILM METROLOGY AND CERTIFICATION
+
+Use:
+
+`38_L72_ConformalFilmMetrologyScanner.fbx`
+
+## REQUIRED OUTPUTS
+
+- Average film thickness.
+- Maximum thickness.
+- Minimum thickness.
+- Regional thickness deviation.
+- Wafer nonuniformity.
+- Top thickness.
+- Sidewall thickness.
+- Bottom thickness.
+- Conformality.
+- Contamination estimate.
+- Film-quality result.
+
+## CERTIFICATION REQUIREMENTS
+
+A wafer passes only if:
+
+- Thickness is within tolerance.
+- Nonuniformity within target.
+- Conformality within target.
+- Contamination below limit.
+- Valid measurement evidence exists.
+- No unresolved critical process fault.
+
+Do not certify the wafer from cycle count alone.
+
+---
+
+# 33. SURFACE COVERAGE MONITOR
+
+Use:
+
+`39_L72_SurfaceCoverageMonitor.fbx`
+
+## REQUIRED LIVE VALUES
+
+- A site coverage.
+- B reaction completion.
+- Available surface sites.
+- Saturation status.
+- Region-specific coverage.
+- Exposure completeness.
+- Current stage.
+
+## REQUIRED BEHAVIOR
+
+Display values from the actual surface-reaction model.
+
+Do not display 100% coverage simply because the A pulse timer expired.
+
+---
+
+# 34. REACTANT OVERLAP MONITOR
+
+Use:
+
+`41_L72_ReactantOverlapMonitor.fbx`
+
+## REQUIRED STATES
+
+- Residual A concentration.
+- Residual B concentration.
+- Simultaneous exposure condition.
+- Overlap severity.
+- Contamination accumulation.
+- Safety status.
+
+## REQUIRED BEHAVIOR
+
+If substantial A residue remains during B dosing, the overlap model should report an actual simulated risk.
+
+This risk may degrade film quality.
+
+The monitoring system must derive its output from process concentrations and timing, not only an invisible scenario flag.
+
+---
+
+# 35. PROCESS DISTURBANCE A — PURGE RESTRICTION
+
+Simulate an actual reduction in available purge flow or effective gas removal.
+
+## REQUIRED RESPONSE
+
+- Actual purge throughput decreases.
+- Residual vapor clears more slowly.
+- Purge completion is delayed or denied.
+- Sequencer cannot advance normally.
+- Protection may enter SAFE_HOLD.
+- SCADA shows diagnostic evidence.
+
+## PLAYER RECOVERY
+
+1. Detect reduced purge performance.
+2. Identify the restriction.
+3. Stop unsafe exposure.
+4. Restore purge path.
+5. Verify actual flow.
+6. Verify residual-gas removal.
+7. Reset any required fault.
+8. Recommission the sequence.
+9. Produce acceptable film.
+
+Do not repair the fault only by resetting a Boolean while flow remains insufficient.
+
+---
+
+# 36. PROCESS DISTURBANCE B — HEATER-ZONE DRIFT
+
+Introduce a fault in one modeled heating zone.
+
+## REQUIRED RESPONSE
+
+- Actual heater power differs from command.
+- Local temperature begins drifting.
+- Surface reaction rates change.
+- Regional growth may become nonuniform.
+- PID controller responds within capacity.
+- Safety acts if needed.
+
+## PLAYER RECOVERY
+
+Diagnose the faulty zone using valid temperature and heater feedback.
+
+Restore heater performance.
+
+Reestablish an acceptable temperature profile.
+
+Process a new valid test wafer if the previous wafer quality is compromised.
+
+---
+
+# 37. PROCESS DISTURBANCE C — STUCK A PULSE VALVE
+
+Introduce a mismatch between commanded and actual A valve position.
+
+## REQUIRED RESPONSE
+
+- Valve command changes.
+- Actual position does not follow correctly.
+- A delivery may persist or be insufficient.
+- Residual A behavior changes.
+- Overlap risk may increase.
+- Sequencer detects invalid conditions.
+
+## PLAYER RECOVERY
+
+1. Detect command/feedback mismatch.
+2. Enter safe state.
+3. Correct the simulated valve fault.
+4. Verify closure behavior.
+5. Verify residual A removal.
+6. Reset protection.
+7. Resume controlled deposition.
+8. Certify a new valid film.
+
+---
+
+# 38. PURGE INTERLOCK PROTECTION
+
+Use:
+
+`47_L72_PurgeInterlockProtectionRelay.fbx`
+
+## REQUIRED PROTECTIONS
+
+- Invalid purge flow feedback.
+- Insufficient purge flow.
+- Excess residual A.
+- Excess residual B.
+- Reactant overlap risk.
+- Stuck precursor valve.
+- Invalid chamber pressure.
+- Vacuum unavailable.
+- Temperature outside permitted range.
+- Reactor lid unsafe.
+- Load-lock gate unsafe.
+- Emergency stop.
+
+## REQUIRED STATES
+
+- READY.
+- ARMED.
+- WARNING.
+- SAFE_HOLD.
+- TRIPPED.
+- LOCKED_OUT.
+- RESET_REQUIRED.
+
+## REQUIRED RESPONSE
+
+- Inhibit unsafe precursor admission.
+- Stop or suspend deposition.
+- Close appropriate dose valves.
+- Preserve safe purge and pumping if physically available.
+- Record fault.
+- Require corrective action.
+- Require explicit reset.
+- Revalidate conditions before restart.
+
+## IMPORTANT
+
+A purge-feedback fault does not automatically mean physical purge flow has stopped.
+
+The protection system must distinguish between invalid measurement and actual flow failure.
+
+Both may require process inhibition, but the diagnostic messages should be different.
+
+---
+
+# 39. EMERGENCY AND REACTOR SAFETY
+
+Use:
+
+`49_L72_EmergencyDepositionSafetyStation.fbx`
+
+## REQUIRED SAFETY CONDITIONS
+
+- Reactor lid closed.
+- Load-lock gate safe.
+- Vacuum system ready.
+- Pumps operating within limits.
+- Gas supplies controlled.
+- Purge path available.
+- Pressure measurement valid.
+- Wafer thermal feedback valid.
+- Heater protection healthy.
+- Sequencer permission valid.
+- No unresolved critical fault.
+
+## IMPORTANT
+
+Safety control must override normal PLC and PID commands.
+
+The virtual process should not encourage operating real vacuum, thermal or chemical equipment without professional procedures.
+
+---
+
+# 40. MAIN DEPOSITION PLC
+
+Use:
+
+`44_L72_AtomicDepositionPLCRack.fbx`
+
+## REQUIRED OPERATING STATES
+
+- OFF.
+- INITIALIZING.
+- IDLE.
+- SAFETY_CHECK.
+- SENSOR_CALIBRATION.
+- ROUGH_PUMPDOWN.
+- HIGH_VACUUM_READY.
+- LOADLOCK_READY.
+- WAFER_TRANSFER.
+- WAFER_CLAMP.
+- WAFER_HEATING.
+- TEMPERATURE_STABILIZATION.
+- GAS_SYSTEM_READY.
+- PURGE_SYSTEM_VALIDATION.
+- MANUAL_CYCLE_READY.
+- A_DOSE.
+- A_PURGE.
+- B_DOSE.
+- B_PURGE.
+- CYCLE_CERTIFICATION.
+- AUTO_DEPOSITION.
+- FILM_TARGET_REACHED.
+- METROLOGY.
+- PROCESS_COMPLETE.
+- SAFE_HOLD.
+- FAULT.
+- RESET_REQUIRED.
+
+## REQUIRED BEHAVIOR
+
+State transitions depend on actual validated conditions.
+
+Do not skip process checks because the player clicked the next-stage button.
+
+---
+
+# 41. TIME ACCELERATION FOR 120 CYCLES
+
+The proposed target is approximately 120 valid cycles.
+
+The player should not need to manually click four buttons 120 times.
+
+## GAMEPLAY DESIGN
+
+Require the player to demonstrate several valid manual ALD cycles.
+
+After successful manual certification, unlock automated sequencing.
+
+## AUTOMATIC MODE
+
+The automatic sequencer must continue calculating:
+
+- Actual valve positions.
+- Gas throughput.
+- Residual concentrations.
+- Surface saturation.
+- Reaction completion.
+- Film growth.
+- Temperature.
+- Pressure.
+- Safety.
+
+## TIME ACCELERATION
+
+Use bounded simulation substeps or appropriately designed cycle-level integration.
+
+Do not simply multiply film thickness by 120 when AUTO is enabled.
+
+Faults and disturbances must still be detected.
+
+If a critical fault develops, automatic deposition must stop or hold safely.
+
+---
+
+# 42. LIVE AAA SCADA DASHBOARD
+
+Use:
+
+`50_L72_HolographicAtomicDepositionSCADA.fbx`
+
+## REQUIRED LIVE VALUES
+
+- MAIN CONTROL POWER.
+- PLC STATE.
+- SAFETY STATUS.
+- REACTOR LID STATUS.
+- LOADLOCK STATUS.
+- CHAMBER PRESSURE.
+- PRESSURE SETPOINT.
+- BACKING PUMP RPM.
+- TURBO PUMP RPM.
+- THROTTLE OPENING.
+- ISOLATION VALVE.
+- PRECURSOR A INVENTORY.
+- PRECURSOR B INVENTORY.
+- PURGE GAS INVENTORY.
+- PRECURSOR A FLOW.
+- PRECURSOR B FLOW.
+- PURGE ACTUAL FLOW.
+- PURGE MEASURED FLOW.
+- PURGE SIGNAL VALIDITY.
+- RESIDUAL A.
+- RESIDUAL B.
+- OVERLAP RISK.
+- WAFER ZONE TEMPERATURES.
+- HEATER ZONE POWER.
+- WAFER TEMPERATURE TARGET.
+- CURRENT ALD STAGE.
+- COMPLETED CYCLES.
+- SUCCESSFUL CYCLES.
+- ABORTED CYCLES.
+- SURFACE A COVERAGE.
+- B REACTION COMPLETION.
+- GROWTH PER CYCLE.
+- TOTAL FILM THICKNESS.
+- QCM MASS CHANGE.
+- ELLIPSOMETER ESTIMATE.
+- FILM NONUNIFORMITY.
+- TOP TRENCH THICKNESS.
+- SIDEWALL THICKNESS.
+- BOTTOM TRENCH THICKNESS.
+- FILM CONFORMALITY.
+- CONTAMINATION METRIC.
+- FILM QUALITY.
+- SENSOR VALIDITY.
+- FAULT HISTORY.
+- OBJECTIVES X/6.
+
+## REQUIRED PLAYER CONTROLS
+
+- MAIN POWER.
+- CALIBRATE PRESSURE.
+- CALIBRATE GAS FLOW.
+- CALIBRATE PURGE FLOW.
+- CALIBRATE WAFER TEMPERATURE.
+- START BACKING PUMP.
+- START TURBO PUMP.
+- ENABLE PRESSURE PID.
+- OPEN ISOLATION VALVE.
+- ADJUST THROTTLE VALVE.
+- LOAD WAFER.
+- CLAMP WAFER.
+- ENABLE HEATERS.
+- SET WAFER TEMPERATURE.
+- SET PRECURSOR A FLOW.
+- SET PRECURSOR B FLOW.
+- SET PURGE FLOW.
+- ENABLE A PULSE.
+- ENABLE A PURGE.
+- ENABLE B PULSE.
+- ENABLE B PURGE.
+- ENABLE AUTOMATIC SEQUENCER.
+- SET THICKNESS TARGET.
+- CALIBRATE QCM.
+- CALIBRATE ELLIPSOMETER.
+- START DEPOSITION.
+- STOP DEPOSITION.
+- INSPECT FILM.
+- START PURGE RESTRICTION TEST.
+- START HEATER-DRIFT TEST.
+- START STUCK-VALVE TEST.
+- EMERGENCY SHUTDOWN.
+- RESET PROTECTION.
+- DISCONNECT PURGE FEEDBACK.
+- RESTORE PURGE WIRE.
+- RECALIBRATE PURGE TRANSMITTER.
+- RESET PURGE FAULT.
+- FINAL CERTIFY.
+
+Every control must affect actual gameplay state.
+
+No decorative controls.
+
+---
+
+# 43. SIX AUTHORITATIVE OBJECTIVES
+
+Integrate all six with the existing Project Spark evaluator.
+
+## OBJECTIVE 1 — BUILD THE ATOMIC DEPOSITION NETWORK
+
+Require:
+
+1. All 94 player-created wires connected.
+2. Exactly 146 functional terminal IDs registered.
+3. Valid 5 V control supply.
+4. Valid control return.
+5. Main PLC connected.
+6. Four-stage sequencer connected.
+7. Backing pump controls connected.
+8. Turbo pump controls connected.
+9. Vacuum valves connected.
+10. Pressure sensors connected.
+11. Virtual precursor A connected.
+12. Virtual precursor B connected.
+13. Purge source connected.
+14. Pulse valves connected.
+15. MFC A and B connected.
+16. Purge transmitter connected.
+17. Heater controls connected.
+18. Wafer temperature sensing connected.
+19. Wafer robot and load-lock connected.
+20. QCM connected.
+21. Ellipsometer connected.
+22. Conformality scanner connected.
+23. Residual vapor and overlap monitors connected.
+24. Safety relay connected.
+25. Emergency stop connected.
+26. No unsafe circuit topology.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — COMMISSION VACUUM AND WAFER TEMPERATURE
+
+Require:
+
+1. Objective 1 certified.
+2. Safety ready.
+3. Pressure sensors calibrated.
+4. Flow sensors calibrated.
+5. Purge transmitter calibrated.
+6. Wafer temperature sensing calibrated.
+7. Backing pump operational.
+8. Turbo pump operational under valid conditions.
+9. Chamber pressure reaches configured range.
+10. Vacuum control stable.
+11. Load-lock commissioned.
+12. Wafer transferred.
+13. Wafer clamped.
+14. Heater zones enabled safely.
+15. Actual wafer temperature rises.
+16. Wafer temperature profile stabilizes.
+17. Purge path validated.
+18. No critical fault.
+19. Stable observation interval completed.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — MASTER THE FOUR-STAGE ALD CYCLE
+
+Require:
+
+1. Previous objectives certified.
+2. A source ready.
+3. B source ready.
+4. Purge source ready.
+5. Valid gas-flow feedback.
+6. A dose starts.
+7. Actual A exposure occurs.
+8. Surface A coverage approaches saturation.
+9. A valve closes.
+10. First purge begins.
+11. Actual purge flow established.
+12. Residual A decreases.
+13. First purge certified.
+14. B exposure permitted.
+15. Actual B reaction occurs.
+16. Completed surface reaction recorded.
+17. B valve closes.
+18. Second purge begins.
+19. Residual B decreases.
+20. Second purge certified.
+21. A complete valid cycle recorded.
+22. Growth per cycle measured.
+23. No significant reactant overlap.
+24. Several repeatable successful cycles demonstrated.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — BUILD A PRECISE CONFORMAL FILM
+
+Require:
+
+1. Previous objectives certified.
+2. Automated sequencer commissioned.
+3. Valid wafer loaded.
+4. Wafer temperature controlled.
+5. Chamber pressure controlled.
+6. Actual A/B exposures and purges.
+7. Successful cycles accumulated.
+8. Film thickness increases from modeled reactions.
+9. QCM signal valid.
+10. Ellipsometer signal valid.
+11. Growth-per-cycle estimate valid.
+12. Target film thickness reached.
+13. Final thickness within ±0.3 nm.
+14. Nonuniformity ≤3%.
+15. Trench conformality ≥95%.
+16. Contamination below configured limit.
+17. Final metrology passes.
+18. No unresolved critical fault.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — SURVIVE THE DEPOSITION DISTURBANCES
+
+Require:
+
+1. Previous objectives certified.
+2. Stable baseline recorded.
+3. Purge restriction activated.
+4. Actual purge flow decreases.
+5. Residual concentration responds.
+6. Purge validation fails appropriately.
+7. Unsafe next exposure inhibited.
+8. Purge restriction corrected.
+9. Purge performance restored.
+10. Heater-zone drift activated.
+11. Actual zone temperature changes.
+12. Film uniformity effect observed.
+13. Heater fault detected and corrected.
+14. Temperature profile restored.
+15. Precursor A valve fault activated.
+16. Actual valve position differs from command.
+17. Residual/overlap behavior responds.
+18. Valve fault detected.
+19. Safe process hold applied.
+20. Valve repaired.
+21. Protection reset under valid conditions.
+22. New deposition test performed.
+23. Film quality passes.
+24. No unresolved critical fault.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — RESTORE CRITICAL PURGE FEEDBACK
+
+Require:
+
+1. Objectives 1–5 historically certified.
+2. Designated purge-flow feedback wire disconnected.
+3. Actual electrical topology changes.
+4. Purge measurement becomes invalid.
+5. Sequencer detects feedback loss.
+6. Purge completion can no longer be certified.
+7. Unsafe subsequent precursor exposure inhibited.
+8. Safe process state entered.
+9. Fault latched.
+10. Player reconnects actual wire.
+11. Electrical connectivity restored.
+12. Purge transmitter recalibrated.
+13. Fresh valid purge samples acquired.
+14. Purge path functionally verified.
+15. Residual vapor measurement valid.
+16. Player explicitly resets fault.
+17. Chamber pressure recommissioned.
+18. Wafer temperature recommissioned.
+19. Valid four-stage cycle demonstrated.
+20. Fresh deposition performed.
+21. Growth per cycle verified.
+22. New film thickness verified.
+23. Uniformity verified.
+24. Conformality verified.
+25. Contamination within limit.
+26. No unresolved critical fault.
+27. Final certification passed.
+
+Progress becomes **6/6**.
+
+## HISTORICAL OBJECTIVE REQUIREMENT
+
+Objectives 1–5 must remain historically certified during the deliberate final sensor fault.
+
+Do not reset progress to 0/6.
+
+However, Objective 6 must not complete simply because the player reconnects the wire.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REPORT 6/6.**
+
+---
+
+# 44. FINAL SENSOR FAULT — ACTUAL WIRE DISCONNECTION
+
+## FAULT INJECTION
+
+1. Player identifies purge-flow feedback wire.
+2. Player disconnects it in the actual wiring gameplay.
+3. Connection topology changes.
+4. Purge transmitter signal path becomes unavailable.
+5. Measurement validity changes to INVALID.
+6. PLC receives missing/invalid feedback.
+7. Sequencer refuses to certify purge completion.
+8. Unsafe reactant exposure is inhibited.
+9. Fault latches.
+10. Event recorder logs the fault.
+
+## IMPORTANT
+
+Do not set actual purge flow to zero merely because sensor feedback is lost.
+
+The purge system may still physically operate.
+
+The controller simply cannot trust its measurement.
+
+If a last valid value remains on screen, mark it STALE.
+
+## RECOVERY
+
+1. Player reconnects the actual wire.
+2. Topology becomes valid.
+3. Sensor supply and return checked.
+4. Measurement reacquired.
+5. Calibration performed.
+6. Fresh valid samples collected.
+7. Purge throughput verified.
+8. Residual concentrations checked.
+9. Player explicitly resets fault.
+10. Safety permissions revalidated.
+11. Four-stage ALD sequencer recommissioned.
+12. Fresh valid deposition cycle performed.
+13. Complete target film produced.
+14. Metrology passed.
+15. Final objective certified.
+
+---
+
+# 45. RECOMMENDED UNITY C# ARCHITECTURE
+
+Inspect actual source before creating these scripts.
+
+Suggested responsibilities:
+
+- `SparkLevel72Coordinator.cs`
+- `SparkLevel72ProcessState.cs`
+- `SparkLevel72VacuumNetwork.cs`
+- `SparkLevel72VacuumPumpDynamics.cs`
+- `SparkLevel72VacuumValveDynamics.cs`
+- `SparkLevel72PressureSensor.cs`
+- `SparkLevel72GasDeliveryNetwork.cs`
+- `SparkLevel72VirtualPrecursorSupply.cs`
+- `SparkLevel72MassFlowController.cs`
+- `SparkLevel72PulseValve.cs`
+- `SparkLevel72PurgeFlowTransmitter.cs`
+- `SparkLevel72PurgeModel.cs`
+- `SparkLevel72ResidualVaporModel.cs`
+- `SparkLevel72SurfaceReactionModel.cs`
+- `SparkLevel72FilmGrowthModel.cs`
+- `SparkLevel72WaferRegionState.cs`
+- `SparkLevel72ConformalityAnalyzer.cs`
+- `SparkLevel72MultiZoneHeater.cs`
+- `SparkLevel72WaferThermalModel.cs`
+- `SparkLevel72TemperatureSensor.cs`
+- `SparkLevel72TemperaturePID.cs`
+- `SparkLevel72PressurePID.cs`
+- `SparkLevel72QCMSensor.cs`
+- `SparkLevel72Ellipsometer.cs`
+- `SparkLevel72MetrologyScanner.cs`
+- `SparkLevel72SurfaceCoverageMonitor.cs`
+- `SparkLevel72ReactantOverlapMonitor.cs`
+- `SparkLevel72GrowthPerCycleAnalyzer.cs`
+- `SparkLevel72CycleSequencer.cs`
+- `SparkLevel72WaferTransfer.cs`
+- `SparkLevel72ProtectionRelay.cs`
+- `SparkLevel72SafetyController.cs`
+- `SparkLevel72DepositionPLC.cs`
+- `SparkLevel72DisturbanceController.cs`
+- `SparkLevel72FaultRecovery.cs`
+- `SparkLevel72EventRecorder.cs`
+- `SparkLevel72ObjectiveTracker.cs`
+- `SparkLevel72SCADADashboard.cs`
+- `SparkLevel72Interaction.cs`
+- `SparkLevel72VisualRigAdapter.cs`
+
+These names represent proposed responsibilities, not verified existing Project Spark APIs.
+
+Reuse compatible project infrastructure.
+
+---
+
+# 46. AUTHORITATIVE SIMULATION UPDATE ORDER
+
+Use a fixed or consistently scheduled simulation update.
+
+Suggested dependency order:
+
+1. Validate electrical topology.
+2. Evaluate control power.
+3. Read player commands.
+4. Validate sensor signals.
+5. Evaluate safety and process permissions.
+6. Execute PLC scan if due.
+7. Update sequencer command state.
+8. Evaluate pressure PID.
+9. Evaluate wafer temperature PID.
+10. Apply safety overrides.
+11. Update pump motor commands.
+12. Integrate pump RPM.
+13. Update vacuum valve positions.
+14. Update precursor pulse-valve positions.
+15. Update purge-valve position.
+16. Update MFC actual flows.
+17. Solve virtual gas throughput.
+18. Integrate chamber gas inventories.
+19. Integrate chamber pressure.
+20. Integrate residual vapor inventories.
+21. Update wafer-zone thermal energy.
+22. Calculate current surface exposures.
+23. Integrate regional surface coverage.
+24. Calculate completed surface reactions.
+25. Update film thickness.
+26. Update trench coating.
+27. Update contamination state.
+28. Generate QCM measurements.
+29. Generate optical measurements.
+30. Update growth and conformality estimates.
+31. Acquire new sensor samples.
+32. Apply measurement latency and validity.
+33. Evaluate purge completion.
+34. Evaluate protection and faults.
+35. Record event history.
+36. Evaluate authoritative objective evidence.
+37. Update SCADA.
+38. Update visual rig and VFX.
+
+## IMPORTANT
+
+This is a conceptual dependency sequence.
+
+If pressure, flow and surface reactions require coupled iteration, solve consistently and commit only once per timestep.
+
+Do not accidentally deposit film twice during a single update.
+
+---
+
+# 47. AAA VISUAL IMPLEMENTATION
+
+Use the approved Level 72 cinematic direction and actual 52 models.
+
+## STARTUP
+
+- Reactor dark.
+- All gas pulse effects disabled.
+- Pumps stationary.
+- Wafer robot idle.
+- SCADA displays initialization.
+- Film visual at initial thickness.
+
+## VACUUM COMMISSIONING
+
+- Backing pump begins operating.
+- Turbo rotor accelerates.
+- Throttle valve moves.
+- Chamber pressure displays respond.
+
+## WAFER LOADING
+
+- Load-lock gate operates.
+- Wafer robot transfers wafer.
+- Wafer lift moves.
+- Chuck secures wafer.
+
+## TEMPERATURE COMMISSIONING
+
+- Heater indicators illuminate.
+- Temperature rises gradually.
+- Regional temperature display updates.
+
+## A EXPOSURE
+
+- Cyan diagnostic flow appears.
+- Surface site visualization progressively fills.
+- Coverage approaches saturation.
+- Actual growth remains bounded.
+
+## FIRST PURGE
+
+- White diagnostic flow appears.
+- Residual A visual decreases.
+- Purge completion follows measured conditions.
+
+## B EXPOSURE
+
+- Magenta flow appears.
+- Surface reaction completes.
+- A thin gold film increment becomes visible.
+
+## SECOND PURGE
+
+- Residual B decreases.
+- Sequencer prepares next cycle.
+
+## AUTOMATIC DEPOSITION
+
+- Cycle display advances.
+- Film grows gradually.
+- Nanometre readout updates.
+- Trench coating follows actual regional growth.
+- QCM and ellipsometer readings respond.
+
+## PURGE RESTRICTION
+
+- Purge flow visual weakens.
+- Residual vapor warning appears.
+- Sequencer holds.
+
+## HEATER-ZONE DRIFT
+
+- Temperature map becomes uneven.
+- Uniformity display responds.
+
+## STUCK VALVE
+
+- Actual A valve position differs from command.
+- Fault diagnosis appears.
+- Unsafe sequencing stops.
+
+## FINAL FEEDBACK FAULT
+
+- Purge measurement becomes INVALID.
+- Safety hold activates.
+- Wire is repaired.
+- Calibration restores valid feedback.
+- Fresh film is produced.
+- Final certification passes.
+
+## CRITICAL VISUAL RULE
+
+All visuals follow actual process state.
+
+Do not use particle emission rates or shader colors as authoritative gas concentration, temperature or film thickness.
+
+---
+
+# 48. ONE-CLICK UNITY EDITOR LEVEL CREATOR
+
+Create the menu:
+
+`Tools/Project Spark/Levels/Create Level 72`
+
+The builder must generate or safely update:
+
+- `Level_72.asset`
+- `Level_72_Layout.prefab`
+- All 52 modular equipment instances.
+- Exactly 146 functional terminal anchors.
+- Exactly 94 player-wire declarations.
+- Fixed internal equipment connections.
+- Vacuum chamber configuration.
+- Load-lock configuration.
+- Pump and valve parameters.
+- Fictional precursor configuration.
+- Purge configuration.
+- Surface reaction configuration.
+- Film growth configuration.
+- Wafer temperature configuration.
+- QCM and ellipsometer configuration.
+- Conformality metrology.
+- Four-stage ALD sequencer.
+- Protection and PLC state machines.
+- Disturbance scenarios.
+- Six authoritative objectives.
+- Live SCADA.
+- Animation mapping.
+- Diagnostic report.
+
+## REQUIRED EDITOR OPERATIONS
+
+1. Inspect real Project Spark Editor architecture.
+2. Locate all 52 numbered FBXs.
+3. Validate filenames.
+4. Validate import scale.
+5. Verify approximately 16.1 m workstation width.
+6. Create/update Level 72 definition.
+7. Set level ID `level_72`.
+8. Set display name `Layer by Layer`.
+9. Set subtitle.
+10. Create six objective definitions.
+11. Create/update layout prefab.
+12. Create `L72_HD_VISUAL_ART`.
+13. Instantiate all 52 individual FBXs.
+14. Preserve common-origin coordinates.
+15. Configure ALD reactor.
+16. Configure reactor lid and viewport.
+17. Configure wafer chuck.
+18. Configure wafer.
+19. Configure atomic film visualization.
+20. Configure trench sample.
+21. Configure lift mechanism.
+22. Configure wafer cassette.
+23. Configure load-lock.
+24. Configure gate valve.
+25. Configure wafer robot.
+26. Configure precursor A supply.
+27. Configure precursor B supply.
+28. Configure purge supply.
+29. Configure pulse valve A.
+30. Configure pulse valve B.
+31. Configure purge valve.
+32. Configure MFC A.
+33. Configure MFC B.
+34. Configure purge transmitter.
+35. Configure manifold.
+36. Configure showerhead.
+37. Configure delivery piping.
+38. Configure turbo pump.
+39. Configure backing pump.
+40. Configure throttle valve.
+41. Configure isolation valve.
+42. Configure foreline.
+43. Configure pressure instruments.
+44. Configure delivery-line temperature sensor.
+45. Configure chuck temperature sensor.
+46. Configure heater bank.
+47. Configure QCM.
+48. Configure ellipsometer.
+49. Configure optical viewport.
+50. Configure conformality scanner.
+51. Configure surface coverage monitor.
+52. Configure residual vapor analyzer.
+53. Configure overlap monitor.
+54. Configure growth-per-cycle analyzer.
+55. Configure four-stage sequencer.
+56. Configure main PLC.
+57. Configure temperature PID.
+58. Configure pressure PID.
+59. Configure purge safety relay.
+60. Configure virtual exhaust handling.
+61. Configure emergency station.
+62. Configure SCADA.
+63. Configure regulated 5 V power.
+64. Create exactly 146 unique terminal IDs.
+65. Create exactly 94 player-created wire definitions.
+66. Register gameplay components.
+67. Register terminal bindings.
+68. Configure fixed internal connections.
+69. Configure vacuum capacity.
+70. Configure pump limits.
+71. Configure valve dynamics.
+72. Configure virtual gas inventories.
+73. Configure fictional surface-reaction coefficients.
+74. Configure wafer thermal parameters.
+75. Configure QCM calibration.
+76. Configure ellipsometer calibration.
+77. Configure film target.
+78. Configure wafer nonuniformity limits.
+79. Configure trench conformality criteria.
+80. Configure purge restriction scenario.
+81. Configure heater drift scenario.
+82. Configure stuck valve scenario.
+83. Configure final purge-feedback fault.
+84. Bind all 24 animation reference pivots.
+85. Configure process VFX.
+86. Create live SCADA labels.
+87. Integrate six objectives.
+88. Validate missing references.
+89. Detect duplicate terminal IDs.
+90. Detect duplicate simulation owners.
+91. Generate validation report.
+92. Save all assets and prefab.
+
+## EDITOR RELIABILITY
+
+Use actual Unity asset paths.
+
+Do not invent asset GUIDs.
+
+Use appropriate Unity Editor APIs:
+
+- `AssetDatabase`
+- `PrefabUtility`
+- `SerializedObject`
+- Undo
+- Asset-saving APIs
+
+Make the builder safe to rerun.
+
+Do not duplicate models, controllers or terminals.
+
+Preserve Levels 1–71.
+
+---
+
+# 49. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 94 WIRES → VERIFY 146 TERMINALS → ENABLE CONTROL POWER → COMMISSION PLC → CALIBRATE PRESSURE → CALIBRATE PRECURSOR FLOW → CALIBRATE PURGE FLOW → START BACKING PUMP → START TURBO PUMP → ESTABLISH CHAMBER VACUUM → ENABLE PRESSURE PID → COMMISSION LOAD-LOCK → TRANSFER WAFER → SECURE WAFER CHUCK → ENABLE HEATER ZONES → STABILIZE WAFER TEMPERATURE → VERIFY PURGE PATH → COMMISSION PRECURSOR A → COMMISSION PRECURSOR B → START A EXPOSURE → MEASURE SURFACE A SATURATION → CLOSE A VALVE → PURGE A → VALIDATE RESIDUAL A REMOVAL → START B EXPOSURE → COMPLETE SURFACE REACTION → CLOSE B VALVE → PURGE B → VALIDATE RESIDUAL B REMOVAL → CERTIFY ONE ALD CYCLE → REPEAT VALID MANUAL CYCLES → ENABLE AUTOMATIC SEQUENCER → COMPLETE CONTROLLED DEPOSITION → REACH 12 NM FILM TARGET → VERIFY QCM → VERIFY ELLIPSOMETRY → VERIFY NONUNIFORMITY → VERIFY TRENCH CONFORMALITY → CERTIFY FILM → APPLY PURGE RESTRICTION → DETECT RESIDUAL CONTAMINATION → RESTORE PURGE → APPLY HEATER-ZONE DRIFT → DETECT TEMPERATURE GRADIENT → RESTORE HEATING → APPLY STUCK A VALVE → DETECT COMMAND/FEEDBACK MISMATCH → REPAIR VALVE → COMPLETE FRESH VALID FILM → DISCONNECT ACTUAL PURGE-FEEDBACK WIRE → DETECT INVALID PURGE MEASUREMENT → INHIBIT UNSAFE EXPOSURE → RECONNECT ACTUAL WIRE → RECALIBRATE PURGE TRANSMITTER → EXPLICITLY RESET FAULT → RECOMMISSION ALD PROCESS → COMPLETE FRESH VALID FOUR-STAGE CYCLES → DEPOSIT NEW FILM → VERIFY THICKNESS, UNIFORMITY AND CONFORMALITY → AUTHORITATIVE 6/6**
+
+---
+
+# 50. PLAYER-FACING GAME MESSAGES
+
+Implement:
+
+- `BUILD THE ATOMIC DEPOSITION NETWORK`
+- `CONNECT ALL 94 WIRES`
+- `VERIFY 146 TERMINALS`
+- `POWER THE DEPOSITION PLC`
+- `CALIBRATE PRESSURE SENSORS`
+- `CALIBRATE PRECURSOR FLOW`
+- `CALIBRATE PURGE TRANSMITTER`
+- `START BACKING PUMP`
+- `START TURBOMOLECULAR PUMP`
+- `CHAMBER PRESSURE FALLING`
+- `VACUUM STABILIZED`
+- `LOAD-LOCK READY`
+- `TRANSFER SILICON WAFER`
+- `SECURE WAFER CHUCK`
+- `ENABLE MULTI-ZONE HEATING`
+- `WAFER TEMPERATURE STABILIZING`
+- `VERIFY PURGE SYSTEM`
+- `PRECURSOR A READY`
+- `PRECURSOR B READY`
+- `START REACTANT A EXPOSURE`
+- `SURFACE COVERAGE INCREASING`
+- `SURFACE A SATURATION REACHED`
+- `PURGE REACTANT A`
+- `RESIDUAL A DECREASING`
+- `PURGE A VERIFIED`
+- `START REACTANT B EXPOSURE`
+- `SURFACE REACTION COMPLETE`
+- `PURGE REACTANT B`
+- `PURGE B VERIFIED`
+- `ALD CYCLE COMPLETE`
+- `GROWTH PER CYCLE MEASURED`
+- `ENABLE AUTOMATIC DEPOSITION`
+- `FILM THICKNESS INCREASING`
+- `TARGET THICKNESS APPROACHING`
+- `VERIFY FILM UNIFORMITY`
+- `VERIFY TRENCH CONFORMALITY`
+- `FILM CERTIFIED`
+- `PURGE FLOW RESTRICTED`
+- `RESIDUAL VAPOR TOO HIGH`
+- `UNSAFE EXPOSURE INHIBITED`
+- `RESTORE PURGE PERFORMANCE`
+- `HEATER ZONE DRIFT DETECTED`
+- `WAFER TEMPERATURE NONUNIFORM`
+- `RESTORE HEATER CONTROL`
+- `PRECURSOR A VALVE STICKING`
+- `ACTUAL VALVE POSITION INVALID`
+- `REPAIR PULSE VALVE`
+- `DEPOSITION DISTURBANCES COMPLETE`
+- `DISCONNECT CRITICAL PURGE FEEDBACK`
+- `PURGE FLOW MEASUREMENT LOST`
+- `SAFE PROCESS HOLD ACTIVE`
+- `RECONNECT PURGE SIGNAL WIRE`
+- `RECALIBRATE PURGE TRANSMITTER`
+- `RESET LATCHED FAULT`
+- `RECOMMISSION ALD SEQUENCER`
+- `FINAL THIN-FILM CERTIFICATION`
+- `LEVEL 72 COMPLETE`
+
+---
+
+# 51. TESTING AND DIAGNOSTICS
+
+Provide clear error reporting for:
+
+- Incorrect W01–W94 wiring.
+- Missing socket IDs.
+- Duplicate socket IDs.
+- Invalid control supply.
+- Missing control return.
+- Backing pump disconnected.
+- Turbo pump not accelerating.
+- Pump pressure model invalid.
+- Vacuum pressure not responding.
+- Throttle valve ineffective.
+- Isolation valve topology incorrect.
+- Precursor flow invalid.
+- MFC signal disconnected.
+- Pulse valve command ignored.
+- Pulse valve stuck.
+- Purge flow unavailable.
+- Purge transmitter disconnected.
+- Purge feedback stale.
+- Residual A not decreasing.
+- Residual B not decreasing.
+- Purge certified without flow.
+- Purge certified with excessive residue.
+- A and B exposure overlapping unsafely.
+- Sequencer advancing without validation.
+- Surface growth exceeding saturation limits.
+- Film growing without completed reaction.
+- Film thickness becoming negative.
+- Film thickness changing while process stopped.
+- Trench conformality not simulated.
+- Wafer temperature not responding.
+- Heater zone power unlimited.
+- PID integral windup.
+- QCM measurement fabricated.
+- Ellipsometer measurement fabricated.
+- Growth per cycle inconsistent.
+- Final metrology not validating film state.
+- Protection allowing unsafe exposure.
+- Reset accepted before repair.
+- Final pressure/sensor fault not affecting topology.
+- Historical objectives erased.
+- Actual manager stuck at 0/6 or 5/6.
+- Unity reload failure.
+- Regression in Levels 1–71.
+
+## REQUIRED TESTS
+
+1. Exactly 94 player wires registered.
+2. Exactly 146 unique terminals registered.
+3. Wiring IDs unique.
+4. Valid 5 V control power.
+5. PLC initializes.
+6. Safety controller ready.
+7. Backing pump starts.
+8. Turbo pump starts under valid conditions.
+9. Pump RPM changes dynamically.
+10. Reactor pressure responds.
+11. Pressure sensor measures actual state.
+12. Pressure PID operates.
+13. Throttle valve affects pressure.
+14. Isolation valve affects connectivity.
+15. Precursor A supply valid.
+16. Precursor B supply valid.
+17. Purge source valid.
+18. MFC A responds.
+19. MFC B responds.
+20. A pulse valve operates.
+21. B pulse valve operates.
+22. Purge valve operates.
+23. Actual flows respond.
+24. Gas inventories conserved.
+25. Residual A tracked.
+26. Residual B tracked.
+27. Purge removes residual gas.
+28. Insufficient purge prevents stage completion.
+29. A surface coverage increases.
+30. A coverage saturates.
+31. Excess A exposure does not cause unlimited ideal growth.
+32. B reaction depends on A-prepared sites.
+33. Correct four-stage cycle completes.
+34. Invalid cycle does not count.
+35. Growth per cycle is calculated.
+36. Film thickness grows from completed reactions.
+37. Regional film thickness varies appropriately.
+38. Film thickness remains nonnegative.
+39. Trench coating modeled.
+40. Conformality calculated.
+41. Heater zones respond.
+42. Wafer temperature changes dynamically.
+43. Temperature PID works.
+44. Sensor validity works.
+45. QCM measurement derives from deposited mass.
+46. Ellipsometer estimate derives from film state.
+47. Film metrology works.
+48. Correct wafer passes.
+49. Incorrect thickness fails.
+50. Poor uniformity fails.
+51. Poor conformality fails.
+52. Excess contamination fails.
+53. Purge restriction reduces flow.
+54. Residual contamination rises or clears more slowly.
+55. Safety blocks unsafe next exposure.
+56. Purge recovery works.
+57. Heater-zone drift changes temperature.
+58. Film growth responds to thermal variation.
+59. Heating recovery works.
+60. A pulse valve fault creates command/position mismatch.
+61. Valve repair restores actual operation.
+62. Fresh valid wafer passes after disturbances.
+63. Designated purge feedback wire disconnects.
+64. Actual topology changes.
+65. Measurement becomes invalid.
+66. Sequencer rejects invalid purge feedback.
+67. Subsequent unsafe precursor exposure inhibited.
+68. Protection fault latches.
+69. Wire reconnects.
+70. Signal validity returns after checks.
+71. Sensor recalibration succeeds.
+72. Explicit reset succeeds.
+73. Process recommissioning succeeds.
+74. Fresh A–purge–B–purge cycles pass.
+75. Fresh deposited film reaches target.
+76. Fresh metrology passes.
+77. Authoritative objective evaluator reaches 6/6.
+78. Level progression succeeds.
+79. Levels 1–71 remain unaffected.
+
+Only report tests as passed when actually executed.
+
+---
+
+# 52. REQUIRED DELIVERABLES
+
+Create a complete downloadable Level 72 Unity implementation ZIP containing:
+
+- Full runtime C# source.
+- Authoritative ALD process coordinator.
+- Vacuum network simulation.
+- Vacuum pump dynamics.
+- Vacuum valve dynamics.
+- Pressure sensing.
+- Vacuum PID.
+- Fictional gas delivery model.
+- Precursor A/B supply model.
+- Purge source model.
+- Pulse valve dynamics.
+- Mass-flow controllers.
+- Purge-flow transmitter.
+- Residual vapor transport.
+- Purge validation.
+- Surface coverage kinetics.
+- Self-limiting reaction model.
+- Regional film growth.
+- Trench conformality model.
+- Multi-zone wafer heating.
+- Temperature PID.
+- Wafer thermal dynamics.
+- QCM measurement.
+- Ellipsometry measurement.
+- Surface coverage monitoring.
+- Reactant overlap monitoring.
+- Growth-per-cycle analysis.
+- Four-stage ALD sequencer.
+- Manual cycle controls.
+- Automated deposition.
+- Time-accelerated simulation.
+- Wafer load-lock handling.
+- Wafer transfer robot integration.
+- Protection relay.
+- Emergency safety.
+- Main deposition PLC.
+- Purge restriction disturbance.
+- Heater-zone drift disturbance.
+- Stuck A valve disturbance.
+- Actual purge sensor feedback wire disconnection.
+- Measurement invalidation.
+- Safe process inhibition.
+- Wire repair.
+- Sensor recalibration.
+- Explicit reset.
+- Fresh deposition certification.
+- Six authoritative objectives.
+- One-click Unity Editor Level 72 builder.
+- Level definition creator or asset.
+- Layout prefab creator.
+- W01–W94 endpoint wiring manifest.
+- 146-terminal binding manifest.
+- Functional component binding manifest.
+- All 24 verified animation references.
+- Vacuum parameter configuration.
+- Fictional reaction configuration.
+- Purge configuration.
+- Heater configuration.
+- Metrology configuration.
+- PID configuration.
+- Safety configuration.
+- Disturbance configurations.
+- Live SCADA dashboard.
+- Player gameplay walkthrough.
+- Objective certification checklist.
+- Troubleshooting guide.
+- Actual test report.
+
+Reuse:
+
+`ProjectSpark_Level72_HD_AAA_Models.zip`
+
+Do not regenerate the approved 52 visual equipment models without a specific compatibility problem.
+
+Only link files actually created and verified.
+
+Do not claim Unity compilation or Play Mode success unless tested.
+
+---
+
+# 53. FINAL IMPLEMENTATION INSTRUCTIONS
+
+**IMPLEMENT LEVEL 72 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect the real Project Spark Unity codebase and approved Level 72 asset collection.
+
+Then:
+
+1. Preserve Levels 1–71.
+2. Import all 52 individual FBXs.
+3. Verify correct import scale.
+4. Preserve common-origin layout.
+5. Reuse existing art-placement helper.
+6. Use compatible Unity materials.
+7. Reuse the visual rig adapter.
+8. Create 94 player-created connections.
+9. Register 146 unique functional terminals.
+10. Integrate educational control power.
+11. Implement vacuum pumps.
+12. Implement vacuum pressure.
+13. Implement vacuum valves.
+14. Implement pressure sensors.
+15. Implement vacuum PID.
+16. Implement virtual precursor A.
+17. Implement virtual precursor B.
+18. Implement inert purge source.
+19. Implement three high-speed valves.
+20. Implement precursor mass-flow controllers.
+21. Implement purge mass-flow sensing.
+22. Implement residual-vapor inventory.
+23. Implement actual purge validation.
+24. Implement A exposure.
+25. Implement surface A saturation.
+26. Implement first purge.
+27. Implement B reaction.
+28. Implement second purge.
+29. Implement four-stage cycle certification.
+30. Implement actual film growth.
+31. Implement regional wafer thickness.
+32. Implement trench conformality.
+33. Implement multi-zone heating.
+34. Implement wafer temperature PID.
+35. Implement QCM.
+36. Implement ellipsometer.
+37. Implement regional metrology.
+38. Implement growth-per-cycle analyzer.
+39. Implement contamination/overlap monitoring.
+40. Implement auto deposition.
+41. Implement safe simulation acceleration.
+42. Implement wafer loading.
+43. Implement PLC sequencing.
+44. Implement purge protection.
+45. Implement heater protection.
+46. Implement emergency safety.
+47. Implement purge restriction disturbance.
+48. Implement heater-zone drift.
+49. Implement stuck A pulse valve.
+50. Implement safe disturbance recovery.
+51. Implement actual purge-feedback wire disconnection.
+52. Implement invalid measurement handling.
+53. Implement unsafe reactant-inhibition logic.
+54. Implement physical wire reconnection.
+55. Implement sensor recalibration.
+56. Implement explicit fault reset.
+57. Implement recommissioning.
+58. Implement fresh deposition certification.
+59. Integrate six authoritative objectives.
+60. Create the Level 72 one-click Editor builder.
+61. Bind all 24 verified pivot references.
+62. Create responsive ALD process VFX.
+63. Create live SCADA monitoring.
+64. Add diagnostics.
+65. Run feasible tests.
+66. Package and verify outputs.
+
+Do not ask for reapproval of the approved Level 72 design.
+
+Do not fabricate vacuum pressure, gas flow, residual vapor, surface coverage, growth per cycle, film thickness, wafer temperature, uniformity, conformality, metrology, safety state, sensor validity or objective completion.
+
+If an existing Project Spark API cannot be verified, create an isolated subsystem where safe and practical, and report the precise unresolved integration dependency.
+
+---
+
+# 54. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect exactly 94 required wires.
+2. Validate exactly 146 functional terminals.
+3. Commission the main ALD PLC.
+4. Calibrate all required sensors.
+5. Start the vacuum system.
+6. Establish stable chamber pressure.
+7. Load and clamp a wafer.
+8. Establish correct wafer temperature.
+9. Commission fictional precursor delivery.
+10. Verify actual purge flow.
+11. Execute an A exposure.
+12. Observe real surface A saturation.
+13. Complete the first purge.
+14. Execute a B reaction.
+15. Complete the second purge.
+16. Certify a valid four-stage cycle.
+17. Demonstrate finite self-limiting growth.
+18. Enable automated deposition.
+19. Complete approximately 120 valid cycles as required by actual calculated growth.
+20. Produce approximately 12 nm of film.
+21. Verify QCM measurement.
+22. Verify ellipsometry.
+23. Measure wafer nonuniformity.
+24. Measure trench conformality.
+25. Pass film-quality certification.
+26. Detect and recover from purge restriction.
+27. Detect and recover from heater-zone drift.
+28. Detect and recover from a sticking precursor valve.
+29. Produce a valid post-disturbance film.
+30. Disconnect the actual purge-feedback wire.
+31. Detect invalid purge measurement.
+32. Prevent unsafe reactant exposure.
+33. Reconnect the actual wire.
+34. Recalibrate the purge transmitter.
+35. Explicitly reset the fault.
+36. Safely recommission the process.
+37. Complete fresh four-stage ALD cycles.
+38. Produce a new valid film.
+39. Verify thickness, uniformity and conformality.
+40. Complete all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 72.**
+
+The player must learn self-limiting surface chemistry, vacuum control, gas-flow regulation, purge dynamics, multi-zone temperature control, wafer film growth, nanometre metrology, trench conformality, automated process sequencing, protection and sensor-fault recovery through a coherent gameplay simulation.
+
+**FINAL GOAL: A COMPLETE, POLISHED, UNITY-READY, AAA-QUALITY AND ACTUALLY PLAYABLE LEVEL 72 — LAYER BY LAYER.**

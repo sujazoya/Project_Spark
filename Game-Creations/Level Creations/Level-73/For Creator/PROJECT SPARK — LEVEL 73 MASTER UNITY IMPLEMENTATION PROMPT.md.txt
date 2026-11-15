@@ -1,0 +1,3150 @@
+# PROJECT SPARK — LEVEL 73 MASTER UNITY IMPLEMENTATION PROMPT
+
+## LEVEL 73: POLISH TO PERFECTION
+### Advanced Chemical-Mechanical Planarization, Rotating Machinery, Multi-Zone Wafer Contact Pressure, Slurry Dynamics, Polishing Pad Conditioning, Precision Film Removal, Endpoint Detection, Surface Metrology, Industrial Automation and Critical Downforce Sensor Recovery
+
+Act as my senior Unity C# engineer, semiconductor manufacturing simulation engineer, mechanical systems engineer, tribology specialist, precision motion-control engineer, chemical-mechanical planarization specialist, fluid-control engineer, industrial instrumentation developer, multi-zone PID specialist, PLC automation programmer, functional safety engineer, wafer metrology specialist, AAA technical artist and Unity Editor automation engineer.
+
+**YOUR TASK IS TO IMPLEMENT THE COMPLETE, FUNCTIONAL, PLAYABLE LEVEL 73 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+This is a full implementation task.
+
+The Level 73 design and the existing 54 modular HD/AAA-inspired 3D equipment models are already approved.
+
+Do not redesign the workstation or regenerate its FBX assets unnecessarily.
+
+## MAIN MISSION
+
+The player must operate an advanced semiconductor chemical-mechanical planarization system.
+
+They must build the control circuit, commission two independently rotating machines, regulate wafer contact pressure, deliver a fictional polishing slurry, maintain pad condition, remove material from the wafer with nanometre-scale precision, detect the polishing endpoint, clean and inspect the finished wafer, survive industrial disturbances, and recover from a deliberately disconnected downforce feedback sensor.
+
+The final result must be a real playable Unity level, not simply an art demonstration.
+
+**THE ACTUAL PROJECT SPARK `LevelGamePlayManager` MUST REACH 6/6.**
+
+---
+
+# 1. INSPECT THE REAL PROJECT SPARK UNITY CODEBASE
+
+Before writing Level 73 gameplay scripts, inspect the actual Unity project source code.
+
+At minimum, locate and examine these classes if they exist:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+
+Also examine:
+
+- Player-created wire connectivity.
+- Wire removal and reconnection.
+- Component installation and shelf registration.
+- Shared electrical supply and return paths.
+- Analog input and output signals.
+- Digital I/O.
+- Motor speed control.
+- Shaft inertia and torque models.
+- Sensor calibration.
+- Measurement validity and sample age.
+- PID controllers.
+- PLC scanning and sequencing.
+- Emergency-stop logic.
+- Protective interlocks.
+- Latched faults.
+- Fault-reset behavior.
+- Runtime UI and SCADA binding.
+- Level definition creation.
+- Objective evaluation.
+- Historical objective completion.
+- Level progression.
+- Unity Editor prefab builders.
+- Existing visual animation adapters.
+
+## REUSE COMPATIBLE SYSTEMS
+
+Inspect earlier levels where relevant.
+
+**Level 54 — Cross the Critical**
+
+Motor operation, rotating machinery and protection.
+
+**Level 58 — Isolate the Fault**
+
+Electrical fault detection and safe isolation.
+
+**Level 59 — Bring Back the Power**
+
+Controlled commissioning and sequential startup.
+
+**Level 60 — The Grid Must Survive**
+
+Supervisory control and protective coordination.
+
+**Level 63 — Catch the Frequency**
+
+Rotational dynamics, speed sensing and sensor fault recovery.
+
+**Level 65 — The Factory Thinks**
+
+Robotics, PLC sequencing and industrial I/O.
+
+**Level 66 — Save the Factory**
+
+Predictive maintenance, vibration, motor diagnostics and equipment health.
+
+**Level 67 — Master the Flow**
+
+Pump dynamics, flow measurement and PID control.
+
+**Level 68 — Tame the Heat**
+
+Thermal inertia, heat transfer and temperature control.
+
+**Level 69 — Keep It Cold**
+
+Temperature-sensitive product handling and equipment protection.
+
+**Level 70 — Guard the Air**
+
+Sensor validity, contamination monitoring and wafer handling.
+
+**Level 71 — Etch the Future**
+
+Wafer film thickness, optical endpoint and post-process metrology.
+
+**Level 72 — Layer by Layer**
+
+Wafer film growth, regional thickness, uniformity, wafer handling and precision manufacturing.
+
+Reuse compatible code only if it is actually implemented.
+
+Do not assume that a prior level's design prompt is equivalent to completed Unity gameplay.
+
+---
+
+# 2. NON-NEGOTIABLE IMPLEMENTATION RULES
+
+1. Inspect actual Unity APIs before calling them.
+2. Never invent existing namespaces, methods or component fields.
+3. Preserve Levels 1–72.
+4. Do not break existing electrical gameplay.
+5. Use actual Project Spark terminals and wires.
+6. Do not fabricate wiring connectivity.
+7. Keep Level 73 physics independent from decorative animation.
+8. Keep the educational 5 V control domain separate from motor and pump power.
+9. Do not instantly assign platen RPM from its speed command.
+10. Do not instantly assign carrier RPM from its speed command.
+11. Do not calculate material removal from motor RPM alone.
+12. Do not calculate contact force directly from requested pressure without actuator dynamics.
+13. Do not fabricate load-cell measurements.
+14. Do not ignore carrier compliance and contact geometry.
+15. Do not permit wafer polishing without actual contact.
+16. Do not permit unlimited polishing downforce.
+17. Do not create unlimited slurry.
+18. Do not fabricate measured slurry flow.
+19. Do not treat fictional slurry as a hazardous real-world CMP recipe.
+20. Do not allow pad conditioning to restore infinite pad life.
+21. Do not ignore pad glazing or groove wear.
+22. Do not set film thickness directly to a target.
+23. Do not remove material when polishing is inactive.
+24. Do not let film thickness become negative.
+25. Do not ignore patterned-wafer dishing and erosion.
+26. Do not fabricate scratches independently of modeled process conditions.
+27. Do not force wafer surface flatness to zero.
+28. Do not declare endpoint based solely on an elapsed timer.
+29. Do not let endpoint detection read hidden true thickness directly.
+30. Do not display ideal metrology results unless simulation supports them.
+31. Do not instantly cool the polishing interface.
+32. Do not allow unbounded motor torque or friction.
+33. Do not let invalid downforce feedback control the carrier normally.
+34. Do not bypass the emergency stop.
+35. Do not run polishing with the safety enclosure improperly open.
+36. Do not certify a wafer before required cleaning and inspection.
+37. Do not treat motor animation as the authoritative RPM.
+38. Do not treat slurry VFX as authoritative fluid flow.
+39. Do not create duplicate simulation owners.
+40. Do not create a fake objective tracker separate from Project Spark.
+41. Do not erase historically certified objectives during the final fault.
+42. Use coherent SI units.
+43. Use numerically stable integration.
+44. Make the Editor creator safe to rerun.
+45. Deliver complete source files rather than isolated snippets.
+46. Report unresolved integration dependencies.
+47. Do not claim Unity compilation without testing.
+48. Do not claim Play Mode success without testing.
+49. Do not claim 6/6 until the authoritative evaluator actually reports 6/6.
+
+---
+
+# 3. LEVEL 73 CONFIGURATION
+
+**Level Number:** 73
+
+**Level ID:** `level_73`
+
+**Display Name:** `Polish to Perfection`
+
+**Subtitle:** `Intelligent Chemical-Mechanical Planarization`
+
+**Difficulty:** Advanced Master / Expert
+
+**Main Engineering Discipline:** Precision mechanical material processing and tribology
+
+**Educational Control Supply:** 5 V DC
+
+**Main Drive Power:** Separately simulated industrial motor domain
+
+**Equipment Models:** 54 FBX
+
+**Matching Backups:** 54 GLB
+
+**Actual Animation Parent Groups:** 35
+
+**Player-Created Wires:** 98
+
+**Unique Functional Terminals:** 152
+
+**Authoritative Objectives:** 6
+
+**Main Rotating Equipment:**
+
+- Polishing platen.
+- Wafer carrier head.
+- Pad conditioning disc.
+- Slurry pump.
+- Cleaning brushes.
+- Spin dryer.
+
+**Main Process:**
+
+- Multi-zone pressure-controlled wafer planarization.
+
+**Main Consumable:**
+
+- Fictional nonhazardous polishing slurry.
+
+**Final Fault:**
+
+- Actual carrier downforce load-cell feedback wire disconnection.
+
+## PROPOSED EDUCATIONAL QUALITY TARGETS
+
+- Final wafer height variation: ≤10 nm.
+- Within-wafer removal nonuniformity: ≤3%.
+- Dishing: ≤5 nm.
+- Pattern erosion: ≤5 nm.
+- Residual target film: within configured tolerance.
+- Scratch-defect score: within scenario-specific limit.
+- Endpoint detection: valid measurement evidence required.
+- Post-CMP wafer cleaning: mandatory.
+- Final objective state: 6/6.
+
+These are gameplay design targets, not universal semiconductor manufacturing specifications.
+
+Calibrate wafer initial topography, material properties and process parameters so that the targets are achievable within a useful gameplay session.
+
+---
+
+# 4. USE MY ACTUAL LEVEL 73 HD/AAA ASSET PACKAGE
+
+The approved package is:
+
+`ProjectSpark_Level73_HD_AAA_Models.zip`
+
+I already have these visual assets.
+
+Do not regenerate them unless there is a confirmed compatibility issue.
+
+The verified manifest reports:
+
+- 54 individual binary FBX models.
+- 54 individual GLB backups.
+- One assembled workstation FBX.
+- One assembled workstation GLB.
+- 174,012 equipment triangles.
+- 4,137 mesh parts.
+- 35 named animation parent groups.
+- Shared-origin asset alignment.
+- Unity art-placement helper.
+- Unity material-upgrade helper.
+- Unity visual-rig component.
+- Model manifest.
+- Animation pivot CSV.
+- Wiring-budget CSV.
+- Gameplay integration plan.
+- Geometry-generation sources.
+- Verification report.
+
+## IMPORTANT ART-ONLY STATUS
+
+The existing package does not include:
+
+- Actual gameplay `SparkTerminal` objects.
+- 98 functional player wires.
+- 152 playable terminals.
+- Motor physics.
+- Downforce simulation.
+- Slurry transport.
+- CMP material removal.
+- Pad conditioning physics.
+- Wafer metrology gameplay.
+- Safety PLC.
+- Six implemented objectives.
+
+Create all these systems in Unity.
+
+---
+
+# 5. EXACT 54 VERIFIED FBX FILENAMES
+
+Use these exact filenames when importing and constructing Level 73.
+
+| # | Actual FBX filename | Function |
+|---|---|---|
+| 00 | `00_L73_IndustrialCMPWorkstationBase.fbx` | Main workstation |
+| 01 | `01_L73_TransparentCMPSafetyEnclosure.fbx` | Safety housing |
+| 02 | `02_L73_RotatingPolishingPlaten.fbx` | Main polishing platen |
+| 03 | `03_L73_GroovedPolishingPad.fbx` | Polishing contact pad |
+| 04 | `04_L73_PlatenServoMotorDrive.fbx` | Platen motor |
+| 05 | `05_L73_PrecisionWaferCarrierHead.fbx` | Wafer carrier |
+| 06 | `06_L73_CarrierGimbalAssembly.fbx` | Carrier compliance |
+| 07 | `07_L73_MultiZonePressureBladder.fbx` | Pressure zones |
+| 08 | `08_L73_WaferRetainingRing.fbx` | Edge contact control |
+| 09 | `09_L73_SiliconWaferSubstrate.fbx` | Wafer |
+| 10 | `10_L73_PatternedThinFilmLayer.fbx` | Processed film |
+| 11 | `11_L73_MicroscopicSurfaceTopography.fbx` | Height-map visualization |
+| 12 | `12_L73_WaferCarrierCassette.fbx` | Wafer storage |
+| 13 | `13_L73_AutomatedWaferTransferRobot.fbx` | Wafer robot |
+| 14 | `14_L73_WaferLiftAndAlignmentAssembly.fbx` | Wafer alignment |
+| 15 | `15_L73_VirtualSlurrySupplyCabinet.fbx` | Slurry supply |
+| 16 | `16_L73_AbrasiveSlurryMixingTank.fbx` | Slurry reservoir |
+| 17 | `17_L73_PrecisionSlurryMeteringPump.fbx` | Slurry pump |
+| 18 | `18_L73_SlurryMassFlowTransmitter.fbx` | Slurry flow |
+| 19 | `19_L73_MotorizedSlurryDispensingArm.fbx` | Delivery arm |
+| 20 | `20_L73_PrecisionSlurryNozzle.fbx` | Slurry nozzle |
+| 21 | `21_L73_SlurryConcentrationSensor.fbx` | Slurry concentration |
+| 22 | `22_L73_SlurryTemperatureSensor.fbx` | Slurry temperature |
+| 23 | `23_L73_PadConditioningSwingArm.fbx` | Conditioning arm |
+| 24 | `24_L73_PadConditionerAbrasiveDisc.fbx` | Conditioning disc |
+| 25 | `25_L73_PadConditionerMotorDrive.fbx` | Conditioner motor |
+| 26 | `26_L73_PadWearMeasurementSensor.fbx` | Pad wear sensing |
+| 27 | `27_L73_PadGrooveInspectionScanner.fbx` | Pad groove inspection |
+| 28 | `28_L73_CarrierDownforceLoadCell.fbx` | Critical load-cell feedback |
+| 29 | `29_L73_CarrierPressureRegulator.fbx` | Contact-force regulation |
+| 30 | `30_L73_PlatenSpeedEncoder.fbx` | Platen speed |
+| 31 | `31_L73_CarrierSpeedEncoder.fbx` | Carrier speed |
+| 32 | `32_L73_MotorTorqueCurrentAnalyzer.fbx` | Motor load |
+| 33 | `33_L73_PolishingVibrationSensor.fbx` | Vibration |
+| 34 | `34_L73_AcousticEmissionSensor.fbx` | Acoustic diagnostics |
+| 35 | `35_L73_InterfaceTemperatureProbe.fbx` | Contact temperature |
+| 36 | `36_L73_PolishingCoolingLoop.fbx` | Thermal protection |
+| 37 | `37_L73_TransparentSlurrySplashGuard.fbx` | Slurry containment |
+| 38 | `38_L73_WasteSlurryCollectionModule.fbx` | Waste recovery |
+| 39 | `39_L73_CMPEmergencySafetyStation.fbx` | Emergency protection |
+| 40 | `40_L73_PostCMPRinseChamber.fbx` | Wafer rinsing |
+| 41 | `41_L73_WaferBrushCleaningAssembly.fbx` | Cleaning brushes |
+| 42 | `42_L73_SpinRinseDryer.fbx` | Spin drying |
+| 43 | `43_L73_InSituOpticalEndpointSensor.fbx` | Optical endpoint |
+| 44 | `44_L73_EddyCurrentThicknessSensor.fbx` | Conductive-film measurement |
+| 45 | `45_L73_OpticalSurfaceProfilometer.fbx` | Surface-height scan |
+| 46 | `46_L73_WaferDefectInspectionCamera.fbx` | Defect inspection |
+| 47 | `47_L73_DishingErosionAnalyzer.fbx` | Pattern defect analysis |
+| 48 | `48_L73_MultiZonePressurePIDController.fbx` | Pressure PID |
+| 49 | `49_L73_PlatenCarrierMotionController.fbx` | Motor coordination |
+| 50 | `50_L73_CMPProcessPLCRack.fbx` | Main process PLC |
+| 51 | `51_L73_CMPDigitalIOModule.fbx` | Industrial I/O |
+| 52 | `52_L73_HolographicCMPSCADA.fbx` | Main SCADA |
+| 53 | `53_L73_Regulated5VControlSupply.fbx` | Control power |
+
+## SUPPORTING FILES TO READ
+
+- `Model_Manifest.json`
+- `Animation_Rigs.csv`
+- `Art_Assembly.csv`
+- `Component_Roles.csv`
+- `Gameplay_Wiring_Budget.csv`
+- `Gameplay_Integration_Plan.md`
+- `Material_Palette.json`
+- `README_Unity.txt`
+- `Verification_Report.json`
+
+The models should be referenced using exact imported Unity asset paths, not fabricated GUIDs.
+
+---
+
+# 6. MODEL SCALE AND COMMON-ORIGIN PLACEMENT
+
+The actual asset package states:
+
+- X = workstation width.
+- Y = upward.
+- Z = toward front.
+- Original construction units = metres.
+- GLB numeric geometry units = metres.
+- FBX numeric geometry units = centimetres.
+- FBX UnitScaleFactor = 1.
+- Approximate assembled width = 17.15 metres.
+- All individual models use a shared world origin.
+
+## CRITICAL UNITY IMPORT RULE
+
+Confirm that the workstation imports at approximately 17.15 Unity units wide when 1 Unity unit represents 1 metre.
+
+If the models import approximately 100 times too large, apply one correct FBX import conversion.
+
+Do not apply multiple conversions.
+
+Do not create terminal anchors or colliders until the scale is verified.
+
+## VISUAL ART ROOT
+
+Use:
+
+`L73_HD_VISUAL_ART`
+
+Instantiate all 54 numbered FBXs with:
+
+- Local position `(0,0,0)`.
+- Local rotation identity.
+- Local scale `(1,1,1)`.
+
+Do not manually reposition every equipment model with arbitrary offsets.
+
+## ASSEMBLED REFERENCE
+
+The package includes:
+
+`Level73_Complete_ArtKit_Showcase.fbx`
+
+and:
+
+`Level73_Complete_ArtKit_Showcase.glb`
+
+Use these as assembled references only.
+
+Do not instantiate the assembled showcase together with the individual models.
+
+---
+
+# 7. EXACT 35 VERIFIED ANIMATION PIVOTS
+
+The actual `Animation_Rigs.csv` contains 35 references.
+
+These are named moving parent groups already represented in the FBX/GLB hierarchy where feasible.
+
+They do not contain baked animation clips.
+
+Use these exact names and world-space reference positions.
+
+| # | Pivot name | X, Y, Z |
+|---|---|---|
+| 01 | `ANIM_PLATEN_ROTATION` | (0, 1.23, -0.55) |
+| 02 | `ANIM_PAD_ROTATION` | (0, 1.61, -0.55) |
+| 03 | `ANIM_PLATEN_SERVO_ROTOR` | (0, 0.95, -0.55) |
+| 04 | `ANIM_CARRIER_ROTATION` | (-0.67, 2.44, -0.80) |
+| 05 | `ANIM_CARRIER_Z` | (-0.67, 3.34, -0.80) |
+| 06 | `ANIM_CARRIER_GIMBAL` | (-0.67, 2.86, -0.80) |
+| 07 | `ANIM_PRESSURE_ZONE_INDICATOR` | (-0.67, 2.03, -0.80) |
+| 08 | `ANIM_RETAINING_RING` | (-0.67, 1.99, -0.80) |
+| 09 | `ANIM_FILM_THICKNESS` | (-0.67, 1.797, -0.80) |
+| 10 | `ANIM_TOPOGRAPHY_DISPLAY` | (0.45, 3.39, 2.70) |
+| 11 | `ANIM_WAFER_ROBOT_BASE` | (-5.10, 1.15, -0.61) |
+| 12 | `ANIM_WAFER_ROBOT_ARM` | (-4.69, 1.90, -0.61) |
+| 13 | `ANIM_WAFER_ROBOT_TOOL` | (-3.69, 2.02, -0.49) |
+| 14 | `ANIM_WAFER_LIFT` | (-4.02, 1.25, 1.23) |
+| 15 | `ANIM_SLURRY_MIXER` | (-7.72, 1.63, 1.93) |
+| 16 | `ANIM_SLURRY_PUMP` | (-5.64, 0.94, 2.03) |
+| 17 | `ANIM_SLURRY_ARM` | (-3.35, 2.32, 0.62) |
+| 18 | `ANIM_SLURRY_NOZZLE` | (-1.27, 2.06, 0.28) |
+| 19 | `ANIM_CONDITIONER_ARM` | (3.31, 2.54, -0.25) |
+| 20 | `ANIM_CONDITIONER_DISC` | (1.85, 1.79, 0.23) |
+| 21 | `ANIM_CONDITIONER_MOTOR` | (3.40, 2.06, -0.28) |
+| 22 | `ANIM_PAD_WEAR_PROBE` | (2.55, 2.01, -1.83) |
+| 23 | `ANIM_PAD_SCANNER` | (2.68, 2.66, 0.84) |
+| 24 | `ANIM_DOWNFORCE_INDICATOR` | (-0.67, 3.36, -0.80) |
+| 25 | `ANIM_PLATEN_ENCODER_DISC` | (2.38, 1.05, -2.05) |
+| 26 | `ANIM_CARRIER_ENCODER_DISC` | (-0.67, 3.74, -0.80) |
+| 27 | `ANIM_COOLING_FAN` | (4.27, 1.23, -2.48) |
+| 28 | `ANIM_ESTOP` | (7.59, 1.03, 3.75) |
+| 29 | `ANIM_CLEANING_BRUSH` | (5.92, 1.39, -0.70) |
+| 30 | `ANIM_SPIN_DRYER` | (7.13, 1.27, 0.47) |
+| 31 | `ANIM_ENDPOINT_SENSOR` | (2.68, 2.63, -2.10) |
+| 32 | `ANIM_EDDY_CURRENT_HEAD` | (3.28, 2.47, 0.68) |
+| 33 | `ANIM_PROFILOMETER` | (5.72, 2.87, 1.70) |
+| 34 | `ANIM_DEFECT_CAMERA` | (7.36, 2.34, 1.72) |
+| 35 | `ANIM_CMP_SCADA` | (5.65, 3.60, -3.70) |
+
+## IMPORTANT RIGGING RULES
+
+- Use actual imported parent groups.
+- Preserve modeled pivot locations.
+- Animate only the appropriate moving subassembly.
+- Do not rotate the entire workstation.
+- Do not rotate fixed motor housings.
+- Do not double-rotate a mesh through nested groups unintentionally.
+- Verify the exported hierarchy and any parent-child relationships.
+- All rig values must come from authoritative gameplay state.
+
+The `ANIM_FILM_THICKNESS` and `ANIM_TOPOGRAPHY_DISPLAY` groups are intended for visual thickness/topography updates, not ordinary mechanical rotation.
+
+---
+
+# 8. REUSE AND VALIDATE EXISTING UNITY HELPERS
+
+Three C# files are included in the approved art package.
+
+## 8.1 ART PLACEMENT EDITOR
+
+`SparkLevel73ArtPlacementEditor.cs`
+
+Namespace:
+
+`ProjectSpark.EditorTools`
+
+Menu:
+
+`Tools/Project Spark/Levels/73/Place HD Art Under Selected Layout`
+
+The script places all 54 numbered FBXs beneath:
+
+`L73_HD_VISUAL_ART`
+
+It is not a gameplay level creator.
+
+### IMPORTANT EXISTING SOURCE FIX
+
+The supplied Art Placement Editor currently contains an unescaped line break inside the error-message string for missing FBX models.
+
+Correct that C# string literal using an escaped newline, for example:
+
+`".fbx not imported.\nImport all 54 numbered FBX models. No changes made."`
+
+Verify compilation after the correction.
+
+Keep the helper's existing behavior intact.
+
+## 8.2 MATERIAL HELPER
+
+`SparkLevel73MaterialUpgradeEditor.cs`
+
+Namespace:
+
+`ProjectSpark.EditorTools`
+
+Menu:
+
+`Tools/Project Spark/Levels/73/Create & Apply HD Materials To Selected Art`
+
+Use the supplied materials as a starting point.
+
+Validate compatibility with the actual Unity render pipeline.
+
+Configure polished steel, matte pad material, dark anodized metal, wafer materials, transparent slurry visuals, warning lights and holographic displays.
+
+## 8.3 VISUAL RIG ADAPTER
+
+`SparkLevel73VisualRig.cs`
+
+Namespace:
+
+`ProjectSpark.Visuals`
+
+Class:
+
+`SparkLevel73VisualRig`
+
+The actual public runtime APIs are:
+
+`SetActualRPM(float platenRpm, float carrierRpm, float conditionerRpm, float slurryPumpRpm, float brushRpm, float dryerRpm)`
+
+`SetActualActuatorPositions(float carrierZFraction, float conditionerArmFraction, float slurryArmFraction, float nozzleFraction, float waferLiftFraction)`
+
+`SetWaferRobotPose(float baseDeg, float armDeg, float toolDeg)`
+
+`SetProcessVisualState(bool measuredSlurryFlowPresent, bool actualPolishingContact, bool criticalFault, float scanFraction)`
+
+The visual rig automatically searches its children for a subset of the named animation parents.
+
+It does not automatically animate every one of the 35 references.
+
+Extend it where necessary.
+
+## CRITICAL RULE
+
+The visual rig is a consumer of actual simulated states.
+
+It does not calculate:
+
+- Motor torque.
+- Platen speed.
+- Carrier speed.
+- Contact pressure.
+- Slurry flow.
+- Material removal.
+- Wafer thickness.
+- Wafer quality.
+- Safety conditions.
+- Objectives.
+
+Do not put authoritative CMP simulation inside the art-only rig.
+
+---
+
+# 9. EXACT PLAYER WIRING — 98 CONNECTIONS
+
+The Level 73 design requires:
+
+**98 player-created wires.**
+
+**152 unique functional terminal anchors.**
+
+The included `Gameplay_Wiring_Budget.csv` defines the approved wire allocation.
+
+It does not contain a complete functional endpoint manifest.
+
+Create the real W01–W98 manifest in Unity.
+
+## VERIFIED WIRING GROUPS
+
+| Group | Wires |
+|---|---:|
+| 5 V control supply and returns | 10 |
+| Platen and carrier motor controls | 16 |
+| Downforce and multi-zone pressure | 16 |
+| Slurry flow and concentration | 14 |
+| Pad conditioning and wear | 12 |
+| Endpoint sensors and metrology | 12 |
+| Wafer handling, cleaning and safety | 10 |
+| PLC and SCADA coordination | 8 |
+| TOTAL | 98 |
+
+## GROUP A — W01–W10: CONTROL POWER
+
+Provide power and return paths for the educational control network.
+
+Include appropriate PLC, digital I/O, control module and sensor-interface connections.
+
+Motors, pumps and cooling equipment require a separately modeled power domain.
+
+## GROUP B — W11–W26: ROTATING MACHINERY
+
+Define 16 connections for:
+
+- Platen drive enable.
+- Platen speed reference.
+- Platen speed feedback.
+- Platen drive ready.
+- Platen drive fault.
+- Carrier drive enable.
+- Carrier speed reference.
+- Carrier speed feedback.
+- Carrier drive ready.
+- Carrier drive fault.
+- Platen motor current.
+- Carrier motor current.
+- Torque measurement.
+- Motion-controller enable.
+- Coordinated-motion status.
+- Motion fault/permissive.
+
+## GROUP C — W27–W42: DOWNFORCE AND PRESSURE
+
+Define 16 connections for:
+
+- Carrier Z actuator command.
+- Carrier Z feedback.
+- Downforce load-cell supply.
+- Downforce load-cell return.
+- Downforce measurement.
+- Downforce measurement validity.
+- Pressure controller enable.
+- Total force setpoint.
+- Center-zone pressure request.
+- Middle-zone pressure request.
+- Edge-zone pressure request.
+- Retaining-ring pressure request.
+- Regulator output feedback.
+- Pressure-zone status.
+- Contact permission.
+- Pressure protection/status.
+
+The final critical downforce wire must belong to this group.
+
+## GROUP D — W43–W56: SLURRY SYSTEM
+
+Define 14 connections for:
+
+- Slurry pump enable.
+- Slurry pump speed request.
+- Pump running feedback.
+- Slurry flow signal.
+- Flow measurement validity.
+- Slurry concentration signal.
+- Slurry concentration validity.
+- Slurry temperature signal.
+- Tank inventory status.
+- Mixing control.
+- Dispensing arm command.
+- Dispensing arm feedback.
+- Slurry nozzle enable.
+- Slurry delivery fault.
+
+## GROUP E — W57–W68: PAD CONDITIONING
+
+Define 12 connections for:
+
+- Conditioner enable.
+- Conditioner motor command.
+- Conditioner motor feedback.
+- Swing arm command.
+- Swing arm position.
+- Conditioner contact permission.
+- Pad wear measurement.
+- Pad wear validity.
+- Groove scanner enable.
+- Groove scan result.
+- Conditioner status.
+- Pad-condition fault.
+
+## GROUP F — W69–W80: ENDPOINT AND METROLOGY
+
+Define 12 connections for:
+
+- Optical endpoint sensor enable.
+- Optical measurement signal.
+- Optical measurement validity.
+- Eddy-current sensor enable.
+- Eddy-current thickness signal.
+- Eddy-current validity.
+- Torque/current diagnostics.
+- Vibration feedback.
+- Acoustic emission feedback.
+- Profilometer result.
+- Defect camera result.
+- Metrology certification status.
+
+## GROUP G — W81–W90: HANDLING, CLEANING AND SAFETY
+
+Define 10 connections for:
+
+- Wafer robot enable.
+- Wafer robot status.
+- Wafer lift command.
+- Wafer lift status.
+- Rinse chamber command.
+- Cleaning brush command.
+- Spin dryer command.
+- Cleaning/drying completion feedback.
+- Emergency-stop signal.
+- Safety enclosure/interlock status.
+
+## GROUP H — W91–W98: PLC AND SCADA
+
+Define 8 connections for:
+
+- PLC motion request.
+- PLC polishing-state feedback.
+- Pressure-controller coordination.
+- Process endpoint event.
+- Protection state.
+- SCADA operator command.
+- SCADA telemetry/status.
+- Objective certification event.
+
+## REQUIRED WIRING MANIFEST FIELDS
+
+Every W-number must have:
+
+- Unique wire ID.
+- Source component ID.
+- Source terminal ID.
+- Destination component ID.
+- Destination terminal ID.
+- Signal type.
+- Electrical domain.
+- Signal direction.
+- Mandatory/optional status.
+- Expected nominal behavior.
+- Disconnection behavior.
+- Diagnostic message.
+
+## 152 UNIQUE TERMINALS
+
+There are 98 player connections, representing 196 wire endpoint references.
+
+Exactly 152 distinct functional terminal IDs must be registered.
+
+Implement legitimate terminal sharing, common returns or supported junctions according to the actual Project Spark wiring API.
+
+Do not create duplicate terminal IDs.
+
+Do not invent 196 different sockets merely to satisfy the 98 wires.
+
+If shared endpoints are prohibited by the existing wire system, implement actual supported junction components and reconcile the terminal design.
+
+No decorative sockets that are never registered.
+
+---
+
+# 10. FINAL CRITICAL DOWNFORCE SENSOR WIRE
+
+Reserve an actual player-created connection for:
+
+`CARRIER_DOWNFORCE_SENSOR_OUT → MULTIZONE_PRESSURE_PID_FORCE_FEEDBACK_IN`
+
+Use actual component and terminal IDs derived from the implemented manifest.
+
+## DISCONNECTION RESPONSE
+
+When the player removes this wire:
+
+1. Actual circuit topology changes.
+2. Force measurement signal becomes unavailable.
+3. Load-cell measurement validity becomes false.
+4. The pressure controller detects missing feedback.
+5. Automatic contact-force regulation is inhibited.
+6. Unsafe wafer contact is prevented.
+7. A controlled carrier retraction or other modeled safe action occurs.
+8. Polishing material removal stops.
+9. The safety fault latches.
+10. The event is recorded.
+
+## CRITICAL DISTINCTION
+
+The physical force state must not instantly become zero simply because the measurement wire was removed.
+
+The machine still has physical actuators, contact geometry and inertia.
+
+The safety controller must respond through these physical actuators.
+
+Do not keep using the last measured load-cell value as fresh feedback.
+
+---
+
+# 11. INITIAL LEVEL STATE
+
+At Level 73 start:
+
+- 5 V control power disabled.
+- Main PLC idle.
+- Polishing platen stationary.
+- Wafer carrier stationary.
+- Carrier raised.
+- No wafer in polishing contact.
+- Wafer cassette loaded.
+- Slurry delivery disabled.
+- Slurry tank contains finite inventory.
+- Pad condition initialized.
+- Conditioning disc stationary.
+- Conditioner arm retracted.
+- Pressure sensors uncalibrated.
+- Speed encoders uncalibrated.
+- Slurry transmitter uncalibrated.
+- Endpoint sensors uncalibrated.
+- Wafer initial topography initialized.
+- Patterned film thickness initialized.
+- Cleaning equipment idle.
+- Emergency stop released.
+- Protection ready for commissioning.
+- Objectives 0/6.
+
+The player must commission the station step by step.
+
+No one-click instant machine readiness.
+
+---
+
+# 12. SINGLE AUTHORITATIVE CMP PROCESS SIMULATION
+
+Implement one coherent mechanical, fluid and wafer-processing state.
+
+## REQUIRED PROCESS VALUES
+
+- Actual platen RPM.
+- Actual carrier RPM.
+- Motor torque.
+- Motor electrical power.
+- Carrier Z position.
+- Actual downforce.
+- Contact-pressure distribution.
+- Retaining-ring pressure.
+- Wafer/pad relative velocity.
+- Contact fraction.
+- Friction coefficient.
+- Frictional torque.
+- Interface temperature.
+- Slurry flow.
+- Slurry concentration.
+- Slurry inventory.
+- Slurry distribution.
+- Pad condition.
+- Pad wear.
+- Pad glazing.
+- Groove condition.
+- Conditioner activity.
+- Regional material removal rate.
+- Remaining film thickness.
+- Regional surface height.
+- Dishing.
+- Pattern erosion.
+- Scratch defects.
+- Endpoint measurement.
+- Cleaning residue.
+- Wafer quality.
+- Safety state.
+
+## REQUIRED ARCHITECTURE
+
+Use a coordinated simulation owner or properly synchronized subsystems.
+
+Do not allow multiple scripts to independently assign the same wafer thickness, contact force or motor RPM.
+
+---
+
+# 13. PLATEN MOTOR DYNAMICS
+
+Use:
+
+- `02_L73_RotatingPolishingPlaten.fbx`
+- `04_L73_PlatenServoMotorDrive.fbx`
+- `30_L73_PlatenSpeedEncoder.fbx`
+
+## REQUIRED STATES
+
+- Drive enable.
+- Requested RPM.
+- Actual RPM.
+- Angular velocity.
+- Shaft inertia.
+- Motor torque.
+- Frictional load.
+- Mechanical losses.
+- Motor current.
+- Electrical power.
+- Motor temperature estimate.
+- Protection state.
+
+## ROTATIONAL EQUATION
+
+`Jplaten * dOmega/dt = Tmotor - Tfriction - Tloss`
+
+## REQUIRED BEHAVIOR
+
+- Starting the drive accelerates the platen.
+- Actual speed approaches the setpoint dynamically.
+- Increased polishing force changes frictional load.
+- Frictional load affects motor torque/current.
+- Excessive motor load can trigger protection.
+- Mechanical power and electrical energy remain finite.
+
+Do not directly assign actual RPM from the slider.
+
+---
+
+# 14. CARRIER MOTOR DYNAMICS
+
+Use:
+
+- `05_L73_PrecisionWaferCarrierHead.fbx`
+- `06_L73_CarrierGimbalAssembly.fbx`
+- `31_L73_CarrierSpeedEncoder.fbx`
+
+## REQUIRED STATES
+
+- Carrier speed command.
+- Actual carrier RPM.
+- Motor torque.
+- Carrier inertia.
+- Vertical actuator position.
+- Gimbal position.
+- Contact load.
+- Wafer position.
+- Drive status.
+- Fault status.
+
+## REQUIRED BEHAVIOR
+
+The carrier rotates independently from the platen.
+
+The carrier motor accelerates through finite dynamics.
+
+The vertical actuator lowers the carrier into contact.
+
+The gimbal permits bounded angular compliance.
+
+Do not consider the wafer to be polishing simply because the carrier is rotating.
+
+Actual contact must exist.
+
+---
+
+# 15. RELATIVE POLISHING VELOCITY
+
+This is a critical part of CMP physics.
+
+The local sliding speed must be calculated from the relative motion between the rotating platen and rotating carrier.
+
+## CONCEPTUAL EQUATION
+
+For wafer point i:
+
+`Vrelative_i = Magnitude(Vplaten_at_contact_i - Vcarrier_at_contact_i)`
+
+where:
+
+`Vplaten = OmegaPlaten × RadiusFromPlatenAxis`
+
+`Vcarrier = OmegaCarrier × RadiusFromCarrierAxis`
+
+Use consistent world-space vectors.
+
+## IMPORTANT
+
+Platen and carrier have different rotation centers.
+
+Do not calculate relative polishing velocity from the absolute RPM difference alone.
+
+Compute the contact-point kinematics correctly.
+
+## REQUIRED BEHAVIOR
+
+Changing either motor speed alters local sliding speed.
+
+Different wafer positions can have different local velocities.
+
+This affects regional material removal rates and uniformity.
+
+---
+
+# 16. CARRIER DOWNFORCE AND MULTI-ZONE CONTACT
+
+Use:
+
+- `07_L73_MultiZonePressureBladder.fbx`
+- `08_L73_WaferRetainingRing.fbx`
+- `28_L73_CarrierDownforceLoadCell.fbx`
+- `29_L73_CarrierPressureRegulator.fbx`
+
+## REQUIRED STATES
+
+- Total commanded force.
+- Actual carrier force.
+- Center-zone request.
+- Middle-zone request.
+- Edge-zone request.
+- Retaining-ring request.
+- Actual zone pressures.
+- Effective contact areas.
+- Contact compliance.
+- Wafer contact state.
+- Load-cell measurement.
+- Sensor validity.
+
+## BASIC PRESSURE RELATION
+
+`Pressure = Force / EffectiveArea`
+
+## REQUIRED BEHAVIOR
+
+- Pressure regulators have finite response.
+- Actual force does not instantly equal command.
+- Contact load responds to carrier Z position.
+- The gimbal and pad compliance affect distribution.
+- Zone pressure changes local removal rate.
+- Excessive contact force increases friction and damage risk.
+- Safety limits prevent unbounded loading.
+
+## IMPORTANT
+
+Do not fabricate load-cell measurements by copying the requested pressure.
+
+The measurement must derive from actual modeled contact force.
+
+---
+
+# 17. MULTI-ZONE PRESSURE PID
+
+Use:
+
+`48_L73_MultiZonePressurePIDController.fbx`
+
+## REQUIRED FEATURES
+
+- Total force setpoint.
+- Measured downforce.
+- Zone pressure targets.
+- Measured or estimated zone feedback.
+- Proportional gain.
+- Integral gain.
+- Filtered derivative where used.
+- Actuator saturation.
+- Anti-windup.
+- Contact-permission interlock.
+- Sensor validity.
+- Safe fallback.
+
+## REQUIRED BEHAVIOR
+
+The controller commands actual pressure actuators.
+
+The actuators change physical force.
+
+The force distribution changes wafer contact.
+
+The contact changes removal rate.
+
+Do not directly write material removal rates from PID output.
+
+---
+
+# 18. FICTIONAL SLURRY DELIVERY SYSTEM
+
+Use:
+
+- `15_L73_VirtualSlurrySupplyCabinet.fbx`
+- `16_L73_AbrasiveSlurryMixingTank.fbx`
+- `17_L73_PrecisionSlurryMeteringPump.fbx`
+- `18_L73_SlurryMassFlowTransmitter.fbx`
+- `19_L73_MotorizedSlurryDispensingArm.fbx`
+- `20_L73_PrecisionSlurryNozzle.fbx`
+
+## REQUIRED STATES
+
+- Initial slurry inventory.
+- Remaining slurry inventory.
+- Pump command.
+- Actual pump RPM.
+- Pump pressure.
+- Actual mass flow.
+- Nozzle state.
+- Delivered slurry volume.
+- Pad wetting.
+- Wafer contact lubrication.
+- Waste slurry flow.
+- Slurry fault.
+
+## INVENTORY BALANCE
+
+`dSlurryInventory/dt = SupplyIn - DeliveredOut`
+
+Use consistent mass or volume units.
+
+## REQUIRED BEHAVIOR
+
+- Pump RPM changes gradually.
+- Flow depends on pump and delivery restrictions.
+- Nozzle output depends on actual flow.
+- Slurry inventory decreases as material is delivered.
+- Insufficient flow reduces polishing effectiveness or increases defect risk.
+- Excess flow increases consumption without unlimited benefit.
+
+## IMPORTANT
+
+The slurry VFX must not be the authoritative flow measurement.
+
+A visible stream with invalid physical flow must not certify operation.
+
+---
+
+# 19. SLURRY CONCENTRATION AND TEMPERATURE
+
+Use:
+
+- `21_L73_SlurryConcentrationSensor.fbx`
+- `22_L73_SlurryTemperatureSensor.fbx`
+
+## REQUIRED STATES
+
+- Actual fictional abrasive concentration.
+- Measured concentration.
+- Slurry temperature.
+- Measured temperature.
+- Calibration.
+- Measurement validity.
+- Sample timestamp.
+
+## REQUIRED BEHAVIOR
+
+Slurry effectiveness depends on model-calibrated concentration and interface conditions.
+
+Do not use actual hazardous chemical CMP recipes.
+
+The fictional slurry is an educational abstraction.
+
+---
+
+# 20. POLISHING PAD CONTACT MODEL
+
+Use:
+
+`03_L73_GroovedPolishingPad.fbx`
+
+## REQUIRED PAD STATE
+
+- Surface condition.
+- Pad compliance.
+- Groove effectiveness.
+- Pad wear.
+- Glazing.
+- Effective contact area.
+- Slurry transport effectiveness.
+- Friction contribution.
+- Remaining pad service life.
+
+## REQUIRED BEHAVIOR
+
+The pad provides a finite, changing polishing interface.
+
+Its mechanical and transport characteristics affect contact and material removal.
+
+The pad must not remain ideal forever.
+
+---
+
+# 21. PAD CONDITIONING SYSTEM
+
+Use:
+
+- `23_L73_PadConditioningSwingArm.fbx`
+- `24_L73_PadConditionerAbrasiveDisc.fbx`
+- `25_L73_PadConditionerMotorDrive.fbx`
+
+## REQUIRED STATES
+
+- Conditioner enabled.
+- Actual disc RPM.
+- Swing arm position.
+- Contact force.
+- Conditioning effectiveness.
+- Pad glazing removal.
+- Pad wear caused by conditioning.
+- Remaining pad life.
+
+## REQUIRED BEHAVIOR
+
+Correct conditioning improves effective pad surface condition within limits.
+
+Excess conditioning consumes pad life.
+
+An inactive conditioner must not improve the pad merely because time passes.
+
+The conditioner motor and arm require actual operating states.
+
+---
+
+# 22. PAD WEAR AND GROOVE INSPECTION
+
+Use:
+
+- `26_L73_PadWearMeasurementSensor.fbx`
+- `27_L73_PadGrooveInspectionScanner.fbx`
+
+## REQUIRED MEASUREMENTS
+
+- Pad wear.
+- Groove condition.
+- Measurement calibration.
+- Scan completion.
+- Sensor validity.
+- Pad health estimate.
+
+## REQUIRED BEHAVIOR
+
+Measurements must derive from modeled pad state.
+
+Do not simply return HEALTHY because the scanner completed an animation.
+
+If pad wear exceeds service limits, conditioning alone should not restore its structural life.
+
+---
+
+# 23. PRESTON-LAW MATERIAL REMOVAL
+
+Use a reduced-order educational CMP model.
+
+## BASE EQUATION
+
+`MRR_i = Kpreston_i * Pressure_i * RelativeVelocity_i`
+
+where:
+
+- MRR is local material removal rate.
+- Kpreston is the calibrated material/process coefficient.
+- Pressure is actual local contact pressure.
+- RelativeVelocity is local sliding speed.
+
+## EXTENDED GAME MODEL
+
+`MRR_i = Kpreston_i * Pressure_i * RelativeVelocity_i * Fslurry_i * Fpad_i * Ftemperature_i`
+
+Use bounded, documented factors.
+
+## REQUIRED CONDITIONS
+
+Material removal occurs only when:
+
+- Wafer present.
+- Wafer clamped.
+- Wafer contacts pad.
+- Valid safety permission exists.
+- Platen rotates.
+- Carrier operation is valid.
+- Slurry conditions are acceptable.
+- Pad has usable condition.
+- Process is in POLISHING state.
+
+## IMPORTANT
+
+Do not let a fixed timer remove material while the platen is stopped or the wafer is raised.
+
+---
+
+# 24. REGIONAL WAFER SURFACE MODEL
+
+Use:
+
+- `09_L73_SiliconWaferSubstrate.fbx`
+- `10_L73_PatternedThinFilmLayer.fbx`
+- `11_L73_MicroscopicSurfaceTopography.fbx`
+
+Track multiple wafer regions.
+
+Recommended arrangement:
+
+- Center region.
+- Mid-radius ring.
+- Edge ring.
+- Several angular sectors.
+- Patterned-feature samples.
+
+Each region must track:
+
+- Initial surface height.
+- Remaining film thickness.
+- Local contact pressure.
+- Relative sliding speed.
+- Local removal rate.
+- Total removed thickness.
+- Underlying material exposure.
+- Pattern dishing.
+- Erosion.
+- Defect accumulation.
+
+## MATERIAL REMOVAL INTEGRATION
+
+`Thickness_i(t+dt) = Max(0, Thickness_i(t) - MRR_i*dt)`
+
+Account for multiple material layers where required.
+
+Do not allow negative thickness.
+
+Do not make every region receive identical removal when local conditions differ.
+
+---
+
+# 25. WAFER TOPOGRAPHY AND PLANARITY
+
+Level 73's unique manufacturing challenge is wafer surface flatness.
+
+## REQUIRED STATE
+
+- Surface height grid.
+- Initial topographic variation.
+- Material-specific removal.
+- Remaining high spots.
+- Low-lying features.
+- Final peak-to-valley variation.
+- Regional mean surface heights.
+
+## PROPOSED QUALITY TARGET
+
+Final height variation ≤10 nm.
+
+## IMPORTANT
+
+Calculate flatness from the authoritative surface-height model.
+
+Do not set the height map to a perfect plane when the polishing progress bar reaches 100%.
+
+The visual height map must follow the simulation.
+
+---
+
+# 26. DISHING AND PATTERN EROSION
+
+Use:
+
+`47_L73_DishingErosionAnalyzer.fbx`
+
+## REQUIRED STATES
+
+- Patterned feature geometry.
+- Remaining local film.
+- Feature recess depth.
+- Neighboring reference height.
+- Pattern density.
+- Underlying-layer damage.
+- Dishing metric.
+- Erosion metric.
+
+## REQUIRED BEHAVIOR
+
+Excess polishing can cause additional patterned-feature removal.
+
+Overpolishing may produce dishing or erosion.
+
+Stopping too early leaves excess material.
+
+The player must find a valid process endpoint.
+
+## PROPOSED TARGETS
+
+- Dishing ≤5 nm.
+- Erosion ≤5 nm.
+
+These are educational level-calibration targets.
+
+---
+
+# 27. SCRATCH AND DEFECT MODEL
+
+Use:
+
+`46_L73_WaferDefectInspectionCamera.fbx`
+
+## REQUIRED DEFECT CONTRIBUTORS
+
+- Insufficient slurry.
+- Excessive contact force.
+- Pad contamination.
+- Excessive vibration.
+- Poor lubrication.
+- Excessive conditioning-related pad damage.
+- Mechanical fault conditions.
+
+## REQUIRED BEHAVIOR
+
+Defects accumulate according to modeled process exposure.
+
+Use reproducible stochastic variation if appropriate for gameplay.
+
+Do not fabricate defect scores independently of process conditions.
+
+## CERTIFICATION
+
+A wafer can fail even if thickness and planarity are acceptable, if surface defects exceed the configured limit.
+
+---
+
+# 28. FRICTION, TORQUE AND CURRENT MEASUREMENT
+
+Use:
+
+`32_L73_MotorTorqueCurrentAnalyzer.fbx`
+
+## REQUIRED STATES
+
+- Platen load torque.
+- Carrier load torque.
+- Motor current estimate.
+- Electrical power.
+- Frictional power.
+- Drive status.
+- Measurement validity.
+
+## REQUIRED BEHAVIOR
+
+Higher contact force can increase friction torque.
+
+Friction load affects motor power.
+
+Slurry lubrication and pad condition influence the modeled friction coefficient.
+
+Do not fabricate motor current as a fixed proportion of RPM.
+
+---
+
+# 29. VIBRATION AND ACOUSTIC MONITORING
+
+Use:
+
+- `33_L73_PolishingVibrationSensor.fbx`
+- `34_L73_AcousticEmissionSensor.fbx`
+
+## REQUIRED MEASUREMENTS
+
+- True modeled vibration.
+- Measured vibration.
+- Acoustic activity estimate.
+- Measurement filtering.
+- Sampling.
+- Calibration.
+- Fault state.
+
+## REQUIRED BEHAVIOR
+
+Poor mechanical conditions may increase vibration.
+
+Changes in contact or material state may alter acoustic signals.
+
+Do not make vibration readings entirely independent of actual machinery.
+
+---
+
+# 30. POLISHING INTERFACE THERMAL MODEL
+
+Use:
+
+- `35_L73_InterfaceTemperatureProbe.fbx`
+- `36_L73_PolishingCoolingLoop.fbx`
+
+## REQUIRED STATES
+
+- Contact temperature.
+- Thermal capacity.
+- Frictional heating.
+- Slurry thermal contribution.
+- Cooling-loop capacity.
+- Heat loss.
+- Temperature measurement.
+- Overtemperature status.
+
+## ENERGY BALANCE
+
+`Cthermal * dT/dt = Qfriction - Qcooling - Qloss`
+
+## REQUIRED BEHAVIOR
+
+- Friction generates heat.
+- Cooling removes finite thermal energy.
+- Interface temperature changes gradually.
+- Excess temperature may degrade slurry effectiveness or cause defects.
+- Safety protection acts if temperature becomes unacceptable.
+
+Do not directly set the contact temperature to its target.
+
+---
+
+# 31. IN-SITU OPTICAL ENDPOINT
+
+Use:
+
+`43_L73_InSituOpticalEndpointSensor.fbx`
+
+## REQUIRED SENSOR STATES
+
+- Measurement enabled.
+- Optical path valid.
+- Calibration.
+- Synthetic optical feature.
+- Signal noise.
+- Sample timestamp.
+- Signal validity.
+- Endpoint feature trend.
+
+## REQUIRED BEHAVIOR
+
+Generate optical measurements from the modeled wafer film state and process conditions.
+
+The sensor does not get direct privileged access to hidden true completion.
+
+A valid endpoint must be inferred from measurements.
+
+---
+
+# 32. EDDY-CURRENT THICKNESS MONITORING
+
+Use:
+
+`44_L73_EddyCurrentThicknessSensor.fbx`
+
+## REQUIRED STATES
+
+- Material compatibility.
+- Measurement enabled.
+- Synthetic eddy-current response.
+- Estimated conductive-film thickness.
+- Calibration.
+- Validity.
+- Timestamp.
+
+## IMPORTANT
+
+Eddy-current sensing is not equally applicable to all film materials.
+
+Use a configured compatible fictional conductive film when this channel is required.
+
+If the scenario material is incompatible, mark the sensor unavailable rather than fabricating a valid thickness measurement.
+
+---
+
+# 33. ENDPOINT DECISION LOGIC
+
+The endpoint system should combine valid evidence, such as:
+
+- Optical signal changes.
+- Conductive-film thickness estimate where applicable.
+- Torque/current trends.
+- Acoustic trends where informative.
+- Known process baseline.
+- Sensor validity.
+- Signal persistence.
+
+## REQUIRED STATES
+
+- IDLE.
+- BASELINE_ACQUISITION.
+- MONITORING.
+- ENDPOINT_CANDIDATE.
+- ENDPOINT_CONFIRMED.
+- MEASUREMENT_INVALID.
+- SAFE_STOP_REQUESTED.
+
+## REQUIRED BEHAVIOR
+
+When endpoint confidence reaches the configured valid threshold:
+
+1. Stop or complete the polishing cycle safely.
+2. Retract the carrier.
+3. Reduce motor speeds according to machine sequencing.
+4. Stop active material removal.
+5. Transfer wafer to cleaning.
+6. Verify actual wafer condition using post-process metrology.
+
+Do not complete Objective 4 from endpoint detection alone.
+
+---
+
+# 34. WAFER RINSE AND CLEANING
+
+Use:
+
+- `40_L73_PostCMPRinseChamber.fbx`
+- `41_L73_WaferBrushCleaningAssembly.fbx`
+
+## REQUIRED STATES
+
+- Wafer loaded for cleaning.
+- Rinse flow.
+- Remaining slurry residue.
+- Brush rotation.
+- Cleaning contact.
+- Cleaning duration.
+- Remaining particle/abrasive contamination.
+- Cleaning complete.
+- Fault status.
+
+## REQUIRED BEHAVIOR
+
+Rinsing removes a finite amount of residue over time.
+
+Brush cleaning provides additional removal.
+
+Nozzle and brush operation must have physical effects.
+
+Do not immediately set wafer cleanliness to 100% when START CLEANING is clicked.
+
+---
+
+# 35. SPIN-RINSE DRYER
+
+Use:
+
+`42_L73_SpinRinseDryer.fbx`
+
+## REQUIRED STATES
+
+- Wafer loaded.
+- Actual dryer RPM.
+- Remaining liquid.
+- Drainage/evaporation estimate.
+- Drying progress.
+- Motor fault.
+- Completion state.
+
+## REQUIRED BEHAVIOR
+
+Actual dryer RPM changes dynamically.
+
+Residual liquid decreases over time.
+
+A wafer should not pass final dry inspection while still retaining excessive modeled liquid.
+
+---
+
+# 36. OPTICAL SURFACE PROFILOMETER
+
+Use:
+
+`45_L73_OpticalSurfaceProfilometer.fbx`
+
+## REQUIRED MEASUREMENTS
+
+- Surface height profile.
+- Mean surface height.
+- Peak-to-valley variation.
+- Remaining film features.
+- Regional topographic variation.
+- Measurement uncertainty.
+- Scan completion.
+- Sensor validity.
+
+## IMPORTANT
+
+The profilometer must measure the authoritative wafer surface model.
+
+Its scanning animation must not generate arbitrary perfect flatness.
+
+---
+
+# 37. FINAL WAFER METROLOGY
+
+The final certification station must evaluate:
+
+- Remaining film thickness.
+- Surface flatness.
+- Within-wafer nonuniformity.
+- Dishing.
+- Erosion.
+- Scratch defects.
+- Slurry residue.
+- Dryness.
+- Valid inspection evidence.
+
+## FINAL WAFER QUALITY
+
+Define:
+
+- PASS.
+- WARNING.
+- FAIL.
+
+Require all mandatory quality constraints to pass.
+
+Do not force PASS because the polishing timer finished.
+
+---
+
+# 38. DISTURBANCE A — PAD GLAZING
+
+Simulate gradual or event-driven deterioration of the polishing pad's surface.
+
+## REQUIRED EFFECTS
+
+- Pad surface effectiveness decreases.
+- Material removal behavior changes.
+- Torque/friction may change.
+- Wafer nonuniformity may increase.
+- Pad-health measurements reflect the condition.
+
+## PLAYER RESPONSE
+
+1. Detect deteriorating performance.
+2. Inspect pad health.
+3. Operate conditioner safely.
+4. Restore appropriate surface condition.
+5. Verify effective removal behavior.
+6. Resume polishing under valid conditions.
+
+## IMPORTANT
+
+Conditioning must not restore infinite pad life.
+
+If the pad has reached service-life limits, require an appropriate modeled replacement or equivalent safe maintenance behavior.
+
+---
+
+# 39. DISTURBANCE B — SLURRY RESTRICTION
+
+Introduce a finite restriction in the slurry delivery path.
+
+## REQUIRED EFFECTS
+
+- Actual slurry flow falls below command.
+- Pad wetting degrades.
+- Friction or defect risk changes.
+- Flow transmitter reports reduced flow.
+- Process controller responds.
+- Safety may inhibit polishing.
+
+## PLAYER RESPONSE
+
+1. Detect command/measurement mismatch.
+2. Stop unsafe polishing.
+3. Restore slurry path.
+4. Verify actual flow.
+5. Revalidate concentration and temperature.
+6. Resume safe operation.
+
+Do not fix the flow simply by hiding the warning icon.
+
+---
+
+# 40. DISTURBANCE C — EDGE-PRESSURE DRIFT
+
+Introduce an error in one pressure zone or its regulator.
+
+## REQUIRED EFFECTS
+
+- Actual edge force differs from command.
+- Contact-pressure distribution becomes uneven.
+- Regional removal changes.
+- Edge thickness deviates.
+- Wafer uniformity worsens.
+- Pressure diagnostics reveal the condition.
+
+## PLAYER RESPONSE
+
+1. Detect pressure distribution fault.
+2. Diagnose affected zone.
+3. Correct the regulator or actuator fault.
+4. Recalibrate if required.
+5. Verify pressure balance.
+6. Complete a fresh acceptable wafer.
+
+---
+
+# 41. MAIN CMP SAFETY CONTROLLER
+
+Use:
+
+`39_L73_CMPEmergencySafetyStation.fbx`
+
+## REQUIRED SAFETY CONDITIONS
+
+- Safety enclosure secured.
+- Emergency stop released.
+- Platen drive ready.
+- Carrier drive ready.
+- Speed encoder feedback valid.
+- Carrier contact actuator healthy.
+- Downforce feedback valid.
+- Slurry flow valid.
+- Cooling available.
+- Excessive torque absent.
+- Excessive vibration absent.
+- Contact temperature within limits.
+- Wafer properly loaded.
+- No unresolved critical fault.
+
+## REQUIRED RESPONSES
+
+A serious fault must:
+
+- Inhibit further unsafe polishing.
+- Stop material removal.
+- Restrict contact-force commands.
+- Retract the carrier where physically permissible.
+- Reduce rotating-machine speed safely.
+- Record fault details.
+- Latch critical faults.
+- Require correction and explicit reset.
+
+## IMPORTANT
+
+The safety controller must override normal motion and pressure PID commands.
+
+It must not simply illuminate a red light while the polishing process continues.
+
+---
+
+# 42. MAIN CMP PLC
+
+Use:
+
+- `50_L73_CMPProcessPLCRack.fbx`
+- `51_L73_CMPDigitalIOModule.fbx`
+
+## REQUIRED PLC STATES
+
+- OFF.
+- INITIALIZING.
+- IDLE.
+- SAFETY_CHECK.
+- SENSOR_CALIBRATION.
+- PAD_INSPECTION.
+- PAD_CONDITIONING.
+- SLURRY_PRIMING.
+- MOTION_COMMISSIONING.
+- WAFER_LOADING.
+- WAFER_ALIGNMENT.
+- CARRIER_APPROACH.
+- CONTACT_ESTABLISHING.
+- PRESSURE_STABILIZATION.
+- POLISHING.
+- ENDPOINT_MONITORING.
+- ENDPOINT_CONFIRMED.
+- CARRIER_RETRACTION.
+- WAFER_UNLOAD.
+- RINSING.
+- BRUSH_CLEANING.
+- SPIN_DRYING.
+- METROLOGY.
+- PROCESS_COMPLETE.
+- SAFE_HOLD.
+- FAULT.
+- RESET_REQUIRED.
+
+## REQUIRED BEHAVIOR
+
+Each transition must depend on actual equipment state and valid measurements.
+
+Do not advance through the complete polishing sequence from fixed timers alone.
+
+---
+
+# 43. LIVE AAA SCADA DASHBOARD
+
+Use:
+
+`52_L73_HolographicCMPSCADA.fbx`
+
+Implement real runtime measurements and controls.
+
+## REQUIRED LIVE READINGS
+
+- MAIN POWER.
+- PLC STATE.
+- SAFETY STATUS.
+- PLATEN MOTOR STATUS.
+- PLATEN ACTUAL RPM.
+- PLATEN REQUESTED RPM.
+- CARRIER MOTOR STATUS.
+- CARRIER ACTUAL RPM.
+- CARRIER REQUESTED RPM.
+- PLATEN TORQUE.
+- CARRIER TORQUE.
+- MOTOR CURRENT.
+- ELECTRICAL POWER.
+- CARRIER Z POSITION.
+- CARRIER CONTACT STATE.
+- TOTAL DOWNFORCE.
+- DOWNFORCE SENSOR VALIDITY.
+- CENTER PRESSURE.
+- MIDDLE PRESSURE.
+- EDGE PRESSURE.
+- RETAINING-RING PRESSURE.
+- SLURRY PUMP RPM.
+- SLURRY ACTUAL FLOW.
+- SLURRY CONCENTRATION.
+- SLURRY TEMPERATURE.
+- SLURRY INVENTORY.
+- PAD CONDITION.
+- PAD WEAR.
+- PAD GLAZING.
+- GROOVE CONDITION.
+- CONDITIONER STATUS.
+- CONDITIONER RPM.
+- RELATIVE POLISHING VELOCITY.
+- REGIONAL REMOVAL RATE.
+- AVERAGE REMOVAL RATE.
+- REMAINING FILM THICKNESS.
+- WAFER HEIGHT VARIATION.
+- WITHIN-WAFER NONUNIFORMITY.
+- DISHING.
+- PATTERN EROSION.
+- VIBRATION.
+- ACOUSTIC EMISSION.
+- CONTACT TEMPERATURE.
+- COOLING STATUS.
+- OPTICAL ENDPOINT SIGNAL.
+- EDDY-CURRENT THICKNESS.
+- ENDPOINT CONFIDENCE.
+- WAFER CLEANING STATE.
+- WAFER DRYNESS.
+- DEFECT SCORE.
+- FINAL WAFER QUALITY.
+- SENSOR VALIDITY.
+- FAULT HISTORY.
+- OBJECTIVES X/6.
+
+## REQUIRED PLAYER CONTROLS
+
+- MAIN POWER.
+- CALIBRATE PLATEN ENCODER.
+- CALIBRATE CARRIER ENCODER.
+- CALIBRATE DOWNFORCE SENSOR.
+- CALIBRATE SLURRY FLOW.
+- CALIBRATE TORQUE MEASUREMENT.
+- CALIBRATE ENDPOINT SENSOR.
+- START PLATEN.
+- START CARRIER.
+- SET PLATEN RPM.
+- SET CARRIER RPM.
+- LOWER CARRIER.
+- RAISE CARRIER.
+- SET TOTAL DOWNFORCE.
+- SET CENTER PRESSURE.
+- SET MIDDLE PRESSURE.
+- SET EDGE PRESSURE.
+- SET RETAINING-RING PRESSURE.
+- ENABLE PRESSURE PID.
+- START SLURRY PUMP.
+- ADJUST SLURRY FLOW.
+- MOVE SLURRY ARM.
+- START PAD CONDITIONER.
+- RUN PAD INSPECTION.
+- LOAD WAFER.
+- START POLISHING.
+- ENABLE AUTOMATIC ENDPOINT.
+- STOP POLISHING.
+- RINSE WAFER.
+- BRUSH CLEAN WAFER.
+- SPIN DRY WAFER.
+- RUN SURFACE METROLOGY.
+- RUN DEFECT INSPECTION.
+- START PAD GLAZING TEST.
+- START SLURRY RESTRICTION TEST.
+- START EDGE-PRESSURE FAULT TEST.
+- EMERGENCY STOP.
+- RESET PROTECTION.
+- DISCONNECT DOWNFORCE FEEDBACK.
+- RESTORE DOWNFORCE WIRE.
+- RECALIBRATE LOAD CELL.
+- RESET PRESSURE FAULT.
+- FINAL CERTIFY.
+
+Every button must affect authoritative gameplay state.
+
+No decorative buttons.
+
+---
+
+# 44. SIX AUTHORITATIVE LEVEL 73 OBJECTIVES
+
+Integrate all six objectives with the existing Project Spark level system.
+
+## OBJECTIVE 1 — BUILD THE PRECISION POLISHING NETWORK
+
+Require:
+
+1. All 98 player wires connected.
+2. All 152 unique terminals registered.
+3. Valid 5 V control power.
+4. Valid control return.
+5. Main CMP PLC connected.
+6. Digital I/O connected.
+7. Platen drive connected.
+8. Carrier drive connected.
+9. Platen encoder connected.
+10. Carrier encoder connected.
+11. Downforce load cell connected.
+12. Pressure regulator connected.
+13. Multi-zone pressure controller connected.
+14. Slurry pump connected.
+15. Slurry flow transmitter connected.
+16. Slurry concentration sensor connected.
+17. Slurry temperature sensor connected.
+18. Conditioner arm connected.
+19. Conditioner motor connected.
+20. Pad-health instruments connected.
+21. Torque/current sensor connected.
+22. Vibration and acoustic sensors connected.
+23. Interface temperature sensing connected.
+24. Cooling loop connected.
+25. Endpoint measurement connected.
+26. Cleaning and drying controls connected.
+27. Wafer metrology connected.
+28. Emergency stop connected.
+29. No unsafe circuit topology.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — COMMISSION THE CMP WORKSTATION
+
+Require:
+
+1. Objective 1 certified.
+2. Safety ready.
+3. Speed encoders calibrated.
+4. Downforce sensor calibrated.
+5. Slurry transmitter calibrated.
+6. Torque/current measurement calibrated.
+7. Endpoint sensors calibrated.
+8. Wafer handling ready.
+9. Platen drive commissioned.
+10. Actual platen RPM increases.
+11. Carrier drive commissioned.
+12. Actual carrier RPM increases.
+13. Pad inspection completed.
+14. Pad condition acceptable.
+15. Conditioner operational.
+16. Slurry pump operational.
+17. Actual slurry delivery established.
+18. Cooling available.
+19. Wafer loaded.
+20. Contact safety verified.
+21. No critical fault.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — MASTER PRESSURE AND MATERIAL REMOVAL
+
+Require:
+
+1. Previous objectives certified.
+2. Wafer properly clamped.
+3. Platen RPM stable.
+4. Carrier RPM stable.
+5. Downforce measurement valid.
+6. Carrier approaches pad safely.
+7. Contact established.
+8. Multi-zone pressure PID active.
+9. Actual contact force within limits.
+10. Center pressure controlled.
+11. Middle pressure controlled.
+12. Edge pressure controlled.
+13. Retaining-ring pressure valid.
+14. Slurry delivery valid.
+15. Pad condition valid.
+16. Actual relative sliding velocity calculated.
+17. Material removal occurs.
+18. Regional removal rates respond to contact.
+19. Motor torque remains acceptable.
+20. Vibration remains acceptable.
+21. Contact temperature remains acceptable.
+22. Controlled polishing observation completed.
+23. No critical safety fault.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — ACHIEVE PERFECT PLANARIZATION
+
+Require:
+
+1. Previous objectives certified.
+2. Wafer surface initially nonplanar.
+3. Valid polishing process active.
+4. Actual film thickness decreases.
+5. Regional topography updates.
+6. In-situ endpoint sensor valid.
+7. Endpoint confidence develops from actual measurement.
+8. Correct endpoint detected.
+9. Polishing stops safely.
+10. Carrier retracts.
+11. Wafer unloaded.
+12. Rinse completed.
+13. Brush cleaning completed.
+14. Spin drying completed.
+15. Profilometer scan valid.
+16. Final thickness within tolerance.
+17. Height variation ≤10 nm.
+18. Removal nonuniformity ≤3%.
+19. Dishing ≤5 nm.
+20. Pattern erosion ≤5 nm.
+21. Scratch-defect score acceptable.
+22. Slurry residue acceptable.
+23. Final wafer quality passes.
+24. No critical fault.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — SURVIVE THE POLISHING DISTURBANCES
+
+Require:
+
+1. Previous objectives certified.
+2. Stable baseline recorded.
+3. Pad glazing disturbance activated.
+4. Actual pad effectiveness decreases.
+5. Material removal changes.
+6. Pad condition diagnosed.
+7. Conditioning performed.
+8. Pad performance restored within limits.
+9. Slurry restriction activated.
+10. Actual slurry flow decreases.
+11. Friction or defect risk responds.
+12. Flow restriction detected.
+13. Slurry delivery restored.
+14. Edge-pressure drift activated.
+15. Actual edge contact force changes.
+16. Removal uniformity responds.
+17. Pressure fault diagnosed.
+18. Edge pressure restored.
+19. Safety limits respected.
+20. Equipment recommissioned.
+21. Fresh wafer polished.
+22. Fresh wafer cleaned and dried.
+23. Fresh metrology passes.
+24. No unresolved critical fault.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — RESTORE CRITICAL DOWNFORCE FEEDBACK
+
+Require:
+
+1. Objectives 1–5 historically certified.
+2. Designated downforce feedback wire disconnected.
+3. Actual circuit topology changes.
+4. Load-cell measurement becomes invalid.
+5. Pressure controller detects missing feedback.
+6. Unsafe contact-force control inhibited.
+7. Material removal stops.
+8. Carrier enters a safe state.
+9. Critical fault latched.
+10. Player reconnects the actual wire.
+11. Electrical connectivity restored.
+12. Sensor power/return validated.
+13. Load cell recalibrated.
+14. Fresh valid force samples acquired.
+15. Pressure controller measurement validity restored.
+16. Player explicitly resets the fault.
+17. Safety conditions revalidated.
+18. Platen motor recommissioned.
+19. Carrier motor recommissioned.
+20. Slurry delivery revalidated.
+21. Multi-zone pressure control revalidated.
+22. Safe wafer contact established.
+23. Fresh polishing test performed.
+24. Endpoint detected from valid measurements.
+25. Wafer safely unloaded.
+26. Wafer rinsed, cleaned and dried.
+27. Fresh metrology passes.
+28. No unresolved critical fault.
+29. Final objective certified.
+
+Progress becomes **6/6**.
+
+## HISTORICAL OBJECTIVE REQUIREMENT
+
+During the deliberate final wire disconnection, Objectives 1–5 remain historically completed.
+
+Do not reset them to zero.
+
+However, Objective 6 must not pass immediately upon reconnection.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6.**
+
+---
+
+# 45. FINAL DOWNFORCE FEEDBACK FAULT — COMPLETE SEQUENCE
+
+## FAULT INJECTION
+
+1. Player identifies the load-cell feedback wire.
+2. Player disconnects it using the real Project Spark wire interaction.
+3. Actual circuit topology changes.
+4. Force feedback becomes unavailable.
+5. Measurement validity changes to INVALID.
+6. Pressure PID detects feedback loss.
+7. Unsafe automatic downforce control is inhibited.
+8. Carrier retracts or follows another documented safe response.
+9. Material removal stops.
+10. Fault latches.
+11. SCADA displays detailed diagnostics.
+
+## IMPORTANT
+
+The physical force must continue obeying actuator and contact dynamics.
+
+Do not instantly force actual contact load to zero unless the physical actuator model supports that transition.
+
+Do not silently reuse a stale load-cell reading for pressure control.
+
+## RECOVERY
+
+1. Player reconnects the actual signal wire.
+2. Connection topology becomes valid.
+3. Load-cell supply and return are verified.
+4. Fresh measurement becomes available.
+5. Sensor recalibration is performed.
+6. Pressure controller validates measurement.
+7. Player explicitly resets fault.
+8. Safety permissions are re-established.
+9. Drives recommission.
+10. Slurry flow verified.
+11. Carrier downforce tested.
+12. Multi-zone pressure control restored.
+13. Wafer processing restarted.
+14. New endpoint detected.
+15. Wafer cleaned and dried.
+16. Final metrology passes.
+17. Objective 6 certified.
+
+---
+
+# 46. RECOMMENDED UNITY C# ARCHITECTURE
+
+Inspect the real Project Spark codebase before creating these classes.
+
+Suggested responsibilities:
+
+- `SparkLevel73Coordinator.cs`
+- `SparkLevel73ProcessState.cs`
+- `SparkLevel73PlatenDynamics.cs`
+- `SparkLevel73CarrierDynamics.cs`
+- `SparkLevel73MotionController.cs`
+- `SparkLevel73SpeedEncoder.cs`
+- `SparkLevel73CarrierZActuator.cs`
+- `SparkLevel73ContactMechanics.cs`
+- `SparkLevel73RelativeVelocityModel.cs`
+- `SparkLevel73MultiZonePressureModel.cs`
+- `SparkLevel73DownforceLoadCell.cs`
+- `SparkLevel73PressureRegulator.cs`
+- `SparkLevel73PressurePID.cs`
+- `SparkLevel73SlurryReservoir.cs`
+- `SparkLevel73SlurryPump.cs`
+- `SparkLevel73SlurryFlowSensor.cs`
+- `SparkLevel73SlurryDelivery.cs`
+- `SparkLevel73SlurryConditionModel.cs`
+- `SparkLevel73WasteSlurryCollector.cs`
+- `SparkLevel73PadConditionModel.cs`
+- `SparkLevel73PadConditioner.cs`
+- `SparkLevel73PadWearSensor.cs`
+- `SparkLevel73PolishingRateModel.cs`
+- `SparkLevel73WaferTopography.cs`
+- `SparkLevel73WaferFilmModel.cs`
+- `SparkLevel73DishingErosionModel.cs`
+- `SparkLevel73DefectModel.cs`
+- `SparkLevel73FrictionTorqueModel.cs`
+- `SparkLevel73VibrationSensor.cs`
+- `SparkLevel73AcousticSensor.cs`
+- `SparkLevel73ThermalModel.cs`
+- `SparkLevel73CoolingLoop.cs`
+- `SparkLevel73OpticalEndpointSensor.cs`
+- `SparkLevel73EddyCurrentSensor.cs`
+- `SparkLevel73EndpointDetector.cs`
+- `SparkLevel73WaferHandling.cs`
+- `SparkLevel73RinseController.cs`
+- `SparkLevel73BrushCleaningController.cs`
+- `SparkLevel73SpinDryer.cs`
+- `SparkLevel73Profilometer.cs`
+- `SparkLevel73DefectInspection.cs`
+- `SparkLevel73Metrology.cs`
+- `SparkLevel73SafetyController.cs`
+- `SparkLevel73CMPPLC.cs`
+- `SparkLevel73DisturbanceController.cs`
+- `SparkLevel73FaultRecovery.cs`
+- `SparkLevel73EventRecorder.cs`
+- `SparkLevel73ObjectiveTracker.cs`
+- `SparkLevel73SCADADashboard.cs`
+- `SparkLevel73Interaction.cs`
+- `SparkLevel73VisualRigAdapter.cs`
+
+These are proposed responsibilities, not confirmed existing classes.
+
+Reuse compatible infrastructure where practical.
+
+Avoid unnecessarily splitting small systems into excessive MonoBehaviours.
+
+Prefer clearly owned, testable simulation state.
+
+---
+
+# 47. AUTHORITATIVE SIMULATION UPDATE ORDER
+
+Implement a deterministic or consistently scheduled simulation timestep.
+
+Suggested dependency sequence:
+
+1. Validate electrical topology.
+2. Evaluate control power.
+3. Read player commands.
+4. Read valid sensor feedback.
+5. Evaluate safety interlocks.
+6. Execute PLC scan when due.
+7. Evaluate motor speed controllers.
+8. Evaluate downforce controller.
+9. Evaluate slurry controls.
+10. Apply safety overrides.
+11. Update motor torque commands.
+12. Integrate platen speed.
+13. Integrate carrier speed.
+14. Update carrier Z actuator.
+15. Update pressure regulator.
+16. Calculate actual contact force.
+17. Calculate local pressure distribution.
+18. Calculate local relative sliding velocity.
+19. Update slurry pump and actual flow.
+20. Update slurry inventory and pad wetting.
+21. Update pad condition and wear.
+22. Update conditioner state.
+23. Calculate friction and torque load.
+24. Calculate frictional thermal input.
+25. Update contact temperature.
+26. Calculate regional polishing rates.
+27. Integrate material removal.
+28. Update wafer film thickness.
+29. Update topography.
+30. Update dishing and erosion.
+31. Update defect accumulation.
+32. Generate endpoint measurement.
+33. Evaluate endpoint detector.
+34. Apply any stop request.
+35. Update cleaning/drying where active.
+36. Generate metrology measurements.
+37. Acquire new sensor samples.
+38. Apply validity, calibration and latency.
+39. Evaluate protection.
+40. Record event history.
+41. Evaluate authoritative objectives.
+42. Update SCADA.
+43. Update visual rig and effects.
+
+## IMPORTANT
+
+This is a conceptual schedule, not permission to integrate the same timestep multiple times.
+
+If coupled contact, speed, pressure and friction states require iteration, solve consistently and commit one final timestep.
+
+Do not remove film twice in one update.
+
+---
+
+# 48. AAA VISUAL IMPLEMENTATION
+
+Use the approved Level 73 cinematic design.
+
+## STARTUP
+
+- Platen stationary.
+- Wafer carrier raised.
+- Conditioner idle.
+- Slurry disabled.
+- Wafer robot waiting.
+- SCADA initializing.
+
+## MOTOR COMMISSIONING
+
+- Platen accelerates.
+- Carrier accelerates independently.
+- Speed encoders animate.
+- Motor-load indicators update.
+
+## WAFER LOADING
+
+- Robot picks wafer.
+- Wafer alignment completes.
+- Carrier secures wafer.
+- Contact actuator approaches pad.
+
+## SLURRY DELIVERY
+
+- Slurry pump rotates.
+- Dispensing arm moves.
+- Nozzle activates.
+- Cyan fluid VFX follows actual flow.
+
+## POLISHING
+
+- Carrier lowers.
+- Actual contact established.
+- Pad and platen rotate together at measured platen speed.
+- Carrier rotates independently.
+- Pressure-zone indicators respond.
+- Motor current changes under load.
+- Wafer height map gradually flattens.
+
+## PAD CONDITIONING
+
+- Conditioner swing arm moves.
+- Disc rotates.
+- Pad condition improves within physical limits.
+- Pad-wear indication responds.
+
+## ENDPOINT
+
+- Optical signal changes.
+- Endpoint indicator activates.
+- Carrier retracts.
+- Motors transition safely.
+- Wafer transfer begins.
+
+## CLEANING
+
+- Wafer rinses.
+- Brushes rotate.
+- Spin dryer accelerates.
+- Residue and liquid states decrease.
+
+## INSPECTION
+
+- Profilometer scans.
+- Defect camera moves.
+- Dishing/erosion analyzer updates.
+- Final wafer quality is displayed.
+
+## DISTURBANCES
+
+- Pad glazing affects removal.
+- Slurry restriction changes flow VFX and friction.
+- Edge-pressure drift changes pressure and wafer uniformity.
+
+## FINAL FEEDBACK FAULT
+
+- Downforce sensor becomes INVALID.
+- Pressure controller enters safe hold.
+- Carrier moves to safe state.
+- Wire repaired.
+- Load cell recalibrated.
+- Fresh processing completed.
+- Final 6/6 certified.
+
+All visuals must follow authoritative simulation state.
+
+---
+
+# 49. ONE-CLICK UNITY EDITOR LEVEL CREATOR
+
+Create:
+
+`Tools/Project Spark/Levels/Create Level 73`
+
+The new builder must generate or safely update:
+
+- `Level_73.asset`
+- `Level_73_Layout.prefab`
+- All 54 numbered FBX model instances.
+- Exactly 152 functional terminal anchors.
+- Exactly 98 player-wire declarations.
+- Fixed internal equipment connections.
+- Platen motor simulation configuration.
+- Carrier motor simulation configuration.
+- Multi-zone pressure configuration.
+- Wafer topography configuration.
+- Slurry network configuration.
+- Pad condition and wear configuration.
+- Conditioning system.
+- Endpoint measurements.
+- Post-CMP cleaning.
+- Surface metrology.
+- Safety and PLC logic.
+- Three disturbances.
+- Final downforce-feedback fault.
+- Six authoritative objectives.
+- Live SCADA.
+- Animation bindings.
+- Validation report.
+
+## REQUIRED EDITOR OPERATIONS
+
+1. Inspect Project Spark Editor APIs.
+2. Correct the existing art-helper compile issue.
+3. Locate all 54 numbered FBXs.
+4. Validate exact filenames.
+5. Validate FBX import scale.
+6. Verify approximately 17.15 m workstation width.
+7. Create/update Level 73 definition.
+8. Set ID `level_73`.
+9. Set display name `Polish to Perfection`.
+10. Set subtitle.
+11. Create six objective definitions.
+12. Create/update layout prefab.
+13. Create `L73_HD_VISUAL_ART`.
+14. Place all 54 individual FBXs.
+15. Preserve common-origin coordinates.
+16. Configure safety enclosure.
+17. Configure platen.
+18. Configure polishing pad.
+19. Configure platen motor.
+20. Configure carrier head.
+21. Configure gimbal.
+22. Configure multi-zone pressure bladder.
+23. Configure retaining ring.
+24. Configure silicon wafer.
+25. Configure patterned film.
+26. Configure wafer topography display.
+27. Configure wafer cassette.
+28. Configure wafer robot.
+29. Configure wafer lift.
+30. Configure slurry supply.
+31. Configure slurry tank.
+32. Configure slurry pump.
+33. Configure slurry flow transmitter.
+34. Configure slurry arm.
+35. Configure slurry nozzle.
+36. Configure concentration sensor.
+37. Configure slurry temperature sensor.
+38. Configure conditioner arm.
+39. Configure conditioner disc.
+40. Configure conditioner motor.
+41. Configure pad-wear sensor.
+42. Configure groove scanner.
+43. Configure downforce load cell.
+44. Configure pressure regulator.
+45. Configure platen encoder.
+46. Configure carrier encoder.
+47. Configure torque/current analyzer.
+48. Configure vibration sensor.
+49. Configure acoustic sensor.
+50. Configure temperature probe.
+51. Configure cooling loop.
+52. Configure slurry splash guard.
+53. Configure waste collector.
+54. Configure emergency safety station.
+55. Configure rinse chamber.
+56. Configure brush cleaning.
+57. Configure spin dryer.
+58. Configure optical endpoint sensor.
+59. Configure eddy-current sensor.
+60. Configure profilometer.
+61. Configure defect inspection.
+62. Configure dishing/erosion analyzer.
+63. Configure pressure PID.
+64. Configure motion controller.
+65. Configure main PLC.
+66. Configure digital I/O.
+67. Configure SCADA.
+68. Configure regulated 5 V control supply.
+69. Create exactly 152 functional terminals.
+70. Create exactly 98 player-wire declarations.
+71. Register equipment component IDs.
+72. Register terminal IDs.
+73. Configure internal fixed connections.
+74. Configure motor inertias.
+75. Configure speed and torque limits.
+76. Configure contact mechanics.
+77. Configure pressure-zone parameters.
+78. Configure slurry properties and inventories.
+79. Configure pad wear.
+80. Configure conditioning.
+81. Configure material removal coefficients.
+82. Configure initial wafer topography.
+83. Configure patterned film layers.
+84. Configure dishing and erosion.
+85. Configure defect model.
+86. Configure thermal model.
+87. Configure endpoint measurements.
+88. Configure cleaning dynamics.
+89. Configure metrology.
+90. Configure pad glazing disturbance.
+91. Configure slurry restriction disturbance.
+92. Configure edge-pressure drift disturbance.
+93. Configure final downforce feedback disconnection.
+94. Bind all 35 verified animation parent groups.
+95. Configure slurry and polishing VFX.
+96. Configure real SCADA labels and graphs.
+97. Bind six authoritative objectives.
+98. Validate missing references.
+99. Detect duplicate terminals.
+100. Detect conflicting simulation owners.
+101. Generate validation report.
+102. Save the level assets and prefab.
+
+## EDITOR RELIABILITY
+
+Use actual Unity APIs and paths.
+
+Do not invent asset GUIDs.
+
+Use appropriate:
+
+- `AssetDatabase`
+- `PrefabUtility`
+- `SerializedObject`
+- Undo
+- Editor asset-saving operations.
+
+Make the builder safe to rerun.
+
+Do not duplicate visual models, terminals, controllers or gameplay systems.
+
+Preserve Levels 1–72.
+
+---
+
+# 50. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**BUILD 98 WIRES → VERIFY 152 TERMINALS → ENABLE 5 V CONTROL POWER → COMMISSION CMP PLC → CALIBRATE PLATEN ENCODER → CALIBRATE CARRIER ENCODER → CALIBRATE DOWNFORCE LOAD CELL → CALIBRATE SLURRY FLOW → CALIBRATE TORQUE AND ENDPOINT SENSORS → INSPECT POLISHING PAD → START PLATEN MOTOR → START CARRIER MOTOR → VERIFY ACTUAL RPM → COMMISSION SLURRY PUMP → ESTABLISH SLURRY FLOW → LOAD WAFER → ALIGN WAFER → LOWER CARRIER SAFELY → ESTABLISH ACTUAL CONTACT FORCE → ENABLE MULTI-ZONE PRESSURE PID → VERIFY LOCAL CONTACT PRESSURES → CALCULATE RELATIVE POLISHING VELOCITY → START POLISHING → VERIFY REAL FILM REMOVAL → MONITOR MOTOR TORQUE → MONITOR VIBRATION → MONITOR CONTACT TEMPERATURE → CONTROL PAD CONDITION → MONITOR REGIONAL TOPOGRAPHY → DETECT OPTICAL ENDPOINT → STOP POLISHING SAFELY → RETRACT CARRIER → UNLOAD WAFER → RINSE WAFER → BRUSH CLEAN WAFER → SPIN DRY WAFER → SCAN SURFACE PROFILE → MEASURE DISHING AND EROSION → VERIFY SCRATCH DEFECTS → CERTIFY WAFER → APPLY PAD GLAZING → DETECT REMOVAL DEGRADATION → CONDITION PAD → RESTORE PERFORMANCE → APPLY SLURRY RESTRICTION → DETECT LOW FLOW → RESTORE SLURRY → APPLY EDGE-PRESSURE DRIFT → DETECT UNIFORMITY DEGRADATION → REPAIR PRESSURE CONTROL → COMPLETE FRESH WAFER → DISCONNECT ACTUAL DOWNFORCE FEEDBACK WIRE → DETECT INVALID FORCE SIGNAL → INHIBIT UNSAFE CONTACT → ENTER SAFE HOLD → RECONNECT ACTUAL WIRE → RECALIBRATE LOAD CELL → EXPLICITLY RESET FAULT → RECOMMISSION PRESSURE CONTROL → COMPLETE FRESH POLISHING → VERIFY ENDPOINT → CLEAN AND DRY WAFER → PASS FRESH METROLOGY → AUTHORITATIVE 6/6**
+
+---
+
+# 51. PLAYER-FACING GAME MESSAGES
+
+Implement:
+
+- `BUILD THE PRECISION POLISHING NETWORK`
+- `CONNECT ALL 98 WIRES`
+- `VERIFY 152 FUNCTIONAL TERMINALS`
+- `POWER THE CMP CONTROL PLC`
+- `CALIBRATE PLATEN SPEED`
+- `CALIBRATE CARRIER SPEED`
+- `CALIBRATE DOWNFORCE LOAD CELL`
+- `CALIBRATE SLURRY FLOW`
+- `INSPECT POLISHING PAD`
+- `PAD CONDITION VERIFIED`
+- `START PLATEN DRIVE`
+- `START CARRIER DRIVE`
+- `VERIFY ACTUAL RPM`
+- `ENABLE SLURRY DELIVERY`
+- `SLURRY FLOW ESTABLISHED`
+- `LOAD SILICON WAFER`
+- `ALIGN WAFER CARRIER`
+- `LOWER CARRIER`
+- `ESTABLISH CONTROLLED CONTACT`
+- `ENABLE MULTI-ZONE PRESSURE PID`
+- `BALANCE CENTER AND EDGE PRESSURE`
+- `START POLISHING`
+- `MATERIAL REMOVAL ACTIVE`
+- `MONITOR CONTACT TEMPERATURE`
+- `MONITOR MOTOR TORQUE`
+- `MONITOR WAFER TOPOGRAPHY`
+- `SURFACE HEIGHT VARIATION DECREASING`
+- `ENDPOINT SIGNAL CHANGING`
+- `ENDPOINT DETECTED`
+- `STOP POLISHING`
+- `RETRACT CARRIER`
+- `RINSE WAFER`
+- `CLEAN WAFER`
+- `DRY WAFER`
+- `RUN FINAL METROLOGY`
+- `VERIFY FILM THICKNESS`
+- `VERIFY WAFER FLATNESS`
+- `VERIFY DISHING AND EROSION`
+- `VERIFY SURFACE DEFECTS`
+- `WAFER CERTIFIED`
+- `PAD GLAZING DETECTED`
+- `REMOVAL RATE DEGRADING`
+- `RESTORE PAD CONDITION`
+- `SLURRY FLOW RESTRICTED`
+- `FRICTION RISING`
+- `RESTORE SLURRY DELIVERY`
+- `EDGE PRESSURE DRIFT DETECTED`
+- `REMOVAL UNIFORMITY DEGRADING`
+- `RESTORE PRESSURE BALANCE`
+- `DISTURBANCE TESTS COMPLETE`
+- `DISCONNECT CRITICAL DOWNFORCE FEEDBACK`
+- `LOAD CELL SIGNAL LOST`
+- `UNSAFE CONTACT INHIBITED`
+- `CARRIER SAFE RETRACTION ACTIVE`
+- `RECONNECT DOWNFORCE WIRE`
+- `RECALIBRATE LOAD CELL`
+- `RESET PRESSURE FAULT`
+- `RECOMMISSION CMP PROCESS`
+- `FINAL WAFER PLANARIZATION TEST`
+- `FINAL METROLOGY CERTIFICATION`
+- `LEVEL 73 COMPLETE`
+
+---
+
+# 52. TESTING AND DIAGNOSTICS
+
+Provide clear diagnostics for:
+
+- Incorrect W01–W98 wiring.
+- Missing terminal IDs.
+- Duplicate terminal IDs.
+- Control supply invalid.
+- Control return missing.
+- Platen drive disconnected.
+- Carrier drive disconnected.
+- Platen RPM feedback missing.
+- Carrier RPM feedback missing.
+- Motor speed not responding.
+- Mechanical torque inconsistent.
+- Carrier Z actuator invalid.
+- Contact falsely enabled.
+- Downforce load cell invalid.
+- Pressure regulator disconnected.
+- Center-zone pressure invalid.
+- Edge-zone pressure invalid.
+- Pressure controller windup.
+- Contact force exceeding limits.
+- Slurry inventory negative.
+- Slurry pump operating without fluid.
+- Slurry flow transmitter disconnected.
+- Slurry flow not responding.
+- Slurry concentration invalid.
+- Conditioner motor disconnected.
+- Conditioner not contacting pad.
+- Pad glazing not affecting removal.
+- Pad wear not changing.
+- Pad life increasing without replacement.
+- Material removal with no wafer contact.
+- Material removal with platen stationary.
+- Material removal continuing after stop.
+- Film thickness becoming negative.
+- Regional thickness not updating.
+- Dishing/erosion ignored.
+- Defect model inconsistent.
+- Contact temperature not responding.
+- Motor current not reflecting friction.
+- Optical endpoint signal invalid.
+- Eddy-current thickness incompatible with film.
+- Endpoint declared without measurement evidence.
+- Wafer certified without cleaning.
+- Rinse not reducing residue.
+- Dryer not reducing liquid.
+- Metrology not checking actual wafer.
+- Critical safety interlock ignored.
+- Downforce wire removed but signal still valid.
+- Load-cell fault not triggering safe response.
+- Reset accepted before repair.
+- Previously certified objectives erased.
+- `LevelGamePlayManager` stuck at 0/6 or 5/6.
+- Unity reload failure.
+- Regression in Levels 1–72.
+
+---
+
+# 53. REQUIRED VALIDATION TESTS
+
+Test the following:
+
+1. Exactly 98 wires registered.
+2. Exactly 152 functional terminals registered.
+3. Wire IDs unique.
+4. Terminal IDs unique.
+5. Control power valid.
+6. Main PLC initializes.
+7. Safety ready.
+8. Platen motor starts.
+9. Carrier motor starts.
+10. Actual platen RPM changes dynamically.
+11. Actual carrier RPM changes dynamically.
+12. Speed sensors report actual RPM.
+13. Motor torque responds to load.
+14. Carrier Z actuator moves.
+15. Gimbal operates.
+16. Contact force develops dynamically.
+17. Load cell measures actual force.
+18. Multi-zone pressure PID operates.
+19. Center pressure responds.
+20. Middle pressure responds.
+21. Edge pressure responds.
+22. Retaining-ring pressure responds.
+23. Relative velocity calculates correctly.
+24. No polishing occurs without contact.
+25. No polishing occurs without valid process permission.
+26. Slurry pump starts.
+27. Slurry inventory decreases appropriately.
+28. Flow transmitter measures actual flow.
+29. Slurry concentration affects the model.
+30. Slurry temperature affects the model where configured.
+31. Pad wetting responds to flow.
+32. Conditioner motor starts.
+33. Conditioner arm moves.
+34. Pad condition changes through conditioning.
+35. Pad wear remains bounded.
+36. Pad glazing affects removal.
+37. Material removal rate changes with pressure.
+38. Material removal rate changes with velocity.
+39. Material removal rate changes with pad condition.
+40. Material removal rate changes with slurry conditions.
+41. Regional film thickness decreases.
+42. Film thickness never becomes negative.
+43. Surface topography responds.
+44. Dishing calculated.
+45. Erosion calculated.
+46. Scratches/defects tracked.
+47. Motor current responds to friction.
+48. Vibration responds to modeled conditions.
+49. Interface temperature changes dynamically.
+50. Cooling removes finite heat.
+51. Optical endpoint signal generated.
+52. Endpoint controller uses valid measurements.
+53. Correct endpoint causes safe stop.
+54. Wafer retracts.
+55. Wafer unloads.
+56. Rinse removes slurry residue.
+57. Brushes clean wafer.
+58. Dryer removes residual liquid.
+59. Profilometer measures actual surface heights.
+60. Dishing/erosion metrology works.
+61. Defect inspection works.
+62. Valid wafer passes.
+63. Overpolished wafer fails.
+64. Insufficiently polished wafer fails.
+65. Excess dishing fails.
+66. Excess erosion fails.
+67. Excess scratches fail.
+68. Pad glazing disturbance works.
+69. Pad conditioning recovery works.
+70. Slurry restriction reduces actual flow.
+71. Slurry recovery works.
+72. Edge-pressure fault affects contact.
+73. Uniformity changes.
+74. Edge-pressure recovery works.
+75. Fresh post-disturbance wafer passes.
+76. Actual load-cell feedback wire disconnects.
+77. Electrical topology changes.
+78. Measurement validity becomes false.
+79. Pressure controller detects invalid feedback.
+80. Unsafe contact inhibited.
+81. Carrier performs appropriate safe response.
+82. Polishing material removal stops.
+83. Fault latches.
+84. Actual wire reconnects.
+85. Fresh measurement acquired.
+86. Load cell recalibrated.
+87. Explicit fault reset succeeds.
+88. Pressure control recommissioned.
+89. Fresh wafer process succeeds.
+90. Fresh endpoint detection succeeds.
+91. Fresh cleaning and drying succeed.
+92. Fresh metrology passes.
+93. Authoritative evaluator reaches 6/6.
+94. Level progression works.
+95. Levels 1–72 remain unaffected.
+
+Only report a test as PASSED when it actually ran.
+
+---
+
+# 54. REQUIRED DOWNLOADABLE UNITY DELIVERABLES
+
+Create a complete Level 73 implementation ZIP containing:
+
+- All runtime C# source code.
+- Authoritative CMP process coordinator.
+- Platen motor dynamics.
+- Carrier motor dynamics.
+- Independent speed control.
+- Platen encoder.
+- Carrier encoder.
+- Carrier Z actuator.
+- Contact mechanics.
+- Local relative velocity.
+- Multi-zone contact pressure.
+- Load-cell sensing.
+- Pressure regulation.
+- Pressure PID.
+- Slurry pump dynamics.
+- Slurry inventory.
+- Slurry flow measurement.
+- Slurry concentration and temperature.
+- Slurry dispensing arm.
+- Waste slurry collection.
+- Pad condition.
+- Pad wear.
+- Pad glazing.
+- Pad conditioner.
+- Pad inspection.
+- Preston-law material removal.
+- Regional wafer topography.
+- Patterned film thickness.
+- Dishing and erosion.
+- Scratch/defect model.
+- Friction torque.
+- Motor current analysis.
+- Vibration sensing.
+- Acoustic emission sensing.
+- Polishing thermal model.
+- Cooling system.
+- Optical endpoint sensing.
+- Eddy-current film measurement.
+- Endpoint detection.
+- Wafer load/unload automation.
+- Rinse control.
+- Brush cleaning.
+- Spin drying.
+- Profilometer.
+- Defect inspection.
+- Final wafer quality certification.
+- Pad glazing disturbance.
+- Slurry restriction disturbance.
+- Edge-pressure fault.
+- Downforce-feedback wire disconnection.
+- Invalid feedback detection.
+- Safe carrier response.
+- Fault latching.
+- Physical wire repair.
+- Load-cell recalibration.
+- Explicit fault reset.
+- Fresh wafer certification.
+- CMP PLC.
+- Safety controller.
+- Six authoritative objectives.
+- One-click Unity Level 73 Editor builder.
+- Level definition creator or asset.
+- Layout prefab creator.
+- Full W01–W98 wiring endpoint manifest.
+- 152-terminal binding manifest.
+- Equipment binding manifest.
+- All 35 actual animation pivots.
+- Motion configuration.
+- Contact parameter configuration.
+- Slurry parameter configuration.
+- Pad condition configuration.
+- Material removal configuration.
+- Wafer topography configuration.
+- Endpoint configuration.
+- Metrology configuration.
+- Safety configuration.
+- PID configuration.
+- Disturbance configuration.
+- Live SCADA.
+- Runtime diagnostics.
+- Player gameplay walkthrough.
+- Objective certification checklist.
+- Troubleshooting guide.
+- Actual test report.
+
+Reuse:
+
+`ProjectSpark_Level73_HD_AAA_Models.zip`
+
+Do not regenerate the approved geometry without a demonstrated compatibility problem.
+
+Only provide download links to files that were actually created and verified.
+
+Do not claim Unity compilation, Play Mode success or authoritative level completion unless tested.
+
+---
+
+# 55. FINAL EXECUTION INSTRUCTIONS
+
+**IMPLEMENT LEVEL 73 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect my existing Project Spark Unity source code and the approved Level 73 assets.
+
+Then:
+
+1. Preserve existing Levels 1–72.
+2. Import all 54 modular FBXs.
+3. Verify correct FBX import scale.
+4. Correct the identified art-placement helper string-literal issue.
+5. Preserve shared-origin model placement.
+6. Reuse existing materials and visual rig.
+7. Implement 98 player-created wires.
+8. Implement 152 functional terminals.
+9. Integrate actual Project Spark electrical connectivity.
+10. Implement industrial motor power abstraction.
+11. Implement platen shaft dynamics.
+12. Implement carrier shaft dynamics.
+13. Implement carrier Z actuation.
+14. Implement carrier gimbal behavior.
+15. Implement multi-zone pressure regulation.
+16. Implement actual load-cell measurement.
+17. Implement speed encoders.
+18. Implement relative polishing velocity.
+19. Implement slurry pump.
+20. Implement slurry inventory.
+21. Implement slurry flow sensing.
+22. Implement slurry concentration.
+23. Implement slurry delivery.
+24. Implement slurry waste recovery.
+25. Implement pad condition.
+26. Implement pad glazing.
+27. Implement pad wear.
+28. Implement pad conditioning.
+29. Implement pad inspection.
+30. Implement contact friction.
+31. Implement motor torque/current feedback.
+32. Implement thermal energy balance.
+33. Implement cooling.
+34. Implement regional wafer film removal.
+35. Implement microscopic topography.
+36. Implement wafer nonuniformity.
+37. Implement dishing.
+38. Implement erosion.
+39. Implement defects and scratches.
+40. Implement optical endpoint sensing.
+41. Implement eddy-current sensing where applicable.
+42. Implement measurement-based endpoint control.
+43. Implement safe polishing shutdown.
+44. Implement wafer handling.
+45. Implement rinsing.
+46. Implement brush cleaning.
+47. Implement spin drying.
+48. Implement final metrology.
+49. Implement CMP safety logic.
+50. Implement PLC sequencing.
+51. Implement pad glazing disturbance.
+52. Implement slurry restriction disturbance.
+53. Implement edge-pressure drift.
+54. Implement safe disturbance recovery.
+55. Implement actual downforce wire disconnection.
+56. Implement invalid-force feedback detection.
+57. Implement safe carrier retraction.
+58. Implement wire repair.
+59. Implement load-cell recalibration.
+60. Implement explicit fault reset.
+61. Implement fresh post-repair polishing certification.
+62. Integrate six authoritative objectives.
+63. Build the one-click Level 73 Unity Editor creator.
+64. Bind all 35 animation parent groups.
+65. Create real simulation-driven slurry and polishing VFX.
+66. Create the live CMP SCADA dashboard.
+67. Add comprehensive diagnostics.
+68. Run feasible automated tests.
+69. Package and verify all deliverables.
+
+Do not ask for reapproval of the already-approved Level 73 design.
+
+Do not fabricate motor speeds, contact force, slurry flow, pad wear, removal rates, film thickness, wafer surface height, dishing, erosion, temperature, endpoint data, sensor validity, safety status or objective completion.
+
+If the existing Project Spark API cannot be verified, implement a safely isolated subsystem where possible and report the exact unresolved dependency.
+
+---
+
+# 56. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect exactly 98 wires.
+2. Validate exactly 152 functional terminals.
+3. Commission the CMP PLC.
+4. Calibrate platen and carrier encoders.
+5. Calibrate the critical load cell.
+6. Calibrate slurry flow sensing.
+7. Commission the platen motor.
+8. Commission the carrier motor.
+9. Observe actual shaft acceleration.
+10. Load and align a wafer.
+11. Inspect the polishing pad.
+12. Commission the slurry pump.
+13. Establish real slurry delivery.
+14. Lower the carrier safely.
+15. Establish controlled wafer contact.
+16. Tune the multi-zone downforce controller.
+17. Control center, middle and edge pressure.
+18. Calculate actual relative polishing velocity.
+19. Begin physical material removal.
+20. Track regional film thickness.
+21. Observe wafer topography changing.
+22. Monitor motor torque and vibration.
+23. Control contact temperature.
+24. Maintain pad condition.
+25. Detect the polishing endpoint.
+26. Stop material removal safely.
+27. Retract and unload the wafer.
+28. Rinse the wafer.
+29. Brush-clean the wafer.
+30. Spin-dry the wafer.
+31. Measure final thickness.
+32. Measure surface flatness.
+33. Measure dishing and erosion.
+34. Inspect scratch defects.
+35. Certify a successful planarized wafer.
+36. Diagnose pad glazing.
+37. Restore pad effectiveness.
+38. Diagnose slurry restriction.
+39. Restore slurry delivery.
+40. Diagnose edge-pressure drift.
+41. Restore pressure balance.
+42. Complete a new valid wafer.
+43. Disconnect the actual downforce sensor feedback wire.
+44. Detect invalid force feedback.
+45. Inhibit unsafe polishing.
+46. Perform the correct safe carrier response.
+47. Reconnect the actual wire.
+48. Recalibrate the load cell.
+49. Explicitly reset the fault.
+50. Recommission pressure control.
+51. Perform fresh polishing.
+52. Detect the fresh endpoint.
+53. Clean and dry the new wafer.
+54. Pass final metrology.
+55. Complete all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 73.**
+
+The player must learn real relationships between rotating machinery, torque, contact pressure, sliding velocity, abrasive slurry, polishing-pad condition, material removal, thermal load, wafer surface topography, endpoint measurement, cleaning, precision metrology and functional safety.
+
+**FINAL GOAL: A COMPLETE, POLISHED, UNITY-READY, AAA-QUALITY AND ACTUALLY PLAYABLE LEVEL 73 — POLISH TO PERFECTION.**

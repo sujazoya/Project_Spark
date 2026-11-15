@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_67_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_67
+  levelTitle: Master the Flow
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the process plant
+    explanation: Route power, drives, transmitters, valves and safety. Install W74
+      last.
+    caption: "74 WIRES  \u2022  116 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.67}
+      label: POWER
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.67, y: 0.67}
+      label: SIGNALS
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.67}
+      label: SAFETY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.67}
+      - {x: 0.43, y: 0.67}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.67, y: 0.67}
+      - {x: 0.75, y: 0.67}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 02 / Prime and tune
+    explanation: Calibrate, prime A and B, start feed and mixing, prime the transfer
+      pump, then tune outer level and inner flow.
+    caption: "SUCTION  \u2022  LEVEL  \u2022  FLOW"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.67}
+      label: PRIME
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.67, y: 0.67}
+      label: MEASURE
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.67}
+      label: TUNE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.67}
+      - {x: 0.43, y: 0.67}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.67, y: 0.67}
+      - {x: 0.75, y: 0.67}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 03 / Make on-spec product
+    explanation: Use real flows and blend readings to certify delivery. Verify response
+      to demand, pressure loss and Pump B failure.
+    caption: 70% A  /  30% B
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.67}
+      label: RATIO
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.67, y: 0.67}
+      label: PRODUCE
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.67}
+      label: DISTURB
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.67}
+      - {x: 0.43, y: 0.67}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.67, y: 0.67}
+      - {x: 0.75, y: 0.67}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+  - title: 04 / Recover Supply B
+    explanation: Undo the real Flow B connection, observe automatic isolation, reconnect,
+      recalibrate, reset and repeat recipe and demand tests.
+    caption: "W74  \u2022  RECALIBRATE"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.67}
+      label: ISOLATE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.67, y: 0.67}
+      label: RECOVER
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.67}
+      label: CERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.67}
+      - {x: 0.43, y: 0.67}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.67, y: 0.67}
+      - {x: 0.75, y: 0.67}
+      energized: 0
+      color: {r: 1, g: 0.68, b: 0.31, a: 1}

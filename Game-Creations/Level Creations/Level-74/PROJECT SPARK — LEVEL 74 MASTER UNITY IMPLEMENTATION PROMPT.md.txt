@@ -1,0 +1,3265 @@
+# PROJECT SPARK — LEVEL 74 MASTER UNITY IMPLEMENTATION PROMPT
+
+## LEVEL 74: ALIGN THE LIGHT
+### Advanced DUV Semiconductor Photolithography, Nanometre Motion Control, Reticle and Wafer Stage Synchronization, Laser Interferometer Feedback, Optical Projection, Exposure Dose, Photoresist Patterning, Focus Compensation, Overlay Metrology, Industrial PLC Safety and Critical Sensor Recovery
+
+Act as my senior Unity C# engineer, semiconductor manufacturing simulation engineer, photolithography specialist, precision mechatronics engineer, motion-control engineer, optical systems engineer, servo-control specialist, industrial instrumentation developer, PID controller specialist, metrology engineer, functional safety engineer, PLC programmer, gameplay engineer, Unity Editor automation specialist and AAA technical artist.
+
+**YOUR TASK IS TO IMPLEMENT THE COMPLETE, FUNCTIONAL, PLAYABLE LEVEL 74 INSIDE MY EXISTING PROJECT SPARK UNITY GAME.**
+
+This is a complete implementation request, not a design discussion.
+
+The Level 74 design and its 56 modular HD/AAA-inspired 3D equipment models have already been approved.
+
+Do not regenerate the models unless an actual compatibility problem requires it.
+
+## PRIMARY MISSION
+
+The player must operate a virtual advanced photolithography scanner that prints microscopic circuit patterns onto a previously planarized silicon wafer.
+
+The player must:
+
+1. Build the machine's electrical control network.
+2. Commission the PLC and safety interlocks.
+3. Prepare and coat the wafer with fictional photoresist.
+4. Stabilize the soft-bake process.
+5. Load and inspect a circuit reticle.
+6. Calibrate wafer and reticle stage feedback.
+7. Align existing wafer circuit marks.
+8. Correct wafer focus and tilt.
+9. Synchronize the reticle and wafer motion stages.
+10. Stabilize the DUV optical source.
+11. Control exposure dose.
+12. Expose a 4×4 array of wafer fields.
+13. Perform post-exposure bake and development.
+14. Clean and dry the wafer.
+15. Verify critical dimensions, overlay and defects.
+16. Survive three industrial disturbances.
+17. Recover from a deliberately disconnected laser interferometer signal.
+18. Complete all six authoritative level objectives.
+
+**DO NOT STOP AT PSEUDOCODE OR A DECORATIVE LITHOGRAPHY SCENE.**
+
+The actual Project Spark `LevelGamePlayManager` must reach **6/6**.
+
+---
+
+# 1. INSPECT MY ACTUAL PROJECT SPARK UNITY SOURCE
+
+Before writing Level 74 runtime code, inspect the actual project architecture.
+
+Find and study these classes if present:
+
+- `SparkElectricalSolver`
+- `SparkCircuitSystem`
+- `SparkElectricalComponent`
+- `SparkTerminal`
+- `SparkSwitch`
+- `SparkLevelDefinition`
+- `SparkLevelEvaluator`
+- `SparkLevelSceneBindings`
+- `SparkLevelWorkstationBindingBridge`
+- `SparkShelfSlot`
+- `SparkObjectShelf`
+- `SparkLevelLayoutLoader`
+- `SparkLevel`
+- `LevelGamePlayManager`
+
+Also inspect actual implementations of:
+
+- Player-created wires.
+- Wire registration and removal.
+- Circuit topology and connectivity.
+- Component and terminal IDs.
+- Educational 5 V supply and ground.
+- Power and signal compatibility.
+- Motors and servo drives.
+- Sensors and analog signals.
+- Digital inputs and outputs.
+- PID controllers.
+- PLC control.
+- Emergency-stop logic.
+- Fault latching.
+- Sensor calibration.
+- Stale and invalid measurements.
+- Historical objective completion.
+- Workstation equipment binding.
+- Unity Editor level creation.
+- Prefab instantiation.
+- Runtime SCADA.
+- TextMeshPro.
+- Visual animation adapters.
+- Shelf purchasing and inventory.
+
+## REUSE COMPATIBLE PREVIOUS LEVEL INFRASTRUCTURE
+
+Inspect the following previous levels where their implementations exist:
+
+**Level 54 — Cross the Critical**
+
+Motor dynamics, feedback and protection.
+
+**Level 58 — Isolate the Fault**
+
+Electrical protection and safety isolation.
+
+**Level 59 — Bring Back the Power**
+
+Equipment commissioning and controlled startup.
+
+**Level 60 — The Grid Must Survive**
+
+Coordinated automation.
+
+**Level 63 — Catch the Frequency**
+
+Feedback validity, dynamic control and fault recovery.
+
+**Level 65 — The Factory Thinks**
+
+Robot control, industrial I/O and PLC sequencing.
+
+**Level 66 — Save the Factory**
+
+Vibration, diagnostics and equipment condition.
+
+**Level 67 — Master the Flow**
+
+Flow control and PID loops.
+
+**Level 68 — Tame the Heat**
+
+Thermal inertia, heaters and temperature control.
+
+**Level 70 — Guard the Air**
+
+Environmental monitoring, safety and wafer handling.
+
+**Level 71 — Etch the Future**
+
+Wafer film representation, endpoint sensing and metrology.
+
+**Level 72 — Layer by Layer**
+
+Thin-film measurement and manufacturing process sequencing.
+
+**Level 73 — Polish to Perfection**
+
+Precision mechanical motion, wafer topography, metrology, defect inspection and sensor-feedback faults.
+
+Reuse only implementations that actually exist.
+
+Do not assume previous design documents or prompts mean the Unity features have already been built.
+
+---
+
+# 2. NON-NEGOTIABLE ENGINEERING RULES
+
+1. Inspect the actual codebase before calling existing APIs.
+2. Do not invent Project Spark classes or method signatures.
+3. Preserve Levels 1–73.
+4. Reuse compatible existing infrastructure.
+5. Keep visual art separate from authoritative simulation.
+6. Use actual registered `SparkTerminal` components.
+7. Validate real player-created wire topology.
+8. Do not treat disconnected wires as connected.
+9. Keep 5 V educational control power separate from high-power systems.
+10. Do not power stage motors, heaters and the DUV source entirely from 5 V.
+11. Do not assign actual stage position directly from its command.
+12. Do not assign actual velocity directly from requested velocity.
+13. Do not ignore acceleration, jerk and motion limits.
+14. Do not fabricate interferometer position measurements.
+15. Do not use stale position feedback for precision exposure.
+16. Do not ignore reticle/wafer stage synchronization error.
+17. Do not fake perfect 4:1 motion synchronization.
+18. Do not directly assign overlay error from a success flag.
+19. Do not fabricate wafer focus.
+20. Do not directly set lens thermal drift to zero on reset.
+21. Do not treat a vibration fault as a decorative warning.
+22. Do not assign the photoresist layer directly to its target thickness.
+23. Do not fabricate spin-coating fluid flow.
+24. Do not fabricate bake temperatures.
+25. Do not apply exposure dose when the actual shutter is closed.
+26. Do not create infinite optical power.
+27. Do not ignore photodiode measurement validity.
+28. Do not treat violet visual light as authoritative UV dose.
+29. Do not automatically make all wafer fields identical.
+30. Do not fabricate latent resist images.
+31. Do not produce a developed pattern without valid exposure and development.
+32. Do not fabricate perfect critical dimensions.
+33. Do not fabricate overlay metrology.
+34. Do not ignore reticle pattern defects.
+35. Do not certify failed exposure fields.
+36. Do not allow unsafe exposure with enclosure interlocks open.
+37. Do not allow scanning with invalid critical position feedback.
+38. Do not let PLC commands bypass protective interlocks.
+39. Do not reset a fault before its underlying cause is corrected.
+40. Do not erase historical objectives during the final deliberate fault.
+41. Do not use a fake Level 74-only objective counter.
+42. Do not duplicate authoritative simulation state owners.
+43. Use consistent SI units.
+44. Use stable numerical integration.
+45. Use sufficient precision for nanometre-scale process errors.
+46. Make the Unity Editor creator idempotent.
+47. Do not change existing levels unnecessarily.
+48. Provide complete, compilable C# files.
+49. Clearly identify unresolved dependencies.
+50. Do not claim compilation or Play Mode success without testing.
+
+## AUTHORITATIVE SUCCESS RULE
+
+**THE REAL `LevelGamePlayManager` MUST REACH 6/6.**
+
+A Level 74 dashboard displaying COMPLETE is insufficient.
+
+Inspect and use the actual `SparkLevelDefinition` and `SparkLevelEvaluator` architecture.
+
+Objectives 1–5 must remain historically certified during Objective 6's deliberate interferometer disconnection.
+
+---
+
+# 3. LEVEL 74 CONFIGURATION
+
+**Level Number:** 74
+
+**Level ID:** `level_74`
+
+**Display Name:** `Align the Light`
+
+**Subtitle:** `Advanced Photolithography and Nanometre Alignment`
+
+**Difficulty:** Advanced Master / Expert
+
+**Environment:** Advanced semiconductor lithography workstation
+
+**Main Engineering Theme:** Precision mechatronics and optical manufacturing
+
+**Educational Control Power:** 5 V DC
+
+**Virtual High-Power Domains:** Stage motors, UV source, heaters, pumps
+
+**Main Optical System:** Fictionalized DUV projection scanner
+
+**Nominal Simulated Optical Wavelength:** 193 nm
+
+**Projection Reduction:** 4:1
+
+**Exposure Fields:** 16 in a 4×4 field map
+
+**Individual Equipment Models:** 56 FBX
+
+**Matching Model Backups:** 56 GLB
+
+**Actual Animation Pivot Groups:** 42
+
+**Player-Created Wires:** 102
+
+**Unique Functional Terminals:** 158
+
+**Authoritative Objectives:** 6
+
+**Stage Motion:** Reticle X/Y and wafer X/Y/Z/tilt
+
+**Critical Measurement:** Wafer-stage laser interferometer
+
+**Final Deliberate Fault:** Laser interferometer feedback wire disconnection
+
+## PROPOSED EDUCATIONAL TARGETS
+
+- Resist thickness: 350 ±15 nm.
+- Printed critical dimension: 120 ±8 nm.
+- Maximum overlay error: 12 nm.
+- Exposure dose variation: ≤2%.
+- Focus error: ±100 nm.
+- Successful exposure fields: 16.
+- Pattern quality score: ≥97%.
+- No unresolved critical safety faults.
+- Final authoritative objectives: 6/6.
+
+These are proposed gameplay balancing values, not actual industrial manufacturing recipes.
+
+Use fictional, nonhazardous photoresist and developer materials.
+
+The simulator must not provide operational instructions for real UV exposure or hazardous processing equipment.
+
+---
+
+# 4. USE MY EXISTING LEVEL 74 HD/AAA ASSET PACKAGE
+
+The approved package is:
+
+`ProjectSpark_Level74_HD_AAA_Models.zip`
+
+I already have these 3D assets.
+
+The actual verified manifest reports:
+
+- 56 individual binary FBX models.
+- 56 matching GLB backups.
+- One assembled FBX showcase.
+- One assembled GLB showcase.
+- 140,212 individual equipment triangles.
+- 4,168 separate mesh parts.
+- 42 named animation parent pivot groups.
+- One common-origin workstation layout.
+- Unity art-placement helper.
+- Unity material-upgrade helper.
+- Unity visual-only animation rig.
+- Model manifest.
+- Animation pivot CSV.
+- Art assembly CSV.
+- Component roles CSV.
+- Wiring budget CSV.
+- Gameplay integration plan.
+- Geometry-generation source.
+- Export verification report.
+
+## IMPORTANT
+
+The existing package is visual art only.
+
+It does not include:
+
+- 102 functional player-created wires.
+- 158 actual `SparkTerminal` anchors.
+- Servo-stage physics.
+- Interferometer gameplay measurements.
+- Optical simulation.
+- Photoresist processing physics.
+- Functional safety control.
+- Six implemented objectives.
+- A tested playable Unity level.
+
+Create these systems separately.
+
+## EXPORT REPORT DETAIL
+
+The current verification report contains stale `individual_models_expected` and `matching_individual_glbs_expected` values of 54, although the actual manifest and verified exported inventory contain 56 of each.
+
+Correct those expected-count metadata fields when maintaining the report.
+
+Do not remove two valid models to match the stale expected-count labels.
+
+---
+
+# 5. EXACT 56 VERIFIED FBX FILENAMES
+
+Use the actual names from `Model_Manifest.json`.
+
+| # | Exact FBX filename | Equipment function |
+|---|---|---|
+| 00 | `00_L74_IndustrialLithographyWorkstationBase.fbx` | Workstation chassis |
+| 01 | `01_L74_TransparentLithographySafetyEnclosure.fbx` | Scanner safety enclosure |
+| 02 | `02_L74_AutomatedPhotoresistTrack.fbx` | Resist processing track |
+| 03 | `03_L74_PhotoresistSpinCoatingBowl.fbx` | Resist coating bowl |
+| 04 | `04_L74_PrecisionSpinChuckDrive.fbx` | Spin-coating drive |
+| 05 | `05_L74_VirtualPhotoresistSupplyCartridge.fbx` | Fictional resist cartridge |
+| 06 | `06_L74_PhotoresistMeteringPump.fbx` | Resist metering pump |
+| 07 | `07_L74_PrecisionPhotoresistNozzle.fbx` | Resist dispensing |
+| 08 | `08_L74_ResistThicknessMeasurementSensor.fbx` | Resist thickness sensor |
+| 09 | `09_L74_SoftBakeHotplateModule.fbx` | Soft-bake hotplate |
+| 10 | `10_L74_SoftBakeTemperatureSensor.fbx` | Bake temperature sensing |
+| 11 | `11_L74_SiliconWaferCarrierCassette.fbx` | Wafer cassette |
+| 12 | `12_L74_AutomatedWaferHandlingRobot.fbx` | Wafer robot |
+| 13 | `13_L74_WaferPrealignmentStation.fbx` | Wafer prealignment |
+| 14 | `14_L74_PrecisionProjectionScannerFrame.fbx` | Main optical scanner |
+| 15 | `15_L74_VirtualDUVLightSource.fbx` | Simulated DUV source |
+| 16 | `16_L74_OpticalIlluminationHomogenizer.fbx` | Illumination uniformity |
+| 17 | `17_L74_HighSpeedExposureShutter.fbx` | Light exposure shutter |
+| 18 | `18_L74_PrecisionReticleStorageCassette.fbx` | Reticle cassette |
+| 19 | `19_L74_HighResolutionCircuitReticle.fbx` | Patterned reticle |
+| 20 | `20_L74_PrecisionReticleMotionStage.fbx` | Reticle X/Y stage |
+| 21 | `21_L74_ReticleStageLinearEncoder.fbx` | Reticle position feedback |
+| 22 | `22_L74_ProjectionOpticsLensBarrel.fbx` | Projection optics |
+| 23 | `23_L74_ActiveOpticalFocusCorrector.fbx` | Focus correction |
+| 24 | `24_L74_NumericalApertureSelector.fbx` | NA adjustment |
+| 25 | `25_L74_NanometreWaferXYStage.fbx` | Wafer X/Y stage |
+| 26 | `26_L74_DualAxisLinearServoMotorAssembly.fbx` | Wafer servo motors |
+| 27 | `27_L74_WaferZTiltFocusStage.fbx` | Wafer Z and tilt |
+| 28 | `28_L74_WaferStageLaserInterferometer.fbx` | Critical position sensor |
+| 29 | `29_L74_WaferAlignmentMarkCamera.fbx` | Alignment mark detection |
+| 30 | `30_L74_ElectrostaticWaferChuck.fbx` | Wafer mounting |
+| 31 | `31_L74_PlanarizedSiliconWafer.fbx` | Wafer substrate |
+| 32 | `32_L74_WaferOverlayAlignmentMarks.fbx` | Existing-layer markers |
+| 33 | `33_L74_PhotosensitiveResistLayer.fbx` | Resist film |
+| 34 | `34_L74_WaferTopographyFocusMap.fbx` | Focus-map visualization |
+| 35 | `35_L74_WaferHeightLevelingSensor.fbx` | Height measurement |
+| 36 | `36_L74_ActiveVibrationIsolationPlatform.fbx` | Vibration isolation |
+| 37 | `37_L74_SixAxisVibrationMeasurementSensor.fbx` | Six-axis vibration sensing |
+| 38 | `38_L74_ProjectionLensThermalDriftSensor.fbx` | Optical thermal sensing |
+| 39 | `39_L74_ExposureDosePhotodiode.fbx` | Optical dose sensing |
+| 40 | `40_L74_PrecisionScanSlitAssembly.fbx` | Scan slit |
+| 41 | `41_L74_LithographyEmergencySafetyStation.fbx` | Emergency protection |
+| 42 | `42_L74_PostExposureBakeModule.fbx` | Post-exposure bake |
+| 43 | `43_L74_PostExposureBakeTemperatureSensor.fbx` | Post-bake temperature |
+| 44 | `44_L74_VirtualPhotoresistDeveloperModule.fbx` | Fictional developer |
+| 45 | `45_L74_DeveloperDispensingNozzle.fbx` | Developer nozzle |
+| 46 | `46_L74_DeveloperFlowTransmitter.fbx` | Development flow |
+| 47 | `47_L74_WaferRinseSpinDryer.fbx` | Rinse/drying |
+| 48 | `48_L74_CriticalDimensionInspectionScanner.fbx` | Critical-dimension metrology |
+| 49 | `49_L74_OverlayAlignmentMetrologySystem.fbx` | Overlay metrology |
+| 50 | `50_L74_ReticleDefectInspectionModule.fbx` | Reticle inspection |
+| 51 | `51_L74_PhotoresistPatternDefectCamera.fbx` | Resist defect inspection |
+| 52 | `52_L74_LithographyProcessPLCRack.fbx` | Main PLC |
+| 53 | `53_L74_StageSynchronizationController.fbx` | Motion synchronization |
+| 54 | `54_L74_HolographicLithographySCADAMonitor.fbx` | SCADA display |
+| 55 | `55_L74_Regulated5VControlSupply.fbx` | Educational control supply |
+
+Do not invent replacement filenames.
+
+Use the matching 56 GLBs as backups, not duplicate visible equipment.
+
+---
+
+# 6. FBX SCALE AND ART PLACEMENT
+
+The actual package reports:
+
+- X = workstation width.
+- Y = upward.
+- Z = front.
+- Authored coordinates originally in metres.
+- GLB numeric vertex coordinates in metres.
+- FBX numeric vertex coordinates in centimetres.
+- FBX `UnitScaleFactor=1`.
+- All individual models use a common origin.
+- Approximate workstation width: 18.2 metres.
+
+## CRITICAL SCALE RULE
+
+Verify Unity's FBX import conversion before creating gameplay colliders, terminals or motion bindings.
+
+The assembled workstation should be approximately **18.2 Unity units wide** if one Unity unit represents one metre.
+
+Do not double-apply scale conversions.
+
+## ART ROOT
+
+Create:
+
+`L74_HD_VISUAL_ART`
+
+Place all 56 numbered FBX models at their common origin.
+
+Use:
+
+- Local position `(0,0,0)`.
+- Identity rotation.
+- Local scale `(1,1,1)` after importer-scale validation.
+
+Do not manually adjust arbitrary model positions.
+
+## ASSEMBLED REFERENCE
+
+The existing package contains:
+
+`Models/Level74_Complete_ArtKit_Showcase.fbx`
+
+and:
+
+`GLB/Level74_Complete_ArtKit_Showcase.glb`
+
+Use these for reference only.
+
+Do not place the assembled showcase together with all individual models.
+
+---
+
+# 7. EXACT 42 VERIFIED ANIMATION PIVOT GROUPS
+
+The supplied `Animation_Rigs.csv` contains **42 actual pivot-parent references**, exceeding the 32 originally proposed in the design.
+
+Use the verified names.
+
+| # | Pivot name | World-space reference XYZ |
+|---|---|---|
+| 01 | `ANIM_RESIST_SPIN_BOWL` | (-6.86, 1.65, -1.63) |
+| 02 | `ANIM_RESIST_SPIN_CHUCK` | (-6.86, 1.19, -1.63) |
+| 03 | `ANIM_RESIST_PUMP` | (-7.48, 0.99, 2.28) |
+| 04 | `ANIM_RESIST_NOZZLE` | (-6.63, 2.23, -1.59) |
+| 05 | `ANIM_RESIST_THICKNESS_PROBE` | (-5.31, 2.24, 0.15) |
+| 06 | `ANIM_SOFTBAKE_LIFT` | (-5.34, 1.53, 1.68) |
+| 07 | `ANIM_WAFER_ROBOT_BASE` | (-4.55, 1.06, 0.03) |
+| 08 | `ANIM_WAFER_ROBOT_ARM` | (-4.26, 1.85, 0.03) |
+| 09 | `ANIM_WAFER_ROBOT_TOOL` | (-3.40, 1.98, 0.04) |
+| 10 | `ANIM_WAFER_PREALIGNER` | (-3.60, 1.23, 1.43) |
+| 11 | `ANIM_DUV_SOURCE_IRIS` | (0.00, 5.16, -0.73) |
+| 12 | `ANIM_EXPOSURE_SHUTTER` | (0.00, 3.92, -0.73) |
+| 13 | `ANIM_RETICLE_STAGE_X` | (0.00, 3.38, -0.73) |
+| 14 | `ANIM_RETICLE_STAGE_Y` | (0.00, 3.49, -0.73) |
+| 15 | `ANIM_RETICLE_POSITION_MARKER` | (1.13, 3.61, 0.16) |
+| 16 | `ANIM_LENS_FOCUS` | (0.00, 2.76, -0.73) |
+| 17 | `ANIM_NA_DIAPHRAGM` | (0.00, 2.16, -0.73) |
+| 18 | `ANIM_WAFER_STAGE_X` | (0.00, 1.18, -0.73) |
+| 19 | `ANIM_WAFER_STAGE_Y` | (0.00, 1.36, -0.73) |
+| 20 | `ANIM_X_LINEAR_SERVO` | (1.34, 1.05, -0.73) |
+| 21 | `ANIM_Y_LINEAR_SERVO` | (0.00, 1.05, -2.03) |
+| 22 | `ANIM_WAFER_STAGE_Z` | (0.00, 1.57, -0.73) |
+| 23 | `ANIM_WAFER_TILT_X` | (0.00, 1.68, -0.73) |
+| 24 | `ANIM_WAFER_TILT_Y` | (0.00, 1.68, -0.73) |
+| 25 | `ANIM_INTERFEROMETER_HEAD` | (-2.26, 1.51, -0.73) |
+| 26 | `ANIM_ALIGNMENT_CAMERA` | (1.73, 2.17, -0.37) |
+| 27 | `ANIM_WAFER_CHUCK` | (0.00, 1.76, -0.73) |
+| 28 | `ANIM_TOPOGRAPHY_FOCUS_MAP` | (2.37, 3.22, 0.82) |
+| 29 | `ANIM_HEIGHT_LEVELING_HEAD` | (1.62, 2.32, -1.83) |
+| 30 | `ANIM_ISOLATION_STAGE` | (0.00, 0.79, -0.73) |
+| 31 | `ANIM_DOSE_PHOTODIODE` | (1.83, 3.89, -1.44) |
+| 32 | `ANIM_SCAN_SLIT` | (0.00, 3.77, -0.73) |
+| 33 | `ANIM_LITHO_ESTOP` | (8.08, 1.11, 3.40) |
+| 34 | `ANIM_POSTBAKE_LID` | (4.33, 2.35, -0.91) |
+| 35 | `ANIM_DEVELOPER_SPIN` | (5.97, 1.24, 1.16) |
+| 36 | `ANIM_DEVELOPER_NOZZLE` | (5.86, 2.18, 1.10) |
+| 37 | `ANIM_RINSE_DRYER` | (7.73, 1.34, -1.04) |
+| 38 | `ANIM_CD_SCANNER` | (4.62, 2.45, 2.54) |
+| 39 | `ANIM_OVERLAY_METROLOGY` | (6.55, 2.47, 2.54) |
+| 40 | `ANIM_RETICLE_INSPECTION` | (-3.37, 2.49, -3.34) |
+| 41 | `ANIM_RESIST_DEFECT_CAMERA` | (8.12, 2.28, 2.47) |
+| 42 | `ANIM_LITHOGRAPHY_SCADA` | (5.60, 3.83, -3.82) |
+
+## ANIMATION REQUIREMENTS
+
+The FBX and GLB packages contain named parent transforms for these references.
+
+They do not contain baked animation clips.
+
+Inspect the actual hierarchy and bind the moving submeshes.
+
+Do not rotate the complete workstation.
+
+Do not rotate the whole reticle or wafer stage incorrectly.
+
+Use the actual axis and motion type specified in `Animation_Rigs.csv`.
+
+Where nested stage axes exist, verify parent-child dependencies and avoid double displacement.
+
+**All animations must follow actual runtime machine state.**
+
+---
+
+# 8. REUSE EXISTING UNITY SUPPORT SCRIPTS
+
+The package contains three C# helpers.
+
+## ART PLACEMENT
+
+File:
+
+`SparkLevel74ArtPlacementEditor.cs`
+
+Namespace:
+
+`ProjectSpark.EditorTools`
+
+Menu:
+
+`Tools/Project Spark/Levels/74/Place HD Art Under Selected Layout`
+
+The helper:
+
+- Finds the numbered imported FBXs.
+- Validates all 56 before modifying the layout.
+- Creates `L74_HD_VISUAL_ART`.
+- Places models at the shared origin.
+- Uses Undo-aware Editor operations.
+
+This is art placement only.
+
+## MATERIAL HELPER
+
+File:
+
+`SparkLevel74MaterialUpgradeEditor.cs`
+
+Namespace:
+
+`ProjectSpark.EditorTools`
+
+Menu:
+
+`Tools/Project Spark/Levels/74/Create & Apply HD Materials To Selected Art`
+
+Use it to create and assign compatible preview materials.
+
+Verify whether the project uses Built-in, URP or HDRP.
+
+## VISUAL RIG
+
+File:
+
+`SparkLevel74VisualRig.cs`
+
+Namespace:
+
+`ProjectSpark.Visuals`
+
+Class:
+
+`SparkLevel74VisualRig`
+
+The existing verified public methods are:
+
+`SetActualSpindleRPM(float resistSpin, float developerSpinRPM, float dryerRPM)`
+
+`SetActualStagePose(Vector2 reticleMeters, Vector2 waferMeters, float waferZMetres, float waferTiltXDegrees, float waferTiltYDegrees)`
+
+`SetWaferRobotPose(float baseDegrees, float armDegrees, float toolDegrees)`
+
+`SetOpticalVisuals(float shutterOpen01, float focusCorrectionMetres, bool actualExposureAllowed, bool fault)`
+
+`SetMetrologyProgress(float normalized)`
+
+## CRITICAL VISUAL REQUIREMENT
+
+These methods are visual-only.
+
+They do not calculate:
+
+- Servo dynamics.
+- Actual position feedback.
+- Interferometer validity.
+- Stage synchronization.
+- Exposure dose.
+- Focus error.
+- Printed critical dimensions.
+- Overlay errors.
+- Resist development.
+- Metrology.
+- Safety permission.
+- Objectives.
+
+Build these systems separately.
+
+Then feed their authoritative state into the visual rig.
+
+---
+
+# 9. COMPLETE ELECTRICAL WIRING — W01 TO W102
+
+The approved Level 74 design requires:
+
+**102 player-created wires.**
+
+**158 unique functional terminals.**
+
+The existing package provides only the planned group budget, not a completed wiring manifest.
+
+Create a full W01–W102 endpoint table using real Unity components.
+
+## VERIFIED WIRING BUDGET
+
+| Group | Player wires |
+|---|---:|
+| 5 V control supply and returns | 10 |
+| Wafer and reticle stage servos/encoders | 16 |
+| Interferometer, alignment and focus | 16 |
+| DUV illumination, shutter and dose | 14 |
+| Resist coating and thermal preparation | 12 |
+| Development, cleaning and metrology | 12 |
+| Vibration, thermal and safety protection | 10 |
+| PLC, stage synchronization and SCADA | 12 |
+| TOTAL | 102 |
+
+## GROUP A — W01–W10: CONTROL SUPPLY
+
+Define ten gameplay connections for:
+
+- Main 5 V control supply.
+- Common control return.
+- Main PLC supply.
+- Stage synchronization controller supply.
+- Sensor interface supply.
+- Optical control interface supply.
+- Digital control return.
+- Instrumentation reference.
+- Safety controller supply.
+- Control-ready or enable distribution.
+
+Use valid shared buses or junction terminals.
+
+## GROUP B — W11–W26: STAGE MOTION
+
+Define 16 connections for:
+
+- Wafer X servo enable.
+- Wafer X motion command.
+- Wafer X drive feedback.
+- Wafer Y servo enable.
+- Wafer Y motion command.
+- Wafer Y drive feedback.
+- Reticle X stage enable.
+- Reticle X motion command.
+- Reticle X encoder feedback.
+- Reticle Y motion command.
+- Reticle Y encoder/status.
+- Wafer stage Z command.
+- Wafer Z feedback.
+- Wafer tilt controller.
+- Motion-controller readiness.
+- Stage-following-error status.
+
+## GROUP C — W27–W42: POSITION, ALIGNMENT AND FOCUS
+
+Define 16 connections for:
+
+- Interferometer control power.
+- Interferometer return.
+- Interferometer position signal.
+- Interferometer measurement validity.
+- Wafer alignment camera enable.
+- Wafer alignment measurement.
+- Reticle alignment reference.
+- Wafer height sensor enable.
+- Wafer height measurement.
+- Focus-map validity.
+- Optical focus actuator command.
+- Optical focus actuator feedback.
+- Wafer tilt measurement.
+- Stage reference/calibration command.
+- Alignment completion signal.
+- Position-feedback fault status.
+
+The final deliberate fault must use the actual interferometer measurement connection from this group.
+
+## GROUP D — W43–W56: OPTICAL EXPOSURE
+
+Define 14 connections for:
+
+- DUV source enable.
+- DUV source status.
+- Requested illumination power.
+- Actual illumination measurement.
+- Shutter open command.
+- Shutter position feedback.
+- Dose photodiode power.
+- Dose photodiode signal.
+- Dose measurement validity.
+- Illumination homogenizer command/status.
+- Numerical aperture control.
+- Focus/optics readiness.
+- Exposure permission.
+- Exposure trip/status.
+
+## GROUP E — W57–W68: RESIST COATING AND THERMAL PREPARATION
+
+Define 12 connections for:
+
+- Spin-coating motor enable.
+- Spin speed command.
+- Spin speed feedback.
+- Resist pump enable.
+- Resist dispenser command.
+- Resist flow/availability signal.
+- Resist thickness measurement.
+- Resist measurement validity.
+- Soft-bake heater command.
+- Soft-bake temperature measurement.
+- Soft-bake validity.
+- Wafer transfer permission.
+
+## GROUP F — W69–W80: DEVELOPMENT AND METROLOGY
+
+Define 12 connections for:
+
+- Post-exposure bake heater command.
+- Post-bake temperature measurement.
+- Developer module enable.
+- Developer nozzle command.
+- Developer flow measurement.
+- Developer flow validity.
+- Rinse/dryer enable.
+- Rinse/dryer status.
+- Critical-dimension metrology result.
+- Overlay metrology result.
+- Reticle defect inspection result.
+- Resist-pattern inspection result.
+
+## GROUP G — W81–W90: STABILITY AND SAFETY
+
+Define 10 connections for:
+
+- Active isolation platform enable.
+- Isolation control feedback.
+- Six-axis vibration measurement.
+- Vibration sensor validity.
+- Lens thermal-drift measurement.
+- Lens drift sensor validity.
+- Safety enclosure interlock.
+- Emergency stop.
+- Protection-ready permission.
+- Latched fault/status.
+
+## GROUP H — W91–W102: PLC AND SCADA COORDINATION
+
+Define 12 connections for:
+
+- Main PLC enable.
+- Process state/status.
+- Stage synchronization enable.
+- Scan trajectory command.
+- Stage synchronization feedback.
+- Alignment certification.
+- Focus certification.
+- Exposure-field completion.
+- Exposure-fault status.
+- SCADA operator command.
+- SCADA telemetry/status.
+- Objective certification event.
+
+## FOR EVERY WIRE DEFINE
+
+- W-number.
+- Source component ID.
+- Source terminal ID.
+- Destination component ID.
+- Destination terminal ID.
+- Signal type.
+- Electrical domain.
+- Signal direction.
+- Required state.
+- Disconnection behavior.
+- Compatibility constraints.
+- Diagnostic message.
+
+## UNIQUE TERMINAL REQUIREMENT
+
+Exactly 158 unique functional terminal IDs must be registered.
+
+102 player wires create 204 endpoint references.
+
+Use legitimate shared buses or junctions according to the actual Project Spark electrical system.
+
+Do not automatically create 204 unique terminals.
+
+Do not create duplicate IDs.
+
+Do not create decorative fake sockets that are never registered.
+
+---
+
+# 10. FINAL INTERFEROMETER FEEDBACK WIRE
+
+Reserve one actual player-created wire for:
+
+`WAFER_STAGE_INTERFEROMETER_SIGNAL_OUT → STAGE_SYNCHRONIZATION_POSITION_FEEDBACK_IN`
+
+Assign its specific W-number in the final complete endpoint manifest.
+
+## WHEN THE WIRE IS DISCONNECTED
+
+1. Actual circuit topology changes.
+2. Interferometer-to-controller feedback becomes unavailable.
+3. Position measurement validity becomes false.
+4. Stage synchronization detects the missing measurement.
+5. The exposure shutter closes through the control/safety system.
+6. New exposure is inhibited.
+7. Active stage scan enters a controlled safe response.
+8. Any active field is marked interrupted or invalid.
+9. The fault latches.
+10. The event is recorded.
+
+## IMPORTANT PHYSICAL DISTINCTION
+
+The physical stage does not teleport to zero position when feedback is lost.
+
+Actual position, velocity and motor inertia continue according to the motion model.
+
+A stale last-known position must be marked STALE, not VALID.
+
+Never silently reuse stale interferometer data for precision exposure.
+
+---
+
+# 11. INITIAL LEVEL STATE
+
+At level start:
+
+- Main educational control power off.
+- PLC not commissioned.
+- Safety enclosure closed.
+- DUV source disabled.
+- Exposure shutter closed.
+- Reticle not yet verified.
+- Wafer carrier cassette available.
+- Wafer robot at home.
+- Photoresist cartridge installed.
+- Spin-coating motor stopped.
+- Resist pump stopped.
+- Soft-bake hotplate inactive.
+- Wafer stage at a defined home position.
+- Reticle stage at a defined home position.
+- Interferometer uncalibrated.
+- Alignment camera awaiting calibration.
+- Focus map not acquired.
+- Vibration isolation awaiting commissioning.
+- Optical focus system uncalibrated.
+- No exposure fields certified.
+- Post-exposure equipment idle.
+- Metrology equipment awaiting calibration.
+- No active critical fault.
+- Objectives 0/6.
+
+The player must bring the machine online through actual commissioning.
+
+---
+
+# 12. NUMERICAL PRECISION FOR NANOMETRE CONTROL
+
+Level 74 requires much smaller process tolerances than the physical workstation scale.
+
+The workstation is approximately 18.2 metres wide, while gameplay errors may be measured in nanometres.
+
+## CRITICAL REQUIREMENT
+
+Do not represent nanometre-scale error solely as a tiny addition to a large world-space `Vector3` using single-precision floats.
+
+Instead use:
+
+- Double-precision machine/process coordinates.
+- Local coordinate frames.
+- Separate commanded and actual positions.
+- Explicit coordinate conversion.
+- Calibrated measurement uncertainty.
+- Float-based Unity transforms only for visual rendering.
+
+## REQUIRED UNITS
+
+Use explicit units in type and field names where useful:
+
+- Stage positions in metres internally.
+- Stage errors in nanometres or metres with double precision.
+- Rotation in radians or degrees consistently.
+- Angular speed in radians/s.
+- Stage velocity in m/s.
+- Acceleration in m/s².
+- Jerk in m/s³.
+- Film thickness in nm.
+- Light wavelength in nm.
+- Exposure dose in a defined simulated unit.
+- Temperature in °C or K with explicit conversion.
+
+## VISUAL MOTION
+
+The FBX motion rig represents macroscopic visual movements.
+
+Do not scale the whole stage by 1,000,000 to make nanometre errors visible.
+
+Use a separate holographic magnification or diagnostic overlay to visualize tiny positioning errors.
+
+---
+
+# 13. WAFER AND RETICLE STAGE DYNAMICS
+
+Use:
+
+- `20_L74_PrecisionReticleMotionStage.fbx`
+- `25_L74_NanometreWaferXYStage.fbx`
+- `26_L74_DualAxisLinearServoMotorAssembly.fbx`
+- `27_L74_WaferZTiltFocusStage.fbx`
+
+## REQUIRED STATES
+
+For each relevant motion axis:
+
+- Drive enabled.
+- Requested position.
+- Actual position.
+- Requested velocity.
+- Actual velocity.
+- Acceleration.
+- Maximum acceleration.
+- Maximum velocity.
+- Jerk limit.
+- Following error.
+- Actuator force.
+- Moving mass.
+- Damping.
+- Position feedback validity.
+- Fault state.
+
+## REDUCED-ORDER MOTION MODEL
+
+A simplified axis relationship:
+
+`Mass * dVelocity/dt = MotorForce - DampingForce - DisturbanceForce`
+
+`dPosition/dt = Velocity`
+
+Use controller limits and appropriate damping.
+
+## REQUIRED BEHAVIOR
+
+- Stages accelerate gradually.
+- Stage trajectories respect speed and travel limits.
+- Reversing scan direction takes finite time.
+- Large errors cause motion faults.
+- The controller uses valid feedback.
+- Disturbances affect actual tracking.
+
+Do not instantly assign actual position from requested position.
+
+---
+
+# 14. RETICLE AND WAFER STAGE SYNCHRONIZATION
+
+Use:
+
+`53_L74_StageSynchronizationController.fbx`
+
+This is the central Level 74 engineering challenge.
+
+## PROJECTED POSITION RELATIONSHIP
+
+For the simulated 4:1 reduction system:
+
+`WaferScanPosition = -ReticleScanPosition / 4 + FieldOffset`
+
+Apply a consistent coordinate convention and calibrated axis mapping.
+
+## REQUIRED STATES
+
+- Reticle command.
+- Wafer command.
+- Actual reticle position.
+- Actual wafer position.
+- Reduction ratio.
+- Synchronization error.
+- Velocity mismatch.
+- Following error.
+- Scan direction.
+- Shutter permission.
+- Fault status.
+
+## REQUIRED BEHAVIOR
+
+- Reticle and wafer move in synchronized scan trajectories.
+- Their speeds follow the reduction ratio.
+- Errors change projected placement quality.
+- Excess error inhibits or invalidates exposure.
+- An incorrectly calibrated ratio produces measurable overlay/blur errors.
+- A dry scan can verify motion without opening the shutter.
+
+## IMPORTANT
+
+Do not let the controller assign both stage positions directly in a way that guarantees perfect tracking.
+
+Each stage must follow its command through actual dynamics.
+
+---
+
+# 15. WAFER-STAGE LASER INTERFEROMETER
+
+Use:
+
+`28_L74_WaferStageLaserInterferometer.fbx`
+
+## REQUIRED STATES
+
+- Actual stage position.
+- Measured stage position.
+- Reference calibration.
+- Measurement latency.
+- Sampling frequency.
+- Position noise.
+- Measurement uncertainty.
+- Signal timestamp.
+- Signal validity.
+- Actual electrical connectivity.
+- Fault state.
+
+## REQUIRED BEHAVIOR
+
+Measured position is derived from the true stage state.
+
+It must not simply equal requested position.
+
+The feedback must become invalid when its designated signal wire is removed.
+
+The stage controller must detect invalid, stale or out-of-range feedback.
+
+This sensor is the final deliberate Objective 6 fault target.
+
+---
+
+# 16. RETICLE ENCODER AND ALIGNMENT
+
+Use:
+
+- `21_L74_ReticleStageLinearEncoder.fbx`
+- `29_L74_WaferAlignmentMarkCamera.fbx`
+- `32_L74_WaferOverlayAlignmentMarks.fbx`
+
+## REQUIRED STATES
+
+- Actual reticle position.
+- Measured reticle position.
+- Encoder calibration.
+- Wafer alignment mark coordinates.
+- Measured mark coordinates.
+- Translation offset.
+- Rotation offset.
+- Alignment confidence.
+- Measurement validity.
+
+## REQUIRED BEHAVIOR
+
+Wafer alignment must estimate actual offsets and wafer rotation.
+
+The player must calibrate and correct alignment before certified exposure.
+
+Do not declare alignment complete merely because the camera animation finishes.
+
+---
+
+# 17. STAGE VIBRATION AND ACTIVE ISOLATION
+
+Use:
+
+- `36_L74_ActiveVibrationIsolationPlatform.fbx`
+- `37_L74_SixAxisVibrationMeasurementSensor.fbx`
+
+## REQUIRED STATES
+
+- External disturbance.
+- Platform displacement.
+- Platform velocity.
+- Vibrational acceleration.
+- Pitch/roll/yaw disturbance estimates.
+- Isolation actuator command.
+- Isolation effectiveness.
+- Sensor validity.
+- Fault state.
+
+## REQUIRED BEHAVIOR
+
+Vibration changes actual stage disturbance or measurement noise.
+
+Active isolation reduces disturbances within finite limits.
+
+An isolation failure must increase stage-following error or optical placement variability.
+
+Do not simply show a red VIBRATION warning while calculated stage error remains unchanged.
+
+---
+
+# 18. OPTICAL DUV SOURCE
+
+Use:
+
+`15_L74_VirtualDUVLightSource.fbx`
+
+## EDUCATIONAL SCOPE
+
+Model a fictional 193 nm DUV source.
+
+The user-facing violet beam is a visual diagnostic representation, not actual visible 193 nm light.
+
+## REQUIRED STATES
+
+- Source enable.
+- Requested intensity.
+- Actual intensity.
+- Intensity response time.
+- Illumination stability.
+- Optical efficiency.
+- Source fault.
+- Safety permission.
+
+## REQUIRED BEHAVIOR
+
+Actual illumination is finite and changes dynamically.
+
+No exposure dose is applied when source intensity is zero.
+
+Do not infer UV intensity from emissive material brightness.
+
+---
+
+# 19. EXPOSURE SHUTTER AND SCAN SLIT
+
+Use:
+
+- `17_L74_HighSpeedExposureShutter.fbx`
+- `40_L74_PrecisionScanSlitAssembly.fbx`
+
+## REQUIRED STATES
+
+- Shutter command.
+- Actual shutter position.
+- Opening/closing time.
+- Exposure permission.
+- Scan slit position.
+- Scan slit width.
+- Actual illumination throughput.
+- Shutter feedback.
+- Fault state.
+
+## REQUIRED BEHAVIOR
+
+The source can be powered while the shutter remains closed.
+
+No wafer exposure should occur if the shutter blocks the optical path.
+
+The shutter must close automatically on a critical feedback or safety fault.
+
+The scan slit must affect which part of the field receives dose during a scan.
+
+---
+
+# 20. OPTICAL PROJECTION MODEL
+
+Use:
+
+- `16_L74_OpticalIlluminationHomogenizer.fbx`
+- `19_L74_HighResolutionCircuitReticle.fbx`
+- `22_L74_ProjectionOpticsLensBarrel.fbx`
+- `23_L74_ActiveOpticalFocusCorrector.fbx`
+- `24_L74_NumericalApertureSelector.fbx`
+
+## REQUIRED OPTICAL PARAMETERS
+
+- Wavelength.
+- Numerical aperture.
+- Reduction factor.
+- Reticle image.
+- Illumination uniformity.
+- Focus offset.
+- Lens thermal distortion.
+- Pattern contrast.
+- Image blur.
+- Effective projected intensity.
+
+## SIMPLIFIED RESOLUTION RELATIONSHIP
+
+`CDapprox = k1 * Wavelength / NA`
+
+## SIMPLIFIED DEPTH OF FOCUS
+
+`DOFapprox = k2 * Wavelength / (NA*NA)`
+
+These are educational scaling relationships.
+
+Do not claim they fully determine production lithography performance.
+
+## REQUIRED BEHAVIOR
+
+- Higher NA can improve simulated resolution.
+- Higher NA reduces focus margin in the simplified model.
+- Defocus degrades pattern contrast.
+- Lens drift changes projected imaging conditions.
+- Illumination nonuniformity affects local dose.
+- Reticle defects can affect printed patterns.
+
+---
+
+# 21. RETICLE PATTERN MODEL
+
+Use:
+
+- `18_L74_PrecisionReticleStorageCassette.fbx`
+- `19_L74_HighResolutionCircuitReticle.fbx`
+- `50_L74_ReticleDefectInspectionModule.fbx`
+
+## REQUIRED STATES
+
+- Reticle identity.
+- Reticle loaded.
+- Pattern definition.
+- Correct orientation.
+- Pattern quality.
+- Defect map.
+- Inspection status.
+- Reticle alignment.
+- Reticle readiness.
+
+## REQUIRED BEHAVIOR
+
+A reticle with defects may print corresponding defects.
+
+The reticle must be inspected before qualified production exposure.
+
+Do not certify the reticle merely because it is visibly present.
+
+---
+
+# 22. PHOTORESIST SPIN COATING
+
+Use:
+
+- `03_L74_PhotoresistSpinCoatingBowl.fbx`
+- `04_L74_PrecisionSpinChuckDrive.fbx`
+- `05_L74_VirtualPhotoresistSupplyCartridge.fbx`
+- `06_L74_PhotoresistMeteringPump.fbx`
+- `07_L74_PrecisionPhotoresistNozzle.fbx`
+
+## REQUIRED STATES
+
+- Wafer present.
+- Spin motor enabled.
+- Requested RPM.
+- Actual RPM.
+- Resist inventory.
+- Requested resist flow.
+- Actual resist flow.
+- Dispensed volume.
+- Wafer radial wet-film distribution.
+- Drying/thinning progress.
+- Temperature.
+- Fault condition.
+
+## REQUIRED BEHAVIOR
+
+Spin chuck acceleration takes time.
+
+Resist flow derives from actual pump and nozzle state.
+
+The coating model must account for spin-speed history, resist volume and radial distribution.
+
+A restricted nozzle should produce a physical coating defect.
+
+Do not instantly set the resist thickness to 350 nm.
+
+---
+
+# 23. RESIST FILM THICKNESS
+
+Use:
+
+- `08_L74_ResistThicknessMeasurementSensor.fbx`
+- `33_L74_PhotosensitiveResistLayer.fbx`
+
+## REQUIRED STATES
+
+- Local resist thickness by region.
+- Average thickness.
+- Thickness variation.
+- Measurement calibration.
+- Measured thickness.
+- Measurement validity.
+- Sample timestamp.
+
+## PROPOSED TARGET
+
+350 ±15 nm.
+
+## REQUIRED BEHAVIOR
+
+The player must reach the target through actual spin-coating parameters.
+
+Incorrect resist flow, spin speed or processing may cause thickness variation.
+
+Thickness measurements must derive from simulated resist state.
+
+Do not fabricate thickness values to award an objective.
+
+---
+
+# 24. SOFT-BAKE THERMAL MODEL
+
+Use:
+
+- `09_L74_SoftBakeHotplateModule.fbx`
+- `10_L74_SoftBakeTemperatureSensor.fbx`
+
+## REQUIRED STATES
+
+- Hotplate temperature.
+- Wafer temperature.
+- Requested temperature.
+- Heater power.
+- Thermal capacity.
+- Heat losses.
+- Resist process state.
+- Sensor calibration.
+- Signal validity.
+
+## ENERGY BALANCE
+
+`C * dTemperature/dt = HeaterPower - HeatLoss`
+
+## REQUIRED BEHAVIOR
+
+- The wafer warms gradually.
+- Bake outcome depends on actual temperature history.
+- Under-baking and over-baking affect the fictional resist model.
+- Invalid temperature sensing prevents certification.
+- Heater output is bounded.
+
+Do not directly set actual temperature equal to the setpoint.
+
+---
+
+# 25. WAFER LOADING AND ROBOTICS
+
+Use:
+
+- `11_L74_SiliconWaferCarrierCassette.fbx`
+- `12_L74_AutomatedWaferHandlingRobot.fbx`
+- `13_L74_WaferPrealignmentStation.fbx`
+- `30_L74_ElectrostaticWaferChuck.fbx`
+- `31_L74_PlanarizedSiliconWafer.fbx`
+
+## REQUIRED STATES
+
+- Wafer location.
+- Wafer available.
+- Robot ready.
+- Wafer picked.
+- Wafer aligned.
+- Wafer transferred.
+- Chuck ready.
+- Wafer clamped.
+- Wafer processing permission.
+
+## REQUIRED BEHAVIOR
+
+The wafer cannot occupy multiple physical stations simultaneously.
+
+Stage scanning is inhibited unless the wafer is securely mounted.
+
+Robot motion must follow PLC sequencing and safety states.
+
+Do not certify handling from an animation alone.
+
+---
+
+# 26. WAFER HEIGHT AND FOCUS MAP
+
+Use:
+
+- `34_L74_WaferTopographyFocusMap.fbx`
+- `35_L74_WaferHeightLevelingSensor.fbx`
+- `27_L74_WaferZTiltFocusStage.fbx`
+
+## REQUIRED STATES
+
+- Wafer surface-height map.
+- Measured height samples.
+- Wafer tilt.
+- Stage Z position.
+- Focus setpoint.
+- Focus error by field.
+- Sensor validity.
+- Correction limit.
+
+## REQUIRED BEHAVIOR
+
+The sensor generates a focus map from actual modeled wafer topography.
+
+The Z/tilt stage changes wafer pose.
+
+Optical focus changes from wafer height and lens settings.
+
+Do not declare perfect focus when the player activates AUTO FOCUS.
+
+---
+
+# 27. LENS THERMAL DRIFT
+
+Use:
+
+`38_L74_ProjectionLensThermalDriftSensor.fbx`
+
+## REQUIRED STATES
+
+- Actual optical temperature.
+- Thermal capacity.
+- Heat input.
+- Cooling loss.
+- Thermal drift coefficient.
+- Focus offset.
+- Image distortion estimate.
+- Measured temperature.
+- Sensor validity.
+- Correction capability.
+
+## REQUIRED BEHAVIOR
+
+Thermal drift develops over time.
+
+It affects focus or projected image geometry.
+
+The sensor detects a physical model change.
+
+The player must restore thermal stability and recalibrate optics.
+
+Do not simply clear the fault flag while lens temperature remains outside the acceptable range.
+
+---
+
+# 28. EXPOSURE DOSE AND PHOTODIODE
+
+Use:
+
+`39_L74_ExposureDosePhotodiode.fbx`
+
+## EXPOSURE DOSE
+
+For a spatial point:
+
+`Dose_i = Integral(EffectiveIntensity_i * dt)`
+
+## REQUIRED STATES
+
+- Actual illumination.
+- Shutter transmission.
+- Scan slit transmission.
+- Effective local intensity.
+- Accumulated dose.
+- Photodiode measurement.
+- Calibration.
+- Validity.
+- Measurement timestamp.
+
+## REQUIRED BEHAVIOR
+
+Dose accumulates only when light actually reaches the resist.
+
+Source intensity, scan trajectory, shutter and slit determine accumulated local dose.
+
+The player must not be able to certify exposure merely by setting the dose target.
+
+---
+
+# 29. RESIST LATENT-IMAGE SIMULATION
+
+Use:
+
+`33_L74_PhotosensitiveResistLayer.fbx`
+
+## REQUIRED STATES
+
+- Spatial resist thickness.
+- Reticle-projected pattern intensity.
+- Local accumulated dose.
+- Focus-dependent blur.
+- Latent-image response.
+- Bake response.
+- Development response.
+
+## REQUIRED BEHAVIOR
+
+Exposure produces a latent image in the fictional resist.
+
+Dose and focus determine whether the intended pattern forms correctly.
+
+Excessive or insufficient exposure affects critical dimension and defects.
+
+Do not permanently alter the silicon substrate merely because the virtual resist was illuminated.
+
+---
+
+# 30. FIELD-BY-FIELD 4×4 EXPOSURE
+
+Implement exactly 16 exposure fields.
+
+## REQUIRED PER-FIELD DATA
+
+- Field ID F01–F16.
+- Field center position.
+- Intended pattern.
+- Actual stage trajectory.
+- Actual reticle trajectory.
+- Synchronization error.
+- Alignment error.
+- Focus error.
+- Accumulated dose map.
+- Scan completion.
+- Exposure validity.
+- Predicted pattern quality.
+
+## REQUIRED BEHAVIOR
+
+- Player positions the wafer at the correct field.
+- Controller performs a synchronized scan.
+- Shutter opens only when valid.
+- Dose integrates during actual motion.
+- Faults invalidate affected scans.
+- Successful fields are recorded individually.
+- All 16 valid fields are required for certification.
+
+## IMPORTANT
+
+Do not mark a field complete based only on a countdown timer.
+
+Do not fake the 4×4 exposure map by coloring fields green without actual process evidence.
+
+---
+
+# 31. POST-EXPOSURE BAKE
+
+Use:
+
+- `42_L74_PostExposureBakeModule.fbx`
+- `43_L74_PostExposureBakeTemperatureSensor.fbx`
+
+## REQUIRED STATES
+
+- Wafer loaded.
+- Hotplate temperature.
+- Wafer temperature.
+- Heater power.
+- Bake progress.
+- Resist reaction state.
+- Measurement validity.
+- Fault state.
+
+## REQUIRED BEHAVIOR
+
+Post-exposure processing must influence the fictional latent resist image and final developed pattern.
+
+The bake must have thermal inertia and bounded heating.
+
+Do not instantly certify the post-bake when the player presses START.
+
+---
+
+# 32. FICTIONAL RESIST DEVELOPMENT
+
+Use:
+
+- `44_L74_VirtualPhotoresistDeveloperModule.fbx`
+- `45_L74_DeveloperDispensingNozzle.fbx`
+- `46_L74_DeveloperFlowTransmitter.fbx`
+
+## REQUIRED STATES
+
+- Developer available.
+- Requested flow.
+- Actual flow.
+- Measured flow.
+- Wafer rotation if applicable.
+- Development progress.
+- Resist dissolution response.
+- Remaining resist profile.
+- Fault status.
+
+## REQUIRED BEHAVIOR
+
+Development converts the simulated latent resist image into a patterned resist layer.
+
+Pattern quality depends on exposure, bake and development conditions.
+
+The system uses fictional virtual developer properties.
+
+Do not provide real chemical processing instructions.
+
+Do not instantly create a perfect pattern regardless of prior exposure.
+
+---
+
+# 33. WAFER RINSE AND DRY
+
+Use:
+
+`47_L74_WaferRinseSpinDryer.fbx`
+
+## REQUIRED STATES
+
+- Wafer loaded.
+- Rinse enabled.
+- Rinse flow.
+- Remaining developer/residue.
+- Actual spin RPM.
+- Remaining liquid.
+- Drying progress.
+- Completion status.
+
+## REQUIRED BEHAVIOR
+
+Rinse and drying reduce residual material over time.
+
+Spin RPM changes dynamically.
+
+Do not award a clean wafer before residue and liquid conditions are acceptable.
+
+---
+
+# 34. CRITICAL DIMENSION METROLOGY
+
+Use:
+
+`48_L74_CriticalDimensionInspectionScanner.fbx`
+
+## REQUIRED MEASUREMENTS
+
+- Intended critical dimension.
+- Actual printed feature dimension.
+- CD error.
+- Local exposure dose.
+- Focus contribution.
+- Resist response.
+- Measurement uncertainty.
+- Measurement validity.
+
+## PROPOSED TARGET
+
+120 ±8 nm.
+
+## REQUIRED BEHAVIOR
+
+Critical dimension must derive from the simulated developed pattern.
+
+The scanner must not simply copy the target CD.
+
+A wafer may fail if the features are too narrow, too wide, missing or distorted.
+
+---
+
+# 35. OVERLAY METROLOGY
+
+Use:
+
+`49_L74_OverlayAlignmentMetrologySystem.fbx`
+
+## REQUIRED STATES
+
+- Existing wafer alignment marks.
+- New printed pattern locations.
+- Translation error.
+- Rotation error.
+- Field-dependent distortion.
+- Maximum overlay error.
+- Measurement uncertainty.
+- Scan completion.
+
+## PROPOSED TARGET
+
+Maximum overlay error ≤12 nm.
+
+## REQUIRED BEHAVIOR
+
+Calculate overlay from simulated printed and intended feature positions.
+
+Alignment, motion errors, vibration and optical drift must affect the result.
+
+Do not assign perfect overlay simply because ALIGN was pressed.
+
+---
+
+# 36. PATTERN DEFECT INSPECTION
+
+Use:
+
+`51_L74_PhotoresistPatternDefectCamera.fbx`
+
+## REQUIRED DEFECT SOURCES
+
+- Resist coating defects.
+- Reticle defects.
+- Insufficient dose.
+- Excessive dose.
+- Defocus.
+- Stage misalignment.
+- Excessive scan synchronization error.
+- Development failures.
+- Inadequate rinse/drying.
+
+## REQUIRED BEHAVIOR
+
+Defects must derive from modeled process conditions.
+
+Allow bounded deterministic or reproducible stochastic variation if useful.
+
+A field with invalid exposure cannot pass merely because the defect camera completed its animation.
+
+---
+
+# 37. FINAL WAFER QUALITY CERTIFICATION
+
+The final wafer inspection must combine:
+
+- Resist coating thickness.
+- Resist uniformity.
+- Valid soft bake.
+- Correct reticle.
+- Valid alignment.
+- Focus quality.
+- Exposure dose.
+- All 16 valid fields.
+- Valid post-exposure bake.
+- Valid development.
+- Rinse/dry completion.
+- Critical dimension.
+- Overlay error.
+- Pattern defects.
+- Safety status.
+
+## REQUIRED QUALITY STATES
+
+- PASS.
+- WARNING.
+- FAIL.
+
+A wafer passes only when all mandatory criteria are valid.
+
+Do not force PASS because the player completed every animation.
+
+---
+
+# 38. DISTURBANCE A — RESIST NOZZLE RESTRICTION
+
+Introduce a finite restriction in the fictional photoresist delivery nozzle.
+
+## REQUIRED EFFECTS
+
+- Actual resist flow falls below command.
+- Dispensed volume changes.
+- Resist thickness becomes inconsistent.
+- Radial film uniformity may deteriorate.
+- Thickness sensor detects the problem.
+- Later pattern quality is affected if the defect is ignored.
+
+## PLAYER RECOVERY
+
+1. Detect abnormal coating.
+2. Diagnose flow restriction.
+3. Stop unsafe processing.
+4. Correct the virtual nozzle fault.
+5. Verify actual flow.
+6. Recoat a new test wafer.
+7. Complete soft bake.
+8. Certify valid coating thickness.
+
+Do not clear the problem by assigning ideal film thickness.
+
+---
+
+# 39. DISTURBANCE B — VIBRATION ISOLATION FAILURE
+
+Introduce a failure in the active vibration-isolation system.
+
+## REQUIRED EFFECTS
+
+- Residual stage vibration increases.
+- Position-following error changes.
+- Interferometer measurement reflects actual motion.
+- Scan synchronization degrades.
+- Exposure-field quality may deteriorate.
+- Protection can interrupt scanning.
+
+## PLAYER RECOVERY
+
+1. Detect abnormal vibration.
+2. Identify isolation failure.
+3. Stop exposure safely.
+4. Repair the simulated isolation system.
+5. Verify vibration reduction.
+6. Recalibrate stage positioning if required.
+7. Perform a valid dry scan.
+8. Requalify exposure.
+
+---
+
+# 40. DISTURBANCE C — PROJECTION LENS THERMAL DRIFT
+
+Introduce thermal drift in the projection lens system.
+
+## REQUIRED EFFECTS
+
+- Lens temperature changes.
+- Focus offset develops.
+- Pattern distortion may increase.
+- CD and focus performance degrade.
+- Thermal sensor reports actual state.
+- Controller may attempt compensation within limits.
+
+## PLAYER RECOVERY
+
+1. Detect thermal drift.
+2. Stop invalid exposure.
+3. Restore simulated thermal stability.
+4. Recalibrate optical focus.
+5. Reacquire wafer height/focus map if required.
+6. Verify printed CD.
+7. Certify a new test wafer.
+
+Do not treat temperature reset as instantaneous thermal recovery.
+
+---
+
+# 41. MAIN LITHOGRAPHY SAFETY SYSTEM
+
+Use:
+
+`41_L74_LithographyEmergencySafetyStation.fbx`
+
+## REQUIRED SAFETY INTERLOCKS
+
+- Safety enclosure closed.
+- Emergency stop released.
+- Wafer chuck secure.
+- Reticle loaded.
+- Reticle inspected.
+- Wafer stage ready.
+- Reticle stage ready.
+- Interferometer feedback valid.
+- Encoder feedback valid.
+- Stage following error acceptable.
+- Vibration within limits.
+- Focus valid.
+- Illumination measurements valid.
+- Shutter status valid.
+- Optical thermal conditions acceptable.
+- No unresolved critical fault.
+
+## REQUIRED RESPONSE
+
+On critical failure:
+
+1. Inhibit new exposure.
+2. Close the optical shutter.
+3. Remove virtual illumination permission as appropriate.
+4. Perform controlled safe stage motion.
+5. Prevent new field certification.
+6. Latch the fault where required.
+7. Record event and timestamp.
+8. Require repair.
+9. Require explicit reset.
+10. Require recalibration before certification.
+
+## IMPORTANT
+
+Do not encourage actual real-world ultraviolet operation or safety-interlock bypass.
+
+All UV exposure and chemistry are simulated.
+
+---
+
+# 42. MAIN LITHOGRAPHY PLC
+
+Use:
+
+`52_L74_LithographyProcessPLCRack.fbx`
+
+## REQUIRED PLC STATES
+
+- OFF.
+- INITIALIZING.
+- IDLE.
+- SAFETY_CHECK.
+- SENSOR_CALIBRATION.
+- WAFER_LOADING.
+- RESIST_DISPENSING.
+- RESIST_SPIN_COATING.
+- RESIST_THICKNESS_VALIDATION.
+- SOFT_BAKE.
+- WAFER_PREALIGNMENT.
+- RETICLE_LOADING.
+- RETICLE_INSPECTION.
+- STAGE_HOMING.
+- INTERFEROMETER_CALIBRATION.
+- ALIGNMENT_MARK_ACQUISITION.
+- FOCUS_MAPPING.
+- OPTICAL_CALIBRATION.
+- DRY_SCAN_VALIDATION.
+- EXPOSURE_READY.
+- FIELD_POSITIONING.
+- SYNCHRONIZED_SCAN.
+- FIELD_VALIDATION.
+- WAFER_EXPOSURE_COMPLETE.
+- POST_EXPOSURE_BAKE.
+- DEVELOPMENT.
+- RINSE_DRY.
+- CD_METROLOGY.
+- OVERLAY_METROLOGY.
+- DEFECT_INSPECTION.
+- PROCESS_CERTIFICATION.
+- SAFE_HOLD.
+- FAULT.
+- RESET_REQUIRED.
+
+## REQUIRED BEHAVIOR
+
+Every state transition must depend on actual equipment states and measurements.
+
+Do not advance solely because a decorative process timer completed.
+
+---
+
+# 43. LIVE AAA SCADA DASHBOARD
+
+Use:
+
+`54_L74_HolographicLithographySCADAMonitor.fbx`
+
+## REQUIRED LIVE VALUES
+
+- MAIN CONTROL POWER.
+- PLC STATE.
+- SAFETY STATUS.
+- WAFER ID.
+- RETICLE ID.
+- RETICLE INSPECTION STATUS.
+- PHOTORESIST INVENTORY.
+- SPIN COATER REQUESTED RPM.
+- SPIN COATER ACTUAL RPM.
+- ACTUAL RESIST FLOW.
+- AVERAGE RESIST THICKNESS.
+- RESIST THICKNESS NONUNIFORMITY.
+- SOFT-BAKE TEMPERATURE.
+- SOFT-BAKE STATUS.
+- RETICLE X/Y POSITION.
+- RETICLE X/Y VELOCITY.
+- WAFER X/Y POSITION.
+- WAFER X/Y VELOCITY.
+- WAFER Z POSITION.
+- WAFER TILT.
+- INTERFEROMETER MEASUREMENT.
+- INTERFEROMETER VALIDITY.
+- POSITION MEASUREMENT AGE.
+- STAGE FOLLOWING ERROR.
+- RETICLE/WAFER SYNCHRONIZATION ERROR.
+- REDUCTION RATIO.
+- WAFER ALIGNMENT OFFSET.
+- WAFER ROTATIONAL MISALIGNMENT.
+- HEIGHT MAP STATUS.
+- FOCUS ERROR.
+- LENS THERMAL DRIFT.
+- ACTIVE ISOLATION STATUS.
+- VIBRATION LEVEL.
+- DUV SOURCE STATUS.
+- OPTICAL INTENSITY.
+- EXPOSURE SHUTTER STATE.
+- NUMERICAL APERTURE.
+- SCAN SLIT STATE.
+- EXPOSURE DOSE.
+- DOSE UNIFORMITY.
+- CURRENT FIELD NUMBER.
+- 16-FIELD WAFER MAP.
+- COMPLETED FIELDS.
+- FAILED FIELDS.
+- POST-BAKE TEMPERATURE.
+- DEVELOPER FLOW.
+- DEVELOPMENT STATUS.
+- RINSE/DRY STATUS.
+- PRINTED CRITICAL DIMENSION.
+- OVERLAY ERROR.
+- DEFECT SCORE.
+- WAFER QUALITY.
+- ACTIVE ALARMS.
+- SENSOR VALIDITY.
+- EVENT HISTORY.
+- OBJECTIVES X/6.
+
+## REQUIRED PLAYER CONTROLS
+
+- MAIN POWER.
+- CALIBRATE SPIN CHUCK.
+- CALIBRATE RESIST FLOW.
+- DISPENSE RESIST.
+- SET SPIN SPEED.
+- START SPIN COATING.
+- MEASURE RESIST THICKNESS.
+- START SOFT BAKE.
+- LOAD RETICLE.
+- INSPECT RETICLE.
+- LOAD WAFER.
+- PREALIGN WAFER.
+- CLAMP WAFER.
+- HOME RETICLE STAGE.
+- HOME WAFER STAGE.
+- CALIBRATE RETICLE ENCODER.
+- CALIBRATE INTERFEROMETER.
+- ACQUIRE ALIGNMENT MARKS.
+- CORRECT ALIGNMENT.
+- MEASURE WAFER HEIGHT.
+- ENABLE FOCUS CONTROL.
+- ENABLE VIBRATION ISOLATION.
+- ENABLE STAGE SYNCHRONIZATION.
+- SET REDUCTION RATIO.
+- RUN DRY SCAN.
+- ENABLE DUV SOURCE.
+- SET ILLUMINATION.
+- SET NUMERICAL APERTURE.
+- SET EXPOSURE DOSE.
+- OPEN EXPOSURE SHUTTER.
+- START FIELD SCAN.
+- START FULL WAFER EXPOSURE.
+- STOP EXPOSURE.
+- START POST-EXPOSURE BAKE.
+- START DEVELOPMENT.
+- RINSE WAFER.
+- DRY WAFER.
+- RUN CD INSPECTION.
+- RUN OVERLAY INSPECTION.
+- RUN DEFECT INSPECTION.
+- START NOZZLE RESTRICTION TEST.
+- START VIBRATION FAULT TEST.
+- START LENS DRIFT TEST.
+- EMERGENCY STOP.
+- RESET PROTECTION.
+- DISCONNECT INTERFEROMETER FEEDBACK.
+- RECONNECT INTERFEROMETER WIRE.
+- RECALIBRATE INTERFEROMETER.
+- RESET POSITION FEEDBACK FAULT.
+- FINAL CERTIFY.
+
+All controls must affect real gameplay state.
+
+---
+
+# 44. SIX AUTHORITATIVE LEVEL 74 OBJECTIVES
+
+Integrate the objectives with the actual `SparkLevelEvaluator` and `LevelGamePlayManager`.
+
+## OBJECTIVE 1 — BUILD THE LITHOGRAPHY CONTROL NETWORK
+
+Require:
+
+1. All 102 player-created wires connected.
+2. Exactly 158 functional terminal IDs registered.
+3. Valid 5 V control supply.
+4. Valid control return.
+5. Main PLC connected.
+6. Stage synchronization controller connected.
+7. Wafer stage controls connected.
+8. Reticle stage controls connected.
+9. Reticle encoder connected.
+10. Wafer interferometer connected.
+11. Wafer alignment camera connected.
+12. Height/focus sensors connected.
+13. DUV source control connected.
+14. Shutter control connected.
+15. Photodiode connected.
+16. Resist coating equipment connected.
+17. Spin-chuck feedback connected.
+18. Soft-bake controller connected.
+19. Post-bake controller connected.
+20. Development equipment connected.
+21. CD scanner connected.
+22. Overlay scanner connected.
+23. Defect camera connected.
+24. Vibration sensor connected.
+25. Lens thermal sensor connected.
+26. Safety station connected.
+27. No unsafe circuit topology.
+
+Progress becomes **1/6**.
+
+## OBJECTIVE 2 — PREPARE THE PHOTOSENSITIVE WAFER
+
+Require:
+
+1. Objective 1 certified.
+2. Main PLC ready.
+3. Safety system ready.
+4. Wafer cassette available.
+5. Wafer-handling robot ready.
+6. Spin chuck calibrated.
+7. Resist pump commissioned.
+8. Resist flow valid.
+9. Resist cartridge available.
+10. Wafer placed in coating station.
+11. Actual resist coating performed.
+12. Spin speed stable.
+13. Measured resist thickness valid.
+14. Resist thickness within 350 ±15 nm.
+15. Coating nonuniformity within limit.
+16. Soft-bake temperature sensor valid.
+17. Soft bake completed under actual thermal conditions.
+18. Wafer moved to scanner.
+19. No critical fault.
+
+Progress becomes **2/6**.
+
+## OBJECTIVE 3 — ALIGN AND SYNCHRONIZE THE SCANNER
+
+Require:
+
+1. Previous objectives certified.
+2. Correct reticle loaded.
+3. Reticle inspection passed.
+4. Wafer safely clamped.
+5. Reticle stage homed.
+6. Wafer stage homed.
+7. Reticle encoder calibrated.
+8. Wafer interferometer calibrated.
+9. Position feedback valid.
+10. Alignment marks acquired.
+11. Wafer translation corrected.
+12. Wafer rotation corrected.
+13. Wafer height map acquired.
+14. Z/tilt focus commissioned.
+15. Focus error within target.
+16. Vibration isolation active.
+17. Stage synchronization controller enabled.
+18. 4:1 scan relationship validated.
+19. Actual following error acceptable.
+20. Dry scan completed with shutter closed.
+21. No critical fault.
+
+Progress becomes **3/6**.
+
+## OBJECTIVE 4 — PRINT THE PERFECT CIRCUIT PATTERN
+
+Require:
+
+1. Previous objectives certified.
+2. DUV source commissioned.
+3. Optical intensity measurement valid.
+4. Exposure shutter functional.
+5. Photodiode calibrated.
+6. Numerical aperture configured.
+7. Focus valid.
+8. Reticle and wafer motion synchronized.
+9. Field F01 successfully scanned.
+10. Field F02 successfully scanned.
+11. Field F03 successfully scanned.
+12. Field F04 successfully scanned.
+13. Field F05 successfully scanned.
+14. Field F06 successfully scanned.
+15. Field F07 successfully scanned.
+16. Field F08 successfully scanned.
+17. Field F09 successfully scanned.
+18. Field F10 successfully scanned.
+19. Field F11 successfully scanned.
+20. Field F12 successfully scanned.
+21. Field F13 successfully scanned.
+22. Field F14 successfully scanned.
+23. Field F15 successfully scanned.
+24. Field F16 successfully scanned.
+25. All field dose measurements valid.
+26. All required focus/overlay limits met.
+27. No invalid field counted as successful.
+28. Post-exposure bake completed.
+29. Fictional resist development completed.
+30. Wafer rinsed.
+31. Wafer dried.
+32. Critical dimension measured within tolerance.
+33. Overlay measured within tolerance.
+34. Pattern defect score acceptable.
+35. Final patterned wafer certified.
+
+Progress becomes **4/6**.
+
+## OBJECTIVE 5 — SURVIVE THE PRECISION DISTURBANCES
+
+Require:
+
+1. Previous objectives certified.
+2. Stable baseline recorded.
+3. Resist nozzle restriction activated.
+4. Actual resist flow decreases.
+5. Coating thickness responds.
+6. Flow restriction detected.
+7. Nozzle fault corrected.
+8. New resist coating validated.
+9. Vibration-isolation disturbance activated.
+10. Actual vibration increases.
+11. Stage-following error responds.
+12. Invalid exposures rejected.
+13. Isolation fault corrected.
+14. Motion accuracy restored.
+15. Lens thermal-drift disturbance activated.
+16. Actual lens temperature changes.
+17. Focus or image distortion responds.
+18. Lens drift diagnosed.
+19. Thermal stability restored.
+20. Focus recalibrated.
+21. New wafer prepared.
+22. New 16-field exposure completed.
+23. Post-exposure processing completed.
+24. Final metrology passed.
+25. No unresolved critical fault.
+
+Progress becomes **5/6**.
+
+## OBJECTIVE 6 — RESTORE NANOMETRE POSITION FEEDBACK
+
+Require:
+
+1. Objectives 1–5 historically certified.
+2. Actual interferometer feedback wire disconnected.
+3. Electrical topology changes.
+4. Interferometer signal becomes invalid.
+5. Controller detects missing position feedback.
+6. Exposure shutter closes.
+7. Active scan stops safely.
+8. Invalid field is not certified.
+9. Safety fault latches.
+10. Player reconnects the actual wire.
+11. Electrical connectivity restored.
+12. Fresh position signal acquired.
+13. Interferometer recalibrated.
+14. Wafer stage re-referenced.
+15. Position measurement validity restored.
+16. Player explicitly resets the fault.
+17. Motion controls recommissioned.
+18. Reticle stage synchronized.
+19. Wafer alignment reverified.
+20. Focus map reverified.
+21. Vibration conditions acceptable.
+22. Exposure dose measurement valid.
+23. Fresh full 16-field exposure performed.
+24. Post-exposure bake passed.
+25. Resist development passed.
+26. Wafer rinse/dry passed.
+27. Fresh CD metrology passed.
+28. Fresh overlay metrology passed.
+29. Fresh defect inspection passed.
+30. No unresolved critical fault.
+31. Final objective certified.
+
+Progress becomes **6/6**.
+
+## HISTORICAL OBJECTIVE REQUIREMENT
+
+The final deliberate feedback fault must not erase Objectives 1–5.
+
+Objective 6 must not complete immediately upon reconnection.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REPORT 6/6.**
+
+---
+
+# 45. FINAL INTERFEROMETER FAULT SEQUENCE
+
+## FAULT INJECTION
+
+1. Player locates the designated interferometer feedback wire.
+2. Player disconnects it using the actual Project Spark wiring interaction.
+3. Circuit topology changes.
+4. Sensor-to-controller data path becomes unavailable.
+5. Measurement validity becomes false.
+6. Stage synchronization detects invalid feedback.
+7. Exposure shutter closes.
+8. Exposure is inhibited.
+9. Actual stage motion follows safe deceleration limits.
+10. Active field becomes interrupted/invalid.
+11. Fault latches.
+12. SCADA records fault details.
+
+## IMPORTANT
+
+The physical stage position must not become zero.
+
+Do not allow stale feedback to drive precision scanning.
+
+Do not fake a fault by simply changing the status text.
+
+## RECOVERY
+
+1. Reconnect the actual wire.
+2. Verify topology.
+3. Verify sensor supply and return.
+4. Acquire fresh position measurements.
+5. Recalibrate interferometer reference.
+6. Rehome/re-reference the stage if required.
+7. Recheck alignment.
+8. Recheck focus.
+9. Recheck synchronization.
+10. Explicitly reset fault.
+11. Execute valid dry scan.
+12. Enable exposure under valid conditions.
+13. Expose a new wafer's 16 fields.
+14. Perform post-exposure bake.
+15. Develop resist.
+16. Rinse and dry.
+17. Measure CD and overlay.
+18. Inspect defects.
+19. Certify final wafer.
+20. Reach authoritative 6/6.
+
+---
+
+# 46. RECOMMENDED UNITY C# ARCHITECTURE
+
+Inspect the existing project before creating new classes.
+
+Suggested responsibilities:
+
+- `SparkLevel74Coordinator.cs`
+- `SparkLevel74ProcessState.cs`
+- `SparkLevel74ElectricalBindings.cs`
+- `SparkLevel74ResistReservoir.cs`
+- `SparkLevel74ResistPump.cs`
+- `SparkLevel74SpinChuckDynamics.cs`
+- `SparkLevel74ResistCoatingModel.cs`
+- `SparkLevel74ResistThicknessSensor.cs`
+- `SparkLevel74BakeThermalModel.cs`
+- `SparkLevel74WaferTransferController.cs`
+- `SparkLevel74WaferPrealigner.cs`
+- `SparkLevel74ReticleManager.cs`
+- `SparkLevel74ReticleInspector.cs`
+- `SparkLevel74ReticleStageDynamics.cs`
+- `SparkLevel74WaferStageDynamics.cs`
+- `SparkLevel74StageServoController.cs`
+- `SparkLevel74StageSynchronization.cs`
+- `SparkLevel74StageInterferometer.cs`
+- `SparkLevel74ReticleEncoder.cs`
+- `SparkLevel74AlignmentCamera.cs`
+- `SparkLevel74WaferFocusMap.cs`
+- `SparkLevel74FocusController.cs`
+- `SparkLevel74VibrationIsolation.cs`
+- `SparkLevel74VibrationSensor.cs`
+- `SparkLevel74OpticalThermalModel.cs`
+- `SparkLevel74DUVSource.cs`
+- `SparkLevel74OpticalProjection.cs`
+- `SparkLevel74ExposureShutter.cs`
+- `SparkLevel74ScanSlit.cs`
+- `SparkLevel74DosePhotodiode.cs`
+- `SparkLevel74ExposureDoseModel.cs`
+- `SparkLevel74FieldExposureMap.cs`
+- `SparkLevel74ResistLatentImage.cs`
+- `SparkLevel74PostExposureBake.cs`
+- `SparkLevel74ResistDeveloper.cs`
+- `SparkLevel74RinseDryer.cs`
+- `SparkLevel74CriticalDimensionMetrology.cs`
+- `SparkLevel74OverlayMetrology.cs`
+- `SparkLevel74PatternDefectInspection.cs`
+- `SparkLevel74SafetyController.cs`
+- `SparkLevel74LithographyPLC.cs`
+- `SparkLevel74DisturbanceController.cs`
+- `SparkLevel74FaultRecovery.cs`
+- `SparkLevel74EventRecorder.cs`
+- `SparkLevel74ObjectiveTracker.cs`
+- `SparkLevel74SCADADashboard.cs`
+- `SparkLevel74Interaction.cs`
+- `SparkLevel74VisualRigAdapter.cs`
+
+These are proposed responsibilities, not verified existing Project Spark classes.
+
+Reuse compatible project systems where appropriate.
+
+Avoid unnecessarily creating duplicate MonoBehaviours that fight over shared state.
+
+---
+
+# 47. AUTHORITATIVE SIMULATION UPDATE ORDER
+
+Use fixed or consistently scheduled simulation steps.
+
+Suggested order:
+
+1. Validate circuit topology.
+2. Evaluate control power.
+3. Read player commands.
+4. Validate sensor measurements.
+5. Evaluate safety interlocks.
+6. Execute PLC scan.
+7. Calculate stage motion commands.
+8. Evaluate stage servo controllers.
+9. Apply motion and safety limits.
+10. Integrate reticle stage position.
+11. Integrate wafer stage position.
+12. Integrate wafer Z and tilt.
+13. Integrate vibration-isolation dynamics.
+14. Update true alignment and stage errors.
+15. Acquire interferometer measurements.
+16. Acquire reticle encoder measurements.
+17. Apply measurement noise/latency/validity.
+18. Evaluate stage synchronization error.
+19. Update resist pump and spin chuck.
+20. Update resist coating thickness.
+21. Update bake thermal states.
+22. Update wafer height and focus map.
+23. Update optical thermal drift.
+24. Update focus correction.
+25. Update source intensity.
+26. Update actual shutter state.
+27. Update scan slit state.
+28. Calculate projected field intensity.
+29. Integrate local exposure dose.
+30. Update resist latent image.
+31. Update field completion/validity.
+32. Update post-exposure bake state.
+33. Update resist development state.
+34. Update rinse/dry state.
+35. Generate CD measurements.
+36. Generate overlay measurements.
+37. Generate pattern defects.
+38. Evaluate wafer quality.
+39. Evaluate protection and faults.
+40. Record event history.
+41. Evaluate authoritative objectives.
+42. Update SCADA.
+43. Update visual rig and VFX.
+
+## IMPORTANT
+
+This is a conceptual dependency sequence.
+
+Any coupled controller and plant steps must be scheduled consistently.
+
+Do not integrate exposure dose twice during one simulation timestep.
+
+Do not use old sensor samples as though they were current measurements.
+
+---
+
+# 48. AAA VISUAL IMPLEMENTATION
+
+Use the approved Level 74 cinematic design and actual FBX geometry.
+
+## STARTUP
+
+- Optical tower dark.
+- Stage motors stationary.
+- Shutter closed.
+- Wafer robot idle.
+- Resist coater inactive.
+- SCADA initializing.
+
+## WAFER COATING
+
+- Spin chuck accelerates.
+- Resist pump operates.
+- Dispensing nozzle moves.
+- Fictional resist visually spreads.
+- Thickness display responds to actual film model.
+
+## SOFT BAKE
+
+- Hotplate indicators illuminate.
+- Wafer temperature changes.
+- Bake status updates.
+
+## WAFER ALIGNMENT
+
+- Robot transfers wafer.
+- Prealigner rotates.
+- Wafer stage homes.
+- Alignment camera moves.
+- Alignment markers appear in diagnostic overlay.
+
+## STAGE SYNCHRONIZATION
+
+- Reticle moves.
+- Wafer stage moves in opposite scan direction.
+- Feedback traces show actual motion.
+- Position error decreases as controller is tuned.
+
+## OPTICAL EXPOSURE
+
+- Violet diagnostic beam becomes visible only when exposure is permitted.
+- Shutter opens.
+- Reticle pattern appears in optical overlay.
+- Scan slit travels over exposure field.
+- Field map updates from actual scan evidence.
+
+## FOCUS CORRECTION
+
+- Focus actuator moves.
+- Wafer Z/tilt adjusts.
+- Focus hologram updates.
+- CD quality responds to actual focus.
+
+## DEVELOPMENT
+
+- Post-bake activates.
+- Virtual developer flows.
+- Resist pattern appears.
+- Wafer rinses and dries.
+
+## INSPECTION
+
+- CD scanner moves.
+- Overlay scanner moves.
+- Defect camera inspects.
+- Final measurements update.
+
+## DISTURBANCES
+
+- Resist restriction affects coating flow.
+- Vibration fault affects stage motion.
+- Lens thermal drift affects focus.
+
+## FINAL INTERFEROMETER FAULT
+
+- Position feedback becomes INVALID.
+- Exposure shutter closes.
+- Stage safe-stop activates.
+- Player repairs wire.
+- Stage recalibrates.
+- Fresh exposure completes.
+
+## IMPORTANT
+
+All visual effects follow actual gameplay state.
+
+Do not make stage animation, violet beam brightness or green field graphics the authoritative physics.
+
+---
+
+# 49. ONE-CLICK UNITY LEVEL 74 EDITOR CREATOR
+
+Create:
+
+`Tools/Project Spark/Levels/Create Level 74`
+
+The new builder must create or safely update:
+
+- `Level_74.asset`
+- `Level_74_Layout.prefab`
+- All 56 numbered model instances.
+- Exactly 158 functional terminal anchors.
+- Exactly 102 player-created wire declarations.
+- Documented internal connections.
+- Photoresist coating system.
+- Spin-chuck dynamics.
+- Resist flow.
+- Soft-bake controls.
+- Wafer handling.
+- Reticle management.
+- Reticle stage.
+- Wafer X/Y/Z/tilt stage.
+- Stage motion controllers.
+- Laser interferometer.
+- Reticle encoder.
+- Alignment cameras.
+- Wafer focus map.
+- Active vibration isolation.
+- Lens thermal model.
+- DUV source.
+- Optical projection.
+- Exposure shutter.
+- Scan slit.
+- Dose photodiode.
+- 16-field exposure map.
+- Resist latent image.
+- Post-exposure bake.
+- Resist development.
+- Rinse/dryer.
+- CD metrology.
+- Overlay metrology.
+- Defect inspection.
+- PLC and safety control.
+- Three disturbances.
+- Final feedback-wire fault.
+- Six authoritative objectives.
+- 42 animation parent bindings.
+- SCADA dashboard.
+- Validation report.
+
+## REQUIRED EDITOR OPERATIONS
+
+1. Inspect the actual Project Spark Editor architecture.
+2. Locate all 56 FBX models.
+3. Validate exact filenames.
+4. Validate import scale.
+5. Verify approximately 18.2 m workstation width.
+6. Create/update Level 74 definition.
+7. Set `level_74`.
+8. Set `Align the Light`.
+9. Create six objective definitions.
+10. Create/update layout prefab.
+11. Create `L74_HD_VISUAL_ART`.
+12. Instantiate all 56 individual FBXs.
+13. Preserve common-origin coordinates.
+14. Configure safety enclosure.
+15. Configure photoresist track.
+16. Configure spin-coating bowl.
+17. Configure spin motor.
+18. Configure resist supply.
+19. Configure resist pump.
+20. Configure dispensing nozzle.
+21. Configure thickness sensor.
+22. Configure soft-bake equipment.
+23. Configure wafer cassette.
+24. Configure wafer robot.
+25. Configure prealignment station.
+26. Configure scanner frame.
+27. Configure DUV source.
+28. Configure illumination homogenizer.
+29. Configure exposure shutter.
+30. Configure reticle cassette.
+31. Configure circuit reticle.
+32. Configure reticle motion stage.
+33. Configure reticle encoder.
+34. Configure projection lens barrel.
+35. Configure focus corrector.
+36. Configure numerical aperture selector.
+37. Configure wafer XY stage.
+38. Configure X/Y servo motors.
+39. Configure wafer Z/tilt stage.
+40. Configure interferometer.
+41. Configure alignment camera.
+42. Configure electrostatic chuck.
+43. Configure wafer substrate.
+44. Configure alignment marks.
+45. Configure resist layer.
+46. Configure focus map.
+47. Configure height sensor.
+48. Configure vibration isolation.
+49. Configure six-axis vibration sensor.
+50. Configure lens drift sensor.
+51. Configure dose photodiode.
+52. Configure scan slit.
+53. Configure emergency station.
+54. Configure post-bake equipment.
+55. Configure fictional developer.
+56. Configure developer nozzle.
+57. Configure developer flow transmitter.
+58. Configure rinse/dryer.
+59. Configure CD scanner.
+60. Configure overlay metrology.
+61. Configure reticle inspection.
+62. Configure resist defect inspection.
+63. Configure main PLC.
+64. Configure stage synchronization controller.
+65. Configure SCADA.
+66. Configure regulated 5 V power.
+67. Create exactly 158 functional terminal IDs.
+68. Create exactly 102 player-wire definitions.
+69. Register equipment IDs.
+70. Register terminal IDs.
+71. Configure fixed internal connections.
+72. Configure motor masses and limits.
+73. Configure servo dynamics.
+74. Configure interferometer parameters.
+75. Configure stage synchronization.
+76. Configure reticle reduction ratio.
+77. Configure vibration isolation.
+78. Configure photoresist coating.
+79. Configure bake parameters.
+80. Configure virtual optical source.
+81. Configure focus model.
+82. Configure exposure dose.
+83. Configure latent resist image.
+84. Configure 16 exposure fields.
+85. Configure development.
+86. Configure rinse/dry.
+87. Configure CD metrology.
+88. Configure overlay metrology.
+89. Configure defect inspection.
+90. Configure nozzle restriction.
+91. Configure vibration failure.
+92. Configure lens thermal drift.
+93. Configure final interferometer feedback disconnection.
+94. Bind all 42 animation pivots.
+95. Configure diagnostic optical VFX.
+96. Configure live SCADA UI.
+97. Bind all six authoritative objectives.
+98. Validate missing references.
+99. Detect duplicate terminals.
+100. Detect duplicate simulation owners.
+101. Validate wiring allocation.
+102. Generate validation report.
+103. Save assets and prefabs.
+
+## EDITOR RELIABILITY
+
+Use actual Unity APIs and paths.
+
+Do not invent GUIDs.
+
+Use appropriate:
+
+- `AssetDatabase`
+- `PrefabUtility`
+- `SerializedObject`
+- Undo
+- Editor asset-saving APIs.
+
+Make the builder safe to rerun.
+
+Do not duplicate models, terminals or controllers.
+
+Preserve Levels 1–73.
+
+---
+
+# 50. COMPLETE PLAYER GAMEPLAY SEQUENCE
+
+Implement:
+
+**CONNECT 102 WIRES → VERIFY 158 TERMINALS → ENABLE CONTROL POWER → COMMISSION LITHOGRAPHY PLC → CALIBRATE SPIN CHUCK → CALIBRATE RESIST DELIVERY → LOAD PLANARIZED WAFER → DISPENSE FICTIONAL PHOTORESIST → SPIN COAT WAFER → VERIFY 350 NM RESIST THICKNESS → COMPLETE SOFT BAKE → LOAD RETICLE → INSPECT RETICLE → TRANSFER WAFER TO SCANNER → SECURE WAFER CHUCK → HOME RETICLE STAGE → HOME WAFER STAGE → CALIBRATE RETICLE ENCODER → CALIBRATE INTERFEROMETER → ACQUIRE WAFER ALIGNMENT MARKS → CORRECT TRANSLATION AND ROTATION → MAP WAFER HEIGHT → TUNE FOCUS → ENABLE VIBRATION ISOLATION → CONFIGURE 4:1 REDUCTION → ENABLE STAGE SYNCHRONIZATION → VERIFY ACTUAL POSITION TRACKING → PERFORM DRY SCAN → CALIBRATE DOSE PHOTODIODE → ENABLE VIRTUAL DUV SOURCE → SET NUMERICAL APERTURE → SET EXPOSURE DOSE → OPEN SHUTTER UNDER SAFETY PERMISSION → EXPOSE FIELD F01 → EXPOSE FIELD F02 → EXPOSE FIELD F03 → EXPOSE FIELD F04 → EXPOSE FIELD F05 → EXPOSE FIELD F06 → EXPOSE FIELD F07 → EXPOSE FIELD F08 → EXPOSE FIELD F09 → EXPOSE FIELD F10 → EXPOSE FIELD F11 → EXPOSE FIELD F12 → EXPOSE FIELD F13 → EXPOSE FIELD F14 → EXPOSE FIELD F15 → EXPOSE FIELD F16 → VERIFY ALL FIELD DOSES → VERIFY FOCUS AND STAGE ERRORS → COMPLETE POST-EXPOSURE BAKE → DEVELOP FICTIONAL RESIST → RINSE WAFER → DRY WAFER → MEASURE CRITICAL DIMENSIONS → MEASURE OVERLAY → INSPECT PATTERN DEFECTS → CERTIFY WAFER → APPLY RESIST NOZZLE RESTRICTION → DETECT COATING FAILURE → REPAIR NOZZLE → APPLY VIBRATION ISOLATION FAILURE → DETECT STAGE ERROR → RESTORE ISOLATION → APPLY LENS THERMAL DRIFT → DETECT FOCUS DEGRADATION → RESTORE THERMAL STABILITY → RECALIBRATE OPTICS → COMPLETE FRESH CERTIFIED WAFER → DISCONNECT ACTUAL INTERFEROMETER FEEDBACK WIRE → INVALIDATE POSITION MEASUREMENT → CLOSE EXPOSURE SHUTTER → STOP UNSAFE SCAN → LATCH FAULT → RECONNECT ACTUAL WIRE → RECALIBRATE INTERFEROMETER → REFERENCE STAGE → EXPLICITLY RESET FAULT → RECOMMISSION SYNCHRONIZATION → RUN DRY SCAN → COMPLETE FRESH 16-FIELD EXPOSURE → COMPLETE POST-EXPOSURE PROCESSING → PASS FRESH CD AND OVERLAY METROLOGY → PASS DEFECT INSPECTION → AUTHORITATIVE 6/6**
+
+---
+
+# 51. REQUIRED PLAYER-FACING MESSAGES
+
+Implement:
+
+- `BUILD THE LITHOGRAPHY CONTROL NETWORK`
+- `CONNECT ALL 102 WIRES`
+- `VERIFY 158 FUNCTIONAL TERMINALS`
+- `POWER THE LITHOGRAPHY PLC`
+- `CALIBRATE SPIN COATER`
+- `CALIBRATE RESIST DELIVERY`
+- `LOAD PLANARIZED WAFER`
+- `DISPENSE PHOTORESIST`
+- `START SPIN COATING`
+- `MEASURE RESIST THICKNESS`
+- `RESIST THICKNESS ACCEPTABLE`
+- `START SOFT BAKE`
+- `SOFT BAKE COMPLETE`
+- `LOAD CIRCUIT RETICLE`
+- `INSPECT RETICLE`
+- `RETICLE VERIFIED`
+- `TRANSFER WAFER TO SCANNER`
+- `SECURE WAFER CHUCK`
+- `HOME RETICLE STAGE`
+- `HOME WAFER STAGE`
+- `CALIBRATE RETICLE ENCODER`
+- `CALIBRATE LASER INTERFEROMETER`
+- `ACQUIRE ALIGNMENT MARKS`
+- `CORRECT WAFER ALIGNMENT`
+- `MAP WAFER HEIGHT`
+- `TUNE OPTICAL FOCUS`
+- `ENABLE VIBRATION ISOLATION`
+- `ENABLE STAGE SYNCHRONIZATION`
+- `VERIFY 4:1 SCAN RELATIONSHIP`
+- `RUN DRY SCAN`
+- `STAGE SYNCHRONIZATION VERIFIED`
+- `ENABLE VIRTUAL DUV SOURCE`
+- `SET EXPOSURE DOSE`
+- `EXPOSURE SHUTTER READY`
+- `START FIELD EXPOSURE`
+- `RETICLE AND WAFER STAGES SYNCHRONIZED`
+- `POSITION FOLLOWING ERROR TOO HIGH`
+- `FOCUS OUTSIDE TOLERANCE`
+- `EXPOSURE DOSE STABILIZED`
+- `FIELD EXPOSURE COMPLETE`
+- `16 EXPOSURE FIELDS CERTIFIED`
+- `START POST-EXPOSURE BAKE`
+- `START PHOTORESIST DEVELOPMENT`
+- `RINSE AND DRY WAFER`
+- `MEASURE CRITICAL DIMENSION`
+- `MEASURE OVERLAY`
+- `RUN PATTERN DEFECT INSPECTION`
+- `PATTERNED WAFER CERTIFIED`
+- `RESIST NOZZLE RESTRICTION DETECTED`
+- `RESIST COATING NONUNIFORM`
+- `RESTORE RESIST FLOW`
+- `VIBRATION ISOLATION FAILURE`
+- `SCAN POSITION ERROR INCREASING`
+- `RESTORE STAGE ISOLATION`
+- `LENS THERMAL DRIFT DETECTED`
+- `FOCUS CALIBRATION INVALID`
+- `RESTORE OPTICAL STABILITY`
+- `DISTURBANCE TESTS COMPLETE`
+- `DISCONNECT INTERFEROMETER FEEDBACK`
+- `POSITION FEEDBACK SIGNAL LOST`
+- `EXPOSURE SHUTTER CLOSED`
+- `SAFE STAGE STOP ACTIVE`
+- `RECONNECT INTERFEROMETER WIRE`
+- `RECALIBRATE POSITION FEEDBACK`
+- `RESET LATCHED POSITION FAULT`
+- `RECOMMISSION STAGE SYNCHRONIZATION`
+- `FINAL FULL WAFER EXPOSURE`
+- `FINAL CD AND OVERLAY CERTIFICATION`
+- `LEVEL 74 COMPLETE`
+
+---
+
+# 52. DIAGNOSTICS AND FAULT REPORTING
+
+Provide clear diagnostic errors for:
+
+- Incorrect W01–W102 wiring.
+- Missing terminal IDs.
+- Duplicate terminal IDs.
+- Invalid control supply.
+- Missing common return.
+- Stage servo disconnected.
+- Stage encoder disconnected.
+- Interferometer disconnected.
+- Interferometer reading stale.
+- Actual stage not moving despite command.
+- Stage moving without correct permission.
+- Stage speed exceeding limits.
+- Stage acceleration exceeding limits.
+- Stage following error excessive.
+- Incorrect reticle/wafer ratio.
+- Invalid dry scan.
+- Wafer alignment camera invalid.
+- Wafer alignment incomplete.
+- Focus map unavailable.
+- Wafer Z/tilt correction invalid.
+- Vibration isolation ineffective.
+- Vibration sensor disconnected.
+- Lens thermal drift excessive.
+- DUV source unavailable.
+- Shutter feedback invalid.
+- Photodiode uncalibrated.
+- Dose accumulating while shutter closed.
+- Dose nonuniformity excessive.
+- Resist pump disconnected.
+- Resist nozzle restricted.
+- Spin motor not accelerating.
+- Resist thickness outside limits.
+- Bake temperature invalid.
+- Reticle not loaded.
+- Reticle inspection failed.
+- Wafer chuck unsafe.
+- Wafer field exposure incomplete.
+- Field marked complete without valid scan.
+- Developer flow invalid.
+- Post-exposure bake incomplete.
+- Rinse/dry incomplete.
+- Critical dimension out of tolerance.
+- Overlay out of tolerance.
+- Pattern defects excessive.
+- UV interlock bypassed.
+- Unsafe scan not inhibited.
+- Fault reset before repair.
+- Sensor signal removed but still marked valid.
+- Previous objectives incorrectly erased.
+- `LevelGamePlayManager` stuck at 0/6.
+- `LevelGamePlayManager` stuck at 5/6.
+- Unity compilation failure.
+- Prefab binding failure.
+- Scene reload failure.
+- Regression in Levels 1–73.
+
+---
+
+# 53. REQUIRED IMPLEMENTATION TESTS
+
+Test:
+
+1. Exactly 102 player wires registered.
+2. Exactly 158 unique terminals registered.
+3. Wire IDs unique.
+4. Terminal IDs unique.
+5. 5 V control power valid.
+6. PLC initializes.
+7. Safety system ready.
+8. Wafer robot operates.
+9. Spin chuck accelerates.
+10. Resist pump operates.
+11. Resist inventory changes.
+12. Resist film thickness calculates.
+13. Resist thickness sensor measures actual film.
+14. Coating thickness can reach target.
+15. Nonuniform coating fails.
+16. Soft-bake temperature changes dynamically.
+17. Soft-bake controller regulates temperature.
+18. Reticle loads.
+19. Reticle inspection works.
+20. Wafer chuck clamps.
+21. Reticle stage homes.
+22. Wafer stage homes.
+23. Reticle position changes dynamically.
+24. Wafer position changes dynamically.
+25. Stage velocity limits enforced.
+26. Acceleration/jerk limits enforced.
+27. Reticle encoder measures actual stage.
+28. Interferometer measures actual wafer position.
+29. Sensor latency and validity work.
+30. Alignment camera measures actual offsets.
+31. Wafer rotation correction works.
+32. Wafer height map calculates.
+33. Wafer Z and tilt respond.
+34. Focus error calculates.
+35. Numerical aperture affects optics.
+36. Reduction ratio configured.
+37. Reticle/wafer 4:1 synchronization works.
+38. Incorrect ratio creates error.
+39. Vibration affects stage accuracy.
+40. Active isolation reduces modeled vibration.
+41. Lens temperature changes dynamically.
+42. Lens drift affects focus/image.
+43. DUV source intensity responds.
+44. Shutter opens/closes through actuator state.
+45. Dose remains zero when shutter blocks light.
+46. Photodiode measures actual optical state.
+47. Accumulated exposure dose calculates.
+48. Reticle pattern affects projected image.
+49. Field F01 can complete correctly.
+50. All 16 fields track separately.
+51. Invalid field is rejected.
+52. Dose variation evaluated.
+53. Focus variation evaluated.
+54. Scan synchronization error affects printing.
+55. Latent resist image generated.
+56. Post-exposure bake changes resist process state.
+57. Virtual development produces patterned resist.
+58. Rinse and drying work.
+59. CD metrology measures actual developed pattern.
+60. Overlay metrology measures actual pattern registration.
+61. Defect inspection derives from process state.
+62. Valid wafer passes.
+63. Invalid coating fails.
+64. Excessive dose fails.
+65. Incorrect focus fails.
+66. Excessive overlay fails.
+67. Too many defects fail.
+68. Nozzle restriction changes actual flow.
+69. Coating responds to restriction.
+70. Nozzle recovery works.
+71. Vibration isolation disturbance changes stage behavior.
+72. Safety rejects unsafe scanning.
+73. Isolation recovery works.
+74. Lens thermal disturbance changes focus.
+75. Optical recovery works.
+76. Fresh post-disturbance wafer passes.
+77. Actual interferometer signal wire disconnects.
+78. Electrical topology changes.
+79. Measurement becomes invalid.
+80. Synchronization controller detects feedback loss.
+81. Exposure shutter closes.
+82. Active scan enters safe stop.
+83. Interrupted field does not pass.
+84. Fault latches.
+85. Physical wire reconnects.
+86. Fresh sensor measurement acquired.
+87. Interferometer recalibration succeeds.
+88. Stage referencing succeeds.
+89. Explicit fault reset succeeds.
+90. Motion recommissioning succeeds.
+91. Fresh dry scan succeeds.
+92. Fresh 16-field exposure succeeds.
+93. Fresh post-exposure bake succeeds.
+94. Fresh development succeeds.
+95. Fresh rinse/dry succeeds.
+96. Fresh CD metrology passes.
+97. Fresh overlay metrology passes.
+98. Fresh defect inspection passes.
+99. Authoritative evaluator reaches 6/6.
+100. Level progression succeeds.
+101. Levels 1–73 remain unaffected.
+
+Only report tests as PASSED when actually executed.
+
+---
+
+# 54. REQUIRED DOWNLOADABLE DELIVERABLES
+
+Create a complete Level 74 Unity implementation ZIP containing:
+
+- Full runtime C# source.
+- Authoritative lithography coordinator.
+- Wafer state model.
+- Fictional resist supply.
+- Resist pump.
+- Spin chuck dynamics.
+- Resist coating thickness model.
+- Resist thickness sensing.
+- Soft-bake thermal model.
+- Wafer robot integration.
+- Wafer prealignment.
+- Reticle manager.
+- Reticle inspection.
+- Reticle stage dynamics.
+- Wafer stage dynamics.
+- Servo position/velocity controllers.
+- Stage acceleration/jerk limiting.
+- Reticle encoder.
+- Wafer laser interferometer.
+- Sensor calibration and validity.
+- Wafer alignment camera.
+- Wafer height/focus map.
+- Wafer Z/tilt controller.
+- Vibration isolation.
+- Vibration sensing.
+- Lens thermal drift model.
+- Optical projection model.
+- Fictional 193 nm DUV source.
+- Exposure shutter.
+- Scan slit.
+- Numerical aperture model.
+- Dose photodiode.
+- Exposure dose integration.
+- Reticle image/field projection.
+- 16-field wafer exposure map.
+- Resist latent-image model.
+- Post-exposure bake.
+- Fictional resist development.
+- Wafer rinse/dryer.
+- Critical-dimension metrology.
+- Overlay metrology.
+- Pattern defect inspection.
+- Stage synchronization controller.
+- PLC state machine.
+- Safety controller.
+- Resist nozzle restriction disturbance.
+- Vibration isolation disturbance.
+- Lens thermal drift disturbance.
+- Actual interferometer wire disconnection.
+- Signal invalidation.
+- Exposure shutter safety response.
+- Controlled stage stop.
+- Fault latching.
+- Wire repair.
+- Interferometer recalibration.
+- Explicit fault reset.
+- Fresh full-field certification.
+- Six authoritative objectives.
+- One-click Unity Editor Level 74 builder.
+- Level definition creator or asset.
+- Layout prefab creator.
+- Full W01–W102 wiring endpoint manifest.
+- 158-terminal binding manifest.
+- Equipment bindings.
+- All 42 verified animation pivots.
+- Motion configuration.
+- Servo parameters.
+- Optical parameters.
+- Resist process configuration.
+- Bake configuration.
+- Exposure configuration.
+- Metrology configuration.
+- Safety configuration.
+- Disturbance configuration.
+- Live SCADA dashboard.
+- Visual/VFX adapter.
+- Diagnostics.
+- Player gameplay walkthrough.
+- Objective certification checklist.
+- Troubleshooting guide.
+- Actual test report.
+
+Reuse:
+
+`ProjectSpark_Level74_HD_AAA_Models.zip`
+
+Do not regenerate the approved geometry without a verified compatibility problem.
+
+Only provide files that were actually generated.
+
+Do not claim Unity compilation, Play Mode testing or completed gameplay unless those tests were performed.
+
+---
+
+# 55. FINAL EXECUTION INSTRUCTIONS
+
+**IMPLEMENT LEVEL 74 — DO NOT STOP AT DESIGN OR EXPLANATION.**
+
+First inspect my real Project Spark Unity codebase and the approved Level 74 FBX package.
+
+Then:
+
+1. Preserve Levels 1–73.
+2. Import all 56 modular FBXs.
+3. Validate correct scale.
+4. Use common-origin placement.
+5. Reuse the existing art-placement helper.
+6. Reuse compatible material setup.
+7. Reuse the visual rig.
+8. Implement 102 player-created wires.
+9. Implement 158 functional terminals.
+10. Integrate actual electrical topology.
+11. Implement resist spin-coating.
+12. Implement resist flow.
+13. Implement resist thickness.
+14. Implement soft bake.
+15. Implement wafer handling.
+16. Implement reticle handling.
+17. Implement reticle inspection.
+18. Implement reticle stage motion.
+19. Implement wafer XY stage motion.
+20. Implement wafer Z/tilt stage motion.
+21. Implement servo controllers.
+22. Implement stage limits.
+23. Implement encoder feedback.
+24. Implement interferometer feedback.
+25. Implement alignment mark sensing.
+26. Implement wafer overlay alignment.
+27. Implement wafer focus mapping.
+28. Implement active vibration isolation.
+29. Implement lens thermal dynamics.
+30. Implement DUV source simulation.
+31. Implement exposure shutter.
+32. Implement scan slit.
+33. Implement numerical aperture.
+34. Implement optical resolution/blur.
+35. Implement reticle image projection.
+36. Implement exposure dose integration.
+37. Implement 4:1 stage synchronization.
+38. Implement 16 exposure fields.
+39. Implement resist latent image.
+40. Implement post-exposure bake.
+41. Implement fictional resist development.
+42. Implement rinse and drying.
+43. Implement CD metrology.
+44. Implement overlay metrology.
+45. Implement defect inspection.
+46. Implement wafer certification.
+47. Implement nozzle restriction.
+48. Implement vibration disturbance.
+49. Implement lens drift disturbance.
+50. Implement disturbance recovery.
+51. Implement industrial PLC sequencing.
+52. Implement safety interlocks.
+53. Implement actual interferometer wire disconnection.
+54. Implement measurement invalidation.
+55. Implement shutter closure and safe stage stop.
+56. Implement physical wire repair.
+57. Implement recalibration.
+58. Implement explicit reset.
+59. Implement fresh 16-field certification.
+60. Integrate six authoritative objectives.
+61. Create one-click Unity Level 74 builder.
+62. Bind all 42 verified animation groups.
+63. Create simulation-driven optical VFX.
+64. Create live SCADA.
+65. Add comprehensive diagnostics.
+66. Run feasible tests.
+67. Package and verify outputs.
+
+Do not ask for reapproval of the already-approved design.
+
+Do not fabricate stage position, interferometer measurements, synchronization error, wafer alignment, focus, dose, resist thickness, critical dimension, overlay, defects, safety state, sensor validity or objective completion.
+
+If an existing Project Spark API cannot be verified, create an isolated subsystem where appropriate and document the exact integration dependency.
+
+---
+
+# 56. FINAL SUCCESS CONDITION
+
+The player must be able to:
+
+1. Connect all 102 player-created wires.
+2. Validate 158 functional terminals.
+3. Commission the lithography PLC.
+4. Calibrate resist coating.
+5. Load a planarized wafer.
+6. Produce an acceptable fictional resist film.
+7. Complete soft bake.
+8. Load a valid reticle.
+9. Inspect reticle quality.
+10. Secure wafer on the scanner.
+11. Home reticle stage.
+12. Home wafer stage.
+13. Calibrate reticle encoder.
+14. Calibrate wafer interferometer.
+15. Detect wafer alignment marks.
+16. Correct translation and rotation.
+17. Acquire focus map.
+18. Control wafer Z/tilt.
+19. Enable vibration isolation.
+20. Synchronize the stage trajectories.
+21. Verify the 4:1 reduction relationship.
+22. Complete a valid dry scan.
+23. Enable simulated DUV source.
+24. Calibrate photodiode.
+25. Set exposure dose.
+26. Expose 16 fields using actual stage motion.
+27. Verify field validity.
+28. Complete post-exposure bake.
+29. Develop the fictional resist.
+30. Rinse and dry the wafer.
+31. Measure critical dimensions.
+32. Measure overlay error.
+33. Inspect defects.
+34. Certify a patterned wafer.
+35. Diagnose resist nozzle restriction.
+36. Restore coating quality.
+37. Diagnose vibration isolation failure.
+38. Restore stage accuracy.
+39. Diagnose lens thermal drift.
+40. Restore optical focus.
+41. Complete a new valid wafer.
+42. Disconnect actual interferometer feedback.
+43. Detect invalid precision positioning.
+44. Close exposure shutter.
+45. Stop unsafe scanning.
+46. Reconnect the actual signal wire.
+47. Recalibrate interferometer.
+48. Re-reference the stage.
+49. Explicitly reset the fault.
+50. Recommission stage synchronization.
+51. Complete fresh exposure of all 16 fields.
+52. Complete fresh resist processing.
+53. Pass fresh CD metrology.
+54. Pass fresh overlay metrology.
+55. Pass fresh defect inspection.
+56. Complete all six authoritative objectives.
+
+**THE ACTUAL `LevelGamePlayManager` MUST REACH 6/6 AND COMPLETE LEVEL 74.**
+
+The player must learn precision servo motion, wafer and reticle stage synchronization, laser interferometry, optical focus, projection resolution, photoresist processing, exposure dose, nanometre overlay, critical-dimension metrology, vibration isolation, thermal drift compensation and safety through meaningful gameplay simulation.
+
+**FINAL GOAL: A COMPLETE, POLISHED, UNITY-READY, AAA-QUALITY AND ACTUALLY PLAYABLE LEVEL 74 — ALIGN THE LIGHT.**

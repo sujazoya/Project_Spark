@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_70_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_70
+  levelTitle: Guard the Air
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the cleanroom
+    explanation: Connect blowers, FFUs, sensors, dampers, doors and safety. Install
+      W86 last.
+    caption: "86 WIRES  \u2022  134 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.7}
+      label: POWER
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.7, y: 0.7}
+      label: SENSORS
+      color: {r: 1, g: 0.7, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.7}
+      label: SAFETY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.7}
+      - {x: 0.43, y: 0.7}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.7, y: 0.7}
+      - {x: 0.75, y: 0.7}
+      energized: 0
+      color: {r: 1, g: 0.7, b: 0.31, a: 1}
+  - title: 02 / Commission and stabilize
+    explanation: Calibrate, start all five fans, tune pressure and airflow, then
+      enable automatic environmental control.
+    caption: "+15 Pa  /  +8 Pa  \u2022  22\xB0C  \u2022  45% RH"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.7}
+      label: FLOW
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.7, y: 0.7}
+      label: PRESSURE
+      color: {r: 1, g: 0.7, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.7}
+      label: CLIMATE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.7}
+      - {x: 0.43, y: 0.7}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.7, y: 0.7}
+      - {x: 0.75, y: 0.7}
+      energized: 0
+      color: {r: 1, g: 0.7, b: 0.31, a: 1}
+  - title: 03 / Protect the wafer
+    explanation: Inspect wafer exposure, exercise the airlock, verify loading and
+      isolate the failed HEPA cartridge before replacement.
+    caption: "PARTICLE SAMPLES  \u2022  FILTER DP"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.7}
+      label: WAFER
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.7, y: 0.7}
+      label: SERVICE
+      color: {r: 1, g: 0.7, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.7}
+      label: PURGE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.7}
+      - {x: 0.43, y: 0.7}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.7, y: 0.7}
+      - {x: 0.75, y: 0.7}
+      energized: 0
+      color: {r: 1, g: 0.7, b: 0.31, a: 1}
+  - title: 04 / Restore pressure feedback
+    explanation: Disconnect the actual pressure feedback wire. Restore and recalibrate
+      the channel, reset, then repeat the door and wafer tests.
+    caption: "W86  \u2022  SAFE VENTILATION  \u2022  RECERTIFY"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.7}
+      label: ISOLATE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.7, y: 0.7}
+      label: RECONNECT
+      color: {r: 1, g: 0.7, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.7}
+      label: CERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.7}
+      - {x: 0.43, y: 0.7}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.7, y: 0.7}
+      - {x: 0.75, y: 0.7}
+      energized: 0
+      color: {r: 1, g: 0.7, b: 0.31, a: 1}
