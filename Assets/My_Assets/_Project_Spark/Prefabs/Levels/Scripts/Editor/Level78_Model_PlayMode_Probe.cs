@@ -221,6 +221,7 @@ internal static class Level78ModelPlayModeProbe
             await Click(loop.calGasButton);
             await Click(loop.calRfButton);
             await Click(loop.calMeterButton);
+            await Wait(()=>Flag("gasCal")&&Flag("rfCal")&&Flag("validLeak"),"gas, RF and electrometer calibration");
             await Load();
             await At(2);
             await Seal(true);await At(3);
@@ -394,6 +395,7 @@ internal static class Level78ModelPlayModeProbe
     }
 }
 #endif
+
 
 
 

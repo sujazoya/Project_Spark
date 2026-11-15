@@ -411,7 +411,7 @@ namespace ProjectSpark.EditorTools
                     throw new InvalidOperationException("Unexpected axes on fitted model " + model.name);
             }
 
-            assembly.localScale = Vector3.one * .62f;
+            assembly.localScale = Vector3.one * .55f;
             if (!AssetDatabase.IsValidFolder(Materials)) AssetDatabase.CreateFolder(Folder + "Models", "Materials");
             var shader = Shader.Find("Universal Render Pipeline/Lit");
             if (shader == null) throw new InvalidOperationException("The project URP Lit shader is missing.");
@@ -703,6 +703,7 @@ namespace ProjectSpark.EditorTools
     }
 }
 #endif
+
 
 
 

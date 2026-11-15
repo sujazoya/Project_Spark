@@ -1,0 +1,167 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_79
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_79
+  displayName: Bond the Worlds
+  description: Align, bond and test four chiplets, then restore W037 position feedback.
+  completionMode: 0
+  requiredTargetCount: 6
+  requireClosedReturn: 0
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 1
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: CONTROL_POWER
+    positiveTerminalId: SUPPLY_POS
+    negativeTerminalId: SUPPLY_RET
+    nominalVoltage: 5
+  targets:
+  - targetId: level79_bond_1
+    displayName: Build Precision Bonding Network
+    description: "Recorded from the electrical graph, valid calibrated feedback and
+      the level\u2019s verified run history."
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L79_Wired
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level79_bond_2
+    displayName: Qualify Surfaces and Six Axis Alignment
+    description: "Recorded from the electrical graph, valid calibrated feedback and
+      the level\u2019s verified run history."
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L79_Commissioned
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level79_bond_3
+    displayName: Bond Logic and Memory
+    description: "Recorded from the electrical graph, valid calibrated feedback and
+      the level\u2019s verified run history."
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L79_FirstPair
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level79_bond_4
+    displayName: Complete and Test Four Chiplets
+    description: "Recorded from the electrical graph, valid calibrated feedback and
+      the level\u2019s verified run history."
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L79_Qualified
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level79_bond_5
+    displayName: Survive Assembly Disturbances
+    description: "Recorded from the electrical graph, valid calibrated feedback and
+      the level\u2019s verified run history."
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L79_Disturbances
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level79_bond_6
+    displayName: Restore Critical Laser Feedback
+    description: "Recorded from the electrical graph, valid calibrated feedback and
+      the level\u2019s verified run history."
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L79_Recertified
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 0
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 0
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

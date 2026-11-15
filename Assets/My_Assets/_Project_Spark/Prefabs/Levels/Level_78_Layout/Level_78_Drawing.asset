@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_78_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_78
+  levelTitle: Seal the Signal
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the dielectric cluster
+    explanation: Connect vacuum, deposition, cure, metrology and safety. Add W083
+      last.
+    caption: "118 WIRES  \u2022  182 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: POWER
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: PROCESS
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: RELIABILITY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+  - title: 02 / Prepare and seal copper
+    explanation: Pump down, inspect and precondition copper. Calibrate flow and RF,
+      deposit the cap and verify continuity.
+    caption: "VACUUM  \u2022  PREP  \u2022  CAP"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: PUMP DOWN
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: CAP
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: INSPECT
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+  - title: 03 / Build and qualify low-k
+    explanation: Deposit the dielectric, open the UV shutter during cure and then
+      verify film and coupon quality.
+    caption: "LOW-K  \u2022  CURE  \u2022  SCREEN"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: LOW-K
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: UV CURE
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: LEAKAGE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+  - title: 04 / Restore leakage feedback
+    explanation: Disconnect W083 during coupon stress. Watch the fixture discharge.
+      Reconnect, calibrate, verify, reset and qualify a fresh wafer.
+    caption: "W083  \u2022  DISCHARGE"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: DISCHARGE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: CALIBRATE
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: CERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}

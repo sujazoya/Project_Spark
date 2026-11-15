@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_79_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_79
+  levelTitle: Bond the Worlds
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the bonding cell
+    explanation: Wire the motion, laser, vision, force, metrology and safety systems.
+      Connect W037 last.
+    caption: "122 WIRES  \u2022  188 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: MOTION
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: LASER
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: SAFETY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+  - title: 02 / Align the first pair
+    explanation: Home the axes, calibrate both sensors, prepare the surfaces and
+      bond the first two chiplets.
+    caption: "LOGIC  \u2022  MEMORY"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: PREPARE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: ALIGN
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: BOND
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+  - title: 03 / Finish and test
+    explanation: After scan acceptance of all four placements, consolidate and test
+      the vertical contacts and chiplet links.
+    caption: "I/O  \u2022  SENSOR  \u2022  LINK"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: SCAN
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: CONSOLIDATE
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: TEST
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+  - title: 04 / Recover precision motion
+    explanation: Disconnect W037 mid-approach, reconnect, home, calibrate, verify
+      and reset, then build a fresh assembly.
+    caption: "W037  \u2022  MOTION HOLD"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: HOLD
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: RECALIBRATE
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: CERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
