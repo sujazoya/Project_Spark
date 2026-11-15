@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_73_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_73
+  levelTitle: Polish to Perfection
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the CMP workbench
+    explanation: Connect drives, force, slurry, cleaning and measurement. Install
+      downforce feedback W98 last.
+    caption: "98 WIRES  \u2022  152 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: POWER
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: PROCESS
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: SAFETY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+  - title: 02 / Establish controlled contact
+    explanation: Calibrate, condition the pad, spin both drives, clamp a wafer and
+      enable the zone controller.
+    caption: "SPEED  \u2022  DOWNFORCE  \u2022  SLURRY"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: COMMISSION
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: CLAMP
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: ENGAGE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+  - title: 03 / Planarize and verify
+    explanation: Verify endpoint, rinse, brush and dry before checking wafer flatness,
+      removal uniformity and defects.
+    caption: "ENDPOINT  \u2022  RINSE  \u2022  METROLOGY"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: POLISH
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: CLEAN
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: SCAN
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+  - title: 04 / Restore downforce
+    explanation: Disconnect W98 during contact. Reconnect, calibrate and verify the
+      unloaded sensor. Then certify a fresh wafer.
+    caption: "W98  \u2022  CARRIER RETRACTION"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: RETRACT
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: RECALIBRATE
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: CERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}

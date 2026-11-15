@@ -1,0 +1,139 @@
+WireID,Group,SourceModel,SourceVisualAnchor,TargetModel,TargetVisualAnchor,SignalPurpose,SignalKind,Critical,Status
+W001,Educational 5V control power and return,L83_Protected5VControlSupply,P198,L83_EPSPowerSafetyPLC,P192,5V EPS safety PLC power,POWER_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W002,Educational 5V control power and return,L83_Protected5VControlSupply,P199,L83_MainBusEnergyManagementController,P195,5V energy management supervisor supply,POWER_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W003,Educational 5V control power and return,L83_Protected5VControlSupply,P200,L83_MPPTControllerPort,P052,5V port MPPT controller logic,POWER_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W004,Educational 5V control power and return,L83_Protected5VControlSupply,P198,L83_MPPTControllerStarboard,P056,5V starboard MPPT controller logic,POWER_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W005,Educational 5V control power and return,L83_Protected5VControlSupply,P199,L83_BatteryManagementController,P112,5V battery management logic,POWER_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W006,Educational 5V control power and return,L83_Protected5VControlSupply,P200,L83_PowerDistributionUnit,P141,5V distribution controller logic,POWER_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W007,Educational 5V control power and return,L83_Protected5VControlSupply,P198,L83_PriorityLoadSwitchingRack,P144,5V priority load controller logic,POWER_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W008,Educational 5V control power and return,L83_Protected5VControlSupply,P199,L83_OrbitalPowerSCADA,P201,5V SCADA logic supply,POWER_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W009,Educational 5V control power and return,L83_Protected5VControlSupply,P200,L83_IndependentUndervoltageProtector,P189,5V independent undervoltage protector logic,POWER_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W010,Educational 5V control power and return,L83_Protected5VControlSupply,P198,L83_BusVoltageTransducer,P075,5V bus transducer conditioning feed,POWER_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W011,Solar wing deployment and tracking,L83_MainBusEnergyManagementController,P196,L83_SolarWingPortHingeAssembly,P007,Port wing deploy command,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W012,Solar wing deployment and tracking,L83_SolarWingPortHingeAssembly,P008,L83_MainBusEnergyManagementController,P197,Port wing deployed limit feedback,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W013,Solar wing deployment and tracking,L83_MainBusEnergyManagementController,P195,L83_SolarWingStarboardHingeAssembly,P010,Starboard wing deploy command,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W014,Solar wing deployment and tracking,L83_SolarWingStarboardHingeAssembly,P011,L83_MainBusEnergyManagementController,P196,Starboard wing deployed limit feedback,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W015,Solar wing deployment and tracking,L83_MainBusEnergyManagementController,P197,L83_SolarArrayPortTrackingGimbal,P013,Port azimuth tracking request,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W016,Solar wing deployment and tracking,L83_SolarArrayPortTrackingGimbal,P014,L83_MainBusEnergyManagementController,P195,Port array actual azimuth,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W017,Solar wing deployment and tracking,L83_MainBusEnergyManagementController,P196,L83_SolarArrayStarboardTrackingGimbal,P016,Starboard azimuth tracking request,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W018,Solar wing deployment and tracking,L83_SolarArrayStarboardTrackingGimbal,P017,L83_MainBusEnergyManagementController,P197,Starboard array actual azimuth,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W019,Solar wing deployment and tracking,L83_SolarArrayAzimuthEncoder,P019,L83_MainBusEnergyManagementController,P195,Solar tracking encoder measured position,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W020,Solar wing deployment and tracking,L83_MainBusEnergyManagementController,P196,L83_SolarArrayAzimuthEncoder,P020,Tracking encoder calibration enable,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W021,Solar wing deployment and tracking,L83_ProgrammableSolarIlluminationArc,P022,L83_MainBusEnergyManagementController,P197,Modeled Sun vector and irradiance diagnostic,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W022,Solar wing deployment and tracking,L83_EarthShadowOccluderStage,P025,L83_MainBusEnergyManagementController,P195,Orbital eclipse shadow boundary status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W023,Solar wing deployment and tracking,L83_OrbitalDayNightHologram,P028,L83_MainBusEnergyManagementController,P196,Simulated orbital phase status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W024,Solar wing deployment and tracking,L83_MainBusEnergyManagementController,P197,L83_SolarGimbalJamSimulator,P180,Solar array jam fault arm,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W025,Solar wing deployment and tracking,L83_SolarGimbalJamSimulator,P181,L83_MainBusEnergyManagementController,P195,Port gimbal jam diagnostic,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W026,Solar wing deployment and tracking,L83_MainBusEnergyManagementController,P196,L83_SolarArrayCellStringMap,P031,Solar string inspection request,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W027,Solar wing deployment and tracking,L83_SolarArrayCellStringMap,P032,L83_MainBusEnergyManagementController,P197,Solar cell string distribution feedback,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W028,Solar wing deployment and tracking,L83_MainBusEnergyManagementController,P195,L83_SolarArrayCombinerBox,P043,Solar combiner isolation command,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W029,Solar wing deployment and tracking,L83_SolarArrayCombinerBox,P044,L83_MainBusEnergyManagementController,P196,Solar combiner ready feedback,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W030,Solar wing deployment and tracking,L83_SolarArrayPortTrackingGimbal,P015,L83_EPSPowerSafetyPLC,P193,Port gimbal motion safety status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W031,PV generation and MPPT power conversion,L83_SolarArrayCurrentSensors,P046,L83_MPPTControllerPort,P053,Port solar measured array current,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W032,PV generation and MPPT power conversion,L83_SolarArrayVoltageSensors,P049,L83_MPPTControllerPort,P054,Port solar measured array voltage,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W033,PV generation and MPPT power conversion,L83_SolarArrayCurrentSensors,P047,L83_MPPTControllerStarboard,P057,Starboard solar measured current,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W034,PV generation and MPPT power conversion,L83_SolarArrayVoltageSensors,P050,L83_MPPTControllerStarboard,P058,Starboard solar measured voltage,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W035,PV generation and MPPT power conversion,L83_MainBusEnergyManagementController,P197,L83_MPPTControllerPort,P055,Port MPPT enable request,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W036,PV generation and MPPT power conversion,L83_MainBusEnergyManagementController,P195,L83_MPPTControllerStarboard,P059,Starboard MPPT enable request,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W037,PV generation and MPPT power conversion,L83_MPPTControllerPort,P052,L83_PowerConditioningConverterA,P063,Port MPPT converter duty request,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W038,PV generation and MPPT power conversion,L83_MPPTControllerStarboard,P056,L83_PowerConditioningConverterB,P067,Starboard MPPT converter duty request,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W039,PV generation and MPPT power conversion,L83_PowerConditioningConverterA,P064,L83_MainBusEnergyManagementController,P196,Port converter measured DC output,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W040,PV generation and MPPT power conversion,L83_PowerConditioningConverterB,P068,L83_MainBusEnergyManagementController,P197,Starboard converter measured DC output,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W041,PV generation and MPPT power conversion,L83_MPPTControllerPort,P053,L83_MainBusEnergyManagementController,P195,Port measured MPPT tracking quality,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W042,PV generation and MPPT power conversion,L83_MPPTControllerStarboard,P057,L83_MainBusEnergyManagementController,P196,Starboard measured MPPT tracking quality,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W043,PV generation and MPPT power conversion,L83_PVStringPortIVTracer,P034,L83_MPPTControllerPort,P054,Port IV curve sample data,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W044,PV generation and MPPT power conversion,L83_PVStringStarboardIVTracer,P037,L83_MPPTControllerStarboard,P058,Starboard IV curve sample data,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W045,PV generation and MPPT power conversion,L83_PVStringBypassDiodeBank,P040,L83_MPPTControllerPort,P055,Bypass diode array health,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W046,PV generation and MPPT power conversion,L83_SolarArrayCombinerBox,P045,L83_PowerConditioningConverterA,P065,Solar combined port output monitoring,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W047,PV generation and MPPT power conversion,L83_SolarArrayCombinerBox,P043,L83_PowerConditioningConverterB,P069,Solar combined starboard output monitoring,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W048,PV generation and MPPT power conversion,L83_MainBusEnergyManagementController,P197,L83_PowerConditioningConverterA,P066,Port converter protected enable,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W049,PV generation and MPPT power conversion,L83_MainBusEnergyManagementController,P195,L83_PowerConditioningConverterB,P070,Starboard converter protected enable,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W050,PV generation and MPPT power conversion,L83_PowerConditioningConverterA,P063,L83_RegulatedMainDCBus,P071,Port converter DC bus power interface,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W051,PV generation and MPPT power conversion,L83_PowerConditioningConverterB,P067,L83_RegulatedMainDCBus,P072,Starboard converter DC bus power interface,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W052,PV generation and MPPT power conversion,L83_MPPTPerturbObserveDisplay,P060,L83_OrbitalPowerSCADA,P202,MPPT perturb observe diagnostic telemetry,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W053,"Battery packs, cell sensing and BMS",L83_BatteryPackA,P089,L83_BatteryManagementController,P113,Battery A module presence and pack state,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W054,"Battery packs, cell sensing and BMS",L83_BatteryPackB,P093,L83_BatteryManagementController,P114,Battery B module presence and pack state,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W055,"Battery packs, cell sensing and BMS",L83_BatteryCellVoltageTapArray,P100,L83_BatteryManagementController,P115,Battery individual cell-group voltages,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W056,"Battery packs, cell sensing and BMS",L83_BatteryCurrentHallSensor,P104,L83_BatteryManagementController,P112,Battery measured pack current,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W057,"Battery packs, cell sensing and BMS",L83_BatteryThermalSensorGrid,P108,L83_BatteryManagementController,P113,Battery pack thermistor array feedback,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W058,"Battery packs, cell sensing and BMS",L83_BatteryManagementController,P114,L83_BatteryBalancingCircuit,P116,BMS cell balancing command,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W059,"Battery packs, cell sensing and BMS",L83_BatteryBalancingCircuit,P117,L83_BatteryManagementController,P115,Cell balancing progress and diagnostic,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W060,"Battery packs, cell sensing and BMS",L83_BatteryManagementController,P112,L83_BatteryChargeController,P120,BMS safe charge authorization,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W061,"Battery packs, cell sensing and BMS",L83_BatteryManagementController,P113,L83_BatteryDischargeController,P123,BMS safe discharge authorization,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W062,"Battery packs, cell sensing and BMS",L83_BatteryManagementController,P114,L83_BatteryIsolationContactor,P126,BMS isolation contactor drive,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W063,"Battery packs, cell sensing and BMS",L83_BatteryIsolationContactor,P127,L83_BatteryManagementController,P115,Actual isolation contactor feedback,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W064,"Battery packs, cell sensing and BMS",L83_BatteryManagementController,P112,L83_BatteryPrechargeResistorModule,P129,Safe precharge resistor switching request,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W065,"Battery packs, cell sensing and BMS",L83_BatteryPrechargeResistorModule,P130,L83_BatteryManagementController,P113,Precharge measured completion,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W066,"Battery packs, cell sensing and BMS",L83_BatteryChargeController,P121,L83_BatteryPackA,P090,Pack A charge controller output,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W067,"Battery packs, cell sensing and BMS",L83_BatteryChargeController,P122,L83_BatteryPackB,P094,Pack B charge controller output,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W068,"Battery packs, cell sensing and BMS",L83_BatteryPackA,P091,L83_BatteryDischargeController,P124,Battery A available discharge capacity,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W069,"Battery packs, cell sensing and BMS",L83_BatteryPackB,P095,L83_BatteryDischargeController,P125,Battery B available discharge capacity,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W070,"Battery packs, cell sensing and BMS",L83_BatteryThermalSensorGrid,P109,L83_BatteryThermalControlPlate,P135,Thermal battery cooling plate control feedback,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W071,"Battery packs, cell sensing and BMS",L83_BatteryThermalControlPlate,P136,L83_BatteryManagementController,P114,Battery thermal plate state,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W072,"Battery packs, cell sensing and BMS",L83_BatteryManagementController,P115,L83_BatteryRadiatorFinAssembly,P138,Battery radiator position request,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W073,"Battery packs, cell sensing and BMS",L83_BatteryRadiatorFinAssembly,P139,L83_BatteryManagementController,P112,Battery radiator actual state,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W074,"Battery packs, cell sensing and BMS",L83_BatteryCellImbalanceSimulator,P183,L83_BatteryManagementController,P113,Controlled cell imbalance fault state,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W075,Main DC bus and distribution,L83_RegulatedMainDCBus,P073,L83_BusVoltageTransducer,P076,Main bus physical potential measurement sense,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W076,Main DC bus and distribution,L83_RegulatedMainDCBus,P074,L83_BusCurrentShuntMonitor,P079,Main bus actual shunt current measurement,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W077,Main DC bus and distribution,L83_RegulatedMainDCBus,P071,L83_BusBulkCapacitorModule,P083,Bus bulk capacitor energy interface,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W078,Main DC bus and distribution,L83_BusBulkCapacitorModule,P084,L83_MainBusEnergyManagementController,P196,Bus transient ride through measurement,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W079,Main DC bus and distribution,L83_RegulatedMainDCBus,P072,L83_PowerDistributionUnit,P142,Regulated DC bus distribution input,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W080,Main DC bus and distribution,L83_PowerDistributionUnit,P143,L83_PriorityLoadSwitchingRack,P145,Power distribution priority switching command feed,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W081,Main DC bus and distribution,L83_PriorityLoadSwitchingRack,P146,L83_SafetyEssentialLoadBus,P147,P0 essential bus supply permit,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W082,Main DC bus and distribution,L83_PriorityLoadSwitchingRack,P144,L83_AttitudeControlLoadEmulator,P150,P1 attitude control load switch,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W083,Main DC bus and distribution,L83_PriorityLoadSwitchingRack,P145,L83_MissionComputerLoadEmulator,P153,P0 mission computer load switch,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W084,Main DC bus and distribution,L83_PriorityLoadSwitchingRack,P146,L83_OpticalTelemetryLoadEmulator,P156,P2 optical telemetry load switch,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W085,Main DC bus and distribution,L83_PriorityLoadSwitchingRack,P144,L83_SciencePayloadLoadEmulator,P159,P3 science payload load switch,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W086,Main DC bus and distribution,L83_PriorityLoadSwitchingRack,P145,L83_HeaterThermalLoadEmulator,P162,P1 thermal heater load switch,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W087,Main DC bus and distribution,L83_MainBusEnergyManagementController,P197,L83_PowerDistributionUnit,P141,Distribution power limit request,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W088,Main DC bus and distribution,L83_PowerDistributionUnit,P142,L83_MainBusEnergyManagementController,P195,Actual distribution branch current status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W089,Main DC bus and distribution,L83_SupercapacitorRideThroughModule,P132,L83_RegulatedMainDCBus,P073,Supercapacitor discharge support status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W090,Main DC bus and distribution,L83_MainBusEnergyManagementController,P196,L83_SupercapacitorRideThroughModule,P133,Bounded supercapacitor ride-through command,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W091,Main DC bus and distribution,L83_IndependentUndervoltageProtector,P190,L83_PowerDistributionUnit,P143,Independent bus undervoltage distribution inhibit,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W092,Main DC bus and distribution,L83_RegulatedMainDCBus,P074,L83_IndependentUndervoltageProtector,P191,Independent main bus voltage protector sense,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W093,Energy measurements and diagnostics,L83_HighSpeedPowerTransientRecorder,P086,L83_MainBusEnergyManagementController,P197,Bus transient recorder measured ripple diagnostic,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W094,Energy measurements and diagnostics,L83_BusVoltageTransducer,P077,L83_HighSpeedPowerTransientRecorder,P087,Bus voltage acquisition to transient recorder,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W095,Energy measurements and diagnostics,L83_BusCurrentShuntMonitor,P080,L83_HighSpeedPowerTransientRecorder,P088,Shunt current acquisition to transient recorder,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W096,Energy measurements and diagnostics,L83_BusVoltageTransducer,P078,L83_OrbitalPowerSCADA,P203,Display only main bus voltage telemetry,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W097,Energy measurements and diagnostics,L83_BusCurrentShuntMonitor,P081,L83_OrbitalPowerSCADA,P201,Main bus current trend telemetry,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W098,Energy measurements and diagnostics,L83_BatteryManagementController,P114,L83_OrbitalPowerSCADA,P202,Battery cell health and SOC diagnostic telemetry,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W099,Energy measurements and diagnostics,L83_SolarArrayCurrentSensors,P048,L83_OrbitalPowerSCADA,P203,Solar port current telemetry,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W100,Energy measurements and diagnostics,L83_SolarArrayVoltageSensors,P051,L83_OrbitalPowerSCADA,P201,Solar port voltage telemetry,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W101,Energy measurements and diagnostics,L83_LoadForecastEnergyBudgetAnalyzer,P168,L83_MainBusEnergyManagementController,P195,Mission energy reserve forecast result,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W102,Energy measurements and diagnostics,L83_EclipseEntryPredictionConsole,P171,L83_MainBusEnergyManagementController,P196,Predicted eclipse entry and duration,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W103,Energy measurements and diagnostics,L83_SunlightReturnChargePlanner,P174,L83_MainBusEnergyManagementController,P197,Sunlight return battery recharge plan,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W104,Energy measurements and diagnostics,L83_BusVoltageTransducer,P075,L83_MainBusEnergyManagementController,P195,CRITICAL trusted DC bus voltage control feedback,ANALOG_FEEDBACK,YES,CONCEPT_ONLY_NO_PLAYER_WIRE
+W105,Energy measurements and diagnostics,L83_BusVoltageTransducer,P076,L83_MainBusEnergyManagementController,P196,Bus voltage transducer calibration health (diagnostic only),ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W106,Energy measurements and diagnostics,L83_IndependentUndervoltageProtector,P189,L83_MainBusEnergyManagementController,P197,Independent under voltage protection status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W107,Energy measurements and diagnostics,L83_MainBusEnergyManagementController,P195,L83_HighSpeedPowerTransientRecorder,P086,Bus transient capture trigger,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W108,Energy measurements and diagnostics,L83_MainBusEnergyManagementController,P196,L83_LoadForecastEnergyBudgetAnalyzer,P169,Energy budget computation request,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W109,Energy measurements and diagnostics,L83_ContingencyPowerFaultInjector,P177,L83_MainBusEnergyManagementController,P197,Contingency power fault diagnostic status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W110,Energy measurements and diagnostics,L83_HighSpeedPowerTransientRecorder,P087,L83_OrbitalPowerSCADA,P202,Transient waveform SCADA display only,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W111,Mission loads and eclipse scheduling,L83_MissionTaskPowerScheduler,P165,L83_MainBusEnergyManagementController,P195,Scheduled mission task demand,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W112,Mission loads and eclipse scheduling,L83_MainBusEnergyManagementController,P196,L83_MissionTaskPowerScheduler,P166,Approved mission task energy budget,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W113,Mission loads and eclipse scheduling,L83_LoadForecastEnergyBudgetAnalyzer,P170,L83_MissionTaskPowerScheduler,P167,Eclipse energy reserve prediction,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W114,Mission loads and eclipse scheduling,L83_EclipseEntryPredictionConsole,P172,L83_MissionTaskPowerScheduler,P165,Eclipse phase transition forecast,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W115,Mission loads and eclipse scheduling,L83_SunlightReturnChargePlanner,P175,L83_MissionTaskPowerScheduler,P166,Sunlight return charge opportunity,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W116,Mission loads and eclipse scheduling,L83_MainBusEnergyManagementController,P197,L83_PriorityLoadSwitchingRack,P146,Mission priority load schedule,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W117,Mission loads and eclipse scheduling,L83_AttitudeControlLoadEmulator,P151,L83_MissionTaskPowerScheduler,P167,Attitude control required energy demand,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W118,Mission loads and eclipse scheduling,L83_MissionComputerLoadEmulator,P154,L83_MissionTaskPowerScheduler,P165,Mission computer required electrical demand,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W119,Mission loads and eclipse scheduling,L83_OpticalTelemetryLoadEmulator,P157,L83_MissionTaskPowerScheduler,P166,Optical telemetry downlink power demand,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W120,Mission loads and eclipse scheduling,L83_SciencePayloadLoadEmulator,P160,L83_MissionTaskPowerScheduler,P167,Science payload optional power demand,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W121,Mission loads and eclipse scheduling,L83_HeaterThermalLoadEmulator,P163,L83_MissionTaskPowerScheduler,P165,Thermal heater required demand,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W122,Mission loads and eclipse scheduling,L83_MissionTaskPowerScheduler,P166,L83_PriorityLoadSwitchingRack,P144,Priority shedding request,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W123,Mission loads and eclipse scheduling,L83_OpticalBurstDemandInjector,P186,L83_OpticalTelemetryLoadEmulator,P158,Optical burst surge fault injection state,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W124,Mission loads and eclipse scheduling,L83_OpticalTelemetryLoadEmulator,P156,L83_MainBusEnergyManagementController,P195,Actual optical transient demand feedback,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W125,Mission loads and eclipse scheduling,L83_MainBusEnergyManagementController,P196,L83_OpticalBurstDemandInjector,P187,Optical burst disturbance activation,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W126,Mission loads and eclipse scheduling,L83_MissionTaskPowerScheduler,P167,L83_OrbitalPowerSCADA,P203,Mission load schedule visualization telemetry,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W127,"EPS safety, controls and SCADA",L83_EPSPowerSafetyPLC,P194,L83_MainBusEnergyManagementController,P197,EPS safety authorization and interlock permit,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W128,"EPS safety, controls and SCADA",L83_EPSPowerSafetyPLC,P192,L83_PowerDistributionUnit,P141,Independent priority load safe-state command,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W129,"EPS safety, controls and SCADA",L83_IndependentUndervoltageProtector,P190,L83_EPSPowerSafetyPLC,P193,Hardwired independent undervoltage trip status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W130,"EPS safety, controls and SCADA",L83_EmergencyPowerIsolationStation,P207,L83_EPSPowerSafetyPLC,P194,Emergency power isolation actuator status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W131,"EPS safety, controls and SCADA",L83_EPSPowerSafetyPLC,P192,L83_BatteryIsolationContactor,P128,Battery isolation interlock override,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W132,"EPS safety, controls and SCADA",L83_MainBusEnergyManagementController,P195,L83_EPSPowerSafetyPLC,P193,Supervisor power system fault/status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W133,"EPS safety, controls and SCADA",L83_MainBusEnergyManagementController,P196,L83_OrbitalPowerSCADA,P201,Authoritative mission energy objective telemetry,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W134,"EPS safety, controls and SCADA",L83_OrbitalPowerSCADA,P202,L83_MainBusEnergyManagementController,P197,Operator requested mission load schedule,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W135,"EPS safety, controls and SCADA",L83_EPSPowerSafetyPLC,P194,L83_OrbitalPowerSCADA,P203,EPS safety fault latch and alarm,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W136,"EPS safety, controls and SCADA",L83_MainBusEnergyManagementController,P195,L83_EPSPowerSafetyPLC,P192,Operator explicit safety reset request,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W137,"EPS safety, controls and SCADA",L83_BatteryManagementController,P115,L83_EPSPowerSafetyPLC,P193,Battery thermal and current protection health,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W138,"EPS safety, controls and SCADA",L83_MainBusEnergyManagementController,P196,L83_MissionSurvivalCertificationBeacon,P204,Final orbital power qualification beacon,DIGITAL_CONTROL,NO,CONCEPT_ONLY_NO_PLAYER_WIRE

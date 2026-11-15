@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_75_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_75
+  levelTitle: Write the Silicon
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the implanter
+    explanation: Route beam optics, vacuum and safety. Connect W067 last for dosimetry
+      loss.
+    caption: "106 WIRES  \u2022  164 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: POWER
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: BEAM
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: SAFETY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+  - title: 02 / Qualify the beam
+    explanation: Commission vacuum and wafer handling. Qualify the analyzer, beam
+      profile and Faraday calibration.
+    caption: "VACUUM  \u2022  SPECIES  \u2022  PROFILE"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: VACUUM
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: PROFILE
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: CALIBRATE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+  - title: 03 / Implant and activate
+    explanation: Implant a masked wafer, activate, then verify depth and sheet resistance.
+      Diagnose all three disturbances.
+    caption: "16 REGIONS  \u2022  100 DOSE"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: IMPLANT
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: ACTIVATE
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: SCAN
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+  - title: 04 / Restore dosimetry
+    explanation: Disconnect W067 during the live raster. Reconnect, zero, verify,
+      reset and certify a fresh wafer.
+    caption: "W067  \u2022  BEAM BLANKING"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: BLANK
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: RECALIBRATE
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: CERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}

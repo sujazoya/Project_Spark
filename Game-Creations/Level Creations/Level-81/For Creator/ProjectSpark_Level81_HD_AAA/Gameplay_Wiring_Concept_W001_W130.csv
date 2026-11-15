@@ -1,0 +1,131 @@
+WireID,Group,SourceModel,SourceVisualAnchor,TargetModel,TargetVisualAnchor,SignalPurpose,SignalKind,Critical,Status
+W001,Control power / returns,L81_Regulated5VControlSupply,P189,L81_MissionSafetyPLCRack,P174,5V mission safety PLC feed,POWER,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W002,Control power / returns,L81_Regulated5VControlSupply,P190,L81_CriticalECCFeedbackSupervisor,P179,5V trusted ECC supervisor feed,POWER,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W003,Control power / returns,L81_Regulated5VControlSupply,P191,L81_DigitalFaultInjectionController,P006,5V virtual fault controller feed,POWER,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W004,Control power / returns,L81_Regulated5VControlSupply,P192,L81_ECCSyndromeDetectionEngine,P036,5V ECC syndrome controller feed,POWER,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W005,Control power / returns,L81_Regulated5VControlSupply,P193,L81_BackgroundMemoryScrubber,P050,5V memory scrubber feed,POWER,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W006,Control power / returns,L81_Regulated5VControlSupply,P189,L81_TripleLaneExecutionSupervisor,P084,5V redundant compute sequencer feed,POWER,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W007,Control power / returns,L81_Regulated5VControlSupply,P190,L81_SafeMissionCommandGate,P108,5V command gate control feed,POWER,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W008,Control power / returns,L81_Regulated5VControlSupply,P191,L81_OpticalLinkErrorTelemetryBridge,P138,5V optical telemetry bridge feed,POWER,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W009,Control power / returns,L81_Regulated5VControlSupply,P192,L81_GuardedFaultInjectionConsole,P194,5V guarded fault console feed,POWER,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W010,Control power / returns,L81_Regulated5VControlSupply,P193,L81_HolographicDependabilitySCADA,P196,5V SCADA control feed,POWER,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W011,"Clock, reset and mission scheduling",L81_DeterministicMissionTaskScheduler,P102,L81_TripleLaneExecutionSupervisor,P085,Mission task ready strobe,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W012,"Clock, reset and mission scheduling",L81_DeterministicMissionTaskScheduler,P103,L81_RedundantComputeCoreA,P066,Core A mission clock request,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W013,"Clock, reset and mission scheduling",L81_DeterministicMissionTaskScheduler,P102,L81_RedundantComputeCoreB,P072,Core B mission clock request,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W014,"Clock, reset and mission scheduling",L81_DeterministicMissionTaskScheduler,P103,L81_RedundantComputeCoreC,P078,Core C mission clock request,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W015,"Clock, reset and mission scheduling",L81_DeterministicMissionTaskScheduler,P102,L81_HardwareWatchdogTimer,P104,Watchdog cycle synchronization,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W016,"Clock, reset and mission scheduling",L81_HardwareWatchdogTimer,P105,L81_DeterministicMissionTaskScheduler,P103,Watchdog timer status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W017,"Clock, reset and mission scheduling",L81_WatchdogChallengeResponseModule,P106,L81_HardwareWatchdogTimer,P104,Watchdog challenge reply,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W018,"Clock, reset and mission scheduling",L81_MissionSafetyPLCRack,P175,L81_DeterministicMissionTaskScheduler,P102,Mission scheduler safety permit,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W019,"Clock, reset and mission scheduling",L81_DeterministicMissionTaskScheduler,P103,L81_MemoryAddressDecoder,P028,Memory address cycle command,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W020,"Clock, reset and mission scheduling",L81_MemoryAddressDecoder,P029,L81_ECCMemoryBankA,P016,Memory bank A address bus,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W021,"Clock, reset and mission scheduling",L81_MemoryAddressDecoder,P028,L81_ECCMemoryBankB,P022,Memory bank B address bus,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W022,"Clock, reset and mission scheduling",L81_TripleLaneExecutionSupervisor,P086,L81_DeterministicMissionTaskScheduler,P102,Triple lane lockstep state,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W023,"Clock, reset and mission scheduling",L81_IndependentReferenceComputeUnit,P100,L81_TripleLaneExecutionSupervisor,P087,Reference compute readiness,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W024,"Clock, reset and mission scheduling",L81_MissionSafetyPLCRack,P176,L81_SafeMissionCommandGate,P109,Safe command gate enable,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W025,"Clock, reset and mission scheduling",L81_GuidanceCommandValidationUnit,P168,L81_DeterministicMissionTaskScheduler,P103,Guidance computation request,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W026,"Clock, reset and mission scheduling",L81_DeterministicMissionTaskScheduler,P102,L81_MissionSafetyPLCRack,P177,Mission deadline status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W027,"Memory ECC encoding, correction and scrubbing",L81_MemoryAddressDecoder,P029,L81_SECDEDParityEncoder,P030,Data word read for SECDED encoding,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W028,"Memory ECC encoding, correction and scrubbing",L81_SECDEDParityEncoder,P031,L81_ECCMemoryBankA,P017,ECC codeword bank A write,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W029,"Memory ECC encoding, correction and scrubbing",L81_SECDEDParityEncoder,P032,L81_ECCMemoryBankB,P023,ECC codeword bank B write,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W030,"Memory ECC encoding, correction and scrubbing",L81_ECCMemoryBankA,P018,L81_ECCSyndromeDetectionEngine,P037,Memory bank A ECC syndrome input,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W031,"Memory ECC encoding, correction and scrubbing",L81_ECCMemoryBankB,P024,L81_ECCSyndromeDetectionEngine,P038,Memory bank B ECC syndrome input,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W032,"Memory ECC encoding, correction and scrubbing",L81_ECCSyndromeDetectionEngine,P039,L81_SingleBitCorrectionEngine,P042,Correctable error position output,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W033,"Memory ECC encoding, correction and scrubbing",L81_SingleBitCorrectionEngine,P043,L81_ECCMemoryBankA,P019,Corrected codeword writeback A,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W034,"Memory ECC encoding, correction and scrubbing",L81_SingleBitCorrectionEngine,P044,L81_ECCMemoryBankB,P025,Corrected codeword writeback B,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W035,"Memory ECC encoding, correction and scrubbing",L81_ECCSyndromeDetectionEngine,P040,L81_DoubleBitErrorAlarmAnalyzer,P048,Detected double bit error event,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W036,"Memory ECC encoding, correction and scrubbing",L81_DoubleBitErrorAlarmAnalyzer,P049,L81_MemoryPageQuarantineModule,P060,Uncorrectable page quarantine request,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W037,"Memory ECC encoding, correction and scrubbing",L81_ScrubCycleSequencer,P056,L81_BackgroundMemoryScrubber,P051,Memory scrub interval command,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W038,"Memory ECC encoding, correction and scrubbing",L81_BackgroundMemoryScrubber,P052,L81_MemoryAddressDecoder,P028,Scrub address cycle selection,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W039,"Memory ECC encoding, correction and scrubbing",L81_BackgroundMemoryScrubber,P053,L81_ECCSyndromeDetectionEngine,P041,Scrub syndrome evaluation request,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W040,"Memory ECC encoding, correction and scrubbing",L81_ECCSyndromeDetectionEngine,P036,L81_BackgroundMemoryScrubber,P054,Scrub correction result,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W041,"Memory ECC encoding, correction and scrubbing",L81_MemoryBandwidthLoadMeter,P058,L81_ScrubCycleSequencer,P057,Scrubber bandwidth availability,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W042,"Memory ECC encoding, correction and scrubbing",L81_BackgroundMemoryScrubber,P055,L81_MemoryBandwidthLoadMeter,P059,Scrubber utilization feedback,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W043,"Memory ECC encoding, correction and scrubbing",L81_MemoryPageQuarantineModule,P061,L81_ReadOnlyGoldenImageVault,P062,Validated checkpoint selection request,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W044,"Memory ECC encoding, correction and scrubbing",L81_ReadOnlyGoldenImageVault,P063,L81_CheckpointRecoveryController,P064,Trusted backup data transfer authorization,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W045,"Memory ECC encoding, correction and scrubbing",L81_CheckpointRecoveryController,P065,L81_MemoryPageQuarantineModule,P060,Recovered page verification result,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W046,"Memory ECC encoding, correction and scrubbing",L81_IndependentChecksumReferenceModule,P198,L81_CheckpointRecoveryController,P064,Checkpoint integrity reference confirmation,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W047,Redundant computing and TMR voting,L81_TripleLaneExecutionSupervisor,P088,L81_RedundantComputeCoreA,P067,Core A lockstep input,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W048,Redundant computing and TMR voting,L81_TripleLaneExecutionSupervisor,P089,L81_RedundantComputeCoreB,P073,Core B lockstep input,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W049,Redundant computing and TMR voting,L81_TripleLaneExecutionSupervisor,P084,L81_RedundantComputeCoreC,P079,Core C lockstep input,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W050,Redundant computing and TMR voting,L81_RedundantComputeCoreA,P068,L81_TripleModularMajorityVoter,P090,Core A actual calculated output,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W051,Redundant computing and TMR voting,L81_RedundantComputeCoreB,P074,L81_TripleModularMajorityVoter,P091,Core B actual calculated output,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W052,Redundant computing and TMR voting,L81_RedundantComputeCoreC,P080,L81_TripleModularMajorityVoter,P092,Core C actual calculated output,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W053,Redundant computing and TMR voting,L81_TripleModularMajorityVoter,P093,L81_VoterDiscrepancyAnalyzer,P096,Voter disagreement telemetry,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W054,Redundant computing and TMR voting,L81_VoterDiscrepancyAnalyzer,P097,L81_TripleLaneExecutionSupervisor,P085,Faulty lane identification,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W055,Redundant computing and TMR voting,L81_ComputeLaneHealthProbeArray,P098,L81_RedundantComputeCoreA,P069,Core A independent health status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W056,Redundant computing and TMR voting,L81_ComputeLaneHealthProbeArray,P099,L81_RedundantComputeCoreB,P075,Core B independent health status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W057,Redundant computing and TMR voting,L81_ComputeLaneHealthProbeArray,P098,L81_RedundantComputeCoreC,P081,Core C independent health status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W058,Redundant computing and TMR voting,L81_IndependentReferenceComputeUnit,P101,L81_TripleModularMajorityVoter,P094,Independent reference result compare,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W059,Redundant computing and TMR voting,L81_CorrelatedFaultPatternAnalyzer,P170,L81_VoterDiscrepancyAnalyzer,P096,Correlated common mode alert,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W060,Redundant computing and TMR voting,L81_VoterDiscrepancyAnalyzer,P097,L81_SafeMissionCommandGate,P110,Voter qualified command permit,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W061,Redundant computing and TMR voting,L81_TripleModularMajorityVoter,P095,L81_SafeMissionCommandGate,P111,Majority voted command result,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W062,Redundant computing and TMR voting,L81_IndependentReferenceComputeUnit,P100,L81_SafeMissionCommandGate,P112,Independent validation gate,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W063,Redundant computing and TMR voting,L81_SafeMissionCommandGate,P113,L81_GuidanceCommandValidationUnit,P169,Validated guidance command,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W064,Redundant computing and TMR voting,L81_GuidanceCommandValidationUnit,P168,L81_SpacecraftAttitudeActuatorSimulator,P166,Authorized fictional spacecraft actuation,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W065,Optical telemetry and packet integrity,L81_MissionSensorInputEmulator,P162,L81_PacketCRCEncoder,P120,Synthetic sensor data packet source,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W066,Optical telemetry and packet integrity,L81_NavigationStateEstimator,P164,L81_PacketCRCEncoder,P121,Navigation state packet source,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W067,Optical telemetry and packet integrity,L81_PacketCRCEncoder,P122,L81_OpticalLinkErrorTelemetryBridge,P139,CRC encoded telemetry frame,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W068,Optical telemetry and packet integrity,L81_OpticalLinkErrorTelemetryBridge,P140,L81_PacketCRCVerificationEngine,P126,Optical receiver reconstructed frame,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W069,Optical telemetry and packet integrity,L81_PacketCRCVerificationEngine,P127,L81_PacketSequenceNumberMonitor,P132,CRC checked frame into sequence monitor,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W070,Optical telemetry and packet integrity,L81_PacketSequenceNumberMonitor,P133,L81_TelemetryFrameIntegrityAnalyzer,P150,Verified packet order result,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W071,Optical telemetry and packet integrity,L81_PacketCRCVerificationEngine,P128,L81_TelemetryFrameIntegrityAnalyzer,P151,Packet CRC validity result,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W072,Optical telemetry and packet integrity,L81_PacketSequenceNumberMonitor,P134,L81_PacketRetransmissionBuffer,P144,Missing sequence retransmission request,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W073,Optical telemetry and packet integrity,L81_PacketRetransmissionBuffer,P145,L81_OpticalLinkErrorTelemetryBridge,P141,Retransmitted packet data,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W074,Optical telemetry and packet integrity,L81_TelemetryFrameIntegrityAnalyzer,P152,L81_ProtectedTelemetryMemoryBuffer,P156,Qualified telemetry to protected buffer,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W075,Optical telemetry and packet integrity,L81_ProtectedTelemetryMemoryBuffer,P157,L81_NavigationStateEstimator,P165,Validated navigation telemetry data,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W076,Optical telemetry and packet integrity,L81_OpticalLinkErrorTelemetryBridge,P142,L81_TelemetryFrameIntegrityAnalyzer,P153,Optical link receiver validity status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W077,Optical telemetry and packet integrity,L81_TelemetryFrameIntegrityAnalyzer,P154,L81_MissionSafetyPLCRack,P178,Telemetry integrity mission permission,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W078,Optical telemetry and packet integrity,L81_OpticalLinkErrorTelemetryBridge,P143,L81_PacketSequenceNumberMonitor,P135,Optical stream packet age,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W079,Optical telemetry and packet integrity,L81_PacketCRCVerificationEngine,P129,L81_PacketRetransmissionBuffer,P146,Reject bad frame signal,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W080,Optical telemetry and packet integrity,L81_PacketSequenceNumberMonitor,P136,L81_ProtectedTelemetryMemoryBuffer,P158,Replay or duplicate quarantine status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W081,Optical telemetry and packet integrity,L81_ProtectedTelemetryMemoryBuffer,P159,L81_GuidanceCommandValidationUnit,P169,Sensor freshness proof for command validator,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W082,Optical telemetry and packet integrity,L81_TelemetryFrameIntegrityAnalyzer,P155,L81_HolographicDependabilitySCADA,P196,Telemetry integrity dashboard reporting,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W083,Fault injection / monitoring / ECC trust,L81_GuardedFaultInjectionConsole,P194,L81_DigitalFaultInjectionController,P007,Operator fictional bit fault injection command,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W084,Fault injection / monitoring / ECC trust,L81_DigitalFaultInjectionController,P006,L81_ParticleEventPatternDirector,P004,Seeded fault distribution command,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W085,Fault injection / monitoring / ECC trust,L81_ParticleEventPatternDirector,P005,L81_ECCMemoryBankA,P020,Memory A virtual upset event,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W086,Fault injection / monitoring / ECC trust,L81_ParticleEventPatternDirector,P004,L81_ECCMemoryBankB,P026,Memory B virtual upset event,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W087,Fault injection / monitoring / ECC trust,L81_DigitalFaultInjectionController,P007,L81_RedundantComputeCoreA,P070,Core A controlled transient event,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W088,Fault injection / monitoring / ECC trust,L81_DigitalFaultInjectionController,P006,L81_RedundantComputeCoreB,P076,Core B controlled transient event,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W089,Fault injection / monitoring / ECC trust,L81_DigitalFaultInjectionController,P007,L81_RedundantComputeCoreC,P082,Core C controlled transient event,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W090,Fault injection / monitoring / ECC trust,L81_ParticleEventPatternDirector,P005,L81_CorrelatedFaultPatternAnalyzer,P171,Fault correlation raw event feed,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W091,Fault injection / monitoring / ECC trust,L81_CorrelatedFaultPatternAnalyzer,P170,L81_ErrorPropagationTraceAnalyzer,P172,Correlated fault pattern result,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W092,Fault injection / monitoring / ECC trust,L81_ErrorPropagationTraceAnalyzer,P173,L81_MissionSafetyPLCRack,P174,Fault propagation risk to mission safety,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W093,Fault injection / monitoring / ECC trust,L81_DoubleBitErrorAlarmAnalyzer,P048,L81_CriticalECCFeedbackSupervisor,P180,Double bit ECC alarm into supervisory diagnostics,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W094,Fault injection / monitoring / ECC trust,L81_ECCSyndromeDetectionEngine,P037,L81_CriticalECCFeedbackSupervisor,P181,CRITICAL ECC syndrome feedback and heartbeat,ANALOG_FEEDBACK,YES,CONCEPT_ONLY_NO_PLAYER_WIRE
+W095,Fault injection / monitoring / ECC trust,L81_CriticalECCFeedbackSupervisor,P182,L81_MissionSafetyPLCRack,P175,Trusted ECC feedback health to mission safety,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W096,Fault injection / monitoring / ECC trust,L81_ECCSyndromeDetectionEngine,P038,L81_GuardedFaultInjectionConsole,P194,Non-authoritative ECC inspection display,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W097,Fault injection / monitoring / ECC trust,L81_ErrorPropagationTraceAnalyzer,P172,L81_DigitalFaultInjectionController,P006,Fault event trace diagnostic readout,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W098,Fault injection / monitoring / ECC trust,L81_CorrelatedFaultPatternAnalyzer,P171,L81_TripleLaneExecutionSupervisor,P086,Common mode computation inhibit,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W099,Fault injection / monitoring / ECC trust,L81_DigitalFaultInjectionController,P007,L81_OpticalLinkErrorTelemetryBridge,P138,Packet corruption injection signal,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W100,Fault injection / monitoring / ECC trust,L81_DigitalFaultInjectionController,P006,L81_HolographicDependabilitySCADA,P196,Fault injection telemetry for SCADA,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W101,Watchdog and recovery supervision,L81_HardwareWatchdogTimer,P105,L81_MissionSafetyPLCRack,P176,Watchdog expired event,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W102,Watchdog and recovery supervision,L81_WatchdogChallengeResponseModule,P107,L81_MissionSafetyPLCRack,P177,Watchdog challenge confidence status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W103,Watchdog and recovery supervision,L81_MissionSafetyPLCRack,P178,L81_SafeMissionCommandGate,P108,Mission safe hold command,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W104,Watchdog and recovery supervision,L81_MissionSafetyPLCRack,P174,L81_CheckpointRecoveryController,P065,Trusted recovery approval,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W105,Watchdog and recovery supervision,L81_CheckpointRecoveryController,P064,L81_IndependentChecksumReferenceModule,P198,Restore checksum reference request,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W106,Watchdog and recovery supervision,L81_IndependentChecksumReferenceModule,P198,L81_CheckpointRecoveryController,P065,Backup checksum comparison feedback,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W107,Watchdog and recovery supervision,L81_MemoryPageQuarantineModule,P061,L81_MissionSafetyPLCRack,P175,Memory quarantine status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W108,Watchdog and recovery supervision,L81_BackgroundMemoryScrubber,P050,L81_CriticalECCFeedbackSupervisor,P183,Scrubber inspected word freshness,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W109,Watchdog and recovery supervision,L81_CriticalECCFeedbackSupervisor,P179,L81_MissionSafetyPLCRack,P176,ECC trusted sample freshness,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W110,Watchdog and recovery supervision,L81_CriticalECCFeedbackSupervisor,P180,L81_CheckpointRecoveryController,P064,ECC recertification request,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W111,Watchdog and recovery supervision,L81_CheckpointRecoveryController,P065,L81_MissionSafetyPLCRack,P177,Memory recovery verified result,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W112,Watchdog and recovery supervision,L81_TripleModularMajorityVoter,P090,L81_MissionSafetyPLCRack,P178,Majority voter overall confidence,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W113,Watchdog and recovery supervision,L81_IndependentReferenceComputeUnit,P101,L81_MissionSafetyPLCRack,P174,Independent compute validation status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W114,Watchdog and recovery supervision,L81_TelemetryFrameIntegrityAnalyzer,P150,L81_MissionSafetyPLCRack,P175,Packet continuity qualification,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W115,Watchdog and recovery supervision,L81_MissionSafetyPLCRack,P176,L81_GuardedFaultInjectionConsole,P194,Guarded fault console safe enable,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W116,Watchdog and recovery supervision,L81_GuardedFaultInjectionConsole,P194,L81_MissionSafetyPLCRack,P177,Explicit manual reset request,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W117,"Safety PLC, SCADA and certification",L81_ProtectedPowerDistributionCabinet,P184,L81_MissionSafetyPLCRack,P178,Protected controls distribution status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W118,"Safety PLC, SCADA and certification",L81_Regulated5VControlSupply,P189,L81_ProtectedPowerDistributionCabinet,P185,Educational 5V supply status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W119,"Safety PLC, SCADA and certification",L81_MissionSafetyPLCRack,P174,L81_EmergencyMissionSafeHoldStation,P195,Emergency mission hold actuator command,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W120,"Safety PLC, SCADA and certification",L81_EmergencyMissionSafeHoldStation,P195,L81_MissionSafetyPLCRack,P175,Emergency hold physical feedback,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W121,"Safety PLC, SCADA and certification",L81_MissionSafetyPLCRack,P176,L81_GuardedFaultInjectionConsole,P194,Fault injection permission interlock,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W122,"Safety PLC, SCADA and certification",L81_MissionSafetyPLCRack,P177,L81_HolographicDependabilitySCADA,P196,Safety PLC state telemetry,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W123,"Safety PLC, SCADA and certification",L81_CriticalECCFeedbackSupervisor,P181,L81_HolographicDependabilitySCADA,P196,Trusted ECC monitoring telemetry,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W124,"Safety PLC, SCADA and certification",L81_MemoryPageQuarantineModule,P060,L81_HolographicDependabilitySCADA,P196,Quarantined page count telemetry,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W125,"Safety PLC, SCADA and certification",L81_BackgroundMemoryScrubber,P051,L81_HolographicDependabilitySCADA,P196,Memory scrubber progress telemetry,DIGITAL_COMMAND_OR_STATUS,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W126,"Safety PLC, SCADA and certification",L81_TripleModularMajorityVoter,P091,L81_HolographicDependabilitySCADA,P196,Triple modular voter status telemetry,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W127,"Safety PLC, SCADA and certification",L81_DeterministicMissionTaskScheduler,P103,L81_HolographicDependabilitySCADA,P196,Mission timing and task health telemetry,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W128,"Safety PLC, SCADA and certification",L81_TelemetryFrameIntegrityAnalyzer,P151,L81_HolographicDependabilitySCADA,P196,Telemetry packet integrity status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W129,"Safety PLC, SCADA and certification",L81_MissionSafetyPLCRack,P178,L81_HolographicMissionHealthDisplay,P197,Qualified mission health status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE
+W130,"Safety PLC, SCADA and certification",L81_MissionSafetyPLCRack,P174,L81_MissionReliabilityCertificationBeacon,P200,Final 6 objective certification status,ANALOG_FEEDBACK,NO,CONCEPT_ONLY_NO_PLAYER_WIRE

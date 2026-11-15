@@ -1,0 +1,259 @@
+{
+  "material_sets": 12,
+  "texture_maps": 36,
+  "materials": [
+    {
+      "name": "BrushedSteel",
+      "resolution": [
+        1024,
+        1024
+      ],
+      "metallic": 0.81,
+      "roughness": 0.37,
+      "procedural_pattern": "brushed",
+      "files": {
+        "Albedo": "Textures/BrushedSteel_Albedo.png",
+        "Normal": "Textures/BrushedSteel_Normal.png",
+        "MetalRoughAO": "Textures/BrushedSteel_MetalRoughAO.png"
+      },
+      "mrao_channels": {
+        "R": "Metallic",
+        "G": "Roughness",
+        "B": "AmbientOcclusion"
+      },
+      "use": "OPTIONAL_REFERENCE_MAPS_REQUIRING_UV_AND_SHADER_CHANNEL_MAPPING"
+    },
+    {
+      "name": "TitaniumAlloy",
+      "resolution": [
+        1024,
+        1024
+      ],
+      "metallic": 0.83,
+      "roughness": 0.28,
+      "procedural_pattern": "brushed",
+      "files": {
+        "Albedo": "Textures/TitaniumAlloy_Albedo.png",
+        "Normal": "Textures/TitaniumAlloy_Normal.png",
+        "MetalRoughAO": "Textures/TitaniumAlloy_MetalRoughAO.png"
+      },
+      "mrao_channels": {
+        "R": "Metallic",
+        "G": "Roughness",
+        "B": "AmbientOcclusion"
+      },
+      "use": "OPTIONAL_REFERENCE_MAPS_REQUIRING_UV_AND_SHADER_CHANNEL_MAPPING"
+    },
+    {
+      "name": "SpacecraftAlloy",
+      "resolution": [
+        1024,
+        1024
+      ],
+      "metallic": 0.74,
+      "roughness": 0.37,
+      "procedural_pattern": "panel",
+      "files": {
+        "Albedo": "Textures/SpacecraftAlloy_Albedo.png",
+        "Normal": "Textures/SpacecraftAlloy_Normal.png",
+        "MetalRoughAO": "Textures/SpacecraftAlloy_MetalRoughAO.png"
+      },
+      "mrao_channels": {
+        "R": "Metallic",
+        "G": "Roughness",
+        "B": "AmbientOcclusion"
+      },
+      "use": "OPTIONAL_REFERENCE_MAPS_REQUIRING_UV_AND_SHADER_CHANNEL_MAPPING"
+    },
+    {
+      "name": "GoldContacts",
+      "resolution": [
+        1024,
+        1024
+      ],
+      "metallic": 0.96,
+      "roughness": 0.19,
+      "procedural_pattern": "brushed",
+      "files": {
+        "Albedo": "Textures/GoldContacts_Albedo.png",
+        "Normal": "Textures/GoldContacts_Normal.png",
+        "MetalRoughAO": "Textures/GoldContacts_MetalRoughAO.png"
+      },
+      "mrao_channels": {
+        "R": "Metallic",
+        "G": "Roughness",
+        "B": "AmbientOcclusion"
+      },
+      "use": "OPTIONAL_REFERENCE_MAPS_REQUIRING_UV_AND_SHADER_CHANNEL_MAPPING"
+    },
+    {
+      "name": "CopperCoils",
+      "resolution": [
+        1024,
+        1024
+      ],
+      "metallic": 0.91,
+      "roughness": 0.3,
+      "procedural_pattern": "wire",
+      "files": {
+        "Albedo": "Textures/CopperCoils_Albedo.png",
+        "Normal": "Textures/CopperCoils_Normal.png",
+        "MetalRoughAO": "Textures/CopperCoils_MetalRoughAO.png"
+      },
+      "mrao_channels": {
+        "R": "Metallic",
+        "G": "Roughness",
+        "B": "AmbientOcclusion"
+      },
+      "use": "OPTIONAL_REFERENCE_MAPS_REQUIRING_UV_AND_SHADER_CHANNEL_MAPPING"
+    },
+    {
+      "name": "CarbonComposite",
+      "resolution": [
+        1024,
+        1024
+      ],
+      "metallic": 0.06,
+      "roughness": 0.69,
+      "procedural_pattern": "carbon",
+      "files": {
+        "Albedo": "Textures/CarbonComposite_Albedo.png",
+        "Normal": "Textures/CarbonComposite_Normal.png",
+        "MetalRoughAO": "Textures/CarbonComposite_MetalRoughAO.png"
+      },
+      "mrao_channels": {
+        "R": "Metallic",
+        "G": "Roughness",
+        "B": "AmbientOcclusion"
+      },
+      "use": "OPTIONAL_REFERENCE_MAPS_REQUIRING_UV_AND_SHADER_CHANNEL_MAPPING"
+    },
+    {
+      "name": "OpticalGlass",
+      "resolution": [
+        1024,
+        1024
+      ],
+      "metallic": 0.05,
+      "roughness": 0.12,
+      "procedural_pattern": "glass",
+      "files": {
+        "Albedo": "Textures/OpticalGlass_Albedo.png",
+        "Normal": "Textures/OpticalGlass_Normal.png",
+        "MetalRoughAO": "Textures/OpticalGlass_MetalRoughAO.png"
+      },
+      "mrao_channels": {
+        "R": "Metallic",
+        "G": "Roughness",
+        "B": "AmbientOcclusion"
+      },
+      "use": "OPTIONAL_REFERENCE_MAPS_REQUIRING_UV_AND_SHADER_CHANNEL_MAPPING"
+    },
+    {
+      "name": "SolarCellBlue",
+      "resolution": [
+        1024,
+        1024
+      ],
+      "metallic": 0.13,
+      "roughness": 0.28,
+      "procedural_pattern": "solar",
+      "files": {
+        "Albedo": "Textures/SolarCellBlue_Albedo.png",
+        "Normal": "Textures/SolarCellBlue_Normal.png",
+        "MetalRoughAO": "Textures/SolarCellBlue_MetalRoughAO.png"
+      },
+      "mrao_channels": {
+        "R": "Metallic",
+        "G": "Roughness",
+        "B": "AmbientOcclusion"
+      },
+      "use": "OPTIONAL_REFERENCE_MAPS_REQUIRING_UV_AND_SHADER_CHANNEL_MAPPING"
+    },
+    {
+      "name": "BlackCeramic",
+      "resolution": [
+        1024,
+        1024
+      ],
+      "metallic": 0.04,
+      "roughness": 0.48,
+      "procedural_pattern": "ceramic",
+      "files": {
+        "Albedo": "Textures/BlackCeramic_Albedo.png",
+        "Normal": "Textures/BlackCeramic_Normal.png",
+        "MetalRoughAO": "Textures/BlackCeramic_MetalRoughAO.png"
+      },
+      "mrao_channels": {
+        "R": "Metallic",
+        "G": "Roughness",
+        "B": "AmbientOcclusion"
+      },
+      "use": "OPTIONAL_REFERENCE_MAPS_REQUIRING_UV_AND_SHADER_CHANNEL_MAPPING"
+    },
+    {
+      "name": "StageFloor",
+      "resolution": [
+        1024,
+        1024
+      ],
+      "metallic": 0.61,
+      "roughness": 0.55,
+      "procedural_pattern": "floor",
+      "files": {
+        "Albedo": "Textures/StageFloor_Albedo.png",
+        "Normal": "Textures/StageFloor_Normal.png",
+        "MetalRoughAO": "Textures/StageFloor_MetalRoughAO.png"
+      },
+      "mrao_channels": {
+        "R": "Metallic",
+        "G": "Roughness",
+        "B": "AmbientOcclusion"
+      },
+      "use": "OPTIONAL_REFERENCE_MAPS_REQUIRING_UV_AND_SHADER_CHANNEL_MAPPING"
+    },
+    {
+      "name": "InstrumentPanel",
+      "resolution": [
+        1024,
+        1024
+      ],
+      "metallic": 0.25,
+      "roughness": 0.45,
+      "procedural_pattern": "panel",
+      "files": {
+        "Albedo": "Textures/InstrumentPanel_Albedo.png",
+        "Normal": "Textures/InstrumentPanel_Normal.png",
+        "MetalRoughAO": "Textures/InstrumentPanel_MetalRoughAO.png"
+      },
+      "mrao_channels": {
+        "R": "Metallic",
+        "G": "Roughness",
+        "B": "AmbientOcclusion"
+      },
+      "use": "OPTIONAL_REFERENCE_MAPS_REQUIRING_UV_AND_SHADER_CHANNEL_MAPPING"
+    },
+    {
+      "name": "CelestialHologram",
+      "resolution": [
+        1024,
+        1024
+      ],
+      "metallic": 0.03,
+      "roughness": 0.21,
+      "procedural_pattern": "holo",
+      "files": {
+        "Albedo": "Textures/CelestialHologram_Albedo.png",
+        "Normal": "Textures/CelestialHologram_Normal.png",
+        "MetalRoughAO": "Textures/CelestialHologram_MetalRoughAO.png"
+      },
+      "mrao_channels": {
+        "R": "Metallic",
+        "G": "Roughness",
+        "B": "AmbientOcclusion"
+      },
+      "use": "OPTIONAL_REFERENCE_MAPS_REQUIRING_UV_AND_SHADER_CHANNEL_MAPPING"
+    }
+  ],
+  "uv_authoring_required": true
+}

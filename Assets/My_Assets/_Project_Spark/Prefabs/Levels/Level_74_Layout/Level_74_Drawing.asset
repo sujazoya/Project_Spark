@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbcf2efd0d400c45bb9124777514e60, type: 3}
+  m_Name: Level_74_Drawing
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.VisualTeaching.SparkLevelDrawingAsset
+  levelId: level_74
+  levelTitle: Align the Light
+  initialPage: 0
+  pages:
+  - title: 01 / Wire the lithography workstation
+    explanation: Route power, stages, alignment, optics, process and safety. Connect
+      interferometer W102 last.
+    caption: "102 WIRES  \u2022  158 SOCKETS"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: POWER
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: STAGES
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: SAFETY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+  - title: 02 / Prepare and align
+    explanation: Prepare a 350 nm resist film, load the reticle, align the wafer,
+      map focus and run a dry scan.
+    caption: "SPIN COAT  \u2022  BAKE  \u2022  4:1"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: COAT
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: ALIGN
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: VERIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+  - title: 03 / Print and measure
+    explanation: Expose all sixteen fields, post-bake, develop, rinse and dry. Verify
+      metrology and diagnose the three process disturbances.
+    caption: "16 FIELDS  \u2022  CD AND OVERLAY"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: EXPOSE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: DEVELOP
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: SCAN
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+  - title: 04 / Restore stage feedback
+    explanation: Disconnect W102 during a scan. Reconnect, recalibrate, reference
+      and reset before printing a fresh wafer.
+    caption: "W102  \u2022  SHUTTER SAFE"
+    parts:
+    - id: input
+      kind: 9
+      position: {x: 0.18, y: 0.71}
+      label: BRAKE
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - id: tracking
+      kind: 9
+      position: {x: 0.71, y: 0.71}
+      label: REFERENCE
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}
+    - id: output
+      kind: 9
+      position: {x: 0.82, y: 0.71}
+      label: CERTIFY
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    wires:
+    - points:
+      - {x: 0.25, y: 0.71}
+      - {x: 0.43, y: 0.71}
+      energized: 0
+      color: {r: 0.18, g: 0.86, b: 0.94, a: 1}
+    - points:
+      - {x: 0.71, y: 0.71}
+      - {x: 0.75, y: 0.71}
+      energized: 0
+      color: {r: 1, g: 0.71, b: 0.31, a: 1}

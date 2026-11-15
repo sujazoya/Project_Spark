@@ -1,0 +1,7 @@
+ObjectiveNumber,Name,RequiredEvidence,Authority,Status
+1,Build the Attitude Control Network,"142 actual player wires, 218 functional ports, valid power/sensors/actuators/safety and trusted W097 feedback",REAL_GRAPH_AND_DEVICE_COMMISSIONING,DESIGN_ONLY_NOT_IMPLEMENTED
+2,Stop the Tumble and Find the Stars,"Calibrated gyro/magnetic coarse estimate, actual angular rate under threshold, valid primary star-tracker fix",DYNAMICS_AND_SENSOR_EVIDENCE,DESIGN_ONLY_NOT_IMPLEMENTED
+3,Achieve Precision Three-Axis Pointing,"Four wheel models allocated; controlled target slew, fine pointing, estimator confidence, momentum and jitter margin",REAL_ATTITUDE_AND_ACTUATOR_EVIDENCE,DESIGN_ONLY_NOT_IMPLEMENTED
+4,Hold the Optical Beam,"Two real scheduled ground-station passes, actual beam lock, valid power, tracking/jitter margin and qualified desaturation",TWO_PASS_QUALIFICATION,DESIGN_ONLY_NOT_IMPLEMENTED
+5,Survive Attitude-Control Disturbances,"Actual gyro bias, wheel saturation and flexible solar-wing jitter faults repaired followed by fresh two-pass qualification",THREE_RECOVERIES_AND_FRESH_MISSION,DESIGN_ONLY_NOT_IMPLEMENTED
+6,Restore Critical Star-Tracker Feedback,"Deliberate real W097 removal, stale quaternion fault, safe coarse-mode, physical reconnect, fresh stars/calibration, explicit reset and new two-pass mission",LATCHED_FAULT_AND_FRESH_POST_REPAIR_QUALIFICATION,DESIGN_ONLY_NOT_IMPLEMENTED
