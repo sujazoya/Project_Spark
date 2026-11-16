@@ -1,0 +1,18 @@
+Source,Target,Meaning,ImplementationStatus
+ExternalParticleFlux,DetectorA/B,"Spectral samples, bounded dynamic range",PLANNED_NOT_IMPLEMENTED
+DetectorA/B,NavigationForecast,Measured particle spectrum with sampling validity,PLANNED_NOT_IMPLEMENTED
+Forecast,MissionSequencingPLC,"Predicted storm horizon, non-authoritative",PLANNED_NOT_IMPLEMENTED
+ExternalParticleFlux,UnshieldedHabitat,Actual fictional ambient exposure process,PLANNED_NOT_IMPLEMENTED
+WaterReservoir,WaterPumpA/B,Finite water mass transfer,PLANNED_NOT_IMPLEMENTED
+WaterPumpA/B,FourShieldTanks,Only if actual valve flows and pump power,PLANNED_NOT_IMPLEMENTED
+FourShieldTanks,ShieldArealDensity,Physical shielding geometry and per-energy transmission,PLANNED_NOT_IMPLEMENTED
+ShieldCassettes,ShieldCoverage,"Actual encoder/lock state, not command state",PLANNED_NOT_IMPLEMENTED
+ShieldArealDensity,ShelterDoseProcess,Areal mass and physical gaps affect protection,PLANNED_NOT_IMPLEMENTED
+UnshieldedHabitat,ShelterDoseProcess,"Actual external environment, independent of UI",PLANNED_NOT_IMPLEMENTED
+ShelterDoseProcess,ShelterReferenceDosimeter,"Fresh measured sample, possible overrange",PLANNED_NOT_IMPLEMENTED
+ShelterDoseProcess,IndependentDosimeter,Separate protection measurement,PLANNED_NOT_IMPLEMENTED
+ShelterReferenceDosimeter,W149,Critical sampled feedback; must be live circuit edge,PLANNED_NOT_IMPLEMENTED
+W149,HeliosSafetyPLC,Invalid sample inhibits normal safety authorization,PLANNED_NOT_IMPLEMENTED
+HeliosSafetyPLC,ShieldActuators,Bounded protected movement permission,PLANNED_NOT_IMPLEMENTED
+EssentialPowerAndLifeSupport,ShelterMission,Must remain active through storm,PLANNED_NOT_IMPLEMENTED
+ShelterDoseProcess,ObjectiveHistory,Full run-scoped integrated dose evidence,PLANNED_NOT_IMPLEMENTED

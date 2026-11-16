@@ -1,0 +1,20 @@
+# Level 89 — Unity engineering integration contract (design requirements, NOT existing gameplay)
+
+1. Preserve Levels 1–88. Inspect actual `SparkElectricalSolver`, `SparkCircuitSystem`, `SparkTerminal`, `SparkLevelDefinition`, `SparkLevelEvaluator`, `SparkLevelSceneBindings`, `SparkLevelLayoutLoader`, `SparkObjectShelf` and `LevelGamePlayManager` APIs before implementation. Do not invent signatures.
+2. Add a separate, idempotent `Tools/Project Spark/Levels/Create Level 89` gameplay builder. Current optional `.../89/Place HD Art Under Selected Layout` is **art placement only**.
+3. Import 92 FBX visual instances in one `L89_HD_VISUAL_ART` disposable root. Keep terminals, physics, safety and objectives outside this root. Use source FBX importer scale exactly once.
+4. Translate the **170** conceptual WIDs to actual player created Spark electrical graph connections, initially unconnected. Preserve all **248** art anchor locations while accommodating **340** independent logical endpoint contacts. Review 68 reused art sockets and split analog/power/digital/safety ports if needed to avoid electrical shorting.
+5. Establish distinct educational 5V control/signals domain; fictional particle/energy dose process domain; protected independent safety and habitat essential supply domain.
+6. Author a bounded deterministic fictional solar-particle event state with independent storm phases quiet→rise→peak→decay, variable particle energy bins, source intensity, optional uncertainty and seeded faults.
+7. Implement instrument calibration, finite dynamic range, detector saturation, counter statistics/noise proxies, sampled sensor timestamps, range validity, redundancy and sample freshness. SCADA is display only.
+8. Model radiation shielding geometrically with water-wall module positions, known shielding areal-density proxies, finite resource mass, shield gaps and energy-bin-dependent transmission. Do not use a blanket physical radiation protection certification formula or pretend scalar attenuation is real spacecraft qualification.
+9. Actuators have finite speed, acceleration/limits, measured encoder values, jam states, actual shield placement and independent real mechanical locks. Requested shield coverage cannot be certified as actual coverage.
+10. Maintain finite water inventory shared with Level 88 life-support abstractions. Pump transfer consumes modeled energy and respects reservoir floors and actuator state. Reserve constraints protect essential ventilation, thermal maintenance, oxygen and electrical distribution.
+11. Independently integrated fictional sheltered exposure is computed from actual storm and shield state; do not let an invalid dose sensor set true physical exposure to zero. Protect habitat mission utility (not every load off).
+12. Enforce independent safety PLC, shelter door interlock, protective operating mode, measured actuation, emergency isolation, fault latch and explicit reset. No manual button may override invalid W149 trusted feedback for normal certification.
+13. Three disturbances: detector measurement saturation, jammed panel hardware, unexpected high-energy particle surge. Each causes measurable authoritative effects, documented repair, then fresh full event for Objective 5.
+14. Make W149 a real detachable player wire from `L89_ShelterReferenceDosimeter` (`P072`) to `L89_HeliosSafetyPLC` (`P222`). Physical disconnect → lost valid sample → normal safety authorization withdrawn → protective hold + latch; reconnect → fresh calibrated sample → explicit reset → fresh full storm → 6/6. Objectives 1–5 remain historically awarded.
+15. Update `SparkLevel89VisualRig` through **actual measured states only**, never drive particle process, safety, terminal validity or objective status by reading meshes/animations/lights.
+16. Provide compile, Play Mode, actual wiring, independent safety, signed state evidence and regression QA. Report unexecuted tests honestly.
+
+**Note:** This is a fictional game educational simulation, not a validated particle-transport, human radiation dosage, or shelter safety analysis.

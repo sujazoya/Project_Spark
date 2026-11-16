@@ -78,6 +78,7 @@ namespace ProjectSpark.HolographicViewer
 
         public void Zoom(float wheelDelta)
         {
+            if (!isActiveAndEnabled) return;
             targetDistance -=
                 wheelDelta * wheelZoomSpeed;
 
@@ -91,6 +92,12 @@ namespace ProjectSpark.HolographicViewer
 
         public void ZoomIn()
         {
+            if (TryGetComponent<ProjectSpark.Cameras.SparkGameCameraRig>(out var rig)&&rig.OwnsCamera)
+            {
+                rig.ZoomStep(1);
+                return;
+            }
+            if (!isActiveAndEnabled) return;
             targetDistance -= 0.5f;
 
             targetDistance =
@@ -103,6 +110,12 @@ namespace ProjectSpark.HolographicViewer
 
         public void ZoomOut()
         {
+            if (TryGetComponent<ProjectSpark.Cameras.SparkGameCameraRig>(out var rig)&&rig.OwnsCamera)
+            {
+                rig.ZoomStep(-1);
+                return;
+            }
+            if (!isActiveAndEnabled) return;
             targetDistance += 0.5f;
 
             targetDistance =
@@ -115,6 +128,7 @@ namespace ProjectSpark.HolographicViewer
 
         public void Pan(Vector2 delta)
         {
+            if (!isActiveAndEnabled) return;
             Vector3 movement = transform.right * delta.x + transform.up * delta.y;
             targetOffset = defaultOffset + Vector3.ClampMagnitude(
                 targetOffset - defaultOffset + movement, Mathf.Max(0f, panLimit));
@@ -122,6 +136,11 @@ namespace ProjectSpark.HolographicViewer
 
         public void ResetView()
         {
+            if (TryGetComponent<ProjectSpark.Cameras.SparkGameCameraRig>(out var rig)&&rig.OwnsCamera)
+            {
+                rig.SelectView(0);
+                return;
+            }
             targetDistance =
                 Mathf.Clamp(
                     defaultDistance,
@@ -139,3 +158,4 @@ namespace ProjectSpark.HolographicViewer
         }
     }
 }
+

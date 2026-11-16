@@ -1,0 +1,147 @@
+{
+  "source": "LOCAL_GENERATED_LEVEL87_ART",
+  "structural_checks_passed": true,
+  "total_checks": 24,
+  "passes": 24,
+  "fails": 0,
+  "checks": [
+    {
+      "check": "86 individual binary FBX model files",
+      "passed": true,
+      "details": 86
+    },
+    {
+      "check": "86 matching GLB geometry model files",
+      "passed": true,
+      "details": 86
+    },
+    {
+      "check": "Assembled showcase FBX and GLB",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "Unique and sequential filenames",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "FBX binary 7400 headers",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "FBX basic objects, geometry, connections structural text",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "GLB binary header",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "All 86 GLB exports independently loadable",
+      "passed": true,
+      "details": "[]"
+    },
+    {
+      "check": "Exported triangle sum agrees with manifest",
+      "passed": true,
+      "details": "184948 vs 184948"
+    },
+    {
+      "check": "Exported mesh part sum agrees with manifest",
+      "passed": true,
+      "details": "1208 vs 1208"
+    },
+    {
+      "check": "68 unique planned animation pivot IDs",
+      "passed": true,
+      "details": 68
+    },
+    {
+      "check": "All 68 pivot transforms present as actual GLB scene nodes",
+      "passed": true,
+      "details": []
+    },
+    {
+      "check": "236 unique gold socket anchor records",
+      "passed": true,
+      "details": 236
+    },
+    {
+      "check": "All 236 SOCKET_P nodes present as GLB scene nodes",
+      "passed": true,
+      "details": 0
+    },
+    {
+      "check": "158 sequential unique proposed WIDs",
+      "passed": true,
+      "details": 158
+    },
+    {
+      "check": "All wire endpoints map to art sockets on correct owning models",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "316 separately identified logical wire ends",
+      "passed": true,
+      "details": 316
+    },
+    {
+      "check": "All reused visual anchors produce a reconciliation report",
+      "passed": true,
+      "details": 96
+    },
+    {
+      "check": "W137 uniquely marked critical and correct models",
+      "passed": true,
+      "details": {
+        "WireID": "W137",
+        "SourceModel": "L87_PrimaryRadialGapSensor",
+        "TargetModel": "L87_MagneticBearingSafetyPLC",
+        "SignalPurpose": "CRITICAL trusted radial displacement feedback W137",
+        "SignalKind": "ANALOG_FEEDBACK",
+        "Status": "CONCEPT_ONLY_NOT_PLAYER_WIRE",
+        "Critical": "YES",
+        "Group": "Independent safety, W137 and three disturbances",
+        "SourceVisualAnchor": "P019",
+        "TargetVisualAnchor": "P135"
+      }
+    },
+    {
+      "check": "W137 correct planned P019-to-P135 socket route",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "Six source objective design rows",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "Exactly 12 original procedural material sets / 36 maps",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "Four optional Unity art helper scripts",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "No gameplay falsely represented as implemented",
+      "passed": true,
+      "details": null
+    }
+  ],
+  "triangles": 184948,
+  "mesh_parts": 1208,
+  "unity_compilation_tested": false,
+  "unity_play_mode_tested": false,
+  "actual_player_wires_included": false,
+  "actual_physics_and_objectives_implemented": false,
+  "independently_verified_binary_fbx_import_in_dcc": false
+}

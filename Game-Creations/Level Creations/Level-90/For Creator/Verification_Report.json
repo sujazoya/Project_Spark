@@ -1,0 +1,192 @@
+{
+  "level_id": "level_90",
+  "validation_type": "STRUCTURAL_ART_PACKAGE_ONLY",
+  "checks": [
+    {
+      "name": "Model count",
+      "passed": true,
+      "detail": "94"
+    },
+    {
+      "name": "FBX files including showcase",
+      "passed": true,
+      "detail": "95"
+    },
+    {
+      "name": "GLB files including showcase",
+      "passed": true,
+      "detail": "95"
+    },
+    {
+      "name": "Modular triangle count",
+      "passed": true,
+      "detail": "232552"
+    },
+    {
+      "name": "Source mesh part count",
+      "passed": true,
+      "detail": "1040"
+    },
+    {
+      "name": "Animation pivot count",
+      "passed": true,
+      "detail": "80"
+    },
+    {
+      "name": "Visual socket count",
+      "passed": true,
+      "detail": "254"
+    },
+    {
+      "name": "Conceptual unique wires",
+      "passed": true,
+      "detail": "176"
+    },
+    {
+      "name": "Logical endpoints 2 per wire",
+      "passed": true,
+      "detail": "352"
+    },
+    {
+      "name": "Six design objectives",
+      "passed": true,
+      "detail": "6"
+    },
+    {
+      "name": "All wires marked conceptual",
+      "passed": true,
+      "detail": "not actual player wires"
+    },
+    {
+      "name": "All sockets marked decorative",
+      "passed": true,
+      "detail": "not SparkTerminals"
+    },
+    {
+      "name": "Unique anchor IDs",
+      "passed": true,
+      "detail": "P001...P254"
+    },
+    {
+      "name": "All anchor references valid",
+      "passed": true,
+      "detail": "all mapped"
+    },
+    {
+      "name": "Source and target models exist",
+      "passed": true,
+      "detail": "all grounded"
+    },
+    {
+      "name": "Critical one W157",
+      "passed": true,
+      "detail": "W157"
+    },
+    {
+      "name": "W157 physical concept endpoints",
+      "passed": true,
+      "detail": "P214->P216"
+    },
+    {
+      "name": "W157 port identities",
+      "passed": true,
+      "detail": "two separate logical contacts"
+    },
+    {
+      "name": "Shared anchor reconciliation report",
+      "passed": true,
+      "detail": "67"
+    },
+    {
+      "name": "Signal conflicts not silently merged",
+      "passed": true,
+      "detail": "per-anchor split required"
+    },
+    {
+      "name": "No runtime claims",
+      "passed": true,
+      "detail": "art-only"
+    },
+    {
+      "name": "94 valid binary FBX 7400 headers",
+      "passed": true,
+      "detail": "binary FBX not glTF or a renamed image"
+    },
+    {
+      "name": "94 GLB independently load with expected triangles/sockets",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "Exact total GLB geometry triangles",
+      "passed": true,
+      "detail": "232552"
+    },
+    {
+      "name": "80 pivots present as named GLB scene nodes",
+      "passed": true,
+      "detail": "80"
+    },
+    {
+      "name": "254 gold visual socket parents present in GLBs",
+      "passed": true,
+      "detail": "254"
+    },
+    {
+      "name": "Assembled reference GLB scene loads",
+      "passed": true,
+      "detail": "1040"
+    },
+    {
+      "name": "Assembled GLB triangle count matches modular total",
+      "passed": true,
+      "detail": "232552"
+    },
+    {
+      "name": "Assembled FBX header",
+      "passed": true,
+      "detail": "binary"
+    },
+    {
+      "name": "36 material reference PNGs",
+      "passed": true,
+      "detail": "36"
+    },
+    {
+      "name": "Reference maps 1024 square",
+      "passed": true,
+      "detail": "1024x1024"
+    },
+    {
+      "name": "Four optional Unity C# art scripts",
+      "passed": true,
+      "detail": "art-only"
+    },
+    {
+      "name": "Unity menu paths target Level90",
+      "passed": true,
+      "detail": "menu paths"
+    },
+    {
+      "name": "Original source generator included",
+      "passed": true,
+      "detail": "reproducible geometry"
+    }
+  ],
+  "unity_compilation_tested": false,
+  "unity_playmode_tested": false,
+  "real_sparkterminal_tested": false,
+  "runtime_propulsion_tested": false,
+  "total_checks": 34,
+  "passed": 34,
+  "failed": 0,
+  "visual_pivot_nodes": 80,
+  "decorative_socket_nodes": 254,
+  "individual_triangle_sum": 232552,
+  "source_w157": {
+    "source": "L90_NeutralizerCurrentTransducer",
+    "source_art_anchor": "P214",
+    "destination": "L90_PropulsionSafetyPLC",
+    "destination_art_anchor": "P216"
+  }
+}

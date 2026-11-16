@@ -1,0 +1,16 @@
+# Level 86 — Engineering implementation plan
+
+This is a **design and art kit**, not playable logic.
+
+1. Inspect the actual Project Spark source (`SparkElectricalSolver`, `SparkCircuitSystem`, `SparkTerminal`, `SparkLevelDefinition`, `LevelGamePlayManager`, object shelf, shop, preexisting PLC and safety APIs) before writing adapters. Do not invent signatures.
+2. Instantiate **82 modular FBX models at identity origin** under visual-only `L86_HD_VISUAL_ART`; do not instantiate assembled showcase simultaneously. FBX geometry is numeric centimetres, GLB numeric metres, convert exactly once.
+3. Register all **230** decorative `SOCKET_P###` art transforms, then reconcile **304 distinct proposed W-wire endpoint contacts**. Shared art anchors can map multiple independent logical ports. Separate power, analog, digital and data domains; NO shorting incompatible signals.
+4. Bind **152 actual player-created wires** and verify actual solver continuity and returns. W129 is a deliberately detachable trusted contact force-feedback circuit edge.
+5. Implement a single authoritative 7-axis robotic system: actual joint encoder/angle/velocity/torque, motor drive and brake dynamics, forward/inverse kinematics, collision envelope and dynamic joint limits. The 7 `ANIM_ROBOT_*` pivots are separate modular meshes; rebuild a correct parent-child arm hierarchy for visualization and calibration; no direct gameplay qualification based on visual transforms.
+6. Model stereo/depth vision sensor bias, calibration and timestamps, actual relative end-effector pose and vision covariance. Real contact must depend on simulated physical geometry, not overlap of visible art alone.
+7. Distinguish commanded gripper jaw and joint positions from achieved state; model six-axis wrist wrench, independent hold pressure, tool change, bolt torque and compliant insertion with finite dynamics. A robot cannot release an unsupported payload on a critical sensor fault.
+8. Model replacement radiator mass/inertia and flexible oscillation, realistic finite mechanical fastening, coolant isolation pressure/flow/temperature and coherent educational heat balance (`C dT/dt = Q_load - Q_radiator`), not cosmetic HUD cooling.
+9. Three real disturbances: encoder bias causes motion error, payload modal excitation produces oscillations and abnormal load, asymmetry changes actual jaw contact. Diagnose/repair and demand new requalification evidence.
+10. W129 disconnection must change solver topology; invalidate trusted contact feedback, independently inhibit risky robot motion, latch a fault, then after reconnect require **fresh** sensor calibration, independent safety checks, explicit reset and a new full service-cassette thermal trial. Historical Objectives 1–5 persist.
+11. All six objectives require authoritative evidence, `runId` history and real `LevelGamePlayManager` integration. Optional Unity Editor scripts in this ZIP are art-only import/material/validator helpers. They do not constitute a gameplay builder.
+12. Validate 82 imported FBXs, 64 named moving/indicator pivots, 230 art sockets, 152 WIDs, 304 independent contacts, collision/LOD/materials and old Levels 1–85. Run actual Unity compilation and Play Mode tests before claiming complete. Procedural reference textures require UV work and shader-channel mapping.

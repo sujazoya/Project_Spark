@@ -1,0 +1,14 @@
+# Level 91 Unity gameplay integration plan (NOT included at runtime)
+
+1. Inspect real `SparkElectricalSolver`, `SparkCircuitSystem`, `SparkTerminal`, `SparkElectricalComponent`, `SparkLevelDefinition`, `SparkLevelEvaluator`, `SparkLevel`, `SparkLevelSceneBindings`, `SparkObjectShelf` and `LevelGamePlayManager` code before assuming any method exists.
+2. Import 96 individual FBXs as the visual-only layout. Verify centimetre FBX conversion exactly once; keep the showcase separate.
+3. Reconcile the 260 decorative sockets with 364 conceptual independent logical contacts: split mixed-signal uses into distinct real terminal children, maintain domain separation, and document any additional physical terminals. Model control-power return paths as actually required by the project API.
+4. Register W001–W182 as real **player-required but initially disconnected** circuit graph edges; validate direction, type, voltage/reference, age and topology before activating devices.
+5. Maintain independent authoritative simulator states: spacecraft motion/orbit, four detector photon streams and backgrounds, atomic clock bias/drift/temperature, telescope encoder positions, observation timestamps, four stored pulsar time-models, pulse phase fitting, position/velocity covariance, propulsion correction, safety and objective history. Visuals read but never determine those states.
+6. Implement repeatable photon counting (Poisson arrival events, pulse profile and background) at scaled game time and measured timestamp accumulation. Simulate a valid four-pulsar geometry with a full-rank navigation measurement model; do not treat 'four samples' as instant qualification.
+7. Support three true disturbances: high photon background; atomic clock thermal drift; corrupt ephemeris. Each mutates authoritative state, requires diagnosis and repair, and then fresh time/position qualification.
+8. Implement trusted W163 loss based on the **real wire graph**; loss does not mean zero clock bias. Inhibit new autonomous correction burns, preserve independent protection, require actual reconnection, fresh calibration, explicit reset and a fresh four-pulsar correction test.
+9. Six objectives from the CSV are historical evidence certifications. Objectives 1–5 remain historically completed during deliberate final W163 fault; only after fresh postrepair full mission can Objective 6 drive actual `LevelGamePlayManager` to 6/6.
+10. Add an idempotent gameplay editor menu `Tools/Project Spark/Levels/Create Level 91`, using real inspected Project Spark APIs. The three included art editor menus do NOT replace that game builder.
+
+Test before claiming completion: import/FBX scaling, pivot count, terminal mapping, electrical graph, injection and fault recovery, fresh timestamp/covariance, protected burn authorization, actual objective history, Unity compilation and Play Mode.

@@ -1,0 +1,12 @@
+Domain,From,To,Flow,Constraint
+Control,5V_ControlSupply,Ignition_Sequencer,power/return,Educational logic only
+Propellant,TankA,XenonFeedManifold,finite mass & pressure,Modeled protected plant state
+Propellant,TankB,XenonFeedManifold,finite mass & pressure,Modeled protected plant state
+Propellant,XenonFeedManifold,FourActualFlowControllers,mass flow and valve lag,Actual flow separate from command
+Energy,ProtectedDCBus,PPU_A_B_C_D,bounded electric power,"Conversion losses, precharge, max current"
+Energy,PPU_A_B_C_D,HallThruster_A_B_C_D,discharge power,Must respect magnet and cathode limits
+Plasma,Neutralizers_A_B_C_D,IonBeam_A_B_C_D,neutralization status,W157 trusted current is critical control feedback
+Dynamics,HallThruster_A_B_C_D,Aurora1SpacecraftState,force / mass / deltaV,Actual trajectory integrated over time
+Thermal,PPU_HallThrusterHeat,ThermalControlPumpAndRadiator,joules and heat,Requires measured cooling capacity
+Safety,PrimaryNeutralizerCurrent,PropulsionSafetyPLC,W157 real topology,Cannot be bypassed by SCADA cached display
+Safety,IndependentProtection,PPU_Inhibit,safe shutdown,Independent action remains available

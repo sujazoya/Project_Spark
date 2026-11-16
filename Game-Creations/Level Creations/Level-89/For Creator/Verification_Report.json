@@ -1,0 +1,189 @@
+{
+  "level_id": "level_89",
+  "structural_checks_passed": true,
+  "passes": 34,
+  "fails": 0,
+  "total_checks": 34,
+  "checks": [
+    {
+      "name": "92 individually exported FBX model files",
+      "passed": true,
+      "detail": "92"
+    },
+    {
+      "name": "92 corresponding GLB model files",
+      "passed": true,
+      "detail": "92"
+    },
+    {
+      "name": "Both assembled reference models present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sequential manifest-matched FBX filenames",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Sequential matching GLB filenames",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "All FBX files have correct binary FBX 7400 header",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "All FBX files contain mesh/model/connections nodes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "All GLBs have glTF 2.0 binary signature",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "All GLB files independently load as mesh scenes",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "Every GLB contains nonempty geometry",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "All evaluated geometry bounding values are finite",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "GLB triangle total matches actual FBX/GLB manifest",
+      "passed": true,
+      "detail": "156444 / 156444"
+    },
+    {
+      "name": "GLB unique mesh group count matches manifest",
+      "passed": true,
+      "detail": "1154 / 1154"
+    },
+    {
+      "name": "Exactly 76 unique animation pivot definitions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Every pivot name appears as exported GLB transform",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "Every pivot has a single valid model owner",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Exactly 248 unique decorated socket definitions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "All 248 socket transform nodes exist in GLBs",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "Every socket belongs to a valid equipment model",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Exactly 170 sequential planned wires",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "All proposed wire source/target socket IDs match owning equipment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "340 unique proposed logical contact endpoints",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Each WID has exactly 2 independently identified endpoints",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Visual socket multi-use reconciliation report matches source",
+      "passed": true,
+      "detail": "68"
+    },
+    {
+      "name": "Only critical W149 with correct primary sensor and safety PLC",
+      "passed": true,
+      "detail": "{'WireID': 'W149', 'Group': 'Independent safety critical feedback and fault handling', 'SourceModel': 'L89_ShelterReferenceDosimeter', 'TargetModel': 'L89_HeliosSafetyPLC', 'SignalKind': 'ANALOG_FEEDBACK', 'Purpose': 'CRITICAL trusted shelter dose-rate measurement to independent radiation safety PLC', 'Critical': 'YES', 'SourceVisualAnchor': 'P072', 'TargetVisualAnchor': 'P222', 'State': 'CONCEPT_ONLY_PLAYER_NOT_CONNECTED'}"
+    },
+    {
+      "name": "W149 is analog with separate named logical functional ports",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Six distinct objective design declarations",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Eight budget groups sum to exactly 170",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "12 material sets, all 36 PNG texture reference maps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Four optional Unity art scripts",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "17 physical shielding process-planning links",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Collision and LOD production plan covers 92 modular models",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Source build and README delivered",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No false claims of Unity gameplay/compilation/tested solver",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "modular_triangles": 156444,
+  "mesh_parts": 1154,
+  "fbx_dcc_roundtrip_tested": false,
+  "unity_import_tested": false,
+  "unity_compilation_tested": false,
+  "unity_play_mode_tested": false,
+  "actual_sparkterminal_connectivity_implemented": false,
+  "radiation_simulation_implemented": false,
+  "objective_6_of_6_tested": false,
+  "disclaimer": "These are source/package structural validations only, not proof of flight safety, AAA artist finish or functioning Unity level."
+}

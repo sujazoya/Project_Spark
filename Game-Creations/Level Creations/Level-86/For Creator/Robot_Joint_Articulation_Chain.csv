@@ -1,0 +1,8 @@
+Order,Model,Pivot,Axis,JointCenterX_m,JointCenterY_m,JointCenterZ_m,ParentPivot,Note
+1,L86_RobotJoint1BaseYaw,ANIM_ROBOT_BASE_ROTATE,y,-4.55,2.52,-1.52,ANIM_LINEAR_RAIL_CARRIAGE,Actual visual pivot; reparent at runtime preserving world transform; drive by measured actual axis angle
+2,L86_RobotJoint2Shoulder,ANIM_ROBOT_SHOULDER_PITCH,z,-4.15,3.03,-1.52,ANIM_ROBOT_BASE_ROTATE,Actual visual pivot; reparent at runtime preserving world transform; drive by measured actual axis angle
+3,L86_RobotJoint3UpperArm,ANIM_ROBOT_UPPERARM_PITCH,z,-3.3,3.67,-1.52,ANIM_ROBOT_SHOULDER_PITCH,Actual visual pivot; reparent at runtime preserving world transform; drive by measured actual axis angle
+4,L86_RobotJoint4Elbow,ANIM_ROBOT_ELBOW_PITCH,z,-2.35,4.22,-1.52,ANIM_ROBOT_UPPERARM_PITCH,Actual visual pivot; reparent at runtime preserving world transform; drive by measured actual axis angle
+5,L86_RobotJoint5Forearm,ANIM_ROBOT_FOREARM_ROLL,x,-1.3,4.74,-1.52,ANIM_ROBOT_ELBOW_PITCH,Actual visual pivot; reparent at runtime preserving world transform; drive by measured actual axis angle
+6,L86_RobotJoint6WristPitch,ANIM_ROBOT_WRIST_PITCH,z,-0.55,5.15,-1.52,ANIM_ROBOT_FOREARM_ROLL,Actual visual pivot; reparent at runtime preserving world transform; drive by measured actual axis angle
+7,L86_RobotJoint7WristRoll,ANIM_ROBOT_WRIST_ROLL,x,0.25,5.42,-1.52,ANIM_ROBOT_WRIST_PITCH,Actual visual pivot; reparent at runtime preserving world transform; drive by measured actual axis angle

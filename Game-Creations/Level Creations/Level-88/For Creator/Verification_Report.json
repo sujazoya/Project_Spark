@@ -1,0 +1,153 @@
+{
+  "level": "level_88",
+  "structural_checks_passed": true,
+  "passes": 27,
+  "fails": 0,
+  "total_checks": 27,
+  "checks": [
+    {
+      "name": "90 separately exported binary FBX models",
+      "passed": true,
+      "details": "90"
+    },
+    {
+      "name": "90 matching GLB models",
+      "passed": true,
+      "details": "90"
+    },
+    {
+      "name": "Assembled showcase in both formats",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "Sequential model filenames",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "FBX 7400 binary headers",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "Mesh hierarchy and geometry blocks in each FBX",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "GLB headers",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "All 90 GLB meshes load independently",
+      "passed": true,
+      "details": "[]"
+    },
+    {
+      "name": "Every GLB has geometry",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "All GLB vertices finite",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "GLB triangle sum matches manifest",
+      "passed": true,
+      "details": "184224 vs 184224"
+    },
+    {
+      "name": "GLB mesh group count matches manifest",
+      "passed": true,
+      "details": "1219 vs 1219"
+    },
+    {
+      "name": "Exactly 72 unique animation pivots",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "All animation pivots are exported transform nodes",
+      "passed": true,
+      "details": "[]"
+    },
+    {
+      "name": "242 unique visual gold-rim sockets",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "All 242 visual socket transforms exist in GLB",
+      "passed": true,
+      "details": "[]"
+    },
+    {
+      "name": "164 unique sequential conceptual connections",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "Every conceptual wire anchor owned by the correct model",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "328 independent unique logical endpoint declarations",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "All reused visual sockets have reconciliation records",
+      "passed": true,
+      "details": "108"
+    },
+    {
+      "name": "W145 only critical with exact source/destination",
+      "passed": true,
+      "details": "{'WireID': 'W145', 'Group': 'Independent Safety and Pressure Disturbances', 'SourceModel': 'L88_CabinPressurePrimaryTransducer', 'TargetModel': 'L88_HabitatLifeSupportSafetyPLC', 'SourceVisualAnchor': 'P134', 'TargetVisualAnchor': 'P180', 'SignalKind': 'ANALOG_FEEDBACK', 'Purpose': 'CRITICAL trusted cabin pressure feedback', 'Critical': 'YES', 'ImplementationStatus': 'CONCEPT_ONLY_NO_PLAYER_WIRE'}"
+    },
+    {
+      "name": "W145 signal is analog and has separate functional ports",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "Six objective specification rows",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "Material texture sets and maps",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "Four optional Unity art helper C# files",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "13 separate physical process-flow concept links",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "No claimed Unity gameplay/compilation/Play Mode tests",
+      "passed": true,
+      "details": ""
+    }
+  ],
+  "individual_model_triangles": 184224,
+  "individual_mesh_parts": 1219,
+  "unity_compilation_tested": false,
+  "unity_play_mode_tested": false,
+  "independently_imported_fbx_in_Unity_or_DCC": false,
+  "actual_wires": false,
+  "actual_process_physics": false,
+  "objectives_implemented": false,
+  "disclaimer": "Structural checks are not a substitute for Unity importer, topology, gameplay or AAA hand-authored production qualification"
+}
