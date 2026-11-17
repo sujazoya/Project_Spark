@@ -53,11 +53,19 @@ namespace ProjectSpark.UIManagement
             if(!manager || !dashboard)yield break;
 
             var workshop=Node("ProjectSparkUI/MonitorScreen canvas");
-            if(workshop && workshop.TryGetComponent<Canvas>(out var monitorCanvas))
-                dashboard.AttachToWorkshopMonitor(monitorCanvas);
-
             var computer=Node("ProjectSparkUI/MonitorScreen canvas/Motitor Parent");
-            RegisterObject("workshop","Workshop Computer",SparkUILayer.Main,computer,"workshop");
+            var monitorCanvas = workshop ? workshop.GetComponent<Canvas>() : null;
+            var camera=Find<SparkGameCameraRig>();
+            var wallDisplays=gameObject.AddComponent<SparkWorkshopWallDisplays>();
+            var room=Node("PS_PRO_GAME_ROOM");
+            bool wallsMounted=wallDisplays.Mount(room ? room.transform : null,camera);
+            if(wallsMounted)
+                wallDisplays.Connect(dashboard,manager,monitorCanvas,computer ? computer.transform as RectTransform : null);
+            else
+            {
+                dashboard.AttachToWorkshopMonitor(monitorCanvas);
+                RegisterObject("workshop","Workshop Computer",SparkUILayer.Main,computer,"workshop");
+            }
 
             var wires=Find<SparkWireListUI>();
             var wirePanel=Node("ProjectSpark Wire Manager UI/Wire Registry Panel");
@@ -91,9 +99,16 @@ namespace ProjectSpark.UIManagement
             TopRight(telemetry,24f,88f,386f);
 
             var voltage=Find<SparkVoltageDrawer>();
-            if(voltage)
-                Native("voltage","Voltage Monitor",SparkUILayer.Tool,visible=>{if(visible)voltage.Open();else voltage.Close();},
-                    ()=>voltage && voltage.IsOpen);
+            var voltageRoot=Node("Spark_VoltageMonitor_Canvas");
+            if(voltage && voltageRoot && voltageRoot.TryGetComponent<Canvas>(out var voltageCanvas))
+            {
+                Native("voltage","Voltage Monitor",SparkUILayer.Tool,visible=>
+                {
+                    voltageCanvas.enabled=visible;
+                    if(voltageRoot.TryGetComponent<GraphicRaycaster>(out var raycaster))raycaster.enabled=visible;
+                    if(visible)voltage.Open();else voltage.Close();
+                },()=>voltage && voltage.IsOpen);
+            }
             MaskLauncher(Node("Spark_VoltageMonitor_Canvas/VoltageMonitor_Panel/VoltageDrawer_ToggleTab"));
 
             var experiments=Find<SparkCircuitExperimentLab>();
@@ -104,18 +119,36 @@ namespace ProjectSpark.UIManagement
 
             MaskLauncher(Node("SparkCircuitExperimentLabCanvas/OpenExperimentLab"));
             var assistant=Find<SparkAIUnifiedAssistant>();
-            var conversation=Node("SparkAIConversation_UI");
-            if(assistant && conversation)
+            if(assistant)assistant.ArrangeWorkshopPanel();
+            if(assistant)
                 Native("assistant","Ask Spark",SparkUILayer.Main,visible=>{if(visible)assistant.Show();else assistant.Hide();},
-                    ()=>conversation && conversation.activeSelf);
+                    ()=>assistant && assistant.PanelVisible);
 
-            RegisterCanvas("live-coach","Live Circuit Coach",SparkUILayer.Overlay,
-                Node("ProjectSpark_Gameplay/Spark AI/AI_TutorialSystem/Spark_AI_LiveCircuitHUD"),"workshop");
-            RegisterObject("quick-ai","Quick AI Question",SparkUILayer.Overlay,
-                Node("ProjectSpark_Gameplay/Spark AI/Canvas/AI Question Panel"),"workshop");
-            RegisterCanvas("learning","Learning Library",SparkUILayer.Main,Node("AILearningPanel"),"workshop");
-            RegisterObject("whiteboard","Teaching Whiteboard",SparkUILayer.Main,
-                Node("SparkAIVisualTeachingCanvas/WhiteboardPanel"),"workshop");
+            var liveCoach=Find<SparkTutorialCircuitAwareness>();
+            if(liveCoach)
+                Native("live-coach","Live Circuit Coach",SparkUILayer.Overlay,liveCoach.SetPanelOpen,
+                    ()=>liveCoach && liveCoach.PanelVisible);
+            var quickAI=Node("ProjectSpark_Gameplay/Spark AI/Canvas/AI Question Panel");
+            RegisterObject("quick-ai","Quick AI Question",SparkUILayer.Overlay,quickAI,"workshop");
+            TopRight(quickAI,24f,88f,580f);
+            var learning=Find<SparkAILearningPanel>();
+            var learningCanvas=learning ? learning.GetComponent<Canvas>() : null;
+            if(learning && learningCanvas)
+                Native("learning","Learning Library",SparkUILayer.Main,visible=>
+                {
+                    learningCanvas.enabled=visible;
+                    if(learning.TryGetComponent<GraphicRaycaster>(out var raycaster))raycaster.enabled=visible;
+                    if(visible)learning.ShowDetailed();else learning.HideDrawer();
+                },()=>learning && learningCanvas.isActiveAndEnabled &&
+                    learning.CurrentMode!=SparkAILearningPanel.DrawerMode.Hidden);
+
+            var teaching=Find<SparkVisualTeachingManager>();
+            if(teaching)
+                Native("whiteboard","Teaching Whiteboard",SparkUILayer.Main,visible=>
+                {
+                    if(visible){teaching.ViewWhiteboard();teaching.OpenPanel();}
+                    else teaching.ClosePanel();
+                },()=>teaching && teaching.PanelOpen);
             var shop=Find<ProjectSparkShopRuntime>();
             var shopBackdrop=shop ? Child(shop.transform,"Backdrop") : null;
             if(shop && shopBackdrop)
@@ -129,13 +162,49 @@ namespace ProjectSpark.UIManagement
                     ()=>inventoryBackdrop && inventoryBackdrop.activeInHierarchy);
 
             RegisterCanvas("bench-display","Bench Display",SparkUILayer.HUD,Node("ProjectSparkUI/Disply_Canvas"));
-            RegisterObject("recycle","Component Recycling",SparkUILayer.Tool,Node("SparkShelf_RecycleCanvas"),"workshop");
+            if(Find<SparkShelfRemovePrompt>())dashboard.RegisterRecyclingHelp();
 
             RegisterObject("tools","Workshop Tool Rail",SparkUILayer.HUD,Node(Tools+"Tools-Panel"));
-            RegisterObject("measurement","Geometry Measurement",SparkUILayer.Tool,Node(Tools+"MeasurementHUD"),"workshop");
+            var measurement=Node(Tools+"MeasurementHUD");
+            if(measurement)
+                Native("measurement","Geometry Measurement",SparkUILayer.Tool,visible=>
+                {
+                    measurement.SetActive(visible);
+                    if(visible)TopRight(measurement,24f,88f,240f);
+                },()=>measurement && measurement.activeInHierarchy);
+            if(measurement && measurement.TryGetComponent<Animator>(out var measurementSlide))measurementSlide.enabled=false;
+            if(measurement)
+            {
+                var root=(RectTransform)measurement.transform;
+                root.sizeDelta=new Vector2(240,400);
+                var buttons=measurement.GetComponentsInChildren<Button>(true);
+                for(int i=0;i<buttons.Length;i++)
+                {
+                    var rect=(RectTransform)buttons[i].transform;
+                    rect.SetParent(root,false);
+                    rect.anchorMin=rect.anchorMax=new Vector2(0,1);
+                    rect.pivot=new Vector2(0,1);
+                    rect.anchoredPosition3D=new Vector3(0,-i*74,0);
+                    rect.sizeDelta=new Vector2(62,62);
+                    rect.localScale=Vector3.one;
+                    var labelObject=new GameObject("Tool label",typeof(RectTransform),typeof(Text));
+                    var label=labelObject.GetComponent<Text>();
+                    label.rectTransform.SetParent(rect,false);
+                    label.rectTransform.anchorMin=label.rectTransform.anchorMax=new Vector2(1,.5f);
+                    label.rectTransform.pivot=new Vector2(0,.5f);
+                    label.rectTransform.anchoredPosition=new Vector2(12,0);
+                    label.rectTransform.sizeDelta=new Vector2(155,50);
+                    label.font=Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+                    label.fontSize=17;
+                    label.color=new Color(.8f,.95f,1f);
+                    label.text=buttons[i].name.Replace("Button","").Trim();
+                    label.alignment=TextAnchor.MiddleLeft;
+                    label.raycastTarget=false;
+                }
+                TopRight(measurement,24f,88f,240f);
+            }
             RegisterObject("view-tools","View and Inspection Tools",SparkUILayer.Tool,Node(Tools+"HUD_ViewControls"),"workshop");
 
-            var camera=Find<SparkGameCameraRig>();
             if(camera)
                 Native("camera","Camera Views",SparkUILayer.HUD,visible=>camera.ViewControlsVisible=visible,
                     ()=>camera && camera.ViewControlsVisible,"");
@@ -155,12 +224,27 @@ namespace ProjectSpark.UIManagement
                 Native("shop-quick","Shop Quick Access",SparkUILayer.Tool,visible=>shopDrawer.SetOpen(visible),
                     ()=>shopDrawer && shopDrawer.DrawerOpen);
 
+            var fullTools=Find<ProjectSparkThreeModeToolsPanel>();
+            if(fullTools)
+                BindExisting("SparkThreeModeTools","Expanded Workshop Tools",SparkUILayer.Tool,
+                    visible=>fullTools.SetModeImmediate(visible ? ProjectSparkThreeModeToolsPanel.DisplayMode.Complete :
+                        ProjectSparkThreeModeToolsPanel.DisplayMode.Hidden),
+                    ()=>fullTools && fullTools.gameObject.activeInHierarchy &&
+                        fullTools.CurrentMode!=ProjectSparkThreeModeToolsPanel.DisplayMode.Hidden);
+
+            var assessment=Find<SparkAILearningPathAssessment>();
+            if(assessment)
+                BindExisting("SparkAIAssessmentCanvas","Learning Assessments",SparkUILayer.Main,
+                    visible=>{if(visible)assessment.Show();else assessment.Hide();},
+                    ()=>assessment && assessment.PanelVisible);
             MaskLauncher(Node(Tools+"SparkThreeModeTools/ModeToggle"));
             MaskLauncher(Node("ProjectSparkUI/Main_HUD/ShopQuickAccess/DrawerToggle"));
             MaskLauncher(Node("ProjectSparkUI/Main_HUD/TutorialHubRoot/Drawer/DrawerToggle"));
             MaskLauncher(Node("SparkAIVisualTeachingCanvas/OpenVisualTeacherButton"));
             MaskLauncher(Node("SparkAIVisualTeachingCanvas/SparkAdaptiveExplanationRoot/SparkAINaturalExplanationRoot/AskAILauncher"));
             MaskLauncher(Node(Tools+"Level-7"));
+            MaskLauncher(Node("ProjectSparkUI/Main_HUD/LOGO"));
+            MaskLauncher(Node("ProjectSparkUI/Main_HUD/battery"));
 
             var next=Node("ProjectSparkUI/Main_HUD/Next");
             var previous=Node("ProjectSparkUI/Main_HUD/previouse");
@@ -175,7 +259,7 @@ namespace ProjectSpark.UIManagement
                 levels.LevelStarted+=ScheduleLevelControls;
                 ScheduleLevelControls(levels.ActiveLevel);
             }
-            dashboard.SetVisible(true);
+            dashboard.SetVisible(!wallsMounted);
         }
 
         private void ScheduleLevelControls(SparkLevelDefinition definition)
@@ -207,6 +291,13 @@ namespace ProjectSpark.UIManagement
             manager.RegisterNative(id,label,layer,group,blocks,apply,read);
         }
 
+        private void BindExisting(string id,string label,SparkUILayer layer,Action<bool> apply,Func<bool> read)
+        {
+            var panel=manager.Find(id);
+            if(panel)panel.BindNative(id,label,layer,"workshop",false,apply,read);
+            else Native(id,label,layer,apply,read);
+        }
+
         private void RegisterObject(string id,string label,SparkUILayer layer,GameObject root,string group="")
         {
             if(root)Native(id,label,layer,value=>{if(root)root.SetActive(value);},()=>root && root.activeInHierarchy,group);
@@ -233,7 +324,8 @@ namespace ProjectSpark.UIManagement
             rect.anchorMin=rect.anchorMax=new Vector2(1,1);
             rect.pivot=new Vector2(1,1);
             rect.sizeDelta=originalSize;
-            rect.anchoredPosition=new Vector2(-x,-y);
+            rect.localRotation=Quaternion.identity;
+            rect.anchoredPosition3D=new Vector3(-x,-y,0f);
             rect.localScale=new Vector3(scale,scale,1);
         }
 

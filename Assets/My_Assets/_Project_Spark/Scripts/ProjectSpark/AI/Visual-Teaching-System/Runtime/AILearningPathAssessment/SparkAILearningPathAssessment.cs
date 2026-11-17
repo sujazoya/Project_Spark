@@ -211,6 +211,7 @@ namespace ProjectSpark.UI.VisualTeaching
             return prefix + value.Length + ":" + value;
         }
 
+        public bool PanelVisible => panel && panel.activeInHierarchy;
         public void Show() { Resolve(); Subscribe(); if (panel != null) panel.SetActive(true); Refresh(); }
         public void Hide() { if (panel != null) panel.SetActive(false); }
         public void Toggle() { if (panel != null && panel.activeSelf) Hide(); else Show(); }

@@ -37,9 +37,16 @@ namespace ProjectSpark.UIManagement
         private bool initialized;
         private string registrySignature = "";
         private GameObject launcher;
+        private RectTransform workshopScreen;
+        private RectTransform closeBar;
+        private Action locateMaster;
+        private Action leaveMaster;
+        private Action locateWorkshop;
+        public bool IsWallMounted => canvas && canvas.renderMode == RenderMode.WorldSpace;
+        private string closeSignature;
         private static SparkUIMonitorDashboard current;
 
-        public static bool IsConsoleVisible => current && current.canvas && current.canvas.gameObject.activeInHierarchy;
+        public static bool IsConsoleVisible => current && !current.IsWallMounted && current.canvas && current.canvas.gameObject.activeInHierarchy;
 
         private void Awake()
         {
@@ -55,25 +62,45 @@ namespace ProjectSpark.UIManagement
         {
             if (current == this) current = null;
             if (launcher) Destroy(launcher);
+            if (IsWallMounted) Destroy(canvas.gameObject);
+            else if (workshopScreen) Destroy(workshopScreen.gameObject);
             if (manager) { manager.Changed -= Refresh; manager.LogEvent -= OnEvent; }
         }
         private void Update()
         {
 #if ENABLE_LEGACY_INPUT_MANAGER
-            if (Input.GetKeyDown(toggleKey)) SetVisible(!canvas.gameObject.activeSelf);
+            if (Input.GetKeyDown(toggleKey))
+            {
+                if (IsWallMounted) locateMaster?.Invoke();
+                else SetVisible(!canvas.gameObject.activeSelf);
+            }
+            if (IsConsoleVisible && Input.GetKeyDown(KeyCode.Escape)) SetVisible(false);
 #endif
+            FitWorkshopScreen();
             if (Time.unscaledTime >= refreshAt) { refreshAt = Time.unscaledTime + .5f; Refresh(); }
         }
         public void SetVisible(bool visible)
         {
             if (!canvas) return;
-            canvas.gameObject.SetActive(visible);
+            canvas.gameObject.SetActive(IsWallMounted || visible);
             if (launcher) launcher.SetActive(!visible);
+            UpdateCloseButtons();
         }
 
         public void AttachToWorkshopMonitor(Canvas workshopCanvas)
         {
             if (!workshopCanvas || launcher) return;
+            workshopScreen=(RectTransform)Obj("Spark Master Monitor Screen",workshopCanvas.transform).transform;
+            workshopScreen.anchorMin=Vector2.zero;
+            workshopScreen.anchorMax=Vector2.one;
+            workshopScreen.offsetMin=workshopScreen.offsetMax=Vector2.zero;
+            root.SetParent(workshopScreen,false);
+            root.anchorMin=root.anchorMax=new Vector2(.5f,.5f);
+            root.pivot=new Vector2(.5f,.5f);
+            root.anchoredPosition=Vector2.zero;
+            root.sizeDelta=new Vector2(1672,941);
+            FitWorkshopScreen();
+
             launcher=Obj("Spark Master Monitor Launcher",workshopCanvas.transform);
             var rect=(RectTransform)launcher.transform;
             rect.anchorMin=rect.anchorMax=new Vector2(1,1);
@@ -102,6 +129,120 @@ namespace ProjectSpark.UIManagement
             label.rectTransform.offsetMin=label.rectTransform.offsetMax=Vector2.zero;
             launcher.SetActive(!IsConsoleVisible);
         }
+        internal void AttachToWall(Canvas surface, Action locate, Action leave, Action locateRight)
+        {
+            locateMaster = locate;
+            leaveMaster = leave;
+            locateWorkshop = locateRight;
+            workshopScreen = (RectTransform)surface.transform;
+            root.SetParent(workshopScreen, false);
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = surface.worldCamera;
+            canvas.overrideSorting = false;
+            var scaler = canvas.GetComponent<CanvasScaler>();
+            if (scaler) scaler.enabled = false;
+            root.anchorMin = root.anchorMax = root.pivot = new Vector2(.5f, .5f);
+            root.anchoredPosition3D = Vector3.zero;
+            root.sizeDelta = new Vector2(1672, 941);
+            FitWorkshopScreen();
+            canvas.gameObject.SetActive(true);
+            RelabelButton("Button CLOSE  ×", "VIEW RIGHT WALL");
+            RelabelButton("Button HIDE CONSOLE  [F8]", "VIEW WORKTOP");
+            CreateCloseBar();
+        }
+
+        private void RelabelButton(string name, string caption)
+        {
+            var button = root.Find(name);
+            if (button) button.GetComponentInChildren<Text>().text = caption;
+        }
+
+        private void ReturnToWorktop()
+        {
+            if (IsWallMounted) leaveMaster?.Invoke();
+            else SetVisible(false);
+        }
+
+        internal void RegisterRecyclingHelp()
+        {
+            var notice = Obj("Recycling Help", transform);
+            var noticeCanvas = notice.AddComponent<Canvas>();
+            noticeCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            noticeCanvas.sortingOrder = 2100;
+            var scaler = notice.AddComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(1920, 1080);
+
+            var background = Box(notice.transform, "Recycling card", 0, 0, 432, 142, new Color(.023f, .11f, .17f, .98f));
+            background.raycastTarget = false;
+            var rect = background.rectTransform;
+            rect.anchorMin = rect.anchorMax = rect.pivot = Vector2.one;
+            rect.anchoredPosition = new Vector2(-24, -88);
+            Label(rect, "COMPONENT RECYCLING", 18, 14, 390, 28, 19, cyan, TextAnchor.MiddleLeft, FontStyle.Bold);
+            Label(rect, "Select a shelf component, then use its recycle icon.", 18, 50, 390, 58, 17)
+                .horizontalOverflow = HorizontalWrapMode.Wrap;
+            manager.RegisterNative("recycle", "Component Recycling", SparkUILayer.Tool, "workshop", false,
+                visible => notice.SetActive(visible), () => notice.activeInHierarchy);
+        }
+
+        private void CreateCloseBar()
+        {
+            closeBar = (RectTransform)Obj("Open Panel Close Controls", transform).transform;
+            var closeCanvas = closeBar.gameObject.AddComponent<Canvas>();
+            closeCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            closeCanvas.sortingOrder = dashboardSortOrder - 10;
+            closeBar.gameObject.AddComponent<GraphicRaycaster>();
+            var scaler = closeBar.gameObject.AddComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(1920, 1080);
+            closeBar.anchorMin = Vector2.zero;
+            closeBar.anchorMax = Vector2.one;
+            closeBar.offsetMin = closeBar.offsetMax = Vector2.zero;
+            UpdateCloseButtons();
+        }
+
+        private void UpdateCloseButtons()
+        {
+            if (!closeBar || !manager) return;
+            var panels = manager.Panels.Where(panel => panel && panel.IsVisible && !panel.AlwaysVisible).ToArray();
+            closeBar.gameObject.SetActive(!IsConsoleVisible && panels.Length > 0);
+            var signature = string.Join("|", panels.Select(panel => panel.Id));
+            if (signature == closeSignature) return;
+            closeSignature = signature;
+            foreach (Transform child in closeBar)
+            {
+                child.gameObject.SetActive(false);
+                Destroy(child.gameObject);
+            }
+
+            float width = Mathf.Min(210f, 1450f / Mathf.Max(1, panels.Length) - 8f);
+            for (int i = 0; i < panels.Length; i++)
+            {
+                string id = panels[i].Id;
+                var button = Btn(closeBar, "Close " + panels[i].DisplayName, 0, 0, width, 41,
+                    () => manager.Close(id), false, 15);
+                button.gameObject.name = "Close " + id;
+                var rect = (RectTransform)button.transform;
+                rect.anchorMin = rect.anchorMax = new Vector2(.5f, 1f);
+                rect.pivot = new Vector2(.5f, 1f);
+                rect.anchoredPosition = new Vector2((i - (panels.Length - 1) * .5f) * (width + 8f), -16f);
+
+                var label = button.GetComponentInChildren<Text>();
+                label.horizontalOverflow = HorizontalWrapMode.Wrap;
+                label.resizeTextForBestFit = true;
+                label.resizeTextMinSize = 10;
+                label.resizeTextMaxSize = 15;
+            }
+        }
+
+        private void FitWorkshopScreen()
+        {
+            if (!workshopScreen) return;
+            Vector2 size=workshopScreen.rect.size;
+            float scale=Mathf.Min(size.x/1672f,size.y/941f);
+            root.localScale=new Vector3(scale,scale,1f);
+        }
+
         public void ToggleDashboard() { if (canvas) SetVisible(!canvas.gameObject.activeSelf); }
         private void OnEvent(string entry)
         {
@@ -173,6 +314,13 @@ namespace ProjectSpark.UIManagement
             frame.raycastTarget = false;
             Label(root, "SPARK UI MANAGER", 530, 24, 610, 44, 37, textWhite, TextAnchor.MiddleCenter, FontStyle.Bold);
             Label(root, "CENTRAL PANEL ORCHESTRATION SYSTEM", 580, 65, 510, 22, 16, cyan, TextAnchor.MiddleCenter);
+            Btn(root, "VIEW LEFT WALL", 55, 30, 150, 39, () =>
+            {
+                if (locateMaster == null) return;
+                SetVisible(false);
+                locateMaster();
+            }, false, 14);
+            Btn(root, "CLOSE  ×", 1450, 30, 145, 39, () => { if (IsWallMounted) locateWorkshop?.Invoke(); else SetVisible(false); }, true, 16);
             Label(root, "PROJECTSPARK  //  CONTROL CONSOLE", 243, 104, 470, 25, 14, cyan, TextAnchor.MiddleLeft, FontStyle.Bold);
             Label(root, "LIVE SYSTEM", 1370, 104, 205, 25, 14, cyan, TextAnchor.MiddleRight);
 
@@ -238,8 +386,8 @@ namespace ProjectSpark.UIManagement
             Btn(root, "FOCUS", 1300, 433, 82, 42, () => WithSelected(p => OpenForUse(p.Id)), false, 14);
             Btn(root, "MINIMIZE", 1392, 433, 88, 42, () => WithSelected(p => manager.Minimize(p.Id)), false, 12);
             Btn(root, "BACK", 1490, 433, 82, 42, () => { if (manager) manager.Back(); }, false, 14);
-            Btn(root, "CLOSE ALL MANAGED PANELS", 1300, 493, 272, 46, () => { if (manager) manager.CloseAll(); }, true, 13);
-            Label(root, "Close All preserves HUD and System layers", 1300, 545, 274, 28, 12, cyan);
+            Btn(root, "CLOSE ALL MANAGED PANELS", 1300, 493, 272, 46, () => { if (manager) manager.CloseAll(true); }, true, 13);
+            Label(root, "Reopen panels from the registry", 1300, 545, 274, 28, 12, cyan);
 
             Header(root, "SYSTEM DIAGNOSTICS", 234, 606, 440, 180);
             Label(root, "Layer sorting / focus / input routing", 249, 646, 405, 28, 18, textWhite);
@@ -249,7 +397,7 @@ namespace ProjectSpark.UIManagement
             eventLabel = Label(root, "No activity yet", 701, 642, 558, 132, 14, textWhite, TextAnchor.UpperLeft);
             Header(root, "OPERATIONS", 1286, 606, 300, 180);
             Btn(root, "REFRESH REGISTRY", 1301, 648, 269, 42, () => { registrySignature = ""; Refresh(); }, false, 14);
-            Btn(root, "HIDE CONSOLE  [F8]", 1301, 711, 269, 42, () => SetVisible(false), true, 14);
+            Btn(root, "HIDE CONSOLE  [F8]", 1301, 711, 269, 42, ReturnToWorktop, true, 14);
             string[] foot = { "HOME", "LAYERS", "REGISTRY", "TOOLS", "LAYOUTS", "SYSTEM" };
             for (int i = 0; i < foot.Length; i++)
             {
@@ -268,6 +416,8 @@ namespace ProjectSpark.UIManagement
         public bool OpenForUse(string id)
         {
             if (!manager || !manager.Open(id)) return false;
+            if (IsWallMounted && id == "workshop") locateWorkshop?.Invoke();
+            if (id != "workshop") leaveMaster?.Invoke();
             SetVisible(false);
             return true;
         }
@@ -282,6 +432,7 @@ namespace ProjectSpark.UIManagement
         private void Refresh()
         {
             if (!initialized || !manager) return;
+            UpdateCloseButtons();
             countLabel.text = manager.Panels.Count.ToString();
             stackLabel.text = manager.OpenCount.ToString(); focusLabel.text = manager.FocusedId;
             var modal = manager.Panels.LastOrDefault(p => p && p.IsVisible && (p.Layer == SparkUILayer.Modal || p.Layer == SparkUILayer.Fullscreen));

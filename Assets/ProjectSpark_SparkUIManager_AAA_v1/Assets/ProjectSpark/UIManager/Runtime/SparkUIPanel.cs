@@ -59,6 +59,7 @@ namespace ProjectSpark.UIManagement
         public bool BlocksGameplayInput { get { return blocksGameplayInput; } }
         public bool LocksFocus { get { return locksFocus; } }
         public bool AllowMinimize { get { return allowMinimize; } }
+        public bool AlwaysVisible { get; internal set; }
         public bool Animate { get { return animate; } }
         public float FadeSeconds { get { return fadeSeconds; } }
         public bool DeactivateWhenClosed { get { return deactivateWhenClosed; } }

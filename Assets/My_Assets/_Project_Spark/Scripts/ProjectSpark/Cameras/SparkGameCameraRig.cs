@@ -25,6 +25,8 @@ namespace ProjectSpark.Cameras
         private int activeIndex;
         private bool ownsCamera,legacyWasEnabled,sharedOverride;
         private SparkLevelLayout overrideLayout;
+        private RectTransform wallDisplay;
+        private bool wallOpenedSharedView;
         private OutputChannels levelChannel;
         private CinemachineBrain.UpdateMethods levelUpdate;
         private CinemachineBrain.BrainUpdateMethods levelBlendUpdate;
@@ -82,6 +84,8 @@ namespace ProjectSpark.Cameras
         {
             if(sharedOverride&&loader&&loader.ActiveLayout!=overrideLayout)
             {
+                wallDisplay=null;
+                wallOpenedSharedView=false;
                 sharedOverride=false;
                 overrideLayout=null;
             }
@@ -102,7 +106,8 @@ namespace ProjectSpark.Cameras
             pitch=Mathf.Lerp(pitch,goalPitch,blend);
             distance=Mathf.Lerp(distance,goalDistance,blend);
             pan=Vector2.Lerp(pan,goalPan,blend);
-            Apply(activeIndex,yaw,pitch,distance,pan);
+            if (wallDisplay) ApplyWallDisplay();
+            else Apply(activeIndex,yaw,pitch,distance,pan);
             brain.ManualUpdate(Time.frameCount,dt);
         }
 
@@ -165,12 +170,57 @@ namespace ProjectSpark.Cameras
                 overrideLayout=loader?loader.ActiveLayout:null;
                 TakeCamera();
             }
+            wallDisplay = null;
+            wallOpenedSharedView = false;
             views[activeIndex].Priority=10;
             activeIndex=index;
             ResetMotion();
             Apply(activeIndex,0,0,1,Vector2.zero);
             views[activeIndex].Priority=100;
             views[activeIndex].Prioritize();
+        }
+
+        public void FocusWallDisplay(RectTransform display)
+        {
+            if (!display || !HasSharedViews || SignalWireBuilder.AnyWireDrawing) return;
+            bool restoreDedicated = wallOpenedSharedView;
+            if (!ownsCamera && DedicatedCameraActive())
+            {
+                SelectView(activeIndex);
+                restoreDedicated = sharedOverride;
+            }
+
+            wallDisplay = display;
+            wallOpenedSharedView = restoreDedicated;
+            ResetMotion();
+        }
+
+        public void LeaveWallDisplay(Transform display)
+        {
+            if (wallDisplay != display) return;
+            wallDisplay = null;
+            ResetMotion();
+            if (wallOpenedSharedView) ReturnToLevelView();
+            wallOpenedSharedView = false;
+        }
+
+        private void ApplyWallDisplay()
+        {
+            var bounds = wallDisplay.rect.size;
+            float height = bounds.y * Mathf.Abs(wallDisplay.lossyScale.y);
+            float width = bounds.x * Mathf.Abs(wallDisplay.lossyScale.x);
+            const float fieldOfView = 42f;
+            float visibleHeight = Mathf.Max(height, width / Mathf.Max(.1f, output.aspect));
+            float distanceToScreen = visibleHeight * .63f / Mathf.Tan(fieldOfView * .5f * Mathf.Deg2Rad);
+            Vector3 forward = wallDisplay.forward;
+            var view = views[activeIndex];
+            view.transform.SetPositionAndRotation(wallDisplay.position - forward * distanceToScreen,
+                Quaternion.LookRotation(forward, wallDisplay.up));
+            var lens = view.Lens;
+            lens.ModeOverride = LensSettings.OverrideModes.Perspective;
+            lens.FieldOfView = fieldOfView;
+            lens.NearClipPlane = .12f;
+            view.Lens = lens;
         }
 
         public void ZoomStep(float steps)
@@ -208,6 +258,7 @@ namespace ProjectSpark.Cameras
                 if(keyboard.digit4Key.wasPressedThisFrame||keyboard.numpad4Key.wasPressedThisFrame)SelectView(3);
                 if(keyboard.digit5Key.wasPressedThisFrame||keyboard.numpad5Key.wasPressedThisFrame)SelectView(4);
             }
+            if (wallDisplay) return;
             var mouse=Mouse.current;
             if(mouse==null)return;
             bool overUI=EventSystem.current!=null&&EventSystem.current.IsPointerOverGameObject();
@@ -318,6 +369,8 @@ namespace ProjectSpark.Cameras
 
         private void RestoreLevelCamera()
         {
+            wallDisplay = null;
+            wallOpenedSharedView = false;
             sharedOverride = false;
             overrideLayout = null;
             ownsCamera = false;
@@ -338,6 +391,8 @@ namespace ProjectSpark.Cameras
                 RestoreLevelCamera();
             else
             {
+                wallDisplay = null;
+                wallOpenedSharedView = false;
                 sharedOverride = false;
                 overrideLayout = null;
                 ReleaseCamera();

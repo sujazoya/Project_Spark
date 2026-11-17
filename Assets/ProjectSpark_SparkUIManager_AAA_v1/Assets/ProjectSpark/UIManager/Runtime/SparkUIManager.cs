@@ -50,7 +50,7 @@ namespace ProjectSpark.UIManagement
                 nextNativePoll=Time.unscaledTime+.18f;
                 ObserveNativePanels();
             }
-            if (!escapeClosesTopPanel) return;
+            if (!escapeClosesTopPanel || SparkUIMonitorDashboard.IsConsoleVisible) return;
 #if ENABLE_LEGACY_INPUT_MANAGER
             if (Input.GetKeyDown(KeyCode.Escape)) Back();
 #endif
@@ -70,12 +70,13 @@ namespace ProjectSpark.UIManagement
                 if (string.IsNullOrWhiteSpace(p.Id)) { Debug.LogError("[SparkUI] Empty panel ID: " + p.name, p); continue; }
                 if (lookup.ContainsKey(p.Id)) { Debug.LogError("[SparkUI] Duplicate panel ID: " + p.Id, p); continue; }
                 lookup.Add(p.Id, p);
+                bool visible=p.VisibleOnStart || p.AlwaysVisible;
                 p.gameObject.SetActive(true);
-                p.Group.alpha = p.VisibleOnStart ? 1f : 0f;
-                p.Group.interactable = p.VisibleOnStart;
-                p.Group.blocksRaycasts = p.VisibleOnStart;
-                p.SetState(p.VisibleOnStart ? SparkUIPanelState.Open : SparkUIPanelState.Closed);
-                if (p.VisibleOnStart) openOrder.Add(p);
+                p.Group.alpha = visible ? 1f : 0f;
+                p.Group.interactable = visible;
+                p.Group.blocksRaycasts = visible;
+                p.SetState(visible ? SparkUIPanelState.Open : SparkUIPanelState.Closed);
+                if (visible) openOrder.Add(p);
                 else if (p.DeactivateWhenClosed) p.gameObject.SetActive(false);
             }
             Reorder(); Notify("Registry initialized: " + lookup.Count + " panels");
@@ -146,7 +147,7 @@ namespace ProjectSpark.UIManagement
         public bool Close(string id)
         {
             var p = Find(id);
-            if (!p || p.State == SparkUIPanelState.Closed || p.State == SparkUIPanelState.Closing) return false;
+            if (!p || p.AlwaysVisible || p.State == SparkUIPanelState.Closed || p.State == SparkUIPanelState.Closing) return false;
             Cancel(p); p.NativeVisibility?.Invoke(false); p.SetState(SparkUIPanelState.Closing);
             p.Group.blocksRaycasts = false; p.Group.interactable = false;
             if (focused == p) focused = null;
@@ -158,7 +159,7 @@ namespace ProjectSpark.UIManagement
         public bool Toggle(string id) { var p = Find(id); return p ? (p.IsVisible ? Close(id) : Open(id)) : false; }
         public bool Minimize(string id)
         {
-            var p = Find(id); if (!p || !p.AllowMinimize || !p.IsVisible) return false;
+            var p = Find(id); if (!p || p.AlwaysVisible || !p.AllowMinimize || !p.IsVisible) return false;
             Cancel(p); p.NativeVisibility?.Invoke(false); p.Group.alpha = 0f; p.Group.blocksRaycasts = false; p.Group.interactable = false;
             p.SetState(SparkUIPanelState.Minimized); openOrder.Remove(p); if (focused == p) focused = null;
             Reorder(); Notify("Minimized: " + p.Id); return true;
@@ -178,8 +179,9 @@ namespace ProjectSpark.UIManagement
         public bool Back()
         {
             // Modal always gets priority; otherwise last opened/focused panel.
-            var top = openOrder.Where(p => p && p.IsVisible && (p.Layer == SparkUILayer.Modal || p.Layer == SparkUILayer.Fullscreen)).LastOrDefault();
-            if (!top) top = openOrder.LastOrDefault(p => p && p.IsVisible && p.Layer != SparkUILayer.HUD && p.Layer != SparkUILayer.Background);
+            var top = openOrder.Where(p => p && p.IsVisible && !p.AlwaysVisible && (p.Layer == SparkUILayer.Modal || p.Layer == SparkUILayer.Fullscreen)).LastOrDefault();
+            if (!top) top = openOrder.LastOrDefault(p => p && p.IsVisible && !p.AlwaysVisible && p.Layer != SparkUILayer.HUD && p.Layer != SparkUILayer.Background);
+            if (!top) top = openOrder.LastOrDefault(p => p && p.IsVisible && !p.AlwaysVisible);
             return top && Close(top.Id);
         }
         private void Reorder()

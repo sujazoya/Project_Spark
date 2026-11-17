@@ -72,6 +72,7 @@ namespace ProjectSpark.AI.Tutorial
 
 
        
+        private bool workshopPanelArranged;
         private string pendingQuestion;
         private float pendingUntil;
        
@@ -167,6 +168,112 @@ private void BindButtons()
     }
 }
 
+
+public void ArrangeWorkshopPanel()
+{
+    if (!canvas) return;
+    var root = canvas.transform.Find("ASK-AI-Panel") as RectTransform;
+    if (!root) return;
+    root.anchorMin = root.anchorMax = root.pivot = Vector2.one;
+    root.anchoredPosition3D = new Vector3(-24, -88, 0);
+    root.localScale = Vector3.one;
+    root.sizeDelta = new Vector2(680, 620);
+    workshopPanelArranged = true;
+    var image = root.GetComponent<Image>();
+    if (image) image.color = new Color(.025f, .075f, .13f, .98f);
+
+    void Place(RectTransform rect, float x, float y, float width, float height)
+    {
+        if (!rect) return;
+        rect.SetParent(root, false);
+        rect.anchorMin = rect.anchorMax = new Vector2(0, 1);
+        rect.pivot = new Vector2(0, 1);
+        rect.anchoredPosition3D = new Vector3(x, -y, 0);
+        rect.sizeDelta = new Vector2(width, height);
+        rect.localScale = Vector3.one;
+    }
+
+    Place(heading ? heading.rectTransform : null, 20, 16, 540, 34);
+    Place(status ? status.rectTransform : null, 20, 56, 640, 34);
+    Place(closeButton ? closeButton.transform as RectTransform : null, 622, 14, 38, 38);
+    if (heading) { heading.enableAutoSizing = false; heading.fontSize = 25; }
+    if (status) { status.enableAutoSizing = false; status.fontSize = 15; status.textWrappingMode = TextWrappingModes.Normal; }
+
+    if (answerScroll)
+    {
+        Place((RectTransform)answerScroll.transform, 20, 104, 640, 380);
+        if (answerScroll.viewport)
+        {
+            answerScroll.viewport.anchorMin = Vector2.zero;
+            answerScroll.viewport.anchorMax = Vector2.one;
+            answerScroll.viewport.offsetMin = answerScroll.viewport.offsetMax = Vector2.zero;
+        }
+        if (answerScroll.content)
+        {
+            var content = answerScroll.content;
+            content.anchorMin = new Vector2(0, 1);
+            content.anchorMax = Vector2.one;
+            content.pivot = new Vector2(.5f, 1);
+            content.anchoredPosition = Vector2.zero;
+            content.sizeDelta = new Vector2(-16, 380);
+            if (answer)
+            {
+                answer.rectTransform.SetParent(content, false);
+                answer.rectTransform.anchorMin = Vector2.zero;
+                answer.rectTransform.anchorMax = Vector2.one;
+                answer.rectTransform.offsetMin = Vector2.zero;
+                answer.rectTransform.offsetMax = Vector2.zero;
+                answer.rectTransform.localScale = Vector3.one;
+                answer.enableAutoSizing = false;
+                answer.maxVisibleCharacters = int.MaxValue;
+                answer.maxVisibleWords = int.MaxValue;
+                answer.maxVisibleLines = int.MaxValue;
+                answer.fontSize = 20;
+                answer.textWrappingMode = TextWrappingModes.Normal;
+                answer.overflowMode = TextOverflowModes.Overflow;
+            }
+        }
+        answerScroll.horizontal = false;
+        answerScroll.vertical = true;
+    }
+
+    void ButtonLabel(Button button, string caption)
+    {
+        if (!button) return;
+        foreach (Transform child in button.transform) child.gameObject.SetActive(false);
+        var labelObject = new GameObject("Workshop action label", typeof(RectTransform), typeof(Text));
+        var label = labelObject.GetComponent<Text>();
+        label.rectTransform.SetParent(button.transform, false);
+        label.rectTransform.anchorMin = Vector2.zero;
+        label.rectTransform.anchorMax = Vector2.one;
+        label.rectTransform.offsetMin = label.rectTransform.offsetMax = Vector2.zero;
+        label.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        label.fontSize = 20;
+        label.text = caption;
+        label.color = Color.white;
+        label.alignment = TextAnchor.MiddleCenter;
+        label.raycastTarget = false;
+        if (button.targetGraphic is Image background)
+        {
+            background.sprite = null;
+            background.color = new Color(.03f, .25f, .36f);
+        }
+    }
+    ButtonLabel(closeButton, "X");
+    ButtonLabel(askButton, "ASK");
+    var actions = new[] {inspectButton, explainButton, hintButton, tutorialButton};
+    for (int i = 0; i < actions.Length; i++)
+        Place(actions[i] ? actions[i].transform as RectTransform : null, 20 + i * 162, 500, 150, 42);
+    Place(questionInput ? questionInput.transform as RectTransform : null, 20, 560, 510, 42);
+    Place(askButton ? askButton.transform as RectTransform : null, 544, 560, 116, 42);
+    if (questionInput)
+    {
+        if (questionInput.textComponent) { questionInput.textComponent.enableAutoSizing = false; questionInput.textComponent.fontSize = 18; }
+        if (questionInput.placeholder is TMP_Text placeholder) { placeholder.enableAutoSizing = false; placeholder.fontSize = 18; placeholder.color = new Color(.63f,.78f,.86f); }
+    }
+}
+
+public bool PanelVisible => canvas && canvas.isActiveAndEnabled;
 
 [ContextMenu("Ask Spark / Show")]
 public void Show()
@@ -2992,6 +3099,9 @@ private void SetAnswer(string title, string text)
 
         // Refresh TextMeshPro's existing text geometry.
         answer.ForceMeshUpdate();
+        if (workshopPanelArranged && answerScroll && answerScroll.content && answerScroll.viewport)
+            answerScroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,
+                Mathf.Max(answerScroll.viewport.rect.height, answer.preferredHeight + 24f));
     }
 
     // Update the existing ScrollRect and move

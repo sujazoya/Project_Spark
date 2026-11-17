@@ -1,0 +1,20 @@
+{
+  "wire": "W067",
+  "type": "removable_logic_feedback_jumper",
+  "source": "L97_MainRailSupervisor_U7.TRUSTED_MAIN_POWER_GOOD_OUT",
+  "destination": "L97_PowerSafetyController_U8.TRUSTED_MAIN_POWER_GOOD_IN",
+  "initial": "DISCONNECTED",
+  "condition_for_objective_6": "historical objectives 1-5 completed; disconnect after normal setup and prove safe inhibition",
+  "fault_response": [
+    "invalidate feedback quality",
+    "disable dependent loads",
+    "retain independent diagnostics",
+    "latch fault"
+  ],
+  "recovery": [
+    "reinstall real jumper",
+    "fresh rail observations",
+    "explicit reset",
+    "new qualification"
+  ]
+}

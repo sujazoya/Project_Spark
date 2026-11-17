@@ -113,6 +113,20 @@ namespace ProjectSpark.AI.Tutorial
         private void OnLevelFailed(SparkLevelDefinition level, string reason) => RefreshState(true);
         private void OnLevelChanged(SparkLevelDefinition level) => RefreshState(false);
 
+        public bool PanelVisible => canvas && canvas.isActiveAndEnabled;
+
+        public void SetPanelOpen(bool visible)
+        {
+            if (!visible)
+            {
+                if (canvas) canvas.gameObject.SetActive(false);
+                return;
+            }
+            RefreshState(false);
+            Show(string.IsNullOrEmpty(lastDescription) ? "Waiting for the level and electrical solver." : lastDescription, false);
+            hideAt = float.PositiveInfinity;
+        }
+
         private void Update()
         {
             if (levelManager == null)
