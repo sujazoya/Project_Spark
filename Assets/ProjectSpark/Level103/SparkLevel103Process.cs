@@ -31,7 +31,7 @@ namespace ProjectSpark.Gameplay
         public Transform arena,art;
         public Part[] parts;
         public Route[] routes;
-        public SparkPowerSupply certification,supply,logic,reference,supervisor,safetyLamp;
+        public SparkPowerSupply certification,supply,logic,reference,supervisor,safetyLamp,bridgeCommon;
         public SparkPowerSupply[] excitations,sensorOutputs,frontEnds;
         public SparkTerminal ground,protectedInput,logicInput,referenceInput,supervisorInput,trustedInput;
         public SparkTerminal[] sensorInputs,minusInputs,adcInputs,componentReturns;
@@ -46,16 +46,21 @@ namespace ProjectSpark.Gameplay
         private SparkLevelLayoutLoader loader;
         private SparkLevel103BoardView cameraView;
         private SignalWireBuilder wireBuilder;
+        private SparkToolController tools;
         private readonly List<SparkCircuitConnection> connections=new();
         private bool[] placed,soldered,flux,hot;
         private bool[] repairProved=new bool[3];
-        private int selectedPart,selectedRoute,orientation,stage,revision,fault=-1,pendingRepair=-1;
+        private int selectedPart,selectedFootprint,selectedRoute,orientation,stage,revision,fault=-1,pendingRepair=-1;
+        private bool unauthorizedCopper,schematicResolved;
         private bool diagnosed,armed,lossObserved,latched,recoveryReset,running;
         private int routed,viaCount,runSamples,runRevision;
         private double elapsedRun,runStarted,referenceGoodSince=-1;
         private string notice="Fit a component to its named footprint, then solder its contacts.";
         private float nextPresentation;
+        private UnityEngine.EventSystems.PhysicsRaycaster ownedRaycaster;
         private bool Active=>manager && loader && loader.ActiveLayout==layout;
+        public bool HasUnauthorizedCopper=>unauthorizedCopper;
+        public bool SchematicResolved=>schematicResolved;
         public int Stage=>stage;
         public int InstalledCount=>placed==null?0:placed.Count(value=>value);
         public int SolderedCount=>soldered==null?0:soldered.Count(value=>value);
@@ -70,8 +75,10 @@ namespace ProjectSpark.Gameplay
         {
             manager=FindFirstObjectByType<LevelGamePlayManager>();
             loader=FindFirstObjectByType<SparkLevelLayoutLoader>();
+            schematicResolved=design && design.IsResolved(out notice);
             placed=new bool[parts.Length];soldered=new bool[parts.Length];
             flux=new bool[parts.Length];hot=new bool[parts.Length];
+            using(manager.ElectricalSolver.BeginConfigurationBatch())
             foreach(var part in parts)
             {
                 part.art.SetActive(false);
@@ -81,6 +88,14 @@ namespace ProjectSpark.Gameplay
                 part.target.SetWorkstation(workstation);
             }
             workstation.BindAuthority(this);
+            GetComponentInChildren<Canvas>(true).worldCamera=Camera.main;
+            if(Camera.main && !Camera.main.GetComponent<UnityEngine.EventSystems.PhysicsRaycaster>())
+            {
+                ownedRaycaster=Camera.main.gameObject.AddComponent<UnityEngine.EventSystems.PhysicsRaycaster>();
+                ownedRaycaster.eventMask=1<<LayerMask.NameToLayer("UI");
+            }
+            tools=FindFirstObjectByType<SparkGameplayController>()?.ToolController;
+            if(tools){tools.ActiveToolChanged+=OnToolChanged;OnToolChanged(null,tools.ActiveTool);}
             cameraView=gameObject.AddComponent<SparkLevel103BoardView>();
             cameraView.Initialize(arena);
             BoardView();
@@ -95,6 +110,8 @@ namespace ProjectSpark.Gameplay
 
         private void OnDisable()
         {
+            if(tools)tools.ActiveToolChanged-=OnToolChanged;
+            if(ownedRaycaster)Destroy(ownedRaycaster);
             if(!wireBuilder)return;
             wireBuilder.TerminalWireConnected-=OnManualWire;
             if(wireBuilder.TerminalPickerOverride!=PickPad)return;
@@ -102,6 +119,21 @@ namespace ProjectSpark.Gameplay
             wireBuilder.TerminalPickerOverride=null;
         }
 
+        private void OnToolChanged(SparkTool previous,SparkTool current)
+        {if(ownedRaycaster)ownedRaycaster.enabled=!current || current.ToolType!=SparkToolType.Wire;}
+        public void WireMode()
+        {
+            if(tools)tools.OnWireButton();
+            if(ownedRaycaster)ownedRaycaster.enabled=false;
+            notice="WIRE MODE: drag from the amber highlighted pad to the cyan pad. Plate the via before routing both layers.";
+        }
+        public void InspectMode()
+        {
+            if(tools)tools.OnInspectButton();
+            if(ownedRaycaster)ownedRaycaster.enabled=true;
+            workstation.SelectTool(SparkVirtualTool.Inspect);
+            notice="INSPECT MODE: click a component body to select its footprint or read its probe.";
+        }
         private bool Edge(SparkTerminal from,SparkTerminal to)=>connections.Exists(edge=>
             edge.Kind==SparkConnectionKind.Wire && (edge.A==from && edge.B==to || edge.A==to && edge.B==from));
 
@@ -116,6 +148,9 @@ namespace ProjectSpark.Gameplay
         {
             connections.Clear();
             manager.CircuitSystem.CopyConnections(connections);
+            unauthorizedCopper=connections.Any(edge=>edge.Kind==SparkConnectionKind.Wire &&
+                (edge.A.transform.IsChildOf(arena)||edge.B.transform.IsChildOf(arena)) && !routes.Any(route=>
+                Pair(edge.A,edge.B,route.from,route.via?route.viaTop:route.to) || route.via && Pair(edge.A,edge.B,route.viaBottom,route.to)));
             routed=viaCount=0;
             for(int i=0;i<routes.Length;i++)
             {
@@ -127,17 +162,19 @@ namespace ProjectSpark.Gameplay
             }
         }
 
-        public void FitPart()
+        private static bool Pair(SparkTerminal a,SparkTerminal b,SparkTerminal x,SparkTerminal y)=>(a==x&&b==y)||(a==y&&b==x);
+        public bool TryFitPart(string componentReference,string footprintReference,out string reason)
         {
-            if(!Active || supply.IsOutputActive || placed[selectedPart])return;
-            if(orientation!=0){notice="Pin 1 orientation is wrong. Rotate until the mark aligns.";return;}
-            placed[selectedPart]=true;
-            parts[selectedPart].art.SetActive(true);
-            revision++;
-            notice=design.parts[selectedPart].reference+" placed. Apply flux and solder its contacts.";
-            effects.Emit(parts[selectedPart].target.transform.position,0);
+            int index=Array.FindIndex(design.parts,item=>item.reference==componentReference);
+            if(!Active||supply.IsOutputActive){reason="Isolate power before placing components.";return false;}
+            if(index<0||componentReference!=footprintReference){reason="Incorrect package or component identity for footprint "+footprintReference+".";notice=reason;return false;}
+            if(placed[index]){reason="Component already installed.";return false;}
+            if(orientation!=0){reason="Pin 1 orientation is wrong. Rotate until the mark aligns.";notice=reason;return false;}
+            placed[index]=true;parts[index].art.SetActive(true);revision++;
+            reason=componentReference+" placed. Apply flux and solder its contacts.";notice=reason;
+            effects.Emit(parts[index].target.transform.position,0);return true;
         }
-
+        public void FitPart()=>TryFitPart(design.parts[selectedPart].reference,design.parts[selectedFootprint].reference,out notice);
         public void NextPart()
         {
             for(int i=1;i<=parts.Length;i++)
@@ -145,8 +182,7 @@ namespace ProjectSpark.Gameplay
                 int next=(selectedPart+i)%parts.Length;
                 if(!soldered[next]){selectedPart=next;break;}
             }
-            orientation=0;
-            Highlight();
+            selectedFootprint=selectedPart;orientation=0;Highlight();
         }
 
         public void RotatePart(){orientation=(orientation+1)%4;notice="Pin 1 rotation "+orientation*90+"°";}
@@ -155,11 +191,8 @@ namespace ProjectSpark.Gameplay
 
         private void Highlight()
         {
-            if(cameraView && stage==0)
-                cameraView.UseSocketView(parts[selectedPart].target.transform.position-Vector3.right*.16f,
-                    parts[selectedPart].target.transform.position+Vector3.right*.16f);
+            notice="Selected "+design.parts[selectedPart].reference+" footprint. FIT, FLUX, then SOLDER. HOME returns to the board overview.";
         }
-
         public void NextRoute(){selectedRoute=(selectedRoute+1)%routes.Length;}
         public void PreviousRoute(){selectedRoute=(selectedRoute+routes.Length-1)%routes.Length;}
         public void PlateVia()
@@ -196,7 +229,7 @@ namespace ProjectSpark.Gameplay
             {notice="The circuit rejected the first copper segment.";return;}
             if(route.via && !Connect(route.viaBottom,route.to,out _))
             {
-                if(!existing && first!=0)manager.CircuitSystem.RemoveConnection(first);
+                if(!existing && first!=0)RemoveWire(first);
                 notice="The second segment failed. New first segment rolled back.";return;
             }
             CompleteRoute();
@@ -207,6 +240,7 @@ namespace ProjectSpark.Gameplay
             revision++;
             ReadGraph();
             effects.Emit(routes[selectedRoute].to.transform.position,1);
+            if(!RouteReady(selectedRoute)){notice="First layer connected. Draw the highlighted second-layer segment.";return;}
             notice=design.routes[selectedRoute].id+" electrically connected.";
             if(selectedRoute<58)
                 for(int i=1;i<=59;i++)
@@ -214,6 +248,12 @@ namespace ProjectSpark.Gameplay
                     int next=(selectedRoute+i)%59;
                     if(!RouteReady(next)){selectedRoute=next;break;}
                 }
+        }
+
+        private void RemoveWire(ulong id)
+        {
+            if(id!=0 && (!wireBuilder || !wireBuilder.RemoveConnectedWire(id)))
+                manager.CircuitSystem.TryRemoveConnection(id,out _);
         }
 
         public void UndoCopper()
@@ -226,7 +266,7 @@ namespace ProjectSpark.Gameplay
                     (edge.A==route.from && edge.B==(route.via?route.viaTop:route.to) ||
                      edge.B==route.from && edge.A==(route.via?route.viaTop:route.to) ||
                      route.via && (edge.A==route.viaBottom && edge.B==route.to || edge.B==route.viaBottom && edge.A==route.to)))
-                    manager.CircuitSystem.RemoveConnection(edge.Id);
+                    RemoveWire(edge.Id);
             revision++;
             ReadGraph();
         }
@@ -266,7 +306,15 @@ namespace ProjectSpark.Gameplay
 
         private void OnGUI()
         {
-            if(Event.current.type!=EventType.Repaint || !Pending(out var from,out var to) || !Camera.main)return;
+            if(Event.current.type!=EventType.Repaint || !Camera.main || !Active)return;
+            GUI.Label(new Rect(14,Screen.height-28,430,24),"HOME: board view   |   Middle drag: pan   |   Right drag: orbit");
+            if(stage==0 && placed!=null)
+            {
+                var selected=Camera.main.WorldToScreenPoint(parts[selectedPart].target.transform.position);
+                if(selected.z>0){var tint=GUI.color;GUI.color=new Color(1,.72f,.2f);GUI.DrawTexture(new Rect(selected.x-6,Screen.height-selected.y-6,12,12),Texture2D.whiteTexture);GUI.Label(new Rect(selected.x-65,Screen.height-selected.y-30,180,22),design.parts[selectedPart].reference+" / PIN 1");GUI.color=tint;}
+                return;
+            }
+            if(!Pending(out var from,out var to))return;
             var color=GUI.color;
             foreach(var pin in new[]{from,to})
             {
@@ -286,17 +334,33 @@ namespace ProjectSpark.Gameplay
             var renderers=board.GetComponentsInChildren<Renderer>();
             var bounds=renderers[0].bounds;
             foreach(var item in renderers)bounds.Encapsulate(item.bounds);
-            cameraView.UseSocketView(bounds.center-Vector3.right*bounds.extents.x*1.4f,
-                bounds.center+Vector3.right*bounds.extents.x*1.4f);
+            cameraView.UseSocketView(bounds.center-arena.forward*1.35f-Vector3.right*bounds.extents.x*1.4f,
+                bounds.center-arena.forward*1.35f+Vector3.right*bounds.extents.x*1.4f);
         }
-        public void PadView(){if(cameraView)cameraView.UseSocketView(routes[selectedRoute].from.transform.position,routes[selectedRoute].to.transform.position);}
+        public void PadView()
+        {
+            if(!cameraView)return;
+            if(stage==0){var center=parts[selectedPart].target.transform.position;cameraView.UseSocketView(center-Vector3.right*.16f,center+Vector3.right*.16f);}
+            else cameraView.UseSocketView(routes[selectedRoute].from.transform.position,routes[selectedRoute].to.transform.position);
+        }
         public void Showcase(){if(cameraView)cameraView.UseShowcaseView();}
 
+        public bool TryReadTerminalProbe(SparkTerminal terminal,out string reading)
+        {
+            var contact=design.contacts.FirstOrDefault(pin=>pin.id==terminal.name);
+            if(contact==null){reading="Not a board contact.";return false;}
+            double volts=Voltage(terminal);
+            reading=contact.id+" ["+contact.net+"] @ "+terminal.transform.position+" : "+
+                (double.IsFinite(volts)?volts.ToString("F5")+" V":"NO SOLVER READING");
+            return true;
+        }
         public bool TryReadProbe(SparkVirtualPCBTarget target,SparkVirtualTool tool,out string reading)
         {
             int part=Array.FindIndex(design.parts,item=>item.reference==target.TargetId);
+            if(part>=0 && stage==0)selectedFootprint=part;
             int channel=part>=0 && design.parts[part].reference.StartsWith("S")?int.Parse(design.parts[part].reference.Substring(1))-1:-1;
             reading=channel>=0 ? ChannelText(channel) : target.TargetId+" / "+(part>=0&&soldered[part]?"SOLDERED":"CONTACT OPEN");
+            if(part>=0){var pin=design.contacts.First(c=>c.reference==target.TargetId);var terminal=GetComponentsInChildren<SparkTerminal>(true).First(t=>t.name==pin.id);TryReadTerminalProbe(terminal,out var snapshot);reading+=" | "+snapshot;}
             if(target.TargetId=="U6")reading=$"Independent reference probe {measuredReference:F5} V; nominal 2.50000 V.";
             if(fault>=0 && target.TargetId==(fault==0?"U6":fault==1?"U3":"U4"))
             {
@@ -324,11 +388,14 @@ namespace ProjectSpark.Gameplay
             {
                 if(!placed[index]||!flux[index]){message="Place the part and apply flux first.";return false;}
                 soldered[index]=true;
+                using(manager.ElectricalSolver.BeginConfigurationBatch())
+                {
                 foreach(var device in parts[index].devices)device.SetElectricalEnabled(true);
                 foreach(var joint in parts[index].joints)joint.SetState(SparkSwitchState.Closed);
+                }
                 revision++;NextPart();
                 message=target.TargetId+" solder joints electrically closed.";
-                effects.Emit(target.transform.position,0);
+                effects.Emit(workstation.CurrentContactPoint??target.transform.position,0);
                 notice=message;
                 return true;
             }
@@ -348,7 +415,7 @@ namespace ProjectSpark.Gameplay
             if(fault==2)opticalFeedback.SetResistance(47000);
             fault=-1;revision++;acquisition.InvalidateCalibration();
             message="Physical defect repaired. Recheck reference, recalibrate, and run fresh qualification.";
-            effects.Emit(target.transform.position,0);
+            effects.Emit(workstation.CurrentContactPoint??target.transform.position,0);
             notice=message;
             return true;
         }
@@ -390,7 +457,16 @@ namespace ProjectSpark.Gameplay
             readings.text=string.Join("     ",Enumerable.Range(0,4).Select(ChannelText));
             string task=stage==0?$"{design.parts[selectedPart].reference}  {design.parts[selectedPart].value}  PIN 1 {orientation*90}°":
                 $"{design.routes[selectedRoute].id}: {routes[selectedRoute].from.name} > {routes[selectedRoute].to.name} [{design.routes[selectedRoute].via}]";
-            detail.text=$"{task}\nREF {measuredReference:F5} V   TRUST {(trusted?"VALID":"INVALID")}   SAFETY {(latched?"LATCHED":"READY")}   {notice}";
+            detail.text=$"{(unauthorizedCopper?"UNAUTHORIZED COPPER: remove the incompatible connection. ":"")}{(!schematicResolved?"UNRESOLVED SCHEMATIC. ":"")}{task}\nREF {measuredReference:F5} V   TRUST {(trusted?"VALID":"INVALID")}   SAFETY {(latched?"LATCHED":"READY")}   {notice}";
         }
     }
 }
+
+
+
+
+
+
+
+
+

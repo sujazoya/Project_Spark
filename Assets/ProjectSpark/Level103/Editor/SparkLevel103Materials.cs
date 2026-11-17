@@ -16,6 +16,12 @@ namespace ProjectSpark.EditorTools
             Materials.Clear();
             foreach(string family in new[]{"FR4","Mask","Gold","Copper","Solder","Chip","Ceramic","ResBody","Connector","White","RedPlastic","LEDGreen","Ink","Glass"})
             {
+                var ready=AssetDatabase.LoadAssetAtPath<Material>(Folder+"/Materials/"+family+".mat");
+                if(ready && ready.GetTexture("_BaseMap") && ready.GetTexture("_BumpMap") && ready.GetTexture("_MetallicGlossMap"))
+                {
+                    Materials.Add(family,ready);
+                    continue;
+                }
                 Texture2D Map(string suffix,bool normal=false,bool linear=false)
                 {
                     string path=Folder+"/Textures/"+family+"_"+suffix+".png";

@@ -25,7 +25,7 @@ namespace ProjectSpark.EditorTools
             design.parts=Rows("Component_BOM_44").Select(row=>new SparkLevel103Design.Part {
                 reference=row[0],kind=row[1],value=row[2],xMm=Number(row[3]),zMm=Number(row[4]),
                 widthMm=Number(row[5]),depthMm=Number(row[6]),
-                model=manifest.Single(m=>m[1].StartsWith("L96_"+row[0]+"_",StringComparison.Ordinal) ||
+                model=manifest.Single(m=>row[0]!="W059" && m[1].StartsWith("L96_"+row[0]+"_",StringComparison.Ordinal) ||
                     (row[0]=="W059" && m[1]=="L96_W059_Jumper"))[1]
             }).ToArray();
             var sourceContacts=Rows("Component_Contact_Plan");
@@ -84,7 +84,7 @@ namespace ProjectSpark.EditorTools
                 else Route(P(amp,6),"C11.P01","HALL_FILTER",channel);
                 Route(P(sensor,channel==1?4:3),ground,"GND",channel);
             }
-            Route("U1.P07","U7.P07","ADC_READY");
+            Route("U1.P12","U7.P07","ADC_READY");
             Route("U7.P08","U9.P03","ACQUISITION_HEARTBEAT");
             Route("U9.P04","R8.P01","SAFE_STATUS");
             Route("R8.P02","LED1.P01","LED_ANODE");

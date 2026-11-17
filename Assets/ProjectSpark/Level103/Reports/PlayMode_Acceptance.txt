@@ -1,0 +1,21 @@
+LEVEL 103 / LIVE PLAY MODE ACCEPTANCE
+PASS bare board: 44 uninstalled parts, 187 contacts, 58 copper tasks, 12 open vias, W059 open.
+PASS 1/6 actual solder switches and native devices enabled.
+PASS Wire Mode disables repair-body UI interception at the highlighted pad.
+PASS all 71 manual wire segments through native SparkWireTool and SignalWireBuilder.
+PASS 2/6 all real connections, 12 vias and supervised reference trusted.
+PASS save/resume restored actual copper and solder state, with fresh reference reacquisition.
+PASS 3/6 independent reference and measured zero/span calibration.
+PASS 4/6 four-channel 128 Hz acquisition and dynamic uncertainty.
+Fault 1: CH0 — | ADC 5245 | 0.2001 V | ReferenceUntrusted     CH1 — | ADC 5239 | 0.1999 V | ReferenceUntrusted     CH2 — | ADC 5244 | 0.2000 V | ReferenceUntrusted     CH3 — | ADC 6554 | 0.2500 V | ReferenceUntrusted
+Repair 1: W059: W059.P01 > W059.P02 []
+REF 2.50000 V   TRUST VALID   SAFETY READY   Four-channel 6-second acquisition qualification running.
+Fault 2: CH0 — | ADC 5245 | 0.2001 V | Uncalibrated     CH1 — | ADC 5235 | 0.1997 V | OpenCircuit     CH2 — | ADC 5244 | 0.2000 V | Uncalibrated     CH3 — | ADC 6554 | 0.2500 V | Uncalibrated
+Repair 2: W059: W059.P01 > W059.P02 []
+REF 2.50000 V   TRUST VALID   SAFETY READY   Measured acquisition passed. Select the next fault scenario.
+Fault 3: CH0 — | ADC 5245 | 0.2001 V | Uncalibrated     CH1 — | ADC 5294 | 0.2019 V | Uncalibrated     CH2 — | ADC 65535 | 3.1500 V | Saturated     CH3 — | ADC 6554 | 0.2500 V | Uncalibrated
+Repair 3: W059: W059.P01 > W059.P02 []
+REF 2.50000 V   TRUST VALID   SAFETY READY   Four-channel 6-second acquisition qualification running.
+PASS 5/6 three independent diagnosed repairs and fresh qualification.
+PASS 6/6 authoritative manager completion; W059 loss preserved stimuli and evidence, recalibration/reset/requalification required.
+Returned to Edit Mode.

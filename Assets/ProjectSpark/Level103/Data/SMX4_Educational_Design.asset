@@ -1,0 +1,1866 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75893596dba3ca8498371693644804cd, type: 3}
+  m_Name: SMX4_Educational_Design
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevel103Design
+  designRevision: SMX4-EDU-1
+  provenance: Educational SMX-4 design authored for Project Spark Level 103 with
+    user authorization. Source art is Level 96. Generic IC models have explicitly
+    assigned game pins. No manufacturer pin compatibility is claimed. Unused package
+    contacts are documented NC.
+  parts:
+  - reference: U1
+    kind: IC
+    value: 16-bit 4CH ADC
+    model: L96_U1_IC
+    xMm: 9
+    zMm: 2
+    widthMm: 10
+    depthMm: 9
+  - reference: U2
+    kind: IC
+    value: RTD Excitation
+    model: L96_U2_IC
+    xMm: -39
+    zMm: 25
+    widthMm: 7.5
+    depthMm: 5.2
+  - reference: U3
+    kind: IC
+    value: Bridge Amplifier
+    model: L96_U3_IC
+    xMm: -39
+    zMm: 8
+    widthMm: 7.5
+    depthMm: 5.2
+  - reference: U4
+    kind: IC
+    value: Optical TIA
+    model: L96_U4_IC
+    xMm: -39
+    zMm: -9
+    widthMm: 7.5
+    depthMm: 5.2
+  - reference: U5
+    kind: IC
+    value: Hall Signal Filter
+    model: L96_U5_IC
+    xMm: -39
+    zMm: -26
+    widthMm: 7.5
+    depthMm: 5.2
+  - reference: U6
+    kind: IC
+    value: 2.5V Reference
+    model: L96_U6_IC
+    xMm: 6
+    zMm: 28
+    widthMm: 7.5
+    depthMm: 5.2
+  - reference: U7
+    kind: IC
+    value: Acquisition MCU
+    model: L96_U7_IC
+    xMm: 38
+    zMm: 0
+    widthMm: 11
+    depthMm: 11
+  - reference: U8
+    kind: IC
+    value: Reference Supervisor
+    model: L96_U8_IC
+    xMm: 34
+    zMm: -25
+    widthMm: 7.5
+    depthMm: 5.2
+  - reference: U9
+    kind: IC
+    value: Safety Controller
+    model: L96_U9_IC
+    xMm: 53
+    zMm: -25
+    widthMm: 7.5
+    depthMm: 5.2
+  - reference: R1
+    kind: Resistor
+    value: "1k\u03A9"
+    model: L96_R1_Resistor
+    xMm: -21
+    zMm: 33
+    widthMm: 3.2
+    depthMm: 1.6
+  - reference: R2
+    kind: Resistor
+    value: "10k\u03A9"
+    model: L96_R2_Resistor
+    xMm: -11
+    zMm: 33
+    widthMm: 3.2
+    depthMm: 1.6
+  - reference: R3
+    kind: Resistor
+    value: "100\u03A9"
+    model: L96_R3_Resistor
+    xMm: -1
+    zMm: 33
+    widthMm: 3.2
+    depthMm: 1.6
+  - reference: R4
+    kind: Resistor
+    value: "4.7k\u03A9"
+    model: L96_R4_Resistor
+    xMm: 9
+    zMm: 33
+    widthMm: 3.2
+    depthMm: 1.6
+  - reference: R5
+    kind: Resistor
+    value: "2.2k\u03A9"
+    model: L96_R5_Resistor
+    xMm: 19
+    zMm: 33
+    widthMm: 3.2
+    depthMm: 1.6
+  - reference: R6
+    kind: Resistor
+    value: "0\u03A9"
+    model: L96_R6_Resistor
+    xMm: 29
+    zMm: 33
+    widthMm: 3.2
+    depthMm: 1.6
+  - reference: R7
+    kind: Resistor
+    value: "47k\u03A9"
+    model: L96_R7_Resistor
+    xMm: 39
+    zMm: 33
+    widthMm: 3.2
+    depthMm: 1.6
+  - reference: R8
+    kind: Resistor
+    value: "1k\u03A9"
+    model: L96_R8_Resistor
+    xMm: -21
+    zMm: -36
+    widthMm: 3.2
+    depthMm: 1.6
+  - reference: R9
+    kind: Resistor
+    value: "10k\u03A9"
+    model: L96_R9_Resistor
+    xMm: -11
+    zMm: -36
+    widthMm: 3.2
+    depthMm: 1.6
+  - reference: R10
+    kind: Resistor
+    value: "100\u03A9"
+    model: L96_R10_Resistor
+    xMm: -1
+    zMm: -36
+    widthMm: 3.2
+    depthMm: 1.6
+  - reference: R11
+    kind: Resistor
+    value: "4.7k\u03A9"
+    model: L96_R11_Resistor
+    xMm: 9
+    zMm: -36
+    widthMm: 3.2
+    depthMm: 1.6
+  - reference: R12
+    kind: Resistor
+    value: "2.2k\u03A9"
+    model: L96_R12_Resistor
+    xMm: 19
+    zMm: -36
+    widthMm: 3.2
+    depthMm: 1.6
+  - reference: R13
+    kind: Resistor
+    value: "0\u03A9"
+    model: L96_R13_Resistor
+    xMm: 29
+    zMm: -36
+    widthMm: 3.2
+    depthMm: 1.6
+  - reference: R14
+    kind: Resistor
+    value: "47k\u03A9"
+    model: L96_R14_Resistor
+    xMm: 39
+    zMm: -36
+    widthMm: 3.2
+    depthMm: 1.6
+  - reference: C1
+    kind: Capacitor
+    value: 100nF
+    model: L96_C1_Capacitor
+    xMm: -22
+    zMm: 19
+    widthMm: 3
+    depthMm: 1.8
+  - reference: C2
+    kind: Capacitor
+    value: 1uF
+    model: L96_C2_Capacitor
+    xMm: -12
+    zMm: 19
+    widthMm: 3
+    depthMm: 1.8
+  - reference: C3
+    kind: Capacitor
+    value: 10nF
+    model: L96_C3_Capacitor
+    xMm: -2
+    zMm: 19
+    widthMm: 3
+    depthMm: 1.8
+  - reference: C4
+    kind: Capacitor
+    value: 4.7uF
+    model: L96_C4_Capacitor
+    xMm: 8
+    zMm: 19
+    widthMm: 3
+    depthMm: 1.8
+  - reference: C5
+    kind: Capacitor
+    value: 10uF
+    model: L96_C5_Capacitor
+    xMm: 18
+    zMm: 19
+    widthMm: 3
+    depthMm: 1.8
+  - reference: C6
+    kind: Capacitor
+    value: 100nF
+    model: L96_C6_Capacitor
+    xMm: 28
+    zMm: 19
+    widthMm: 3
+    depthMm: 1.8
+  - reference: C7
+    kind: Capacitor
+    value: 1uF
+    model: L96_C7_Capacitor
+    xMm: -22
+    zMm: -19
+    widthMm: 3
+    depthMm: 1.8
+  - reference: C8
+    kind: Capacitor
+    value: 10nF
+    model: L96_C8_Capacitor
+    xMm: -12
+    zMm: -19
+    widthMm: 3
+    depthMm: 1.8
+  - reference: C9
+    kind: Capacitor
+    value: 4.7uF
+    model: L96_C9_Capacitor
+    xMm: -2
+    zMm: -19
+    widthMm: 3
+    depthMm: 1.8
+  - reference: C10
+    kind: Capacitor
+    value: 10uF
+    model: L96_C10_Capacitor
+    xMm: 8
+    zMm: -19
+    widthMm: 3
+    depthMm: 1.8
+  - reference: C11
+    kind: Capacitor
+    value: 100nF
+    model: L96_C11_Capacitor
+    xMm: 18
+    zMm: -19
+    widthMm: 3
+    depthMm: 1.8
+  - reference: S1
+    kind: Sensor
+    value: PT1000 Module
+    model: L96_S1_Sensor
+    xMm: -57
+    zMm: 25
+    widthMm: 9
+    depthMm: 8
+  - reference: S2
+    kind: Sensor
+    value: Strain Bridge Module
+    model: L96_S2_Sensor
+    xMm: -57
+    zMm: 8
+    widthMm: 9
+    depthMm: 8
+  - reference: S3
+    kind: Sensor
+    value: Photodiode Module
+    model: L96_S3_Sensor
+    xMm: -57
+    zMm: -9
+    widthMm: 9
+    depthMm: 8
+  - reference: S4
+    kind: Sensor
+    value: Hall Current Module
+    model: L96_S4_Sensor
+    xMm: -57
+    zMm: -26
+    widthMm: 9
+    depthMm: 8
+  - reference: J1
+    kind: Connector
+    value: Protected 5V In
+    model: L96_J1_Connector
+    xMm: 57
+    zMm: 33
+    widthMm: 9
+    depthMm: 6
+  - reference: J2
+    kind: Connector
+    value: Digital Interface
+    model: L96_J2_Connector
+    xMm: 56
+    zMm: 15
+    widthMm: 9
+    depthMm: 6
+  - reference: RV1
+    kind: Trimmer
+    value: Gain Calibration
+    model: L96_RV1_Trimmer
+    xMm: 7
+    zMm: -29
+    widthMm: 6
+    depthMm: 6
+  - reference: LED1
+    kind: LED
+    value: Status Green
+    model: L96_LED1_LED
+    xMm: 59
+    zMm: -37
+    widthMm: 3
+    depthMm: 3
+  - reference: W059
+    kind: Jumper
+    value: Reference Valid
+    model: L96_W059_Jumper
+    xMm: 40
+    zMm: 28
+    widthMm: 6
+    depthMm: 4
+  - reference: D1
+    kind: Diode
+    value: Protection
+    model: L96_D1_Diode
+    xMm: 51
+    zMm: 29
+    widthMm: 3.6
+    depthMm: 2
+  contacts:
+  - id: U1.P01
+    reference: U1
+    net: 3V3
+    role: 3V3
+    positionMm: {x: 5.1000013, y: 1.0299981, z: 6.3200006}
+  - id: U1.P02
+    reference: U1
+    net: GND
+    role: GND
+    positionMm: {x: 5.966667, y: 1.0299981, z: 6.3200006}
+  - id: U1.P03
+    reference: U1
+    net: VREF_2V5
+    role: VREF_2V5
+    positionMm: {x: 6.8333344, y: 1.0299981, z: 6.3200006}
+  - id: U1.P04
+    reference: U1
+    net: CH0_ADC
+    role: CH0_ADC
+    positionMm: {x: 7.700001, y: 1.0299981, z: 6.3199997}
+  - id: U1.P05
+    reference: U1
+    net: CH1_ADC
+    role: CH1_ADC
+    positionMm: {x: 8.566668, y: 1.0299981, z: 6.3199997}
+  - id: U1.P06
+    reference: U1
+    net: CH2_ADC
+    role: CH2_ADC
+    positionMm: {x: 9.433334, y: 1.0299981, z: 6.3199997}
+  - id: U1.P07
+    reference: U1
+    net: CH3_ADC
+    role: CH3_ADC
+    positionMm: {x: 10.300001, y: 1.0299981, z: 6.3199997}
+  - id: U1.P08
+    reference: U1
+    net: ADC_SCLK
+    role: ADC_SCLK
+    positionMm: {x: 11.166668, y: 1.0299981, z: 6.3199997}
+  - id: U1.P09
+    reference: U1
+    net: ADC_DATA
+    role: ADC_DATA
+    positionMm: {x: 12.033335, y: 1.0299981, z: 6.3199997}
+  - id: U1.P10
+    reference: U1
+    net: ADC_SELECT
+    role: ADC_SELECT
+    positionMm: {x: 12.900002, y: 1.0299981, z: 6.3199997}
+  - id: U1.P11
+    reference: U1
+    net: ANALOG_RETURN
+    role: ANALOG_RETURN
+    positionMm: {x: 5.1000004, y: 1.030001, z: -2.3199992}
+  - id: U1.P12
+    reference: U1
+    net: ADC_READY
+    role: ADC_READY
+    positionMm: {x: 5.9666667, y: 1.030001, z: -2.3199992}
+  - id: U1.P13
+    reference: U1
+    net: NC_U1_P13
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 6.8333335, y: 1.030001, z: -2.3199992}
+  - id: U1.P14
+    reference: U1
+    net: NC_U1_P14
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 7.7, y: 1.030001, z: -2.3199997}
+  - id: U1.P15
+    reference: U1
+    net: NC_U1_P15
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 8.566667, y: 1.030001, z: -2.3199997}
+  - id: U1.P16
+    reference: U1
+    net: NC_U1_P16
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 9.433333, y: 1.030001, z: -2.3199997}
+  - id: U1.P17
+    reference: U1
+    net: NC_U1_P17
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 10.3, y: 1.030001, z: -2.3199997}
+  - id: U1.P18
+    reference: U1
+    net: NC_U1_P18
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 11.166667, y: 1.030001, z: -2.32}
+  - id: U1.P19
+    reference: U1
+    net: NC_U1_P19
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 12.033334, y: 1.030001, z: -2.32}
+  - id: U1.P20
+    reference: U1
+    net: NC_U1_P20
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 12.9, y: 1.030001, z: -2.32}
+  - id: U2.P01
+    reference: U2
+    net: 3V3
+    role: 3V3
+    positionMm: {x: -41.925003, y: 1.0299981, z: 27.496}
+  - id: U2.P02
+    reference: U2
+    net: GND
+    role: GND
+    positionMm: {x: -39.975002, y: 1.0299981, z: 27.496}
+  - id: U2.P03
+    reference: U2
+    net: CH0_EXC
+    role: CH0_EXC
+    positionMm: {x: -38.025, y: 1.0299981, z: 27.496}
+  - id: U2.P04
+    reference: U2
+    net: CH0_INPUT
+    role: CH0_INPUT
+    positionMm: {x: -36.075005, y: 1.0299981, z: 27.495998}
+  - id: U2.P05
+    reference: U2
+    net: CH0_ADC
+    role: CH0_ADC
+    positionMm: {x: -41.925003, y: 1.030001, z: 22.504}
+  - id: U2.P06
+    reference: U2
+    net: RTD_TRIM_HI
+    role: RTD_TRIM_HI
+    positionMm: {x: -39.975002, y: 1.030001, z: 22.504}
+  - id: U2.P07
+    reference: U2
+    net: NC_U2_P07
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: -38.025, y: 1.030001, z: 22.504}
+  - id: U2.P08
+    reference: U2
+    net: NC_U2_P08
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: -36.075005, y: 1.030001, z: 22.504}
+  - id: U3.P01
+    reference: U3
+    net: 3V3
+    role: 3V3
+    positionMm: {x: -41.925003, y: 1.0299981, z: 10.496}
+  - id: U3.P02
+    reference: U3
+    net: GND
+    role: GND
+    positionMm: {x: -39.975002, y: 1.0299981, z: 10.496}
+  - id: U3.P03
+    reference: U3
+    net: CH1_EXC
+    role: CH1_EXC
+    positionMm: {x: -38.025, y: 1.0299981, z: 10.496}
+  - id: U3.P04
+    reference: U3
+    net: CH1_INPUT
+    role: CH1_INPUT
+    positionMm: {x: -36.075005, y: 1.0299981, z: 10.496}
+  - id: U3.P05
+    reference: U3
+    net: CH1_ADC
+    role: CH1_ADC
+    positionMm: {x: -41.925003, y: 1.030001, z: 5.5040016}
+  - id: U3.P06
+    reference: U3
+    net: CH1_DIFFERENTIAL_MINUS
+    role: CH1_DIFFERENTIAL_MINUS
+    positionMm: {x: -39.975002, y: 1.030001, z: 5.504001}
+  - id: U3.P07
+    reference: U3
+    net: BRIDGE_COMMON_MODE
+    role: BRIDGE_COMMON_MODE
+    positionMm: {x: -38.025, y: 1.030001, z: 5.504001}
+  - id: U3.P08
+    reference: U3
+    net: GND
+    role: GND
+    positionMm: {x: -36.075005, y: 1.030001, z: 5.504001}
+  - id: U4.P01
+    reference: U4
+    net: 3V3
+    role: 3V3
+    positionMm: {x: -41.925003, y: 1.0299981, z: -6.5040007}
+  - id: U4.P02
+    reference: U4
+    net: GND
+    role: GND
+    positionMm: {x: -39.975002, y: 1.0299981, z: -6.5040007}
+  - id: U4.P03
+    reference: U4
+    net: CH2_EXC
+    role: CH2_EXC
+    positionMm: {x: -38.025, y: 1.0299981, z: -6.5040007}
+  - id: U4.P04
+    reference: U4
+    net: CH2_INPUT
+    role: CH2_INPUT
+    positionMm: {x: -36.075005, y: 1.0299981, z: -6.5040007}
+  - id: U4.P05
+    reference: U4
+    net: CH2_ADC
+    role: CH2_ADC
+    positionMm: {x: -41.925003, y: 1.030001, z: -11.496}
+  - id: U4.P06
+    reference: U4
+    net: NC_U4_P06
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: -39.975002, y: 1.030001, z: -11.496}
+  - id: U4.P07
+    reference: U4
+    net: OPTICAL_FEEDBACK
+    role: OPTICAL_FEEDBACK
+    positionMm: {x: -38.025, y: 1.030001, z: -11.496}
+  - id: U4.P08
+    reference: U4
+    net: NC_U4_P08
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: -36.075005, y: 1.030001, z: -11.496}
+  - id: U5.P01
+    reference: U5
+    net: 3V3
+    role: 3V3
+    positionMm: {x: -41.925003, y: 1.0299981, z: -23.504}
+  - id: U5.P02
+    reference: U5
+    net: GND
+    role: GND
+    positionMm: {x: -39.975002, y: 1.0299981, z: -23.504}
+  - id: U5.P03
+    reference: U5
+    net: CH3_EXC
+    role: CH3_EXC
+    positionMm: {x: -38.025, y: 1.0299981, z: -23.504}
+  - id: U5.P04
+    reference: U5
+    net: CH3_INPUT
+    role: CH3_INPUT
+    positionMm: {x: -36.075005, y: 1.0299981, z: -23.504}
+  - id: U5.P05
+    reference: U5
+    net: CH3_ADC
+    role: CH3_ADC
+    positionMm: {x: -41.925003, y: 1.030001, z: -28.495996}
+  - id: U5.P06
+    reference: U5
+    net: HALL_FILTER
+    role: HALL_FILTER
+    positionMm: {x: -39.975002, y: 1.030001, z: -28.495996}
+  - id: U5.P07
+    reference: U5
+    net: NC_U5_P07
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: -38.025, y: 1.030001, z: -28.495996}
+  - id: U5.P08
+    reference: U5
+    net: NC_U5_P08
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: -36.075005, y: 1.030001, z: -28.495996}
+  - id: U6.P01
+    reference: U6
+    net: 3V3
+    role: 3V3
+    positionMm: {x: 3.0750003, y: 1.0299981, z: 30.496002}
+  - id: U6.P02
+    reference: U6
+    net: GND
+    role: GND
+    positionMm: {x: 5.0250006, y: 1.0299981, z: 30.496002}
+  - id: U6.P03
+    reference: U6
+    net: VREF_2V5
+    role: VREF_2V5
+    positionMm: {x: 6.9750004, y: 1.0299981, z: 30.496002}
+  - id: U6.P04
+    reference: U6
+    net: NC_U6_P04
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 8.925001, y: 1.0299981, z: 30.496002}
+  - id: U6.P05
+    reference: U6
+    net: NC_U6_P05
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 3.0749998, y: 1.030001, z: 25.504002}
+  - id: U6.P06
+    reference: U6
+    net: NC_U6_P06
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 5.025, y: 1.030001, z: 25.504002}
+  - id: U6.P07
+    reference: U6
+    net: NC_U6_P07
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 6.975, y: 1.030001, z: 25.504002}
+  - id: U6.P08
+    reference: U6
+    net: NC_U6_P08
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 8.925, y: 1.030001, z: 25.503998}
+  - id: U7.P01
+    reference: U7
+    net: PROTECTED_5V
+    role: PROTECTED_5V
+    positionMm: {x: 33.975002, y: 1.0600001, z: 5.060001}
+  - id: U7.P02
+    reference: U7
+    net: GND
+    role: GND
+    positionMm: {x: 32.940002, y: 1.0600001, z: 4.0250006}
+  - id: U7.P03
+    reference: U7
+    net: 3V3
+    role: 3V3
+    positionMm: {x: 35.125004, y: 1.0600001, z: 5.060001}
+  - id: U7.P04
+    reference: U7
+    net: ADC_SCLK
+    role: ADC_SCLK
+    positionMm: {x: 32.940002, y: 1.0600001, z: 2.8750002}
+  - id: U7.P05
+    reference: U7
+    net: ADC_DATA
+    role: ADC_DATA
+    positionMm: {x: 36.275, y: 1.0600001, z: 5.0600004}
+  - id: U7.P06
+    reference: U7
+    net: ADC_SELECT
+    role: ADC_SELECT
+    positionMm: {x: 32.940002, y: 1.0600001, z: 1.7250004}
+  - id: U7.P07
+    reference: U7
+    net: ADC_READY
+    role: ADC_READY
+    positionMm: {x: 37.425003, y: 1.0600001, z: 5.0600004}
+  - id: U7.P08
+    reference: U7
+    net: ACQUISITION_HEARTBEAT
+    role: ACQUISITION_HEARTBEAT
+    positionMm: {x: 32.940002, y: 1.0600001, z: 0.5750006}
+  - id: U7.P09
+    reference: U7
+    net: RESET_LOGIC
+    role: RESET_LOGIC
+    positionMm: {x: 38.575005, y: 1.0600001, z: 5.0600004}
+  - id: U7.P10
+    reference: U7
+    net: NC_U7_P10
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 32.940002, y: 1.0600001, z: -0.5749994}
+  - id: U7.P11
+    reference: U7
+    net: NC_U7_P11
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 39.725002, y: 1.0600001, z: 5.0600004}
+  - id: U7.P12
+    reference: U7
+    net: NC_U7_P12
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 32.940002, y: 1.0600001, z: -1.7249993}
+  - id: U7.P13
+    reference: U7
+    net: NC_U7_P13
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 40.875004, y: 1.0600001, z: 5.06}
+  - id: U7.P14
+    reference: U7
+    net: NC_U7_P14
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 32.94, y: 1.0600001, z: -2.874999}
+  - id: U7.P15
+    reference: U7
+    net: NC_U7_P15
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 42.025005, y: 1.0600001, z: 5.06}
+  - id: U7.P16
+    reference: U7
+    net: NC_U7_P16
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 32.94, y: 1.0600001, z: -4.0249987}
+  - id: U7.P17
+    reference: U7
+    net: NC_U7_P17
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 33.975002, y: 1.0600001, z: -5.0599995}
+  - id: U7.P18
+    reference: U7
+    net: NC_U7_P18
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 43.060005, y: 1.0600001, z: 4.0249996}
+  - id: U7.P19
+    reference: U7
+    net: NC_U7_P19
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 35.125004, y: 1.0600001, z: -5.0599995}
+  - id: U7.P20
+    reference: U7
+    net: NC_U7_P20
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 43.060005, y: 1.0600001, z: 2.8749995}
+  - id: U7.P21
+    reference: U7
+    net: NC_U7_P21
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 36.275, y: 1.0600001, z: -5.06}
+  - id: U7.P22
+    reference: U7
+    net: NC_U7_P22
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 43.06, y: 1.0600001, z: 1.7249997}
+  - id: U7.P23
+    reference: U7
+    net: NC_U7_P23
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 37.425003, y: 1.0600001, z: -5.06}
+  - id: U7.P24
+    reference: U7
+    net: NC_U7_P24
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 43.06, y: 1.0600001, z: 0.57499975}
+  - id: U7.P25
+    reference: U7
+    net: NC_U7_P25
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 38.575005, y: 1.0600001, z: -5.06}
+  - id: U7.P26
+    reference: U7
+    net: NC_U7_P26
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 43.06, y: 1.0600001, z: -0.57500017}
+  - id: U7.P27
+    reference: U7
+    net: NC_U7_P27
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 39.725002, y: 1.0600001, z: -5.06}
+  - id: U7.P28
+    reference: U7
+    net: NC_U7_P28
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 43.06, y: 1.0600001, z: -1.725}
+  - id: U7.P29
+    reference: U7
+    net: NC_U7_P29
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 40.875004, y: 1.0600001, z: -5.06}
+  - id: U7.P30
+    reference: U7
+    net: NC_U7_P30
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 43.06, y: 1.0600001, z: -2.875}
+  - id: U7.P31
+    reference: U7
+    net: NC_U7_P31
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 42.025005, y: 1.0600001, z: -5.06}
+  - id: U7.P32
+    reference: U7
+    net: NC_U7_P32
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 43.06, y: 1.0600001, z: -4.0249996}
+  - id: U8.P01
+    reference: U8
+    net: 3V3
+    role: 3V3
+    positionMm: {x: 31.075005, y: 1.0299981, z: -22.504}
+  - id: U8.P02
+    reference: U8
+    net: GND
+    role: GND
+    positionMm: {x: 33.025005, y: 1.0299981, z: -22.504}
+  - id: U8.P03
+    reference: U8
+    net: VREF_2V5
+    role: VREF_2V5
+    positionMm: {x: 34.975002, y: 1.0299981, z: -22.504}
+  - id: U8.P04
+    reference: U8
+    net: REFERENCE_VALID_OUT
+    role: REFERENCE_VALID_OUT
+    positionMm: {x: 36.925003, y: 1.0299981, z: -22.504}
+  - id: U8.P05
+    reference: U8
+    net: NC_U8_P05
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 31.075005, y: 1.030001, z: -27.495998}
+  - id: U8.P06
+    reference: U8
+    net: NC_U8_P06
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 33.025005, y: 1.030001, z: -27.495998}
+  - id: U8.P07
+    reference: U8
+    net: NC_U8_P07
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 34.975002, y: 1.030001, z: -27.495998}
+  - id: U8.P08
+    reference: U8
+    net: NC_U8_P08
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 36.925003, y: 1.030001, z: -27.495998}
+  - id: U9.P01
+    reference: U9
+    net: 3V3
+    role: 3V3
+    positionMm: {x: 50.075, y: 1.0299981, z: -22.504}
+  - id: U9.P02
+    reference: U9
+    net: GND
+    role: GND
+    positionMm: {x: 52.025, y: 1.0299981, z: -22.504}
+  - id: U9.P03
+    reference: U9
+    net: ACQUISITION_HEARTBEAT
+    role: ACQUISITION_HEARTBEAT
+    positionMm: {x: 53.975006, y: 1.0299981, z: -22.504}
+  - id: U9.P04
+    reference: U9
+    net: SAFE_STATUS
+    role: SAFE_STATUS
+    positionMm: {x: 55.925007, y: 1.0299981, z: -22.504}
+  - id: U9.P05
+    reference: U9
+    net: TRUSTED_REFERENCE_IN
+    role: TRUSTED_REFERENCE_IN
+    positionMm: {x: 50.075, y: 1.030001, z: -27.495998}
+  - id: U9.P06
+    reference: U9
+    net: RESET_RETURN
+    role: RESET_RETURN
+    positionMm: {x: 52.025, y: 1.030001, z: -27.495998}
+  - id: U9.P07
+    reference: U9
+    net: SAFETY_TEST
+    role: SAFETY_TEST
+    positionMm: {x: 53.975006, y: 1.030001, z: -27.495998}
+  - id: U9.P08
+    reference: U9
+    net: NC_U9_P08
+    role: RESERVED_NO_CONNECT
+    positionMm: {x: 55.925007, y: 1.030001, z: -27.495998}
+  - id: R1.P01
+    reference: R1
+    net: CH0_SENSOR
+    role: CH0_SENSOR
+    positionMm: {x: -22.44, y: 0.909999, z: 33}
+  - id: R1.P02
+    reference: R1
+    net: CH0_INPUT
+    role: CH0_INPUT
+    positionMm: {x: -19.56, y: 0.909999, z: 33}
+  - id: R2.P01
+    reference: R2
+    net: CH1_SENSOR
+    role: CH1_SENSOR
+    positionMm: {x: -12.440001, y: 0.909999, z: 33}
+  - id: R2.P02
+    reference: R2
+    net: CH1_INPUT
+    role: CH1_INPUT
+    positionMm: {x: -9.560001, y: 0.909999, z: 33}
+  - id: R3.P01
+    reference: R3
+    net: CH2_SENSOR
+    role: CH2_SENSOR
+    positionMm: {x: -2.44, y: 0.909999, z: 33}
+  - id: R3.P02
+    reference: R3
+    net: CH2_INPUT
+    role: CH2_INPUT
+    positionMm: {x: 0.4399999, y: 0.909999, z: 33}
+  - id: R4.P01
+    reference: R4
+    net: CH3_SENSOR
+    role: CH3_SENSOR
+    positionMm: {x: 7.560001, y: 0.909999, z: 33}
+  - id: R4.P02
+    reference: R4
+    net: CH3_INPUT
+    role: CH3_INPUT
+    positionMm: {x: 10.440001, y: 0.909999, z: 33}
+  - id: R5.P01
+    reference: R5
+    net: TRIM_WIPER
+    role: TRIM_WIPER
+    positionMm: {x: 17.560001, y: 0.909999, z: 33}
+  - id: R5.P02
+    reference: R5
+    net: GND
+    role: GND
+    positionMm: {x: 20.440002, y: 0.909999, z: 33}
+  - id: R6.P01
+    reference: R6
+    net: RESET_LOGIC
+    role: RESET_LOGIC
+    positionMm: {x: 27.560001, y: 0.909999, z: 33}
+  - id: R6.P02
+    reference: R6
+    net: RESET_RETURN
+    role: RESET_RETURN
+    positionMm: {x: 30.440002, y: 0.909999, z: 33}
+  - id: R7.P01
+    reference: R7
+    net: OPTICAL_FEEDBACK
+    role: OPTICAL_FEEDBACK
+    positionMm: {x: 37.56, y: 0.909999, z: 33}
+  - id: R7.P02
+    reference: R7
+    net: CH2_ADC
+    role: CH2_ADC
+    positionMm: {x: 40.440002, y: 0.909999, z: 33}
+  - id: R8.P01
+    reference: R8
+    net: SAFE_STATUS
+    role: SAFE_STATUS
+    positionMm: {x: -22.44, y: 0.909999, z: -36.000004}
+  - id: R8.P02
+    reference: R8
+    net: LED_ANODE
+    role: LED_ANODE
+    positionMm: {x: -19.56, y: 0.909999, z: -36.000004}
+  - id: R9.P01
+    reference: R9
+    net: 3V3
+    role: 3V3
+    positionMm: {x: -12.440001, y: 0.909999, z: -36.000004}
+  - id: R9.P02
+    reference: R9
+    net: BRIDGE_COMMON_MODE
+    role: BRIDGE_COMMON_MODE
+    positionMm: {x: -9.560001, y: 0.909999, z: -36.000004}
+  - id: R10.P01
+    reference: R10
+    net: SAFETY_TEST
+    role: SAFETY_TEST
+    positionMm: {x: -2.44, y: 0.909999, z: -36.000004}
+  - id: R10.P02
+    reference: R10
+    net: GND
+    role: GND
+    positionMm: {x: 0.4399999, y: 0.909999, z: -36.000004}
+  - id: R11.P01
+    reference: R11
+    net: 3V3
+    role: 3V3
+    positionMm: {x: 7.560001, y: 0.909999, z: -36.000004}
+  - id: R11.P02
+    reference: R11
+    net: ADC_SELECT
+    role: ADC_SELECT
+    positionMm: {x: 10.440001, y: 0.909999, z: -36.000004}
+  - id: R12.P01
+    reference: R12
+    net: ADC_SCLK
+    role: ADC_SCLK
+    positionMm: {x: 17.560001, y: 0.909999, z: -36.000004}
+  - id: R12.P02
+    reference: R12
+    net: GND
+    role: GND
+    positionMm: {x: 20.440002, y: 0.909999, z: -36.000004}
+  - id: R13.P01
+    reference: R13
+    net: ANALOG_RETURN
+    role: ANALOG_RETURN
+    positionMm: {x: 27.560001, y: 0.909999, z: -36.000004}
+  - id: R13.P02
+    reference: R13
+    net: GND
+    role: GND
+    positionMm: {x: 30.440002, y: 0.909999, z: -36.000004}
+  - id: R14.P01
+    reference: R14
+    net: TRUSTED_REFERENCE_IN
+    role: TRUSTED_REFERENCE_IN
+    positionMm: {x: 37.56, y: 0.909999, z: -36.000004}
+  - id: R14.P02
+    reference: R14
+    net: GND
+    role: GND
+    positionMm: {x: 40.440002, y: 0.909999, z: -36.000004}
+  - id: C1.P01
+    reference: C1
+    net: CH0_INPUT
+    role: CH0_INPUT
+    positionMm: {x: -23.350002, y: 0.909999, z: 19.000002}
+  - id: C1.P02
+    reference: C1
+    net: GND
+    role: GND
+    positionMm: {x: -20.650002, y: 0.909999, z: 19.000002}
+  - id: C2.P01
+    reference: C2
+    net: 3V3
+    role: 3V3
+    positionMm: {x: -13.350001, y: 0.909999, z: 19.000002}
+  - id: C2.P02
+    reference: C2
+    net: GND
+    role: GND
+    positionMm: {x: -10.650001, y: 0.909999, z: 19.000002}
+  - id: C3.P01
+    reference: C3
+    net: CH1_INPUT
+    role: CH1_INPUT
+    positionMm: {x: -3.3500001, y: 0.909999, z: 19.000002}
+  - id: C3.P02
+    reference: C3
+    net: GND
+    role: GND
+    positionMm: {x: -0.6500001, y: 0.909999, z: 19.000002}
+  - id: C4.P01
+    reference: C4
+    net: 3V3
+    role: 3V3
+    positionMm: {x: 6.6500006, y: 0.909999, z: 19.000002}
+  - id: C4.P02
+    reference: C4
+    net: GND
+    role: GND
+    positionMm: {x: 9.350001, y: 0.909999, z: 19.000002}
+  - id: C5.P01
+    reference: C5
+    net: VREF_2V5
+    role: VREF_2V5
+    positionMm: {x: 16.650002, y: 0.909999, z: 19.000002}
+  - id: C5.P02
+    reference: C5
+    net: GND
+    role: GND
+    positionMm: {x: 19.350002, y: 0.909999, z: 19.000002}
+  - id: C6.P01
+    reference: C6
+    net: VREF_2V5
+    role: VREF_2V5
+    positionMm: {x: 26.65, y: 0.909999, z: 19.000002}
+  - id: C6.P02
+    reference: C6
+    net: GND
+    role: GND
+    positionMm: {x: 29.350002, y: 0.909999, z: 19.000002}
+  - id: C7.P01
+    reference: C7
+    net: CH2_INPUT
+    role: CH2_INPUT
+    positionMm: {x: -23.350002, y: 0.909999, z: -19.000002}
+  - id: C7.P02
+    reference: C7
+    net: GND
+    role: GND
+    positionMm: {x: -20.650002, y: 0.909999, z: -19.000002}
+  - id: C8.P01
+    reference: C8
+    net: 3V3
+    role: 3V3
+    positionMm: {x: -13.350001, y: 0.909999, z: -19.000002}
+  - id: C8.P02
+    reference: C8
+    net: GND
+    role: GND
+    positionMm: {x: -10.650001, y: 0.909999, z: -19.000002}
+  - id: C9.P01
+    reference: C9
+    net: CH3_INPUT
+    role: CH3_INPUT
+    positionMm: {x: -3.3500001, y: 0.909999, z: -19.000002}
+  - id: C9.P02
+    reference: C9
+    net: GND
+    role: GND
+    positionMm: {x: -0.6500001, y: 0.909999, z: -19.000002}
+  - id: C10.P01
+    reference: C10
+    net: 3V3
+    role: 3V3
+    positionMm: {x: 6.6500006, y: 0.909999, z: -19.000002}
+  - id: C10.P02
+    reference: C10
+    net: GND
+    role: GND
+    positionMm: {x: 9.350001, y: 0.909999, z: -19.000002}
+  - id: C11.P01
+    reference: C11
+    net: HALL_FILTER
+    role: HALL_FILTER
+    positionMm: {x: 16.650002, y: 0.909999, z: -19.000002}
+  - id: C11.P02
+    reference: C11
+    net: GND
+    role: GND
+    positionMm: {x: 19.350002, y: 0.909999, z: -19.000002}
+  - id: S1.P01
+    reference: S1
+    net: CH0_EXC
+    role: CH0_EXC
+    positionMm: {x: -59.550007, y: 1.3799995, z: 27.960001}
+  - id: S1.P02
+    reference: S1
+    net: CH0_SENSOR
+    role: CH0_SENSOR
+    positionMm: {x: -57.850002, y: 1.3799995, z: 27.960001}
+  - id: S1.P03
+    reference: S1
+    net: GND
+    role: GND
+    positionMm: {x: -56.15001, y: 1.3799995, z: 27.960001}
+  - id: S1.P04
+    reference: S1
+    net: GND
+    role: GND
+    positionMm: {x: -54.450005, y: 1.3799995, z: 27.960001}
+  - id: S2.P01
+    reference: S2
+    net: CH1_EXC
+    role: CH1_EXC
+    positionMm: {x: -59.550007, y: 1.3799995, z: 10.960001}
+  - id: S2.P02
+    reference: S2
+    net: CH1_SENSOR
+    role: CH1_SENSOR
+    positionMm: {x: -57.850002, y: 1.3799995, z: 10.960001}
+  - id: S2.P03
+    reference: S2
+    net: CH1_DIFFERENTIAL_MINUS
+    role: CH1_DIFFERENTIAL_MINUS
+    positionMm: {x: -56.15001, y: 1.3799995, z: 10.960001}
+  - id: S2.P04
+    reference: S2
+    net: GND
+    role: GND
+    positionMm: {x: -54.450005, y: 1.3799995, z: 10.960001}
+  - id: S3.P01
+    reference: S3
+    net: CH2_EXC
+    role: CH2_EXC
+    positionMm: {x: -59.550007, y: 1.3799995, z: -6.0400004}
+  - id: S3.P02
+    reference: S3
+    net: CH2_SENSOR
+    role: CH2_SENSOR
+    positionMm: {x: -57.850002, y: 1.3799995, z: -6.040001}
+  - id: S3.P03
+    reference: S3
+    net: GND
+    role: GND
+    positionMm: {x: -56.15001, y: 1.3799995, z: -6.040001}
+  - id: S3.P04
+    reference: S3
+    net: GND
+    role: GND
+    positionMm: {x: -54.450005, y: 1.3799995, z: -6.040001}
+  - id: S4.P01
+    reference: S4
+    net: CH3_EXC
+    role: CH3_EXC
+    positionMm: {x: -59.550007, y: 1.3799995, z: -23.04}
+  - id: S4.P02
+    reference: S4
+    net: CH3_SENSOR
+    role: CH3_SENSOR
+    positionMm: {x: -57.850002, y: 1.3799995, z: -23.04}
+  - id: S4.P03
+    reference: S4
+    net: GND
+    role: GND
+    positionMm: {x: -56.15001, y: 1.3799995, z: -23.04}
+  - id: S4.P04
+    reference: S4
+    net: GND
+    role: GND
+    positionMm: {x: -54.450005, y: 1.3799995, z: -23.04}
+  - id: J1.P01
+    reference: J1
+    net: RAW_5V
+    role: RAW_5V
+    positionMm: {x: 54.450005, y: 2.5999994, z: 33}
+  - id: J1.P02
+    reference: J1
+    net: GND
+    role: GND
+    positionMm: {x: 56.15001, y: 2.5999994, z: 33}
+  - id: J2.P01
+    reference: J2
+    net: 3V3
+    role: 3V3
+    positionMm: {x: 53.45, y: 2.5999994, z: 15.000001}
+  - id: J2.P02
+    reference: J2
+    net: GND
+    role: GND
+    positionMm: {x: 55.15, y: 2.5999994, z: 15.000001}
+  - id: RV1.P01
+    reference: RV1
+    net: RTD_TRIM_HI
+    role: RTD_TRIM_HI
+    positionMm: {x: 4.6, y: 0.9999991, z: -29.000004}
+  - id: RV1.P02
+    reference: RV1
+    net: TRIM_WIPER
+    role: TRIM_WIPER
+    positionMm: {x: 7, y: 0.9, z: -25.3}
+  - id: RV1.P03
+    reference: RV1
+    net: GND
+    role: GND
+    positionMm: {x: 9.4, y: 0.9999991, z: -29.000004}
+  - id: LED1.P01
+    reference: LED1
+    net: LED_ANODE
+    role: LED_ANODE
+    positionMm: {x: 57.800003, y: 0.9999991, z: -37}
+  - id: LED1.P02
+    reference: LED1
+    net: GND
+    role: GND
+    positionMm: {x: 60.200005, y: 0.9999991, z: -37}
+  - id: W059.P01
+    reference: W059
+    net: REFERENCE_VALID_OUT
+    role: REFERENCE_VALID_OUT
+    positionMm: {x: 37.600006, y: 0.9999991, z: 28}
+  - id: W059.P02
+    reference: W059
+    net: TRUSTED_REFERENCE_IN
+    role: TRUSTED_REFERENCE_IN
+    positionMm: {x: 42.4, y: 0.9999991, z: 28}
+  - id: D1.P01
+    reference: D1
+    net: RAW_5V
+    role: RAW_5V
+    positionMm: {x: 49.560005, y: 0.9999991, z: 29.000004}
+  - id: D1.P02
+    reference: D1
+    net: PROTECTED_5V
+    role: PROTECTED_5V
+    positionMm: {x: 52.440006, y: 0.9999991, z: 29.000004}
+  routes:
+  - id: W001
+    from: J1.P01
+    to: D1.P01
+    net: RAW_5V
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W002
+    from: D1.P02
+    to: U7.P01
+    net: PROTECTED_5V
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W003
+    from: U7.P02
+    to: J1.P02
+    net: GND
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W004
+    from: U7.P03
+    to: U1.P01
+    net: 3V3
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W005
+    from: U1.P02
+    to: J1.P02
+    net: GND
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W006
+    from: U7.P03
+    to: U9.P01
+    net: 3V3
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W007
+    from: U9.P02
+    to: J1.P02
+    net: GND
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W008
+    from: U7.P03
+    to: U6.P01
+    net: 3V3
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W009
+    from: U6.P02
+    to: J1.P02
+    net: GND
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W010
+    from: U6.P03
+    to: U1.P03
+    net: VREF_2V5
+    via: V05
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W011
+    from: U6.P03
+    to: U8.P03
+    net: VREF_2V5
+    via: V06
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W012
+    from: U7.P03
+    to: U8.P01
+    net: 3V3
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W013
+    from: U8.P02
+    to: J1.P02
+    net: GND
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W014
+    from: U1.P08
+    to: U7.P04
+    net: ADC_SCLK
+    via: V07
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W015
+    from: U1.P09
+    to: U7.P05
+    net: ADC_DATA
+    via: V08
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W016
+    from: U1.P10
+    to: U7.P06
+    net: ADC_SELECT
+    via: V09
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W017
+    from: U7.P03
+    to: J2.P01
+    net: 3V3
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W018
+    from: J1.P02
+    to: J2.P02
+    net: GND
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W019
+    from: U7.P03
+    to: U2.P01
+    net: 3V3
+    via: 
+    channel: 0
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W020
+    from: U2.P02
+    to: J1.P02
+    net: GND
+    via: 
+    channel: 0
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W021
+    from: U2.P03
+    to: S1.P01
+    net: CH0_EXC
+    via: V10
+    channel: 0
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W022
+    from: S1.P02
+    to: R1.P01
+    net: CH0_SENSOR
+    via: 
+    channel: 0
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W023
+    from: R1.P02
+    to: U2.P04
+    net: CH0_INPUT
+    via: 
+    channel: 0
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W024
+    from: U2.P05
+    to: U1.P04
+    net: CH0_ADC
+    via: V01
+    channel: 0
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W025
+    from: U2.P06
+    to: RV1.P01
+    net: RTD_TRIM_HI
+    via: 
+    channel: 0
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W026
+    from: S1.P03
+    to: J1.P02
+    net: GND
+    via: 
+    channel: 0
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W027
+    from: U7.P03
+    to: U3.P01
+    net: 3V3
+    via: 
+    channel: 1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W028
+    from: U3.P02
+    to: J1.P02
+    net: GND
+    via: 
+    channel: 1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W029
+    from: U3.P03
+    to: S2.P01
+    net: CH1_EXC
+    via: V11
+    channel: 1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W030
+    from: S2.P02
+    to: R2.P01
+    net: CH1_SENSOR
+    via: 
+    channel: 1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W031
+    from: R2.P02
+    to: U3.P04
+    net: CH1_INPUT
+    via: 
+    channel: 1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W032
+    from: U3.P05
+    to: U1.P05
+    net: CH1_ADC
+    via: V02
+    channel: 1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W033
+    from: U3.P06
+    to: S2.P03
+    net: CH1_DIFFERENTIAL_MINUS
+    via: 
+    channel: 1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W034
+    from: S2.P04
+    to: J1.P02
+    net: GND
+    via: 
+    channel: 1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W035
+    from: U7.P03
+    to: U4.P01
+    net: 3V3
+    via: 
+    channel: 2
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W036
+    from: U4.P02
+    to: J1.P02
+    net: GND
+    via: 
+    channel: 2
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W037
+    from: U4.P03
+    to: S3.P01
+    net: CH2_EXC
+    via: V12
+    channel: 2
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W038
+    from: S3.P02
+    to: R3.P01
+    net: CH2_SENSOR
+    via: 
+    channel: 2
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W039
+    from: R3.P02
+    to: U4.P04
+    net: CH2_INPUT
+    via: 
+    channel: 2
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W040
+    from: U4.P05
+    to: U1.P06
+    net: CH2_ADC
+    via: V03
+    channel: 2
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W041
+    from: U4.P07
+    to: R7.P01
+    net: OPTICAL_FEEDBACK
+    via: 
+    channel: 2
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W042
+    from: S3.P03
+    to: J1.P02
+    net: GND
+    via: 
+    channel: 2
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W043
+    from: U7.P03
+    to: U5.P01
+    net: 3V3
+    via: 
+    channel: 3
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W044
+    from: U5.P02
+    to: J1.P02
+    net: GND
+    via: 
+    channel: 3
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W045
+    from: U5.P03
+    to: S4.P01
+    net: CH3_EXC
+    via: 
+    channel: 3
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W046
+    from: S4.P02
+    to: R4.P01
+    net: CH3_SENSOR
+    via: 
+    channel: 3
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W047
+    from: R4.P02
+    to: U5.P04
+    net: CH3_INPUT
+    via: 
+    channel: 3
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W048
+    from: U5.P05
+    to: U1.P07
+    net: CH3_ADC
+    via: V04
+    channel: 3
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W049
+    from: U5.P06
+    to: C11.P01
+    net: HALL_FILTER
+    via: 
+    channel: 3
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W050
+    from: S4.P03
+    to: J1.P02
+    net: GND
+    via: 
+    channel: 3
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W051
+    from: U1.P12
+    to: U7.P07
+    net: ADC_READY
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W052
+    from: U7.P08
+    to: U9.P03
+    net: ACQUISITION_HEARTBEAT
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W053
+    from: U9.P04
+    to: R8.P01
+    net: SAFE_STATUS
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W054
+    from: R8.P02
+    to: LED1.P01
+    net: LED_ANODE
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W055
+    from: LED1.P02
+    to: J1.P02
+    net: GND
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W056
+    from: U6.P03
+    to: C5.P01
+    net: VREF_2V5
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W057
+    from: C5.P02
+    to: J1.P02
+    net: GND
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W058
+    from: RV1.P03
+    to: J1.P02
+    net: GND
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  - id: W059
+    from: W059.P01
+    to: W059.P02
+    net: TRUSTED_REFERENCE_LINK
+    via: 
+    channel: -1
+    widthMm: 0.25
+    clearanceMm: 0.2
+  factory:
+  - from: U8.P04
+    to: W059.P01
+  - from: W059.P02
+    to: U9.P05
+  - from: C1.P01
+    to: U2.P04
+  - from: C1.P02
+    to: J1.P02
+  - from: C2.P01
+    to: U7.P03
+  - from: C2.P02
+    to: J1.P02
+  - from: C3.P01
+    to: U3.P04
+  - from: C3.P02
+    to: J1.P02
+  - from: C4.P01
+    to: U7.P03
+  - from: C4.P02
+    to: J1.P02
+  - from: C6.P01
+    to: U6.P03
+  - from: C6.P02
+    to: J1.P02
+  - from: C7.P01
+    to: U4.P04
+  - from: C7.P02
+    to: J1.P02
+  - from: C8.P01
+    to: U7.P03
+  - from: C8.P02
+    to: J1.P02
+  - from: C9.P01
+    to: U5.P04
+  - from: C9.P02
+    to: J1.P02
+  - from: C10.P01
+    to: U7.P03
+  - from: C10.P02
+    to: J1.P02
+  - from: C11.P02
+    to: J1.P02
+  - from: R7.P02
+    to: U4.P05
+  - from: RV1.P02
+    to: R5.P01
+  - from: R5.P02
+    to: J1.P02
+  - from: R6.P01
+    to: U7.P09
+  - from: R6.P02
+    to: U9.P06
+  - from: R9.P01
+    to: U7.P03
+  - from: R9.P02
+    to: U3.P07
+  - from: U3.P08
+    to: J1.P02
+  - from: R10.P01
+    to: U9.P07
+  - from: R10.P02
+    to: J1.P02
+  - from: R11.P01
+    to: U7.P03
+  - from: R11.P02
+    to: U7.P06
+  - from: R12.P01
+    to: U7.P04
+  - from: R12.P02
+    to: J1.P02
+  - from: R13.P01
+    to: U1.P11
+  - from: R13.P02
+    to: J1.P02
+  - from: R14.P01
+    to: U9.P05
+  - from: R14.P02
+    to: J1.P02
+  - from: S1.P04
+    to: J1.P02
+  - from: S3.P04
+    to: J1.P02
+  - from: S4.P04
+    to: J1.P02

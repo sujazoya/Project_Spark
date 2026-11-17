@@ -32,6 +32,7 @@ namespace ProjectSpark.PCBVirtualStudio
         private readonly Queue<string> recentEvents = new Queue<string>();
         public SparkVirtualTool ActiveTool => activeTool;
         public bool DemoMode => demoMode;
+        public Vector3? CurrentContactPoint { get; private set; }
         public event Action<SparkVirtualPCBTarget, SparkVirtualTool> RepairActionAccepted;
 
         public void Configure(SparkPCBTouchVFX fx, SparkPCBWaveformGraphic graph, Text toolName, Text hint,
@@ -125,6 +126,9 @@ namespace ProjectSpark.PCBVirtualStudio
         public void UseSelectedToolOn(SparkVirtualPCBTarget target, Vector3? physicalPoint)
         {
             if (target == null) return;
+            CurrentContactPoint=physicalPoint;
+            try
+            {
             selectedTarget = target;
             SparkRepairToolResult result;
             ISparkPCBRepairAuthority authority = repairAuthorityBehaviour as ISparkPCBRepairAuthority;
@@ -163,6 +167,8 @@ namespace ProjectSpark.PCBVirtualStudio
             Log((result.accepted ? "OK" : "NO") + "  " + target.TargetId + "  /  " + result.message);
             RefreshView(false);
             if (result.accepted) RepairActionAccepted?.Invoke(target, activeTool);
+            }
+            finally{CurrentContactPoint=null;}
         }
 
         private void RefreshView(bool resetReadout = true)
@@ -202,3 +208,4 @@ namespace ProjectSpark.PCBVirtualStudio
         }
     }
 }
+

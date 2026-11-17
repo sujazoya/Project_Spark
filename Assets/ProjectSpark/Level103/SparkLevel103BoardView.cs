@@ -61,6 +61,10 @@ namespace ProjectSpark.Gameplay
                     foreach(var renderer in obstruction.GetComponentsInChildren<Renderer>(true))
                     {covered.Add(renderer,renderer.forceRenderingOff);renderer.forceRenderingOff=true;}
                 }
+            foreach(var legacyWire in FindObjectsByType<SparkSingleWire>(FindObjectsSortMode.None))
+                if(!legacyWire.transform.IsChildOf(arena))
+                    foreach(var renderer in legacyWire.GetComponentsInChildren<Renderer>(true))
+                        if(!covered.ContainsKey(renderer)){covered.Add(renderer,renderer.forceRenderingOff);renderer.forceRenderingOff=true;}
             camera=Camera.main;
             if(camera==null)return;
             originalPosition=camera.transform.position;
@@ -137,7 +141,7 @@ namespace ProjectSpark.Gameplay
         public void UseSocketView(Vector3 a, Vector3 b)
         {
             socketAim = (a + b) * .5f;
-            socketZoom = Mathf.Clamp(Vector3.Distance(a,b) * .49f, .52f, 4.5f);
+            socketZoom = Mathf.Clamp(Vector3.Distance(a,b) * .49f, .52f, 6.5f);
             Select(1);
         }
 
@@ -172,6 +176,7 @@ namespace ProjectSpark.Gameplay
                 desired=current;
                 return;
             }
+            if(Keyboard.current!=null && Keyboard.current.homeKey.wasPressedThisFrame){GetComponent<SparkLevel103Process>().BoardView();return;}
             bool overUI=EventSystem.current!=null&&EventSystem.current.IsPointerOverGameObject();
             Vector2 pointer=mouse.position.ReadValue();
             if(drag==Drag.Orbit&&!mouse.rightButton.isPressed||drag==Drag.Pan&&!mouse.middleButton.isPressed)
@@ -264,6 +269,10 @@ namespace ProjectSpark.Gameplay
         }
     }
 }
+
+
+
+
 
 
 

@@ -274,7 +274,7 @@ namespace ProjectSpark.UIManagement
             yield return null;
             if(!string.IsNullOrEmpty(levelControlsId))manager.Unregister(levelControlsId);
             var canvas=Object.FindObjectsByType<Canvas>(FindObjectsInactive.Include,FindObjectsSortMode.None)
-                .FirstOrDefault(candidate=>candidate.name is "Board Foundry controls" or "Pulse Architect controls");
+                .FirstOrDefault(candidate=>candidate.name is "Board Foundry controls" or "Pulse Architect controls" or "Sensor Matrix controls");
             if(!canvas)yield break;
             levelControlsId="active-level";
             RegisterCanvas(levelControlsId,"Current Level Controls",SparkUILayer.HUD,canvas.gameObject);

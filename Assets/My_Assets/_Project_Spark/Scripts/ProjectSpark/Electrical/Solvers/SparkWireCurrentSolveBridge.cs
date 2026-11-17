@@ -272,7 +272,7 @@ private void OnEnable()
 
                if (!supported || float.IsNaN(amps) || float.IsInfinity(amps))
 {
-    Debug.LogWarning(
+    if(logDiagnostics)Debug.LogWarning(
         "[WIRE BRIDGE BLOCKED] " +
         $"Component={component.name} | " +
         $"Type={component.GetType().FullName} | " +
@@ -341,3 +341,4 @@ CurrentsResolved?.Invoke(currents);
         }
     }
 }
+

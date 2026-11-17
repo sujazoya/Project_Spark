@@ -10,11 +10,15 @@ namespace ProjectSpark.SensorMatrix
     [Serializable]
     public sealed class SparkSensorMatrixAcquisition
     {
+        [Serializable] public struct RawSample
+        { public double timestamp,voltage,reference;public int code;public SensorSampleStatus status; }
         [Serializable] public sealed class Channel
         {
             public string name,unit;
             public double low,high,stimulus,filtered,voltage,value,timestamp;
-            public int rawCode,samples;
+            public int rawCode,samples,historyWrite,historyCount;
+            public RawSample[] history=new RawSample[256];
+            public void Record(double time,double vref){if(history==null||history.Length!=256)history=new RawSample[256];history[historyWrite]=new RawSample{timestamp=time,voltage=voltage,reference=vref,code=rawCode,status=status};historyWrite=(historyWrite+1)%history.Length;historyCount=Math.Min(historyCount+1,history.Length);}
             public double zeroCode,spanCode;
             public bool zeroCaptured,calibrated;
             public SensorSampleStatus status=SensorSampleStatus.OpenCircuit;
@@ -30,8 +34,10 @@ namespace ProjectSpark.SensorMatrix
         public int standard=-1;
         public bool referenceChecked;
         public const double SamplePeriod=1d/128d;
-        private double accumulated;
-        private uint random=103;
+        [SerializeField] private double accumulated,muxHold;
+        public double muxSettlingSeconds=.0014;
+        public const double MuxTimeConstant=.0001;
+        [SerializeField] private uint random=103;
         public bool AllCalibrated => Array.TrueForAll(channels,c=>c.calibrated);
         public bool AllValid => Array.TrueForAll(channels,c=>c.status==SensorSampleStatus.Valid && clock-c.timestamp<.1);
         public int TotalSamples => channels[0].samples+channels[1].samples+channels[2].samples+channels[3].samples;
@@ -75,7 +81,7 @@ namespace ProjectSpark.SensorMatrix
         {
             if(dt<=0 || double.IsNaN(dt))return;
             accumulated+=Math.Min(dt,.25);
-            reference=vref;
+            reference=double.IsFinite(vref)?vref:0;
             while(accumulated>=SamplePeriod)
             {
                 accumulated-=SamplePeriod;
@@ -84,22 +90,29 @@ namespace ProjectSpark.SensorMatrix
                 {
                     var channel=channels[i];
                     if(!connected[i]){channel.status=SensorSampleStatus.OpenCircuit;continue;}
-                    if(!solvedFresh){channel.status=SensorSampleStatus.Stale;continue;}
-                    if(!trusted || vref<2.475 || vref>2.525){channel.status=SensorSampleStatus.ReferenceUntrusted;continue;}
+                    if(!solvedFresh || !double.IsFinite(volts[i])){channel.status=SensorSampleStatus.Stale;continue;}
+                    if(!double.IsFinite(vref)||vref<.05){channel.status=SensorSampleStatus.ReferenceUntrusted;continue;}
                     double alpha=1-Math.Exp(-SamplePeriod/.018);
                     channel.filtered+=alpha*(volts[i]-channel.filtered);
+                    double budget=Math.Clamp(muxSettlingSeconds,0,SamplePeriod/4);
+                    muxHold=channel.filtered+(muxHold-channel.filtered)*Math.Exp(-budget/MuxTimeConstant);
+                    bool settled=Math.Abs(muxHold-channel.filtered)<vref/65535d*.5;
                     double noise=(NextNoise()-.5)*.000012;
                     channel.voltage=channel.filtered;
-                    channel.rawCode=(int)Math.Clamp(Math.Round((channel.filtered+noise)/vref*65535),0,65535);
+                    channel.rawCode=(int)Math.Clamp(Math.Round((muxHold+noise)/vref*65535),0,65535);
                     channel.timestamp=clock;
+                    if(!settled){channel.status=SensorSampleStatus.Stale;channel.Record(clock,vref);continue;}
+                    if(!trusted || vref<2.475 || vref>2.525)
+                    {channel.status=SensorSampleStatus.ReferenceUntrusted;channel.Record(clock,vref);continue;}
                     channel.samples++;
-                    if(volts[i]>=vref-.001 || volts[i]<-.005){channel.status=SensorSampleStatus.Saturated;continue;}
-                    if(!channel.calibrated){channel.status=SensorSampleStatus.Uncalibrated;continue;}
+                    if(volts[i]>=vref-.001 || volts[i]<-.005){channel.status=SensorSampleStatus.Saturated;channel.Record(clock,vref);continue;}
+                    if(!channel.calibrated){channel.status=SensorSampleStatus.Uncalibrated;channel.Record(clock,vref);continue;}
                     double fraction=(channel.rawCode-channel.zeroCode)/(channel.spanCode-channel.zeroCode);
                     channel.value=channel.low+fraction*(channel.high-channel.low);
                     double margin=(channel.high-channel.low)*.012;
                     channel.status=channel.value<channel.low-margin || channel.value>channel.high+margin ?
                         SensorSampleStatus.OutOfRange : SensorSampleStatus.Valid;
+                    channel.Record(clock,vref);
                 }
             }
         }

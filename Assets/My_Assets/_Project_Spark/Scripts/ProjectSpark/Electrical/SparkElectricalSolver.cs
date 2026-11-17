@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using ProjectSpark.Gameplay;
@@ -114,6 +114,24 @@ namespace ProjectSpark.Electrical
 
         [SerializeField]
         private bool solveOnDirty = true;
+        [Header("Diagnostics")]
+        [SerializeField] private bool verboseDiagnostics;
+        private int configurationBatchDepth;
+        private void Trace(object message,UnityEngine.Object context=null)
+        {if(verboseDiagnostics)Debug.Log(message,context);}
+
+        /// <summary>Defers automatic solves until a set of native device/connection changes is complete.</summary>
+        public IDisposable BeginConfigurationBatch()
+        {configurationBatchDepth++;return new ConfigurationBatch(this);}
+        private sealed class ConfigurationBatch:IDisposable
+        {
+            private SparkElectricalSolver owner;
+            public ConfigurationBatch(SparkElectricalSolver value){owner=value;}
+            public void Dispose(){var current=owner;owner=null;if(!current)return;
+                current.configurationBatchDepth=Math.Max(0,current.configurationBatchDepth-1);
+                if(current.configurationBatchDepth==0 && current.isActiveAndEnabled && current.dirty)
+                {if(current.solving)current.solveRequestedDuringSolve=true;else current.SolveNow();}}
+        }
 
         // ---------------------------------------------------------------------
         // TRANSIENT
@@ -265,6 +283,7 @@ private void OnDisable()
 private void HandleCircuitTopologyChanged()
 {
     MarkTopologyDirty();
+    if(configurationBatchDepth>0){if(solving)solveRequestedDuringSolve=true;return;}
 
     if (!isActiveAndEnabled)
         return;
@@ -283,6 +302,7 @@ private void HandleCircuitTopologyChanged()
 private void HandleElectricalConfigurationChanged()
 {
     MarkDirty();
+    if(configurationBatchDepth>0){if(solving)solveRequestedDuringSolve=true;return;}
 
     if (!isActiveAndEnabled)
     {
@@ -418,7 +438,7 @@ public void MarkDirty()
 {
     dirty = true;
 
-    Debug.Log(
+    Trace(
         $"[SPARK SOLVER] MarkDirty called | " +
         $"InstanceID={GetInstanceID()} | " +
         $"TopologyVersion={topologyVersion} | " +
@@ -508,7 +528,7 @@ public void MarkDirty()
             {
                 int callId = ++solveCallSequence;
 
-                Debug.Log(
+                Trace(
                     $"[SPARK SOLVER #{callId}] ENTER | " +
                     $"Solving={solving} | Dirty={dirty} | " +
                     $"HasResult={latestSolveResult != null} | " +
@@ -559,7 +579,7 @@ public void MarkDirty()
 
                 try
                 {
-                    Debug.Log(
+                    Trace(
                         $"[SPARK SOLVER #{callId}] EXECUTING SolveInternal.",
                         this);
 
@@ -611,7 +631,7 @@ public void MarkDirty()
 
             if (solved)
             {
-                Debug.Log(
+                Trace(
                     $"[SPARK SOLVER #{callId}] COMPLETED EVENT.",
                     this);
 
@@ -634,7 +654,7 @@ public void MarkDirty()
                     nameof(SolveFailed));
                 }
 
-                Debug.Log(
+                Trace(
                     $"[SPARK SOLVER #{callId}] EXIT | " +
                     $"Success={solved} | Dirty={dirty} | " +
                     $"HasResult={latestSolveResult != null}",
@@ -849,7 +869,7 @@ if (currentGraph != null)
             anode,
             cathode);
 
-        Debug.Log(
+        Trace(
             "[LEVEL23 DIODE] " +
             "Iteration=" + iteration +
             " | Diode=" + diode.name +
@@ -861,7 +881,7 @@ if (currentGraph != null)
             diode);
     }
 
-    Debug.Log(
+    Trace(
         "[LEVEL23 DIODE SUMMARY] " +
         "Iteration=" + iteration +
         " | DiscoveredDiodes=" + diodeCount,
@@ -976,7 +996,7 @@ if (currentGraph != null)
 
         dirty = false;
 
-        Debug.Log(
+        Trace(
             $"[SOLVER TEST] Finished | Success={solved} | " +
             $"Dirty={dirty} | HasResult={latestSolveResult != null}",
             this);
@@ -1033,7 +1053,7 @@ if (currentGraph != null)
                         true);
 
 
-                        Debug.Log(
+                        Trace(
     $"[COMPONENT DISCOVERY] Root={root.name} | " +
     $"RootPath={GetHierarchyPath(root)} | " +
     $"Discovered={discovered.Length}",
@@ -1046,7 +1066,7 @@ for (int i = 0; i < discovered.Length; i++)
     if (component == null)
         continue;
 
-    Debug.Log(
+    Trace(
         $"[COMPONENT DISCOVERY ITEM] " +
         $"Type={component.GetType().FullName} | " +
         $"Name={component.name} | " +
@@ -1587,6 +1607,7 @@ for (int i = 0; i < discovered.Length; i++)
         }
         
 #if UNITY_EDITOR
+if(verboseDiagnostics)
 for (int j = 0; j < electricalComponents.Length; j++)
 {
     if (!(electricalComponents[j] is SparkSwitch sw))
@@ -1625,7 +1646,7 @@ private void ApplyAllDeviceStates(
         return;
     }
 
-    Debug.Log(
+    Trace(
         $"[WIRE APPLY TRACE] Begin | " +
         $"ComponentCount={electricalComponents.Length}",
         this);
@@ -1646,7 +1667,7 @@ private void ApplyAllDeviceStates(
 
         if (isWire)
         {
-            Debug.Log(
+            Trace(
                 $"[WIRE APPLY TRACE] Found wire | " +
                 $"Name={component.name} | " +
                 $"InstanceID={component.GetInstanceID()} | " +
@@ -1678,7 +1699,7 @@ private void ApplyAllDeviceStates(
 
         if (isWire)
         {
-            Debug.Log(
+            Trace(
                 $"[WIRE APPLY TRACE] Applying | " +
                 $"Wire={component.name} | " +
                 $"Definition={definition.GetType().Name}",
@@ -1690,7 +1711,7 @@ private void ApplyAllDeviceStates(
             result);
     }
 
-    Debug.Log("[WIRE APPLY TRACE] End.", this);
+    Trace("[WIRE APPLY TRACE] End.", this);
 }
 
         // ---------------------------------------------------------------------
@@ -1804,7 +1825,7 @@ private void ApplyAllDeviceStates(
             if (terminal.Owner != null &&
                 terminal.Owner.name == "LED")
             {
-                Debug.Log(
+                Trace(
                     "[SPARK SOLVER LED TERMINAL VOLTAGE] " +
                     "Terminal=" + terminal.name +
                     " | InstanceID=" + terminal.GetInstanceID() +
@@ -2508,7 +2529,7 @@ private void ApplyZeroResult(
                 ? supply.NegativeTerminal.ElectricalState.Voltage
                 : float.NaN;
 
-/*        Debug.Log(
+/*        Trace(
             $"[POWER SUPPLY DIAGNOSTIC] {supply.name} | " +
             $"ConfiguredV={supply.OutputVoltage:F6} | " +
             $"SupplyActive={supply.IsOutputActive} | " +
@@ -2525,3 +2546,5 @@ private void ApplyZeroResult(
 
     }
 }
+
+

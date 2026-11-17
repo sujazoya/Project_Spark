@@ -22,7 +22,10 @@ namespace ProjectSpark.Gameplay
         {
             if(!device)return;
             if(double.IsFinite(voltage) && Math.Abs(device.OutputVoltage-voltage)>.00001)
+                {
+                if(device.IsOutputActive)device.SetOutput(false,default);
                 device.TryConfigure((float)Math.Clamp(voltage,0,5.1),device.CurrentLimit,out _);
+            }
             bool on=enabled && device.ElectricalEnabled;
             if(device.IsOutputActive!=on)device.SetOutput(on,default);
         }
@@ -30,6 +33,9 @@ namespace ProjectSpark.Gameplay
         private void Update()
         {
             if(!Active || placed==null)return;
+            using(manager.ElectricalSolver.BeginConfigurationBatch())
+            {
+            if(running)acquisition.DynamicStimulus(acquisition.clock-runStarted);
             ReadGraph();
             validPower=supply.IsOutputActive && !supply.IsOverloaded && Voltage(protectedInput) is >3.5 and <5.15;
             Drive(logic,3.3,validPower);
@@ -37,10 +43,11 @@ namespace ProjectSpark.Gameplay
             Drive(reference,fault==0?2.37:2.5,validPower && logicValid);
             measuredReference=Voltage(reference.PositiveTerminal);
             double adcReference=Voltage(referenceInput);
-            bool referenceHealthy=validPower && logicValid && double.IsFinite(measuredReference) &&
+            bool referenceHealthy=schematicResolved && !unauthorizedCopper && validPower && logicValid && double.IsFinite(measuredReference) &&
                 Math.Abs(measuredReference-2.5)<.015 && double.IsFinite(adcReference) &&
                 Math.Abs(adcReference-measuredReference)<.008 && RouteReady(10) && RouteReady(11) && RouteReady(12);
             Drive(supervisor,3.3,referenceHealthy);
+            Drive(bridgeCommon,double.IsFinite(measuredReference)?measuredReference*.5:1.25,validPower && logicValid);
             bool jumper=RouteReady(58);
             trusted=referenceHealthy && jumper && Voltage(trustedInput) is >3.05 and <3.45;
             if(trusted && referenceGoodSince<0)referenceGoodSince=acquisition.clock;
@@ -63,6 +70,12 @@ namespace ProjectSpark.Gameplay
                 double excitation=channel==1 && double.IsFinite(measuredReference)?measuredReference:2.5;
                 Drive(excitations[channel],excitation,validPower && logicValid);
                 Drive(sensorOutputs[channel],acquisition.SensorVoltage(channel,excitation),connected);
+            }
+            if(manager.ElectricalSolver.IsDirty)manager.ElectricalSolver.SolveNow();
+            for(int channel=0;channel<4;channel++)
+            {
+                double excitation=channel==1 && double.IsFinite(measuredReference)?measuredReference:2.5;
+                bool connected=channelConnected[channel];
                 double input=Voltage(sensorInputs[channel]);
                 double minus=channel==1?Voltage(minusInputs[channel]):0;
                 double front=double.IsFinite(input) && double.IsFinite(minus) ?
@@ -71,6 +84,12 @@ namespace ProjectSpark.Gameplay
                 double measured=Voltage(adcInputs[channel]);
                 adcVoltages[channel]=double.IsFinite(measured)?measured:0;
                 channelConnected[channel] &= double.IsFinite(measured);
+            }
+            if(manager.ElectricalSolver.IsDirty)manager.ElectricalSolver.SolveNow();
+            for(int channel=0;channel<4;channel++)
+            {
+                double measured=Voltage(adcInputs[channel]);
+                adcVoltages[channel]=double.IsFinite(measured)?measured:0;
             }
             acquisition.Step(Time.deltaTime,adcVoltages,channelConnected,trusted,adcReference,
                 !manager.ElectricalSolver.IsSolving && !manager.ElectricalSolver.IsDirty);
@@ -85,6 +104,7 @@ namespace ProjectSpark.Gameplay
 
             if(running)UpdateRun();
             if(Time.unscaledTime>=nextPresentation){nextPresentation=Time.unscaledTime+.12f;Present();}
+            }
         }
 
         public void TogglePower()
@@ -109,7 +129,7 @@ namespace ProjectSpark.Gameplay
 
         public void TestBoard()
         {
-            if(!Active || stage<3 || !trusted || latched || fault>=0 || !acquisition.AllCalibrated ||
+            if(!Active || stage<3 || !schematicResolved || unauthorizedCopper || !trusted || latched || fault>=0 || !acquisition.AllCalibrated ||
                 !acquisition.referenceChecked || routed!=58 || viaCount!=12)
             {notice="Qualification needs all copper/vias, trusted reference, calibration and a reset safety latch.";return;}
             runStarted=acquisition.clock;elapsedRun=0;runSamples=acquisition.TotalSamples;
@@ -121,13 +141,13 @@ namespace ProjectSpark.Gameplay
         private void UpdateRun()
         {
             elapsedRun=acquisition.clock-runStarted;
-            acquisition.DynamicStimulus(elapsedRun);
+
             // Allow the analog filters to settle from the preceding calibration standard.
             if(elapsedRun>.65 && (!trusted || latched || fault>=0 || routed!=58 ||
                 manager.CircuitSystem.TopologyVersion!=runRevision || !acquisition.WithinUncertainty()))
             {
                 running=false;
-                notice="Qualification rejected: stale, open, clipped, untrusted, changed-topology or inaccurate sample.";
+                notice="Qualification rejected at "+elapsedRun.ToString("F3")+" s; graph "+manager.CircuitSystem.TopologyVersion+"/"+runRevision+" valid="+acquisition.AllValid+"; "+string.Join("; ",acquisition.channels.Select(c=>$"{c.name} {c.value:F3}/{c.stimulus:F3} {c.status}"));
                 return;
             }
             if(elapsedRun<6.2)return;
@@ -177,3 +197,6 @@ namespace ProjectSpark.Gameplay
         }
     }
 }
+
+
+
