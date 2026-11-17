@@ -349,17 +349,25 @@ private void Update()
                 return;
             }
 
-            if (!CurrentTarget.HasValue)
+            SparkTargetHit hit;
+            if (tool is ProjectSpark.Tools.SparkWireTool wireTool && wireTool.UsesTerminalPicker)
             {
-                Publish(
-                    SparkResult.Rejected(
-                        "No interactive target under pointer."));
-
+                if (!wireTool.TryResolveTerminalTarget(ReadPointerPosition(), out hit))
+                {
+                    Publish(SparkResult.Rejected(wireTool.UsesCustomTerminalPicker
+                        ? "Start at a highlighted PCB pad." : "Start at an electrical terminal."));
+                    return;
+                }
+            }
+            else if (CurrentTarget.HasValue)
+            {
+                hit = CurrentTarget.Value;
+            }
+            else
+            {
+                Publish(SparkResult.Rejected("No interactive target under pointer."));
                 return;
             }
-
-            SparkTargetHit hit =
-                CurrentTarget.Value;
 
             SparkInteractionType type =
                 MapInteraction(
@@ -470,12 +478,19 @@ private void Update()
                     interactionCamera,
                     interactionContext);
 
-            SparkResult result =
-                tool.End(context);
+            SparkResult result = session.ToolType == SparkToolType.Wire &&
+                (!Application.isFocused || (blockWorldInputOverUI && IsPointerOverUI()))
+                ? tool.Cancel(context)
+                : tool.End(context);
 
             Publish(result);
 
             ActiveSession = null;
+        }
+
+        private void OnApplicationFocus(bool focused)
+        {
+            if (!focused) CancelActiveInteraction();
         }
 
         private void OnCancelPerformed(
@@ -618,8 +633,11 @@ private void Update()
 
         private bool IsPointerOverUI()
         {
-            return eventSystem != null &&
-                   eventSystem.IsPointerOverGameObject();
+            if (ProjectSpark.UIManagement.SparkUIMonitorDashboard.IsConsoleVisible) return true;
+            if (eventSystem != null && eventSystem.IsPointerOverGameObject()) return true;
+            return interactionCamera != null &&
+                interactionCamera.TryGetComponent<ProjectSpark.Cameras.SparkGameCameraRig>(out var rig) &&
+                rig.IsPointerOverViewControls(ReadPointerPosition());
         }
 
         private void Publish(

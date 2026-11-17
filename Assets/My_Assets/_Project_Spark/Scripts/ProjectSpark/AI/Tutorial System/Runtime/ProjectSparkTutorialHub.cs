@@ -100,6 +100,7 @@ namespace ProjectSpark.UI
         private float ClosedX => drawer.rect.width + offscreenExtra;
         private float OpenX => -openRightInset;
 
+        public bool DrawerOpen => open;
         public void ToggleDrawer() => SetOpen(!open);
         public void OpenDrawer() => SetOpen(true);
         public void CloseDrawer() => SetOpen(false);

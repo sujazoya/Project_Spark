@@ -46,6 +46,28 @@ namespace ProjectSpark.Tools
             }
         }
 
+        public bool UsesCustomTerminalPicker => wireBuilder != null && wireBuilder.TerminalPickerOverride != null;
+
+        public bool UsesTerminalPicker => wireBuilder != null &&
+            wireBuilder.DrawingMode == WireDrawingMode.TerminalToTerminal;
+
+        public bool TryResolveCustomTarget(Vector2 screenPosition, out SparkTargetHit hit) =>
+            TryResolveTerminalTarget(screenPosition, out hit);
+
+        public bool TryResolveTerminalTarget(Vector2 screenPosition, out SparkTargetHit hit)
+        {
+            hit = default;
+            if (!UsesTerminalPicker) return false;
+            SparkTerminal terminal = wireBuilder.FindStartTerminal(screenPosition);
+            if (terminal == null || terminal.Owner == null)
+                return false;
+            Collider collider = terminal.GetComponentInChildren<Collider>(true);
+            if (collider == null)
+                return false;
+            hit = new SparkTargetHit(terminal.Owner, collider, terminal.transform.position, terminal.transform.up, 0f);
+            return true;
+        }
+
         public override bool CanBegin(
             in SparkToolContext context,
             out string reason)
@@ -183,11 +205,9 @@ namespace ProjectSpark.Tools
             "Wire construction is not active.");
     }
 
-    wireBuilder.EndWire(
-        context.ScreenPosition);
-
-    return SparkResult.Success(
-        "Wire construction completed.");
+    return wireBuilder.TryEndWire(context.ScreenPosition)
+        ? SparkResult.Success("Wire construction completed.")
+        : SparkResult.Rejected("Wire did not connect. Release over a compatible terminal.");
 }
 
         protected override SparkResult OnCancel(

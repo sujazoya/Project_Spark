@@ -1,0 +1,29 @@
+{
+  "required_interfaces": [
+    "SparkTerminal",
+    "SparkCircuitSystem",
+    "SparkElectricalSolver",
+    "LevelGamePlayManager"
+  ],
+  "source_status": "INTEGRATION PLAN ONLY - inspect actual user Project Spark assemblies before compiling",
+  "nodes": 127,
+  "player_required_routes": 34,
+  "physical_critical_jumper": "W035",
+  "shared_nets": "Connections on same logical net may join only through compatible solver rules",
+  "do_not_use": [
+    "decorative wire as circuit",
+    "gameplay state from renderers",
+    "fake 6/6 result"
+  ],
+  "instruments": [
+    "DMM",
+    "Oscilloscope",
+    "Logic Analyzer",
+    "Protected Supply"
+  ],
+  "safety": [
+    "No hot work simulation",
+    "Protected 5 V educational input",
+    "Independent feedback validation"
+  ]
+}

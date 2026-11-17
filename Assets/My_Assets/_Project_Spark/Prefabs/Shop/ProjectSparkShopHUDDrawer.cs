@@ -75,6 +75,7 @@ namespace ProjectSpark.UI
                 toggleButton.onClick.RemoveListener(Toggle);
         }
 
+        public bool DrawerOpen => isOpen;
         public void Toggle()
         {
             SetOpen(!isOpen);

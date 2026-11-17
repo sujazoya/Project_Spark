@@ -1,0 +1,14 @@
+From,To,PhysicalFlowType,RequiredAuthority
+Habitat Compartment A,Main Airflow Duct,Gas flow / loop return,Mass balance and fan pressure
+Habitat Compartment B,Main Airflow Duct,Gas flow / loop return,Mass balance and damper position
+Habitat Compartment C,Main Airflow Duct,Gas flow / loop return,Mass balance and damper position
+Habitat Compartment D,Main Airflow Duct,Gas flow / loop return,Mass balance and damper position
+Air Duct,Adsorber Tower A,Mixed cabin gas,Bed capacity and actual inlet valve
+Air Duct,Adsorber Tower B,Mixed cabin gas,Bed capacity and actual inlet valve
+Adsorber Towers,Scrubbed Airflow Return,CO2-depleted gas,Regeneration cycle and capture efficiency
+Water Recovery,Finite Clean Water Reservoir,Condensed water,Condensation and water quality
+Water Reservoir,Oxygen Electrolyzer,Clean water flow,Resource consumption and pump response
+Oxygen Electrolyzer,Oxygen Buffer Tank,Separated oxygen,"Finite power, water, and process qualification"
+Oxygen Buffer Tank,Cabin Gas Regulation,Regulated oxygen,"Actual valve, fresh pressure and safety authorization"
+Habitat Compartments,Environment / Micro-Leak,Gas inventory loss,Actual leak state and compartment pressure
+Safety Relief Valve,Environment,Protected pressure release,Independent trip and actual valve dynamics

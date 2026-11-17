@@ -1,0 +1,4 @@
+FaultID,Name,Affected,Injection,RealEffect,Recovery,Proof
+F01,Timing capacitor misvalue,C1,10 nF intended -> 22 nF faulty,"Master and divided frequencies fall, frequency measurement invalid",Replace C1 with correct value and calibrate trimmer,New scope captures measured frequencies
+F02,Missing divided-clock via,V06 / W028,Remove physical via continuity,Clock conditioning fails between U1 and U3; output timing unavailable,Rebuild correct via under clearance rules,Continuity and two valid divided clock captures
+F03,PWM stage solder bridge,Q1 Gate-Drain,Cross-net solder bridge causes non-commanded output,Output monitor fault and abnormal load current,"De-energize, remove short, retest current and PWM",W049 trusted monitor with actual safe load behavior

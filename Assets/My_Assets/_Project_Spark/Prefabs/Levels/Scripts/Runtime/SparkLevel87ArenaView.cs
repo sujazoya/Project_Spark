@@ -136,7 +136,7 @@ namespace ProjectSpark.Gameplay
 
         private void Select(int index)
         {
-            if(!brain||AAAUI.VFX.SignalWireBuilder.AnyWireDrawing)return;
+            if (!brain || brain.ChannelMask != OutputChannels.Channel15 || AAAUI.VFX.SignalWireBuilder.AnyWireDrawing) return;
             current=desired=presets[index];
             drag=Drag.None;
             shots[shot].Priority=10;
@@ -148,7 +148,7 @@ namespace ProjectSpark.Gameplay
 
         private void Update()
         {
-            if(!brain)return;
+            if (!brain || brain.ChannelMask != OutputChannels.Channel15) { drag=Drag.None; desired=current; return; }
             var mouse=Mouse.current;
             if(!Application.isFocused||mouse==null||AAAUI.VFX.SignalWireBuilder.AnyWireDrawing)
             {
@@ -190,7 +190,7 @@ namespace ProjectSpark.Gameplay
 
         private void LateUpdate()
         {
-            if(!brain||AAAUI.VFX.SignalWireBuilder.AnyWireDrawing)return;
+            if (!brain || brain.ChannelMask != OutputChannels.Channel15 || AAAUI.VFX.SignalWireBuilder.AnyWireDrawing) return;
             float damping=1f-Mathf.Exp(-18f*Time.unscaledDeltaTime);
             current.Yaw=Mathf.Lerp(current.Yaw,desired.Yaw,damping);
             current.Pitch=Mathf.Lerp(current.Pitch,desired.Pitch,damping);

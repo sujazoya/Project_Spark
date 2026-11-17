@@ -1,0 +1,17 @@
+{
+  "wire_id": "W059",
+  "source": "L96_ReferenceSupervisor_U8.TRUSTED_REF_VALID_OUT",
+  "target": "L96_SafetyController_U9.TRUSTED_REF_VALID_IN",
+  "initially_connected": false,
+  "meaning": "digital reference-valid monitor, NOT a 2.500V supply",
+  "step_sequence": [
+    "initial connection and qualification",
+    "supervised disconnection",
+    "invalidate certification / protect output",
+    "physical reconnection",
+    "fresh calibration and measurements",
+    "explicit reset",
+    "full new qualification"
+  ],
+  "requires_real_solver": true
+}

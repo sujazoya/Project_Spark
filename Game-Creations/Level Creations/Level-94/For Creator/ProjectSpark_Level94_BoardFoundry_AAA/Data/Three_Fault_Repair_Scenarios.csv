@@ -1,0 +1,4 @@
+FaultID,Name,Location,ElectricalEffect,Repair,Validation
+F01,Open Ground Via,"V05, W030 return path",Open return / false LED operation,Rebuild actual via connection,Net continuity + powered test
+F02,Incorrect Resistor Value,R2 SDA pull-up,47K instead of required 4K7; slower I2C rise time,Replace with correct 4K7 component,Measure I2C edges and acknowledge
+F03,MOSFET Solder Bridge,Q1 Gate-to-Drain neighboring pads,Unwanted coupling and load-control malfunction,"Remove bridged solder defect, run DRC",Correct controlled switching and safety cutoff

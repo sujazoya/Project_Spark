@@ -9,6 +9,7 @@ namespace ProjectSpark.Gameplay
     {
         private Transform arena;
         private Camera camera;
+        private ProjectSpark.Cameras.SparkGameCameraRig sharedRig;
         private Vector3 originalPosition;
         private Quaternion originalRotation;
         private bool originalOrthographic;
@@ -20,6 +21,7 @@ namespace ProjectSpark.Gameplay
             arena=anchor;
             camera=Camera.main;
             if(camera==null)return;
+            sharedRig=camera.GetComponent<ProjectSpark.Cameras.SparkGameCameraRig>();
             originalPosition=camera.transform.position;
             originalRotation=camera.transform.rotation;
             originalOrthographic=camera.orthographic;
@@ -33,10 +35,12 @@ namespace ProjectSpark.Gameplay
 
         private void LateUpdate()
         {
-            if(camera==null||arena==null)return;
+            if (camera == null || arena == null || (sharedRig && sharedRig.OwnsCamera) ||
+                AAAUI.VFX.SignalWireBuilder.AnyWireDrawing) return;
             var mouse=Mouse.current;
             bool overUI=EventSystem.current!=null&&EventSystem.current.IsPointerOverGameObject();
-            if(mouse!=null&&!overUI)
+            if (Application.isFocused && mouse != null && !overUI &&
+                (!sharedRig || !sharedRig.IsPointerOverViewControls(mouse.position.ReadValue())))
             {
                 Vector2 delta=mouse.delta.ReadValue();
                 zoom=Mathf.Clamp(zoom-mouse.scroll.ReadValue().y*.00058f,.22f,1.64f);

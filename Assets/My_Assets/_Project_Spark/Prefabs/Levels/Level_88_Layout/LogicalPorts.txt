@@ -1,0 +1,328 @@
+W001_OUT_POWER_CONTROL	L88_Protected5VControlSupply	P189	POWER_CONTROL	-2.526	1.653	10.18	Primary ECLSS PLC logic power
+W001_IN_POWER_CONTROL	L88_ECLSSMasterPLC	P199	POWER_CONTROL	1.134	1.653	10.18	Primary ECLSS PLC logic power
+W002_OUT_POWER_CONTROL	L88_Protected5VControlSupply	P193	POWER_CONTROL	-2.158	1.653	10.18	Independent life-support safety controller power
+W002_IN_POWER_CONTROL	L88_HabitatLifeSupportSafetyPLC	P166	POWER_CONTROL	-4.264	1.653	10.18	Independent life-support safety controller power
+W003_OUT_POWER_CONTROL	L88_Protected5VControlSupply	P188	POWER_CONTROL	-2.618	1.653	10.18	Adsorption-cycle PLC control power
+W003_IN_POWER_CONTROL	L88_CO2RegenerationControllerPLC	P038	POWER_CONTROL	-7.412	1.503	5.98	Adsorption-cycle PLC control power
+W004_OUT_POWER_CONTROL	L88_Protected5VControlSupply	P192	POWER_CONTROL	-2.25	1.653	10.18	Oxygen process controller power
+W004_IN_POWER_CONTROL	L88_OxygenGenerationProcessPLC	P077	POWER_CONTROL	0.6	1.503	5.98	Oxygen process controller power
+W005_OUT_POWER_CONTROL	L88_Protected5VControlSupply	P196	POWER_CONTROL	-1.882	1.653	10.18	Humidity recovery controller power
+W005_IN_POWER_CONTROL	L88_HumidityRecoveryPLC	P102	POWER_CONTROL	-9.168	1.503	8.13	Humidity recovery controller power
+W006_OUT_POWER_CONTROL	L88_Protected5VControlSupply	P191	POWER_CONTROL	-2.342	1.653	10.18	Ventilation and air-quality controller power
+W006_IN_POWER_CONTROL	L88_AirQualityEnvironmentalPLC	P156	POWER_CONTROL	-5.726	1.653	10.18	Ventilation and air-quality controller power
+W007_OUT_POWER_CONTROL	L88_Protected5VControlSupply	P195	POWER_CONTROL	-1.974	1.653	10.18	Atmosphere SCADA control power
+W007_IN_POWER_CONTROL	L88_HabitatEnvironmentalSCADA	P224	POWER_CONTROL	0.276	7.253	-5.27	Atmosphere SCADA control power
+W008_OUT_POWER_CONTROL	L88_Protected5VControlSupply	P190	POWER_CONTROL	-2.434	1.653	10.18	Primary cabin pressure transducer conditioning power
+W008_IN_POWER_CONTROL	L88_CabinPressurePrimaryTransducer	P133	POWER_CONTROL	6.572	1.503	8.13	Primary cabin pressure transducer conditioning power
+W009_OUT_POWER_CONTROL	L88_Protected5VControlSupply	P194	POWER_CONTROL	-2.066	1.653	10.18	Backup pressure monitor logic power
+W009_IN_POWER_CONTROL	L88_IndependentCabinPressureSensor	P135	POWER_CONTROL	8.192	1.503	8.13	Backup pressure monitor logic power
+W010_OUT_POWER_CONTROL	L88_Protected5VControlSupply	P189	POWER_CONTROL	-2.526	1.653	10.18	Telemetry gateway logic power
+W010_IN_POWER_CONTROL	L88_OxygenCO2TelemetryGateway	P197	POWER_CONTROL	-0.788	1.653	10.18	Telemetry gateway logic power
+W011_OUT_GROUND_RETURN	L88_HabitatLifeSupportSafetyPLC	P178	GROUND_RETURN	-3.988	1.758	10.18	Life-support safety control return
+W011_IN_GROUND_RETURN	L88_Protected5VControlSupply	P193	GROUND_RETURN	-2.158	1.653	10.18	Life-support safety control return
+W012_OUT_GROUND_RETURN	L88_ECLSSMasterPLC	P213	GROUND_RETURN	1.594	1.758	10.18	Main ECLSS supervisory control return
+W012_IN_GROUND_RETURN	L88_Protected5VControlSupply	P188	GROUND_RETURN	-2.618	1.653	10.18	Main ECLSS supervisory control return
+W013_OUT_ANALOG_FEEDBACK	L88_HabitatA_ZonePressureSensor	P129	ANALOG_FEEDBACK	0.092	1.503	8.13	Crew compartment measured cabin pressure
+W013_IN_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P199	ANALOG_FEEDBACK	1.134	1.653	10.18	Crew compartment measured cabin pressure
+W014_OUT_ANALOG_FEEDBACK	L88_HabitatB_ZonePressureSensor	P130	ANALOG_FEEDBACK	1.712	1.503	8.13	Research compartment measured cabin pressure
+W014_IN_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P203	ANALOG_FEEDBACK	1.502	1.653	10.18	Research compartment measured cabin pressure
+W015_OUT_ANALOG_FEEDBACK	L88_HabitatC_ZonePressureSensor	P131	ANALOG_FEEDBACK	3.332	1.503	8.13	Garden compartment measured cabin pressure
+W015_IN_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P207	ANALOG_FEEDBACK	1.042	1.758	10.18	Garden compartment measured cabin pressure
+W016_OUT_ANALOG_FEEDBACK	L88_HabitatD_ZonePressureSensor	P132	ANALOG_FEEDBACK	4.952	1.503	8.13	Habitat compartment measured cabin pressure
+W016_IN_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P211	ANALOG_FEEDBACK	1.41	1.758	10.18	Habitat compartment measured cabin pressure
+W017_OUT_ANALOG_FEEDBACK	L88_CabinPressurePrimaryTransducer	P133	ANALOG_FEEDBACK	6.572	1.503	8.13	Primary cabin total-pressure telemetry diagnostic
+W017_IN_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P215	ANALOG_FEEDBACK	1.778	1.758	10.18	Primary cabin total-pressure telemetry diagnostic
+W018_OUT_ANALOG_FEEDBACK	L88_IndependentCabinPressureSensor	P135	ANALOG_FEEDBACK	8.192	1.503	8.13	Independent cabin-pressure safety monitor
+W018_IN_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P164	ANALOG_FEEDBACK	-4.448	1.653	10.18	Independent cabin-pressure safety monitor
+W019_OUT_ANALOG_FEEDBACK	L88_DifferentialPressureMonitorArray	P139	ANALOG_FEEDBACK	9.904	1.503	8.13	Differential compartment pressure trend
+W019_IN_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P202	ANALOG_FEEDBACK	1.41	1.653	10.18	Differential compartment pressure trend
+W020_OUT_ANALOG_FEEDBACK	L88_AdsorberInletCO2Analyzer	P024	ANALOG_FEEDBACK	-12.784	1.503	5.98	CO2 absorption intake actual measurement
+W020_IN_ANALOG_FEEDBACK	L88_CO2RegenerationControllerPLC	P040	ANALOG_FEEDBACK	-7.228	1.503	5.98	CO2 absorption intake actual measurement
+W021_OUT_ANALOG_FEEDBACK	L88_AdsorberOutletCO2Analyzer	P025	ANALOG_FEEDBACK	-11.648	1.503	5.98	CO2 absorption exhaust actual measurement
+W021_IN_ANALOG_FEEDBACK	L88_CO2RegenerationControllerPLC	P044	ANALOG_FEEDBACK	-7.688	1.608	5.98	CO2 absorption exhaust actual measurement
+W022_OUT_ANALOG_FEEDBACK	L88_OxygenPartialPressureAnalyzer	P063	ANALOG_FEEDBACK	-4.956	1.503	5.98	Oxygen partial-pressure sensor feedback
+W022_IN_ANALOG_FEEDBACK	L88_OxygenGenerationProcessPLC	P081	ANALOG_FEEDBACK	0.968	1.503	5.98	Oxygen partial-pressure sensor feedback
+W023_OUT_ANALOG_FEEDBACK	L88_VaporHumidityProbeArray	P113	ANALOG_FEEDBACK	-8.008	1.503	8.13	Water-vapor humidity measurement
+W023_IN_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P107	ANALOG_FEEDBACK	-9.536	1.608	8.13	Water-vapor humidity measurement
+W024_OUT_ANALOG_FEEDBACK	L88_AirFlowVelocityMeasurementRack	P145	ANALOG_FEEDBACK	-9.938	1.653	10.18	Actual air-duct flow velocity
+W024_IN_ANALOG_FEEDBACK	L88_AirQualityEnvironmentalPLC	P163	ANALOG_FEEDBACK	-5.91	1.758	10.18	Actual air-duct flow velocity
+W025_OUT_ANALOG_FEEDBACK	L88_GasMixingAndSamplingStation	P148	ANALOG_FEEDBACK	-8.016	1.653	10.18	Mixed sample gas analyzer output
+W025_IN_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P211	ANALOG_FEEDBACK	1.41	1.758	10.18	Mixed sample gas analyzer output
+W026_OUT_ANALOG_FEEDBACK	L88_OxygenCO2TelemetryGateway	P197	ANALOG_FEEDBACK	-0.788	1.653	10.18	Atmosphere sampling gateway display
+W026_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P229	ANALOG_FEEDBACK	-0.092	7.358	-5.27	Atmosphere sampling gateway display
+W027_OUT_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P198	ANALOG_FEEDBACK	1.042	1.653	10.18	Zone A pressure sampling request
+W027_IN_ANALOG_FEEDBACK	L88_HabitatA_ZonePressureSensor	P129	ANALOG_FEEDBACK	0.092	1.503	8.13	Zone A pressure sampling request
+W028_OUT_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P202	ANALOG_FEEDBACK	1.41	1.653	10.18	Zone B pressure sampling request
+W028_IN_ANALOG_FEEDBACK	L88_HabitatB_ZonePressureSensor	P130	ANALOG_FEEDBACK	1.712	1.503	8.13	Zone B pressure sampling request
+W029_OUT_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P206	ANALOG_FEEDBACK	1.778	1.653	10.18	Zone C pressure sampling request
+W029_IN_ANALOG_FEEDBACK	L88_HabitatC_ZonePressureSensor	P131	ANALOG_FEEDBACK	3.332	1.503	8.13	Zone C pressure sampling request
+W030_OUT_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P210	ANALOG_FEEDBACK	1.318	1.758	10.18	Zone D pressure sampling request
+W030_IN_ANALOG_FEEDBACK	L88_HabitatD_ZonePressureSensor	P132	ANALOG_FEEDBACK	4.952	1.503	8.13	Zone D pressure sampling request
+W031_OUT_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P180	ANALOG_FEEDBACK	-3.804	1.758	10.18	Safety differential pressure diagnostic
+W031_IN_ANALOG_FEEDBACK	L88_DifferentialPressureMonitorArray	P139	ANALOG_FEEDBACK	9.904	1.503	8.13	Safety differential pressure diagnostic
+W032_OUT_ANALOG_FEEDBACK	L88_AirQualityEnvironmentalPLC	P160	ANALOG_FEEDBACK	-6.186	1.758	10.18	Airflow transducer calibration command
+W032_IN_ANALOG_FEEDBACK	L88_AirFlowVelocityMeasurementRack	P146	ANALOG_FEEDBACK	-9.846	1.653	10.18	Airflow transducer calibration command
+W033_OUT_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P198	ANALOG_FEEDBACK	1.042	1.653	10.18	Oxygen analyzer measurement request
+W033_IN_ANALOG_FEEDBACK	L88_OxygenPartialPressureAnalyzer	P062	ANALOG_FEEDBACK	-5.048	1.503	5.98	Oxygen analyzer measurement request
+W034_OUT_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P202	ANALOG_FEEDBACK	1.41	1.653	10.18	CO2 intake calibration request
+W034_IN_ANALOG_FEEDBACK	L88_AdsorberInletCO2Analyzer	P023	ANALOG_FEEDBACK	-12.876	1.503	5.98	CO2 intake calibration request
+W035_OUT_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P206	ANALOG_FEEDBACK	1.778	1.653	10.18	CO2 outlet calibration request
+W035_IN_ANALOG_FEEDBACK	L88_AdsorberOutletCO2Analyzer	P027	ANALOG_FEEDBACK	-11.464	1.503	5.98	CO2 outlet calibration request
+W036_OUT_ANALOG_FEEDBACK	L88_IndependentCabinPressureSensor	P135	ANALOG_FEEDBACK	8.192	1.503	8.13	Non-authoritative backup pressure diagnostic display
+W036_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P225	ANALOG_FEEDBACK	0.368	7.253	-5.27	Non-authoritative backup pressure diagnostic display
+W037_OUT_DIGITAL_CONTROL	L88_CO2RegenerationControllerPLC	P045	DIGITAL_CONTROL	-7.596	1.608	5.98	Adsorber A process start permit
+W037_IN_DIGITAL_CONTROL	L88_DualAdsorberTowerA	P013	DIGITAL_CONTROL	-11.368	3.053	-0.22	Adsorber A process start permit
+W038_OUT_DIGITAL_CONTROL	L88_CO2RegenerationControllerPLC	P049	DIGITAL_CONTROL	-7.228	1.608	5.98	Adsorber B process start permit
+W038_IN_DIGITAL_CONTROL	L88_DualAdsorberTowerB	P014	DIGITAL_CONTROL	-8.718	3.053	-0.22	Adsorber B process start permit
+W039_OUT_DIGITAL_CONTROL	L88_CO2RegenerationControllerPLC	P035	DIGITAL_CONTROL	-7.688	1.503	5.98	Adsorber A inlet command
+W039_IN_DIGITAL_CONTROL	L88_AdsorberAFlowDistributor	P015	DIGITAL_CONTROL	-11.368	1.703	1.78	Adsorber A inlet command
+W040_OUT_DIGITAL_CONTROL	L88_CO2RegenerationControllerPLC	P039	DIGITAL_CONTROL	-7.32	1.503	5.98	Adsorber B inlet command
+W040_IN_DIGITAL_CONTROL	L88_AdsorberBFlowDistributor	P016	DIGITAL_CONTROL	-8.718	1.703	1.78	Adsorber B inlet command
+W041_OUT_ANALOG_FEEDBACK	L88_AdsorberAFlowDistributor	P015	ANALOG_FEEDBACK	-11.368	1.703	1.78	Adsorber A actual valve feedback
+W041_IN_ANALOG_FEEDBACK	L88_CO2RegenerationControllerPLC	P043	ANALOG_FEEDBACK	-6.952	1.503	5.98	Adsorber A actual valve feedback
+W042_OUT_ANALOG_FEEDBACK	L88_AdsorberBFlowDistributor	P016	ANALOG_FEEDBACK	-8.718	1.703	1.78	Adsorber B actual valve feedback
+W042_IN_ANALOG_FEEDBACK	L88_CO2RegenerationControllerPLC	P047	ANALOG_FEEDBACK	-7.412	1.608	5.98	Adsorber B actual valve feedback
+W043_OUT_DIGITAL_CONTROL	L88_AdsorbentCartridgeArrayA	P017	DIGITAL_CONTROL	-11.368	2.553	-0.02	Adsorber A sorbent loading measurement
+W043_IN_DIGITAL_CONTROL	L88_AdsorptionCapacityMonitor	P031	DIGITAL_CONTROL	-10.052	1.503	5.98	Adsorber A sorbent loading measurement
+W044_OUT_DIGITAL_CONTROL	L88_AdsorbentCartridgeArrayB	P018	DIGITAL_CONTROL	-8.718	2.553	-0.02	Adsorber B sorbent loading measurement
+W044_IN_DIGITAL_CONTROL	L88_AdsorptionCapacityMonitor	P031	DIGITAL_CONTROL	-10.052	1.503	5.98	Adsorber B sorbent loading measurement
+W045_OUT_ANALOG_FEEDBACK	L88_AdsorptionCapacityMonitor	P031	ANALOG_FEEDBACK	-10.052	1.503	5.98	Measured capture capacity qualification
+W045_IN_ANALOG_FEEDBACK	L88_CO2RegenerationControllerPLC	P035	ANALOG_FEEDBACK	-7.688	1.503	5.98	Measured capture capacity qualification
+W046_OUT_DIGITAL_CONTROL	L88_CO2RegenerationControllerPLC	P039	DIGITAL_CONTROL	-7.32	1.503	5.98	Adsorber A regeneration heater enable
+W046_IN_DIGITAL_CONTROL	L88_AdsorberRegenerationHeaterA	P019	DIGITAL_CONTROL	-11.368	1.553	-1.52	Adsorber A regeneration heater enable
+W047_OUT_DIGITAL_CONTROL	L88_CO2RegenerationControllerPLC	P043	DIGITAL_CONTROL	-6.952	1.503	5.98	Adsorber B regeneration heater enable
+W047_IN_DIGITAL_CONTROL	L88_AdsorberRegenerationHeaterB	P020	DIGITAL_CONTROL	-8.718	1.553	-1.52	Adsorber B regeneration heater enable
+W048_OUT_ANALOG_FEEDBACK	L88_AdsorberRegenerationHeaterA	P019	ANALOG_FEEDBACK	-11.368	1.553	-1.52	Adsorber A actual heat feedback
+W048_IN_ANALOG_FEEDBACK	L88_CO2RegenerationControllerPLC	P047	ANALOG_FEEDBACK	-7.412	1.608	5.98	Adsorber A actual heat feedback
+W049_OUT_ANALOG_FEEDBACK	L88_AdsorberRegenerationHeaterB	P020	ANALOG_FEEDBACK	-8.718	1.553	-1.52	Adsorber B actual heat feedback
+W049_IN_ANALOG_FEEDBACK	L88_CO2RegenerationControllerPLC	P051	ANALOG_FEEDBACK	-7.044	1.608	5.98	Adsorber B actual heat feedback
+W050_OUT_DIGITAL_CONTROL	L88_CO2RegenerationControllerPLC	P037	DIGITAL_CONTROL	-7.504	1.503	5.98	Selector valve switching command
+W050_IN_DIGITAL_CONTROL	L88_AdsorberCycleSelectorValveManifold	P021	DIGITAL_CONTROL	-10.068	1.853	2.48	Selector valve switching command
+W051_OUT_ANALOG_FEEDBACK	L88_AdsorberCycleSelectorValveManifold	P021	ANALOG_FEEDBACK	-10.068	1.853	2.48	Selector valve actual transition feedback
+W051_IN_ANALOG_FEEDBACK	L88_CO2RegenerationControllerPLC	P041	ANALOG_FEEDBACK	-7.136	1.503	5.98	Selector valve actual transition feedback
+W052_OUT_DIGITAL_CONTROL	L88_CO2RegenerationControllerPLC	P045	DIGITAL_CONTROL	-7.596	1.608	5.98	Exhaust regeneration condenser enable
+W052_IN_DIGITAL_CONTROL	L88_RegenerationExhaustCondenser	P032	DIGITAL_CONTROL	-11.068	1.303	4.28	Exhaust regeneration condenser enable
+W053_OUT_ANALOG_FEEDBACK	L88_RegenerationExhaustCondenser	P032	ANALOG_FEEDBACK	-11.068	1.303	4.28	Exhaust condenser active status
+W053_IN_ANALOG_FEEDBACK	L88_CO2RegenerationControllerPLC	P049	ANALOG_FEEDBACK	-7.228	1.608	5.98	Exhaust condenser active status
+W054_OUT_DIGITAL_CONTROL	L88_CO2RegenerationControllerPLC	P035	DIGITAL_CONTROL	-7.688	1.503	5.98	Captured CO2 storage isolation command
+W054_IN_DIGITAL_CONTROL	L88_CO2StorageIsolationCanister	P033	DIGITAL_CONTROL	-9.268	1.553	4.28	Captured CO2 storage isolation command
+W055_OUT_ANALOG_FEEDBACK	L88_CO2StorageIsolationCanister	P033	ANALOG_FEEDBACK	-9.268	1.553	4.28	CO2 canister isolation actual position
+W055_IN_ANALOG_FEEDBACK	L88_CO2RegenerationControllerPLC	P039	ANALOG_FEEDBACK	-7.32	1.503	5.98	CO2 canister isolation actual position
+W056_OUT_ANALOG_FEEDBACK	L88_CO2BreakthroughFaultInjector	P034	ANALOG_FEEDBACK	-9.008	1.503	5.98	Breakthrough fault injection status
+W056_IN_ANALOG_FEEDBACK	L88_CO2RegenerationControllerPLC	P043	ANALOG_FEEDBACK	-6.952	1.503	5.98	Breakthrough fault injection status
+W057_OUT_DIGITAL_CONTROL	L88_AdsorberInletCO2Analyzer	P022	DIGITAL_CONTROL	-12.968	1.503	5.98	Adsorbent upstream CO2 sample
+W057_IN_DIGITAL_CONTROL	L88_AdsorptionCapacityMonitor	P030	DIGITAL_CONTROL	-10.144	1.503	5.98	Adsorbent upstream CO2 sample
+W058_OUT_DIGITAL_CONTROL	L88_AdsorberOutletCO2Analyzer	P026	DIGITAL_CONTROL	-11.556	1.503	5.98	Adsorbent downstream CO2 sample
+W058_IN_DIGITAL_CONTROL	L88_AdsorptionCapacityMonitor	P030	DIGITAL_CONTROL	-10.144	1.503	5.98	Adsorbent downstream CO2 sample
+W059_OUT_ANALOG_FEEDBACK	L88_CO2RegenerationControllerPLC	P049	ANALOG_FEEDBACK	-7.228	1.608	5.98	Measured scrubber cycle health telemetry
+W059_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P217	ANALOG_FEEDBACK	-0.368	7.253	-5.27	Measured scrubber cycle health telemetry
+W060_OUT_DIGITAL_CONTROL	L88_ECLSSMasterPLC	P198	DIGITAL_CONTROL	1.042	1.653	10.18	Master scrubber operating setpoint
+W060_IN_DIGITAL_CONTROL	L88_CO2RegenerationControllerPLC	P035	DIGITAL_CONTROL	-7.688	1.503	5.98	Master scrubber operating setpoint
+W061_OUT_DIGITAL_CONTROL	L88_OxygenGenerationProcessPLC	P089	DIGITAL_CONTROL	0.876	1.608	5.98	Water electrolysis generation enable
+W061_IN_DIGITAL_CONTROL	L88_O2WaterElectrolysisChamber	P053	DIGITAL_CONTROL	-4.368	2.803	-0.67	Water electrolysis generation enable
+W062_OUT_DIGITAL_CONTROL	L88_OxygenGenerationProcessPLC	P076	DIGITAL_CONTROL	0.508	1.503	5.98	Electrolysis cell stack A drive request
+W062_IN_DIGITAL_CONTROL	L88_O2CellStackA	P054	DIGITAL_CONTROL	-5.618	2.553	-0.12	Electrolysis cell stack A drive request
+W063_OUT_DIGITAL_CONTROL	L88_OxygenGenerationProcessPLC	P080	DIGITAL_CONTROL	0.876	1.503	5.98	Electrolysis cell stack B drive request
+W063_IN_DIGITAL_CONTROL	L88_O2CellStackB	P055	DIGITAL_CONTROL	-3.118	2.553	-0.12	Electrolysis cell stack B drive request
+W064_OUT_ANALOG_FEEDBACK	L88_O2CellStackA	P054	ANALOG_FEEDBACK	-5.618	2.553	-0.12	Cell stack A voltage and health
+W064_IN_ANALOG_FEEDBACK	L88_ElectrolyzerCellMonitoringConsole	P071	ANALOG_FEEDBACK	-1.088	1.503	5.98	Cell stack A voltage and health
+W065_OUT_ANALOG_FEEDBACK	L88_O2CellStackB	P055	ANALOG_FEEDBACK	-3.118	2.553	-0.12	Cell stack B voltage and health
+W065_IN_ANALOG_FEEDBACK	L88_ElectrolyzerCellMonitoringConsole	P071	ANALOG_FEEDBACK	-1.088	1.503	5.98	Cell stack B voltage and health
+W066_OUT_ANALOG_FEEDBACK	L88_ElectrolyzerCellMonitoringConsole	P071	ANALOG_FEEDBACK	-1.088	1.503	5.98	Individual electrolysis cell diagnostics
+W066_IN_ANALOG_FEEDBACK	L88_OxygenGenerationProcessPLC	P086	ANALOG_FEEDBACK	0.6	1.608	5.98	Individual electrolysis cell diagnostics
+W067_OUT_DIGITAL_CONTROL	L88_OxygenGenerationProcessPLC	P073	DIGITAL_CONTROL	0.232	1.503	5.98	Oxygen product gas separator command
+W067_IN_DIGITAL_CONTROL	L88_OxygenGasSeparator	P056	DIGITAL_CONTROL	-2.018	1.853	1.48	Oxygen product gas separator command
+W068_OUT_ANALOG_FEEDBACK	L88_OxygenGasSeparator	P056	ANALOG_FEEDBACK	-2.018	1.853	1.48	Gas separator measured qualification
+W068_IN_ANALOG_FEEDBACK	L88_OxygenGenerationProcessPLC	P077	ANALOG_FEEDBACK	0.6	1.503	5.98	Gas separator measured qualification
+W069_OUT_DIGITAL_CONTROL	L88_OxygenGenerationProcessPLC	P081	DIGITAL_CONTROL	0.968	1.503	5.98	Isolate byproduct stream safety command
+W069_IN_DIGITAL_CONTROL	L88_HydrogenByproductIsolationModule	P058	DIGITAL_CONTROL	-5.776	1.603	2.18	Isolate byproduct stream safety command
+W070_OUT_ANALOG_FEEDBACK	L88_HydrogenByproductIsolationModule	P058	ANALOG_FEEDBACK	-5.776	1.603	2.18	Byproduct containment safety status
+W070_IN_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P174	ANALOG_FEEDBACK	-4.356	1.758	10.18	Byproduct containment safety status
+W071_OUT_DIGITAL_CONTROL	L88_OxygenGenerationProcessPLC	P086	DIGITAL_CONTROL	0.6	1.608	5.98	Oxygen buffer fill request
+W071_IN_DIGITAL_CONTROL	L88_OxygenBufferStorageTank	P060	DIGITAL_CONTROL	-0.476	2.503	-0.52	Oxygen buffer fill request
+W072_OUT_ANALOG_FEEDBACK	L88_OxygenBufferStorageTank	P060	ANALOG_FEEDBACK	-0.476	2.503	-0.52	Measured oxygen buffer inventory
+W072_IN_ANALOG_FEEDBACK	L88_OxygenGenerationProcessPLC	P073	ANALOG_FEEDBACK	0.232	1.503	5.98	Measured oxygen buffer inventory
+W073_OUT_ANALOG_FEEDBACK	L88_OxygenGenerationProcessPLC	P077	ANALOG_FEEDBACK	0.6	1.503	5.98	Oxygen outlet flow demand
+W073_IN_ANALOG_FEEDBACK	L88_OxygenOutputFlowController	P061	ANALOG_FEEDBACK	-6.368	1.503	5.98	Oxygen outlet flow demand
+W074_OUT_ANALOG_FEEDBACK	L88_OxygenOutputFlowController	P061	ANALOG_FEEDBACK	-6.368	1.503	5.98	Measured delivered oxygen flow
+W074_IN_ANALOG_FEEDBACK	L88_OxygenGenerationProcessPLC	P081	ANALOG_FEEDBACK	0.968	1.503	5.98	Measured delivered oxygen flow
+W075_OUT_ANALOG_FEEDBACK	L88_OxygenPartialPressureAnalyzer	P062	ANALOG_FEEDBACK	-5.048	1.503	5.98	Oxygen partial pressure control feedback
+W075_IN_ANALOG_FEEDBACK	L88_OxygenGenerationProcessPLC	P085	ANALOG_FEEDBACK	0.508	1.608	5.98	Oxygen partial pressure control feedback
+W076_OUT_ANALOG_FEEDBACK	L88_OxygenOutputQualityMonitor	P065	ANALOG_FEEDBACK	-3.728	1.503	5.98	Oxygen product quality feedback
+W076_IN_ANALOG_FEEDBACK	L88_OxygenGenerationProcessPLC	P089	ANALOG_FEEDBACK	0.876	1.608	5.98	Oxygen product quality feedback
+W077_OUT_DIGITAL_CONTROL	L88_OxygenGenerationProcessPLC	P076	DIGITAL_CONTROL	0.508	1.503	5.98	Electrolysis power converter current limit
+W077_IN_DIGITAL_CONTROL	L88_O2GenerationPowerConverter	P066	DIGITAL_CONTROL	-2.408	1.503	5.98	Electrolysis power converter current limit
+W078_OUT_ANALOG_FEEDBACK	L88_O2GenerationPowerConverter	P066	ANALOG_FEEDBACK	-2.408	1.503	5.98	Measured electrolyzer power and losses
+W078_IN_ANALOG_FEEDBACK	L88_OxygenGenerationProcessPLC	P080	ANALOG_FEEDBACK	0.876	1.503	5.98	Measured electrolyzer power and losses
+W079_OUT_DIGITAL_CONTROL	L88_OxygenGenerationProcessPLC	P084	DIGITAL_CONTROL	0.416	1.608	5.98	Oxygen plant thermal cooling command
+W079_IN_DIGITAL_CONTROL	L88_OxygenGeneratorThermalCoolingLoop	P067	DIGITAL_CONTROL	-2.568	1.203	3.58	Oxygen plant thermal cooling command
+W080_OUT_ANALOG_FEEDBACK	L88_OxygenGeneratorThermalCoolingLoop	P067	ANALOG_FEEDBACK	-2.568	1.203	3.58	Coolant flow and temperature feedback
+W080_IN_ANALOG_FEEDBACK	L88_OxygenGenerationProcessPLC	P088	ANALOG_FEEDBACK	0.784	1.608	5.98	Coolant flow and temperature feedback
+W081_OUT_DIGITAL_CONTROL	L88_OxygenGenerationProcessPLC	P075	DIGITAL_CONTROL	0.416	1.503	5.98	Oxygen delivery regulation permit
+W081_IN_DIGITAL_CONTROL	L88_OxygenDeliveryRegulatorManifold	P069	DIGITAL_CONTROL	-0.568	1.553	2.08	Oxygen delivery regulation permit
+W082_OUT_DIGITAL_CONTROL	L88_OxygenEmergencyBackupReserve	P070	DIGITAL_CONTROL	1.032	2.153	1.58	Emergency reserve isolation safety state
+W082_IN_DIGITAL_CONTROL	L88_HabitatLifeSupportSafetyPLC	P165	DIGITAL_CONTROL	-4.356	1.653	10.18	Emergency reserve isolation safety state
+W083_OUT_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P106	ANALOG_FEEDBACK	-9.628	1.608	8.13	Humidity condenser process enable
+W083_IN_ANALOG_FEEDBACK	L88_HumidityCondensingHeatExchanger	P090	ANALOG_FEEDBACK	3.632	2.053	-0.82	Humidity condenser process enable
+W084_OUT_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P110	ANALOG_FEEDBACK	-9.26	1.608	8.13	Cooling coil heat exchange command
+W084_IN_ANALOG_FEEDBACK	L88_CoolingCoilSerpentineAssembly	P091	ANALOG_FEEDBACK	3.632	2.653	-0.82	Cooling coil heat exchange command
+W085_OUT_ANALOG_FEEDBACK	L88_CoolingCoilSerpentineAssembly	P091	ANALOG_FEEDBACK	3.632	2.653	-0.82	Cooling circuit actual temperature feedback
+W085_IN_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P098	ANALOG_FEEDBACK	-9.536	1.503	8.13	Cooling circuit actual temperature feedback
+W086_OUT_ANALOG_FEEDBACK	L88_HumidityCondensingHeatExchanger	P090	ANALOG_FEEDBACK	3.632	2.053	-0.82	Measured condensate collection rate
+W086_IN_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P102	ANALOG_FEEDBACK	-9.168	1.503	8.13	Measured condensate collection rate
+W087_OUT_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P106	ANALOG_FEEDBACK	-9.628	1.608	8.13	Condensate separation command
+W087_IN_ANALOG_FEEDBACK	L88_CondensateWaterSeparator	P092	ANALOG_FEEDBACK	5.532	1.353	1.88	Condensate separation command
+W088_OUT_ANALOG_FEEDBACK	L88_CondensateWaterSeparator	P092	ANALOG_FEEDBACK	5.532	1.353	1.88	Separator actual throughput feedback
+W088_IN_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P110	ANALOG_FEEDBACK	-9.26	1.608	8.13	Separator actual throughput feedback
+W089_OUT_ANALOG_FEEDBACK	L88_CondensateCollectionReservoir	P093	ANALOG_FEEDBACK	4.932	1.453	3.58	Recovered water tank level
+W089_IN_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P098	ANALOG_FEEDBACK	-9.536	1.503	8.13	Recovered water tank level
+W090_OUT_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P102	ANALOG_FEEDBACK	-9.168	1.503	8.13	Reclaimed water pump run command
+W090_IN_ANALOG_FEEDBACK	L88_ReclaimedWaterPump	P094	ANALOG_FEEDBACK	6.532	1.253	3.63	Reclaimed water pump run command
+W091_OUT_ANALOG_FEEDBACK	L88_ReclaimedWaterPump	P094	ANALOG_FEEDBACK	6.532	1.253	3.63	Actual reclaimed water pump flow
+W091_IN_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P106	ANALOG_FEEDBACK	-9.628	1.608	8.13	Actual reclaimed water pump flow
+W092_OUT_ANALOG_FEEDBACK	L88_WaterQualityMonitoringStation	P095	ANALOG_FEEDBACK	-12.868	1.503	8.13	Reclaimed water quality validity
+W092_IN_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P110	ANALOG_FEEDBACK	-9.26	1.608	8.13	Reclaimed water quality validity
+W093_OUT_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P098	ANALOG_FEEDBACK	-9.536	1.503	8.13	Water cartridge filtration enable
+W093_IN_ANALOG_FEEDBACK	L88_RecoveredWaterFiltrationRack	P115	ANALOG_FEEDBACK	3.632	1.503	3.78	Water cartridge filtration enable
+W094_OUT_ANALOG_FEEDBACK	L88_RecoveredWaterFiltrationRack	P115	ANALOG_FEEDBACK	3.632	1.503	3.78	Water filtration actual health
+W094_IN_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P102	ANALOG_FEEDBACK	-9.168	1.503	8.13	Water filtration actual health
+W095_OUT_ANALOG_FEEDBACK	L88_VaporHumidityProbeArray	P113	ANALOG_FEEDBACK	-8.008	1.503	8.13	Compartment humidity actual measurement
+W095_IN_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P106	ANALOG_FEEDBACK	-9.628	1.608	8.13	Compartment humidity actual measurement
+W096_OUT_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P110	ANALOG_FEEDBACK	-9.26	1.608	8.13	Condensation cooling valve actuator command
+W096_IN_ANALOG_FEEDBACK	L88_CoolingValveActuator	P114	ANALOG_FEEDBACK	-6.388	1.503	8.13	Condensation cooling valve actuator command
+W097_OUT_ANALOG_FEEDBACK	L88_CoolingValveActuator	P114	ANALOG_FEEDBACK	-6.388	1.503	8.13	Actual cooling valve position feedback
+W097_IN_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P098	ANALOG_FEEDBACK	-9.536	1.503	8.13	Actual cooling valve position feedback
+W098_OUT_ANALOG_FEEDBACK	L88_FrozenCondenserFaultInjector	P096	ANALOG_FEEDBACK	-11.248	1.503	8.13	Frozen condenser diagnostic fault state
+W098_IN_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P102	ANALOG_FEEDBACK	-9.168	1.503	8.13	Frozen condenser diagnostic fault state
+W099_OUT_ANALOG_FEEDBACK	L88_WaterResourceBudgetAnalyzer	P116	ANALOG_FEEDBACK	-4.768	1.503	8.13	Water reserve budget constraint
+W099_IN_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P106	ANALOG_FEEDBACK	-9.628	1.608	8.13	Water reserve budget constraint
+W100_OUT_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P110	ANALOG_FEEDBACK	-9.26	1.608	8.13	Measured recovered water inventory
+W100_IN_ANALOG_FEEDBACK	L88_WaterResourceBudgetAnalyzer	P117	ANALOG_FEEDBACK	-4.676	1.503	8.13	Measured recovered water inventory
+W101_OUT_ANALOG_FEEDBACK	L88_WaterResourceBudgetAnalyzer	P118	ANALOG_FEEDBACK	-4.584	1.503	8.13	Water supply allowance to oxygen plant
+W101_IN_ANALOG_FEEDBACK	L88_WaterFeedPumpToElectrolyzer	P068	ANALOG_FEEDBACK	-4.668	0.953	3.68	Water supply allowance to oxygen plant
+W102_OUT_ANALOG_FEEDBACK	L88_WaterFeedPumpToElectrolyzer	P068	ANALOG_FEEDBACK	-4.668	0.953	3.68	Water pump actual feed flow to electrolysis
+W102_IN_ANALOG_FEEDBACK	L88_OxygenGenerationProcessPLC	P082	ANALOG_FEEDBACK	0.232	1.608	5.98	Water pump actual feed flow to electrolysis
+W103_OUT_DIGITAL_CONTROL	L88_AirQualityEnvironmentalPLC	P150	DIGITAL_CONTROL	-6.278	1.653	10.18	Main circulation blower enable
+W103_IN_DIGITAL_CONTROL	L88_VentilationMainCirculationBlower	P120	DIGITAL_CONTROL	8.724	1.953	-0.52	Main circulation blower enable
+W104_OUT_DIGITAL_CONTROL	L88_AirQualityEnvironmentalPLC	P154	DIGITAL_CONTROL	-5.91	1.653	10.18	Backup circulation blower enable
+W104_IN_DIGITAL_CONTROL	L88_VentilationSecondaryCirculationBlower	P122	DIGITAL_CONTROL	10.732	1.953	-0.52	Backup circulation blower enable
+W105_OUT_DIGITAL_CONTROL	L88_AirQualityEnvironmentalPLC	P158	DIGITAL_CONTROL	-5.542	1.653	10.18	Main fan speed request
+W105_IN_DIGITAL_CONTROL	L88_VariableFrequencyFanDriveA	P124	DIGITAL_CONTROL	-3.148	1.503	8.13	Main fan speed request
+W106_OUT_DIGITAL_CONTROL	L88_AirQualityEnvironmentalPLC	P162	DIGITAL_CONTROL	-6.002	1.758	10.18	Backup fan speed request
+W106_IN_DIGITAL_CONTROL	L88_VariableFrequencyFanDriveB	P125	DIGITAL_CONTROL	-1.528	1.503	8.13	Backup fan speed request
+W107_OUT_ANALOG_FEEDBACK	L88_VariableFrequencyFanDriveA	P124	ANALOG_FEEDBACK	-3.148	1.503	8.13	Main fan VFD actual output
+W107_IN_ANALOG_FEEDBACK	L88_VentilationMainCirculationBlower	P121	ANALOG_FEEDBACK	8.816	1.953	-0.52	Main fan VFD actual output
+W108_OUT_ANALOG_FEEDBACK	L88_VariableFrequencyFanDriveB	P125	ANALOG_FEEDBACK	-1.528	1.503	8.13	Backup fan VFD actual output
+W108_IN_ANALOG_FEEDBACK	L88_VentilationSecondaryCirculationBlower	P123	ANALOG_FEEDBACK	10.824	1.953	-0.52	Backup fan VFD actual output
+W109_OUT_ANALOG_FEEDBACK	L88_VentilationMainCirculationBlower	P120	ANALOG_FEEDBACK	8.724	1.953	-0.52	Measured primary blower speed
+W109_IN_ANALOG_FEEDBACK	L88_AirQualityEnvironmentalPLC	P154	ANALOG_FEEDBACK	-5.91	1.653	10.18	Measured primary blower speed
+W110_OUT_ANALOG_FEEDBACK	L88_VentilationSecondaryCirculationBlower	P122	ANALOG_FEEDBACK	10.732	1.953	-0.52	Measured standby blower speed
+W110_IN_ANALOG_FEEDBACK	L88_AirQualityEnvironmentalPLC	P158	ANALOG_FEEDBACK	-5.542	1.653	10.18	Measured standby blower speed
+W111_OUT_ANALOG_FEEDBACK	L88_AirQualityEnvironmentalPLC	P162	ANALOG_FEEDBACK	-6.002	1.758	10.18	Main duct distribution flow setpoint
+W111_IN_ANALOG_FEEDBACK	L88_PrimaryAirDuctDistributionManifold	P126	ANALOG_FEEDBACK	9.632	4.103	-2.52	Main duct distribution flow setpoint
+W112_OUT_ANALOG_FEEDBACK	L88_PrimaryAirDuctDistributionManifold	P126	ANALOG_FEEDBACK	9.632	4.103	-2.52	Actual main duct pressure/flow
+W112_IN_ANALOG_FEEDBACK	L88_AirQualityEnvironmentalPLC	P152	ANALOG_FEEDBACK	-6.094	1.653	10.18	Actual main duct pressure/flow
+W113_OUT_DIGITAL_CONTROL	L88_AirQualityEnvironmentalPLC	P156	DIGITAL_CONTROL	-5.726	1.653	10.18	Four-zone motorized damper requests
+W113_IN_DIGITAL_CONTROL	L88_FourZoneMotorizedDamperBank	P128	DIGITAL_CONTROL	9.724	3.453	1.98	Four-zone motorized damper requests
+W114_OUT_ANALOG_FEEDBACK	L88_FourZoneMotorizedDamperBank	P128	ANALOG_FEEDBACK	9.724	3.453	1.98	Measured zone damper positions
+W114_IN_ANALOG_FEEDBACK	L88_AirQualityEnvironmentalPLC	P160	ANALOG_FEEDBACK	-6.186	1.758	10.18	Measured zone damper positions
+W115_OUT_ANALOG_FEEDBACK	L88_AirQualityEnvironmentalPLC	P150	ANALOG_FEEDBACK	-6.278	1.653	10.18	Cabin trace filtration airflow command
+W115_IN_ANALOG_FEEDBACK	L88_TraceContaminantFilterArray	P144	ANALOG_FEEDBACK	11.432	2.353	2.58	Cabin trace filtration airflow command
+W116_OUT_ANALOG_FEEDBACK	L88_TraceContaminantFilterArray	P144	ANALOG_FEEDBACK	11.432	2.353	2.58	Measured replaceable filter pressure drop
+W116_IN_ANALOG_FEEDBACK	L88_AirQualityEnvironmentalPLC	P154	ANALOG_FEEDBACK	-5.91	1.653	10.18	Measured replaceable filter pressure drop
+W117_OUT_ANALOG_FEEDBACK	L88_AirFlowVelocityMeasurementRack	P146	ANALOG_FEEDBACK	-9.846	1.653	10.18	Measured air velocity after filtration
+W117_IN_ANALOG_FEEDBACK	L88_AirQualityEnvironmentalPLC	P158	ANALOG_FEEDBACK	-5.542	1.653	10.18	Measured air velocity after filtration
+W118_OUT_ANALOG_FEEDBACK	L88_AirQualityEnvironmentalPLC	P162	ANALOG_FEEDBACK	-6.002	1.758	10.18	Compartment gas mixing sampling command
+W118_IN_ANALOG_FEEDBACK	L88_GasMixingAndSamplingStation	P148	ANALOG_FEEDBACK	-8.016	1.653	10.18	Compartment gas mixing sampling command
+W119_OUT_ANALOG_FEEDBACK	L88_GasMixingAndSamplingStation	P148	ANALOG_FEEDBACK	-8.016	1.653	10.18	Sample station calibrated gas quality
+W119_IN_ANALOG_FEEDBACK	L88_AirQualityEnvironmentalPLC	P152	ANALOG_FEEDBACK	-6.094	1.653	10.18	Sample station calibrated gas quality
+W120_OUT_DIGITAL_CONTROL	L88_ECLSSMasterPLC	P207	DIGITAL_CONTROL	1.042	1.758	10.18	Habitat occupancy demand ventilation plan
+W120_IN_DIGITAL_CONTROL	L88_AirQualityEnvironmentalPLC	P156	DIGITAL_CONTROL	-5.726	1.653	10.18	Habitat occupancy demand ventilation plan
+W121_OUT_SAFETY_INTERLOCK	L88_HabitatLifeSupportSafetyPLC	P183	SAFETY_INTERLOCK	-4.356	1.863	10.18	Compartment leak isolation authorization
+W121_IN_SAFETY_INTERLOCK	L88_CabinLeakIsolationManifold	P141	SAFETY_INTERLOCK	9.332	1.353	4.08	Compartment leak isolation authorization
+W122_OUT_ANALOG_FEEDBACK	L88_CabinLeakIsolationManifold	P141	ANALOG_FEEDBACK	9.332	1.353	4.08	Actual leak isolation valve feedback
+W122_IN_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P187	ANALOG_FEEDBACK	-3.988	1.863	10.18	Actual leak isolation valve feedback
+W123_OUT_SAFETY_INTERLOCK	L88_HabitatLifeSupportSafetyPLC	P167	SAFETY_INTERLOCK	-4.172	1.653	10.18	Normal pressure regulator safety permit
+W123_IN_SAFETY_INTERLOCK	L88_CabinPressureRegulator	P142	SAFETY_INTERLOCK	10.932	1.353	4.08	Normal pressure regulator safety permit
+W124_OUT_ANALOG_FEEDBACK	L88_CabinPressureRegulator	P142	ANALOG_FEEDBACK	10.932	1.353	4.08	Actual pressure regulator operation state
+W124_IN_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P171	ANALOG_FEEDBACK	-3.804	1.653	10.18	Actual pressure regulator operation state
+W125_OUT_ANALOG_FEEDBACK	L88_HabitatMicroLeakFaultInjector	P143	ANALOG_FEEDBACK	-11.768	1.653	10.18	Micro-leak fault source declaration
+W125_IN_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P175	ANALOG_FEEDBACK	-4.264	1.758	10.18	Micro-leak fault source declaration
+W126_OUT_SAFETY_INTERLOCK	L88_HabitatPressureVesselSafetyRelief	P149	SAFETY_INTERLOCK	12.832	1.853	1.48	Independent relief valve mechanically sensed state
+W126_IN_SAFETY_INTERLOCK	L88_HabitatLifeSupportSafetyPLC	P179	SAFETY_INTERLOCK	-3.896	1.758	10.18	Independent relief valve mechanically sensed state
+W127_OUT_ANALOG_FEEDBACK	L88_IndependentCabinPressureSensor	P136	ANALOG_FEEDBACK	8.284	1.503	8.13	Independent backup pressure protector health
+W127_IN_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P183	ANALOG_FEEDBACK	-4.356	1.863	10.18	Independent backup pressure protector health
+W128_OUT_SAFETY_INTERLOCK	L88_DifferentialPressureMonitorArray	P140	SAFETY_INTERLOCK	9.996	1.503	8.13	Compartments differential pressure safety
+W128_IN_SAFETY_INTERLOCK	L88_HabitatLifeSupportSafetyPLC	P187	SAFETY_INTERLOCK	-3.988	1.863	10.18	Compartments differential pressure safety
+W129_OUT_SAFETY_INTERLOCK	L88_HydrogenByproductIsolationModule	P058	SAFETY_INTERLOCK	-5.776	1.603	2.18	Byproduct stream segregation interlock
+W129_IN_SAFETY_INTERLOCK	L88_HabitatLifeSupportSafetyPLC	P167	SAFETY_INTERLOCK	-4.172	1.653	10.18	Byproduct stream segregation interlock
+W130_OUT_SAFETY_INTERLOCK	L88_OxygenEmergencyBackupReserve	P070	SAFETY_INTERLOCK	1.032	2.153	1.58	Backup oxygen supply isolation state
+W130_IN_SAFETY_INTERLOCK	L88_HabitatLifeSupportSafetyPLC	P171	SAFETY_INTERLOCK	-3.804	1.653	10.18	Backup oxygen supply isolation state
+W131_OUT_SAFETY_INTERLOCK	L88_WaterAndEnergySafetyInterlock	P216	SAFETY_INTERLOCK	2.872	1.653	10.18	Water resource independent safety inhibit
+W131_IN_SAFETY_INTERLOCK	L88_HabitatLifeSupportSafetyPLC	P175	SAFETY_INTERLOCK	-4.264	1.758	10.18	Water resource independent safety inhibit
+W132_OUT_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P179	ANALOG_FEEDBACK	-3.896	1.758	10.18	Safety PLC water-energy permit status
+W132_IN_ANALOG_FEEDBACK	L88_WaterAndEnergySafetyInterlock	P216	ANALOG_FEEDBACK	2.872	1.653	10.18	Safety PLC water-energy permit status
+W133_OUT_SAFETY_INTERLOCK	L88_ECLSSMasterPLC	P205	SAFETY_INTERLOCK	1.686	1.653	10.18	Atmosphere supervisor safety run request
+W133_IN_SAFETY_INTERLOCK	L88_HabitatLifeSupportSafetyPLC	P183	SAFETY_INTERLOCK	-4.356	1.863	10.18	Atmosphere supervisor safety run request
+W134_OUT_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P187	ANALOG_FEEDBACK	-3.988	1.863	10.18	Actual independent safety authorization
+W134_IN_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P209	ANALOG_FEEDBACK	1.226	1.758	10.18	Actual independent safety authorization
+W135_OUT_SAFETY_INTERLOCK	L88_HabitatLifeSupportSafetyPLC	P167	SAFETY_INTERLOCK	-4.172	1.653	10.18	Emergency isolation inhibit output
+W135_IN_SAFETY_INTERLOCK	L88_EmergencyAtmosphereIsolationConsole	P238	SAFETY_INTERLOCK	10.192	1.653	10.18	Emergency isolation inhibit output
+W136_OUT_ANALOG_FEEDBACK	L88_EmergencyAtmosphereIsolationConsole	P239	ANALOG_FEEDBACK	10.284	1.653	10.18	Emergency station actual stop state
+W136_IN_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P171	ANALOG_FEEDBACK	-3.804	1.653	10.18	Emergency station actual stop state
+W137_OUT_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P175	ANALOG_FEEDBACK	-4.264	1.758	10.18	Safety fault latch event report
+W137_IN_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P215	ANALOG_FEEDBACK	1.778	1.758	10.18	Safety fault latch event report
+W138_OUT_ANALOG_FEEDBACK	L88_MissionOccupancyDemandSimulator	P236	ANALOG_FEEDBACK	6.532	1.653	10.18	Simulated occupancy test safety status
+W138_IN_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P179	ANALOG_FEEDBACK	-3.896	1.758	10.18	Simulated occupancy test safety status
+W139_OUT_SAFETY_INTERLOCK	L88_FrozenCondenserFaultInjector	P096	SAFETY_INTERLOCK	-11.248	1.503	8.13	Condenser freeze critical inhibit
+W139_IN_SAFETY_INTERLOCK	L88_HabitatLifeSupportSafetyPLC	P183	SAFETY_INTERLOCK	-4.356	1.863	10.18	Condenser freeze critical inhibit
+W140_OUT_ANALOG_FEEDBACK	L88_CO2BreakthroughFaultInjector	P034	ANALOG_FEEDBACK	-9.008	1.503	5.98	CO2 breakthrough safety condition
+W140_IN_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P187	ANALOG_FEEDBACK	-3.988	1.863	10.18	CO2 breakthrough safety condition
+W141_OUT_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P167	ANALOG_FEEDBACK	-4.172	1.653	10.18	Safety status for hologram readout
+W141_IN_ANALOG_FEEDBACK	L88_AtmosphericDigitalFlowHologram	P234	ANALOG_FEEDBACK	3.932	7.653	-5.32	Safety status for hologram readout
+W142_OUT_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P171	ANALOG_FEEDBACK	-3.804	1.653	10.18	Safety latched fault SCADA output
+W142_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P218	ANALOG_FEEDBACK	-0.276	7.253	-5.27	Safety latched fault SCADA output
+W143_OUT_SAFETY_INTERLOCK	L88_ECLSSMasterPLC	P206	SAFETY_INTERLOCK	1.778	1.653	10.18	Operator explicit safety reset request
+W143_IN_SAFETY_INTERLOCK	L88_EmergencyAtmosphereIsolationConsole	P240	SAFETY_INTERLOCK	10.376	1.653	10.18	Operator explicit safety reset request
+W144_OUT_ANALOG_FEEDBACK	L88_EmergencyAtmosphereIsolationConsole	P238	ANALOG_FEEDBACK	10.192	1.653	10.18	Operator explicit reset demand feedback
+W144_IN_ANALOG_FEEDBACK	L88_HabitatLifeSupportSafetyPLC	P176	ANALOG_FEEDBACK	-4.172	1.758	10.18	Operator explicit reset demand feedback
+TRUSTED_CABIN_PRESSURE_OUT	L88_CabinPressurePrimaryTransducer	P134	ANALOG_FEEDBACK	6.664	1.503	8.13	CRITICAL trusted cabin pressure feedback
+TRUSTED_CABIN_PRESSURE_IN	L88_HabitatLifeSupportSafetyPLC	P180	ANALOG_FEEDBACK	-3.804	1.758	10.18	CRITICAL trusted cabin pressure feedback
+W146_OUT_SAFETY_INTERLOCK	L88_HabitatLifeSupportSafetyPLC	P184	SAFETY_INTERLOCK	-4.264	1.863	10.18	Six-objective final safety permission
+W146_IN_SAFETY_INTERLOCK	L88_AtmosphereMissionCertificationBeacon	P241	SAFETY_INTERLOCK	-0.368	11.603	-5.32	Six-objective final safety permission
+W147_OUT_ANALOG_FEEDBACK	L88_AdsorberInletCO2Analyzer	P022	ANALOG_FEEDBACK	-12.968	1.503	5.98	Inlet CO2 analyzers SCADA sampled data
+W147_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P226	ANALOG_FEEDBACK	-0.368	7.358	-5.27	Inlet CO2 analyzers SCADA sampled data
+W148_OUT_ANALOG_FEEDBACK	L88_AdsorberOutletCO2Analyzer	P026	ANALOG_FEEDBACK	-11.556	1.503	5.98	Outlet CO2 analyzers SCADA sampled data
+W148_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P230	ANALOG_FEEDBACK	0.0	7.358	-5.27	Outlet CO2 analyzers SCADA sampled data
+W149_OUT_ANALOG_FEEDBACK	L88_AdsorptionCapacityMonitor	P028	ANALOG_FEEDBACK	-10.328	1.503	5.98	CO2 capture-bed lifetime telemetry
+W149_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P217	ANALOG_FEEDBACK	-0.368	7.253	-5.27	CO2 capture-bed lifetime telemetry
+W150_OUT_ANALOG_FEEDBACK	L88_CO2RegenerationControllerPLC	P038	ANALOG_FEEDBACK	-7.412	1.503	5.98	Adsorption cycle and regeneration status
+W150_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P221	ANALOG_FEEDBACK	0.0	7.253	-5.27	Adsorption cycle and regeneration status
+W151_OUT_ANALOG_FEEDBACK	L88_OxygenBufferStorageTank	P060	ANALOG_FEEDBACK	-0.476	2.503	-0.52	Oxygen buffer inventory telemetry
+W151_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P225	ANALOG_FEEDBACK	0.368	7.253	-5.27	Oxygen buffer inventory telemetry
+W152_OUT_ANALOG_FEEDBACK	L88_OxygenPartialPressureAnalyzer	P064	ANALOG_FEEDBACK	-4.864	1.503	5.98	Oxygen partial pressure trend
+W152_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P229	ANALOG_FEEDBACK	-0.092	7.358	-5.27	Oxygen partial pressure trend
+W153_OUT_ANALOG_FEEDBACK	L88_OxygenOutputQualityMonitor	P065	ANALOG_FEEDBACK	-3.728	1.503	5.98	Oxygen product quality display
+W153_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P233	ANALOG_FEEDBACK	0.276	7.358	-5.27	Oxygen product quality display
+W154_OUT_ANALOG_FEEDBACK	L88_OxygenGenerationProcessPLC	P086	ANALOG_FEEDBACK	0.6	1.608	5.98	Oxygen generation process status
+W154_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P220	ANALOG_FEEDBACK	-0.092	7.253	-5.27	Oxygen generation process status
+W155_OUT_ANALOG_FEEDBACK	L88_CondensateCollectionReservoir	P093	ANALOG_FEEDBACK	4.932	1.453	3.58	Condensate inventory telemetry
+W155_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P224	ANALOG_FEEDBACK	0.276	7.253	-5.27	Condensate inventory telemetry
+W156_OUT_ANALOG_FEEDBACK	L88_HumidityRecoveryPLC	P105	ANALOG_FEEDBACK	-8.892	1.503	8.13	Humidity recovery process telemetry
+W156_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P228	ANALOG_FEEDBACK	-0.184	7.358	-5.27	Humidity recovery process telemetry
+W157_OUT_ANALOG_FEEDBACK	L88_WaterResourceBudgetAnalyzer	P117	ANALOG_FEEDBACK	-4.676	1.503	8.13	Water reserve forecast telemetry
+W157_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P232	ANALOG_FEEDBACK	0.184	7.358	-5.27	Water reserve forecast telemetry
+W158_OUT_ANALOG_FEEDBACK	L88_VentilationMainCirculationBlower	P121	ANALOG_FEEDBACK	8.816	1.953	-0.52	Main blower actual response trend
+W158_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P219	ANALOG_FEEDBACK	-0.184	7.253	-5.27	Main blower actual response trend
+W159_OUT_ANALOG_FEEDBACK	L88_FourZoneMotorizedDamperBank	P128	ANALOG_FEEDBACK	9.724	3.453	1.98	Compartment damper actual state trend
+W159_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P223	ANALOG_FEEDBACK	0.184	7.253	-5.27	Compartment damper actual state trend
+W160_OUT_ANALOG_FEEDBACK	L88_DifferentialPressureMonitorArray	P139	ANALOG_FEEDBACK	9.904	1.503	8.13	Differential pressure survey
+W160_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P227	ANALOG_FEEDBACK	-0.276	7.358	-5.27	Differential pressure survey
+W161_OUT_ANALOG_FEEDBACK	L88_ECLSSMasterPLC	P209	ANALOG_FEEDBACK	1.226	1.758	10.18	Authoritative life support mission state
+W161_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P231	ANALOG_FEEDBACK	0.092	7.358	-5.27	Authoritative life support mission state
+W162_OUT_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P218	ANALOG_FEEDBACK	-0.276	7.253	-5.27	Atmosphere digital twin display updates
+W162_IN_ANALOG_FEEDBACK	L88_AtmosphericDigitalFlowHologram	P234	ANALOG_FEEDBACK	3.932	7.653	-5.32	Atmosphere digital twin display updates
+W163_OUT_ANALOG_FEEDBACK	L88_AirSystemDiagnosticsRecorder	P235	ANALOG_FEEDBACK	4.702	1.653	10.18	Process history trend recording
+W163_IN_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P222	ANALOG_FEEDBACK	0.092	7.253	-5.27	Process history trend recording
+W164_OUT_ANALOG_FEEDBACK	L88_HabitatEnvironmentalSCADA	P226	ANALOG_FEEDBACK	-0.368	7.358	-5.27	Objective certification visualization only
+W164_IN_ANALOG_FEEDBACK	L88_AtmosphereMissionCertificationBeacon	P241	ANALOG_FEEDBACK	-0.368	11.603	-5.32	Objective certification visualization only

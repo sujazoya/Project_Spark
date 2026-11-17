@@ -212,6 +212,12 @@ public bool ExternalInputControl
         public int DragRoutePointCount => dragRoutePoints;
         public SparkTerminal HoveredTerminal => hoveredTerminal;
 
+        // A dense board can supply its own hit test while it is active.
+        public Func<Vector2, SparkTerminal, SparkTerminal> TerminalPickerOverride { get; set; }
+
+        public bool RemoveConnectedWire(ulong connectionId) =>
+            pathManager != null && pathManager.RemoveWire(connectionId);
+
         /// <summary>Change the route for the next created wire.</summary>
         public void SetTerminalCableRouting(TerminalCableRouting route)
         {
@@ -1571,9 +1577,9 @@ public void CancelWire()
 
             if (logWireOperations)
                 Debug.Log($"[WIRE AAA] CONNECTED: {terminal1.name} -> {terminal2.name}", this);
-            TerminalWireConnected?.Invoke(terminal1, terminal2, finishedPath);
             CompleteVisualWire();
             SetHoveredTerminal(null);
+            TerminalWireConnected?.Invoke(terminal1, terminal2, finishedPath);
             return true;
         }
 
@@ -1588,8 +1594,17 @@ public void CancelWire()
             return TryFinishTerminalWire(terminal2);
         }
 
+        public SparkTerminal FindStartTerminal(Vector2 screenPosition) =>
+            FindTerminalForNewMode(screenPosition);
+
+        private bool IsPickableTerminal(SparkTerminal terminal) =>
+            terminal != null && terminal.isActiveAndEnabled &&
+            terminal.Owner != null && terminal.Owner.isActiveAndEnabled && terminal.Owner.InteractionsEnabled;
+
         private SparkTerminal FindTerminalForNewMode(Vector2 screenPosition)
         {
+            if (TerminalPickerOverride != null)
+                return TerminalPickerOverride(screenPosition, startTerminal);
             if (targetCamera == null) targetCamera = Camera.main;
             if (targetCamera == null) return null;
 
@@ -1604,7 +1619,7 @@ public void CancelWire()
                 Collider hitCollider = terminalRayHits[i].collider;
                 if (hitCollider == null) continue;
                 SparkTerminal terminal = hitCollider.GetComponentInParent<SparkTerminal>();
-                if (terminal != null && terminalRayHits[i].distance < distance)
+                if (IsPickableTerminal(terminal) && terminalRayHits[i].distance < distance)
                 {
                     nearest = terminal;
                     distance = terminalRayHits[i].distance;
@@ -1623,7 +1638,7 @@ public void CancelWire()
                 Collider hitCollider = terminalSphereHits[i].collider;
                 if (hitCollider == null) continue;
                 SparkTerminal terminal = hitCollider.GetComponentInParent<SparkTerminal>();
-                if (terminal == null) continue;
+                if (!IsPickableTerminal(terminal)) continue;
                 Vector3 projected = targetCamera.WorldToScreenPoint(terminal.transform.position);
                 if (projected.z <= 0f) continue;
                 float pixelSquare = ((Vector2)projected - screenPosition).sqrMagnitude;

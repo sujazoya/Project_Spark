@@ -45,12 +45,13 @@ namespace ProjectSpark.Diagnostics
             inputShield = image.GetComponent<RectTransform>();
             inputShield.anchorMin = inputShield.anchorMax = inputShield.pivot = new Vector2(0, 1);
         }
+        public bool PanelVisible { get => visible; set => visible = value; }
         private void OnEnable() { nextRefresh = 0; }
         private void OnDisable() { Unsubscribe(); if (inputShield != null) inputShield.gameObject.SetActive(false); }
         private void LateUpdate()
         {
             if (inputShield == null) return;
-            inputShield.gameObject.SetActive(true);
+            inputShield.gameObject.SetActive(visible && !ProjectSpark.UIManagement.SparkUIMonitorDashboard.IsConsoleVisible);
             inputShield.anchoredPosition = visible ? new Vector2(window.x, -window.y) : new Vector2(16, -60);
             inputShield.sizeDelta = visible ? new Vector2(window.width, window.height) : new Vector2(180, 30);
         }
@@ -61,7 +62,7 @@ namespace ProjectSpark.Diagnostics
         }
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F8)) visible = !visible;
+            if (visible && Input.GetKeyDown(KeyCode.F9)) visible = false;
             if (Time.unscaledTime < nextRefresh) return;
             nextRefresh = Time.unscaledTime + Mathf.Max(.1f, refreshSeconds);
             RefreshNow();
@@ -284,11 +285,7 @@ namespace ProjectSpark.Diagnostics
         }
         private void OnGUI()
         {
-            if (!visible)
-            {
-                if (GUI.Button(new Rect(16, 60, 180, 30), "Diagnostics [F8]")) visible = true;
-                return;
-            }
+            if (!visible || ProjectSpark.UIManagement.SparkUIMonitorDashboard.IsConsoleVisible) return;
             window.width = Mathf.Min(900, Mathf.Max(300, Screen.width - 32));
             window.height = Mathf.Min(720, Mathf.Max(200, Screen.height - 80));
             window.x = Mathf.Clamp(window.x, 0, Mathf.Max(0, Screen.width - window.width));
@@ -302,7 +299,7 @@ namespace ProjectSpark.Diagnostics
             if (GUILayout.Button("Copy report")) CopyReport();
             if (GUILayout.Button("Export .txt")) ExportReport();
             if (GUILayout.Button("Reset history")) ResetObservations();
-            if (GUILayout.Button("Hide [F8]")) visible = false;
+            if (GUILayout.Button("Hide [F9]")) visible = false;
             GUILayout.EndHorizontal();
             if (!string.IsNullOrEmpty(exportStatus)) GUILayout.Label(exportStatus);
             scroll = GUILayout.BeginScrollView(scroll);
