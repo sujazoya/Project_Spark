@@ -1,0 +1,18 @@
+{
+  "id": "W185",
+  "logical_source": "U18.TRUSTED_LINK_HEALTH_OUT",
+  "logical_destination": "U19.TRUSTED_LINK_HEALTH_IN",
+  "physical_source_pin": "UNASSIGNED",
+  "physical_destination_pin": "UNASSIGNED",
+  "status": "SCHEMATIC_REQUIRED",
+  "initial": "DISCONNECTED",
+  "note": "Logical safety feedback only; never high-speed signal or main rail",
+  "reset_sequence": [
+    "supervised disconnect",
+    "detect fresh-frame loss and inhibit",
+    "reconnect true mapped pads",
+    "new 4-lane test with eye and BER evidence",
+    "explicit safety reset",
+    "new mission qualification"
+  ]
+}

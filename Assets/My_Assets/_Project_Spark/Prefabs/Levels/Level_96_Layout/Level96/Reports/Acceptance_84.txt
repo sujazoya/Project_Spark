@@ -1,0 +1,88 @@
+LEVEL 103 / NUMBERED ACCEPTANCE AUDIT
+PASS L103-AT-001: 62 exact manifest models resolve with geometry; source FBX recovery documented.
+PASS L103-AT-002: All 62 source GLBs exist.
+PASS L103-AT-003: Only modular assets appear under gameplay art; complete reference is separate.
+PASS L103-AT-004: FR4 dimensions in metres: (0.140000, 0.001600, 0.095000)
+PASS L103-AT-005: Only supplied board models/reference imported; no new room, furniture or instrument FBXs.
+PASS L103-AT-006: Unique Create Level 103 menu, deliberately adapted from source Level 96 identity.
+PASS L103-AT-007: Nested project-local kit materials resolve supported shaders.
+PASS L103-AT-008: Repeated build preserves prefab GUID and all existing scene/other level definition hashes.
+PASS L103-AT-019: Conceptual placeholder labels are absent from the certifying design.
+PASS L103-AT-020: Same build/startup validator rejects a required unmapped contact.
+PASS L103-AT-083: Runtime/editor assemblies compiled; target URP Lit shader supported.
+PASS L103-AT-029: PT1000 equivalent rises 115.5 mV from 10 to 70 C with 0.5 mA excitation.
+PASS L103-AT-031: Bridge changes 10 mV differential over 0-100 N at 2.5 V excitation.
+PASS L103-AT-033: Photodiode/47 kohm equivalent changes 1.88 V over 1000 lux.
+PASS L103-AT-034: Tenfold optical gain clips analog output at 3.15 V.
+PASS L103-AT-035: Hall zero-current offset equals 250 mV.
+PASS L103-AT-036: Hall 2 A stimulus produces 1.85 V.
+PASS L103-AT-039: 16-bit voltage/reference scaling within bounded noise.
+PASS L103-AT-040: Fixed-clock one-second run accepts 128 samples/channel.
+PASS L103-AT-041: Zero settling rejects samples; nominal mux slots settle within half an LSB.
+PASS L103-AT-042: Calibration retains raw-code/voltage/reference history with timestamps.
+PASS L103-AT-043: Stale solve status blocks calibration and accuracy acceptance.
+PASS L103-AT-044: Clipped ADC input cannot pass accuracy.
+PASS L103-AT-045: Drift changes non-ratiometric raw codes while trusted qualification remains blocked.
+PASS L103-AT-046: Ratiometric bridge code remains invariant; no double drift correction.
+PASS L103-AT-038: Untrusted reference cannot qualify samples or calibration.
+PASS L103-AT-009: 44 source BOM identities start uninstalled.
+PASS L103-AT-017: 58 tasks start incomplete.
+PASS L103-AT-018: 12 via switches start open.
+PASS L103-AT-057: No reference/gain fault active initially.
+PASS L103-AT-065: W059 starts disconnected.
+PASS L103-AT-073: Six targets start incomplete.
+PASS L103-AT-074: Assembled-looking art without placement/contact authority earns no objective.
+PASS L103-AT-075: Decorative copper cannot certify routing.
+PASS L103-AT-076: Invalid reference cannot certify calibration.
+PASS L103-AT-077: Missing/stale measurement cannot start qualification.
+PASS L103-AT-052: Cosmetic effects do not mutate circuit or progress.
+PASS L103-AT-078: Cosmetic repair supplies no repair evidence.
+PASS L103-AT-079: UI clicks alone cannot finish recovery.
+PASS L103-AT-011: Wrong component/package identity rejected for footprint.
+PASS L103-AT-012: Reversed pin-1 orientation rejected.
+PASS L103-AT-010: Correct component accepted at named footprint.
+PASS L103-AT-013: Solderless placement leaves contacts and devices electrically isolated.
+PASS L103-AT-016: Visual scaling does not change ohms or reference voltage.
+PASS L103-AT-015: Footprints and source-aligned terminal poses have matching hit proxies.
+PASS L103-AT-054: Solder rejects an unplaced/unprepared target.
+PASS L103-AT-053: Accepted solder effect uses actual physical hit position.
+PASS L103-AT-047: World controls bind live authoritative measurement/repair provider.
+PASS L103-AT-048: No illustrative waveform is displayed as a measurement in gameplay.
+PASS L103-AT-050: Repair-body raycaster does not block wire input.
+PASS L103-AT-049: Master UI closes/reopens the active board canvas; pad target resolves with that GUI visible.
+PASS L103-AT-023: Unauthorized destination rejected without creating a silent short.
+PASS L103-AT-027: Save/load preserves incomplete first-layer copper without granting route completion.
+PASS L103-AT-022: Back-layer route requires plated via and both actual wire segments.
+PASS L103-AT-021: Authorized front-layer connections appear in native topology.
+PASS L103-AT-026: Duplicate attempt adds no edge or progress.
+PASS L103-AT-025: Removing each of 58 required segments leaves no alternative closed-contact/factory-copper bypass.
+PASS L103-AT-066: 58 traces and live power cannot commission without W059.
+PASS L103-AT-028: W059 identity is separate from the 58 routing tasks.
+PASS L103-AT-037: Independently measured Vref: 2.50000 V.
+PASS L103-AT-051: Probe reports resolved net, actual position and solver voltage: U1.P03 [VREF_2V5] @ (0.66, 0.84, -1.56) : 2.50000 V
+PASS L103-AT-030: Actual RTD sensor-wire interruption invalidates CH0.
+PASS L103-AT-024: Desoldered package is electrically open despite copper artwork.
+PASS L103-AT-081: Legacy/full board round-trip restores real topology, identities and history, migrates mux defaults, and starts samples stale.
+PASS L103-AT-058: F1 changes native reference to 2.37 V and invalidates trust.
+PASS L103-AT-059: F1 removes reference/calibration proof.
+PASS L103-AT-056: Accepted repair requires new calibration.
+PASS L103-AT-014: Replacement preserves component identity and prior evidence.
+PASS L103-AT-032: Open bridge via invalidates force channel.
+PASS L103-AT-060: F2 opens physical mapped V02 on W032.
+PASS L103-AT-056: Accepted repair requires new calibration.
+PASS L103-AT-055: Via repair closes actual contact switch.
+PASS L103-AT-061: Repair restores true through-layer connectivity.
+PASS L103-AT-062: F3 changes native R7 and yields measured clipping.
+PASS L103-AT-056: Accepted repair requires new calibration.
+PASS L103-AT-063: Repaired feedback removes saturation under the same optical stimulus.
+PASS L103-AT-064: Three repairs have fresh measured qualification evidence.
+PASS L103-AT-067: W059 removal opens actual trusted feedback.
+PASS L103-AT-068: Physical Vref and stimuli persist through W059 loss.
+PASS L103-AT-069: Loss withdraws current certification authority.
+PASS L103-AT-070: Safety remains latched without valid recovery/reset.
+PASS L103-AT-082: Earned history survives W059 outage while measurements become untrusted.
+PASS L103-AT-071: Reconnection alone cannot complete recovery.
+PASS L103-AT-072: Fresh reference/calibration/reset and new run required for recovery.
+PASS L103-AT-084: Live level manager confirms 6/6.
+PASS L103-AT-080: Level 102 regression: unloaded103=True; picker=ProjectSpark.Gameplay.SparkLevel102Process; activeLayout=Level_102_Layout(Clone); activeLevel=level_102; changedFiles=
+SUMMARY 84 PASS / 0 FAIL / 0 NOT RUN. Returned to Edit Mode.

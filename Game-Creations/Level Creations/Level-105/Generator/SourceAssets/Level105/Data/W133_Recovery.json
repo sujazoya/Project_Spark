@@ -1,0 +1,15 @@
+{
+  "id": "W133",
+  "logical_source": "L105_LinkTrainingMonitor_U12.TRUSTED_EXPANSION_READY_OUT",
+  "logical_destination": "L105_ExpansionSafetySupervisor_U13.TRUSTED_EXPANSION_READY_IN",
+  "reconcile_physical_pins": true,
+  "initial": "OPEN",
+  "certifiable": false,
+  "recovery": [
+    "reconnect jumper",
+    "retrain x4 to L0",
+    "new enumeration",
+    "fresh transfer tests",
+    "explicit reset"
+  ]
+}

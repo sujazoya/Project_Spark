@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 namespace ProjectSpark.Gameplay
 {
+    [RequireComponent(typeof(CanvasRenderer))]
     public sealed class SparkLevel82Trend : MaskableGraphic
     {
         private readonly float[] polar=new float[12],cond=new float[16],baseline=new float[16],heat=new float[16];

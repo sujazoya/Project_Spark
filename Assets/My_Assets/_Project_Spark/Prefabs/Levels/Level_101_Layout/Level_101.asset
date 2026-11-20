@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
   m_Name: Level_101
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
-  levelId: level_101
-  displayName: The Board Foundry
-  description: Build and qualify a two-layer PCB, repair three faults, and recover
-    the removable W035 jumper.
+  levelId: level_101_hidden_layers
+  displayName: The Hidden Layers
+  description: Commission a six-layer MLX-9, diagnose three internal signal faults
+    and recover W101 authorization.
   completionMode: 0
   requiredTargetCount: 6
   requireClosedReturn: 0
@@ -26,20 +26,19 @@ MonoBehaviour:
   minimumVoltage: 1
   allowAnyConfiguredPowerSource: 1
   powerSources:
-  - sourceName: CONTROL_POWER
+  - sourceName: TRAINING_INPUT
     positiveTerminalId: SUPPLY_POS
     negativeTerminalId: SUPPLY_RET
     nominalVoltage: 5
   targets:
-  - targetId: level101_pcb_1
-    displayName: Inspect the PCB schematic and nets
-    description: "Recorded from the electrical graph, valid calibrated feedback and
-      the level\u2019s verified run history."
+  - targetId: l101_1
+    displayName: Assemble 76 components
+    description: Fit every component and close its native assembly contact.
     targetType: 2
     targetTerminalId: 
     requiredPositiveTerminalId: 
     requiredNegativeTerminalId: 
-    targetComponentId: L101_Inspect
+    targetComponentId: L101_Proof_1
     minimumVoltage: 0
     minimumCurrent: 0
     minimumPower: 0
@@ -47,20 +46,19 @@ MonoBehaviour:
     requireConduction: 0
     inverted: 0
     useMaximumVoltage: 0
-    maximumVoltage: 5.2
+    maximumVoltage: 0
     useMaximumCurrent: 0
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level101_pcb_2
-    displayName: Install all 27 components
-    description: "Recorded from the electrical graph, valid calibrated feedback and
-      the level\u2019s verified run history."
+  - targetId: l101_2
+    displayName: Route 100 traces and plate 24 vias
+    description: Verify all required native route pairs, plated spans and W101 continuity.
     targetType: 2
     targetTerminalId: 
     requiredPositiveTerminalId: 
     requiredNegativeTerminalId: 
-    targetComponentId: L101_Assembly
+    targetComponentId: L101_Proof_2
     minimumVoltage: 0
     minimumCurrent: 0
     minimumPower: 0
@@ -68,20 +66,20 @@ MonoBehaviour:
     requireConduction: 0
     inverted: 0
     useMaximumVoltage: 0
-    maximumVoltage: 5.2
+    maximumVoltage: 0
     useMaximumCurrent: 0
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level101_pcb_3
-    displayName: Route 34 copper tasks and plate six vias
-    description: "Recorded from the electrical graph, valid calibrated feedback and
-      the level\u2019s verified run history."
+  - targetId: l101_3
+    displayName: Commission the MCU and memory
+    description: Verify all three rails, clock/reset, a qualified SPI flash image
+      and RAM readback.
     targetType: 2
     targetTerminalId: 
     requiredPositiveTerminalId: 
     requiredNegativeTerminalId: 
-    targetComponentId: L101_Copper
+    targetComponentId: L101_Proof_3
     minimumVoltage: 0
     minimumCurrent: 0
     minimumPower: 0
@@ -89,20 +87,20 @@ MonoBehaviour:
     requireConduction: 0
     inverted: 0
     useMaximumVoltage: 0
-    maximumVoltage: 5.2
+    maximumVoltage: 0
     useMaximumCurrent: 0
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level101_pcb_4
-    displayName: Commission the protected board
-    description: "Recorded from the electrical graph, valid calibrated feedback and
-      the level\u2019s verified run history."
+  - targetId: l101_4
+    displayName: Qualify signal integrity
+    description: Train both native lanes and verify return impedance, skew, TDR and
+      a finite PRBS interval.
     targetType: 2
     targetTerminalId: 
     requiredPositiveTerminalId: 
     requiredNegativeTerminalId: 
-    targetComponentId: L101_Commission
+    targetComponentId: L101_Proof_4
     minimumVoltage: 0
     minimumCurrent: 0
     minimumPower: 0
@@ -110,20 +108,20 @@ MonoBehaviour:
     requireConduction: 0
     inverted: 0
     useMaximumVoltage: 0
-    maximumVoltage: 5.2
+    maximumVoltage: 0
     useMaximumCurrent: 0
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level101_pcb_5
-    displayName: Repair all three faults and retest
-    description: "Recorded from the electrical graph, valid calibrated feedback and
-      the level\u2019s verified run history."
+  - targetId: l101_5
+    displayName: Recover three signal faults
+    description: Repair V09 continuity, the W073 ground stitch and W053 pair skew,
+      then qualify each in a fresh epoch.
     targetType: 2
     targetTerminalId: 
     requiredPositiveTerminalId: 
     requiredNegativeTerminalId: 
-    targetComponentId: L101_Repair
+    targetComponentId: L101_Proof_5
     minimumVoltage: 0
     minimumCurrent: 0
     minimumPower: 0
@@ -131,20 +129,20 @@ MonoBehaviour:
     requireConduction: 0
     inverted: 0
     useMaximumVoltage: 0
-    maximumVoltage: 5.2
+    maximumVoltage: 0
     useMaximumCurrent: 0
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level101_pcb_6
-    displayName: Recover W035 feedback and requalify
-    description: "Recorded from the electrical graph, valid calibrated feedback and
-      the level\u2019s verified run history."
+  - targetId: l101_6
+    displayName: Prove W101 recovery
+    description: Open W101, verify independent inhibition, reconnect, acquire new
+      edges, explicitly reset and certify a new training epoch.
     targetType: 2
     targetTerminalId: 
     requiredPositiveTerminalId: 
     requiredNegativeTerminalId: 
-    targetComponentId: L101_Recovery
+    targetComponentId: L101_Proof_6
     minimumVoltage: 0
     minimumCurrent: 0
     minimumPower: 0
@@ -152,7 +150,7 @@ MonoBehaviour:
     requireConduction: 0
     inverted: 0
     useMaximumVoltage: 0
-    maximumVoltage: 5.2
+    maximumVoltage: 0
     useMaximumCurrent: 0
     maximumCurrent: 0
     useMaximumPower: 0
@@ -163,6 +161,6 @@ MonoBehaviour:
   successOutputIds: []
   failureOutputIds: []
   unlockNextLevelOnCompletion: 1
-  unlockedByDefault: 0
+  unlockedByDefault: 1
   autoUnlockNextLevel: 1
   autoAdvanceOnCompletion: 0

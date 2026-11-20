@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
   m_Name: Level_102
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
-  levelId: level_102
-  displayName: The Pulse Architect
-  description: Build a precision timing controller, measure its clocks and PWM, and
-    recover the W049 safety feedback.
+  levelId: level_102_signal_phantom
+  displayName: Signal Phantom
+  description: Build the HSX-10 pair, measure both lanes, repair three signal faults
+    and recover independent W109 authorization.
   completionMode: 0
   requiredTargetCount: 6
   requireClosedReturn: 0
@@ -26,20 +26,19 @@ MonoBehaviour:
   minimumVoltage: 1
   allowAnyConfiguredPowerSource: 1
   powerSources:
-  - sourceName: CONTROL_POWER
+  - sourceName: TRAINING_INPUT
     positiveTerminalId: SUPPLY_POS
     negativeTerminalId: SUPPLY_RET
     nominalVoltage: 5
   targets:
-  - targetId: level102_pcb_1
-    displayName: Inspect and assemble the timing board
-    description: "Recorded from the electrical graph, valid calibrated feedback and
-      the level\u2019s verified run history."
+  - targetId: l102_1
+    displayName: Assemble 82 components
+    description: Fit every component and close its native assembly contact.
     targetType: 2
     targetTerminalId: 
     requiredPositiveTerminalId: 
     requiredNegativeTerminalId: 
-    targetComponentId: L102_Assembly
+    targetComponentId: L102_Proof_1
     minimumVoltage: 0
     minimumCurrent: 0
     minimumPower: 0
@@ -47,20 +46,19 @@ MonoBehaviour:
     requireConduction: 0
     inverted: 0
     useMaximumVoltage: 0
-    maximumVoltage: 5.2
+    maximumVoltage: 0
     useMaximumCurrent: 0
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level102_pcb_2
-    displayName: Route 48 traces, plate 10 vias and fit W049
-    description: "Recorded from the electrical graph, valid calibrated feedback and
-      the level\u2019s verified run history."
+  - targetId: l102_2
+    displayName: Route 108 traces and plate 28 vias
+    description: Verify all required native route pairs, plated spans and W109 continuity.
     targetType: 2
     targetTerminalId: 
     requiredPositiveTerminalId: 
     requiredNegativeTerminalId: 
-    targetComponentId: L102_Network
+    targetComponentId: L102_Proof_2
     minimumVoltage: 0
     minimumCurrent: 0
     minimumPower: 0
@@ -68,20 +66,20 @@ MonoBehaviour:
     requireConduction: 0
     inverted: 0
     useMaximumVoltage: 0
-    maximumVoltage: 5.2
+    maximumVoltage: 0
     useMaximumCurrent: 0
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level102_pcb_3
-    displayName: Capture and qualify the three clocks
-    description: "Recorded from the electrical graph, valid calibrated feedback and
-      the level\u2019s verified run history."
+  - targetId: l102_3
+    displayName: Commission both differential lanes
+    description: Qualify the rails, calibrate the probes and verify native transmit/receive
+      polarity on both lanes.
     targetType: 2
     targetTerminalId: 
     requiredPositiveTerminalId: 
     requiredNegativeTerminalId: 
-    targetComponentId: L102_Clocks
+    targetComponentId: L102_Proof_3
     minimumVoltage: 0
     minimumCurrent: 0
     minimumPower: 0
@@ -89,20 +87,20 @@ MonoBehaviour:
     requireConduction: 0
     inverted: 0
     useMaximumVoltage: 0
-    maximumVoltage: 5.2
+    maximumVoltage: 0
     useMaximumCurrent: 0
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level102_pcb_4
-    displayName: Verify 25%, 50% and 75% PWM under load
-    description: "Recorded from the electrical graph, valid calibrated feedback and
-      the level\u2019s verified run history."
+  - targetId: l102_4
+    displayName: Qualify signal integrity
+    description: Verify both modeled 1 Gb/s lanes using TDR, eye sampling, skew and
+      a finite PRBS interval.
     targetType: 2
     targetTerminalId: 
     requiredPositiveTerminalId: 
     requiredNegativeTerminalId: 
-    targetComponentId: L102_Duty
+    targetComponentId: L102_Proof_4
     minimumVoltage: 0
     minimumCurrent: 0
     minimumPower: 0
@@ -110,20 +108,20 @@ MonoBehaviour:
     requireConduction: 0
     inverted: 0
     useMaximumVoltage: 0
-    maximumVoltage: 5.2
+    maximumVoltage: 0
     useMaximumCurrent: 0
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level102_pcb_5
-    displayName: Repair all three timing faults and retest
-    description: "Recorded from the electrical graph, valid calibrated feedback and
-      the level\u2019s verified run history."
+  - targetId: l102_5
+    displayName: Recover three signal faults
+    description: Measure R1 mismatch, adjacent-lane coupling and the V19 via stub,
+      repair each target, and acquire a fresh passing run.
     targetType: 2
     targetTerminalId: 
     requiredPositiveTerminalId: 
     requiredNegativeTerminalId: 
-    targetComponentId: L102_Repair
+    targetComponentId: L102_Proof_5
     minimumVoltage: 0
     minimumCurrent: 0
     minimumPower: 0
@@ -131,20 +129,20 @@ MonoBehaviour:
     requireConduction: 0
     inverted: 0
     useMaximumVoltage: 0
-    maximumVoltage: 5.2
+    maximumVoltage: 0
     useMaximumCurrent: 0
     maximumCurrent: 0
     useMaximumPower: 0
     maximumPower: 0
-  - targetId: level102_pcb_6
-    displayName: Recover W049 feedback and requalify
-    description: "Recorded from the electrical graph, valid calibrated feedback and
-      the level\u2019s verified run history."
+  - targetId: l102_6
+    displayName: Prove W109 recovery
+    description: Open W109, verify independent inhibition, reconnect, acquire new
+      edges, explicitly reset and certify a new training epoch.
     targetType: 2
     targetTerminalId: 
     requiredPositiveTerminalId: 
     requiredNegativeTerminalId: 
-    targetComponentId: L102_Recovery
+    targetComponentId: L102_Proof_6
     minimumVoltage: 0
     minimumCurrent: 0
     minimumPower: 0
@@ -152,7 +150,7 @@ MonoBehaviour:
     requireConduction: 0
     inverted: 0
     useMaximumVoltage: 0
-    maximumVoltage: 5.2
+    maximumVoltage: 0
     useMaximumCurrent: 0
     maximumCurrent: 0
     useMaximumPower: 0
@@ -163,6 +161,6 @@ MonoBehaviour:
   successOutputIds: []
   failureOutputIds: []
   unlockNextLevelOnCompletion: 1
-  unlockedByDefault: 0
+  unlockedByDefault: 1
   autoUnlockNextLevel: 1
   autoAdvanceOnCompletion: 0

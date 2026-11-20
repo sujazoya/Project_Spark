@@ -1,0 +1,4 @@
+fault_id,location,fault,expected_effect,virtual_repair
+F01,Y1/C1,Oscillator capacitor fault,8 MHz crystal unstable or missing,Replace faulty oscillator capacitor
+F02,V11/SPI_DATA,SPI flash trace via open,"Internal firmware runs, external 8MB SPI flash fails",Restore open via and test bus
+F03,R_RESET,Defective reset pull-up resistor,"Reset stuck low or noisy, boot blocked",Replace resistor and verify reset release

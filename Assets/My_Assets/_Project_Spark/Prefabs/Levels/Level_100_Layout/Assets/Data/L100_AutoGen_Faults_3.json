@@ -1,0 +1,35 @@
+[
+  {
+    "id": "F01",
+    "name": "I2C pullup resistor",
+    "mechanism": "Rise-time violation / possible invalid logic levels",
+    "repair": "Replace incorrect resistor, verify electrical response",
+    "evidence": [
+      "Approved physical netlist",
+      "Authorized repair/firmware mutation",
+      "Fresh I2C/SPI/UART evidence"
+    ]
+  },
+  {
+    "id": "F02",
+    "name": "SPI SCK plated via",
+    "mechanism": "SCK not received by target peripheral",
+    "repair": "Restore via connectivity, retest transactions",
+    "evidence": [
+      "Approved physical netlist",
+      "Authorized repair/firmware mutation",
+      "Fresh I2C/SPI/UART evidence"
+    ]
+  },
+  {
+    "id": "F03",
+    "name": "UART configuration",
+    "mechanism": "Baud and frame mismatch",
+    "repair": "Correct endpoint firmware setting, verify decoded bytes",
+    "evidence": [
+      "Approved physical netlist",
+      "Authorized repair/firmware mutation",
+      "Fresh I2C/SPI/UART evidence"
+    ]
+  }
+]

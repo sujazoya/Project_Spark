@@ -134,7 +134,7 @@ namespace ProjectSpark.Visuals
             fittedLights=new[]{ecc,voter,telemetry,alarm};
             foreach(var lamp in fittedLights)lamp.enabled=false;
         }
-        private Light[] fittedLights;
+        [SerializeField] private Light[] fittedLights;
         private int previousCorrections;
         private float correctionFlash;
         public void Apply(ProjectSpark.Gameplay.SparkLevel81Plant p,bool trusted,int phase,float elapsed,float hold,bool fault,bool armed)
@@ -148,7 +148,7 @@ namespace ProjectSpark.Visuals
             bool packets=phase>0&&p.LastPacket==ProjectSpark.Gameplay.SparkLevel81Plant.Packet.Accepted;
             SetActualPacketIntegrity(packets?.68f:0,p.Recovery,packets,p.Initialized?1:0);
             SetActualMissionSafety(fault,trusted,hold>.01f,hold,hold,phase/3f);
-            if(fittedLights==null)return;
+            if (fittedLights == null || fittedLights.Length != 4) return;
             fittedLights[0].enabled=correctionFlash>.01f||trusted;
             fittedLights[1].enabled=p.VoterValid&&phase>0&&!fault;
             fittedLights[2].enabled=packets&&!fault;

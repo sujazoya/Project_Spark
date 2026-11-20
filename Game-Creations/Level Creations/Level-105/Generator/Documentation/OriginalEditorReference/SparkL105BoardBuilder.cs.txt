@@ -1,0 +1,10 @@
+#if UNITY_EDITOR
+using System; using System.IO; using UnityEditor; using UnityEngine;
+namespace ProjectSpark.Level105.Editor { public static class SparkL105BoardBuilder {
+ static string Find(string filename){foreach(var guid in AssetDatabase.FindAssets(Path.GetFileNameWithoutExtension(filename))){var p=AssetDatabase.GUIDToAssetPath(guid);if(p.EndsWith(filename,StringComparison.OrdinalIgnoreCase))return p;}return null;}
+ [MenuItem("Tools/Project Spark/Levels/105/1. Build EMPTY ENX-13 Board")]
+ static void Build(){var path=Find("101_L105_PCB_ENX13_270x190mm.fbx");if(path==null){Debug.LogError("[L105] Missing board FBX.");return;}var root=new GameObject("L105_ENX13_EmptyArt");var prefab=AssetDatabase.LoadAssetAtPath<GameObject>(path);var child=(GameObject)PrefabUtility.InstantiatePrefab(prefab);child.transform.SetParent(root.transform,false);child.name="PCB_VISUAL_ONLY";Selection.activeGameObject=root;Debug.Log("[L105] Board art only. Gameplay unassembled and not certified.");}
+ [MenuItem("Tools/Project Spark/Levels/105/2. Open Assembled ART Reference")]
+ static void Reference(){var p=Find("129_L105_AssembledMainboardReference.fbx");if(p==null){Debug.LogError("Missing reference FBX");return;}var go=(GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(p));go.name="ART_REFERENCE_NOT_GAMEPLAY";Selection.activeGameObject=go;}
+} }
+#endif

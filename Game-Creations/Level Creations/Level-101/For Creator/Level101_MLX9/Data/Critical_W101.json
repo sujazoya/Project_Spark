@@ -1,0 +1,15 @@
+{
+  "id": "W101",
+  "from": "L101_LinkIntegrityMonitor_U10.TRUSTED_LINK_HEALTH_OUT",
+  "to": "L101_MultilayerSafetySupervisor_U11.TRUSTED_LINK_HEALTH_IN",
+  "type": "removable_logic_feedback_jumper",
+  "start_connected": false,
+  "functional_pins_verified": false,
+  "disconnect_response": "Invalidate fresh link health, inhibit safety-dependent commands, latch fault",
+  "recovery": [
+    "physical reconnection",
+    "fresh link measurements",
+    "explicit safety reset",
+    "full requalification"
+  ]
+}

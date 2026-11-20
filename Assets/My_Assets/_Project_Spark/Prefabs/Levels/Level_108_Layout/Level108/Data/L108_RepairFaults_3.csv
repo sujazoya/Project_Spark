@@ -1,0 +1,4 @@
+id,subsystem,name,model,symptoms,required_evidence,approved_repair
+F1,STANDBY_POWER,Leaky standby ceramic capacitor,LEAKAGE_AND_CURRENT_LIMITING,No power/abnormal standby current,current measurement + isolated branch comparison,replace leaking capacitor
+F2,DDR4_MEMORY,Intermittent U3 BGA contact,TEMPERATURE_DEPENDENT_CONTACT,warm memory training errors,cold/warm lane test + BGA inspection,controlled BGA rework or replacement
+F3,PCIE_CLOCK,Intermittent PCIe reference-clock contact,THERMALLY_INTERMITTENT_CLOCK,endpoint disappears / L0 to Recovery,source clock compared with endpoint waveform,clock solder contact restoration

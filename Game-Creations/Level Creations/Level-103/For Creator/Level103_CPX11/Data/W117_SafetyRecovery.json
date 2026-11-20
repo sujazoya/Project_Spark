@@ -1,0 +1,17 @@
+{
+  "wire": "W117",
+  "source": "L103_VcoreSupervisor_U10.TRUSTED_VCORE_GOOD_OUT",
+  "sink": "L103_CPUSafetySupervisor_U11.TRUSTED_VCORE_GOOD_IN",
+  "purpose": "monitored power-good signal, not high-current CPU VCORE",
+  "initial": "Disconnected",
+  "recovery": [
+    "Install for initial commissioning",
+    "After Objectives 1-5 disconnect during supervised test",
+    "Independent supervisor inhibits CPU authorization",
+    "Reconnect real functional terminals",
+    "Acquire fresh rail health and phase current evidence",
+    "Explicit safety reset",
+    "Repeat complete power qualification"
+  ],
+  "status": "Design stage; pin-level schematic required"
+}

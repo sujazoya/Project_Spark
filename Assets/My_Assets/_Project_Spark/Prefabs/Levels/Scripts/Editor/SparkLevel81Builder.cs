@@ -155,17 +155,24 @@ namespace ProjectSpark.EditorTools
             c.armButton=Control(panel,font,"ARM W094 TEST",357f,100,c.Arm);
             c.eStopButton=Control(panel,font,"E-STOP",476f,100,c.EStop);
             c.certifyButton=Control(panel,font,"CERTIFY",-476f,61,c.Certify);
-            var plot=Rect(canvas.transform,"SCADA trends",new Vector2(330,181),new Vector2(-230,800));
+            c.openFeedbackButton=Control(panel,font,"OPEN W094",-357f,61,c.OpenFeedbackWire);
+            c.cableViewButton=Control(panel,font,"CABLE VIEW",-238f,61,c.ToggleCableView);
+            Control(panel,font,"RESET VIEW",-119f,61,c.ResetWorkbenchView).interactable=true;
+            c.focusWireButton=Control(panel,font,"FOCUS WIRE",0f,61,c.FocusNextWire);
+            c.focusWireButton.interactable=true;
+            var plot=Rect(canvas.transform,"SCADA trends",new Vector2(330,181),Vector2.zero);
+            plot.anchorMin=plot.anchorMax=plot.pivot=Vector2.one;
+            plot.anchoredPosition=new Vector2(-24,-22);
             c.plot=plot.gameObject.AddComponent<SparkLevel81Trend>();
             c.plot.raycastTarget=false;
-            var legend=UIText(plot,"Trend legend","ECC  /  WATCHDOG  /  COMMAND  /  DATA",font,new Vector2(355,25),new Vector2(0,181));
+            var legend=UIText(plot,"Trend legend","MISSION RELIABILITY",font,new Vector2(330,22),new Vector2(0,153));
             legend.fontSize=16;
             legend.color=new Color(.63f,.89f,.99f);
             for(int channel=0;channel<4;channel++)
             {
                 string id=new[]{"ECC","VOTE","WD","CRC"}[channel];
                 var axis=UIText(plot,"Monitor "+id,id,font,new Vector2(38,16),
-                    new Vector2(-112+channel*79,144));
+                    new Vector2(-117+channel*79,121));
                 axis.fontSize=13;
             }
 

@@ -1,0 +1,18 @@
+PROJECT SPARK — AUTOMATIC LEVEL GENERATION VALIDATION
+Errors: 0 | Warnings: 5 | Info: 7
+STATUS: ART BUILD VALIDATED (GAMEPLAY AUTHORITY STILL REQUIRED)
+
+WARN  | SCHEMATIC_REQUIRED: 132 routes lack approved pins/nets/layers; electrical objective blocked
+WARN  | SCHEMATIC_REQUIRED: 38 vias lack approved nets/layer spans; electrical objective blocked
+WARN  | SCHEMATIC_REQUIRED: independent safety jumper pins not approved; safety objective blocked
+INFO  | Blueprint: 105 / ENX-13_ECX-4, installable 100, models 128, routes 132, vias 38
+INFO  | Approvals: routes 0/132, vias 0/38
+INFO  | The generator does not certify connectivity, provide a solver, repair real components, or award objectives by itself
+INFO  | Level 105 PBR: loaded 16 original material families with URP-packed metallic, roughness and AO channels.
+INFO  | Level_105_Layout: 94 ENX-13 + 6 ECX-4 component targets, 132 unapproved routes, 38 unapproved vias, 3 faults, 6 objectives, 8 copper layer references, 26 supplemental meshes.
+INFO  | Model axis: native XZ; native import width=0.270000; native depth=0.190000
+INFO  | WORKSHOP MAINBOARD: 10.130 x 7.129 world units, within target box 10.13 x 7.51; table 15.79 x 8.54 units; margins (centered) 2.83 left/right, 0.7057409 front/back.
+WARN  | 100 footprint pad mappings, routes W001-W132, vias V01-V38 and W133 physical pins are not approved; U12/U13 physical monitor/supervisor identities remain unspecified. Certification remains BLOCKED.
+WARN  | W133 logical U12/U13 labels require verified physical pin mappings; do not fabricate contacts.
+
+Uniformly scaled ENX-13 fits inside 10.13 x 7.51 units; loose ECX-4 remains separate. Electrical pins/nets and gameplay service bindings still require authoritative design.

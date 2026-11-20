@@ -1,0 +1,4 @@
+fault_id,affected,effect,repair
+F01,I2C pullup resistor,Rise-time violation / possible invalid logic levels,"Replace incorrect resistor, verify electrical response"
+F02,SPI SCK plated via,SCK not received by target peripheral,"Restore via connectivity, retest transactions"
+F03,UART configuration,Baud and frame mismatch,"Correct endpoint firmware setting, verify decoded bytes"

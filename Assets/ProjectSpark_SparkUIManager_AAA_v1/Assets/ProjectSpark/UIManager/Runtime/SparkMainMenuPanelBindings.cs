@@ -273,8 +273,10 @@ namespace ProjectSpark.UIManagement
             yield return null;
             yield return null;
             if(!string.IsNullOrEmpty(levelControlsId))manager.Unregister(levelControlsId);
-            var canvas=Object.FindObjectsByType<Canvas>(FindObjectsInactive.Include,FindObjectsSortMode.None)
-                .FirstOrDefault(candidate=>candidate.name is "Board Foundry controls" or "Pulse Architect controls" or "Sensor Matrix controls");
+            var activeLayout=Find<SparkLevelLayoutLoader>()?.ActiveLayout;
+            if(!activeLayout)yield break;
+            var canvas=activeLayout.GetComponentsInChildren<Canvas>(true)
+                .FirstOrDefault(candidate=>candidate.name is "Board Foundry controls" or "Pulse Architect controls" or "Sensor Matrix controls" or "Voltage Guardian controls");
             if(!canvas)yield break;
             levelControlsId="active-level";
             RegisterCanvas(levelControlsId,"Current Level Controls",SparkUILayer.HUD,canvas.gameObject);
@@ -369,3 +371,5 @@ namespace ProjectSpark.UIManagement
         private static T Find<T>() where T:Component=>Object.FindFirstObjectByType<T>(FindObjectsInactive.Include);
     }
 }
+
+

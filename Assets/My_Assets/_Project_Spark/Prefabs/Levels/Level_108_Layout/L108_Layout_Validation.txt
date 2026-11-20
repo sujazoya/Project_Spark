@@ -1,0 +1,33 @@
+LEVEL 108 — GHOST IN THE CIRCUIT
+PLAYABLE TRAINING CIRCUIT — DFX16-EDU-1
+
+MainMenu loads the fitted Level 108 prefab. The board is centered at 10.13 × 7.51 Unity units on the 15.79 × 8.54 workshop table.
+The in-game circuit uses 118 assembly contacts, 156 copper tasks, 50 vias across 10 layers, and the removable W157 jumper.
+The Level108Acceptance Play Mode run covers all six campaign objectives, the three evidence-led repairs, and independent W157 inhibition and recovery.
+Level108/Data/DFX16_EDU_1_Training_Routes.csv records the fictional training pads and spans. The source kit’s physical route, via and jumper assignments remain unverified.
+
+ORIGINAL SOURCE ART VALIDATION
+PROJECT SPARK — AUTOMATIC LEVEL GENERATION VALIDATION
+Errors: 0 | Warnings: 11 | Info: 7
+STATUS: ART BUILD VALIDATED (GAMEPLAY AUTHORITY STILL REQUIRED)
+
+WARN  | SCHEMATIC_REQUIRED: 156 routes lack approved pins/nets/layers; electrical objective blocked
+WARN  | SCHEMATIC_REQUIRED: 50 vias lack approved nets/layer spans; electrical objective blocked
+WARN  | SCHEMATIC_REQUIRED: independent safety jumper pins not approved; safety objective blocked
+INFO  | Blueprint: 108 / DFX16, installable 118, models 152, routes 156, vias 50
+INFO  | Approvals: routes 0/156, vias 0/50
+INFO  | The generator does not certify connectivity, provide a solver, repair real components, or award objectives by itself
+WARN  | Starter base-color texture absent for PAD
+WARN  | Starter base-color texture absent for RUBBER
+WARN  | Starter base-color texture absent for CYAN
+WARN  | Starter base-color texture absent for PURPLE
+WARN  | Starter base-color texture absent for WHITE
+INFO  | Generated/updated 19 starter material overrides (not a completed AAA PBR texture pass)
+WARN  | Completed L108 reference has 300x220 mm legacy art while bare board art is 285x205 mm; reference DISPLAY bounds normalized to fitted board. Gameplay authority remains unverified.
+INFO  | Level_108_Layout: 118 uninstalled part targets, 156 unapproved routes, 50 unapproved vias, 3 faults, 6 objectives, 10 copper layer references, 33 supplemental meshes.
+WARN  | Source DFX-16 bare board geometry = approx. 285x205 mm; specification = 300x220 mm. Artwork/footprints adjusted for 10.13x7.51 display size; no approved pad geometry inferred.
+INFO  | Model axis: native XZ; native import width=0.285000; native depth=0.205000
+INFO  | WORKSHOP BOARD: 10.13 x 7.51 units; table 15.79 x 8.54 units; margins (centered) 2.83 left/right, 0.5149999 front/back.
+WARN  | L108 physical pad mapping, routes W001-W156, vias V01-V50 and W157 physical pins are not approved; electrical and final objective authority remain BLOCKED.
+
+Geometry centered and workshop footprint 10.13 x 7.51 units. Electrical pins/nets and gameplay service bindings still require authoritative design.

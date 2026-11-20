@@ -1,0 +1,9 @@
+#if UNITY_EDITOR
+using System; using System.IO; using UnityEditor; using UnityEngine;
+namespace ProjectSpark.Level105.Editor { public static class SparkL105MaterialBuilder {
+ [MenuItem("Tools/Project Spark/Levels/105/3. Generate Starter PBR Materials")]
+ static void Generate(){string root=null;foreach(var g in AssetDatabase.FindAssets("pcb_Albedo t:Texture2D")){var p=AssetDatabase.GUIDToAssetPath(g);if(p.Contains("Level105")||p.Contains("ExpansionNexus")){root=Path.GetDirectoryName(p).Replace('\','/');break;}}if(root==null){Debug.LogError("[L105] Textures missing.");return;}
+ var dest=Path.GetDirectoryName(root).Replace('\','/')+"/UnityGeneratedMaterials";if(!AssetDatabase.IsValidFolder(dest))AssetDatabase.CreateFolder(Path.GetDirectoryName(dest).Replace('\','/'),"UnityGeneratedMaterials");
+ string[] ids={"pcb","mask","copper","gold","silver","tin","black","chip","ceramic","resistor","green","red","white","core","dielectric","solder"};foreach(var id in ids){var shader=Shader.Find("Universal Render Pipeline/Lit")??Shader.Find("Standard");if(shader==null)continue;var mat=new Material(shader);mat.name="L105_"+id;var tex=AssetDatabase.LoadAssetAtPath<Texture2D>(root+"/"+id+"_Albedo.png");if(mat.HasProperty("_BaseMap"))mat.SetTexture("_BaseMap",tex);if(mat.HasProperty("_MainTex"))mat.SetTexture("_MainTex",tex);if(mat.HasProperty("_Metallic"))mat.SetFloat("_Metallic",(id=="gold"||id=="silver"||id=="copper"||id=="tin"||id=="solder")?0.88f:0f);if(mat.HasProperty("_Smoothness"))mat.SetFloat("_Smoothness",0.5f);var path=dest+"/"+mat.name+".mat";if(AssetDatabase.LoadAssetAtPath<Material>(path)==null)AssetDatabase.CreateAsset(mat,path);else UnityEngine.Object.DestroyImmediate(mat);}AssetDatabase.SaveAssets();Debug.Log("[L105] Starter materials ready; FBX slot mapping and URP masks need checking.");}
+} }
+#endif

@@ -1,0 +1,35 @@
+[
+  {
+    "id": "F01",
+    "name": "Oscillator capacitor fault",
+    "mechanism": "Y1/C1 | 8 MHz crystal unstable or missing",
+    "repair": "Replace faulty oscillator capacitor",
+    "evidence": [
+      "Verified pin-level topology",
+      "Authorized physical repair",
+      "Fresh boot/diagnostic proof"
+    ]
+  },
+  {
+    "id": "F02",
+    "name": "SPI flash trace via open",
+    "mechanism": "V11/SPI_DATA | Internal firmware runs, external 8MB SPI flash fails",
+    "repair": "Restore open via and test bus",
+    "evidence": [
+      "Verified pin-level topology",
+      "Authorized physical repair",
+      "Fresh boot/diagnostic proof"
+    ]
+  },
+  {
+    "id": "F03",
+    "name": "Defective reset pull-up resistor",
+    "mechanism": "R_RESET | Reset stuck low or noisy, boot blocked",
+    "repair": "Replace resistor and verify reset release",
+    "evidence": [
+      "Verified pin-level topology",
+      "Authorized physical repair",
+      "Fresh boot/diagnostic proof"
+    ]
+  }
+]

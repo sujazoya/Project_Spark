@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AAAUI.VFX;
 using ProjectSpark.Circuit;
 using ProjectSpark.Visuals;
 using TMPro;
@@ -19,6 +20,7 @@ namespace ProjectSpark.Gameplay
         public SparkSwitch[] contacts;
         public SparkSwitch emergency,doorSwitch;
         public SparkTerminal[] pins;
+        public TextMesh[] pinLabels = Array.Empty<TextMesh>();
         public SparkLevel82VisualRig rig;
         public SparkLevel82Trend plot;
         public TMP_Text controllerDisplay,qualityDisplay;
@@ -26,6 +28,7 @@ namespace ProjectSpark.Gameplay
         public Button powerButton,doorButton,calMotionButton,calEmiButton,calFieldButton,conductButton,radiateButton,nearButton,
             harnessButton,gasketButton,filterButton,sensorButton,armRfButton,immunityButton,stopButton,harnessFaultButton,seamFaultButton,
             sensorFaultButton,diagnoseButton,verifyButton,resetButton,armButton,eStopButton,certifyButton;
+        public Button cableViewButton, openFeedbackButton;
 
         private enum Fault { None, Power, Wiring, Door, EStop, Field, Sensor, Range }
         private enum Repair { None, Harness, Seam }
@@ -37,6 +40,12 @@ namespace ProjectSpark.Gameplay
         private LevelGamePlayManager manager;
         private SparkLevelLayoutLoader loader;
         private SparkLevelSceneBindings bindings;
+        private SignalWireBuilder wireBuilder;
+        private SparkWireRegistry wireRegistry;
+        private readonly Dictionary<Renderer, bool> hiddenCableRenderers = new();
+        private bool focusCables, choseCableView;
+        private int suggestedWire = -1, shownWire = -2, shownHover = -2;
+        private Camera interactionCamera;
         private Mode mode;
         private Fault latch;
         private Repair disturbance;
@@ -87,6 +96,93 @@ namespace ProjectSpark.Gameplay
                 Debug.LogError("[LEVEL 82] Missing EMC chamber references.",this);enabled=false;return;
             }
             source.SetOutput(false,default);
+            wireRegistry = FindFirstObjectByType<SparkWireRegistry>();
+            if (cableViewButton && wireRegistry)
+            {
+                wireRegistry.WiresChanged += RefreshCableView;
+                wireRegistry.SelectionChanged += OnCableSelected;
+                cableViewButton.interactable = true;
+            }
+            if (pinLabels.Length == pins.Length)
+            {
+                interactionCamera = Camera.main;
+                wireBuilder = FindFirstObjectByType<SignalWireBuilder>();
+                if (wireBuilder) wireBuilder.TerminalPickerOverride = PickOriginalSocket;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (wireRegistry)
+            {
+                wireRegistry.WiresChanged -= RefreshCableView;
+                wireRegistry.SelectionChanged -= OnCableSelected;
+            }
+            RestoreCableRenderers();
+            if (!wireBuilder || wireBuilder.TerminalPickerOverride != PickOriginalSocket) return;
+            if (wireBuilder.IsDrawing) wireBuilder.CancelWire();
+            wireBuilder.TerminalPickerOverride = null;
+        }
+
+        public void ToggleCableView()
+        {
+            choseCableView = true;
+            focusCables = !focusCables;
+            RefreshCableView();
+            Log(focusCables ? "Equipment view highlights W119 and the selected cable." : "All installed cables are visible.");
+        }
+
+        public void ResetWorkbenchView() => GetComponent<SparkLevel82WorkbenchView>()?.ResetView();
+
+        private void OnCableSelected(string wireId) => RefreshCableView();
+
+        private void RestoreCableRenderers()
+        {
+            foreach (var entry in hiddenCableRenderers)
+                if (entry.Key) entry.Key.forceRenderingOff = entry.Value;
+            hiddenCableRenderers.Clear();
+        }
+
+        private bool IsFeedback(SparkWireRecord record)
+        {
+            var (a, b) = Wires[Feedback];
+            return record.TerminalA == pins[a] && record.TerminalB == pins[b] ||
+                record.TerminalA == pins[b] && record.TerminalB == pins[a];
+        }
+
+        private void RefreshCableView()
+        {
+            RestoreCableRenderers();
+            if (!focusCables || !wireRegistry) return;
+            foreach (var record in wireRegistry.Wires)
+            {
+                if (!record.Path || !record.TerminalA || !record.TerminalB || record.WireId == wireRegistry.SelectedWireId ||
+                    !record.TerminalA.transform.IsChildOf(transform) || !record.TerminalB.transform.IsChildOf(transform) || IsFeedback(record)) continue;
+                foreach (var renderer in record.Path.GetComponentsInChildren<Renderer>(true))
+                {
+                    hiddenCableRenderers[renderer] = renderer.forceRenderingOff;
+                    renderer.forceRenderingOff = true;
+                }
+            }
+        }
+
+        private SparkTerminal PickOriginalSocket(Vector2 screenPosition, SparkTerminal start)
+        {
+            if (!interactionCamera) return null;
+            SparkTerminal closest = null;
+            float radius = Mathf.Clamp(interactionCamera.pixelHeight * .011f, 6f, 16f);
+            float best = radius * radius;
+            foreach (var pin in pins)
+            {
+                if (!pin || pin == start || !pin.isActiveAndEnabled || !pin.Owner ||
+                    !pin.Owner.isActiveAndEnabled || !pin.Owner.InteractionsEnabled) continue;
+                Vector3 point = interactionCamera.WorldToScreenPoint(pin.transform.position);
+                float distance = ((Vector2)point - screenPosition).sqrMagnitude;
+                if (point.z <= 0 || distance >= best) continue;
+                closest = pin;
+                best = distance;
+            }
+            return closest;
         }
         private static (int a,int b) Pair(int a,int b)=>a<b?(a,b):(b,a);
         private bool Routed(int i)=>wires.Contains(Pair(Wires[i].a,Wires[i].b));
@@ -100,10 +196,12 @@ namespace ProjectSpark.Gameplay
                 if(a>=0||b>=0)wires.Add(Pair(a,b));
             }
             wiredFeedback=Routed(Feedback);
+            suggestedWire=-1;
             wiring=wires.Count==Wires.Length?null:"Remove extra wires or check the routing chart.";
             for(int i=0;i<Wires.Length;i++)
             {
                 if(Routed(i))continue;
+                suggestedWire=i;
                 wiring=$"Connect W{i+1:000} · {pins[Wires[i].a].name} → {pins[Wires[i].b].name}.";
                 break;
             }
@@ -280,6 +378,11 @@ namespace ProjectSpark.Gameplay
         {
             if(stage>=Gates.Length||!bindings.SetRuntimeComponentBinding(Gates[stage],source))return;
             stage++;awardDwell=0;manager.QueueEvaluation();Log($"Objective {stage}/6 verified.");
+            if (stage == 1 && cableViewButton && !choseCableView)
+            {
+                focusCables = true;
+                RefreshCableView();
+            }
         }
         private void Log(string message)=>latestEvent=$"{elapsed:0.0}s · {message}";
 
@@ -351,7 +454,19 @@ namespace ProjectSpark.Gameplay
         }
         public void Verify(){if(CanVerify){verified=true;Log("Fresh field, door interlock, safe amplifier and EUT checks verified.");}}
         public void Reset(){if(CanReset){feedbackReset|=latch==Fault.Field&&feedbackObserved;latch=Fault.None;Log("Explicit RF safety reset. Repeat all scans and exposure.");}}
-        public void Arm(){if(CanArm){armed=true;Log("Remove W119 with Undo Last Wire during this live exposure.");}}
+        public void Arm(){if(CanArm){armed=true;Log("Ready to open W119 during this live exposure.");}}
+
+        public void OpenFeedbackWire()
+        {
+            if (!armed || !wireRegistry) return;
+            wireRegistry.RefreshNow();
+            foreach (var record in wireRegistry.Wires)
+            {
+                if (!IsFeedback(record)) continue;
+                wireRegistry.RemoveWire(record.WireId);
+                return;
+            }
+        }
         public void EStop(){emergency.SetState(emergency.IsClosed?SparkSwitchState.Open:SparkSwitchState.Closed);if(emergency.IsOpen&&latch==Fault.None)Trip(Fault.EStop);}
         public void Certify(){if(CanCertify)certify=true;}
 
@@ -369,7 +484,7 @@ namespace ProjectSpark.Gameplay
                 return verified?"Select RESET SAFETY.":"Verify shutter, door and fresh field evidence.";
             }
             if(!Ready)return wiring??"Check the 5 V rails and RF emergency stop.";
-            if(armed)return "Live W119 test · use Undo Last Wire to remove trusted field feedback.";
+            if(armed)return "Live W119 test · select OPEN W119 to disconnect the trusted field probe.";
             if(CanArm)return "Select ARM W119 TEST while exposure is active.";
             if(CanSensorFault)return "Inject SENSOR DESENSE during live exposure.";
             if(!Idle)return $"ACQUIRING · {mode} · {completedPoses}/72 antenna poses.";
@@ -387,6 +502,18 @@ namespace ProjectSpark.Gameplay
         }
         private void Present()
         {
+            if (pinLabels.Length == pins.Length)
+            {
+                int hover = wireBuilder && wireBuilder.HoveredTerminal ? Array.IndexOf(pins, wireBuilder.HoveredTerminal) : -1;
+                if (shownWire != suggestedWire || shownHover != hover)
+                {
+                    var pair = suggestedWire >= 0 ? Wires[suggestedWire] : (-1, -1);
+                    for(int i=0;i<pinLabels.Length;i++)
+                        if (pinLabels[i]) pinLabels[i].gameObject.SetActive(i == pair.Item1 || i == pair.Item2 || i == hover);
+                    shownWire = suggestedWire;
+                    shownHover = hover;
+                }
+            }
             statusText.text=Status();
             meterText.text=$"COND {conductedWorst:0.000}   ·   RAD {radiatedWorst:0.000}   ·   FIELD {(trusted?sampleField.ToString("0.000"):"STALE")}   ·   AMP {plant.Amp:0.00}";
             detailText.text=$"AZ {plant.Azimuth:0}° · HEIGHT {plant.Height:0.00} · POL {plant.Polarization:0}°   /   ADC {plant.AdcError:0.000} · JITTER {plant.Jitter:0.000} · OPT {plant.OpticalLoss:0.000}";
@@ -402,6 +529,7 @@ namespace ProjectSpark.Gameplay
             harnessFaultButton.interactable=CanHarnessFault;seamFaultButton.interactable=CanSeamFault;sensorFaultButton.interactable=CanSensorFault;
             diagnoseButton.interactable=CanDiagnose;verifyButton.interactable=CanVerify;resetButton.interactable=CanReset;armButton.interactable=CanArm;
             eStopButton.interactable=stage<6;certifyButton.interactable=CanCertify&&!certify;
+            if (openFeedbackButton) openFeedbackButton.interactable = armed && wiredFeedback && wireRegistry;
             rig.Apply(plant,mode,sampleField,trusted,lastPermit,armRfButton.interactable,conducted,radiated,completedPoses,latch!=Fault.None,
                 1-conductedWorst,1-radiatedWorst,Mathf.Max(highH,highE));
         }

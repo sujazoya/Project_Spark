@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 namespace ProjectSpark.Gameplay
 {
+    [RequireComponent(typeof(CanvasRenderer))]
     public sealed class SparkLevel81Trend : MaskableGraphic
     {
         private bool ecc,vote,watch,packet;

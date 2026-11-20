@@ -1,0 +1,4 @@
+id,name,fault_type,observable_effect,tool,repair,proof
+F1,U6 Primary SPI Chip-Select Contact,OPEN_SPI_CS,Flash reads fail before image verification,SPI Analyzer + Microscope,Qualified solder contact restoration,New valid SPI transactions
+F2,Corrupted Primary Firmware Image,FIRMWARE_CORRUPTION,Flash reads complete but image authentication fails,Image Verifier + Recovery Console,Authenticated rewrite from protected U7 recovery bank,Fresh verified primary image and boot
+F3,Recovery Request Pull-Up Failure,RECOVERY_INPUT,Recovery button not reliably sampled,Multimeter + Logic Analyzer,Replace faulty recovery request resistor,Fresh input transition and recovery test

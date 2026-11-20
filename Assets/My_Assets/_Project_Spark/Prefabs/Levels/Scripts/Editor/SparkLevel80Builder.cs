@@ -125,12 +125,12 @@ namespace ProjectSpark.EditorTools
             var canvas=obj.GetComponent<Canvas>(); canvas.renderMode=RenderMode.ScreenSpaceOverlay; canvas.sortingOrder=30;
             var scaler=obj.GetComponent<CanvasScaler>(); scaler.uiScaleMode=CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution=new Vector2(1920,1080);
-            var panel=Rect(canvas.transform,"Panel",new Vector2(1080,271),new Vector2(-220,6));
+            var panel=Rect(canvas.transform,"Panel",new Vector2(1080,249),new Vector2(-220,6));
             var back=panel.gameObject.AddComponent<Image>(); back.color=new Color(.035f,.08f,.13f,.94f); back.raycastTarget=false;
 
 
 
-            c.statusText=UIText(panel,"Status","Wire the four-channel photonic workstation.",font,new Vector2(1080,28),new Vector2(0,271));
+            c.statusText=UIText(panel,"Status","Wire the four-channel photonic workstation.",font,new Vector2(1080,28),new Vector2(0,254));
             c.meterText=UIText(panel,"Measurements","PHOTONIC WDM LINK CONTROL",font,new Vector2(1080,28),new Vector2(0,233));
             c.meterText.color=new Color(.40f,.92f,.93f);
             c.detailText=UIText(panel,"Details","",font,new Vector2(1080,28),new Vector2(0,207));
@@ -163,7 +163,14 @@ namespace ProjectSpark.EditorTools
             c.armButton=Control(panel,font,"ARM W078 TEST",238f,61,c.Arm);
             c.verifyButton=Control(panel,font,"VERIFY RX / SAFE",357f,61,c.Verify);
             c.certifyButton=Control(panel,font,"CERTIFY",476f,61,c.Certify);
-            var plot=Rect(canvas.transform,"SCADA trends",new Vector2(330,181),new Vector2(-230,800));
+            c.openFeedbackButton=Control(panel,font,"OPEN W078",-476f,22,c.OpenFeedbackWire);
+            c.cableViewButton=Control(panel,font,"CABLE VIEW",-357f,22,c.ToggleCableView);
+            Control(panel,font,"RESET VIEW",-238f,22,c.ResetWorkbenchView).interactable=true;
+            c.focusWireButton=Control(panel,font,"FOCUS WIRE",-119f,22,c.FocusNextWire);
+            c.focusWireButton.interactable=true;
+            var plot=Rect(canvas.transform,"SCADA trends",new Vector2(330,181),Vector2.zero);
+            plot.anchorMin=plot.anchorMax=plot.pivot=Vector2.one;
+            plot.anchoredPosition=new Vector2(-24,-22);
             c.plot=plot.gameObject.AddComponent<SparkLevel80Trend>();
             c.plot.raycastTarget=false;
             var legend=UIText(plot,"Trend legend","4-CHANNEL  ·  EYE OPENING",font,new Vector2(355,25),new Vector2(0,181));
@@ -382,5 +389,3 @@ namespace ProjectSpark.EditorTools
     }
 }
 #endif
-
-

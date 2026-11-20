@@ -1,0 +1,33 @@
+LEVEL 107 — PHOENIX PROTOCOL
+PLAYABLE TRAINING CIRCUIT — PFX15-EDU-1
+
+MainMenu loads the fitted Level 107 prefab. The 10.13 × 7.51 board is centered on the 15.79 × 8.54 workshop table.
+The game uses 112 native assembly contacts, 148 training routes, 46 vias across 10 layers, and the removable W149 jumper.
+The Unity Play Mode scenario covers checkpoint resume, both image banks, power loss during programming, all three repairs, and the independent W149 safety sequence through objective 6.
+Data/PFX15_EDU_1_Training_Routes.csv records the synthetic pads and spans. The original physical schematic planning records remain unassigned and uncertified.
+
+ORIGINAL SOURCE ART VALIDATION
+PROJECT SPARK — AUTOMATIC LEVEL GENERATION VALIDATION
+Errors: 0 | Warnings: 11 | Info: 7
+STATUS: ART BUILD VALIDATED (GAMEPLAY AUTHORITY STILL REQUIRED)
+
+WARN  | SCHEMATIC_REQUIRED: 148 routes lack approved pins/nets/layers; electrical objective blocked
+WARN  | SCHEMATIC_REQUIRED: 46 vias lack approved nets/layer spans; electrical objective blocked
+WARN  | SCHEMATIC_REQUIRED: independent safety jumper pins not approved; safety objective blocked
+INFO  | Blueprint: 107 / PFX15, installable 112, models 144, routes 148, vias 46
+INFO  | Approvals: routes 0/148, vias 0/46
+INFO  | The generator does not certify connectivity, provide a solver, repair real components, or award objectives by itself
+WARN  | Starter base-color texture absent for PAD
+WARN  | Starter base-color texture absent for RUBBER
+WARN  | Starter base-color texture absent for CYAN
+WARN  | Starter base-color texture absent for PURPLE
+WARN  | Starter base-color texture absent for WHITE
+INFO  | Generated/updated 19 starter material overrides (not a completed AAA PBR texture pass)
+WARN  | Completed L107 reference uses legacy procedural geometry; reference DISPLAY bounds normalized to fitted board. Gameplay authority remains unverified.
+INFO  | Level_107_Layout: 112 uninstalled part targets, 148 unapproved routes, 46 unapproved vias, 3 faults, 6 objectives, 10 copper layer references, 31 supplemental meshes.
+WARN  | Source PFX-15 bare board geometry = approx. 285x205 mm; specification = 290x210 mm. Artwork/footprints adjusted for 10.13x7.51 display size; no approved pad geometry inferred.
+INFO  | Model axis: native XZ; native import width=0.285000; native depth=0.205000
+INFO  | WORKSHOP BOARD: 10.13 x 7.51 units; table 15.79 x 8.54 units; margins (centered) 2.83 left/right, 0.5149999 front/back.
+WARN  | L107 physical pad mapping, routes W001-W148, vias V01-V46 and W149 physical pins are not approved; electrical and final objective authority remain BLOCKED.
+
+Geometry centered and workshop footprint 10.13 x 7.51 units. Electrical pins/nets and gameplay service bindings still require authoritative design.

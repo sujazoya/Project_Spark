@@ -1,0 +1,23 @@
+PROJECT SPARK — AUTOMATIC LEVEL GENERATION VALIDATION
+Errors: 0 | Warnings: 10 | Info: 7
+STATUS: ART BUILD VALIDATED (GAMEPLAY AUTHORITY STILL REQUIRED)
+
+WARN  | SCHEMATIC_REQUIRED: 140 routes lack approved pins/nets/layers; electrical objective blocked
+WARN  | SCHEMATIC_REQUIRED: 42 vias lack approved nets/layer spans; electrical objective blocked
+WARN  | SCHEMATIC_REQUIRED: independent safety jumper pins not approved; safety objective blocked
+INFO  | Blueprint: 106 / SFX14, installable 106, models 136, routes 140, vias 42
+INFO  | Approvals: routes 0/140, vias 0/42
+INFO  | The generator does not certify connectivity, provide a solver, repair real components, or award objectives by itself
+WARN  | Starter base-color texture absent for PAD
+WARN  | Starter base-color texture absent for RUBBER
+WARN  | Starter base-color texture absent for CYAN
+WARN  | Starter base-color texture absent for PURPLE
+WARN  | Starter base-color texture absent for WHITE
+INFO  | Generated/updated 19 starter material overrides (not a completed AAA PBR texture pass)
+INFO  | Level_106_Layout: 106 uninstalled part targets, 140 unapproved routes, 42 unapproved vias, 3 faults, 6 objectives, 10 copper layer references, 29 supplemental meshes.
+INFO  | Model axis: XY rotated to XZ; native import width=0.285000; native depth=0.205000
+INFO  | WORKSHOP BOARD: 10.13 x 7.51 units; table 15.79 x 8.54 units; margins (centered) 2.83 left/right, 0.5149999 front/back.
+WARN  | 106 physical terminal mappings, routes W001-W140, vias V01-V42 and W141 physical pins are not approved; W141 U14 source is missing from the BOM. All electrical and final objective authority remains BLOCKED.
+WARN  | W141 logical source L106_SystemBootMonitor_U14 is absent from the 106-part BOM; NEVER silently bind it to another IC.
+
+Geometry centered and workshop footprint 10.13 x 7.51 units. Electrical pins/nets and gameplay service bindings still require authoritative design.

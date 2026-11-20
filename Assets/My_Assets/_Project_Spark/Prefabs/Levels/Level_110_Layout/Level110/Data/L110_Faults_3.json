@@ -1,0 +1,38 @@
+[
+  {
+    "id": "F1",
+    "name": "Output capacitor ESR degradation",
+    "model": "DYNAMIC_OUTPUT_FILTER",
+    "symptoms": "VCORE transient droop and ripple",
+    "evidence": [
+      "VCORE oscilloscope",
+      "load step capture",
+      "capacitance/ESR diagnostic"
+    ],
+    "repair": "Replace defective polymer capacitor and requalify"
+  },
+  {
+    "id": "F2",
+    "name": "Phase 3 current-sense drift",
+    "model": "PHASE_CURRENT_SENSE_BIAS",
+    "symptoms": "Unequal phase currents; sensor differs from independent probe",
+    "evidence": [
+      "phase 3 current trace",
+      "controller current reading",
+      "phase comparison"
+    ],
+    "repair": "Replace current-sense network and recalibrate"
+  },
+  {
+    "id": "F3",
+    "name": "Voltage feedback instability",
+    "model": "FEEDBACK_NETWORK_ERROR",
+    "symptoms": "Incorrect or unstable output regulation",
+    "evidence": [
+      "feedback node measurement",
+      "VCORE waveform",
+      "load response"
+    ],
+    "repair": "Replace defective feedback component and qualify startup"
+  }
+]

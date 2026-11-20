@@ -1,0 +1,1 @@
+using UnityEngine; namespace ProjectSpark.Level104 { public sealed class SparkL104VisualOnly : MonoBehaviour { [TextArea] public string notice="ART ONLY: does not certify PCB continuity, soldering, memory training, or LevelGamePlayManager objectives."; }}

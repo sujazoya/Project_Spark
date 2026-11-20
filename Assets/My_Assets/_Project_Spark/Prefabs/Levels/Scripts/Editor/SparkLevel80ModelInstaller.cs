@@ -24,205 +24,206 @@ namespace ProjectSpark.EditorTools
             "IndustrialPhotonicDataAtriumBase","TransparentPhotonicCoreEnclosure","CompletedFourChipletPackageCarrier","BondedFourChipletElectronicAssembly","CoPackagedSiliconPhotonicInterposer","HolographicOpticalWaveguideMap","PhotonicEdgeCouplerArray","FiberRibbonDockingStation","OpticalFiberRibbonCassette","MultiWavelengthLaserSourceRack","LaserCombStabilizationModule","LaserDriveController","LaserTemperatureControlMount","OpticalSafetyShutter","OpticalIsolatorModule","CalibratedOpticalTapSplitter","LaunchOpticalPowerMeter","PolarizationControlModule","VariableOpticalAttenuator","SpectralReferenceEtalon","HighSpeedTransmitterDriver","ElectroOpticalModulatorArray","ModulatorBiasController","FourChannelWDMMultiplexer","HolographicFourWavelengthCombiner","PhotonicWaveguideCrossSection","PhotonicThermalControlPlatform","MicroringResonatorChannelA","MicroringResonatorChannelB","MicroringResonatorChannelC","MicroringResonatorChannelD","FourZoneMicroringHeaterBank","MicroringHeaterDACController","MicroringThermalSensorArray","ThermalCrosstalkAnalyzer","FourChannelWDMDemultiplexer","DemultiplexerResonanceMonitor","FourChannelOpticalDropPortPanel","PhotodiodeReceiverArray","ReceiverTransimpedanceAmplifierBank","ClockAndDataRecoveryModule","ReceiverOpticalPowerMonitor","HighResolutionOpticalSpectrumAnalyzer","OpticalLinkPowerBudgetMeter","HighSpeedEyeDiagramAnalyzer","OpticalLinkBitErrorRateTester","PAM4WaveformSamplingInstrument","ForwardErrorCorrectionDecoder","PseudorandomBitPatternGenerator","ChipletOpticalTestRouter","MemoryOpticalLinkDiagnosticModule","LogicOpticalTransmitterInterface","IOOpticalOutputInterface","SensorOpticalTelemetryInterface","OpticalFiberMicrobendMonitor","ControlledOpticalFaultInjectionModule","OpticalLinkSupervisoryController","PhotonicLaserSafetyPLCRack","EmergencyOpticalShutterStation","PhotonicCoolingAirManifold","HolographicThermalResonanceDisplay","HolographicOpticalDataSCADA","PhotonicWaveguideDefectMicroscope","StrayLightSafetyMonitor","OpticalCalibrationReferenceCoupon","ESDGuardedPhotonicTestFixture","Regulated5VControlSupply","GiantWavelengthRoutingHologram"
         };
         private const string Materials = Folder + "Models/Materials";
-        private const float SocketHeight = .025f;
-        private const float SocketDiameter = .026f;
+        internal const string MountsName = "Equipment terminal panels";
+        internal const string FixtureName = "L80_HD_VISUAL_ART";
+        private const string BaseModule = "L80_IndustrialPhotonicDataAtriumBase";
 
-        private static readonly (string id, string label, float x, float z, string color)[] Sockets =
+        private static readonly (string id, string label, string color)[] Sockets =
         {
-            ("SUPPLY_POS","SUPPLY POS",-1.0000f,0.6800f,"red"),
-            ("PLC_5V","PLC 5V",-0.9315f,0.6800f,"red"),
-            ("SUPPLY_RET","SUPPLY RET",-0.8630f,0.6800f,"blue"),
-            ("PLC_GND","PLC GND",-0.7945f,0.6800f,"blue"),
-            ("TX_5V","TX 5V",-0.7260f,0.6800f,"red"),
-            ("TX_GND","TX GND",-0.6575f,0.6800f,"blue"),
-            ("RING_5V","RING 5V",-0.5890f,0.6800f,"red"),
-            ("RING_GND","RING GND",-0.5205f,0.6800f,"blue"),
-            ("RX_5V","RX 5V",-0.4520f,0.6800f,"red"),
-            ("RX_GND","RX GND",-0.3835f,0.6800f,"blue"),
-            ("SAFE_5V","SAFE 5V",-0.3150f,0.6800f,"red"),
-            ("SAFE_GND","SAFE GND",-0.2465f,0.6800f,"blue"),
-            ("LASER_PERMIT","LASER PERMIT",-0.1780f,0.6800f,"amber"),
-            ("LASER_ENABLE","LASER ENABLE",-0.1095f,0.6800f,"mint"),
-            ("LASER_CMD","LASER CMD",-0.0410f,0.6800f,"mint"),
-            ("LASER_DAC","LASER DAC",0.0275f,0.6800f,"mint"),
-            ("LAUNCH_TAP","LAUNCH TAP",0.0960f,0.6800f,"mint"),
-            ("LAUNCH_IN","LAUNCH IN",0.1645f,0.6800f,"mint"),
-            ("SOURCE_POWER","SOURCE POWER",0.2330f,0.6800f,"mint"),
-            ("SHUTTER_CMD","SHUTTER CMD",0.3015f,0.6800f,"amber"),
-            ("SHUTTER_OPEN","SHUTTER OPEN",0.3700f,0.6800f,"amber"),
-            ("SHUTTER_FB","SHUTTER FB",0.4385f,0.6800f,"amber"),
-            ("SHUTTER_CLOSED","SHUTTER CLOSED",0.5070f,0.6800f,"amber"),
-            ("ATTEN_CMD","ATTEN CMD",0.5755f,0.6800f,"mint"),
-            ("ATTEN_DAC","ATTEN DAC",0.6440f,0.6800f,"mint"),
-            ("ATTEN_OUT","ATTEN OUT",0.7125f,0.6800f,"mint"),
-            ("ATTEN_IN","ATTEN IN",0.7810f,0.6800f,"mint"),
-            ("COMB_OUT","COMB OUT",0.8495f,0.6800f,"mint"),
-            ("COMB_LOCK","COMB LOCK",0.9180f,0.6800f,"mint"),
-            ("LASER_TEMP","LASER TEMP",0.9865f,0.6800f,"mint"),
-            ("PLC_TEMP","PLC TEMP",-1.0000f,0.5450f,"mint"),
-            ("TEMP_CMD","TEMP CMD",-0.9315f,0.5450f,"mint"),
-            ("TEC_SET","TEC SET",-0.8630f,0.5450f,"mint"),
-            ("REF_OUT","REF OUT",-0.7945f,0.5450f,"mint"),
-            ("SPECTRAL_REF","SPECTRAL REF",-0.7260f,0.5450f,"mint"),
-            ("STRAY_OUT","STRAY OUT",-0.6575f,0.5450f,"mint"),
-            ("SAFE_STRAY","SAFE STRAY",-0.5890f,0.5450f,"amber"),
-            ("ISOLATOR_CMD","ISOLATOR CMD",-0.5205f,0.5450f,"mint"),
-            ("ISOLATOR_SET","ISOLATOR SET",-0.4520f,0.5450f,"mint"),
-            ("ISOLATOR_OUT","ISOLATOR OUT",-0.3835f,0.5450f,"mint"),
-            ("ISO_READY","ISO READY",-0.3150f,0.5450f,"mint"),
-            ("POL_OUT","POL OUT",-0.2465f,0.5450f,"mint"),
-            ("POL_READY","POL READY",-0.1780f,0.5450f,"mint"),
-            ("TAP_HEALTH","TAP HEALTH",-0.1095f,0.5450f,"mint"),
-            ("TAP_READY","TAP READY",-0.0410f,0.5450f,"mint"),
-            ("SCADA_LAUNCH","SCADA LAUNCH",0.0275f,0.5450f,"mint"),
-            ("TX_CMD","TX CMD",0.0960f,0.5450f,"mint"),
-            ("TX_ENABLE","TX ENABLE",0.1645f,0.5450f,"mint"),
-            ("TX_DRIVE","TX DRIVE",0.2330f,0.5450f,"mint"),
-            ("TX_MOD","TX MOD",0.3015f,0.5450f,"mint"),
-            ("BIAS_CMD","BIAS CMD",0.3700f,0.5450f,"mint"),
-            ("MOD_BIAS","MOD BIAS",0.4385f,0.5450f,"mint"),
-            ("MOD_RESP","MOD RESP",0.5070f,0.5450f,"mint"),
-            ("TX_RESPONSE","TX RESPONSE",0.5755f,0.5450f,"mint"),
-            ("LOGIC_OUT","LOGIC OUT",0.6440f,0.5450f,"mint"),
-            ("TX_LOGIC","TX LOGIC",0.7125f,0.5450f,"mint"),
-            ("MEMORY_OUT","MEMORY OUT",0.7810f,0.5450f,"mint"),
-            ("TX_MEMORY","TX MEMORY",0.8495f,0.5450f,"mint"),
-            ("IO_OUT","IO OUT",0.9180f,0.5450f,"mint"),
-            ("TX_IO","TX IO",0.9865f,0.5450f,"mint"),
-            ("SENSOR_OUT","SENSOR OUT",-1.0000f,0.4250f,"mint"),
-            ("TX_SENSOR","TX SENSOR",-0.9330f,0.4250f,"mint"),
-            ("PRBS_CMD","PRBS CMD",-0.8660f,0.4250f,"mint"),
-            ("PRBS_START","PRBS START",-0.7990f,0.4250f,"mint"),
-            ("PRBS_OUT","PRBS OUT",-0.7320f,0.4250f,"mint"),
-            ("REF_PATTERN","REF PATTERN",-0.6650f,0.4250f,"mint"),
-            ("TX_STATUS","TX STATUS",-0.5980f,0.4250f,"mint"),
-            ("TX_ACTIVE","TX ACTIVE",-0.5310f,0.4250f,"mint"),
-            ("MUX_CMD","MUX CMD",-0.4640f,0.4250f,"mint"),
-            ("MUX_PERMIT","MUX PERMIT",-0.3970f,0.4250f,"amber"),
-            ("MUX_OUT","MUX OUT",-0.3300f,0.4250f,"mint"),
-            ("MUX_OK","MUX OK",-0.2630f,0.4250f,"mint"),
-            ("MOD_CAL","MOD CAL",-0.1960f,0.4250f,"mint"),
-            ("TX_CAL_OK","TX CAL OK",-0.1290f,0.4250f,"mint"),
-            ("ROUTE_CMD","ROUTE CMD",-0.0620f,0.4250f,"mint"),
-            ("ROUTE_IN","ROUTE IN",0.0050f,0.4250f,"mint"),
-            ("ROUTE_OUT","ROUTE OUT",0.0720f,0.4250f,"mint"),
-            ("TX_ROUTES","TX ROUTES",0.1390f,0.4250f,"mint"),
-            ("TX_TELEM","TX TELEM",0.2060f,0.4250f,"mint"),
-            ("SCADA_TX","SCADA TX",0.2730f,0.4250f,"mint"),
-            ("BIAS_OUT","BIAS OUT",0.3400f,0.4250f,"mint"),
-            ("SCADA_BIAS","SCADA BIAS",0.4070f,0.4250f,"mint"),
-            ("RING_CMD","RING CMD",0.4740f,0.4250f,"mint"),
-            ("RING_ENABLE","RING ENABLE",0.5410f,0.4250f,"mint"),
-            ("HEAT_DAC","HEAT DAC",0.6080f,0.4250f,"mint"),
-            ("RING_HEAT","RING HEAT",0.6750f,0.4250f,"mint"),
-            ("TEMP_ARRAY","TEMP ARRAY",0.7420f,0.4250f,"mint"),
-            ("RING_TEMP","RING TEMP",0.8090f,0.4250f,"mint"),
-            ("CROSS_HEAT","CROSS HEAT",0.8760f,0.4250f,"mint"),
-            ("CROSS_IN","CROSS IN",0.9430f,0.4250f,"mint"),
-            ("A_HEAT","A HEAT",1.0100f,0.4250f,"mint"),
-            ("A_DAC","A DAC",-1.0000f,-0.3550f,"mint"),
-            ("A_TEMP","A TEMP",-0.9390f,-0.3550f,"mint"),
-            ("A_TEMPERATURE","A TEMPERATURE",-0.8780f,-0.3550f,"mint"),
-            ("B_HEAT","B HEAT",-0.8170f,-0.3550f,"mint"),
-            ("B_DAC","B DAC",-0.7560f,-0.3550f,"mint"),
-            ("B_TEMP","B TEMP",-0.6950f,-0.3550f,"mint"),
-            ("B_TEMPERATURE","B TEMPERATURE",-0.6340f,-0.3550f,"mint"),
-            ("C_HEAT","C HEAT",-0.5730f,-0.3550f,"mint"),
-            ("C_DAC","C DAC",-0.5120f,-0.3550f,"mint"),
-            ("C_TEMP","C TEMP",-0.4510f,-0.3550f,"mint"),
-            ("C_TEMPERATURE","C TEMPERATURE",-0.3900f,-0.3550f,"mint"),
-            ("D_HEAT","D HEAT",-0.3290f,-0.3550f,"mint"),
-            ("D_DAC","D DAC",-0.2680f,-0.3550f,"mint"),
-            ("D_TEMP","D TEMP",-0.2070f,-0.3550f,"mint"),
-            ("D_TEMPERATURE","D TEMPERATURE",-0.1460f,-0.3550f,"mint"),
-            ("A_LOCK","A LOCK",-0.0850f,-0.3550f,"mint"),
-            ("A_RESONANCE","A RESONANCE",-0.0240f,-0.3550f,"mint"),
-            ("B_LOCK","B LOCK",0.0370f,-0.3550f,"mint"),
-            ("B_RESONANCE","B RESONANCE",0.0980f,-0.3550f,"mint"),
-            ("C_LOCK","C LOCK",0.1590f,-0.3550f,"mint"),
-            ("C_RESONANCE","C RESONANCE",0.2200f,-0.3550f,"mint"),
-            ("D_LOCK","D LOCK",0.2810f,-0.3550f,"mint"),
-            ("D_RESONANCE","D RESONANCE",0.3420f,-0.3550f,"mint"),
-            ("CROSS_CMD","CROSS CMD",0.4030f,-0.3550f,"mint"),
-            ("CROSS_COMP","CROSS COMP",0.4640f,-0.3550f,"mint"),
-            ("DEMOD_OUT","DEMOD OUT",0.5250f,-0.3550f,"mint"),
-            ("DEMOD_LOCK","DEMOD LOCK",0.5860f,-0.3550f,"mint"),
-            ("TEMP_TELEM","TEMP TELEM",0.6470f,-0.3550f,"mint"),
-            ("SCADA_TEMP","SCADA TEMP",0.7080f,-0.3550f,"mint"),
-            ("COOL_CMD","COOL CMD",0.7690f,-0.3550f,"mint"),
-            ("COOLING_SET","COOLING SET",0.8300f,-0.3550f,"mint"),
-            ("DEMUX_CMD","DEMUX CMD",0.8910f,-0.3550f,"mint"),
-            ("DEMUX_CONFIG","DEMUX CONFIG",0.9520f,-0.3550f,"mint"),
-            ("DEMUX_OUT","DEMUX OUT",1.0130f,-0.3550f,"mint"),
-            ("DEMUX_OK","DEMUX OK",-1.0000f,-0.5250f,"mint"),
-            ("PD_CMD","PD CMD",-0.9390f,-0.5250f,"mint"),
-            ("PD_ENABLE","PD ENABLE",-0.8780f,-0.5250f,"mint"),
-            ("PD_OUT","PD OUT",-0.8170f,-0.5250f,"mint"),
-            ("PD_CURRENT","PD CURRENT",-0.7560f,-0.5250f,"mint"),
-            ("TIA_OUT","TIA OUT",-0.6950f,-0.5250f,"mint"),
-            ("RX_ANALOG","RX ANALOG",-0.6340f,-0.5250f,"mint"),
-            ("CDR_OUT","CDR OUT",-0.5730f,-0.5250f,"mint"),
-            ("CDR_LOCK","CDR LOCK",-0.5120f,-0.5250f,"mint"),
-            ("RX_TAP","RX TAP",-0.4510f,-0.5250f,"mint"),
-            ("RX_METER","RX METER",-0.3900f,-0.5250f,"mint"),
-            ("SCADA_RX_TAP","SCADA RX TAP",-0.3290f,-0.5250f,"mint"),
-            ("SPEC_OUT","SPEC OUT",-0.2680f,-0.5250f,"mint"),
-            ("SPEC_IN","SPEC IN",-0.2070f,-0.5250f,"mint"),
-            ("BUDGET_OUT","BUDGET OUT",-0.1460f,-0.5250f,"mint"),
-            ("BUDGET_IN","BUDGET IN",-0.0850f,-0.5250f,"mint"),
-            ("DROP_OUT","DROP OUT",-0.0240f,-0.5250f,"mint"),
-            ("DROP_OK","DROP OK",0.0370f,-0.5250f,"mint"),
-            ("RX_OPTICAL_POWER_SIGNAL_OUT","RX POWER OUT",0.0980f,-0.5250f,"mint"),
-            ("LINK_SUPERVISOR_RX_POWER_IN","LINK RX IN",0.1590f,-0.5250f,"mint"),
-            ("METER_HEALTH","METER HEALTH",0.2200f,-0.5250f,"mint"),
-            ("TIA_GAIN_REQ","TIA GAIN REQ",0.2810f,-0.5250f,"mint"),
-            ("TIA_ACTUAL","TIA ACTUAL",0.3420f,-0.5250f,"mint"),
-            ("PD_READY","PD READY",0.4030f,-0.5250f,"mint"),
-            ("SCADA_SPEC","SCADA SPEC",0.4640f,-0.5250f,"mint"),
-            ("SCADA_LOSS","SCADA LOSS",0.5250f,-0.5250f,"mint"),
-            ("BER_ENABLE","BER ENABLE",0.5860f,-0.5250f,"mint"),
-            ("PRBS_EXPECT","PRBS EXPECT",0.6470f,-0.5250f,"mint"),
-            ("TEST_BITS","TEST BITS",0.7080f,-0.5250f,"mint"),
-            ("BER_RESULT","BER RESULT",0.7690f,-0.5250f,"mint"),
-            ("EYE_RESULT","EYE RESULT",0.8300f,-0.5250f,"mint"),
-            ("PAM4_QUALITY","PAM4 QUALITY",0.8910f,-0.5250f,"mint"),
-            ("FEC_STATUS","FEC STATUS",0.9520f,-0.5250f,"mint"),
-            ("RAW_BITS","RAW BITS",1.0130f,-0.5250f,"mint"),
-            ("FEC_BITS","FEC BITS",-1.0000f,-0.7000f,"mint"),
-            ("CDR_REQ","CDR REQ",-0.9410f,-0.7000f,"mint"),
-            ("CLOCK_OUT","CLOCK OUT",-0.8820f,-0.7000f,"mint"),
-            ("ROUTE_PASS","ROUTE PASS",-0.8230f,-0.7000f,"mint"),
-            ("MEMORY_RESP","MEMORY RESP",-0.7640f,-0.7000f,"mint"),
-            ("LOGIC_STATUS","LOGIC STATUS",-0.7050f,-0.7000f,"mint"),
-            ("IO_STATUS","IO STATUS",-0.6460f,-0.7000f,"mint"),
-            ("SENSOR_TELEM","SENSOR TELEM",-0.5870f,-0.7000f,"mint"),
-            ("FIBER_LOSS","FIBER LOSS",-0.5280f,-0.7000f,"mint"),
-            ("FAULT_STATE","FAULT STATE",-0.4690f,-0.7000f,"amber"),
-            ("INJECT_ENABLE","INJECT ENABLE",-0.4100f,-0.7000f,"mint"),
-            ("WAVEGUIDE_SCOPE","WAVEGUIDE SCOPE",-0.3510f,-0.7000f,"mint"),
-            ("COUPON_OK","COUPON OK",-0.2920f,-0.7000f,"mint"),
-            ("ESD_STATUS","ESD STATUS",-0.2330f,-0.7000f,"mint"),
-            ("DOCK_SEATED","DOCK SEATED",-0.1740f,-0.7000f,"mint"),
-            ("EDGE_ALIGN","EDGE ALIGN",-0.1150f,-0.7000f,"mint"),
-            ("FIBER_ID","FIBER ID",-0.0560f,-0.7000f,"mint"),
-            ("CROSSTALK_MAP","CROSSTALK MAP",0.0030f,-0.7000f,"mint"),
-            ("WAVEGUIDE_MAP","WAVEGUIDE MAP",0.0620f,-0.7000f,"mint"),
-            ("WDM_HOLOGRAM","WDM HOLOGRAM",0.1210f,-0.7000f,"mint"),
-            ("ROUTE_HOLOGRAM","ROUTE HOLOGRAM",0.1800f,-0.7000f,"mint"),
-            ("DIAGNOSTICS","DIAGNOSTICS",0.2390f,-0.7000f,"mint"),
-            ("ESTOP_NC","ESTOP NC",0.2980f,-0.7000f,"amber"),
-            ("SAFE_STOP_IN","SAFE STOP IN",0.3570f,-0.7000f,"amber"),
-            ("OVERRIDE_SAFE","OVERRIDE SAFE",0.4160f,-0.7000f,"amber"),
-            ("OPTICAL_PERMIT","OPTICAL PERMIT",0.4750f,-0.7000f,"amber"),
-            ("PLC_ALLOW","PLC ALLOW",0.5340f,-0.7000f,"mint"),
-            ("SCADA_QUAL","SCADA QUAL",0.5930f,-0.7000f,"mint"),
-            ("OPERATOR_CMD","OPERATOR CMD",0.6520f,-0.7000f,"mint"),
-            ("RX_LOSS_TRIP","RX LOSS TRIP",0.7110f,-0.7000f,"amber"),
-            ("LASER_OFF","LASER OFF",0.7700f,-0.7000f,"mint"),
-            ("FAIL_CLOSED","FAIL CLOSED",0.8290f,-0.7000f,"mint"),
-            ("W078_VALID","W078 VALID",0.8880f,-0.7000f,"mint"),
-            ("OBJECTIVE_EVENT","OBJECTIVE EVENT",0.9470f,-0.7000f,"mint"),
-            ("SAFETY_ALARM","SAFETY ALARM",1.0060f,-0.7000f,"amber"),
+            ("SUPPLY_POS","SUPPLY POS","red"),
+            ("PLC_5V","PLC 5V","red"),
+            ("SUPPLY_RET","SUPPLY RET","blue"),
+            ("PLC_GND","PLC GND","blue"),
+            ("TX_5V","TX 5V","red"),
+            ("TX_GND","TX GND","blue"),
+            ("RING_5V","RING 5V","red"),
+            ("RING_GND","RING GND","blue"),
+            ("RX_5V","RX 5V","red"),
+            ("RX_GND","RX GND","blue"),
+            ("SAFE_5V","SAFE 5V","red"),
+            ("SAFE_GND","SAFE GND","blue"),
+            ("LASER_PERMIT","LASER PERMIT","amber"),
+            ("LASER_ENABLE","LASER ENABLE","mint"),
+            ("LASER_CMD","LASER CMD","mint"),
+            ("LASER_DAC","LASER DAC","mint"),
+            ("LAUNCH_TAP","LAUNCH TAP","mint"),
+            ("LAUNCH_IN","LAUNCH IN","mint"),
+            ("SOURCE_POWER","SOURCE POWER","mint"),
+            ("SHUTTER_CMD","SHUTTER CMD","amber"),
+            ("SHUTTER_OPEN","SHUTTER OPEN","amber"),
+            ("SHUTTER_FB","SHUTTER FB","amber"),
+            ("SHUTTER_CLOSED","SHUTTER CLOSED","amber"),
+            ("ATTEN_CMD","ATTEN CMD","mint"),
+            ("ATTEN_DAC","ATTEN DAC","mint"),
+            ("ATTEN_OUT","ATTEN OUT","mint"),
+            ("ATTEN_IN","ATTEN IN","mint"),
+            ("COMB_OUT","COMB OUT","mint"),
+            ("COMB_LOCK","COMB LOCK","mint"),
+            ("LASER_TEMP","LASER TEMP","mint"),
+            ("PLC_TEMP","PLC TEMP","mint"),
+            ("TEMP_CMD","TEMP CMD","mint"),
+            ("TEC_SET","TEC SET","mint"),
+            ("REF_OUT","REF OUT","mint"),
+            ("SPECTRAL_REF","SPECTRAL REF","mint"),
+            ("STRAY_OUT","STRAY OUT","mint"),
+            ("SAFE_STRAY","SAFE STRAY","amber"),
+            ("ISOLATOR_CMD","ISOLATOR CMD","mint"),
+            ("ISOLATOR_SET","ISOLATOR SET","mint"),
+            ("ISOLATOR_OUT","ISOLATOR OUT","mint"),
+            ("ISO_READY","ISO READY","mint"),
+            ("POL_OUT","POL OUT","mint"),
+            ("POL_READY","POL READY","mint"),
+            ("TAP_HEALTH","TAP HEALTH","mint"),
+            ("TAP_READY","TAP READY","mint"),
+            ("SCADA_LAUNCH","SCADA LAUNCH","mint"),
+            ("TX_CMD","TX CMD","mint"),
+            ("TX_ENABLE","TX ENABLE","mint"),
+            ("TX_DRIVE","TX DRIVE","mint"),
+            ("TX_MOD","TX MOD","mint"),
+            ("BIAS_CMD","BIAS CMD","mint"),
+            ("MOD_BIAS","MOD BIAS","mint"),
+            ("MOD_RESP","MOD RESP","mint"),
+            ("TX_RESPONSE","TX RESPONSE","mint"),
+            ("LOGIC_OUT","LOGIC OUT","mint"),
+            ("TX_LOGIC","TX LOGIC","mint"),
+            ("MEMORY_OUT","MEMORY OUT","mint"),
+            ("TX_MEMORY","TX MEMORY","mint"),
+            ("IO_OUT","IO OUT","mint"),
+            ("TX_IO","TX IO","mint"),
+            ("SENSOR_OUT","SENSOR OUT","mint"),
+            ("TX_SENSOR","TX SENSOR","mint"),
+            ("PRBS_CMD","PRBS CMD","mint"),
+            ("PRBS_START","PRBS START","mint"),
+            ("PRBS_OUT","PRBS OUT","mint"),
+            ("REF_PATTERN","REF PATTERN","mint"),
+            ("TX_STATUS","TX STATUS","mint"),
+            ("TX_ACTIVE","TX ACTIVE","mint"),
+            ("MUX_CMD","MUX CMD","mint"),
+            ("MUX_PERMIT","MUX PERMIT","amber"),
+            ("MUX_OUT","MUX OUT","mint"),
+            ("MUX_OK","MUX OK","mint"),
+            ("MOD_CAL","MOD CAL","mint"),
+            ("TX_CAL_OK","TX CAL OK","mint"),
+            ("ROUTE_CMD","ROUTE CMD","mint"),
+            ("ROUTE_IN","ROUTE IN","mint"),
+            ("ROUTE_OUT","ROUTE OUT","mint"),
+            ("TX_ROUTES","TX ROUTES","mint"),
+            ("TX_TELEM","TX TELEM","mint"),
+            ("SCADA_TX","SCADA TX","mint"),
+            ("BIAS_OUT","BIAS OUT","mint"),
+            ("SCADA_BIAS","SCADA BIAS","mint"),
+            ("RING_CMD","RING CMD","mint"),
+            ("RING_ENABLE","RING ENABLE","mint"),
+            ("HEAT_DAC","HEAT DAC","mint"),
+            ("RING_HEAT","RING HEAT","mint"),
+            ("TEMP_ARRAY","TEMP ARRAY","mint"),
+            ("RING_TEMP","RING TEMP","mint"),
+            ("CROSS_HEAT","CROSS HEAT","mint"),
+            ("CROSS_IN","CROSS IN","mint"),
+            ("A_HEAT","A HEAT","mint"),
+            ("A_DAC","A DAC","mint"),
+            ("A_TEMP","A TEMP","mint"),
+            ("A_TEMPERATURE","A TEMPERATURE","mint"),
+            ("B_HEAT","B HEAT","mint"),
+            ("B_DAC","B DAC","mint"),
+            ("B_TEMP","B TEMP","mint"),
+            ("B_TEMPERATURE","B TEMPERATURE","mint"),
+            ("C_HEAT","C HEAT","mint"),
+            ("C_DAC","C DAC","mint"),
+            ("C_TEMP","C TEMP","mint"),
+            ("C_TEMPERATURE","C TEMPERATURE","mint"),
+            ("D_HEAT","D HEAT","mint"),
+            ("D_DAC","D DAC","mint"),
+            ("D_TEMP","D TEMP","mint"),
+            ("D_TEMPERATURE","D TEMPERATURE","mint"),
+            ("A_LOCK","A LOCK","mint"),
+            ("A_RESONANCE","A RESONANCE","mint"),
+            ("B_LOCK","B LOCK","mint"),
+            ("B_RESONANCE","B RESONANCE","mint"),
+            ("C_LOCK","C LOCK","mint"),
+            ("C_RESONANCE","C RESONANCE","mint"),
+            ("D_LOCK","D LOCK","mint"),
+            ("D_RESONANCE","D RESONANCE","mint"),
+            ("CROSS_CMD","CROSS CMD","mint"),
+            ("CROSS_COMP","CROSS COMP","mint"),
+            ("DEMOD_OUT","DEMOD OUT","mint"),
+            ("DEMOD_LOCK","DEMOD LOCK","mint"),
+            ("TEMP_TELEM","TEMP TELEM","mint"),
+            ("SCADA_TEMP","SCADA TEMP","mint"),
+            ("COOL_CMD","COOL CMD","mint"),
+            ("COOLING_SET","COOLING SET","mint"),
+            ("DEMUX_CMD","DEMUX CMD","mint"),
+            ("DEMUX_CONFIG","DEMUX CONFIG","mint"),
+            ("DEMUX_OUT","DEMUX OUT","mint"),
+            ("DEMUX_OK","DEMUX OK","mint"),
+            ("PD_CMD","PD CMD","mint"),
+            ("PD_ENABLE","PD ENABLE","mint"),
+            ("PD_OUT","PD OUT","mint"),
+            ("PD_CURRENT","PD CURRENT","mint"),
+            ("TIA_OUT","TIA OUT","mint"),
+            ("RX_ANALOG","RX ANALOG","mint"),
+            ("CDR_OUT","CDR OUT","mint"),
+            ("CDR_LOCK","CDR LOCK","mint"),
+            ("RX_TAP","RX TAP","mint"),
+            ("RX_METER","RX METER","mint"),
+            ("SCADA_RX_TAP","SCADA RX TAP","mint"),
+            ("SPEC_OUT","SPEC OUT","mint"),
+            ("SPEC_IN","SPEC IN","mint"),
+            ("BUDGET_OUT","BUDGET OUT","mint"),
+            ("BUDGET_IN","BUDGET IN","mint"),
+            ("DROP_OUT","DROP OUT","mint"),
+            ("DROP_OK","DROP OK","mint"),
+            ("RX_OPTICAL_POWER_SIGNAL_OUT","RX POWER OUT","mint"),
+            ("LINK_SUPERVISOR_RX_POWER_IN","LINK RX IN","mint"),
+            ("METER_HEALTH","METER HEALTH","mint"),
+            ("TIA_GAIN_REQ","TIA GAIN REQ","mint"),
+            ("TIA_ACTUAL","TIA ACTUAL","mint"),
+            ("PD_READY","PD READY","mint"),
+            ("SCADA_SPEC","SCADA SPEC","mint"),
+            ("SCADA_LOSS","SCADA LOSS","mint"),
+            ("BER_ENABLE","BER ENABLE","mint"),
+            ("PRBS_EXPECT","PRBS EXPECT","mint"),
+            ("TEST_BITS","TEST BITS","mint"),
+            ("BER_RESULT","BER RESULT","mint"),
+            ("EYE_RESULT","EYE RESULT","mint"),
+            ("PAM4_QUALITY","PAM4 QUALITY","mint"),
+            ("FEC_STATUS","FEC STATUS","mint"),
+            ("RAW_BITS","RAW BITS","mint"),
+            ("FEC_BITS","FEC BITS","mint"),
+            ("CDR_REQ","CDR REQ","mint"),
+            ("CLOCK_OUT","CLOCK OUT","mint"),
+            ("ROUTE_PASS","ROUTE PASS","mint"),
+            ("MEMORY_RESP","MEMORY RESP","mint"),
+            ("LOGIC_STATUS","LOGIC STATUS","mint"),
+            ("IO_STATUS","IO STATUS","mint"),
+            ("SENSOR_TELEM","SENSOR TELEM","mint"),
+            ("FIBER_LOSS","FIBER LOSS","mint"),
+            ("FAULT_STATE","FAULT STATE","amber"),
+            ("INJECT_ENABLE","INJECT ENABLE","mint"),
+            ("WAVEGUIDE_SCOPE","WAVEGUIDE SCOPE","mint"),
+            ("COUPON_OK","COUPON OK","mint"),
+            ("ESD_STATUS","ESD STATUS","mint"),
+            ("DOCK_SEATED","DOCK SEATED","mint"),
+            ("EDGE_ALIGN","EDGE ALIGN","mint"),
+            ("FIBER_ID","FIBER ID","mint"),
+            ("CROSSTALK_MAP","CROSSTALK MAP","mint"),
+            ("WAVEGUIDE_MAP","WAVEGUIDE MAP","mint"),
+            ("WDM_HOLOGRAM","WDM HOLOGRAM","mint"),
+            ("ROUTE_HOLOGRAM","ROUTE HOLOGRAM","mint"),
+            ("DIAGNOSTICS","DIAGNOSTICS","mint"),
+            ("ESTOP_NC","ESTOP NC","amber"),
+            ("SAFE_STOP_IN","SAFE STOP IN","amber"),
+            ("OVERRIDE_SAFE","OVERRIDE SAFE","amber"),
+            ("OPTICAL_PERMIT","OPTICAL PERMIT","amber"),
+            ("PLC_ALLOW","PLC ALLOW","mint"),
+            ("SCADA_QUAL","SCADA QUAL","mint"),
+            ("OPERATOR_CMD","OPERATOR CMD","mint"),
+            ("RX_LOSS_TRIP","RX LOSS TRIP","amber"),
+            ("LASER_OFF","LASER OFF","mint"),
+            ("FAIL_CLOSED","FAIL CLOSED","mint"),
+            ("W078_VALID","W078 VALID","mint"),
+            ("OBJECTIVE_EVENT","OBJECTIVE EVENT","mint"),
+            ("SAFETY_ALARM","SAFETY ALARM","amber"),
         };
 
         public static IEnumerable<string> TerminalIds => Sockets.Select(socket => socket.id);
@@ -238,7 +239,7 @@ namespace ProjectSpark.EditorTools
         {
             SparkLevel80Builder.Create();
             var root = AssetDatabase.LoadAssetAtPath<GameObject>(Prefab);
-            if (root == null || root.GetComponent<SparkLevel80Process>().controllerDisplay == null) Fit();
+            if (root == null || root.GetComponent<SparkEquipmentWorkbenchView>() == null) Fit();
             Register();
             ValidateAssets();
         }
@@ -250,7 +251,8 @@ namespace ProjectSpark.EditorTools
             var control=root != null ? root.GetComponent<SparkLevel80Process>() : null;
             var bindings=root != null ? root.GetComponent<SparkLevelSceneBindings>() : null;
             if (control==null || bindings==null || control.controllerDisplay==null || control.qualityDisplay==null || control.rig==null || control.rig.pivots.Length!=50 ||
-                control.pins.Length!=194 || control.pins.Distinct().Count()!=194 || 
+                control.pins.Length!=194 || control.pins.Distinct().Count()!=194 || !root.GetComponent<SparkEquipmentWorkbenchView>() ||
+                control.pins.Any(pin => pin.GetComponent<Renderer>() || !pin.GetComponent<BoxCollider>()) ||
                 !TerminalIds.SequenceEqual(control.pins.Select(pin=>pin.name)) ||
                 control.pins.Any(pin=>!bindings.TryGetTerminal(pin.name,out var bound) || bound!=pin) ||
                 SparkLevel80Process.Gates.Any(id=>!bindings.IsComponentIdDeclared(id)))
@@ -303,7 +305,7 @@ namespace ProjectSpark.EditorTools
             data.ApplyModifiedProperties();
         }
 
-        [MenuItem("Tools/Project Spark/Level 80/Fit Breadboard Assembly")]
+        [MenuItem("Tools/Project Spark/Level 80/Fit Equipment Workbench")]
         public static void Fit()
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode)
@@ -325,14 +327,14 @@ namespace ProjectSpark.EditorTools
             {
                 var loader = scene.GetRootGameObjects().SelectMany(item => item.GetComponentsInChildren<SparkLevelLayoutLoader>(true)).Single();
                 var layoutRoot = (Transform)new SerializedObject(loader).FindProperty("layoutRoot").objectReferenceValue;
-                var board = FindBoard(scene);
+                var table = SparkEquipmentWorkbenchFit.FindTable(scene);
                 Physics.SyncTransforms();
                 root = PrefabUtility.LoadPrefabContents(Prefab);
-                Fit(root, models, board, layoutRoot != null ? layoutRoot.localToWorldMatrix : Matrix4x4.identity);
+                Fit(root, models, table, layoutRoot != null ? layoutRoot.localToWorldMatrix : Matrix4x4.identity);
                 if (PrefabUtility.SaveAsPrefabAsset(root, Prefab) == null)
                     throw new InvalidOperationException("Unity could not save the Level 80 layout.");
                 AssetDatabase.SaveAssets();
-                Debug.Log("Level 80 fitted to the MainMenu breadboard with 194 seated terminals.");
+                Debug.Log("Level 80 fitted to the workshop table with 194 equipment-mounted terminals.");
             }
             finally
             {
@@ -341,34 +343,7 @@ namespace ProjectSpark.EditorTools
             }
         }
 
-        public static BreadboardGrid FindBoard(Scene scene) => scene.GetRootGameObjects()
-            .SelectMany(item => item.GetComponentsInChildren<BreadboardGrid>(true))
-            .Single(item => item.name == "bread-board");
-
-        public static Vector3 SurfacePoint(BreadboardGrid grid, Vector3 point, Vector3 up)
-        {
-            float nearest = float.PositiveInfinity;
-            // A hole can return its recessed bottom. Seat the rim on the deck
-            // surrounding the hole while keeping its horizontal center snapped.
-            Vector3 right = Vector3.ProjectOnPlane(grid.GridOrigin.right, up).normalized * .071f;
-            Vector3 forward = Vector3.ProjectOnPlane(grid.GridOrigin.forward, up).normalized * .071f;
-            var colliders = grid.GetComponents<Collider>();
-            foreach (var offset in new[] { Vector3.zero, right, -right, forward, -forward })
-            {
-                var ray = new Ray(point + offset + up * 2f, -up);
-                foreach (var collider in colliders)
-                {
-                    if (collider.enabled && collider.Raycast(ray, out var hit, 4f) &&
-                        hit.distance < nearest && Vector3.Dot(hit.normal, up) > .8f)
-                        nearest = hit.distance;
-                }
-            }
-            if (float.IsPositiveInfinity(nearest))
-                throw new InvalidOperationException($"The breadboard has no surface under {point}.");
-            return point + up * (2f - nearest);
-        }
-
-        private static void Fit(GameObject root, GameObject[] models, BreadboardGrid grid, Matrix4x4 layout)
+        private static void Fit(GameObject root, GameObject[] models, BoxCollider table, Matrix4x4 layout)
         {
             var bench = root.transform.Find("Photonic Workbench");
             var bindings = root.GetComponent<SparkLevelSceneBindings>();
@@ -376,41 +351,31 @@ namespace ProjectSpark.EditorTools
             if (bench == null || bindings == null || loop == null)
                 throw new InvalidOperationException("Level 80 is missing its workbench, controls, or scene bindings.");
 
-            var gridData = new SerializedObject(grid);
-            float spacing = gridData.FindProperty("spacing").floatValue;
-            var halfGrid = new Vector3((gridData.FindProperty("columns").intValue - 1) * spacing / 2, 0,
-                (gridData.FindProperty("rows").intValue - 1) * spacing / 2);
-            var gridCenter = grid.GridOrigin.TransformPoint(halfGrid);
+            foreach (var terminal in loop.pins)
+                terminal.transform.SetParent(terminal.Owner.transform, true);
+
             Matrix4x4 parentWorld = layout * bench.parent.localToWorldMatrix;
-            Vector3 up = parentWorld.MultiplyVector(bench.localRotation * Vector3.up).normalized;
-            Vector3 difference = gridCenter - parentWorld.MultiplyPoint3x4(bench.localPosition);
-            bench.localPosition += parentWorld.inverse.MultiplyVector(Vector3.ProjectOnPlane(difference, up));
-            float width = 2 * grid.GridOrigin.TransformVector(Vector3.right * halfGrid.x).magnitude;
-            float depth = 2 * grid.GridOrigin.TransformVector(Vector3.forward * halfGrid.z).magnitude;
-            float worldScale = Mathf.Min(width / 2.05f, depth / 1.56f);
+            Vector3 tableSize = Vector3.Scale(table.size, table.transform.lossyScale);
+            Vector3 tableTop = table.transform.TransformPoint(table.center + Vector3.up * table.size.y * .5f);
+            bench.localPosition = parentWorld.inverse.MultiplyPoint3x4(tableTop + table.transform.up * .025f);
+            bench.localRotation = Quaternion.Inverse(parentWorld.rotation) * table.transform.rotation;
+            float worldScale = Mathf.Min(tableSize.x / 2.55f, tableSize.z / 1.54f);
             bench.localScale = Vector3.one * (worldScale / parentWorld.MultiplyVector(Vector3.right).magnitude);
-            Matrix4x4 workbenchWorld = layout * bench.localToWorldMatrix;
-            Vector3 ToWorld(Vector3 point) => workbenchWorld.MultiplyPoint3x4(point);
-            Vector3 ToLocal(Vector3 point) => workbenchWorld.inverse.MultiplyPoint3x4(point);
-            float floor = ToLocal(SurfacePoint(grid, ToWorld(Vector3.zero), up)).y;
 
-            foreach (string name in new[] {"L80_HD_VISUAL_ART", "Breadboard Labels", "Motion pivots"})
+            foreach (string name in new[] {FixtureName, MountsName, "Breadboard Labels", "Motion pivots", "Temporary board"})
             {
                 var existing = bench.Find(name);
-                if (existing != null) Object.DestroyImmediate(existing.gameObject);
+                if (existing) Object.DestroyImmediate(existing.gameObject);
             }
-            foreach (string name in new[] {"Temporary board"})
-            {
-                var existing = bench.Find(name);
-                if (existing != null) existing.gameObject.SetActive(false);
-            }
-
             foreach (var renderer in bench.GetComponentsInChildren<MeshRenderer>(true))
-                if (renderer.name=="Body") renderer.gameObject.SetActive(false);
-            var assembly = Child(bench, "L80_HD_VISUAL_ART", new Vector3(0,floor,-.010f));
-            foreach (var model in models)
+                if (renderer.name == "Body") renderer.gameObject.SetActive(false);
+
+            var assembly = Child(bench, FixtureName, Vector3.zero);
+            for (int index = 0; index < models.Length; index++)
             {
+                var model = models[index];
                 var instance = Object.Instantiate(model, assembly, false).transform;
+                instance.name = "L80_" + Models[index];
                 var markers = instance.GetComponentsInChildren<Transform>(true)
                     .Where(item => item.name.StartsWith("L80_Board",StringComparison.Ordinal))
                     .ToDictionary(item => item.name);
@@ -423,7 +388,15 @@ namespace ProjectSpark.EditorTools
                     throw new InvalidOperationException("Unexpected axes on fitted model " + model.name);
             }
 
-            assembly.localScale = Vector3.one * .53f;
+            var artBounds = SparkEquipmentWorkbenchFit.MeasureArt(assembly, bench.worldToLocalMatrix);
+            var baseBounds = SparkEquipmentWorkbenchFit.MeasureArt(assembly.Find(BaseModule), bench.worldToLocalMatrix);
+            float fit = Mathf.Min(tableSize.x * .91f / (artBounds.size.x * worldScale),
+                tableSize.z * .89f / (artBounds.size.z * worldScale));
+            assembly.localScale = Vector3.one * fit;
+            assembly.localPosition = new Vector3(-artBounds.center.x, -baseBounds.min.y, -artBounds.center.z) * fit;
+            var view = root.GetComponent<SparkEquipmentWorkbenchView>() ?? root.AddComponent<SparkEquipmentWorkbenchView>();
+            view.Bench = bench;
+            view.FramingBounds = SparkEquipmentWorkbenchFit.MeasureArt(assembly, bench.worldToLocalMatrix);
             if (!AssetDatabase.IsValidFolder(Materials)) AssetDatabase.CreateFolder(Folder + "Models", "Materials");
             var shader = Shader.Find("Universal Render Pipeline/Lit");
             if (shader == null) throw new InvalidOperationException("The project URP Lit shader is missing.");
@@ -452,145 +425,22 @@ namespace ProjectSpark.EditorTools
             }
 
             var font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-            if (loop.calibrationText == null)
+            if (!loop.focusWireButton || !loop.plot || !loop.plot.GetComponent<CanvasRenderer>())
             {
                 var oldControls = root.transform.Find("Level 80 Controls");
-                if (oldControls != null) Object.DestroyImmediate(oldControls.gameObject);
-                SparkLevel80Builder.BuildControls(root.transform,loop,font);
+                if (oldControls) Object.DestroyImmediate(oldControls.gameObject);
+                SparkLevel80Builder.BuildControls(root.transform, loop, font);
             }
-            var labels = Child(bench, "Breadboard Labels", Vector3.zero);
-            var holes = new HashSet<Vector2Int>();
-            var seatedLabels = new List<(string id, string label, Vector3 seat, int column)>();
-            var owners = new HashSet<Transform>();
-            int pinLayer = LayerMask.NameToLayer("Pin");
-            if (pinLayer < 0) throw new InvalidOperationException("The Pin layer is missing.");
-            foreach (var spec in Sockets)
-            {
-                if (!bindings.TryGetTerminal(spec.id, out var terminal))
-                    throw new InvalidOperationException("Missing circuit terminal: " + spec.id);
-                int index = Array.FindIndex(loop.pins, pin => pin == terminal);
-                var terminalData = new SerializedObject(terminal);
-                terminalData.FindProperty("maxConnections").intValue = SparkLevel80Process.Wires.Count(wire => wire.a == index || wire.b == index);
-                terminalData.ApplyModifiedPropertiesWithoutUndo();
-                owners.Add(terminal.transform.parent);
-                terminal.GetComponent<Renderer>().enabled = true;
-                var projected = ToWorld(new Vector3(spec.x, floor, spec.z));
-                projected -= up * Vector3.Dot(projected - grid.GridOrigin.position, up);
-                if (!grid.TryGetNearestHole(projected, .32f, out _, out int column, out int row))
-                    throw new InvalidOperationException("No breadboard row for " + spec.id);
-                int columns = gridData.FindProperty("columns").intValue;
-                int rows = gridData.FindProperty("rows").intValue;
-                Vector3 hole = default;
-                float best = float.PositiveInfinity;
-                Vector2Int chosen = default;
-                for (int r = 0; r < rows; r++)
-                    for (int c = 0; c < columns; c++)
-                    {
-                        var index2D = new Vector2Int(c,r);
-                        if (holes.Contains(index2D) || Mathf.Abs(r-row)>1 || Mathf.Abs(c-column)>4) continue;
-                        var candidate = grid.GridOrigin.TransformPoint(new Vector3(c*spacing,0,r*spacing));
-                        var local = ToLocal(candidate);
-                        if (local.x < -1.02f || local.x > 1.04f || (spec.z>0 && local.x<-.87f)) continue;
-                        float cost=(candidate-projected).sqrMagnitude;
-                        if (cost>=best) continue;
-                        best=cost;
-                        chosen=index2D;
-                        hole=candidate;
-                    }
-                if (float.IsPositiveInfinity(best))
-                    throw new InvalidOperationException("No separate breadboard hole for " + spec.id);
-                holes.Add(chosen);
-                Vector3 seat = ToLocal(SurfacePoint(grid, hole, up));
-                Seat(terminal, bench, seat, pinLayer, MaterialFor(shader, spec.color), MaterialFor(shader, "void"));
-
-                seatedLabels.Add((spec.id,spec.label,seat,chosen.x));
-            }
-            foreach (var label in seatedLabels)
-            {
-                bool terminalBelow=seatedLabels.Any(next=>Mathf.Abs(next.seat.x-label.seat.x)<.025f&&
-                    label.seat.z-next.seat.z is >.045f and <.108f);
-                bool rearInnerRow=label.seat.z is >.36f and <.47f && Mathf.Abs(label.seat.x)<.70f;
-                float offset=rearInnerRow?(label.column%2==0?.030f:.052f):terminalBelow?-.032f:label.column%2==0?-.041f:-.071f;
-                Label(labels,font,label.id,label.label,label.seat+new Vector3(0,.019f,offset),.0096f);
-            }
-            foreach (var owner in owners)
-                foreach (Transform child in owner)
-                    if (child.GetComponent<SparkTerminal>() == null && child.GetComponent<Renderer>() != null)
-                        child.gameObject.SetActive(false);
-
-            var titles = new (string title, float x, float z)[]
-            {
-
-
-
-
-
-
-                ("LASER / TX",-.865f,.147f),("RX / DATA",.862f,.147f),
-                ("MICRORINGS / HEATERS",-.86f,-.235f),("SUPERVISOR / SAFETY",.86f,-.235f)
-            };
-            foreach(var title in titles)
-                Label(labels,font,title.title,title.title,new Vector3(title.x,floor+.058f,title.z),.0165f);
-            Label(labels,font,"Carrier labels","A LOGIC  /  B MEMORY  /  C I/O  /  D SENSOR",new Vector3(0,floor+.068f,-.252f),.013f);
-            Label(labels,font,"Optic path","WDM MUX   /   DEMUX",new Vector3(0,floor+.15f,.13f),.012f);
-            Transform Pivot(string module,string key)
-            {
-                var name="fitted_"+module+"_"+key;
-                return assembly.GetComponentsInChildren<Transform>(true).Single(item=>item.name==name);
-            }
-            loop.rig.art=assembly;
-            loop.rig.pivots=new[]{
-                Pivot("MultiWavelengthLaserSourceRack","ANIM_LASER_SOURCE_DRAWER"),
-                Pivot("LaserCombStabilizationModule","ANIM_LASER_COMB_LOCK"),
-                Pivot("LaserTemperatureControlMount","ANIM_LASER_TEMPERATURE_STAGE"),
-                Pivot("OpticalSafetyShutter","ANIM_SAFETY_SHUTTER"),
-                Pivot("OpticalIsolatorModule","ANIM_OPTICAL_ISOLATOR"),
-                Pivot("CalibratedOpticalTapSplitter","ANIM_TAP_SPLITTER"),
-                Pivot("PolarizationControlModule","ANIM_POLARIZATION_CONTROLLER"),
-                Pivot("VariableOpticalAttenuator","ANIM_OPTICAL_ATTENUATOR"),
-                Pivot("SpectralReferenceEtalon","ANIM_SPECTRAL_REFERENCE_SCAN"),
-                Pivot("LaunchOpticalPowerMeter","ANIM_LAUNCH_POWER_PROBE"),
-                Pivot("TransparentPhotonicCoreEnclosure","ANIM_PHOTONIC_CORE_LID"),
-                Pivot("FiberRibbonDockingStation","ANIM_FIBER_DOCK"),
-                Pivot("PhotonicEdgeCouplerArray","ANIM_COUPLER_ARM"),
-                Pivot("FourChannelWDMMultiplexer","ANIM_WDM_MULTIPLEXER"),
-                Pivot("MicroringResonatorChannelA","ANIM_RING_A_RESONANCE"),
-                Pivot("MicroringResonatorChannelB","ANIM_RING_B_RESONANCE"),
-                Pivot("MicroringResonatorChannelC","ANIM_RING_C_RESONANCE"),
-                Pivot("MicroringResonatorChannelD","ANIM_RING_D_RESONANCE"),
-                Pivot("FourZoneMicroringHeaterBank","ANIM_FOUR_ZONE_HEATER_BANK"),
-                Pivot("GiantWavelengthRoutingHologram","ANIM_WAVELENGTH_ROUTING_HOLOGRAM"),
-                Pivot("FourChannelWDMDemultiplexer","ANIM_WDM_DEMULTIPLEXER"),
-                Pivot("FourChannelOpticalDropPortPanel","ANIM_DROP_PORT_PANEL"),
-                Pivot("PhotodiodeReceiverArray","ANIM_PHOTODIODE_ARRAY"),
-                Pivot("ReceiverTransimpedanceAmplifierBank","ANIM_TRANSIMPEDANCE_DISPLAY"),
-                Pivot("ClockAndDataRecoveryModule","ANIM_CLOCK_RECOVERY_DISPLAY"),
-                Pivot("ReceiverOpticalPowerMonitor","ANIM_RX_POWER_MONITOR"),
-                Pivot("HighResolutionOpticalSpectrumAnalyzer","ANIM_SPECTRUM_ANALYZER_SCAN"),
-                Pivot("HighSpeedEyeDiagramAnalyzer","ANIM_EYE_DIAGRAM_DISPLAY"),
-                Pivot("OpticalLinkBitErrorRateTester","ANIM_BER_TEST_DISPLAY"),
-                Pivot("PAM4WaveformSamplingInstrument","ANIM_PAM4_SIGNAL_DISPLAY"),
-                Pivot("PseudorandomBitPatternGenerator","ANIM_BIT_PATTERN_GENERATOR"),
-                Pivot("ForwardErrorCorrectionDecoder","ANIM_FEC_DECODER_DISPLAY"),
-                Pivot("ChipletOpticalTestRouter","ANIM_CHIPLET_DATA_ROUTER"),
-                Pivot("LogicOpticalTransmitterInterface","ANIM_LOGIC_DATA_STREAM"),
-                Pivot("MemoryOpticalLinkDiagnosticModule","ANIM_MEMORY_DATA_STREAM"),
-                Pivot("IOOpticalOutputInterface","ANIM_IO_DATA_STREAM"),
-                Pivot("SensorOpticalTelemetryInterface","ANIM_SENSOR_DATA_STREAM"),
-                Pivot("OpticalFiberMicrobendMonitor","ANIM_FIBER_BEND_SENSOR"),
-                Pivot("ControlledOpticalFaultInjectionModule","ANIM_FAULT_INJECTION_ARM"),
-                Pivot("PhotonicWaveguideDefectMicroscope","ANIM_WAVEGUIDE_MICROSCOPE"),
-                Pivot("PhotonicCoolingAirManifold","ANIM_COOLING_FAN_BANK"),
-                Pivot("HolographicThermalResonanceDisplay","ANIM_THERMAL_CROSSTALK_MAP"),
-                Pivot("DemultiplexerResonanceMonitor","ANIM_RESONANCE_LOCK_DISPLAY"),
-                Pivot("OpticalLinkPowerBudgetMeter","ANIM_OPTICAL_POWER_BUDGET"),
-                Pivot("EmergencyOpticalShutterStation","ANIM_SAFETY_EMERGENCY_SHUTTER"),
-                Pivot("StrayLightSafetyMonitor","ANIM_STRAY_LIGHT_MONITOR"),
-                Pivot("OpticalCalibrationReferenceCoupon","ANIM_REFERENCE_COUPON_STAGE"),
-                Pivot("ESDGuardedPhotonicTestFixture","ANIM_TEST_FIXTURE_LID"),
-                Pivot("HolographicOpticalDataSCADA","ANIM_PHOTONIC_MAIN_SCADA"),
-                Pivot("GiantWavelengthRoutingHologram","ANIM_LEVEL80_CERTIFICATION_HOLOGRAM"),
-            };
+            var labels = Child(bench, MountsName, Vector3.zero);
+            SeatOriginalTerminals(bench, assembly, bindings, loop, font, shader);
+            var deck = SparkEquipmentWorkbenchFit.MeasureArt(assembly.Find(BaseModule), bench.worldToLocalMatrix);
+            float labelHeight = deck.max.y + .012f;
+            float labelDepth = deck.min.z + .043f;
+            var title = Label(labels, font, "Level name", "COMMAND THE LIGHT", new Vector3(0, labelHeight, labelDepth), .023f);
+            title.color = new Color(.51f, .93f, 1f);
+            loop.rig.art = assembly;
+            loop.rig.pivots = SparkEquipmentWorkbenchFit.SeatMotionPivots(assembly,
+                AssetDatabase.LoadAssetAtPath<TextAsset>(Folder + "Equipment_Animation_Pivots.csv"));
             Light Lamp(string name,Vector3 position,Color color,float intensity,float range)
             {
                 var node=Child(bench,name,position);
@@ -602,20 +452,13 @@ namespace ProjectSpark.EditorTools
                 lamp.range=range;
                 return lamp;
             }
-            Lamp("Optical work light",new Vector3(-.38f,floor+.58f,-.14f),new Color(.91f,.94f,1),1.35f,1.2f);
-            Lamp("Metrology fill",new Vector3(.54f,floor+.34f,.16f),new Color(.49f,.80f,1),.64f,.76f);
+            Lamp("Optical work light",new Vector3(-.38f,.58f,-.14f),new Color(.91f,.94f,1),2.65f,4.9f);
+            Lamp("Metrology fill",new Vector3(.54f,.34f,.16f),new Color(.49f,.80f,1),1.9f,3.9f);
             loop.rig.BindEffects(
-                Lamp("Protected source light",new Vector3(-.37f,floor+.20f,-.03f),new Color(.29f,.75f,1),1,.45f),
-                Lamp("WDM activity light",new Vector3(0,floor+.20f,-.03f),new Color(.48f,.39f,1),1,.46f),
-                Lamp("Receiver lock light",new Vector3(.28f,floor+.2f,-.03f),new Color(.58f,.37f,1),1,.45f),
-                Lamp("Isolation alarm",new Vector3(.56f,floor+.24f,.03f),new Color(1,.18f,.12f),1.25f,.55f));
-            if(loop.plot.transform.Find("Channel A") == null)
-            {
-                var oldPanel = root.transform.Find("Level 80 Controls");
-                if (oldPanel != null) Object.DestroyImmediate(oldPanel.gameObject);
-                SparkLevel80Builder.BuildControls(root.transform,loop,font);
-            }
-
+                Lamp("Protected source light",new Vector3(-.37f,.20f,-.03f),new Color(.29f,.75f,1),1.3f,.88f),
+                Lamp("WDM activity light",new Vector3(0,.20f,-.03f),new Color(.48f,.39f,1),1.3f,.96f),
+                Lamp("Receiver lock light",new Vector3(.28f,.2f,-.03f),new Color(.58f,.37f,1),1,.45f),
+                Lamp("Isolation alarm",new Vector3(.56f,.24f,.03f),new Color(1,.18f,.12f),1.25f,.55f));
             TMP_Text Readout(string name,Vector3 position,Color color)
             {
                 var child=Child(labels,name,position);
@@ -629,34 +472,89 @@ namespace ProjectSpark.EditorTools
                 display.text="—";
                 return display;
             }
-            loop.controllerDisplay=Readout("RX readout",new Vector3(-.815f,floor+.075f,.215f),new Color(.46f,.94f,1f));
-            loop.qualityDisplay=Readout("Wafer status",new Vector3(.862f,floor+.075f,.215f),new Color(.71f,1f,.86f));
+            loop.controllerDisplay = Readout("RX readout", new Vector3(-.87f,labelHeight,labelDepth), new Color(.46f,.94f,1f));
+            loop.qualityDisplay = Readout("Link status", new Vector3(.87f,labelHeight,labelDepth), new Color(.71f,1f,.86f));
         }
 
-        private static void Seat(SparkTerminal terminal, Transform bench, Vector3 seat, int pinLayer, Material rim, Material center)
+        private static void SeatOriginalTerminals(Transform bench, Transform assembly, SparkLevelSceneBindings bindings,
+            SparkLevel80Process loop, Font font, Shader shader)
         {
-            var jack = terminal.transform;
-            jack.SetPositionAndRotation(bench.TransformPoint(seat + Vector3.up * (SocketHeight * .5f)), bench.rotation);
-            jack.localScale = new Vector3(SocketDiameter, SocketHeight * .5f, SocketDiameter);
-            jack.gameObject.layer = pinLayer;
-            jack.GetComponent<Renderer>().sharedMaterial = rim;
-            var disc = jack.Find("Jack recess");
-            if (disc == null)
+            var data = AssetDatabase.LoadAssetAtPath<TextAsset>(Folder + "Equipment_Terminal_Mounts.csv");
+            if (!data) throw new InvalidOperationException("The original equipment mount map is missing.");
+            int pinLayer = LayerMask.NameToLayer("Pin");
+            if (pinLayer < 0) throw new InvalidOperationException("The Pin layer is missing.");
+            var specs = Sockets.ToDictionary(socket => socket.id);
+            var indices = loop.pins.Select((pin, index) => (pin, index)).ToDictionary(item => item.pin.name, item => item.index);
+            var mounts = new HashSet<string>();
+            var assigned = new HashSet<string>();
+            loop.pinLabels = new TextMesh[loop.pins.Length];
+            float unit = bench.InverseTransformVector(assembly.TransformVector(
+                Vector3.right * SparkEquipmentWorkbenchFit.SourceArtUnit)).magnitude;
+
+            foreach (string row in data.text.Split('\n').Skip(1))
             {
-                var primitive = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-                Object.DestroyImmediate(primitive.GetComponent<Collider>());
-                disc = primitive.transform;
-                disc.name = "Jack recess";
-                disc.SetParent(jack, false);
-                disc.localPosition = new Vector3(0, 1.02f, 0);
-                disc.localScale = new Vector3(.59f, .035f, .59f);
+                if (string.IsNullOrWhiteSpace(row)) continue;
+                string[] values = row.TrimEnd('\r').Split(',');
+                if (values.Length != 7 || !mounts.Add(values[0]) || !assigned.Add(values[5]) ||
+                    !bindings.TryGetTerminal(values[5], out var terminal) || !(values[6] is "Modeled" or "Planned"))
+                    throw new InvalidOperationException("Duplicate or unresolved equipment contact: " + row);
+                var module = assembly.Find(values[1]);
+                if (!module) throw new InvalidOperationException("Missing equipment " + values[1]);
+
+                // Terminals belong to the fixed chassis rather than its moving shutters and test probes.
+                var mount = Child(bench, values[0] + " " + values[5], Vector3.zero);
+                mount.SetPositionAndRotation(assembly.TransformPoint(SparkEquipmentWorkbenchFit.SourcePosition(values)), bench.rotation);
+                mount.SetParent(module, true);
+                var jack = terminal.transform;
+                jack.SetParent(mount, false);
+                jack.localPosition = Vector3.zero;
+                jack.localRotation = Quaternion.identity;
+                jack.localScale = Vector3.one;
+                jack.gameObject.layer = pinLayer;
+
+                var collider = jack.GetComponent<BoxCollider>();
+                foreach (var old in jack.GetComponents<Collider>())
+                    if (old != collider) Object.DestroyImmediate(old);
+                if (!collider) collider = jack.gameObject.AddComponent<BoxCollider>();
+                float diameter = unit * (values[6] == "Modeled" ? .084f : .108f);
+                collider.size = new Vector3(diameter, diameter, diameter * .38f);
+                collider.center = Vector3.zero;
+                if (jack.TryGetComponent<MeshRenderer>(out var renderer)) Object.DestroyImmediate(renderer);
+                if (jack.TryGetComponent<MeshFilter>(out var mesh)) Object.DestroyImmediate(mesh);
+                var recess = jack.Find("Jack recess");
+                if (recess) Object.DestroyImmediate(recess.gameObject);
+                if (values[6] == "Planned")
+                {
+                    // On a module without an authored connector mesh, the source plan supplies the front face.
+                    var housing = MaterialFor(shader, "tint47657C", "BrushedSteel");
+                    var insert = MaterialFor(shader, specs[terminal.name].color);
+                    SocketSleeve(mount, "Panel socket housing", unit, .106f, .073f, .071f, housing);
+                    SocketSleeve(mount, "Contact insert", unit, .067f, .004f, .010f, insert);
+                }
+
+                int index = indices[values[5]];
+                var pinData = new SerializedObject(terminal);
+                pinData.FindProperty("maxConnections").intValue = SparkLevel80Process.Wires.Count(wire => wire.a == index || wire.b == index);
+                pinData.ApplyModifiedPropertiesWithoutUndo();
+                var tag = Label(mount, font, "Label " + terminal.name, specs[terminal.name].label, new Vector3(0, .022f, -.009f), .017f);
+                tag.transform.localRotation = Quaternion.Euler(30, 0, 0);
+                tag.gameObject.SetActive(false);
+                loop.pinLabels[index] = tag;
             }
-            disc.GetComponent<Renderer>().sharedMaterial = center;
-            var box = jack.GetComponent<BoxCollider>();
-            foreach (var collider in jack.GetComponents<Collider>())
-                if (collider != box) Object.DestroyImmediate(collider);
-            if (box == null) box = jack.gameObject.AddComponent<BoxCollider>();
-            box.size = new Vector3(1.04f, 2.24f, 1.04f);
+            if (assigned.Count != loop.pins.Length || loop.pinLabels.Any(label => !label))
+                throw new InvalidOperationException("Level 80 must mount every circuit terminal on original equipment.");
+        }
+
+        private static void SocketSleeve(Transform mount, string name, float unit, float diameter,
+            float halfDepth, float offset, Material material)
+        {
+            var sleeve = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            Object.DestroyImmediate(sleeve.GetComponent<Collider>());
+            sleeve.name = name;
+            sleeve.transform.SetParent(mount, false);
+            sleeve.transform.SetLocalPositionAndRotation(Vector3.forward * (unit * offset), Quaternion.Euler(90, 0, 0));
+            sleeve.transform.localScale = new Vector3(diameter, halfDepth, diameter) * unit;
+            sleeve.GetComponent<Renderer>().sharedMaterial = material;
         }
 
         private static Transform Child(Transform parent, string name, Vector3 position)
@@ -769,18 +667,3 @@ namespace ProjectSpark.EditorTools
     }
 }
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

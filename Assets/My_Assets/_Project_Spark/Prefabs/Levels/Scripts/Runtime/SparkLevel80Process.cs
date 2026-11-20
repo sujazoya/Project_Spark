@@ -9,7 +9,7 @@ using Disturbance=ProjectSpark.Gameplay.SparkLevel80Plant.Disturbance;
 
 namespace ProjectSpark.Gameplay
 {
-    public sealed class SparkLevel80Process : MonoBehaviour
+    public sealed partial class SparkLevel80Process : MonoBehaviour
     {
         public static readonly string[] Gates={"L80_Wired","L80_Commissioned","L80_Locked","L80_Qualified","L80_Disturbances","L80_Recertified"};
         public static readonly (int a,int b)[] Wires={(0,1),(2,3),(0,4),(2,5),(0,6),(2,7),(0,8),(2,9),(0,10),(2,11),(12,13),(14,15),(16,17),(16,18),(19,20),(21,22),(23,24),(25,26),(27,28),(29,30),(31,32),(33,34),(35,36),(37,38),(39,40),(41,42),(43,44),(16,45),(46,47),(48,49),(50,51),(52,53),(54,55),(56,57),(58,59),(60,61),(62,63),(64,65),(66,67),(68,69),(70,71),(72,73),(74,75),(76,77),(78,79),(80,81),(82,83),(84,85),(86,87),(88,89),(90,91),(92,93),(94,95),(96,97),(98,99),(100,101),(102,103),(104,105),(106,107),(108,109),(110,111),(112,113),(114,115),(116,117),(118,119),(120,121),(122,123),(124,125),(126,127),(128,129),(130,131),(132,133),(134,135),(134,136),(137,138),(139,140),(141,142),(143,144),(135,145),(131,146),(131,147),(129,148),(138,149),(140,150),(63,151),(65,152),(131,153),(153,154),(153,155),(155,156),(154,157),(153,158),(157,159),(133,160),(133,161),(77,162),(57,163),(55,164),(59,165),(61,166),(44,167),(167,168),(168,169),(142,170),(34,171),(171,172),(44,173),(173,174),(173,175),(89,176),(142,177),(71,178),(162,179),(154,180),(181,182),(182,183),(22,184),(184,185),(162,186),(185,187),(145,188),(14,189),(22,190),(145,191),(186,192),(182,193)};
@@ -79,6 +79,7 @@ namespace ProjectSpark.Gameplay
                 Debug.LogError("[LEVEL 80] Missing photonics workstation references.",this);enabled=false;return;
             }
             source.SetOutput(false,default);
+            BindEquipmentWiring();
         }
         private static (int,int) Pair(int a,int b)=>(Math.Min(a,b),Math.Max(a,b));
         private bool Routed(int i)=>wires.Contains(Pair(Wires[i].a,Wires[i].b));
@@ -92,10 +93,12 @@ namespace ProjectSpark.Gameplay
                 if(a>=0||b>=0)wires.Add(Pair(a,b));
             }
             wiredFeedback=Routed(Feedback);
+            suggestedWire = -1;
             wiring=wires.Count==Wires.Length?null:"Remove extra wires and check the route chart.";
             for(int i=0;i<Wires.Length;i++)
             {
                 if(Routed(i))continue;
+                suggestedWire = i;
                 wiring=$"Connect W{i+1:000} · {pins[Wires[i].a].name} → {pins[Wires[i].b].name}.";
                 break;
             }
@@ -248,7 +251,7 @@ namespace ProjectSpark.Gameplay
         public void Restore(){if(Ready&&latch!=Fault.None&&fault!=Disturbance.None){fault=Disturbance.None;Log("Disturbance corrected. Wait for a safe reset.");}}
         public void EStop(){emergency.SetState(emergency.IsClosed?SparkSwitchState.Open:SparkSwitchState.Closed);if(emergency.IsOpen&&latch==Fault.None)Trip(Fault.EStop);}
         public void Reset(){if(CanReset){feedbackReset|=latch==Fault.Feedback&&feedbackObserved;latch=Fault.None;Log("Protection reset. Retune all four carriers and rerun traffic.");}}
-        public void Arm(){if(CanArm){armed=true;Log("Use Undo Last Wire to remove W078 while all four streams are live.");}}
+        public void Arm(){if(CanArm){armed=true;Log("Use OPEN W078 while all four streams are live.");}}
         public void Verify(){if(CanVerify){shutterVerified=true;Log("Fresh receiver samples, safe laser output, and both shutters verified.");}}
         public void Certify(){if(CanCertify)certify=true;}
 
@@ -265,7 +268,7 @@ namespace ProjectSpark.Gameplay
             }
             if(latch!=Fault.None)return $"PROTECTION LATCHED · {latch} · restore and reset.";
             if(!Ready)return wiring??"Check 5 V rails and the safety loop.";
-            if(armed)return "Live fault test · select Undo Last Wire to remove W078.";
+            if(armed)return "Live fault test · select OPEN W078 to remove W078.";
             if(CanCertify)return "Fresh four-channel link qualified · select CERTIFY.";
             if(CanArm)return "Select ARM W078 TEST with all four streams active.";
             if(stage==4&&counted)
@@ -286,6 +289,7 @@ namespace ProjectSpark.Gameplay
         }
         private void Present()
         {
+            PresentEquipmentWiring();
             statusText.text=Status();
             meterText.text=$"TX {plant.Launch:0.00}   ·   RX {(rxValid?rxSample.ToString("0.00"):"STALE")}   ·   SPACING {plant.SpectrumGap:0.00}   ·   CROSSTALK {plant.CrossTalk:0.00}";
             detailText.text=$"A {plant.Rx[0]:0.00}  /  B {plant.Rx[1]:0.00}  /  C {plant.Rx[2]:0.00}  /  D {plant.Rx[3]:0.00}    ·    SHUTTERS {plant.MainClosed:P0} / {plant.EmergencyClosed:P0}";
@@ -306,4 +310,3 @@ namespace ProjectSpark.Gameplay
         }
     }
 }
-

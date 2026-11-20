@@ -1,0 +1,13 @@
+# Codex: integrate Project Spark Level 98, without inventing electrical authority
+
+Project: `D:\Project_Spark_Master_Project\Project_Spark` (Unity 6.3 URP).
+
+1. Read `Assets/.../AutoLevelGenerator/Runtime/SparkAutoLevelRuntime.cs` plus `LevelGamePlayManager`, `SparkCircuitSystem`, `SparkTerminal`, board placement/route/via scripts and existing virtual world-space repair UI. Enumerate actual namespaces, signatures and scene bindings. Do not create duplicate management systems.
+2. Verify the Level98 package installed source FBX, GLB and preferred OBJ fallbacks. Inspect the generated `Level_98_Layout` hierarchy; its source coordinate basis was GLB Z-up/XY plane converted to Unity Y-up/XZ. The 180×120×1.6mm PCB is only enlarged in the art root.
+3. Keep real original PBR textures and inspect the 21 generated URP/Lit `.mat` bindings. Existing GLBs have no usable UVs in the inspected export; the OBJ fallback supplies generated planar UVs. Improve UV/material authoring as needed but preserve original files and material identities.
+4. Do not infer missing route pads/nets from proximity. Design and independently review `L98_Verified_Component_Pin_Map.csv`, `L98_Verified_Nets.csv`, `L98_Verified_Routes.csv`, `L98_Verified_Via_Spans.csv`; perform ERC and DRC before enabling electrical certification.
+5. Bind existing shelf/shop, placement, interaction, raycast targets, copper, vias, inspection/measure/repair tools, save/load, authority bridge and objective manager via existing APIs. Preserve Levels 1–97 and shared scripts. Visual-only repair cannot award objectives.
+6. Implement a bounded deterministic power-integrity plant with separate 12 V input, 5 V, 1.8 V load and 3.3 V monitor rails; load steps 0.5A ↔ 3A, ESR/ESL/ringing, Kelvin sense, physical feedback. Don't claim SPICE signoff or real device approval.
+7. Three faults: ESR capacitor degradation, ground-return via, Kelvin-sense path; targets remain unassigned until verified. W075 logical source: `L98_LoadRailSupervisor_U8.TRUSTED_LOAD_RAIL_VALID_OUT`; destination `L98_PowerIntegritySafety_U9.TRUSTED_LOAD_RAIL_VALID_IN`; physical mapping pending. Keep W075 initially uninstalled, separate from load power.
+8. Bind six objectives to the real LevelGamePlayManager with fresh evidence and versioned persistence; no manual true flags. Add EditMode & PlayMode tests and a tracked blocker report.
+9. Run actual Unity compilation, FBX/OBJ import validation, Play Mode test, 90 proposed Level 98 acceptance tests from the user's master prompt and Levels 1–97 smoke tests. Provide exact results PASS/FAIL/BLOCKED. Do not claim 6/6 until observed.

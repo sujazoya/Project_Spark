@@ -1,0 +1,15 @@
+{
+  "jumper": "W141",
+  "source": "L106_SystemBootMonitor_U14.TRUSTED_SYSTEM_READY_OUT",
+  "destination": "L106_IndependentSafety_U15.TRUSTED_SYSTEM_READY_IN",
+  "exact_pins": "UNASSIGNED",
+  "required_steps": [
+    "disconnect physical jumper",
+    "independent safety inhibition",
+    "reconnect jumper",
+    "fresh POST and boot qualification",
+    "explicit safety reset",
+    "rerun final certification"
+  ],
+  "status": "SCHEMATIC_RECONCILIATION_REQUIRED"
+}

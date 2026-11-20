@@ -1,0 +1,1430 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: L101_SourceBlueprint
+  m_EditorClassIdentifier: Assembly-CSharp:ProjectSpark.Level101:SparkL101SourceBlueprint
+  level: 101
+  boardId: MLX-9
+  levelTitle: The Hidden Layers
+  physicalBoardMeters: {x: 0.23, y: 0.16}
+  copperLayers: 6
+  electricalStatus: BLOCKED_UNVERIFIED_NETLIST_AND_W101_ROLE_CONFLICT
+  safetyJumper: W101
+  safetyPinConflict: Source W101 designates U10 link monitor and U11 safety, but
+    BOM lists U10=LDO, U11=INTERFACE, U7=LINK_MON, U8=SAFETY. Canonical pin owners
+    must be approved.
+  sourceTrustedOutput: L101_LinkIntegrityMonitor_U10.TRUSTED_LINK_HEALTH_OUT
+  sourceTrustedInput: L101_MultilayerSafetySupervisor_U11.TRUSTED_LINK_HEALTH_IN
+  certifiedObjectives: 0
+  components:
+  - referenceDesignator: U1
+    kind: MCU
+    variant: LQFP144
+    sourceFbx: 001_L101_U1.fbx
+    physicalPositionMeters: {x: 0, y: 0.0008, z: 0}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: U2
+    kind: SPI_FLASH
+    variant: 
+    sourceFbx: 002_L101_U2.fbx
+    physicalPositionMeters: {x: 0.075, y: 0.0008, z: 0.038}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: U3
+    kind: RAM
+    variant: 
+    sourceFbx: 003_L101_U3.fbx
+    physicalPositionMeters: {x: 0.075, y: 0.0008, z: -0.015}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: U4
+    kind: PMIC
+    variant: 
+    sourceFbx: 004_L101_U4.fbx
+    physicalPositionMeters: {x: -0.072, y: 0.0008, z: 0.038}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: U5
+    kind: CLOCK
+    variant: 
+    sourceFbx: 005_L101_U5.fbx
+    physicalPositionMeters: {x: -0.072, y: 0.0008, z: -0.02}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: U6
+    kind: DIFF_TX
+    variant: 
+    sourceFbx: 006_L101_U6.fbx
+    physicalPositionMeters: {x: -0.072, y: 0.0008, z: -0.06}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: U7
+    kind: LINK_MON
+    variant: 
+    sourceFbx: 007_L101_U7.fbx
+    physicalPositionMeters: {x: 0.075, y: 0.0008, z: -0.06}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: U8
+    kind: SAFETY
+    variant: 
+    sourceFbx: 008_L101_U8.fbx
+    physicalPositionMeters: {x: 0.024, y: 0.0008, z: -0.06}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: U9
+    kind: TRANSCEIVER
+    variant: 
+    sourceFbx: 009_L101_U9.fbx
+    physicalPositionMeters: {x: 0.027, y: 0.0008, z: 0.054}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: U10
+    kind: LDO
+    variant: 
+    sourceFbx: 010_L101_U10.fbx
+    physicalPositionMeters: {x: -0.017, y: 0.0008, z: 0.054}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: U11
+    kind: INTERFACE
+    variant: 
+    sourceFbx: 011_L101_U11.fbx
+    physicalPositionMeters: {x: 0.003, y: 0.0008, z: -0.063}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: U12
+    kind: SENSOR
+    variant: 
+    sourceFbx: 012_L101_U12.fbx
+    physicalPositionMeters: {x: 0.072, y: 0.0008, z: 0.066}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: U13
+    kind: BOOT
+    variant: 
+    sourceFbx: 013_L101_U13.fbx
+    physicalPositionMeters: {x: -0.084, y: 0.0008, z: 0.066}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R1
+    kind: RES
+    variant: 
+    sourceFbx: 014_L101_R1.fbx
+    physicalPositionMeters: {x: -0.076, y: 0.0008, z: 0.068}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R2
+    kind: RES
+    variant: 
+    sourceFbx: 015_L101_R2.fbx
+    physicalPositionMeters: {x: -0.059, y: 0.0008, z: 0.068}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R3
+    kind: RES
+    variant: 
+    sourceFbx: 016_L101_R3.fbx
+    physicalPositionMeters: {x: -0.033, y: 0.0008, z: 0.068}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R4
+    kind: RES
+    variant: 
+    sourceFbx: 017_L101_R4.fbx
+    physicalPositionMeters: {x: -0.016, y: 0.0008, z: 0.068}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R5
+    kind: RES
+    variant: 
+    sourceFbx: 018_L101_R5.fbx
+    physicalPositionMeters: {x: 0.001, y: 0.0008, z: 0.068}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R6
+    kind: RES
+    variant: 
+    sourceFbx: 019_L101_R6.fbx
+    physicalPositionMeters: {x: 0.018, y: 0.0008, z: 0.068}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R7
+    kind: RES
+    variant: 
+    sourceFbx: 020_L101_R7.fbx
+    physicalPositionMeters: {x: 0.035, y: 0.0008, z: 0.068}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R8
+    kind: RES
+    variant: 
+    sourceFbx: 021_L101_R8.fbx
+    physicalPositionMeters: {x: 0.052, y: 0.0008, z: 0.068}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R9
+    kind: RES
+    variant: 
+    sourceFbx: 022_L101_R9.fbx
+    physicalPositionMeters: {x: 0.06, y: 0.0008, z: 0.068}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R10
+    kind: RES
+    variant: 
+    sourceFbx: 023_L101_R10.fbx
+    physicalPositionMeters: {x: 0.077, y: 0.0008, z: 0.068}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R11
+    kind: RES
+    variant: 
+    sourceFbx: 024_L101_R11.fbx
+    physicalPositionMeters: {x: -0.093, y: 0.0008, z: 0.056}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R12
+    kind: RES
+    variant: 
+    sourceFbx: 025_L101_R12.fbx
+    physicalPositionMeters: {x: -0.076, y: 0.0008, z: 0.056}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R13
+    kind: RES
+    variant: 
+    sourceFbx: 026_L101_R13.fbx
+    physicalPositionMeters: {x: -0.059, y: 0.0008, z: 0.056}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R14
+    kind: RES
+    variant: 
+    sourceFbx: 027_L101_R14.fbx
+    physicalPositionMeters: {x: -0.033, y: 0.0008, z: 0.056}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R15
+    kind: RES
+    variant: 
+    sourceFbx: 028_L101_R15.fbx
+    physicalPositionMeters: {x: -0.016, y: 0.0008, z: 0.056}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R16
+    kind: RES
+    variant: 
+    sourceFbx: 029_L101_R16.fbx
+    physicalPositionMeters: {x: 0.001, y: 0.0008, z: 0.056}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R17
+    kind: RES
+    variant: 
+    sourceFbx: 030_L101_R17.fbx
+    physicalPositionMeters: {x: 0.018, y: 0.0008, z: 0.056}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R18
+    kind: RES
+    variant: 
+    sourceFbx: 031_L101_R18.fbx
+    physicalPositionMeters: {x: 0.035, y: 0.0008, z: 0.056}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R19
+    kind: RES
+    variant: 
+    sourceFbx: 032_L101_R19.fbx
+    physicalPositionMeters: {x: 0.052, y: 0.0008, z: 0.056}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R20
+    kind: RES
+    variant: 
+    sourceFbx: 033_L101_R20.fbx
+    physicalPositionMeters: {x: 0.06, y: 0.0008, z: 0.056}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R21
+    kind: RES
+    variant: 
+    sourceFbx: 034_L101_R21.fbx
+    physicalPositionMeters: {x: 0.077, y: 0.0008, z: 0.056}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: R22
+    kind: RES
+    variant: 
+    sourceFbx: 035_L101_R22.fbx
+    physicalPositionMeters: {x: -0.093, y: 0.0008, z: 0.044}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C1
+    kind: CAP
+    variant: 
+    sourceFbx: 036_L101_C1.fbx
+    physicalPositionMeters: {x: -0.079, y: 0.0008, z: -0.073}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C2
+    kind: CAP
+    variant: 
+    sourceFbx: 037_L101_C2.fbx
+    physicalPositionMeters: {x: -0.062, y: 0.0008, z: -0.073}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C3
+    kind: CAP
+    variant: 
+    sourceFbx: 038_L101_C3.fbx
+    physicalPositionMeters: {x: -0.045, y: 0.0008, z: -0.073}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C4
+    kind: CAP
+    variant: 
+    sourceFbx: 039_L101_C4.fbx
+    physicalPositionMeters: {x: -0.028, y: 0.0008, z: -0.073}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C5
+    kind: CAP
+    variant: 
+    sourceFbx: 040_L101_C5.fbx
+    physicalPositionMeters: {x: -0.011, y: 0.0008, z: -0.073}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C6
+    kind: CAP
+    variant: 
+    sourceFbx: 041_L101_C6.fbx
+    physicalPositionMeters: {x: 0.006, y: 0.0008, z: -0.073}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C7
+    kind: CAP
+    variant: 
+    sourceFbx: 042_L101_C7.fbx
+    physicalPositionMeters: {x: 0.023, y: 0.0008, z: -0.073}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C8
+    kind: CAP
+    variant: 
+    sourceFbx: 043_L101_C8.fbx
+    physicalPositionMeters: {x: 0.04, y: 0.0008, z: -0.073}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C9
+    kind: CAP
+    variant: 
+    sourceFbx: 044_L101_C9.fbx
+    physicalPositionMeters: {x: 0.057, y: 0.0008, z: -0.073}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C10
+    kind: CAP
+    variant: 
+    sourceFbx: 045_L101_C10.fbx
+    physicalPositionMeters: {x: 0.074, y: 0.0008, z: -0.073}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C11
+    kind: CAP
+    variant: 
+    sourceFbx: 046_L101_C11.fbx
+    physicalPositionMeters: {x: -0.096, y: 0.0008, z: -0.061}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C12
+    kind: CAP
+    variant: 
+    sourceFbx: 047_L101_C12.fbx
+    physicalPositionMeters: {x: -0.079, y: 0.0008, z: -0.061}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C13
+    kind: CAP
+    variant: 
+    sourceFbx: 048_L101_C13.fbx
+    physicalPositionMeters: {x: -0.062, y: 0.0008, z: -0.061}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C14
+    kind: CAP
+    variant: 
+    sourceFbx: 049_L101_C14.fbx
+    physicalPositionMeters: {x: -0.045, y: 0.0008, z: -0.061}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C15
+    kind: CAP
+    variant: 
+    sourceFbx: 050_L101_C15.fbx
+    physicalPositionMeters: {x: -0.028, y: 0.0008, z: -0.061}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C16
+    kind: CAP
+    variant: 
+    sourceFbx: 051_L101_C16.fbx
+    physicalPositionMeters: {x: -0.011, y: 0.0008, z: -0.061}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C17
+    kind: CAP
+    variant: 
+    sourceFbx: 052_L101_C17.fbx
+    physicalPositionMeters: {x: 0.006, y: 0.0008, z: -0.061}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C18
+    kind: CAP
+    variant: 
+    sourceFbx: 053_L101_C18.fbx
+    physicalPositionMeters: {x: 0.023, y: 0.0008, z: -0.061}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C19
+    kind: CAP
+    variant: 
+    sourceFbx: 054_L101_C19.fbx
+    physicalPositionMeters: {x: 0.04, y: 0.0008, z: -0.061}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C20
+    kind: CAP
+    variant: 
+    sourceFbx: 055_L101_C20.fbx
+    physicalPositionMeters: {x: 0.057, y: 0.0008, z: -0.061}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C21
+    kind: CAP
+    variant: 
+    sourceFbx: 056_L101_C21.fbx
+    physicalPositionMeters: {x: 0.074, y: 0.0008, z: -0.061}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: C22
+    kind: CAP
+    variant: 
+    sourceFbx: 057_L101_C22.fbx
+    physicalPositionMeters: {x: -0.096, y: 0.0008, z: -0.049}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: Y1
+    kind: CRYSTAL
+    variant: 
+    sourceFbx: 058_L101_Y1.fbx
+    physicalPositionMeters: {x: -0.044, y: 0.0008, z: 0.016}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: J1
+    kind: CONNECTOR
+    variant: 
+    sourceFbx: 059_L101_J1.fbx
+    physicalPositionMeters: {x: -0.101, y: 0.0008, z: 0.072}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: J2
+    kind: CONNECTOR
+    variant: 
+    sourceFbx: 060_L101_J2.fbx
+    physicalPositionMeters: {x: -0.051, y: 0.0008, z: -0.073}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: J3
+    kind: CONNECTOR
+    variant: 
+    sourceFbx: 061_L101_J3.fbx
+    physicalPositionMeters: {x: -0.001, y: 0.0008, z: 0.072}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: J4
+    kind: CONNECTOR
+    variant: 
+    sourceFbx: 062_L101_J4.fbx
+    physicalPositionMeters: {x: 0.049, y: 0.0008, z: -0.073}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: J5
+    kind: CONNECTOR
+    variant: 
+    sourceFbx: 063_L101_J5.fbx
+    physicalPositionMeters: {x: 0.099, y: 0.0008, z: 0.072}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: LED1
+    kind: LED
+    variant: 
+    sourceFbx: 064_L101_LED1.fbx
+    physicalPositionMeters: {x: 0.044, y: 0.0008, z: -0.075}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: LED2
+    kind: LED
+    variant: 
+    sourceFbx: 065_L101_LED2.fbx
+    physicalPositionMeters: {x: 0.061, y: 0.0008, z: -0.075}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: LED3
+    kind: LED
+    variant: 
+    sourceFbx: 066_L101_LED3.fbx
+    physicalPositionMeters: {x: 0.078, y: 0.0008, z: -0.075}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: LED4
+    kind: LED
+    variant: 
+    sourceFbx: 067_L101_LED4.fbx
+    physicalPositionMeters: {x: 0.095, y: 0.0008, z: -0.075}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: SW1
+    kind: SWITCH
+    variant: 
+    sourceFbx: 068_L101_SW1.fbx
+    physicalPositionMeters: {x: -0.091, y: 0.0008, z: -0.044}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: SW2
+    kind: SWITCH
+    variant: 
+    sourceFbx: 069_L101_SW2.fbx
+    physicalPositionMeters: {x: -0.065, y: 0.0008, z: -0.044}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: FB1
+    kind: FERRITE
+    variant: 
+    sourceFbx: 070_L101_FB1.fbx
+    physicalPositionMeters: {x: -0.025, y: 0.0008, z: 0.075}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: FB2
+    kind: FERRITE
+    variant: 
+    sourceFbx: 071_L101_FB2.fbx
+    physicalPositionMeters: {x: -0.01, y: 0.0008, z: 0.075}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: FB3
+    kind: FERRITE
+    variant: 
+    sourceFbx: 072_L101_FB3.fbx
+    physicalPositionMeters: {x: 0.005, y: 0.0008, z: 0.075}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: D1
+    kind: DIODE
+    variant: 
+    sourceFbx: 073_L101_D1.fbx
+    physicalPositionMeters: {x: 0.031, y: 0.0008, z: 0.075}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: D2
+    kind: DIODE
+    variant: 
+    sourceFbx: 074_L101_D2.fbx
+    physicalPositionMeters: {x: 0.047, y: 0.0008, z: 0.075}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: D3
+    kind: DIODE
+    variant: 
+    sourceFbx: 075_L101_D3.fbx
+    physicalPositionMeters: {x: 0.063, y: 0.0008, z: 0.075}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  - referenceDesignator: W101
+    kind: JUMPER
+    variant: 
+    sourceFbx: 076_L101_W101.fbx
+    physicalPositionMeters: {x: 0.097, y: 0.0008, z: -0.048}
+    startsInstalled: 0
+    hasApprovedElectricalFootprint: 0
+  routes:
+  - id: W001
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W002
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W003
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W004
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W005
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W006
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W007
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W008
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W009
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W010
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W011
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W012
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W013
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W014
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W015
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W016
+    subsystem: Power/Returns
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W017
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W018
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W019
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W020
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W021
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W022
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W023
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W024
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W025
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W026
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W027
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W028
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W029
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W030
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W031
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W032
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W033
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W034
+    subsystem: MCU/Clock/Reset
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W035
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W036
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W037
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W038
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W039
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W040
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W041
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W042
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W043
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W044
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W045
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W046
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W047
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W048
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W049
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W050
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W051
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W052
+    subsystem: Memory/Digital
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W053
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W054
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W055
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W056
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W057
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W058
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W059
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W060
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W061
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W062
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W063
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W064
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W065
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W066
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W067
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W068
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W069
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W070
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W071
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W072
+    subsystem: Differential Link
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W073
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W074
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W075
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W076
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W077
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W078
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W079
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W080
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W081
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W082
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W083
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W084
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W085
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W086
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W087
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W088
+    subsystem: Ground/Return
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W089
+    subsystem: Diagnostics/Safety
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W090
+    subsystem: Diagnostics/Safety
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W091
+    subsystem: Diagnostics/Safety
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W092
+    subsystem: Diagnostics/Safety
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W093
+    subsystem: Diagnostics/Safety
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W094
+    subsystem: Diagnostics/Safety
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W095
+    subsystem: Diagnostics/Safety
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W096
+    subsystem: Diagnostics/Safety
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W097
+    subsystem: Diagnostics/Safety
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W098
+    subsystem: Diagnostics/Safety
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W099
+    subsystem: Diagnostics/Safety
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  - id: W100
+    subsystem: Diagnostics/Safety
+    sourcePad: UNASSIGNED
+    destinationPad: UNASSIGNED
+    netId: UNASSIGNED
+    startsComplete: 0
+    certifiable: 0
+  vias:
+  - id: V01
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: -0.092, y: 0, z: -0.05}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V02
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: -0.076, y: 0, z: -0.05}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V03
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: -0.06, y: 0, z: -0.05}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V04
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: -0.044, y: 0, z: -0.05}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V05
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: -0.028, y: 0, z: -0.05}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V06
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: -0.012, y: 0, z: -0.05}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V07
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: 0.004, y: 0, z: -0.05}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V08
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: 0.02, y: 0, z: -0.05}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V09
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: 0.036, y: 0, z: -0.05}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V10
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: 0.052, y: 0, z: -0.05}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V11
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: 0.068, y: 0, z: -0.05}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V12
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: 0.084, y: 0, z: -0.05}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V13
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: -0.092, y: 0, z: 0.055}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V14
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: -0.076, y: 0, z: 0.055}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V15
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: -0.06, y: 0, z: 0.055}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V16
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: -0.044, y: 0, z: 0.055}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V17
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: -0.028, y: 0, z: 0.055}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V18
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: -0.012, y: 0, z: 0.055}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V19
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: 0.004, y: 0, z: 0.055}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V20
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: 0.02, y: 0, z: 0.055}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V21
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: 0.036, y: 0, z: 0.055}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V22
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: 0.052, y: 0, z: 0.055}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V23
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: 0.068, y: 0, z: 0.055}
+    startsInstalled: 0
+    certifiable: 0
+  - id: V24
+    netId: UNASSIGNED
+    fromLayer: UNASSIGNED
+    toLayer: UNASSIGNED
+    physicalPositionMeters: {x: 0.084, y: 0, z: 0.055}
+    startsInstalled: 0
+    certifiable: 0

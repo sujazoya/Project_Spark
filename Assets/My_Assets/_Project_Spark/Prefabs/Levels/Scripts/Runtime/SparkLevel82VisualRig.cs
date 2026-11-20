@@ -148,7 +148,7 @@ namespace ProjectSpark.Visuals
             lamps=new[]{scan,rf,eut,fault};
             foreach(Light lamp in lamps)lamp.enabled=false;
         }
-        private Light[] lamps;
+        [SerializeField] private Light[] lamps;
         public void Apply(ProjectSpark.Gameplay.SparkLevel82Plant p,ProjectSpark.Gameplay.SparkLevel82Plant.Mode mode,
             float measured,bool trusted,bool permitted,bool ready,bool conducted,bool radiated,int poses,bool hold,float cm,float rm,float hotspot)
         {
@@ -160,7 +160,7 @@ namespace ProjectSpark.Visuals
             SetActualRFImmunity(p.Amp,measured,p.Height,p.Shutter,permitted,trusted);
             SetActualMissionMonitoring(p.AdcError,p.Jitter,p.Load*(1-p.OpticalLoss),p.FunctionValid,poses/72f);
             SetActualRFSafety(hold,trusted,permitted,p.Shutter);
-            if(lamps==null)return;
+            if(lamps == null || lamps.Length != 4) return;
             lamps[0].enabled=scanning;lamps[1].enabled=p.Field>.03f;
             lamps[1].intensity=p.Field*1.45f;lamps[2].enabled=p.FunctionValid&&(ready||permitted);lamps[3].enabled=hold;
         }

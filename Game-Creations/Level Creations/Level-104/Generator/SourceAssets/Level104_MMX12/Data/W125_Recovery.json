@@ -1,0 +1,16 @@
+{
+  "id": "W125",
+  "status": "SCHEMATIC_VALIDATION_REQUIRED",
+  "source": "L104_MemoryTrainingMonitor_U11.TRUSTED_MEMORY_READY_OUT",
+  "destination": "L104_MemorySafetySupervisor_U12.TRUSTED_MEMORY_READY_IN",
+  "warning": "U11/U12 are logical endpoints from gameplay design; physical component BOM and actual package pins must be reconciled.",
+  "initial": "OPEN",
+  "monitor_requires_fresh_sequence": true,
+  "recovery": [
+    "reconnect physical path",
+    "retrain all byte lanes",
+    "run fresh data test",
+    "explicit safety reset",
+    "new qualification"
+  ]
+}

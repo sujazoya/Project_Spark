@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AAAUI.VFX;
 using ProjectSpark.Circuit;
 using ProjectSpark.Visuals;
 using TMPro;
@@ -20,12 +21,15 @@ namespace ProjectSpark.Gameplay
         public SparkSwitch[] contacts;
         public SparkSwitch emergency;
         public SparkTerminal[] pins;
+        public TextMesh[] pinLabels = Array.Empty<TextMesh>();
         public SparkLevel81VisualRig rig;
         public SparkLevel81Trend plot;
         public TMP_Text controllerDisplay,qualityDisplay;
         public Text statusText,meterText,detailText,calibrationText;
         public Button powerButton,initButton,singleButton,scrubButton,tmrButton,laneButton,watchButton,opticalButton,missionButton,
             doubleButton,commonButton,packetsButton,diagnoseButton,restoreButton,revalidateButton,resetButton,armButton,eStopButton,certifyButton;
+
+        public Button cableViewButton, openFeedbackButton, focusWireButton;
 
         private enum Fault { None, Wiring, Power, EStop, Memory, CommonMode, Packet, Watchdog, EccLink }
         private enum Job { None, Tmr, Lane, Common, Restore }
@@ -35,6 +39,12 @@ namespace ProjectSpark.Gameplay
         private LevelGamePlayManager manager;
         private SparkLevelLayoutLoader loader;
         private SparkLevelSceneBindings bindings;
+        private SignalWireBuilder wireBuilder;
+        private SparkWireRegistry wireRegistry;
+        private readonly Dictionary<Renderer, bool> hiddenCableRenderers = new();
+        private bool focusCables, choseCableView;
+        private int suggestedWire = -1, shownWire = -2, shownHover = -2;
+        private Camera interactionCamera;
         private Fault latch;
         private Job job;
         private int topology=-1,stage,phase,acceptedMissions,commandSnapshot,w094Sequence;
@@ -75,7 +85,101 @@ namespace ProjectSpark.Gameplay
                 Debug.LogError("[LEVEL 81] Missing mission reliability references.",this);enabled=false;return;
             }
             source.SetOutput(false,default);
+            wireRegistry = FindFirstObjectByType<SparkWireRegistry>();
+            if (cableViewButton && wireRegistry)
+            {
+                wireRegistry.WiresChanged += RefreshCableView;
+                wireRegistry.SelectionChanged += OnCableSelected;
+                cableViewButton.interactable = true;
+            }
+            if (pinLabels.Length == pins.Length)
+            {
+                interactionCamera = Camera.main;
+                wireBuilder = FindFirstObjectByType<SignalWireBuilder>();
+                if (wireBuilder) wireBuilder.TerminalPickerOverride = PickOriginalSocket;
+            }
         }
+
+        private void OnDisable()
+        {
+            if (wireRegistry)
+            {
+                wireRegistry.WiresChanged -= RefreshCableView;
+                wireRegistry.SelectionChanged -= OnCableSelected;
+            }
+            RestoreCableRenderers();
+            if (!wireBuilder || wireBuilder.TerminalPickerOverride != PickOriginalSocket) return;
+            if (wireBuilder.IsDrawing) wireBuilder.CancelWire();
+            wireBuilder.TerminalPickerOverride = null;
+        }
+
+        public void ToggleCableView()
+        {
+            choseCableView = true;
+            focusCables = !focusCables;
+            RefreshCableView();
+            Log(focusCables ? "Equipment view highlights W094 and the selected cable." : "All installed cables are visible.");
+        }
+
+        public void ResetWorkbenchView() => GetComponent<SparkEquipmentWorkbenchView>()?.ResetView();
+
+        public void FocusNextWire()
+        {
+            var pair = Wires[suggestedWire >= 0 ? suggestedWire : Feedback];
+            GetComponent<SparkEquipmentWorkbenchView>()?.FocusPair(pins[pair.a].transform.position, pins[pair.b].transform.position);
+        }
+
+        private void OnCableSelected(string wireId) => RefreshCableView();
+
+        private void RestoreCableRenderers()
+        {
+            foreach (var entry in hiddenCableRenderers)
+                if (entry.Key) entry.Key.forceRenderingOff = entry.Value;
+            hiddenCableRenderers.Clear();
+        }
+
+        private bool IsFeedback(SparkWireRecord record)
+        {
+            var (a, b) = Wires[Feedback];
+            return record.TerminalA == pins[a] && record.TerminalB == pins[b] ||
+                record.TerminalA == pins[b] && record.TerminalB == pins[a];
+        }
+
+        private void RefreshCableView()
+        {
+            RestoreCableRenderers();
+            if (!focusCables || !wireRegistry) return;
+            foreach (var record in wireRegistry.Wires)
+            {
+                if (!record.Path || !record.TerminalA || !record.TerminalB || record.WireId == wireRegistry.SelectedWireId ||
+                    !record.TerminalA.transform.IsChildOf(transform) || !record.TerminalB.transform.IsChildOf(transform) || IsFeedback(record)) continue;
+                foreach (var renderer in record.Path.GetComponentsInChildren<Renderer>(true))
+                {
+                    hiddenCableRenderers[renderer] = renderer.forceRenderingOff;
+                    renderer.forceRenderingOff = true;
+                }
+            }
+        }
+
+        private SparkTerminal PickOriginalSocket(Vector2 screenPosition, SparkTerminal start)
+        {
+            if (!interactionCamera) return null;
+            SparkTerminal closest = null;
+            float radius = Mathf.Clamp(interactionCamera.pixelHeight * .011f, 6f, 16f);
+            float best = radius * radius;
+            foreach (var pin in pins)
+            {
+                if (!pin || pin == start || !pin.isActiveAndEnabled || !pin.Owner ||
+                    !pin.Owner.isActiveAndEnabled || !pin.Owner.InteractionsEnabled) continue;
+                Vector3 point = interactionCamera.WorldToScreenPoint(pin.transform.position);
+                float distance = ((Vector2)point - screenPosition).sqrMagnitude;
+                if (point.z <= 0 || distance >= best) continue;
+                closest = pin;
+                best = distance;
+            }
+            return closest;
+        }
+
         private static (int,int) Pair(int a,int b)=>(Math.Min(a,b),Math.Max(a,b));
         private bool Routed(int i)=>wires.Contains(Pair(Wires[i].a,Wires[i].b));
         private void ReadTopology(SparkCircuitSystem circuit)
@@ -88,10 +192,12 @@ namespace ProjectSpark.Gameplay
                 if(a>=0||b>=0)wires.Add(Pair(a,b));
             }
             wiredFeedback=Routed(Feedback);
+            suggestedWire = -1;
             wiring=wires.Count==Wires.Length?null:"Remove extra wires and check the route chart.";
             for(int i=0;i<Wires.Length;i++)
             {
                 if(Routed(i))continue;
+                suggestedWire = i;
                 wiring=$"Connect W{i+1:000} · {pins[Wires[i].a].name} → {pins[Wires[i].b].name}.";
                 break;
             }
@@ -235,6 +341,11 @@ namespace ProjectSpark.Gameplay
         {
             if(stage>=Gates.Length||!bindings.SetRuntimeComponentBinding(Gates[stage],source))return;
             stage++;hold=0;manager.QueueEvaluation();Log($"Objective {stage}/6 verified.");
+            if (stage == 1 && cableViewButton && !choseCableView)
+            {
+                focusCables = true;
+                RefreshCableView();
+            }
         }
         private void StartJob(Job next){job=next;jobClock=0;plant.StartComputation();}
         private void Log(string message)=>latestEvent=$"{elapsed:0.0}s · {message}";
@@ -305,7 +416,18 @@ namespace ProjectSpark.Gameplay
             Log(revalidated?"Fresh ECC, memory, reference, watchdog and packet evidence verified.":"Recovery remains unqualified.");
         }
         public void Reset(){if(CanReset){feedbackReset|=latch==Fault.EccLink&&feedbackObserved;latch=Fault.None;Log("Explicit safety reset. Start a fresh three-phase mission.");}}
-        public void Arm(){if(CanArm){armed=true;Log("Remove W094 using Undo Last Wire during the live mission.");}}
+        public void Arm(){if(CanArm){armed=true;Log("Ready to open W094 during the live mission.");}}
+        public void OpenFeedbackWire()
+        {
+            if (!armed || !wireRegistry) return;
+            wireRegistry.RefreshNow();
+            foreach (var record in wireRegistry.Wires)
+            {
+                if (!IsFeedback(record)) continue;
+                wireRegistry.RemoveWire(record.WireId);
+                return;
+            }
+        }
         public void EStop(){emergency.SetState(emergency.IsClosed?SparkSwitchState.Open:SparkSwitchState.Closed);if(emergency.IsOpen&&latch==Fault.None)Trip(Fault.EStop);}
         public void Certify(){if(CanCertify)certify=true;}
 
@@ -322,7 +444,7 @@ namespace ProjectSpark.Gameplay
                 return revalidated?"Select RESET SAFETY.":"Select VERIFY RECOVERY.";
             }
             if(!Ready)return wiring??"Check 5 V rails and the safe-hold loop.";
-            if(armed)return "Live W094 test · use Undo Last Wire to remove the ECC heartbeat.";
+            if(armed)return "Live W094 test · select OPEN W094 to disconnect the ECC heartbeat.";
             if(CanArm)return "Select ARM W094 TEST during the live command phase.";
             if(phase>0)return Phases[phase]+" · protected mission running.";
             if(job!=Job.None)return "Three lanes computing and checking the reference.";
@@ -336,6 +458,19 @@ namespace ProjectSpark.Gameplay
         }
         private void Present()
         {
+            if (pinLabels.Length == pins.Length)
+            {
+                int hover = wireBuilder && wireBuilder.HoveredTerminal ? Array.IndexOf(pins, wireBuilder.HoveredTerminal) : -1;
+                if (shownWire != suggestedWire || shownHover != hover)
+                {
+                    var pair = suggestedWire >= 0 ? Wires[suggestedWire] : (-1, -1);
+                    for(int i=0;i<pinLabels.Length;i++)
+                        if (pinLabels[i]) pinLabels[i].gameObject.SetActive(i == pair.Item1 || i == pair.Item2 || i == hover);
+                    shownWire = suggestedWire;
+                    shownHover = hover;
+                }
+            }
+            if (openFeedbackButton) openFeedbackButton.interactable = armed && wiredFeedback && wireRegistry;
             statusText.text=Status();
             meterText.text=$"ECC {(trusted?"FRESH":"STALE")}   ·   SCRUB {plant.Inspected}   ·   CORRECTED {plant.Corrections}   ·   QUARANTINE {plant.QuarantineCount}";
             detailText.text=$"VOTE {(plant.VoterValid?"VALID":"HOLD")}   ·   WATCHDOG {(plant.Watchdog?"READY":"WAIT")}   ·   COMMITS {plant.Committed}   ·   BLOCKED {plant.Blocked}";

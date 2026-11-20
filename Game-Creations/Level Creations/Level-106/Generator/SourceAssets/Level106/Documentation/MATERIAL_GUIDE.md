@@ -1,0 +1,1 @@
+Starter material maps are constant-color or simple PBR reference channels. Production work requires UV unwrapping, baked normal/roughness/occlusion, URP/HDRP setup, and precise FBX material-slot remapping.

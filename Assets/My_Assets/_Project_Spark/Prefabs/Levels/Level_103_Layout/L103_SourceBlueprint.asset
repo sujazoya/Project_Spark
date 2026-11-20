@@ -1,0 +1,1665 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: L103_SourceBlueprint
+  m_EditorClassIdentifier: Assembly-CSharp:ProjectSpark.Level103:SparkL103SourceBlueprint
+  level: 103
+  boardId: CPX-11
+  levelTitle: The Power Core
+  physicalBoardMeters: {x: 0.24, y: 0.18}
+  copperLayers: 8
+  electricalStatus: BLOCKED_UNVERIFIED_NETLIST
+  safetyJumper: W117
+  trustedOutput: L103_VcoreSupervisor_U10.TRUSTED_VCORE_GOOD_OUT
+  trustedInput: L103_CPUSafetySupervisor_U11.TRUSTED_VCORE_GOOD_IN
+  certifiedObjectives: 0
+  components:
+  - referenceDesignator: U1
+    kind: ic
+    description: 4-phase PWM controller
+    sourceFbx: 001_L103_U1.fbx
+    physicalPositionMeters: {x: -0.092, y: 0.0014, z: 0.005}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: U2
+    kind: ic
+    description: Phase driver A
+    sourceFbx: 002_L103_U2.fbx
+    physicalPositionMeters: {x: -0.031, y: 0.0014, z: 0.005}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: U3
+    kind: ic
+    description: Phase driver B
+    sourceFbx: 003_L103_U3.fbx
+    physicalPositionMeters: {x: 0.03, y: 0.0014, z: 0.005}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: U4
+    kind: ic
+    description: Phase driver C
+    sourceFbx: 004_L103_U4.fbx
+    physicalPositionMeters: {x: 0.091, y: 0.0014, z: 0.005}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: U5
+    kind: ic
+    description: Phase driver D
+    sourceFbx: 005_L103_U5.fbx
+    physicalPositionMeters: {x: -0.092, y: 0.0014, z: -0.027}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: U6
+    kind: ic
+    description: Control 3.3V regulator
+    sourceFbx: 006_L103_U6.fbx
+    physicalPositionMeters: {x: -0.031, y: 0.0014, z: -0.027}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: U7
+    kind: ic
+    description: Control 1.8V regulator
+    sourceFbx: 007_L103_U7.fbx
+    physicalPositionMeters: {x: 0.03, y: 0.0014, z: -0.027}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: U8
+    kind: ic
+    description: Input protection
+    sourceFbx: 008_L103_U8.fbx
+    physicalPositionMeters: {x: 0.091, y: 0.0014, z: -0.027}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: U9
+    kind: ic
+    description: Phase-current processing
+    sourceFbx: 009_L103_U9.fbx
+    physicalPositionMeters: {x: -0.092, y: 0.0014, z: -0.059}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: U10
+    kind: ic
+    description: VCORE-good supervisor
+    sourceFbx: 010_L103_U10.fbx
+    physicalPositionMeters: {x: -0.031, y: 0.0014, z: -0.059}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: U11
+    kind: ic
+    description: Independent CPU safety supervisor
+    sourceFbx: 011_L103_U11.fbx
+    physicalPositionMeters: {x: 0.03, y: 0.0014, z: -0.059}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: U12
+    kind: ic
+    description: Voltage telemetry interface
+    sourceFbx: 012_L103_U12.fbx
+    physicalPositionMeters: {x: 0.091, y: 0.0014, z: -0.059}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: Q1
+    kind: mosfet
+    description: Power MOSFET phase 1 high side
+    sourceFbx: 013_L103_Q1.fbx
+    physicalPositionMeters: {x: -0.073, y: 0.0014, z: 0.037}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: Q2
+    kind: mosfet
+    description: Power MOSFET phase 1 low side
+    sourceFbx: 014_L103_Q2.fbx
+    physicalPositionMeters: {x: -0.073, y: 0.0014, z: 0.025}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: Q3
+    kind: mosfet
+    description: Power MOSFET phase 2 high side
+    sourceFbx: 015_L103_Q3.fbx
+    physicalPositionMeters: {x: -0.025, y: 0.0014, z: 0.037}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: Q4
+    kind: mosfet
+    description: Power MOSFET phase 2 low side
+    sourceFbx: 016_L103_Q4.fbx
+    physicalPositionMeters: {x: -0.025, y: 0.0014, z: 0.025}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: Q5
+    kind: mosfet
+    description: Power MOSFET phase 3 high side
+    sourceFbx: 017_L103_Q5.fbx
+    physicalPositionMeters: {x: 0.023, y: 0.0014, z: 0.037}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: Q6
+    kind: mosfet
+    description: Power MOSFET phase 3 low side
+    sourceFbx: 018_L103_Q6.fbx
+    physicalPositionMeters: {x: 0.023, y: 0.0014, z: 0.025}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: Q7
+    kind: mosfet
+    description: Power MOSFET phase 4 high side
+    sourceFbx: 019_L103_Q7.fbx
+    physicalPositionMeters: {x: 0.071, y: 0.0014, z: 0.037}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: Q8
+    kind: mosfet
+    description: Power MOSFET phase 4 low side
+    sourceFbx: 020_L103_Q8.fbx
+    physicalPositionMeters: {x: 0.071, y: 0.0014, z: 0.025}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: L1
+    kind: inductor
+    description: VRM power phase 1 magnetic inductor
+    sourceFbx: 021_L103_L1.fbx
+    physicalPositionMeters: {x: -0.073, y: 0.0014, z: 0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: L2
+    kind: inductor
+    description: VRM power phase 2 magnetic inductor
+    sourceFbx: 022_L103_L2.fbx
+    physicalPositionMeters: {x: -0.025, y: 0.0014, z: 0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: L3
+    kind: inductor
+    description: VRM power phase 3 magnetic inductor
+    sourceFbx: 023_L103_L3.fbx
+    physicalPositionMeters: {x: 0.023, y: 0.0014, z: 0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: L4
+    kind: inductor
+    description: VRM power phase 4 magnetic inductor
+    sourceFbx: 024_L103_L4.fbx
+    physicalPositionMeters: {x: 0.071, y: 0.0014, z: 0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R1
+    kind: resistor
+    description: VRM feedback or precision sense resistor 1
+    sourceFbx: 025_L103_R1.fbx
+    physicalPositionMeters: {x: -0.098, y: 0.0014, z: -0.05}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R2
+    kind: resistor
+    description: VRM feedback or precision sense resistor 2
+    sourceFbx: 026_L103_R2.fbx
+    physicalPositionMeters: {x: -0.082, y: 0.0014, z: -0.05}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R3
+    kind: resistor
+    description: VRM feedback or precision sense resistor 3
+    sourceFbx: 027_L103_R3.fbx
+    physicalPositionMeters: {x: -0.066, y: 0.0014, z: -0.05}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R4
+    kind: resistor
+    description: VRM feedback or precision sense resistor 4
+    sourceFbx: 028_L103_R4.fbx
+    physicalPositionMeters: {x: -0.05, y: 0.0014, z: -0.05}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R5
+    kind: resistor
+    description: VRM feedback or precision sense resistor 5
+    sourceFbx: 029_L103_R5.fbx
+    physicalPositionMeters: {x: -0.034, y: 0.0014, z: -0.05}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R6
+    kind: resistor
+    description: VRM feedback or precision sense resistor 6
+    sourceFbx: 030_L103_R6.fbx
+    physicalPositionMeters: {x: -0.018, y: 0.0014, z: -0.05}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R7
+    kind: resistor
+    description: VRM feedback or precision sense resistor 7
+    sourceFbx: 031_L103_R7.fbx
+    physicalPositionMeters: {x: -0.002, y: 0.0014, z: -0.05}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R8
+    kind: resistor
+    description: VRM feedback or precision sense resistor 8
+    sourceFbx: 032_L103_R8.fbx
+    physicalPositionMeters: {x: 0.014, y: 0.0014, z: -0.05}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R9
+    kind: resistor
+    description: VRM feedback or precision sense resistor 9
+    sourceFbx: 033_L103_R9.fbx
+    physicalPositionMeters: {x: 0.03, y: 0.0014, z: -0.05}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R10
+    kind: resistor
+    description: VRM feedback or precision sense resistor 10
+    sourceFbx: 034_L103_R10.fbx
+    physicalPositionMeters: {x: 0.046, y: 0.0014, z: -0.05}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R11
+    kind: resistor
+    description: VRM feedback or precision sense resistor 11
+    sourceFbx: 035_L103_R11.fbx
+    physicalPositionMeters: {x: 0.062, y: 0.0014, z: -0.05}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R12
+    kind: resistor
+    description: VRM feedback or precision sense resistor 12
+    sourceFbx: 036_L103_R12.fbx
+    physicalPositionMeters: {x: 0.078, y: 0.0014, z: -0.05}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R13
+    kind: resistor
+    description: VRM feedback or precision sense resistor 13
+    sourceFbx: 037_L103_R13.fbx
+    physicalPositionMeters: {x: 0.094, y: 0.0014, z: -0.05}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R14
+    kind: resistor
+    description: VRM feedback or precision sense resistor 14
+    sourceFbx: 038_L103_R14.fbx
+    physicalPositionMeters: {x: -0.098, y: 0.0014, z: -0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R15
+    kind: resistor
+    description: VRM feedback or precision sense resistor 15
+    sourceFbx: 039_L103_R15.fbx
+    physicalPositionMeters: {x: -0.082, y: 0.0014, z: -0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R16
+    kind: resistor
+    description: VRM feedback or precision sense resistor 16
+    sourceFbx: 040_L103_R16.fbx
+    physicalPositionMeters: {x: -0.066, y: 0.0014, z: -0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R17
+    kind: resistor
+    description: VRM feedback or precision sense resistor 17
+    sourceFbx: 041_L103_R17.fbx
+    physicalPositionMeters: {x: -0.05, y: 0.0014, z: -0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R18
+    kind: resistor
+    description: VRM feedback or precision sense resistor 18
+    sourceFbx: 042_L103_R18.fbx
+    physicalPositionMeters: {x: -0.034, y: 0.0014, z: -0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R19
+    kind: resistor
+    description: VRM feedback or precision sense resistor 19
+    sourceFbx: 043_L103_R19.fbx
+    physicalPositionMeters: {x: -0.018, y: 0.0014, z: -0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R20
+    kind: resistor
+    description: VRM feedback or precision sense resistor 20
+    sourceFbx: 044_L103_R20.fbx
+    physicalPositionMeters: {x: -0.002, y: 0.0014, z: -0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R21
+    kind: resistor
+    description: VRM feedback or precision sense resistor 21
+    sourceFbx: 045_L103_R21.fbx
+    physicalPositionMeters: {x: 0.014, y: 0.0014, z: -0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R22
+    kind: resistor
+    description: VRM feedback or precision sense resistor 22
+    sourceFbx: 046_L103_R22.fbx
+    physicalPositionMeters: {x: 0.03, y: 0.0014, z: -0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R23
+    kind: resistor
+    description: VRM feedback or precision sense resistor 23
+    sourceFbx: 047_L103_R23.fbx
+    physicalPositionMeters: {x: 0.046, y: 0.0014, z: -0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R24
+    kind: resistor
+    description: VRM feedback or precision sense resistor 24
+    sourceFbx: 048_L103_R24.fbx
+    physicalPositionMeters: {x: 0.062, y: 0.0014, z: -0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: R25
+    kind: resistor
+    description: VRM feedback or precision sense resistor 25
+    sourceFbx: 049_L103_R25.fbx
+    physicalPositionMeters: {x: 0.078, y: 0.0014, z: -0.063}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C1
+    kind: bulkcap
+    description: Bulk polymer capacitor 1
+    sourceFbx: 050_L103_C1.fbx
+    physicalPositionMeters: {x: -0.096, y: 0.0014, z: -0.018}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C2
+    kind: bulkcap
+    description: Bulk polymer capacitor 2
+    sourceFbx: 051_L103_C2.fbx
+    physicalPositionMeters: {x: -0.0788, y: 0.0014, z: -0.018}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C3
+    kind: bulkcap
+    description: Bulk polymer capacitor 3
+    sourceFbx: 052_L103_C3.fbx
+    physicalPositionMeters: {x: -0.0616, y: 0.0014, z: -0.018}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C4
+    kind: bulkcap
+    description: Bulk polymer capacitor 4
+    sourceFbx: 053_L103_C4.fbx
+    physicalPositionMeters: {x: -0.0444, y: 0.0014, z: -0.018}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C5
+    kind: bulkcap
+    description: Bulk polymer capacitor 5
+    sourceFbx: 054_L103_C5.fbx
+    physicalPositionMeters: {x: -0.0272, y: 0.0014, z: -0.018}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C6
+    kind: bulkcap
+    description: Bulk polymer capacitor 6
+    sourceFbx: 055_L103_C6.fbx
+    physicalPositionMeters: {x: -0.01, y: 0.0014, z: -0.018}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C7
+    kind: capacitor
+    description: Ceramic decoupling capacitor 7
+    sourceFbx: 056_L103_C7.fbx
+    physicalPositionMeters: {x: 0.0072, y: 0.0014, z: -0.018}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C8
+    kind: capacitor
+    description: Ceramic decoupling capacitor 8
+    sourceFbx: 057_L103_C8.fbx
+    physicalPositionMeters: {x: 0.0244, y: 0.0014, z: -0.018}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C9
+    kind: capacitor
+    description: Ceramic decoupling capacitor 9
+    sourceFbx: 058_L103_C9.fbx
+    physicalPositionMeters: {x: 0.0416, y: 0.0014, z: -0.018}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C10
+    kind: capacitor
+    description: Ceramic decoupling capacitor 10
+    sourceFbx: 059_L103_C10.fbx
+    physicalPositionMeters: {x: 0.0588, y: 0.0014, z: -0.018}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C11
+    kind: capacitor
+    description: Ceramic decoupling capacitor 11
+    sourceFbx: 060_L103_C11.fbx
+    physicalPositionMeters: {x: 0.076, y: 0.0014, z: -0.018}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C12
+    kind: capacitor
+    description: Ceramic decoupling capacitor 12
+    sourceFbx: 061_L103_C12.fbx
+    physicalPositionMeters: {x: 0.0932, y: 0.0014, z: -0.018}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C13
+    kind: capacitor
+    description: Ceramic decoupling capacitor 13
+    sourceFbx: 062_L103_C13.fbx
+    physicalPositionMeters: {x: -0.096, y: 0.0014, z: -0.033}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C14
+    kind: capacitor
+    description: Ceramic decoupling capacitor 14
+    sourceFbx: 063_L103_C14.fbx
+    physicalPositionMeters: {x: -0.0788, y: 0.0014, z: -0.033}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C15
+    kind: capacitor
+    description: Ceramic decoupling capacitor 15
+    sourceFbx: 064_L103_C15.fbx
+    physicalPositionMeters: {x: -0.0616, y: 0.0014, z: -0.033}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C16
+    kind: capacitor
+    description: Ceramic decoupling capacitor 16
+    sourceFbx: 065_L103_C16.fbx
+    physicalPositionMeters: {x: -0.0444, y: 0.0014, z: -0.033}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C17
+    kind: capacitor
+    description: Ceramic decoupling capacitor 17
+    sourceFbx: 066_L103_C17.fbx
+    physicalPositionMeters: {x: -0.0272, y: 0.0014, z: -0.033}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C18
+    kind: capacitor
+    description: Ceramic decoupling capacitor 18
+    sourceFbx: 067_L103_C18.fbx
+    physicalPositionMeters: {x: -0.01, y: 0.0014, z: -0.033}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C19
+    kind: capacitor
+    description: Ceramic decoupling capacitor 19
+    sourceFbx: 068_L103_C19.fbx
+    physicalPositionMeters: {x: 0.0072, y: 0.0014, z: -0.033}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C20
+    kind: capacitor
+    description: Ceramic decoupling capacitor 20
+    sourceFbx: 069_L103_C20.fbx
+    physicalPositionMeters: {x: 0.0244, y: 0.0014, z: -0.033}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C21
+    kind: capacitor
+    description: Ceramic decoupling capacitor 21
+    sourceFbx: 070_L103_C21.fbx
+    physicalPositionMeters: {x: 0.0416, y: 0.0014, z: -0.033}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C22
+    kind: capacitor
+    description: Ceramic decoupling capacitor 22
+    sourceFbx: 071_L103_C22.fbx
+    physicalPositionMeters: {x: 0.0588, y: 0.0014, z: -0.033}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C23
+    kind: capacitor
+    description: Ceramic decoupling capacitor 23
+    sourceFbx: 072_L103_C23.fbx
+    physicalPositionMeters: {x: 0.076, y: 0.0014, z: -0.033}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: C24
+    kind: capacitor
+    description: Ceramic decoupling capacitor 24
+    sourceFbx: 073_L103_C24.fbx
+    physicalPositionMeters: {x: 0.0932, y: 0.0014, z: -0.033}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: J1
+    kind: connector
+    description: 12V CPU power connector
+    sourceFbx: 074_L103_J1.fbx
+    physicalPositionMeters: {x: -0.095, y: 0.0014, z: -0.078}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: J2
+    kind: connector
+    description: CPU load sense connector
+    sourceFbx: 075_L103_J2.fbx
+    physicalPositionMeters: {x: -0.033, y: 0.0014, z: -0.078}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: J3
+    kind: connector
+    description: Debug and telemetry
+    sourceFbx: 076_L103_J3.fbx
+    physicalPositionMeters: {x: 0.029, y: 0.0014, z: -0.078}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: J4
+    kind: connector
+    description: Power test header
+    sourceFbx: 077_L103_J4.fbx
+    physicalPositionMeters: {x: 0.091, y: 0.0014, z: -0.078}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: LED1
+    kind: led
+    description: Status LED 1
+    sourceFbx: 078_L103_LED1.fbx
+    physicalPositionMeters: {x: -0.08, y: 0.0014, z: -0.065}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: LED2
+    kind: led
+    description: Status LED 2
+    sourceFbx: 079_L103_LED2.fbx
+    physicalPositionMeters: {x: -0.027, y: 0.0014, z: -0.065}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: LED3
+    kind: led
+    description: Status LED 3
+    sourceFbx: 080_L103_LED3.fbx
+    physicalPositionMeters: {x: 0.026, y: 0.0014, z: -0.065}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: LED4
+    kind: led
+    description: Status LED 4
+    sourceFbx: 081_L103_LED4.fbx
+    physicalPositionMeters: {x: 0.079, y: 0.0014, z: -0.065}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: T1
+    kind: sensor
+    description: Temperature or current sensor 1
+    sourceFbx: 082_L103_T1.fbx
+    physicalPositionMeters: {x: 0.07, y: 0.0014, z: -0.048}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: T2
+    kind: sensor
+    description: Temperature or current sensor 2
+    sourceFbx: 083_L103_T2.fbx
+    physicalPositionMeters: {x: 0.07, y: 0.0014, z: -0.027}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: T3
+    kind: sensor
+    description: Temperature or current sensor 3
+    sourceFbx: 084_L103_T3.fbx
+    physicalPositionMeters: {x: 0.07, y: 0.0014, z: -0.006}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: D1
+    kind: diode
+    description: Input protection diode 1
+    sourceFbx: 085_L103_D1.fbx
+    physicalPositionMeters: {x: 0.093, y: 0.0014, z: -0.006}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: D2
+    kind: diode
+    description: Input protection diode 2
+    sourceFbx: 086_L103_D2.fbx
+    physicalPositionMeters: {x: 0.093, y: 0.0014, z: 0.008}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: W117
+    kind: jumper
+    description: Removable VCORE-good monitored feedback test jumper
+    sourceFbx: 087_L103_W117.fbx
+    physicalPositionMeters: {x: 0.091, y: 0.0014, z: 0.008}
+    yawDegrees: 0
+    startsInstalled: 0
+  - referenceDesignator: Y1
+    kind: clock
+    description: VRM PWM reference oscillator
+    sourceFbx: 088_L103_Y1.fbx
+    physicalPositionMeters: {x: -0.093, y: 0.0014, z: 0.018}
+    yawDegrees: 0
+    startsInstalled: 0
+  routes:
+  - id: W001
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W002
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W003
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W004
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W005
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W006
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W007
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W008
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W009
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W010
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W011
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W012
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W013
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W014
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W015
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W016
+    subsystem: Input/Protection
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W017
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W018
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W019
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W020
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W021
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W022
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W023
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W024
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W025
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W026
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W027
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W028
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W029
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W030
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W031
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W032
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W033
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W034
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W035
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W036
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W037
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W038
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W039
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W040
+    subsystem: VRM PH1/2
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W041
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W042
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W043
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W044
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W045
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W046
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W047
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W048
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W049
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W050
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W051
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W052
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W053
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W054
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W055
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W056
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W057
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W058
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W059
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W060
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W061
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W062
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W063
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W064
+    subsystem: VRM PH3/4
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W065
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W066
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W067
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W068
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W069
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W070
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W071
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W072
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W073
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W074
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W075
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W076
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W077
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W078
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W079
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W080
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W081
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W082
+    subsystem: VCORE
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W083
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W084
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W085
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W086
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W087
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W088
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W089
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W090
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W091
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W092
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W093
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W094
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W095
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W096
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W097
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W098
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W099
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W100
+    subsystem: Sensing/Thermal
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W101
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W102
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W103
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W104
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W105
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W106
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W107
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W108
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W109
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W110
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W111
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W112
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W113
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W114
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W115
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: W116
+    subsystem: Safety
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  vias:
+  - id: V001
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V002
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V003
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V004
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V005
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V006
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V007
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V008
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V009
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V010
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V011
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V012
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V013
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V014
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V015
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V016
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V017
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V018
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V019
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V020
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V021
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V022
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V023
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V024
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V025
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V026
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V027
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V028
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V029
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0
+  - id: V030
+    subsystem: Layer Transition
+    netId: UNASSIGNED
+    sourcePin: REQUIRES_PIN_SCHEMATIC
+    destinationPin: REQUIRES_PIN_SCHEMATIC
+    layerSpan: UNASSIGNED
+    certifiable: 0

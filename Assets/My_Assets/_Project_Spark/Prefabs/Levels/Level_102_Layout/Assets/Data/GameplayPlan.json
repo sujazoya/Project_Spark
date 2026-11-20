@@ -1,0 +1,50 @@
+{
+  "level": 102,
+  "name": "SIGNAL PHANTOM",
+  "board": "HSX-10",
+  "size_mm": [
+    250,
+    175
+  ],
+  "copper_layers": 6,
+  "player_routes": 108,
+  "via_tasks": 28,
+  "components": 82,
+  "critical_wire": {
+    "id": "W109",
+    "from": "L102_LinkQualityMonitor_U9.TRUSTED_LINK_QUALITY_OUT",
+    "to": "L102_HighSpeedSafetySupervisor_U11.TRUSTED_LINK_QUALITY_IN",
+    "kind": "detachable_validity_signal",
+    "starts_connected": false
+  },
+  "faults": [
+    {
+      "id": "F1",
+      "description": "150 Ohm differential receiver termination instead of 100 Ohm",
+      "target": "R1",
+      "repair": "Replace termination resistor"
+    },
+    {
+      "id": "F2",
+      "description": "Excessive coupling between adjacent lane traces",
+      "target": "Diff_Pair_A_Copper",
+      "repair": "Rework controlled trace separation"
+    },
+    {
+      "id": "F3",
+      "description": "Unterminated transmission via stub",
+      "target": "Via_Barrels",
+      "repair": "Approved section rework or board replacement"
+    }
+  ],
+  "objectives": [
+    "Assembly",
+    "Routing",
+    "Commissioning",
+    "Signal integrity",
+    "Three fault recovery",
+    "W109 safety recovery"
+  ],
+  "netlist_status": "UNVERIFIED - placeholder route and via source tables",
+  "asset_quality": "procedurally detailed asset kit, not manufacturer-certified CAD"
+}

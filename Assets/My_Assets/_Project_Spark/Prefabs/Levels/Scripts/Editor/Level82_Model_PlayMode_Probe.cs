@@ -37,14 +37,14 @@ internal static class Level82ModelPlayModeProbe
         if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling || !File.Exists(Request)) return;
         try { File.Delete(Request); }
         catch (IOException) { return; }
-        File.WriteAllText(Report, "Level 82 — Breadboard assembly and Silence the Spectrum test\n");
+        File.WriteAllText(Report, "Level 82 — Equipment-mounted terminals and Silence the Spectrum test\n");
         try
         {
             Check(SceneManager.GetActiveScene().path == SparkLevel82ModelInstaller.ScenePath, "Open MainMenu in Edit Mode.");
             if (AssetDatabase.LoadAssetAtPath<GameObject>(SparkLevel82ModelInstaller.Prefab) != null)
                 SparkLevel82ModelInstaller.Fit();
-            SparkLevel82ModelInstaller.Install();
-            Record("Installed the fitted assembly in the Level 82 prefab and registered the campaign.");
+            SparkLevel82ModelInstaller.ValidateAssets();
+            Record("Fitted the existing campaign prefab to the workshop table.");
             SessionState.SetBool(Running, true);
             EditorApplication.EnterPlaymode();
         }
@@ -78,9 +78,10 @@ internal static class Level82ModelPlayModeProbe
             manager = Object.FindFirstObjectByType<LevelGamePlayManager>();
             var loader = Object.FindFirstObjectByType<SparkLevelLayoutLoader>();
             var wireBuilder = Object.FindFirstObjectByType<SignalWireBuilder>();
-            var wirePaths = Object.FindFirstObjectByType<SignalPath_Manager>();
+            var registry = Object.FindFirstObjectByType<SparkWireRegistry>();
             var definition = AssetDatabase.LoadAssetAtPath<SparkLevelDefinition>(SparkLevel82ModelInstaller.Folder + "Level_82.asset");
-            Check(definition != null && wireBuilder != null && loader != null, "Level definition, wire builder, or layout loader missing.");
+            Check(definition != null && wireBuilder != null && loader != null && registry != null,
+                "Level definition, native wiring, or layout loader missing.");
             if (manager.LevelProgression != null) manager.LevelProgression.enabled = false;
             Write(manager, "enforceProgressionAccess", false);
             Write(manager, "autoAdvanceOnCompletion", false);
@@ -94,37 +95,85 @@ internal static class Level82ModelPlayModeProbe
 
             var bench = loop.transform.Find("EMC Workbench");
             var camera = Read<Camera>(wireBuilder, "targetCamera");
-            var grid = SparkLevel82ModelInstaller.FindBoard(SceneManager.GetActiveScene());
+            var table = SparkLevel82ModelInstaller.FindTable(SceneManager.GetActiveScene());
             var ids = SparkLevel82ModelInstaller.TerminalIds.ToArray();
             var pins = new Dictionary<string, SparkTerminal>();
-            var holes = new HashSet<Vector2Int>();
-            float maximumGap = 0;
-            float lowestFoot = float.PositiveInfinity, highestFoot = float.NegativeInfinity;
+            var mounts = bench.Find(SparkLevel82ModelInstaller.MountsName);
+            var art = loop.rig.art;
+            Check(mounts && !bench.Find("Breadboard Labels"), "The old freestanding jack panel is still present.");
+            var tableLocal = SparkLevel82ModelInstaller.MeasureArt(art, table.transform.worldToLocalMatrix);
+            var worldTable = Vector3.Scale(table.size, table.transform.lossyScale);
+            var worldFixture = Vector3.Scale(tableLocal.size, table.transform.lossyScale);
+            if (worldFixture.x >= worldTable.x || worldFixture.z >= worldTable.z)
+            {
+                var modules = art.Cast<Transform>().Where(t => t.GetComponentInChildren<MeshFilter>());
+                foreach (var module in modules.Select(t => (t, bounds: SparkLevel82ModelInstaller.MeasureArt(t, table.transform.worldToLocalMatrix)))
+                    .OrderByDescending(m => Mathf.Abs(m.bounds.center.x) + m.bounds.extents.x).Take(4))
+                    Record($"Outermost module {module.t.name}: {module.bounds}.");
+            }
+            Check(worldFixture.x < worldTable.x && worldFixture.z < worldTable.z &&
+                Mathf.Max(worldFixture.x / worldTable.x, worldFixture.z / worldTable.z) > .86f,
+                $"Fixture does not fill the table correctly: {worldFixture.x:F2} × {worldFixture.z:F2} on {worldTable.x:F2} × {worldTable.z:F2}.");
+            Record($"Fixture fits the workshop table: {worldFixture.x:F2} × {worldFixture.z:F2} on {worldTable.x:F2} × {worldTable.z:F2} Unity units.");
+
+            var source = AssetDatabase.LoadAssetAtPath<TextAsset>(SparkLevel82ModelInstaller.Folder + "Equipment_Terminal_Mounts.csv");
+            var positions = source.text.Split('\n').Skip(1).Where(row => !string.IsNullOrWhiteSpace(row))
+                .Select(row => row.Trim().Split(',')).ToDictionary(row => row[5]);
+            var goldContacts = new Dictionary<string, List<Vector3>>();
+            foreach (string equipment in positions.Values.Select(row => row[1]).Distinct())
+            {
+                var gold = new List<Vector3>();
+                foreach (var filter in art.Find(equipment).GetComponentsInChildren<MeshFilter>()
+                    .Where(filter => filter.name.EndsWith("__tintE9BC56", StringComparison.Ordinal)))
+                {
+                    using var data = MeshUtility.AcquireReadOnlyMeshData(filter.sharedMesh);
+                    using var vertices = new Unity.Collections.NativeArray<Vector3>(data[0].vertexCount, Unity.Collections.Allocator.Temp);
+                    data[0].GetVertices(vertices);
+                    var toArt = art.worldToLocalMatrix * filter.transform.localToWorldMatrix;
+                    foreach (var vertex in vertices) gold.Add(toArt.MultiplyPoint3x4(vertex));
+                }
+                goldContacts.Add(equipment, gold);
+            }
+            var unique = new HashSet<Vector3>();
+            float maxError = 0;
+            var socketGaps = new List<(string id, float distance)>();
             Physics.SyncTransforms();
             foreach (string id in ids)
             {
                 Check(manager.SceneBindings.TryGetTerminal(id, out var terminal), "Missing " + id);
                 pins.Add(id, terminal);
                 var socket = terminal.transform;
-                Vector3 foot = socket.TransformPoint(Vector3.down);
-                float height = Vector3.Dot(foot, bench.up);
-                lowestFoot = Mathf.Min(lowestFoot, height);
-                highestFoot = Mathf.Max(highestFoot, height);
-                Vector3 surface = SparkLevel82ModelInstaller.SurfacePoint(grid, foot, bench.up);
-                maximumGap = Mathf.Max(maximumGap, Mathf.Abs(Vector3.Dot(surface - foot, bench.up)));
-                Check(maximumGap < .001f, "Terminal base does not touch the breadboard: " + id);
-                Check(grid.TryGetNearestHole(socket.position, .15f, out var hole, out int column, out int row) &&
-                    holes.Add(new Vector2Int(column, row)) &&
-                    Vector3.ProjectOnPlane(foot - hole, bench.up).magnitude < .001f,
-                    "Terminal does not sit over its own wire hole: " + id);
+                var row = positions[id];
+                float Coordinate(int index) => float.Parse(row[index], System.Globalization.CultureInfo.InvariantCulture);
+                Vector3 expected = art.TransformPoint(.096f * new Vector3(Coordinate(2), Coordinate(3), -Coordinate(4)));
+                Vector3 axis = art.InverseTransformPoint(socket.position);
+                var gold = goldContacts[row[1]];
+                float gap = gold.Count == 0 ? float.PositiveInfinity : Mathf.Sqrt(gold.Min(vertex => (axis - vertex).sqrMagnitude));
+                socketGaps.Add((id, gap));
+                float error = Vector3.Distance(expected, socket.parent.position);
+                maxError = Mathf.Max(maxError, error);
+                Check(socket.IsChildOf(mounts) && socket.parent.name.StartsWith(row[0] + " ", StringComparison.Ordinal)
+                    && socket.parent.parent.name == row[1] + " Fixed Terminals" && error < .0002f,
+                    $"Terminal {id} does not match its original equipment position. Gap {error:F5}.");
+                Check(unique.Add(socket.position) && socket.TryGetComponent<BoxCollider>(out var collider)
+                    && collider.enabled && socket.gameObject.layer == LayerMask.NameToLayer("Pin") &&
+                    !socket.GetComponent<Renderer>() && !socket.Find("Jack recess"),
+                    "Duplicate or standalone terminal visual found at " + id);
             }
-            Check(holes.Count == 206, "Expected 206 breadboard sockets.");
-            Check(highestFoot - lowestFoot < .010f, $"Breadboard seating varies by {highestFoot-lowestFoot:F5} Unity units.");
-            Record($"206/206 terminal feet touch the breadboard on distinct wire holes. Maximum seating error: {maximumGap:F6} Unity units.");
-            var labels = bench.GetComponentsInChildren<TextMesh>();
-            Check(labels.Length == 212 && Array.TrueForAll(labels, label => label.transform.localScale == Vector3.one * .20f),
-                "TextMesh labels must use a local scale of 0.20.");
-            Record("All 212 TextMesh labels use 0.20 local scale.");
+            var offCollar = socketGaps.Where(item => item.distance > .009f).Select(item => $"{item.id} {item.distance:F5}").ToArray();
+            Check(offCollar.Length == 0, "Terminals without a matching original gold collar: " + string.Join(", ", offCollar));
+            Check(unique.Count == 206 && mounts.GetComponentsInChildren<SparkTerminal>(true).Length == 206
+                && loop.GetComponentsInChildren<SparkTerminal>(true).Length == 206,
+                "Expected exactly 206 functional sockets with no extra board terminals.");
+            Record($"206/206 unique terminals match original equipment coordinates. Maximum mount error {maxError:F6} Unity units.");
+            Check(loop.pinLabels.Length == 206 && loop.pinLabels.Count(label => label.gameObject.activeSelf) <= 3,
+                "Only relevant socket labels should be shown during wiring.");
+            Check(loop.plot.TryGetComponent<CanvasRenderer>(out _) && loop.plot.rectTransform.anchorMax == Vector2.one,
+                "The live measurement display should render beside the fixture.");
+            Check(wireBuilder.DrawingMode == WireDrawingMode.TerminalToTerminal, "MainMenu must use direct terminal-to-terminal wiring.");
+            var shelf = GameObject.Find("ProjectSpark_Gameplay")?.transform.Find("Component_Shelf");
+            Check(shelf && shelf.GetComponentsInChildren<Renderer>().All(renderer => renderer.forceRenderingOff),
+                "The component shelf obscures the front of the fitted workbench.");
             Capture(bench, pins, "Unwired", true);
             var covered = new List<string>();
             foreach (var pair in pins)
@@ -132,7 +181,7 @@ internal static class Level82ModelPlayModeProbe
                 Vector3 point = camera.WorldToScreenPoint(pair.Value.transform.position);
                 Check(point.z > 0 && point.x >= 0 && point.y >= 0 && point.x < camera.pixelWidth && point.y < camera.pixelHeight,
                     $"Terminal outside the active camera: {pair.Key} at {point}; camera {camera.pixelWidth}x{camera.pixelHeight}");
-                Check(ReferenceEquals(pick.Invoke(wireBuilder, new object[] { (Vector2)point }), pair.Value),
+                Check(wireBuilder.FindStartTerminal(point) == pair.Value,
                     "Wire tool cannot select " + pair.Key + " from the active game camera.");
                 if (EventSystem.current)
                 {
@@ -149,11 +198,6 @@ internal static class Level82ModelPlayModeProbe
                 Check(wireBuilder.TryEndWire(camera.WorldToScreenPoint(pins[ids[to]].transform.position)),
                     "Wire tool could not finish " + ids[from] + " to " + ids[to]);
             }
-
-
-
-
-
 
             Check(covered.Count==0,"Move the control overlay away from these terminals: "+string.Join(", ",covered));
             var map=SparkLevel82Process.Wires;
@@ -173,8 +217,21 @@ internal static class Level82ModelPlayModeProbe
             await Wait(()=>loop.statusText.text.Contains("W119"),"missing direct field feedback");
             Check(!loop.doorButton.interactable&&manager.SatisfiedTargetCount==0,"Diagnostic field telemetry bypassed W119.");
             Record("Connected 133 wires. Field telemetry W120 and calibration health W125 could not replace W119.");
+            registry.RefreshNow();
+            var laterWire = registry.Wires.Last();
+            Check(registry.RemoveWire(laterWire.WireId), "Could not prepare a connection installed after W119.");
             Connect(map[feedback].a,map[feedback].b);
+            Check(registry.RestoreRemovedWire(laterWire.WireId), "Could not reinstall a cable after W119.");
+            registry.SelectWire(null);
             await At(1);
+            var hidden = Read<Dictionary<Renderer, bool>>(loop, "hiddenCableRenderers");
+            Check(hidden.Count > 0 && hidden.Keys.All(renderer => renderer.forceRenderingOff),
+                "The focused equipment view did not hide ordinary cable renderers.");
+            await Click(loop.cableViewButton);
+            Check(hidden.Count == 0 && registry.Count == 134, "Showing cables changed the electrical connections.");
+            await Click(loop.cableViewButton);
+            Check(hidden.Count > 0 && registry.Count == 134, "Equipment view changed the electrical connections.");
+            Record("Cable View switches between all 134 cables and W119 plus the selected cable, with the circuit intact.");
             Time.captureDeltaTime=.10f;
             camera.enabled=false;
             var plant=Read<SparkLevel82Plant>(loop,"plant");
@@ -250,7 +307,9 @@ internal static class Level82ModelPlayModeProbe
             await Expose();await Click(loop.armButton);
             Check(loop.contacts[0].IsClosed&&plant.Field>.42f,"No live RF field before W119 removal.");
             int seq=Read<int>(loop,"fieldSequence");
-            Check(wirePaths!=null&&wirePaths.UndoLastWire(),"Wire history could not physically remove W119.");
+            await Click(loop.openFeedbackButton);
+            Check(registry.Count == 133 && registry.TryGetWire(laterWire.WireId, out _),
+                "OPEN W119 did not remove the intended connection independently of wire order.");
             await Wait(()=>!Flag("trusted")&&loop.contacts[0].IsOpen,"stale field sample and actual amplifier permit open");
             float amp=Read<float>(loop,"ampAtTrip");
             Check(amp>.40f&&plant.Amp>.026f&&plant.Amp<=amp,"Amplifier output disappeared without decay.");
@@ -269,6 +328,11 @@ internal static class Level82ModelPlayModeProbe
             await At(6);await Wait(()=>manager.IsCompleted,"campaign completion");
             Record("6/6 — Campaign manager reports Completed after W119 reconnection, field recalibration, explicit reset and fresh 72-pose emissions and immunity qualification.");
             Capture(bench,pins,"Verified",false);
+            camera.enabled = true;
+            string gameView = Path.GetFullPath("Logs/Level82_GameView.png");
+            File.Delete(gameView);
+            ScreenCapture.CaptureScreenshot(gameView);
+            await Wait(() => File.Exists(gameView), "the completed Game View capture");
         }
         catch (Exception error)
         {
@@ -289,9 +353,6 @@ internal static class Level82ModelPlayModeProbe
             if (EditorApplication.isPlaying) EditorApplication.ExitPlaymode();
         }
     }
-
-    private static readonly MethodInfo pick = typeof(SignalWireBuilder).GetMethod("FindTerminalAtScreenPosition",
-        BindingFlags.Instance | BindingFlags.NonPublic);
 
     private static async Task At(int stage)
     {

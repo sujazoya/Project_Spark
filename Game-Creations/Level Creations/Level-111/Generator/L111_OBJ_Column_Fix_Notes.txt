@@ -1,0 +1,24 @@
+PROJECT SPARK — LEVEL 111 SIX-19 — CSV PARSER HOTFIX
+
+ROOT CAUSE:
+The manifest at physical CSV line 172 has a quoted comma in its description:
+  171,RetimerHeatsink,,heatsink,"Retimer heatsink, not a tool",NOT_INCLUDED,171_L111_RetimerHeatsink.obj,...
+The builder used Split(',') which incorrectly converted the quoted description into two columns.
+Reading row 172 column 'obj' then produced 'NOT_INCLUDED', despite the actual OBJ being present.
+
+FIX:
+- The corrected builder uses ParseCsvFields, which respects quoted commas and doubled quotes.
+- No models, textures, schematics, or electrical systems are altered by this hotfix.
+- The included script backs up the existing builder and replaces it.
+- If the installed manifest is truly malformed, it restores the included canonical manifest after backup.
+- Unity .meta files are left in place, preserving GUIDs.
+
+INSTALL (Windows, close Unity first):
+1. Extract this ZIP somewhere OUTSIDE the Unity project.
+2. In the extracted folder, run:
+   powershell -ExecutionPolicy Bypass -File .\Fix_Level111_CSV_Parser.ps1 -UnityProjectPath "D:\Project_Spark_Master_Project\Project_Spark"
+3. Reopen Unity, let scripts compile, then run:
+   Tools > Project Spark > Automatic Level Generator > 111 > 3. Validate Sources and Report Blockers
+4. After validation passes, run 111 > 1. Build FULL Level_111_Layout.
+
+NOTE: Source kit is a visual-layout artifact; schematic/solver gameplay integration remains unresolved.

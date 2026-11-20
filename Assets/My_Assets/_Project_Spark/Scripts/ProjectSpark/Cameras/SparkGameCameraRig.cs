@@ -73,7 +73,8 @@ namespace ProjectSpark.Cameras
         private bool HasLegacyLevelCamera()
         {
             var layout=loader?loader.ActiveLayout:null;
-            return layout&&(layout.GetComponent<SparkLevel84ArenaView>()||layout.GetComponent<SparkLevel85ArenaView>()||
+            return layout&&(layout.GetComponent<SparkEquipmentWorkbenchView>()||
+                layout.GetComponent<SparkLevel84ArenaView>()||layout.GetComponent<SparkLevel85ArenaView>()||
                 layout.GetComponent<SparkLevel86ArenaView>());
         }
 

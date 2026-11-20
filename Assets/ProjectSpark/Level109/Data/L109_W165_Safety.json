@@ -1,0 +1,15 @@
+{
+  "id": "W165",
+  "from": "L109_U18_ThermalHealthMonitor",
+  "to": "L109_U19_SafetySupervisor",
+  "purpose": "Trusted thermal health",
+  "initial_state": "DISCONNECTED",
+  "disconnect_behavior": "Inhibit protected peak load and latch fault",
+  "reset_requires": [
+    "Reconnection",
+    "Fresh sensors",
+    "Cooling validation",
+    "Explicit reset"
+  ],
+  "electrical_pins": "UNASSIGNED"
+}

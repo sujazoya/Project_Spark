@@ -1,0 +1,77 @@
+[
+  {
+    "Test": "Wrong enable sequence",
+    "Pass": true,
+    "Measured": "secondary enables refused before parent rail is stable"
+  },
+  {
+    "Test": "Finite main soft-start",
+    "Pass": true,
+    "Measured": 0.36178768892891006
+  },
+  {
+    "Test": "All nominal rails",
+    "Pass": true,
+    "Measured": "5,3.29999999820706,1.79975175694319"
+  },
+  {
+    "Test": "Load 33 ohm",
+    "Pass": true,
+    "Measured": "V=5; I=0.151515151515152; ripple=0.0110104047681578; efficiency=0.888497960679269; temperature=28.1467707537223"
+  },
+  {
+    "Test": "Load 10 ohm",
+    "Pass": true,
+    "Measured": "V=5; I=0.5; ripple=0.0110716471596134; efficiency=0.95510911613058; temperature=28.7463933408667"
+  },
+  {
+    "Test": "Load 5 ohm",
+    "Pass": true,
+    "Measured": "V=5; I=1; ripple=0.0111595166777887; efficiency=0.965594714006684; temperature=30.1432244780123"
+  },
+  {
+    "Test": "W067 physical rail retained",
+    "Pass": true,
+    "Measured": "V=5.2566309784393; quality=Missing"
+  },
+  {
+    "Test": "Stale reset rejected",
+    "Pass": true,
+    "Measured": "reconnected but independent freshness false"
+  },
+  {
+    "Test": "Fresh reset accepted",
+    "Pass": true,
+    "Measured": "stable=True; protection=NONE; V=5"
+  },
+  {
+    "Test": "R7 wrong value protection",
+    "Pass": true,
+    "Measured": "OUTPUT_OVERVOLTAGE"
+  },
+  {
+    "Test": "Open V05 invalidates supply",
+    "Pass": true,
+    "Measured": "physical transfer path unavailable"
+  },
+  {
+    "Test": "Q1 loss heats and protects",
+    "Pass": true,
+    "Measured": "T=43.809378887827; protection=THERMAL_SHUTDOWN"
+  },
+  {
+    "Test": "Overcurrent protection",
+    "Pass": true,
+    "Measured": "OVERCURRENT"
+  },
+  {
+    "Test": "Reverse polarity protection",
+    "Pass": true,
+    "Measured": "REVERSE_POLARITY"
+  },
+  {
+    "Test": "Input overvoltage protection",
+    "Pass": true,
+    "Measured": "INPUT_OVERVOLTAGE"
+  }
+]

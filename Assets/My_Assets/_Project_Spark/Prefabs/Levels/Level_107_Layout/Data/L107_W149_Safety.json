@@ -1,0 +1,19 @@
+{
+  "level": 107,
+  "jumper": "W149",
+  "logical_source": "FirmwareTrustMonitor.TRUSTED_FIRMWARE_READY_OUT",
+  "logical_destination": "IndependentPlatformSafetySupervisor.TRUSTED_FIRMWARE_READY_IN",
+  "exact_component_ids": "SCHEMATIC_REQUIRED",
+  "physical_pins": "UNASSIGNED",
+  "connection_kind": "freshness_validated_digital_feedback",
+  "required_recovery": [
+    "disconnect actual jumper",
+    "latch safety inhibition",
+    "reconnect physical contacts",
+    "authenticate fresh firmware image",
+    "perform full fresh boot qualification",
+    "explicitly reset safety",
+    "record final independent certification"
+  ],
+  "status": "NOT_CERTIFIABLE_UNTIL_SCHEMATIC_APPROVED"
+}
