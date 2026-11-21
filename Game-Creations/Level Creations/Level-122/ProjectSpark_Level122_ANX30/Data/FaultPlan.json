@@ -1,0 +1,25 @@
+{
+  "faults": [
+    {
+      "id": "F1",
+      "title": "Radar PLL phase-noise drift",
+      "physical_target": "UNASSIGNED",
+      "qualified": false,
+      "effect": "Radar range confidence and obstacle detections degrade; safety supervisor inhibits motion pending fresh validation"
+    },
+    {
+      "id": "F2",
+      "title": "GNSS-A RF feed via intermittency",
+      "physical_target": "UNASSIGNED",
+      "qualified": false,
+      "effect": "Satellite fix confidence and position integrity degrade; dual-GNSS disagreement prompts hold"
+    },
+    {
+      "id": "F3",
+      "title": "Redundant IMU reference mismatch",
+      "physical_target": "UNASSIGNED",
+      "qualified": false,
+      "effect": "Inertial estimators diverge; safety-monitor disagreement blocks autonomous motion"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "W385",
+  "logical_source": "L122_U5.TRUSTED_LOCALIZATION_READY_OUT",
+  "logical_destination": "L122_U4.TRUSTED_LOCALIZATION_READY_IN",
+  "initial": "OPEN",
+  "physical_pin_reconciliation_required": true,
+  "certifiable": false,
+  "recovery": [
+    "record deliberate open event only after arming",
+    "independent inhibit motion authorization",
+    "repair approved physical connection",
+    "obtain fresh radar/GNSS/IMU qualification",
+    "run fresh localization integrity and obstacle response tests",
+    "explicit supervised reset",
+    "independently verify new trusted status"
+  ]
+}

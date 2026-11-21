@@ -1,0 +1,101 @@
+id,category,test,status,evidence,requires_unity,requires_approved_schematic
+T001,Import + visual assets,288 OBJ model assets exist and match exact manifest paths,NOT_RUN,,YES,MAYBE
+T002,Import + visual assets,288 GLB model assets exist and match exact manifest paths,NOT_RUN,,YES,MAYBE
+T003,Import + visual assets,Separate 289th assembled reference is inactive in gameplay,NOT_RUN,,YES,MAYBE
+T004,Import + visual assets,Main PCB footprint X=480mm Z=340mm within tolerances,NOT_RUN,,YES,MAYBE
+T005,Import + visual assets,Source model units are metres with Unity Y-up,NOT_RUN,,YES,MAYBE
+T006,Import + visual assets,All 34 PBR families generate correct URP maps,NOT_RUN,,YES,MAYBE
+T007,Import + visual assets,Per-model UV coordinate data imports,NOT_RUN,,YES,MAYBE
+T008,Import + visual assets,Board mesh renders with material slots and no duplicate mats,NOT_RUN,,YES,MAYBE
+T009,Import + visual assets,Designer opens level in new isolated scene; no other level assets changed,NOT_RUN,,YES,MAYBE
+T010,Import + visual assets,Second generator run is idempotent with stable prefab names,NOT_RUN,,YES,MAYBE
+T011,Assembly + component identity,Initial installed part count exactly 0/236,NOT_RUN,,YES,MAYBE
+T012,Assembly + component identity,BOM contains 236 unique part refs including W321,NOT_RUN,,YES,MAYBE
+T013,Assembly + component identity,Install correct U1 into verified footprint target,NOT_RUN,,YES,MAYBE
+T014,Assembly + component identity,Wrong component type cannot snap or count,NOT_RUN,,YES,MAYBE
+T015,Assembly + component identity,Wrong ref cannot install into another ref slot,NOT_RUN,,YES,MAYBE
+T016,Assembly + component identity,Incorrect pin-one orientation cannot certify,NOT_RUN,,YES,MAYBE
+T017,Assembly + component identity,Solder evidence requires real approved physical pads,NOT_RUN,,YES,MAYBE
+T018,Assembly + component identity,A component preview never changes IsInstalled,NOT_RUN,,YES,MAYBE
+T019,Assembly + component identity,Component removal invalidates dependent electrical evidence,NOT_RUN,,YES,MAYBE
+T020,Assembly + component identity,Shop/shelf/drag workflow works using existing implementation,NOT_RUN,,YES,MAYBE
+T021,PCB topology + vias,All 320 routes have assigned authorized source/dest pads before certification,NOT_RUN,,YES,YES
+T022,PCB topology + vias,All 320 routes start incomplete,NOT_RUN,,YES,YES
+T023,PCB topology + vias,UNASSIGNED route is rejected and remains unscored,NOT_RUN,,YES,YES
+T024,PCB topology + vias,Attempting to connect mismatched net IDs fails,NOT_RUN,,YES,YES
+T025,PCB topology + vias,Valid route changes actual conductive solver topology,NOT_RUN,,YES,YES
+T026,PCB topology + vias,Factory art lines are not electrically conductive,NOT_RUN,,YES,YES
+T027,PCB topology + vias,Power-to-ground short is rejected and diagnosed,NOT_RUN,,YES,YES
+T028,PCB topology + vias,All 116 vias have approved layer spans and net IDs,NOT_RUN,,YES,YES
+T029,PCB topology + vias,Blind/through/buried via legality is enforced by exact stackup,NOT_RUN,,YES,YES
+T030,PCB topology + vias,Objective 2 only passes after full verified routing and via tests,NOT_RUN,,YES,YES
+T031,Clock synchronization + holdover,Primary gPTP source must be physically qualified,NOT_RUN,,YES,YES
+T032,Clock synchronization + holdover,Backup holdover oscillator must be separately qualified,NOT_RUN,,YES,YES
+T033,Clock synchronization + holdover,No clock reporting from decorative fixed text,NOT_RUN,,YES,YES
+T034,Clock synchronization + holdover,Clock offset/drift measurement has correct signed units,NOT_RUN,,YES,YES
+T035,Clock synchronization + holdover,PTP event timestamps generated from validated clock snapshots,NOT_RUN,,YES,YES
+T036,Clock synchronization + holdover,Grandmaster failover maintains explicit uncertainty budget,NOT_RUN,,YES,YES
+T037,Clock synchronization + holdover,Excessive drift blocks schedule qualification,NOT_RUN,,YES,YES
+T038,Clock synchronization + holdover,Loss of PPS or return path invalidates gPTP evidence,NOT_RUN,,YES,YES
+T039,Clock synchronization + holdover,Clock restoration requires a fresh independent measurement,NOT_RUN,,YES,YES
+T040,Clock synchronization + holdover,Boundary/transparent-clocking limits explicitly documented,NOT_RUN,,YES,YES
+T041,Six-port links + redundancy,Six port identity maps to J1..J6 source spec,NOT_RUN,,YES,YES
+T042,Six-port links + redundancy,Powered PHY alone is not a trained network link,NOT_RUN,,YES,YES
+T043,Six-port links + redundancy,Separate MAC PHY connector state is observed,NOT_RUN,,YES,YES
+T044,Six-port links + redundancy,Redundant Path A and B have independent conductive paths,NOT_RUN,,YES,YES
+T045,Six-port links + redundancy,Intermittent via changes actual redundancy graph,NOT_RUN,,YES,YES
+T046,Six-port links + redundancy,Link-down triggers bounded re-route and loss logging,NOT_RUN,,YES,YES
+T047,Six-port links + redundancy,Duplicate-path egress cannot count identical command twice,NOT_RUN,,YES,YES
+T048,Six-port links + redundancy,Packet CRC failure increments error and blocks success,NOT_RUN,,YES,YES
+T049,Six-port links + redundancy,"Port rate, queue depth and bitrate conversions are dimensional",NOT_RUN,,YES,YES
+T050,Six-port links + redundancy,Redundant failover requires new packet delivery evidence,NOT_RUN,,YES,YES
+T051,Time-aware gates + deterministic traffic,Qbv-style gate windows defined by validated schedule source,NOT_RUN,,YES,YES
+T052,Time-aware gates + deterministic traffic,Gate open time and guard-band constraints validated,NOT_RUN,,YES,YES
+T053,Time-aware gates + deterministic traffic,Safety-class packets treated separately from best effort,NOT_RUN,,YES,YES
+T054,Time-aware gates + deterministic traffic,Background congestion does not skip critical gate policy,NOT_RUN,,YES,YES
+T055,Time-aware gates + deterministic traffic,Queue overflow has deterministic measurable consequence,NOT_RUN,,YES,YES
+T056,Time-aware gates + deterministic traffic,Out-of-gate transmission rejected or marked non-qualifying,NOT_RUN,,YES,YES
+T057,Time-aware gates + deterministic traffic,Worst-case delay and jitter measured across scheduled test window,NOT_RUN,,YES,YES
+T058,Time-aware gates + deterministic traffic,Frame length / line rate used in serialization delay,NOT_RUN,,YES,YES
+T059,Time-aware gates + deterministic traffic,Stale schedule approval never qualifies a changed topology,NOT_RUN,,YES,YES
+T060,Time-aware gates + deterministic traffic,Objective 4 requires fresh end-to-end command and actuation evidence,NOT_RUN,,YES,YES
+T061,Fault F1 + F2,F1 changes Y1 actual oscillator or contact state,NOT_RUN,,YES,YES
+T062,Fault F1 + F2,F1 creates measured clock offset/jitter degradation,NOT_RUN,,YES,YES
+T063,Fault F1 + F2,Wrong target repair cannot clear F1,NOT_RUN,,YES,YES
+T064,Fault F1 + F2,Restoring primary clock does not fake past timestamps,NOT_RUN,,YES,YES
+T065,Fault F1 + F2,Fresh clock/gate tests are required after F1 repair,NOT_RUN,,YES,YES
+T066,Fault F1 + F2,F2 injects deterministic actual Path B via intermittency,NOT_RUN,,YES,YES
+T067,Fault F1 + F2,F2 fault changes conductive graph topology,NOT_RUN,,YES,YES
+T068,Fault F1 + F2,F2 produces observable failover trace and counters,NOT_RUN,,YES,YES
+T069,Fault F1 + F2,F2 can only clear from authorized via repair transaction,NOT_RUN,,YES,YES
+T070,Fault F1 + F2,Fresh path A/B traffic verification required after F2 repair,NOT_RUN,,YES,YES
+T071,Fault F3 + repair UI,F3 damages approved U15 scheduler SRAM pad/data line,NOT_RUN,,YES,YES
+T072,Fault F3 + repair UI,"F3 forces schedule data fault, not simply red icon",NOT_RUN,,YES,YES
+T073,Fault F3 + repair UI,Schedule-engine self-test detects or exposes failure,NOT_RUN,,YES,YES
+T074,Fault F3 + repair UI,Wrong virtual tool cannot claim F3 repair,NOT_RUN,,YES,YES
+T075,Fault F3 + repair UI,F3 valid repair changes component/contact electrical state,NOT_RUN,,YES,YES
+T076,Fault F3 + repair UI,After repair the time-aware gate table is rechecked,NOT_RUN,,YES,YES
+T077,Fault F3 + repair UI,Virtual oscilloscope and net tracer use actual hit colliders,NOT_RUN,,YES,YES
+T078,Fault F3 + repair UI,Touch and mouse select same stable target ID,NOT_RUN,,YES,YES
+T079,Fault F3 + repair UI,VFX only spawn after authorized physical repair,NOT_RUN,,YES,YES
+T080,Fault F3 + repair UI,Three-fault objective requires all repaired plus fresh full test,NOT_RUN,,YES,YES
+T081,W321 independent safety,W321 begins physically OPEN,NOT_RUN,,YES,YES
+T082,W321 independent safety,U31/U32 logical IDs never imply verified physical pins,NOT_RUN,,YES,YES
+T083,W321 independent safety,Normal closed W321 still needs fresh trusted-ready protocol,NOT_RUN,,YES,YES
+T084,W321 independent safety,Removing W321 opens actual safety feedback graph edge,NOT_RUN,,YES,YES
+T085,W321 independent safety,W321 removal inhibits protected actuator commands,NOT_RUN,,YES,YES
+T086,W321 independent safety,Independent normal rails are not fictitiously set to zero,NOT_RUN,,YES,YES
+T087,W321 independent safety,Stuck-high or stale READY signal does not clear latch,NOT_RUN,,YES,YES
+T088,W321 independent safety,Reinserting W321 without retest does not clear latch,NOT_RUN,,YES,YES
+T089,W321 independent safety,"Fresh gPTP, links, gate and command tests plus explicit reset required",NOT_RUN,,YES,YES
+T090,W321 independent safety,Objective 6 only passes after independently verified full recovery,NOT_RUN,,YES,YES
+T091,Game status + regression,Six objective IDs mapped to actual LevelGamePlayManager API,NOT_RUN,,YES,YES
+T092,Game status + regression,Game starts at 0/6 with no fabricated evidence,NOT_RUN,,YES,YES
+T093,Game status + regression,UI events cannot directly set objective flags,NOT_RUN,,YES,YES
+T094,Game status + regression,"Save/load restores topology IDs, clock generation and fault history",NOT_RUN,,YES,YES
+T095,Game status + regression,Each mutation invalidates only dependent current evidence,NOT_RUN,,YES,YES
+T096,Game status + regression,Replay action log detects tampered or stale certifications,NOT_RUN,,YES,YES
+T097,Game status + regression,No Editor demo can award gameplay progress,NOT_RUN,,YES,YES
+T098,Game status + regression,Performance remains within user-defined PC and mobile budgets,NOT_RUN,,YES,YES
+T099,Game status + regression,Levels 1..117 scenes/managers/shop and UI smoke-tested,NOT_RUN,,YES,YES
+T100,Game status + regression,6/6 achieved only from proven fresh source authority,NOT_RUN,,YES,YES

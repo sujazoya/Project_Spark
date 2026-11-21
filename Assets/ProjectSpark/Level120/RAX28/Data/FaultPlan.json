@@ -1,0 +1,20 @@
+{
+  "F1": {
+    "title": "Axis C phase-B high-side gate path open",
+    "suggested_design_ref": "U18 / Q13-Q18 (candidate; pin UNASSIGNED)",
+    "approved_pin": "UNASSIGNED",
+    "authoritative_effect": "axis C power stage gate path disconnected, causes axis-specific torque plausibility failure"
+  },
+  "F2": {
+    "title": "Axis D encoder differential via intermittency",
+    "suggested_design_ref": "VIA_UNASSIGNED",
+    "approved_pin": "UNASSIGNED",
+    "authoritative_effect": "axis D joint position feedback corruption and independent plausibility failure"
+  },
+  "F3": {
+    "title": "Axis F temperature sensor cold-solder intermittency",
+    "suggested_design_ref": "U34 / SN_UNASSIGNED",
+    "approved_pin": "UNASSIGNED",
+    "authoritative_effect": "axis F temperature/drive health telemetry degrades; system must derate or inhibit motion per approved policy"
+  }
+}

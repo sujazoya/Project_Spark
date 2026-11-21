@@ -1,0 +1,25 @@
+{
+  "faults": [
+    {
+      "id": "F1",
+      "title": "Camera 2 receive differential via intermittency",
+      "target": "UNASSIGNED",
+      "effect": "loss of frame validity and one-camera geometry evidence",
+      "repair": "approved via/contact repair; fresh stereo calibration"
+    },
+    {
+      "id": "F2",
+      "title": "Precision PPS / frame trigger distribution drift",
+      "target": "UNASSIGNED",
+      "effect": "cross-sensor timestamps diverge; fusion refuses stale samples",
+      "repair": "approved timing element/contact repair; requalify clock and trigger"
+    },
+    {
+      "id": "F3",
+      "title": "LiDAR/ToF 5V filter capacitor ESR degradation",
+      "target": "UNASSIGNED",
+      "effect": "ripple, range dropouts and invalid fusion confidence",
+      "repair": "approved capacitor repair/replacement; measure rail and perform fresh range trials"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "scope": "ILLUSTRATIVE_NOT_MEASURED",
+  "test_profiles": [
+    {
+      "name": "idle",
+      "cpu_load_fraction": 0.12,
+      "vrm_load_fraction": 0.1,
+      "duration_s": 120
+    },
+    {
+      "name": "nominal",
+      "cpu_load_fraction": 0.6,
+      "vrm_load_fraction": 0.45,
+      "duration_s": 180
+    },
+    {
+      "name": "peak",
+      "cpu_load_fraction": 1,
+      "vrm_load_fraction": 1,
+      "duration_s": 60
+    },
+    {
+      "name": "fan_failure",
+      "cpu_load_fraction": 0.75,
+      "vrm_load_fraction": 0.7,
+      "f2_enabled": true,
+      "duration_s": 120
+    }
+  ],
+  "requires_real_calibration": true,
+  "pass_fail_thresholds": "TBD_BY_APPROVED_SPEC"
+}

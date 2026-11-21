@@ -1,0 +1,101 @@
+id,category,expected_behavior,current_status,reason
+T001,Asset Import / Complete Mainboard,All 320 separate OBJ model imports resolve exact filenames,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T002,Asset Import / Complete Mainboard,All 320 matching GLB filenames exist and have valid model data,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T003,Asset Import / Complete Mainboard,Complete assembled motherboard OBJ/GLB import independently,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T004,Asset Import / Complete Mainboard,Assembled mesh contains all 264 BOM part geometry instances,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T005,Asset Import / Complete Mainboard,Six individual axis power-stage heatsink assemblies appear in the showcase,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T006,Asset Import / Complete Mainboard,Empty physical PCB is 520 x 380 x 2.2 mm in metres Y-up,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T007,Asset Import / Complete Mainboard,Complete board and empty PCB have the same X-Z physical dimensions,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T008,Asset Import / Complete Mainboard,38 URP PBR materials load and remap without missing slots,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T009,Asset Import / Complete Mainboard,32 layer reference assets stay inactive in normal gameplay,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T010,Asset Import / Complete Mainboard,Builder creates both Level_120_Layout prefab and full showcase prefab,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T011,Component Assembly / BOM,Initial installed counter is 0 of 264,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T012,Component Assembly / BOM,Wrong resistor value cannot satisfy a footprint,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T013,Component Assembly / BOM,Wrong MOSFET type cannot satisfy an axis phase,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T014,Component Assembly / BOM,Every BOM part has unique reference and source model key,BLOCKED,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T015,Component Assembly / BOM,Part cannot install on an incorrect robot axis zone,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T016,Component Assembly / BOM,Correct orientation and solder approval required for installation,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T017,Component Assembly / BOM,Unverified footprint cannot certify a placement,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T018,Component Assembly / BOM,W353 is one of 264 parts and cannot be double-counted,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T019,Component Assembly / BOM,Component installed and gameplay prefab states do not depend on visual preview,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T020,Component Assembly / BOM,Save/load persists independent installation states without changes to earlier levels,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T021,"Netlist, Routes and Vias",352 route records imported as noncertifiable with UNASSIGNED pads,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T022,"Netlist, Routes and Vias",132 via records imported as noncertifiable with TBD spans,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T023,"Netlist, Routes and Vias",Incorrect axis-to-axis phase short is rejected,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T024,"Netlist, Routes and Vias",Power and ground returns must follow approved source connectivity,BLOCKED,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T025,"Netlist, Routes and Vias","Wrong layer, invalid via span and forbidden net-class rejected",NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T026,"Netlist, Routes and Vias",Copper art visibility never grants task completion,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T027,"Netlist, Routes and Vias",Graph mutation occurs only after verified permitted connection,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T028,"Netlist, Routes and Vias",Via continuity must be tested between specified start/end layers,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T029,"Netlist, Routes and Vias",Independent safety feedback nets are not tied to motor power,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T030,"Netlist, Routes and Vias",Topology revision invalidates only dependent evidence,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T031,Six-axis Electrical Commissioning,Protected input and common DC link meet modeled commissioning policy,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T032,Six-axis Electrical Commissioning,Encoder A is electrically qualified independently of encoder B,BLOCKED,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T033,Six-axis Electrical Commissioning,Axis A power stage cannot enable on missing gate-driver feedback,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T034,Six-axis Electrical Commissioning,Axis B power stage cannot enable on undervoltage,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T035,Six-axis Electrical Commissioning,Axis C power stage rejects phase-B driver open,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T036,Six-axis Electrical Commissioning,Axis D power stage rejects intermittent position feedback,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T037,Six-axis Electrical Commissioning,Axis E power stage enforces configured thermal derating,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T038,Six-axis Electrical Commissioning,Axis F fails closed on unreliable thermal or fault telemetry,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T039,Six-axis Electrical Commissioning,Both STO A and STO B independently inhibit motion on failure,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T040,Six-axis Electrical Commissioning,All six axes enabled only with independent source-qualified prerequisites,BLOCKED,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T041,Robot Kinematics / Trajectory,Six-axis joint model uses individually declared mechanical limits,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T042,Robot Kinematics / Trajectory,Forward kinematics matches defined robot geometry within tolerance,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T043,Robot Kinematics / Trajectory,Inverse kinematics rejects unreachable target poses,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T044,Robot Kinematics / Trajectory,Trajectory interpolation has unit-consistent velocity and acceleration,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T045,Robot Kinematics / Trajectory,Acceleration and jerk limits are enforced by actual solver/controller,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T046,Robot Kinematics / Trajectory,Independent encoder plausibility gates joint motion,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T047,Robot Kinematics / Trajectory,Homing is distinct from simply returning to zero pose,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T048,Robot Kinematics / Trajectory,Emergency safe stop follows approved profile with torque gate,BLOCKED,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T049,Robot Kinematics / Trajectory,Path synchronization monitors worst-axis lag and tracking error,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T050,Robot Kinematics / Trajectory,A teaching trajectory never certifies actual motor or arm motion,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T051,Regeneration / Thermal / Collision,Common power bus energy conservation includes six-axis regenerative load,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T052,Regeneration / Thermal / Collision,Brake chopper reacts to approved DC-link voltage thresholds,BLOCKED,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T053,Regeneration / Thermal / Collision,Thermal limits depend on generated component power losses,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T054,Regeneration / Thermal / Collision,Heat sink presence alone does not prove good electrical/thermal coupling,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T055,Regeneration / Thermal / Collision,Collision limits depend on robot geometry and external zone authority,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T056,Regeneration / Thermal / Collision,Workspace envelope violation rejects trajectory without awarding credit,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T057,Regeneration / Thermal / Collision,Safe motion stop is not equated with simply disabling all visuals,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T058,Regeneration / Thermal / Collision,Motor feedback and torque evidence carry fresh timestamps,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T059,Regeneration / Thermal / Collision,Temperature sensor plausibility verified independently of reported RPM,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T060,Regeneration / Thermal / Collision,No motors operate with W353 open or STO unqualified,BLOCKED,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T061,F1 Axis C Gate Driver,F1 injected only after initial relevant baseline success,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T062,F1 Axis C Gate Driver,F1 changes exact mapped Axis C high-side driver/contact state,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T063,F1 Axis C Gate Driver,F1 changes simulated phase currents and tracking,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T064,F1 Axis C Gate Driver,F1 specific target and authorized repair tool required,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T065,F1 Axis C Gate Driver,Wrong part/tool cannot repair F1,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T066,F1 Axis C Gate Driver,VFX-only repair cannot clear hardware fault,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T067,F1 Axis C Gate Driver,F1 current and torque tests refreshed after repair,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T068,F1 Axis C Gate Driver,Old measurements invalid for post-F1 certificate,BLOCKED,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T069,F1 Axis C Gate Driver,F1 repair and test event logged with source revision,BLOCKED,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T070,F1 Axis C Gate Driver,F1 cannot be certified while protective motion latch active,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T071,F2 Axis D / F3 Axis F,F2 opens a verified Axis D encoder via/contact intermittently,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T072,F2 Axis D / F3 Axis F,F2 intermittent schedule is deterministic and replayable,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T073,F2 Axis D / F3 Axis F,F2 feedback error yields position plausibility fault,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T074,F2 Axis D / F3 Axis F,F2 requires actual mapped via repair with continuity proof,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T075,F2 Axis D / F3 Axis F,F2 recertification needs fresh axis D and six-axis path data,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T076,F2 Axis D / F3 Axis F,F3 changes real Axis F temperature/contact source,BLOCKED,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T077,F2 Axis D / F3 Axis F,F3 independent safety logic responds to nonplausible thermal samples,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T078,F2 Axis D / F3 Axis F,F3 qualified repair changes source state not only UI text,BLOCKED,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T079,F2 Axis D / F3 Axis F,F3 requalification requires new thermal/motion tests,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T080,F2 Axis D / F3 Axis F,O5 passes only after F1 F2 F3 each have distinct valid evidence,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T081,W353 / STO Safety,W353 starts OPEN and blocks six-axis motion-ready authorization,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T082,W353 / STO Safety,U47/U48 physical pin map must be signed before certification,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T083,W353 / STO Safety,Opening linked W353 invalidates trusted motion-ready path,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T084,W353 / STO Safety,W353 opening latches protected motion inhibit,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T085,W353 / STO Safety,Opening W353 does not falsely zero unrelated DC-link rail,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T086,W353 / STO Safety,Stuck-high W353 feedback fails transition freshness checks,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T087,W353 / STO Safety,W353 reconnection alone cannot release latch,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T088,W353 / STO Safety,Reset without fresh independent STO A/B checks is rejected,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T089,W353 / STO Safety,"New six-axis tracking, thermal and regen tests required after reconnection",NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T090,W353 / STO Safety,"O6 requires actual disconnection, independent inhibit and reset evidence",NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T091,Objectives / UI / Regression,Existing LevelGamePlayManager remains authoritative for 0/6 initial score,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T092,Objectives / UI / Regression,Source Blueprint cannot directly award objectives,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T093,Objectives / UI / Regression,World-space virtual tools report real hit contact/pad target IDs,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T094,Objectives / UI / Regression,Mobile touch and PC mouse interactions do not collide with Canvas,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T095,Objectives / UI / Regression,Completed-art preview cannot spoof assembly count,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T096,Objectives / UI / Regression,Build repeat does not destroy modified user scenes without permission,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T097,Objectives / UI / Regression,Source paths and prefab GUIDs remain stable on package updates,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T098,Objectives / UI / Regression,Levels 1-119 smoke regression passes in actual Unity project,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T099,Objectives / UI / Regression,Unity 6.3 URP compilation and Play Mode test suite are clean,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent
+T100,Objectives / UI / Regression,Final 6/6 requires source-linked fresh evidence across all objectives,NOT_RUN,Unity EditMode/PlayMode not run; approved source-dependent electrical/mechanical data absent

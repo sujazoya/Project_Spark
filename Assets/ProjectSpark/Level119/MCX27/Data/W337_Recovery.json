@@ -1,0 +1,16 @@
+{
+  "id": "W337",
+  "logical_source": "L119_U39.TRUSTED_MOTION_READY_OUT",
+  "logical_destination": "L119_U40.TRUSTED_MOTION_READY_IN",
+  "initial": "OPEN",
+  "physical_pin_ids": "UNASSIGNED",
+  "certifiable": false,
+  "behavior": "open trusted feedback; latch and inhibit torque enable, not automatically zero unrelated supply rails",
+  "recovery": [
+    "authorized physical reconnection",
+    "fresh dual STO qualification",
+    "fresh current and encoder plausibility",
+    "fresh bounded motor-test evidence",
+    "explicit supervised reset"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "id": "W273",
+  "logical_source": "L115_TrustedBootMonitor_U7.TRUSTED_BOOT_OK_OUT",
+  "logical_destination": "L115_SafetySupervisor_U8.TRUSTED_BOOT_OK_IN",
+  "monitor_bom_ref": "U7",
+  "supervisor_bom_ref": "U8",
+  "source_package_pin": "UNASSIGNED",
+  "destination_package_pin": "UNASSIGNED",
+  "type": "removable_trust_feedback",
+  "initial": "OPEN",
+  "functional_pins_verified": false,
+  "certifiable": false,
+  "recovery": [
+    "Connect for initial secure commissioning",
+    "After objectives 1-5 supervise physical disconnect",
+    "Independent safety latch inhibits trusted operations",
+    "Reattach physically valid link",
+    "Run new power / boot / digest / signature / tamper measurements",
+    "Fresh attestation nonce and response",
+    "Explicit safety reset",
+    "New complete qualification"
+  ]
+}

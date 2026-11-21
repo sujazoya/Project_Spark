@@ -1,0 +1,101 @@
+test_id,category,acceptance_condition,status,evidence,blocker
+T001,Import/Geometry,Model manifest exactly 368 unique records,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T002,Import/Geometry,Modular OBJ count exactly 368,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T003,Import/Geometry,Modular GLB count exactly 368,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T004,Import/Geometry,Every OBJ has matching MTL,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T005,Import/Geometry,Assembled OBJ+GLB present separately,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T006,Import/Geometry,PCB width 580 mm,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T007,Import/Geometry,PCB depth 440 mm,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T008,Import/Geometry,PCB substrate thickness 2.6 mm,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T009,Import/Geometry,All 44 PBR families import,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T010,Import/Geometry,Assembled model includes 8 heatsinks,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T011,Assembly/Parts,312 unique BOM references,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T012,Assembly/Parts,312 matching placement records,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T013,Assembly/Parts,Every component begins uninstalled,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T014,Assembly/Parts,Wrong package rejected,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T015,Assembly/Parts,Wrong value rejected,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T016,Assembly/Parts,Wrong pin-one rejected,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T017,Assembly/Parts,Wrong board owner rejected,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T018,Assembly/Parts,Independent selectable target colliders,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T019,Assembly/Parts,Visual reference cannot install parts,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T020,Assembly/Parts,W401 included within 312 BOM total,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T021,Electrical PCB,All 400 routes initially blocked,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T022,Electrical PCB,No route with unassigned net can certify,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T023,Electrical PCB,Wrong-net route rejected,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T024,Electrical PCB,Shorting power domain detected,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T025,Electrical PCB,Valid approved route changes solver graph,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T026,Electrical PCB,All 156 via spans initially TBD,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T027,Electrical PCB,Via cross-layer constraints enforced,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T028,Electrical PCB,Unapproved factory art never conducts,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T029,Electrical PCB,Return-path continuity required,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T030,Electrical PCB,Electrical topology invalidates stale evidence,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T031,Power/ESC,Independent controller rail qualification,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T032,Power/ESC,Independent motor supply qualification,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T033,Power/ESC,Eight motor gate stages present,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T034,Power/ESC,Missing gate driver prevents arming,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T035,Power/ESC,Overcurrent shuts relevant stage,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T036,Power/ESC,Undervoltage inhibits enable,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T037,Power/ESC,Safety input separate from demo,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T038,Power/ESC,PWM timer synchronized to timebase,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T039,Power/ESC,No motor motion on mere visual import,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T040,Power/ESC,Arming requires approved W401 pins,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T041,Inertial/Altitude,Triple IMU samples have timestamps,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T042,Inertial/Altitude,IMU B drop creates stale sample,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T043,Inertial/Altitude,Voter rejects incoherent IMU set,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T044,Inertial/Altitude,Pressure altitude source distinct,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T045,Inertial/Altitude,Sensor calibration affects measurement,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T046,Inertial/Altitude,GNSS data provenance tracked,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T047,Inertial/Altitude,Clock fault propagates to attitude confidence,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T048,Inertial/Altitude,No measurements from missing terminals,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T049,Inertial/Altitude,Stale sensor data inhibits control,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T050,Inertial/Altitude,Independent watchdog detects missing frames,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T051,Flight Control,Eight outputs computed deterministically,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T052,Flight Control,Roll/pitch/yaw signs verified,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T053,Flight Control,Tilt and rate limits enforced,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T054,Flight Control,Gust disturbance recovery bounded,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T055,Flight Control,Motor5 failure degrades authority,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T056,Flight Control,Throttle ramp respects limits,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T057,Flight Control,Landing/descent sequence constrained,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T058,Flight Control,Emergency cut inhibits all outputs,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T059,Flight Control,Simulated motor spinning cannot certify,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T060,Flight Control,Objective 4 requires fresh bounded test,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T061,F1/Gate Drive,F1 binds approved physical target,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T062,F1/Gate Drive,F1 opens motor5 gate path,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T063,F1/Gate Drive,Fault changes solver graph,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T064,F1/Gate Drive,Scope identifies missing gate transition,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T065,F1/Gate Drive,Wrong-tool repair rejected,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T066,F1/Gate Drive,Wrong-component repair rejected,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T067,F1/Gate Drive,Repair mutates actual contact,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T068,F1/Gate Drive,VFX alone never repairs fault,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T069,F1/Gate Drive,Postrepair drive test required,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T070,F1/Gate Drive,F1 repair logged with fresh generation,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T071,F2/F3/Repair,F2 intermittent via uses deterministic seed,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T072,F2/F3/Repair,IMU B SPI clock fault changes timestamps,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T073,F2/F3/Repair,F2 correct via repair restores path,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T074,F2/F3/Repair,F2 requires fresh voter evidence,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T075,F2/F3/Repair,F3 altitude bias changes actual sensor state,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T076,F2/F3/Repair,Independent crosscheck catches drift,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T077,F2/F3/Repair,F3 authorized repair clears drift,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T078,F2/F3/Repair,Fault repair cannot forge safety state,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T079,F2/F3/Repair,Objective 5 requires all three repaired,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T080,F2/F3/Repair,Old test evidence not reusable,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T081,W401/Safety,W401 starts OPEN,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T082,W401/Safety,U3/U5 physical pin IDs not invented,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T083,W401/Safety,W401 cannot certify with generic labels,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T084,W401/Safety,Intentional open event recorded,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T085,W401/Safety,Open inhibits all eight motor gates,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T086,W401/Safety,Unrelated powered diagnostics remain,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T087,W401/Safety,Stuck-high trusted feedback rejected,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T088,W401/Safety,Reconnect alone does not clear latch,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T089,W401/Safety,Explicit reset plus fresh evidence required,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T090,W401/Safety,Objective6 only after independent approval,BLOCKED,NOT_RUN in Unity,Approved schematic and real project APIs needed
+T091,UI/Saves/Regression,Initial counter 0/6 authoritative,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T092,UI/Saves/Regression,Visual UI cannot mutate objective truth,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T093,UI/Saves/Regression,Mouse picks correct motor contact,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T094,UI/Saves/Regression,Touch picks correct via/contact,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T095,UI/Saves/Regression,Decorative Canvas does not block raycast,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T096,UI/Saves/Regression,Save persists manifest and fault generations,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T097,UI/Saves/Regression,Load revalidates topology and safety,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T098,UI/Saves/Regression,Builder repeat is idempotent,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T099,UI/Saves/Regression,Levels1–122 regression smoke pass,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed
+T100,UI/Saves/Regression,All six objective evidence chains enforced,NOT_RUN,NOT_RUN in Unity,Unity Editor/PlayMode not executed

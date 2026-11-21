@@ -1,0 +1,17 @@
+PROJECT SPARK LEVEL 116 / THE DATA PHOENIX / NVX24-EDU-1
+Unity 6.3.19f1 editor compilation and MainMenu Play Mode acceptance passed.
+The campaign manager completed all six objectives and returned to Edit Mode.
+
+Board: Original 440 × 310 mm geometry displayed at 10.13 × 7.14 Unity units on the 15.79 × 8.54 table.
+Assembly: 208 original placements, including NAND BGA inspection. Save and resume verified.
+Circuit: 288 routes, 100 plated spans, 24 selectable inspection layers and a separate U31-to-U30 W289 jumper.
+Storage: Eight NAND channels, 32 logical pages, SECDED and address-bound CRC, a depth-one training queue and a copy-on-write journal.
+Finite acceptance run: 1,024 bits verified, eight single-bit errors corrected, a double-bit error rejected and all 32 pages recovered.
+Power loss: The uncommitted candidate was discarded. A completed reserve-backed write survived. The nominal reserve held 312 ms under the simulated load.
+Repairs: NAND4 CE via, high-ESR PLP3 (113 ms), and NAND8 journal metadata. Repair acceptance required a fresh storage test.
+W289: Opening the native jumper inhibited writes and preserved prior acknowledgements. Reconnect, retest, reset U30 and prove a new durable host write.
+
+Use MainMenu for the campaign. The standalone layout scene previews the linked prefab at physical scale.
+NVX24-EDU-1 is a fictional training circuit. The source manufacturing schematic and package pins remain unassigned.
+Android device and full campaign regression tests were not run.
+Evidence: Logs/Level116Acceptance.txt, Logs/Level116Inspection.png and Logs/Level116W289Open.png.

@@ -1,0 +1,25 @@
+{
+  "faults": [
+    {
+      "id": "F1",
+      "name": "NAND channel 3 chip-enable microvia open",
+      "proposedPhysicalTarget": "UNASSIGNED",
+      "effect": "channel 3 page reads fail / time out",
+      "repair": "qualified layer-aware via continuity repair"
+    },
+    {
+      "id": "F2",
+      "name": "Power-loss backup capacitor high ESR",
+      "proposedPhysicalTarget": "UNASSIGNED",
+      "effect": "hold-up energy insufficient for durable journal flush",
+      "repair": "correct-spec PLP module replacement and energy test"
+    },
+    {
+      "id": "F3",
+      "name": "Metadata page ECC / journal replay integrity fault",
+      "proposedPhysicalTarget": "UNASSIGNED",
+      "effect": "metadata replay fails or encounters undetected corruption",
+      "repair": "diagnose approved NAND path / journal block and retest crash consistency"
+    }
+  ]
+}

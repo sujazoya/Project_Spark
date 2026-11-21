@@ -1,0 +1,167 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_118
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_118
+  displayName: The Deterministic Grid
+  description: Assemble the TSX-26, qualify bounded deterministic traffic and redundant
+    paths, and recover W321.
+  completionMode: 0
+  requiredTargetCount: 6
+  requireClosedReturn: 0
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 1
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: TRAINING_INPUT
+    positiveTerminalId: SUPPLY_POS
+    negativeTerminalId: SUPPLY_RET
+    nominalVoltage: 5
+  targets:
+  - targetId: l118_1
+    displayName: Assemble 236 TSX-26 footprints
+    description: Fit the correct parts and verify precision contacts before securing
+      them.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L118_Proof_1
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: l118_2
+    displayName: Complete the 28-layer training circuit
+    description: Verify 320 native route edges, 116 legal layer spans and W321 continuity.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L118_Proof_2
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: l118_3
+    displayName: Qualify clocks and both network paths
+    description: Measure both time references and backup holdover. Train all six
+      ports and both uplinks.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L118_Proof_3
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: l118_4
+    displayName: Prove time-aware traffic under congestion
+    description: Check gate-table integrity and measure protected deadlines, jitter,
+      CRC and exactly-once delivery during overload.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L118_Proof_4
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: l118_5
+    displayName: Repair three independent TSN faults
+    description: Repair Y1 timing, the intermittent Path B via and U15 SRAM. Rerun
+      with fresh evidence after each.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L118_Proof_5
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: l118_6
+    displayName: Restore W321 protected output
+    description: Open W321 during protected delivery, restore the path, requalify
+      and explicitly reset U32.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L118_Proof_6
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 0
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 1
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

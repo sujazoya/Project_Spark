@@ -1,0 +1,20 @@
+{
+  "id": "W289",
+  "initial": "OPEN",
+  "certifiable": false,
+  "logical_source": "L116_U31.TRUSTED_STORAGE_READY_OUT",
+  "logical_destination": "L116_U30.TRUSTED_STORAGE_READY_IN",
+  "physical_source_pad": "UNASSIGNED",
+  "physical_dest_pad": "UNASSIGNED",
+  "net_id": "UNASSIGNED",
+  "purpose": "fresh-storage-integrity approval; never a high-current NAND supply",
+  "recovery": [
+    "detect true physical open and independent protected-write inhibition",
+    "reconnect approved physical jumper",
+    "requalify storage power and PLP hold-up",
+    "rerun NAND channel/ECC tests",
+    "replay journal and verify persisted data",
+    "perform fresh explicit safety reset",
+    "issue new independent storage-ready proof"
+  ]
+}

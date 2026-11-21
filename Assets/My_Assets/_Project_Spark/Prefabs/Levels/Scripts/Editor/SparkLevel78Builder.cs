@@ -161,11 +161,18 @@ namespace ProjectSpark.EditorTools
             c.armButton=Control(panel,font,"ARM W083 TEST",0f,61,c.Arm);
             c.verifyButton=Control(panel,font,"VERIFY ELECTROMETER",119f,61,c.Verify);
             c.certifyButton=Control(panel,font,"CERTIFY",238f,61,c.Certify);
-            var plot=Rect(canvas.transform,"SCADA trends",new Vector2(330,181),new Vector2(518,7));
+            c.focusWireButton=Control(panel,font,"FOCUS WIRE",-476f,22,c.FocusNextWire);
+            c.focusWireButton.interactable=true;
+            c.cableViewButton=Control(panel,font,"CABLE VIEW",-357f,22,c.ToggleCableView);
+            Control(panel,font,"RESET VIEW",-238f,22,c.ResetWorkbenchView).interactable=true;
+            c.openFeedbackButton=Control(panel,font,"OPEN W083",0f,22,c.OpenFeedbackWire);
+            var plot=Rect(canvas.transform,"SCADA trends",new Vector2(330,181),Vector2.zero);
+            plot.anchorMin=plot.anchorMax=plot.pivot=Vector2.one;
+            plot.anchoredPosition=new Vector2(-24,-45);
             c.plot=plot.gameObject.AddComponent<SparkLevel78Trend>();
             c.plot.raycastTarget=false;
             var legend=UIText(plot,"Trend legend","16-REGION MAP  ·  CAP / LOW-K / LEAKAGE",font,new Vector2(355,25),new Vector2(0,181));
-            legend.fontSize=11;
+            legend.fontSize=14;
             legend.color=new Color(.63f,.89f,.99f);
 
         }

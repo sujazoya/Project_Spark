@@ -1,0 +1,166 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_109
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_109
+  displayName: Thermal Endurance
+  description: Build the TRX-17, calibrate cooling, diagnose three thermal failures
+    and restore W165.
+  completionMode: 0
+  requiredTargetCount: 6
+  requireClosedReturn: 0
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 1
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: TRAINING_INPUT
+    positiveTerminalId: SUPPLY_POS
+    negativeTerminalId: SUPPLY_RET
+    nominalVoltage: 5
+  targets:
+  - targetId: l104_1
+    displayName: Assemble 124 components and cooling
+    description: Verify placement, solder contacts and both removable cooling assemblies.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L109_Proof_1
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: l104_2
+    displayName: Build the ten-layer network
+    description: Verify 164 native copper connections, 54 plated spans and W165.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L109_Proof_2
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: l104_3
+    displayName: Commission cooling and sensors
+    description: Measure the idle baseline, fan response and auxiliary, CPU and DDR
+      rails.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L109_Proof_3
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: l104_4
+    displayName: Pass thermal endurance
+    description: Run the controlled workload and ambient cycles with in-range thermal
+      and memory evidence.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L109_Proof_4
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: l104_5
+    displayName: Recover three reliability failures
+    description: Repair phase 3 loss, the CPU interface and U3's warm contact, then
+      repeat the original thermal test.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L109_Proof_5
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: l104_6
+    displayName: Restore W165 workload authorization
+    description: Open W165, verify independent inhibition, reconnect, gather fresh
+      thermal evidence, reset U19 and requalify.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L109_Proof_6
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 0
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 1
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

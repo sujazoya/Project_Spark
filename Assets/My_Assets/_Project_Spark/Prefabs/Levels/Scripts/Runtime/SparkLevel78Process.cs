@@ -10,7 +10,7 @@ using Disturbance=ProjectSpark.Gameplay.SparkLevel78Plant.Disturbance;
 
 namespace ProjectSpark.Gameplay
 {
-    public sealed class SparkLevel78Process : MonoBehaviour
+    public sealed partial class SparkLevel78Process : MonoBehaviour
     {
         public static readonly string[] Gates={"L78_Wired","L78_Commissioned","L78_Capped","L78_Qualified","L78_Disturbances","L78_Recertified"};
         public static readonly (int a,int b)[] Wires={(0,1),(2,3),(0,4),(2,5),(0,6),(2,7),(0,8),(2,9),(0,10),(2,11),(12,13),(14,15),(16,17),(16,18),(19,20),(21,22),(23,24),(25,26),(27,28),(29,30),(31,32),(33,34),(35,36),(37,38),(39,40),(41,42),(43,44),(45,46),(47,48),(49,50),(51,52),(53,54),(55,56),(57,58),(59,60),(61,62),(63,64),(65,66),(67,68),(69,70),(71,72),(73,74),(75,76),(77,78),(79,80),(81,82),(83,84),(85,86),(87,88),(89,90),(91,92),(93,94),(95,96),(97,98),(99,100),(101,102),(103,104),(105,106),(107,108),(109,110),(111,112),(113,114),(115,116),(117,118),(119,120),(121,122),(123,124),(125,126),(127,128),(129,130),(118,131),(131,132),(132,133),(114,134),(110,135),(74,136),(132,137),(108,138),(135,139),(36,140),(140,141),(133,142),(143,144),(141,145),(145,146),(146,147),(135,148),(149,150),(40,151),(76,152),(74,153),(104,154),(106,155),(110,156),(130,157),(131,158),(136,159),(137,160),(139,161),(145,162),(140,163),(161,164),(165,166),(166,167),(61,168),(83,169),(115,170),(142,171),(167,172),(172,173),(173,174),(164,175),(145,176),(176,177),(46,178),(173,179),(164,180),(172,181)};
@@ -53,7 +53,7 @@ namespace ProjectSpark.Gameplay
         private bool Active=>cycle!=Cycle.Idle;
         private bool SafeForProcess=>Ready&&Idle&&latch==Fault.None&&loaded&&!rejected&&plant.VacuumReady;
         private bool AwaitingAward=>counted&&(stage==3||stage==4&&gasPassed&&chargePassed&&uvPassed);
-        private bool CanLoad=>Ready&&Idle&&plant.VacuumReady&&latch==Fault.None&&(!loaded||counted)&&!AwaitingAward&&gasClock<=0&&rfClock<=0&&meterClock<=0;
+        private bool CanLoad=>stage<6&&Ready&&Idle&&plant.VacuumReady&&latch==Fault.None&&(!loaded||counted)&&!AwaitingAward&&gasClock<=0&&rfClock<=0&&meterClock<=0;
         private bool CanInspect=>SafeForProcess&&!inspected;
         private bool CanPrep=>SafeForProcess&&inspected&&!prepared;
         private bool CanCalGas=>Ready&&Idle&&plant.VacuumReady&&latch==Fault.None&&!gasCal&&gasClock<=0;
@@ -83,6 +83,7 @@ namespace ProjectSpark.Gameplay
                 Debug.LogError("[LEVEL 78] Missing dielectric workstation references.",this);enabled=false;return;
             }
             source.SetOutput(false,default);
+            BindEquipmentWiring();
         }
         private static (int,int) Pair(int a,int b)=>(Math.Min(a,b),Math.Max(a,b));
         private bool Routed(int i)=>wires.Contains(Pair(Wires[i].a,Wires[i].b));
@@ -96,10 +97,12 @@ namespace ProjectSpark.Gameplay
                 if(a>=0||b>=0)wires.Add(Pair(a,b));
             }
             wiredFeedback=Routed(Feedback);
+            suggestedWire = -1;
             wiring=wires.Count==Wires.Length?null:"Remove extra wires and check the route chart.";
             for(int i=0;i<Wires.Length;i++)
             {
                 if(Routed(i))continue;
+                suggestedWire = i;
                 wiring=$"Connect W{i+1:000} · {pins[Wires[i].a].name} → {pins[Wires[i].b].name}.";
                 break;
             }
@@ -135,6 +138,7 @@ namespace ProjectSpark.Gameplay
                 Tick(SparkLevel78Plant.Step);
             }
             Present();
+            PresentEquipmentWiring();
         }
         private void Tick(float dt)
         {
@@ -299,13 +303,13 @@ namespace ProjectSpark.Gameplay
             feedbackReset|=latch==Fault.Leakage&&feedbackObserved;
             latch=Fault.None;Log("Protection reset. Prepare a fresh wafer.");
         }
-        public void Arm(){if(CanArm){armed=true;Log("Use Undo Last Wire during the live W083 test.");}}
+        public void Arm(){if(CanArm){armed=true;Log("Open W083 during the live coupon test.");}}
         public void Verify(){if(CanVerify){verified=true;Log("Fresh zero-field electrometer samples verified.");}}
         public void Certify(){if(CanCertify)certify=true;}
 
         private string Status()
         {
-            if(stage==6)return "CERTIFIED · cap, low-k film and monitor coupon qualified.";
+            if(stage==6)return "6/6 · CERTIFIED · cap, low-k film and monitor coupon qualified.";
             if(!power)return "Enable 5 V CONTROL and complete wiring.";
             if(latch==Fault.Leakage)
             {
@@ -316,7 +320,7 @@ namespace ProjectSpark.Gameplay
             }
             if(latch!=Fault.None)return $"PROTECTION LATCHED · {latch} · restore and reset.";
             if(!Ready)return wiring??"Check solved rails and the emergency isolation loop.";
-            if(armed)return "Slow-motion stress test · use Undo Last Wire to disconnect W083.";
+            if(armed)return "Slow-motion stress test · select OPEN W083 to disconnect the live cable.";
             if(CanArm)return "Select ARM W083 TEST during the live coupon screen.";
             if(CanGasFault)return "Select CAP FLOW FAULT to test delivery asymmetry.";
             if(CanChargeFault)return "Select RF CHARGE FAULT to test plasma charging.";

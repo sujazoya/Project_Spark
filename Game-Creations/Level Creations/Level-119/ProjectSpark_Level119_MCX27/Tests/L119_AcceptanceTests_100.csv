@@ -1,0 +1,101 @@
+id,test_area,expected_behavior,current_status,reason
+T001,Import/Model/PBR,All 304 modular source OBJ and matching GLB paths resolve,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T002,Import/Model/PBR,Assembled 305 reference exists and remains inactive in gameplay,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T003,Import/Model/PBR,Main PCB mesh is 500 × 360 × 2.0 mm Y-up metre scale,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T004,Import/Model/PBR,Model-manifest record IDs are unique and never NOT_INCLUDED,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T005,Import/Model/PBR,All 248 manifest installable flags match BOM and placements,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T006,Import/Model/PBR,All 56 other art assets are explicitly non-installable,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T007,Import/Model/PBR,All 36 PBR families import and URP Lit remap correctly,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T008,Import/Model/PBR,Normal/metallic/occlusion maps use correct importer color spaces,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T009,Import/Model/PBR,Scene builds without touching Levels 1 through 118,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T010,Import/Model/PBR,Unity C# scripts compile without errors in Unity 6.3 URP,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T011,Assembly/Footprints,Start 0/248 installed with 248 distinct placement targets,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T012,Assembly/Footprints,Installing correct approved MOSFET requires approved orientation and footprint,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T013,Assembly/Footprints,Wrong package size/value rejected by placement authority,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T014,Assembly/Footprints,Unapproved BOM remains uninstalled even when preview model overlaps,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T015,Assembly/Footprints,Component pins have stable identifiers rather than mesh names,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T016,Assembly/Footprints,STO A and STO B physical control components remain independent,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T017,Assembly/Footprints,Motor phase U/V/W component ownership is unambiguous,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T018,Assembly/Footprints,Power stage heat sink visual cannot mark solder complete,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T019,Assembly/Footprints,Slot collider interaction works with desktop mouse and mobile touch,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T020,Assembly/Footprints,A saved state round-trip retains 248 independent part statuses,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T021,Topology/Copper/Vias,336 planned routes remain UNASSIGNED until signed schematic,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T022,Topology/Copper/Vias,124 planned vias remain TBD and uncertifiable until mapped,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T023,Topology/Copper/Vias,Wrong phase-to-phase copper connection is rejected as a short,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T024,Topology/Copper/Vias,Wrong layer or illegal through/buried via span is rejected,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T025,Topology/Copper/Vias,Factory artwork cannot award selected user-built route tasks,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T026,Topology/Copper/Vias,Approved phase current shunt changes solver graph only on genuine connection,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T027,Topology/Copper/Vias,Approved encoder differential pair preserves return topology,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T028,Topology/Copper/Vias,STO paths are independently verified and fail closed,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T029,Topology/Copper/Vias,Via repair mutates the actual solver contact rather than artwork,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T030,Topology/Copper/Vias,Topological changes invalidate affected qualification evidence,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T031,DC Link/Power,DC-link initially discharged and precharge disabled,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T032,DC Link/Power,Power stage cannot energize before qualified precharge,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T033,DC Link/Power,Overvoltage clamp and regenerative brake policy qualify independently,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T034,DC Link/Power,"DC-link measured volts use solver units, no presentation-scale conversion",BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T035,DC Link/Power,Positive and return continuity required for enabling power,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T036,DC Link/Power,Undervoltage blocks torque operation and reports diagnostic cause,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T037,DC Link/Power,Precharge resistor open shows charging fault rather than success,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T038,DC Link/Power,Drive supply fault cannot be ignored by UI animation,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T039,DC Link/Power,Supply dropout invalidates active torque and test evidence,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T040,DC Link/Power,Power-stage protection events are deterministic and logged,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T041,FOC/Motor Commissioning,Three-phase currents sum according to supported motor model,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T042,FOC/Motor Commissioning,Clarke/Park coordinate transforms match declared convention,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T043,FOC/Motor Commissioning,Encoder electrical angle and pole-pair count follow approved motor model,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T044,FOC/Motor Commissioning,Speed loop and current loop use separate configured sample rates,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T045,FOC/Motor Commissioning,PWM duty cycles are limited to valid dead time and ranges,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T046,FOC/Motor Commissioning,"Torque command respects current, thermal and position constraints",BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T047,FOC/Motor Commissioning,Resolver and encoder disagreement triggers plausibility fault,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T048,FOC/Motor Commissioning,Safe-torque-off A and B gate torque independently,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T049,FOC/Motor Commissioning,Regeneration raises DC bus in bounded deterministic motor model,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T050,FOC/Motor Commissioning,Demonstration waveforms never count as measured motor evidence,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T051,Regenerative Braking,Brake chopper follows approved DC-link voltage thresholds,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T052,Regenerative Braking,Negative mechanical torque changes simulated generated energy consistently,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T053,Regenerative Braking,Overvoltage commands are inhibited when braking cannot dissipate,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T054,Regenerative Braking,Brake path current measurements derive from authoritative solver,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T055,Regenerative Braking,Brake heat constraints can derate or disable a run,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T056,Regenerative Braking,DC link energy accounting respects joule/volt/amp units,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T057,Regenerative Braking,Invalid brake resistor model cannot be marked certified,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T058,Regenerative Braking,Post-regeneration settled state requires fresh measurement,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T059,Regenerative Braking,Encoder reversal or no mechanical motion handled explicitly,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T060,Regenerative Braking,Rebuilt brake controller state survives save/load,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T061,Fault F1 Phase Gate,F1 only injected after healthy commissioning phase,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T062,Fault F1 Phase Gate,F1 opens specific schematic-approved phase V gate path,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T063,Fault F1 Phase Gate,F1 generates phase current imbalance without faking other channels,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T064,Fault F1 Phase Gate,Correct tool and target required for gate driver diagnosis,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T065,Fault F1 Phase Gate,Wrong target/tool operation cannot clear F1,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T066,Fault F1 Phase Gate,F1 replacement produces actual electrical/topology change,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T067,Fault F1 Phase Gate,Demonstration visual sparks do not clear F1,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T068,Fault F1 Phase Gate,Post-F1 repair requires newly sampled three-phase currents,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T069,Fault F1 Phase Gate,Fault log preserves F1 state and repair evidence,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T070,Fault F1 Phase Gate,Torque certification blocked until F1 requalified,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T071,Fault F2/F3 Encoder/Brake,F2 intermittent encoder via changes true sensor contact,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T072,Fault F2/F3 Encoder/Brake,F2 deterministic disturbance seed is replayable,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T073,Fault F2/F3 Encoder/Brake,F2 time/position plausibility warning uses independent source,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T074,Fault F2/F3 Encoder/Brake,F2 repair requires approved layer and terminal target,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T075,Fault F2/F3 Encoder/Brake,F2 post-repair position/speed evidence is fresh,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T076,Fault F2/F3 Encoder/Brake,F3 brake feedback drift alters real measured quantity,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T077,Fault F2/F3 Encoder/Brake,F3 brake thermal limit can inhibit torque and regen,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T078,Fault F2/F3 Encoder/Brake,F3 repair cannot be accepted from animation only,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T079,Fault F2/F3 Encoder/Brake,F2 and F3 repairs invalidate dependent test generations,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T080,Fault F2/F3 Encoder/Brake,Three-fault objective requires all fault-specific fresh requalification,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T081,W337 STO/Protected Safety,W337 starts OPEN; neither safety path is assumed qualified,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T082,W337 STO/Protected Safety,Unassigned U39/U40 physical feedback pins block certification,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T083,W337 STO/Protected Safety,After signed mapping W337 opening invalidates motion-ready authority,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T084,W337 STO/Protected Safety,W337 opening inhibits torque enable without zeroing unrelated rails,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T085,W337 STO/Protected Safety,STO A cannot be bypassed using STO B visual state,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T086,W337 STO/Protected Safety,STO B cannot be bypassed using STO A visual state,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T087,W337 STO/Protected Safety,Stuck-high trusted feedback fails freshness/transition checks,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T088,W337 STO/Protected Safety,W337 reconnect without new motor evidence leaves fault latched,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T089,W337 STO/Protected Safety,Fresh STO A/B checks and explicit reset precede protected torque,BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T090,W337 STO/Protected Safety,"Objective 6 requires recorded open, inhibition and full fresh recovery",BLOCKED,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T091,Objectives/UI/Regression,Initial LevelGamePlayManager state remains 0/6,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T092,Objectives/UI/Regression,Visual source blueprint never grants objectives,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T093,Objectives/UI/Regression,Unapproved route/via content leaves objective 2 BLOCKED,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T094,Objectives/UI/Regression,Torque run without STO protection cannot certify objective 4,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T095,Objectives/UI/Regression,Fault test sequence cannot re-use stale successful evidence,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T096,Objectives/UI/Regression,World-space virtual test tools target the actual hit collider,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T097,Objectives/UI/Regression,Existing shop/shelf/selection/throw systems remain unchanged,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T098,Objectives/UI/Regression,Builder rerun does not duplicate Level 119 source scenes,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T099,Objectives/UI/Regression,Levels 1–118 smoke regression and scene references pass,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable
+T100,Objectives/UI/Regression,Final 6/6 requires all six independently certified objective records,NOT_RUN,No Unity EditMode or PlayMode run and/or source schematic unavailable

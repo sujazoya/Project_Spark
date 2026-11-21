@@ -1,0 +1,18 @@
+{
+  "id": "W305",
+  "logical_source": "L117_LinkHealthMonitor_U35.TRUSTED_NETWORK_READY_OUT",
+  "logical_destination": "L117_ProtectedNetworkSupervisor_U36.TRUSTED_NETWORK_READY_IN",
+  "source_pin": "UNASSIGNED",
+  "destination_pin": "UNASSIGNED",
+  "status": "SCHEMATIC_VALIDATION_REQUIRED",
+  "initial": "OPEN",
+  "certifiable": false,
+  "recovery": [
+    "reconnect physical W305",
+    "fresh clock/port qualification",
+    "fresh PTP synchronization",
+    "fresh packet traffic and integrity test",
+    "explicit supervisor safety reset",
+    "renew independent authorization"
+  ]
+}

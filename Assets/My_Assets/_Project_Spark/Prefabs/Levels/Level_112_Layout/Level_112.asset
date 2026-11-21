@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_112
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_112
+  displayName: The EMC Gauntlet
+  description: Build the 16-layer EMC-20, qualify emissions suppression, repair three
+    EMC faults and recover W209.
+  completionMode: 0
+  requiredTargetCount: 6
+  requireClosedReturn: 0
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 1
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: TRAINING_INPUT
+    positiveTerminalId: SUPPLY_POS
+    negativeTerminalId: SUPPLY_RET
+    nominalVoltage: 5
+  targets:
+  - targetId: l104_1
+    displayName: Assemble 152 components and shields
+    description: Verify each footprint and solder contact, then mount all three shield
+      cans.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L112_Proof_1
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: l104_2
+    displayName: Build the 16-layer network
+    description: Connect 208 native route pairs, 68 legal training spans and the
+      separate W209 jumper.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L112_Proof_2
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: l104_3
+    displayName: Calibrate and measure the emissions baseline
+    description: Verify power, reference states and fixture response, then measure
+      common and differential noise at idle.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L112_Proof_3
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: l104_4
+    displayName: Verify suppression and packet integrity
+    description: Stress the board. Verify conducted, radiated, insertion loss, bonding,
+      return continuity, eye and finite packet evidence.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L112_Proof_4
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: l104_5
+    displayName: Repair three EMC faults
+    description: Measure and repair the shield seam, L1 common-mode choke and V44
+      stitching via.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L112_Proof_5
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: l104_6
+    displayName: Restore W209 workload authorization
+    description: Open W209, prove independent inhibition, reconnect, reset U9 after
+      fresh evidence and requalify.
+    targetType: 2
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L112_Proof_6
+    minimumVoltage: 0
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 0
+    maximumVoltage: 0
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 0
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 1
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

@@ -1,0 +1,101 @@
+id,category,acceptance_test,status,evidence,notes
+T001,Source & import,336 model OBJ/GLB pairs import; 337 reference imports,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T002,Source & import,Exact manifest basename and path matching,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T003,Source & import,No NOT_INCLUDED OBJ record,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T004,Source & import,Board X/Z physical size 0.540 x 0.400 m,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T005,Source & import,Board physical substrate thickness 0.0024 m,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T006,Source & import,40 URP Lit PBR material families present,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T007,Source & import,All OBJ meshes contain face geometry,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T008,Source & import,All OBJ models have vt texture coords,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T009,Source & import,No duplicate model GUID or root collisions,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T010,Source & import,Unity C# compiles without errors,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T011,Visual & assemblies,280 individual art parts are present in assembled GLB,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T012,Visual & assemblies,Four heatsink assemblies visible in assembled art,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T013,Visual & assemblies,Assembled reference inactive in gameplay scene,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T014,Visual & assemblies,Gameplay scene starts from bare PCB,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T015,Visual & assemblies,All 34 layer overlays are disabled initially,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T016,Visual & assemblies,Material remapping preserves source indices,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T017,Visual & assemblies,Preview tabletop scaling uniform without stretching,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T018,Visual & assemblies,Complete prefab cannot award assembly completion,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T019,Visual & assemblies,Stage hierarchy re-run is idempotent,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T020,Visual & assemblies,No changes to Levels 1-120,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T021,Components & placement,280 installable BOM entries unique,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T022,Components & placement,280 uninstalled placement anchors created,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T023,Components & placement,All 280 component visual prefabs save,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T024,Components & placement,Wrong component ref rejected,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T025,Components & placement,Wrong manufacturer package rejected,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T026,Components & placement,Wrong pin-one/orientation rejected,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T027,Components & placement,Soldering must update physical authority,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T028,Components & placement,Unverified footprint never certifies assembly,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T029,Components & placement,Component placement changes saved across reload,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T030,Components & placement,Assembled ref does not change slot flags,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T031,Route/via electrical authority,368 copper route records and IDs unique,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T032,Route/via electrical authority,All routes have approved physical pad identities,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T033,Route/via electrical authority,UNASSIGNED copper task never certifies,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T034,Route/via electrical authority,Wrong net route is rejected,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T035,Route/via electrical authority,Verified route changes solver connectivity,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T036,Route/via electrical authority,140 via records and IDs unique,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T037,Route/via electrical authority,TBD via spans cannot certify,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T038,Route/via electrical authority,Blind/buried/through spans checked against stackup,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T039,Route/via electrical authority,Power/clock net isolation survives routing,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T040,Route/via electrical authority,Route/via edits invalidate dependent evidence,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T041,Power and protection,Protected input voltage measured from active graph,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T042,Power and protection,Sensor 5V rail has qualified ground return,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T043,Power and protection,Camera analog rail ripple within approved threshold,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T044,Power and protection,LiDAR rail independent from camera timing supply,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T045,Power and protection,Power sequence blocks sampling before qualification,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T046,Power and protection,Any brownout blocks new sensor certification,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T047,Power and protection,W369 not a fictitious main power break,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T048,Power and protection,Current/heat integrity under bounded load,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T049,Power and protection,Rail health retains measurement timestamps,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T050,Power and protection,No decorative LED signal grants power safety,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T051,Camera acquisition,Four camera links have distinct pad/contact identity,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T052,Camera acquisition,Frame ID monotonic for each camera,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T053,Camera acquisition,Frames carry fresh synchronized timestamps,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T054,Camera acquisition,Missing camera cannot produce valid stereo output,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T055,Camera acquisition,Lane 2 fault changes active electrical graph,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T056,Camera acquisition,Camera CRC/malformed frame increments errors,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T057,Camera acquisition,Frame pairing rejects stale or duplicate frames,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T058,Camera acquisition,Calibration parameters have verified source,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T059,Camera acquisition,Acquire image data without fake hardware truth,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T060,Camera acquisition,Camera result quality depends on actual simulation,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T061,LiDAR and IMU timing,LiDAR range reads carry validity and timestamp,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T062,LiDAR and IMU timing,LiDAR power ripple affects confidence or dropout,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T063,LiDAR and IMU timing,IMU samples have independent rate and clock,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T064,LiDAR and IMU timing,Clock drift changes fusion timestamp residual,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T065,LiDAR and IMU timing,PPS source qualifies with bound clock reference,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T066,LiDAR and IMU timing,Sensor fusion rejects stale camera samples,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T067,LiDAR and IMU timing,Deterministic replay yields repeatable fusion,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T068,LiDAR and IMU timing,Fusion confidence computed from valid evidence,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T069,LiDAR and IMU timing,World transforms and units follow approved geometry,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T070,LiDAR and IMU timing,Safety state independent from fusion visual score,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T071,Faults and repairs,F1 physical via intermittency deterministically injected,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T072,Faults and repairs,F1 wrong repair target rejected,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T073,Faults and repairs,F1 repaired via changes topology and frame results,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T074,Faults and repairs,F2 trigger clock drift affects measured frame timing,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T075,Faults and repairs,F2 correct repair requires fresh clock evidence,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T076,Faults and repairs,F3 filter ESR affects actual LiDAR power quality,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T077,Faults and repairs,F3 replacement changes electrical component property,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T078,Faults and repairs,VFX-only repairs do not clear any faults,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T079,Faults and repairs,Every fault recorded with evidence generation,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T080,Faults and repairs,All three faults require fresh final fusion trial,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T081,W369 safety,W369 starts OPEN and untrusted,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T082,W369 safety,U5/U6 logical pins cannot certify without schematic,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T083,W369 safety,Supervised initial safe authorization created,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T084,W369 safety,W369 physical open logged with topology revision,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T085,W369 safety,W369 disconnection inhibits protected commands,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T086,W369 safety,W369 removal does not erase unrelated rails,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T087,W369 safety,Static HIGH/stale feedback cannot unlock safety,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T088,W369 safety,W369 reconnection alone cannot clear latch,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T089,W369 safety,"Fresh clock, sensor fusion and explicit reset needed",NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T090,W369 safety,Safety objective requires independent reauthorization,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T091,"Objectives, QA & regressions",Start 0/280 installed 0/368 routes 0/140 vias,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T092,"Objectives, QA & regressions",All six objective source evidence contracts declared,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T093,"Objectives, QA & regressions",Objective UI text cannot award achievements,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T094,"Objectives, QA & regressions",World space touch/click targets resolve exact IDs,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T095,"Objectives, QA & regressions",Unity scene save/reload preserves uninstalled flags,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T096,"Objectives, QA & regressions",Evidence epochs invalidate stale sensor measurements,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T097,"Objectives, QA & regressions",EditMode acceptance suite logs PASS/FAIL/BLOCKED,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T098,"Objectives, QA & regressions",PlayMode acceptance suite logs PASS/FAIL/BLOCKED,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T099,"Objectives, QA & regressions",Previous levels 1-120 regression tested,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof
+T100,"Objectives, QA & regressions",Six objectives never pass from art-only assets,NOT_RUN,,Requires Unity or approved electrical source; blocked until proof

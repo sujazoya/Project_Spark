@@ -1,0 +1,17 @@
+{
+  "id": "W209",
+  "source": "L112_TrustedEMCMonitor_U21.EMC_QUALIFIED_OUT",
+  "sink": "L112_IndependentSafetySupervisor_U9.EMC_QUALIFIED_IN",
+  "physicalPinsVerified": false,
+  "initial": "OPEN",
+  "authority": "UNBOUND_TO_PROJECT_SOLVER",
+  "role": "Trusted EMC qualification permission; not high-current rail",
+  "recovery": [
+    "Disconnect after objectives 1-5",
+    "Safety inhibits emission-critical workload but preserves diagnostics",
+    "Reconnect approved pins",
+    "Remeasure conducted and radiated emissions",
+    "Redo suppression and data-link tests",
+    "Explicit safety reset and full requalification"
+  ]
+}

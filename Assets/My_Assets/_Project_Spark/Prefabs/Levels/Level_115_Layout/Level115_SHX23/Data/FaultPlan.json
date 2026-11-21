@@ -1,0 +1,25 @@
+{
+  "faults": [
+    {
+      "id": "F1",
+      "name": "Secure-rail transient / power-glitch path",
+      "effect": "Power integrity drops below secure element reset guard; verified boot invalidated",
+      "repair": "Qualified power-path diagnosis and component replacement; retest from cold boot",
+      "physical_pins_verified": false
+    },
+    {
+      "id": "F2",
+      "name": "Boot flash via intermittency",
+      "effect": "Actual read transactions fail CRC/digest as net opens under deterministic load",
+      "repair": "Approved multilayer via repair; fresh read and signature validation",
+      "physical_pins_verified": false
+    },
+    {
+      "id": "F3",
+      "name": "Shield tamper mesh discontinuity",
+      "effect": "Independent tamper loop opens and irrevocably invalidates the current trust epoch",
+      "repair": "Approved shield mesh/bond repair, explicit reset and fresh attestation",
+      "physical_pins_verified": false
+    }
+  ]
+}

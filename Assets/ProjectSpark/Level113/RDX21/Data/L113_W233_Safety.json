@@ -1,0 +1,17 @@
+{
+  "id": "W233",
+  "source": "L113_HeartbeatAuthentication_U15.TRUSTED_FAILOVER_READY_OUT",
+  "sink": "L113_IndependentFailsafe_U6.TRUSTED_FAILOVER_READY_IN",
+  "physicalPinsVerified": false,
+  "initial": "OPEN",
+  "authority": "UNBOUND_TO_PROJECT_SOLVER",
+  "purpose": "Trusted authorization feedback only, never a power/current rail",
+  "recovery": [
+    "Commission and qualify with jumper installed",
+    "After objectives 1-5, remove monitored jumper in a supervised test",
+    "Independent supervisor detects absence/frozen heartbeat and inhibits protected load",
+    "Reconnect using approved physical pins",
+    "Acquire new failover, ECC, watchdog and power evidence",
+    "Explicit safety reset; complete qualification again"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "faults": [
+    {
+      "id": "F1",
+      "title": "Port 3 optical transmitter bias collapse",
+      "requested_target": "Approved SFP+ transmitter/driver power contact of port 3",
+      "repair": "validate laser-driver supply and replace approved component; re-run optical/packet test"
+    },
+    {
+      "id": "F2",
+      "title": "PTP oscillator drift and timestamp skew",
+      "requested_target": "Y2 timing reference/clock distribution, exact net TBD",
+      "repair": "qualified oscillator repair/replacement, fresh synchronization"
+    },
+    {
+      "id": "F3",
+      "title": "Port 4 high-speed escape via intermittency",
+      "requested_target": "Approved port 4 differential lane via, pending schematic",
+      "repair": "layer-aware via repair and fresh eye/packet tests"
+    }
+  ]
+}

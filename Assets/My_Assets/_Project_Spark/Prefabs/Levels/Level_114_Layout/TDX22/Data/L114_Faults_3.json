@@ -1,0 +1,25 @@
+{
+  "faults": [
+    {
+      "id": "F1",
+      "title": "CPU thermal-interface delamination",
+      "target": "U1-TIM-HS1 interface",
+      "effect": "increased junction-to-heatsink thermal resistance",
+      "repair": "authorized cleaning, correct interface pad application and clamping with post-repair thermal verification"
+    },
+    {
+      "id": "F2",
+      "title": "Fan tachometer stuck-high with partial rotor stall",
+      "target": "FAN1 fan and J1 tach path",
+      "effect": "actual airflow reduced while tach falsely reports healthy speed",
+      "repair": "cross-check thermal response, isolate and replace the defective fan/tach path, rerun load sweep"
+    },
+    {
+      "id": "F3",
+      "title": "VRM hot-spot via discontinuity",
+      "target": "approved Q-bank thermal via cluster",
+      "effect": "localized VRM temperature rises even with normal CPU temperature",
+      "repair": "qualify layer span and ground return, perform authorized via rework and repeat load transient test"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+PROJECT SPARK LEVEL 117 / THE PACKET CITADEL / NFX25-EDU-1
+Unity 6.3.19f1 editor compilation and MainMenu Play Mode acceptance passed.
+The campaign manager completed all six objectives and returned to Edit Mode.
+
+Board: Original 460 × 320 mm geometry displayed at 10.13 × 7.05 Unity units on the 15.79 × 8.54 table. All four source cages and lenses sit at their original right-edge coordinates.
+Assembly: 220 original placements. Contact inspection and checkpoint reload verified.
+Circuit: 304 routes, 108 plated spans, 26 selectable inspection layers and a separate U35-to-U36 W305 jumper.
+Finite link test: 512 of 512 frames accepted across four ports, with zero observed drops or CRC failures. Priority queue behavior and latency passed.
+Timing: 32 simulated four-timestamp exchanges measured +0.06 µs offset and 4.68 µs path delay at baseline.
+Repairs: Port 3 bias collapse, Y2 drift and port 4 escape-via intermittency measured separately and resolved with fresh qualification.
+W305: Opening the native jumper stopped protected traffic in flight and retained diagnostic and module power. Recovery required reconnection, new optical/PTP/packet evidence, independent U36 reset and a new protected burst.
+
+Use MainMenu for the campaign. The standalone layout scene previews the linked prefab at physical scale.
+NFX25-EDU-1 is a fictional training circuit. The source manufacturing schematic and package pins remain unassigned.
+Android device and full campaign regression tests were not run.
+Evidence: Logs/Level117Acceptance.txt, Logs/Level117Inspection.png and Logs/Level117W305Open.png.

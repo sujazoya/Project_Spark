@@ -1,0 +1,20 @@
+[
+  {
+    "id": "F1",
+    "name": "Primary OR-ing MOSFET stuck-open",
+    "effect": "Load transfers to reserve rail; no instant power teleportation; actual hold-up capacitance matters",
+    "repair": "Verify protected power isolation; replace the approved MOSFET; rerun measured failover and droop tests"
+  },
+  {
+    "id": "F2",
+    "name": "ECC memory data via intermittent",
+    "effect": "Graph continuity and error syndrome change under seeded disturbance",
+    "repair": "Layer-specific via reconstruction and fresh ECC scrub/readback evidence"
+  },
+  {
+    "id": "F3",
+    "name": "Independent clock-voter watchdog drift",
+    "effect": "Mismatch between redundant clocks, stale confidence and watchdog inhibit",
+    "repair": "Requalify sensor/controller/oscillator component and repeat fresh watchdog and timing audit"
+  }
+]

@@ -1,0 +1,101 @@
+id,category,case,expected,status,evidence
+L115-AT-001,Asset and Unity authoring,240 modular OBJ models import with renderer meshes,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-002,Asset and Unity authoring,240 matching GLB references are present and independently inspectable,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-003,Asset and Unity authoring,Assembled reference never installs game components,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-004,Asset and Unity authoring,Main PCB measures 0.420 × 0.300 m in local physical coordinates,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-005,Asset and Unity authoring,Source origin and Y-up axis align to board,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-006,Asset and Unity authoring,UV maps are present on every modular OBJ,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-007,Asset and Unity authoring,28 URP Lit material assets rebind by source identity,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-008,Asset and Unity authoring,"Normal maps import as NormalMap, not sRGB",Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-009,Asset and Unity authoring,Repeated one-click build never duplicates assets or root,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-010,Asset and Unity authoring,Existing Levels 1–114 are not modified,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-011,Component placement and inventory,Initial state is 0/196 components installed,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-012,Component placement and inventory,All BOM refs match unique manifest asset IDs,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-013,Component placement and inventory,U1 trusted controller can be inspected as a distinct package,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-014,Component placement and inventory,U2 secure element remains separate from U1 and U3,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-015,Component placement and inventory,Wrong component value and footprint are rejected,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-016,Component placement and inventory,Incorrect pin-one orientation does not make electrical contact,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-017,Component placement and inventory,Component installation requires legitimate inventory and slot,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-018,Component placement and inventory,Shield can is removable and not preinstalled at game start,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-019,Component placement and inventory,W273 occupies exactly one of 196 component slots,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-020,Component placement and inventory,Art-only assembled reference cannot increment placement count,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-021,Copper and DRC,All 272 routes require reviewed pad endpoints,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-022,Copper and DRC,UNASSIGNED source pads block route certification,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-023,Copper and DRC,UNASSIGNED destination pads block route certification,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-024,Copper and DRC,Wrong-net copper is rejected as a short,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-025,Copper and DRC,A ground reference plane is not auto-connected to all vias,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-026,Copper and DRC,Factory visual traces never bypass player tasks,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-027,Copper and DRC,Player trace geometry must pass actual clearance DRC,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-028,Copper and DRC,Tamper mesh signals remain isolated from power planes,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-029,Copper and DRC,Solderless component graphic cannot close a conductive net,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-030,Copper and DRC,Copper route history survives edit undo without false evidence,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-031,Via and stack-up,All 92 via IDs are present exactly once,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-032,Via and stack-up,TBD layer span prevents via certification,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-033,Via and stack-up,UNASSIGNED via net prevents via certification,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-034,Via and stack-up,Legal through via connects only specified plated layers,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-035,Via and stack-up,Blind/buried via requires approved process and span,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-036,Via and stack-up,Via footprint pads preserve copper keepouts,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-037,Via and stack-up,Invalid power-to-ground via link is rejected,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-038,Via and stack-up,Damaged F2 flash via changes actual graph continuity,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-039,Via and stack-up,Repair after F2 requires independent continuity test,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-040,Via and stack-up,22-layer filter UI cannot change electrical graph itself,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-041,Power and reset,Cold secure boot refuses unstable trust rail,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-042,Power and reset,Protected supply brownout invalidates current boot epoch,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-043,Power and reset,Secure element reset is distinct from processor reset,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-044,Power and reset,Clock instability prevents authenticated boot,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-045,Power and reset,"Voltage glitch changes measured rail state, not just UI",Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-046,Power and reset,Independent supervisor can inhibit protected operations,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-047,Power and reset,Boot power is never sourced by art-only decals,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-048,Power and reset,Probe voltage is returned from the live solver,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-049,Power and reset,Safe rework requires simulated isolation,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-050,Power and reset,Power restoration requires fresh boot evidence,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-051,Cryptography and trust,SHA-256 educational digest matches known test vector,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-052,Cryptography and trust,Hash equality alone does not certify signature authenticity,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-053,Cryptography and trust,Untrusted firmware signature is rejected by approved key,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-054,Cryptography and trust,Valid signed image requires version and policy checks,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-055,Cryptography and trust,Rollback to disallowed version blocks authorization,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-056,Cryptography and trust,Revoked signer blocks a previously valid image,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-057,Cryptography and trust,Firmware modification invalidates digest and signature,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-058,Cryptography and trust,Attestation challenge nonce is never silently reused,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-059,Cryptography and trust,Stale successful boot evidence cannot satisfy new epoch,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-060,Cryptography and trust,Real digital signature verification requires approved test vectors,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-061,Tamper and security diagnostics,F1 secure-rail glitch reliably invalidates trust,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-062,Tamper and security diagnostics,Tamper mesh continuity depends on verified physical net,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-063,Tamper and security diagnostics,F3 shield-open fault latches independent security event,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-064,Tamper and security diagnostics,Restoring visual shield alone does not clear tamper latch,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-065,Tamper and security diagnostics,Temperature/voltage anomaly is observable on instruments,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-066,Tamper and security diagnostics,Tamper sensor wrong target is rejected,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-067,Tamper and security diagnostics,Side-channel teaching graph is marked illustrative unless measured,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-068,Tamper and security diagnostics,Debug lock policy is distinct from graphical lock icon,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-069,Tamper and security diagnostics,Trusted counter cannot be reset by replaying UI,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-070,Tamper and security diagnostics,Tamper evidence stores timestamp and fault epoch,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-071,Fault repair and requalification,F1 requires actual qualified power-path repair,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-072,Fault repair and requalification,F1 new boot from cold start is required,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-073,Fault repair and requalification,F2 modifies flash bus in real topology,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-074,Fault repair and requalification,F2 correct repair requires fresh read and signature tests,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-075,Fault repair and requalification,F3 changes physically assigned tamper loop,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-076,Fault repair and requalification,F3 qualified repair restores continuity but latch remains,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-077,Fault repair and requalification,Repair VFX cannot mutate solver by itself,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-078,Fault repair and requalification,Wrong-tool repair attempt preserves existing fault,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-079,Fault repair and requalification,All three repaired faults require new independent evidence,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-080,Fault repair and requalification,Fault controller uses deterministic repeatable events,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-081,W273 safety cycle,W273 starts physically OPEN,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-082,W273 safety cycle,U7/U8 logical role mapping without actual pins blocks certification,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-083,W273 safety cycle,Valid W273 connection for initial commissioning is graph-backed,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-084,W273 safety cycle,"After O1–O5, supervised W273 removal opens a real edge",Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-085,W273 safety cycle,Independent safety latch inhibits trust-dependent operations,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-086,W273 safety cycle,Diagnostic instrumentation remains available after inhibition,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-087,W273 safety cycle,Reconnection alone does not clear an existing latch,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-088,W273 safety cycle,Fresh firmware verification and new nonce are required,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-089,W273 safety cycle,Explicit reset is rejected until fresh trust state qualifies,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-090,W273 safety cycle,Objective 6 requires real post-disconnect trust requalification,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-091,"Objectives, input, persistence, regression",Initial objective count is 0/6,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-092,"Objectives, input, persistence, regression",LevelGamePlayManager is sole authority for six objectives,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-093,"Objectives, input, persistence, regression",Canvas overlay does not intercept 3D hits unintentionally,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-094,"Objectives, input, persistence, regression",Mouse and touch produce identical typed target IDs,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-095,"Objectives, input, persistence, regression",Save/reload does not recycle old qualified boot evidence,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-096,"Objectives, input, persistence, regression",Visual materials cannot write mission completion state,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-097,"Objectives, input, persistence, regression",Generated scene contains no added room or physical tools,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-098,"Objectives, input, persistence, regression",Editor output contains all 196 component visual prefabs,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-099,"Objectives, input, persistence, regression",Unity Play Mode completes after approved schema and tests,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED
+L115-AT-100,"Objectives, input, persistence, regression",No regression in Levels 1–114 under project CI,Authoritative independent verification; no art-only bypass,NOT_RUN,NOT_RECORDED

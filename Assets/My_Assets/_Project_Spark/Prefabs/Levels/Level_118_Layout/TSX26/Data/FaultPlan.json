@@ -1,0 +1,20 @@
+{
+  "F1": {
+    "title": "Primary gPTP oscillator drift",
+    "target_design_ref": "Y1",
+    "physical_pins_verified": false,
+    "required_proof": "fresh independent timestamp drift test"
+  },
+  "F2": {
+    "title": "Redundant Path B intermittent via",
+    "target_design_ref": "UNASSIGNED_VIA",
+    "physical_pins_verified": false,
+    "required_proof": "actual topology mutation, path failover and fresh traffic test"
+  },
+  "F3": {
+    "title": "Time-aware scheduler SRAM data-line open",
+    "target_design_ref": "U15 logical / physical pin UNASSIGNED",
+    "physical_pins_verified": false,
+    "required_proof": "actual schedule table corruption detection, valid repair and fresh gate timeline test"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "W401",
+  "logical_source": "L123_U5.TRUSTED_FLIGHT_READY_OUT",
+  "logical_destination": "L123_U3.TRUSTED_FLIGHT_READY_IN",
+  "initial": "OPEN",
+  "physical_pin_reconciliation_required": true,
+  "certifiable": false,
+  "recovery": [
+    "arm a previously qualified safe flight state under authorized supervision",
+    "disconnect W401 and observe independent inhibit on all eight channels",
+    "repair approved physical link",
+    "qualify fresh clocks, IMUs, altitude, power, motor gate states and mixer tests",
+    "perform fresh bounded control response tests",
+    "explicit supervised reset",
+    "verify new trusted motion-ready authorization"
+  ]
+}

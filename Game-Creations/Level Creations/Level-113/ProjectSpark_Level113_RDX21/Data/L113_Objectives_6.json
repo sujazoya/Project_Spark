@@ -1,0 +1,45 @@
+{
+  "level": 113,
+  "name": "THE REDUNDANCY CITADEL",
+  "model": "RDX-21",
+  "objectives": [
+    {
+      "id": 1,
+      "title": "Verify and assemble 166 parts",
+      "requirement": "Check footprint, exact part, orientation, hold-up capacitance and authorized solder contacts"
+    },
+    {
+      "id": 2,
+      "title": "Construct 232 routes and 76 vias",
+      "requirement": "Certified 18-layer topology, isolation DRC, no power shorts and valid redundancy paths"
+    },
+    {
+      "id": 3,
+      "title": "Commission redundant power and controls",
+      "requirement": "Demonstrate independent 12V sources, OR-ing isolation, 5V/3.3V power and clock vote"
+    },
+    {
+      "id": 4,
+      "title": "Prove failover and data integrity",
+      "requirement": "Measure controlled load transfer, hold-up droop, ECC errors, watchdog and diagnostic timestamps"
+    },
+    {
+      "id": 5,
+      "title": "Recover three true hardware faults",
+      "requirement": "Repair power-path MOSFET, ECC memory via and independent clock supervisor then fresh qualification"
+    },
+    {
+      "id": 6,
+      "title": "Complete W233 supervised authorization recovery",
+      "requirement": "Disconnect monitoring feedback, show independent latch, reconnect and retest full failover"
+    }
+  ],
+  "authoritativeCompletion": false,
+  "initialState": {
+    "installed": 0,
+    "routes": 0,
+    "vias": 0,
+    "W233": "OPEN",
+    "objectives": 0
+  }
+}

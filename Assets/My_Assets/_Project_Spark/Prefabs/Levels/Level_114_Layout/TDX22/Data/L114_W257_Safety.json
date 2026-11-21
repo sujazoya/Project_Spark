@@ -1,0 +1,21 @@
+{
+  "id": "W257",
+  "type": "removable_trusted_thermal_health_feedback",
+  "logical_source": "L114_TrustedThermalMonitor_U11.SAFE_THERMAL_HEALTH_OUT",
+  "logical_destination": "L114_IndependentThermalSafetySupervisor_U10.SAFE_THERMAL_HEALTH_IN",
+  "source_BOM_ref": "U11",
+  "destination_BOM_ref": "U10",
+  "physical_pin_verified": false,
+  "schematic_approval_required": true,
+  "initial": "OPEN",
+  "certifiable": false,
+  "response_to_open": "Latch safety fault, inhibit protected heat-producing load; preserve diagnostics power",
+  "recovery": [
+    "verify physical reconnection",
+    "recalibrate sensors against independent readings",
+    "repeat safe load and cooling qualification",
+    "observe new non-stale health transitions",
+    "explicit safety reset",
+    "run fresh full thermal qualification"
+  ]
+}

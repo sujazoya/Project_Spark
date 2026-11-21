@@ -1,0 +1,17 @@
+{
+  "id": "W417",
+  "logical_source": "L124_U5.TRUSTED_ATTITUDE_READY_OUT",
+  "logical_destination": "L124_U3.TRUSTED_ATTITUDE_READY_IN",
+  "initial": "OPEN",
+  "physical_pin_reconciliation_required": true,
+  "certifiable": false,
+  "recovery": [
+    "first establish a legitimately qualified supervised attitude-hold state",
+    "open W417 and prove independent reaction-wheel and thruster inhibit",
+    "reconnect only the approved physical feedback link",
+    "collect new independent power, tracker, wheel and watchdog evidence",
+    "run fresh bounded pointing and safe-mode tests",
+    "perform supervised explicit reset",
+    "verify renewed trusted attitude-ready authorization"
+  ]
+}

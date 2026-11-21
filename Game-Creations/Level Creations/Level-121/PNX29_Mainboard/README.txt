@@ -1,0 +1,1 @@
+PNX-29: physical-size complete visual motherboard: 540 x 400 mm. Use Models_OBJ/337_L121_AssembledReference.obj with included MTL/Textures in Unity, or Models_GLB/337_L121_AssembledReference.glb in Blender. Includes all 280 component visuals, structural art and four heatsinks. VISUAL ONLY; electrical/safety not certified.

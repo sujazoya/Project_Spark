@@ -1,0 +1,26 @@
+{
+  "board": "NVX-24",
+  "title": "THE DATA PHOENIX",
+  "objectives": [
+    "Install and verify 208 components and all solder contacts",
+    "Build 288 selected routes and 100 vias from approved pin-level schematic",
+    "Qualify power, NAND channels, NVMe link and power-loss protection",
+    "Prove ECC recovery, end-to-end data integrity and power-loss crash consistency",
+    "Diagnose and physically repair F1/F2/F3, then rerun fresh tests",
+    "Disconnect and recover W289 with independent inhibition, test and reset"
+  ],
+  "initialState": {
+    "installed": 0,
+    "routesCompleted": 0,
+    "viasInstalled": 0,
+    "criticalJumper": "OPEN",
+    "qualifiedObjectives": 0,
+    "power": "OFF",
+    "nvmeLink": "DOWN",
+    "nandChannels": "UNINITIALIZED",
+    "ecc": "INVALID",
+    "plp": "UNVERIFIED",
+    "protectedWrites": false
+  },
+  "authoritativeCompletion": false
+}

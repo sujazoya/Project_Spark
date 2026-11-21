@@ -1,0 +1,101 @@
+id,area,test,expected,status,evidence
+T001,Import and Geometry,ModelManifest has exactly 352 unique modular asset IDs,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T002,Import and Geometry,"Every exact OBJ filename exists, no NOT_INCLUDED aliases",Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T003,Import and Geometry,Every corresponding GLB filename exists,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T004,Import and Geometry,Combined assembled pair exists as 353rd OBJ/GLB,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T005,Import and Geometry,Physical board x/z extents exactly 0.560 x 0.420 m,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T006,Import and Geometry,Physical substrate y thickness 0.0024 m,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T007,Import and Geometry,Model pivot/units/orientation imported correctly into Unity,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T008,Import and Geometry,PBR 42 BaseColor families and 42 URP masks import,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T009,Import and Geometry,OBJ material group mapping and UV coordinates render,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T010,Import and Geometry,Assembled reference stays inactive/non-interactive in gameplay,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T011,Assembly and Footprints,Level starts with 0 of 296 components installed,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T012,Assembly and Footprints,Exactly 296 unique BOM refs join ModelManifest and placements,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T013,Assembly and Footprints,Place correct part on correct approved slot,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T014,Assembly and Footprints,Wrong component ref is rejected,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T015,Assembly and Footprints,Wrong physical package/value is rejected,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T016,Assembly and Footprints,Wrong part angle or pin-one orientation rejected,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T017,Assembly and Footprints,Source placement hints alone cannot certify footprint,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T018,Assembly and Footprints,Unverified solder/contact blocks installation,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T019,Assembly and Footprints,Component visual prefab cannot auto-set installed flag,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T020,Assembly and Footprints,"W385 is one of 296 components, not an extra install",Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T021,Routes and Vias,Exactly 384 copper task records exist,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T022,Routes and Vias,384 unassigned routes remain noncertifiable,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T023,Routes and Vias,Correct approved wire changes actual network graph,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T024,Routes and Vias,Wire to wrong net or pad rejected,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T025,Routes and Vias,Short between incompatible supplies blocked,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T026,Routes and Vias,Decorative trace cannot complete a route,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T027,Routes and Vias,Exactly 148 via task records exist,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T028,Routes and Vias,Via with TBD layer span never certifies,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T029,Routes and Vias,Wrong via type or illegal layer span rejected,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T030,Routes and Vias,Real solver shows topology change and no shorts,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T031,Power and Clocks,Protected navigation power requires valid source and return,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T032,Power and Clocks,Missing ground return blocks sensor qualification,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T033,Power and Clocks,GNSS A powered is distinct from GNSS A qualified,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T034,Power and Clocks,GNSS B powered is distinct from GNSS B qualified,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T035,Power and Clocks,Radar PLL phase noise must be measured,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T036,Power and Clocks,PLL drift affects downstream radar evidence,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T037,Power and Clocks,Reset held prevents qualified sensor operation,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T038,Power and Clocks,Dual watchdogs initialize independently,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T039,Power and Clocks,Expired clock generation invalidates time sync,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T040,Power and Clocks,A static instrument readout cannot qualify clock,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T041,Sensor Integrity,"GNSS A records sample age, fix and covariance",Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T042,Sensor Integrity,GNSS B remains independent from GNSS A,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T043,Sensor Integrity,GNSS spoof/jam suspicion changes integrity output,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T044,Sensor Integrity,GNSS RF via open degrades A actual samples,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T045,Sensor Integrity,Radar A rejects unqualified PLL phase noise,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T046,Sensor Integrity,Radar B independent status unaffected by A fault,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T047,Sensor Integrity,IMU A drift alters measured state,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T048,Sensor Integrity,IMU B divergence changes comparison result,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T049,Sensor Integrity,Stale IMU data invalidates fusion authority,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T050,Sensor Integrity,"Fault changes real source state, not just warning",Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T051,Localization and Planning,Motion authorization false until full evidence exists,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T052,Localization and Planning,Localization estimates include uncertainty and timestamps,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T053,Localization and Planning,Outlier measurements increase integrity reason codes,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T054,Localization and Planning,Path preview alone never grants safe-motion authority,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T055,Localization and Planning,Stop distance exceeds free space triggers safe stop,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T056,Localization and Planning,Geofence violation inhibits protected motion,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T057,Localization and Planning,Command age timeout inhibits protected motion,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T058,Localization and Planning,Loss of GNSS changes covariance by policy,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T059,Localization and Planning,Independent safety veto overrides planner request,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T060,Localization and Planning,Fresh tests are required after any topology change,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T061,Fault F1 and F2,F1 injected at approved radar PLL target,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T062,Fault F1 and F2,F1 measurably increases modeled radar phase noise,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T063,Fault F1 and F2,F1 warning identifies exact affected measurement,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T064,Fault F1 and F2,F1 wrong tool/target cannot repair,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T065,Fault F1 and F2,F1 successful repair alters actual source state,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T066,Fault F1 and F2,F1 requalification uses fresh radar and obstacle data,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T067,Fault F1 and F2,F2 injected at approved GNSS-A RF via,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T068,Fault F1 and F2,F2 causes deterministic physical continuity dropout,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T069,Fault F1 and F2,F2 repair requires legitimate via work and continuity,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T070,Fault F1 and F2,F2 requires fresh GNSS integrity and localization tests,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T071,Fault F3 and Safety,F3 injects IMU reference mismatch via real contact,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T072,Fault F3 and Safety,F3 produces IMU A/B disagreement,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T073,Fault F3 and Safety,F3 detector independently inhibits motion,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T074,Fault F3 and Safety,Wrong F3 repair target is rejected,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T075,Fault F3 and Safety,F3 requalification uses fresh dynamic samples,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T076,Fault F3 and Safety,Three fault objective needs all three repaired,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T077,Fault F3 and Safety,Safety stop retains unrelated historical evidence,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T078,Fault F3 and Safety,Safe-stop latch does not auto-reset on UI green,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T079,Fault F3 and Safety,Safety event journal records topo and evidence generation,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T080,Fault F3 and Safety,All fault scenarios support deterministic replay,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T081,W385 Recovery,W385 starts OPEN and physically unqualified,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T082,W385 Recovery,Unassigned W385 pins never certify,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T083,W385 Recovery,Only qualified earlier mission can arm W385 test,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T084,W385 Recovery,Controlled W385 removal changes feedback graph,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T085,W385 Recovery,W385 open latches protected motion inhibit,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T086,W385 Recovery,W385 does not fictitiously erase power rails,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T087,W385 Recovery,Stuck-HIGH W385 feedback fails freshness protocol,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T088,W385 Recovery,Reconnecting W385 alone does not clear latch,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T089,W385 Recovery,New navigation/obstacle evidence plus reset required,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T090,W385 Recovery,Objective 6 only after actual supervised recovery,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T091,Save UI and Regression,Gameplay counter initializes 0/6,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T092,Save UI and Regression,Objective display cannot mutate authority directly,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T093,Save UI and Regression,Teaching demo explicitly NOT CERTIFIABLE,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T094,Save UI and Regression,World-space panel never blocks all 3D raycasts,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T095,Save UI and Regression,Click/touch target resolves correct part ID,Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T096,Save UI and Regression,Authorized repair VFX localizes to actual contact,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T097,Save UI and Regression,"Save/load includes version, manifest hash and generations",Only approved evidence; never infer pass from artwork,NOT_RUN,Unity EditMode/PlayMode log not available
+T098,Save UI and Regression,Builder is idempotent and stable GUID/source paths preserved,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T099,Save UI and Regression,Previous Level 1–121 regression scene smoke checks pass,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available
+T100,Save UI and Regression,6/6 requires independent fresh evidence for all contracts,Only approved evidence; never infer pass from artwork,BLOCKED_SOURCE,Unity EditMode/PlayMode log not available

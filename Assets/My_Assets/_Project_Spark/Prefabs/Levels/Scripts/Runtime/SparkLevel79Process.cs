@@ -10,7 +10,7 @@ using Disturbance=ProjectSpark.Gameplay.SparkLevel79Plant.Disturbance;
 
 namespace ProjectSpark.Gameplay
 {
-    public sealed class SparkLevel79Process : MonoBehaviour
+    public sealed partial class SparkLevel79Process : MonoBehaviour
     {
         public static readonly string[] Gates={"L79_Wired","L79_Commissioned","L79_FirstPair","L79_Qualified","L79_Disturbances","L79_Recertified"};
         public static readonly (int a,int b)[] Wires={(0,1),(2,3),(0,4),(2,5),(0,6),(2,7),(0,8),(2,9),(0,10),(2,11),(12,13),(14,15),(16,17),(18,19),(20,21),(22,23),(24,25),(26,27),(28,29),(30,31),(32,33),(34,35),(36,37),(38,39),(40,41),(42,43),(44,45),(46,47),(48,49),(50,51),(52,53),(54,55),(56,57),(58,59),(60,61),(62,63),(64,65),(64,66),(67,68),(69,70),(69,71),(72,73),(72,74),(75,76),(77,78),(79,80),(81,82),(83,84),(85,86),(87,88),(89,90),(91,92),(93,94),(95,96),(97,98),(99,100),(101,102),(103,104),(105,106),(107,108),(109,110),(111,112),(113,114),(115,116),(117,118),(119,120),(121,122),(123,124),(125,126),(127,128),(129,130),(131,132),(133,134),(135,136),(137,138),(139,140),(106,141),(141,142),(142,143),(143,144),(144,145),(145,146),(142,147),(144,148),(148,149),(149,150),(146,151),(140,152),(152,153),(148,154),(104,155),(155,156),(102,157),(157,158),(156,159),(104,160),(104,161),(161,162),(162,163),(163,164),(164,165),(165,166),(156,167),(166,168),(169,170),(170,171),(170,172),(86,173),(110,174),(29,175),(73,176),(176,177),(177,178),(29,179),(74,180),(156,181),(163,182),(166,183),(170,184),(70,185),(185,186),(166,187)};
@@ -84,6 +84,7 @@ namespace ProjectSpark.Gameplay
                 Debug.LogError("[LEVEL 79] Missing hybrid bonding references.",this);enabled=false;return;
             }
             source.SetOutput(false,default);
+            BindEquipmentWiring();
         }
         private static (int,int) Pair(int a,int b)=>(Math.Min(a,b),Math.Max(a,b));
         private bool Routed(int i)=>wires.Contains(Pair(Wires[i].a,Wires[i].b));
@@ -97,10 +98,12 @@ namespace ProjectSpark.Gameplay
                 if(a>=0||b>=0)wires.Add(Pair(a,b));
             }
             wiredFeedback=Routed(Feedback);
+            suggestedWire=-1;
             wiring=wires.Count==Wires.Length?null:"Remove extra wires and check the route chart.";
             for(int i=0;i<Wires.Length;i++)
             {
                 if(Routed(i))continue;
+                suggestedWire=i;
                 wiring=$"Connect W{i+1:000} · {pins[Wires[i].a].name} → {pins[Wires[i].b].name}.";
                 break;
             }
@@ -307,7 +310,7 @@ namespace ProjectSpark.Gameplay
         public void Restore(){if(Ready&&latch!=Fault.None&&disturbance!=Disturbance.None){disturbance=Disturbance.None;Log("Disturbance corrected. Wait for a safe reset.");}}
         public void EStop(){emergency.SetState(emergency.IsClosed?SparkSwitchState.Open:SparkSwitchState.Closed);if(emergency.IsOpen&&latch==Fault.None)Trip(Fault.EStop);}
         public void Reset(){if(CanReset){feedbackReset|=latch==Fault.Laser&&feedbackObserved;latch=Fault.None;Log("Protection reset. Prepare a fresh assembly.");}}
-        public void Arm(){if(CanArm){armed=true;Log("Undo Last Wire while the fine axis is moving.");}}
+        public void Arm(){if(CanArm){armed=true;Log("Open W037 while the fine axis is moving.");}}
         public void Verify(){if(CanVerify){verified=true;Log("Fresh laser feedback verified at the homed reference.");}}
         public void Certify(){if(CanCertify)certify=true;}
 
@@ -326,7 +329,7 @@ namespace ProjectSpark.Gameplay
             }
             if(latch!=Fault.None)return $"PROTECTION LATCHED · {latch} · restore and reset.";
             if(!Ready)return wiring??"Check 5 V rails and the E-Stop loop.";
-            if(armed)return "Slow-motion approach · use Undo Last Wire to remove W037.";
+            if(armed)return "Slow-motion approach · select OPEN W037.";
             if(CanArm)return "Select ARM W037 TEST while the fine axis is moving.";
             if(CanDrift)return "Select CAMERA DRIFT during alignment.";
             if(CanChuck)return "Select CHUCK ANOMALY during approach.";
@@ -361,6 +364,7 @@ namespace ProjectSpark.Gameplay
             restoreButton.interactable=Ready&&latch!=Fault.None&&disturbance!=Disturbance.None;eStopButton.interactable=stage<6;
             resetButton.interactable=CanReset;armButton.interactable=CanArm;verifyButton.interactable=CanVerify;
             certifyButton.interactable=CanCertify&&!certify;
+            PresentEquipmentWiring();
             rig.Apply(plant,baseTransfer?Cycle.Idle:cycle,taskTime,chip,baseLoaded?scanned:0,baseLoaded&&loaded,validLaser,lastPermit,latch!=Fault.None,emergency.IsOpen);
         }
     }
