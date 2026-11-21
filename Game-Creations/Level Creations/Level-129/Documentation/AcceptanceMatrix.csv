@@ -1,0 +1,31 @@
+test_id,domain,test,status
+T001,Source,FBX imported mesh exists,NOT_RUN
+T002,Source,PCB bounds match expected scale and orientation,NOT_RUN
+T003,Source,Correct material and texture color space,NOT_RUN
+T004,Visual,Socket retention separately selectable,NOT_RUN
+T005,Visual,DIMM latch and PCIe release separately movable,NOT_RUN
+T006,Visual,Chipset cooler removable and reveals package,NOT_RUN
+T007,Visual,Rear I/O connector cavities and pins visible,NOT_RUN
+T008,Visual,Bottom mask visible and holes open,NOT_RUN
+T009,Assembly,CPU orientation and compatible part required,BLOCKED
+T010,Assembly,Wrong memory generation rejected,BLOCKED
+T011,Assembly,M.2 seating and screw fitting required,BLOCKED
+T012,Power,No energization while component removed,BLOCKED
+T013,Power,Missing standby prevents POST,BLOCKED
+T014,Power,CPU rail fault prevents POST,BLOCKED
+T015,POST,DRAM fault sets DRAM indicator,BLOCKED
+T016,POST,VGA fault sets VGA indicator,BLOCKED
+T017,POST,Missing boot device distinguished,BLOCKED
+T018,I/O,M.2 SATA conflict uses approved revision mapping,BLOCKED
+T019,I/O,PCIe and USB qualification use real adapter,BLOCKED
+T020,Safety,Invalid topology blocks objective,BLOCKED
+T021,Safety,Stale measurements invalidate completion,BLOCKED
+T022,Safety,Reset must be explicit after repair,BLOCKED
+T023,Repair,F1 repair requires before and after evidence,BLOCKED
+T024,Repair,F2 repair requires before and after evidence,BLOCKED
+T025,Repair,F3 repair requires before and after evidence,BLOCKED
+T026,Runtime,Visual showcase grants no completion,BLOCKED
+T027,Performance,Profile on PC and mobile,NOT_RUN
+T028,Runtime,Scene reload clears transient state,BLOCKED
+T029,Runtime,Prior levels unaffected,BLOCKED
+T030,Runtime,All six objectives have actual evidence,BLOCKED
