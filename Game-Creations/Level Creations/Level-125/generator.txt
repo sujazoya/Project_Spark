@@ -1,0 +1,26 @@
+run in powershel 1,2,3
+
+$file = ".\Install_Level125_AAA_AutoLayout.ps1"
+
+Copy-Item -LiteralPath $file -Destination "$file.bak" -Force
+
+$content = Get-Content -LiteralPath $file -Raw
+$content = $content.Replace('$mode:', '${mode}:')
+
+Set-Content -LiteralPath $file -Value $content -Encoding UTF8
+
+Write-Host "Level 125 installer patched successfully." -ForegroundColor Green
+
+
+
+
+
+
+
+powershell -ExecutionPolicy Bypass -File ".\Install_Level125_AAA_AutoLayout.ps1" -UnityProjectPath "D:\Project_Spark_Master_Project\Project_Spark" -DryRun
+
+
+
+
+
+powershell -ExecutionPolicy Bypass -File ".\Install_Level125_AAA_AutoLayout.ps1" -UnityProjectPath "D:\Project_Spark_Master_Project\Project_Spark"

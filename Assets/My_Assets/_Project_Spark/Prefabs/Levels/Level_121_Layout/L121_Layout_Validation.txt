@@ -1,12 +1,16 @@
-PROJECT SPARK LEVEL 121 - SOURCE/IMPORT AUDIT (NOT UNITY PLAY MODE CERTIFICATION)
-Board: PNX-29 / The Perception Nexus / 0.540 x 0.400 metres / 34 layers
-Source: Assets/ProjectSpark/Level121/PNX29
-Modular model records: 336 (expected 336)
-Component slots: 280 (280 UNINSTALLED)
-Copper: 368 (UNASSIGNED / NOT CERTIFIABLE)
-Vias: 140 (TBD layer span / NOT CERTIFIABLE)
-W369: OPEN; U5 -> U6 trusted perception ready logical safety feedback; pins UNASSIGNED
-Objectives: 0/6. Existing Project Spark runtime APIs have not been inspected.
-Source validation does not prove Unity compile, rendering, camera timing, sensor fusion, independent safety gating or electrical integrity, or gameplay.
-Requires approved schematic/approved cameras, SerDes receivers, LiDAR, IMU, trigger timing and safety topology/34-layer stack-up and fresh independent tests.
-Every Unity EditMode and PlayMode test: NOT_RUN
+PROJECT SPARK LEVEL 121 | THE PERCEPTION NEXUS
+Unity 6000.3.19f1 Play Mode acceptance passed all six campaign objectives.
+
+1. Secured all 280 parts at the original footprints. Verified four original heat-sink positions, package and orientation checks, and a partial assembly checkpoint.
+2. Connected 368 distinct pairs in the native circuit, plated 140 vias, and verified the 34 layer references and the separately open W369 edge. The native Wire tool connected the first pair.
+3. Commissioned four camera links, LiDAR and IMU after verifying eleven circuit domains. Healthy PPS and trim were 5.000 V, peak trigger skew was 121.7 microseconds, and the LiDAR pulse rail was 4.991 V.
+4. Rejected stale, duplicate and corrupt frames. Accepted 64/64 synchronized sets and got all 64 obstacle decisions right, with 3.2 mm peak range/pose error and 93% minimum confidence. Resuming a checkpoint restored the copper and required fresh calibration and authorization.
+5. Diagnosed and repaired all three faults. Camera B missed 24 frames, PPS drift rejected 64 timed sets at 828 microseconds peak skew, and the LiDAR rail dropped to 3.75 V under load with 1.11 V sag and 64 missing ranges. Each repair earned credit after a new healthy replay.
+6. Opened W369 during protected acquisition. U6 inhibited 58 pending sets while independent diagnostics and sensor rails stayed powered. Restored W369, renewed qualification, explicitly reset U6, and delivered 64/64 new protected sets.
+
+The 10.13 x 7.50 Unity-unit board fits the 15.79 x 8.54 game table. The campaign entry is appended in MainMenu and registered once in the layout catalog. The prior 114 campaign indices were preserved.
+PNX29-EDU-1 is a fictional educational schematic. The authored source data is preserved. The playable route manifest is PNX29/Data/PNX29_EDU_1_Training_Routes.csv.
+Manifest SHA-256 bdb87e2bf4d8a02695034db3450469fdf4a78ca603468eef4ffa2e733569a93d
+
+Evidence in project Logs contains Level121Acceptance.txt and Level121Inspection.png.
+Validation covers the loaded campaign prefab and automated Unity Editor input and gameplay. Device touch, standalone player builds and earlier-level gameplay are outside this run.

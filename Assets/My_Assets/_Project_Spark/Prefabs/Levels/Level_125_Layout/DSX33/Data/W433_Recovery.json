@@ -1,0 +1,17 @@
+{
+  "id": "W433",
+  "logical_source": "L125_U5.TRUSTED_TX_READY_OUT",
+  "logical_destination": "L125_U3.TRUSTED_TX_READY_IN",
+  "initial": "OPEN",
+  "physical_pin_reconciliation_required": true,
+  "certifiable": false,
+  "recovery": [
+    "Qualify a supervised simulated link with approved electrical connections",
+    "Open W433 and independently prove transmitter inhibit",
+    "Reconnect only approved physical feedback",
+    "Collect fresh power, clock, current, frame and watchdog evidence",
+    "Run bounded link and failover tests",
+    "Explicit supervised reset",
+    "Confirm renewed authorization only from safety authority"
+  ]
+}

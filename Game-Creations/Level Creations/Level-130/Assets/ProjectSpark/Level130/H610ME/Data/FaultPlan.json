@@ -1,0 +1,23 @@
+[
+  {
+    "id": "F1",
+    "ref": "EPS_8",
+    "mechanism": "Simulated unseated EPS connector",
+    "symptom": "Standby present; CPU power invalid",
+    "verification": "Confirm virtual standby; inspect EPS seating; retest CPU rail after isolated reseat"
+  },
+  {
+    "id": "F2",
+    "ref": "U_BIOS",
+    "mechanism": "Simulated firmware read failure",
+    "symptom": "Power valid; initialization fails before memory training",
+    "verification": "Compare simulated flash-read integrity; restore approved virtual image or replace matching IC; retest cold POST"
+  },
+  {
+    "id": "F3",
+    "ref": "CPU_FAN1",
+    "mechanism": "Simulated CPU fan tach feedback open",
+    "symptom": "POST may succeed; thermal qualification fails",
+    "verification": "Check simulated fan speed and tach feedback; repair target with power isolated; repeat thermal test"
+  }
+]

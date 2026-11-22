@@ -1,0 +1,15 @@
+PROJECT SPARK LEVEL 124 | THE ORBITAL BASTION
+Unity 6000.3.19f1 compiled the level. The final Play Mode campaign run passed all six objectives.
+
+1. Secured 328 parts at their original footprints. Verified all eight thermal spreaders and three shields, package and orientation validation, and a partial assembly checkpoint.
+2. Completed 416 native copper edges, 164 plated spans and 40 inspection layers. Verified the native Wire tool, separate U5 and U3 W417 contacts, and continuity in all six circuit domains.
+3. Commissioned redundant compute, two clocks, five sensor paths and four wheel shunts. Both clocks and the tachometer reference measured 5.000 V. The virtual timing trial returned 73.0 microseconds peak skew.
+4. Passed all 64 virtual attitude trials, including eclipse pointing, 16 momentum-dump samples and ECC safe mode. Final pointing error was 0.18 degrees. Normalized stored momentum fell from 0.88 to 0.21. The Hamming fixture corrected two single-bit upsets and held the gates for six samples after detecting an uncorrectable word. Resuming a checkpoint restored copper and required new commissioning.
+5. Diagnosed and repaired three measured circuit faults. Wheel 3 drew 416 mA while wheel 2 drew 50 mA. The latch survived a power cycle with the original faulty shunt. Via V031 dropped 26 tracker B frames while tracker A and gyro stayed live. SN4 reference drift to 3.76 V caused a 41% normalized tachometer disagreement. Each repair changed the exact native device and required a fresh trial.
+6. U3 rejected held-high W417 feedback. With all four wheel gates and the momentum-dump gate energized, opening W417 shut off every output with 31 samples pending. Wheel supply, compute and telemetry stayed live. Reconnecting required fresh tests and an explicit U3 reset. The final run verified 64/64 gate decisions, including 16 solved unload samples and six ECC holds, and finished with the outputs inhibited.
+
+The board fits at 10.13 x 7.77 Unity units on the 15.79 x 8.54 game table. Unity resolved 384 modular models and all 46 authored URP material families. MainMenu and the catalog each contain one Level 124 entry. All 117 previous campaign indices were preserved.
+
+OBX32-EDU-1 is a fictional educational circuit and virtual spacecraft fixture. Original art and unassigned source task records are preserved. The generated training manifest is OBX32/Data/OBX32_EDU_1_Training_Routes.csv with SHA-256 c994c8e56bc80ea08f67130a06afa73e0db08cd20ce0bf7686573330a64a2e46.
+
+Evidence is in Logs/Level124Acceptance.txt and Logs/Level124Inspection.png. Validation covers the loaded campaign and automated Unity Editor gameplay. Standalone builds, device touch and earlier-level gameplay regressions were outside this run.

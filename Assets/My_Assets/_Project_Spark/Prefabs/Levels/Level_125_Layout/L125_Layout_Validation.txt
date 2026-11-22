@@ -1,0 +1,15 @@
+PROJECT SPARK LEVEL 125 | THE SIGNAL HORIZON
+Unity 6000.3.19f1 compiled the level. Play Mode passed all six campaign objectives.
+
+1. Secured 344 components at their original footprints. Verified six heat spreaders, three shields, identity and orientation rejection, and partial assembly checkpoint recovery.
+2. Completed 432 native copper edges, 172 plated spans and 42 layer references. Verified native Wire input, separate U5 and U3 W433 contacts, and continuity in all eight circuit domains.
+3. Commissioned redundant compute, two clocks, the decoder, two receive stages and two current shunts. Both clocks measured 5.000 V and the C1 filter measured 4.990 V. The simulated healthy reference showed 59.3 ns peak skew. The CRC-16 reference check returned 0x29B1 and the virtual free-space reference returned +14.71 dB.
+4. Decoded all 64 frames, repaired 10 single-bit disagreements, checked 16 low-margin frames and handled two handovers with 17 backup frames. Minimum link margin was +4.56 dB. Duplicate, stale and uncorrectable frames were rejected. Checkpoint resume required new commissioning and qualification.
+5. Diagnosed and repaired three measured circuit faults. The Y1 trim opened and the modeled skew rose to 275 ns, rejecting all 64 frames. C1 voltage dropped to 2.93 V and RX B missed the handover while RX A remained available. Q1 drove TX A to 417 mA while TX B stayed at 50 mA, latching U3 across a power cycle. Each repair changed the exact device and required fresh tests.
+6. U3 rejected a held-high W433 signal. After live TX A handed over to live TX B, opening W433 inhibited both gates with 31 frames pending. Reception and diagnostics stayed powered, and reset was refused while open. Reconnecting required fresh link tests and explicit reset. The final run verified 64/64 native gate decisions, including 17 backup bursts, and finished with both outputs inhibited.
+
+The board fits at 10.13 x 7.84 Unity units on the 15.79 x 8.54 game table. Unity resolved 400 modular models and all 48 authored URP material families. MainMenu and the catalog each contain one Level 125 entry. All 118 prior campaign indices were preserved.
+
+DSX33-EDU-1 is a fictional educational circuit with a virtual RF link and native DC training measurements. Original art and unassigned source task records are preserved. The training manifest is DSX33/Data/DSX33_EDU_1_Training_Routes.csv with SHA-256 5ce1d84fed8739d331707d1ebb843e1c66d03b43ecbc888f8c20ff05392d97b2.
+
+Evidence is in Logs/Level125Acceptance.txt and Logs/Level125Inspection.png. Validation covers the loaded campaign and automated Unity Editor gameplay. Standalone builds, device touch and earlier-level gameplay regressions were outside this run.

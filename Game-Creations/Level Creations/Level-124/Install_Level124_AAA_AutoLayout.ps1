@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
   [Parameter(Mandatory=$true)][string]$UnityProjectPath,
   [switch]$DryRun
@@ -105,3 +105,4 @@ Write-Host "[L124] Installed $copies files to $destination" -ForegroundColor Gre
 Write-Host 'Unity: Tools > Project Spark > Automatic Level Generator > 124'
 Write-Host 'First 3 Validate Sources; 4 Rebuild URP; 5 Create COMPLETE visual mainboard; then 1 Build FULL Layout.'
 Write-Host 'Existing Levels 1-123 were not targeted. Electrical/spacecraft/gameplay certification is BLOCKED.'
+

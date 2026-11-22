@@ -1,0 +1,31 @@
+{
+  "level": 125,
+  "faults": [
+    {
+      "id": "F1",
+      "target": "Y1",
+      "name": "Reference oscillator drift",
+      "symptom": "Frequency offset and receiver lock loss",
+      "diagnosis": "Compare frequency and lock status against independent reference",
+      "repair": "Replace approved oscillator or repair its approved connection; retest both RF channels"
+    },
+    {
+      "id": "F2",
+      "target": "C1",
+      "name": "Receiver B supply-filter ESR increase",
+      "symptom": "Supply ripple and intermittent receive confidence",
+      "diagnosis": "Measure rail ripple and ESR; compare A/B receiver evidence",
+      "repair": "Replace approved filter component; repeat ripple, receive and failover tests"
+    },
+    {
+      "id": "F3",
+      "target": "Q1",
+      "name": "Transmitter A output-stage overcurrent",
+      "symptom": "Overcurrent latch and transmitter inhibit",
+      "diagnosis": "Observe independent current-sense evidence and compare expected operating point",
+      "repair": "Isolate power in simulation; replace approved failed stage; retest current, fault latch and independent inhibit"
+    }
+  ],
+  "physical_electrical_targets_verified": false,
+  "no_automatic_repair_completion": true
+}

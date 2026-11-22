@@ -1,0 +1,15 @@
+PROJECT SPARK LEVEL 123 | THE FLIGHT SOVEREIGN
+Unity 6000.3.19f1 compiled the level. The final Play Mode run passed all six campaign objectives.
+
+1. Secured 312 parts at their original footprints. Verified all eight heat sinks and three shields, package and orientation checks, and recovery of a partial assembly checkpoint.
+2. Completed 400 native copper edges, 156 plated vias and 38 inspection layers. Verified the native Wire tool, distinct U5 and U3 W401 contacts, and continuity in all six circuit domains.
+3. Commissioned two flight control channels, two clocks, reset, six sensor paths and eight training current shunts. The dual clocks measured 5.000 V and the timing trial recorded 101.0 microseconds peak skew. The barometer reference measured 5.000 V.
+4. Passed 64/64 virtual ground-stand samples. The run reached 3.8 degrees peak tilt, recovered after the gust, landed at 0.00 m and verified four overcurrent cuts and four emergency-stop holds. Common-mode inertial bias was rejected. Checkpoint resume restored copper while requiring fresh commissioning.
+5. Diagnosed three distinct native contacts. The M5 shunt fell to 0.0 mA with M4 at 50.0 mA. SPI via V080 caused 26 stale IMU B samples while A and C remained live. The U10 reference fell to 3.76 V, producing 0.47 m of simulated altitude disagreement. Each repair required the correct footprint and spare, isolated power and a fresh successful run.
+6. U3 rejected held-high W401 feedback. Opening W401 disabled all eight outputs with 58 trials pending while independent diagnostic, controller and drive rails stayed powered. After reconnecting, the campaign required fresh trials and an explicit U3 reset. The final run verified 64/64 native gate decisions and finished with all outputs inhibited.
+
+The board fits at 10.13 x 7.68 Unity units on the 15.79 x 8.54 table. All 44 original URP material families and the full set of 368 modular source assets were resolved. The playable prefab has one MainMenu entry and one catalog entry. All 116 prior campaign indices were preserved.
+
+AFX31-EDU-1 is a fictional educational circuit and ground-stand model. The original schematics and art records remain as supplied. The generated manifest is AFX31/Data/AFX31_EDU_1_Training_Routes.csv with SHA-256 248e06264a2d1dcfc023ee706df3aa63335215adcd81c463db2e6ffe1eafa155.
+
+Evidence is in Logs/Level123Acceptance.txt and Logs/Level123Inspection.png. Validation covers the loaded campaign and automated Unity Editor gameplay. Standalone builds, device touch and earlier-level gameplay regressions were outside this run.

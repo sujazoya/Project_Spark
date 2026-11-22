@@ -28,7 +28,6 @@ namespace ProjectSpark.Level121.Editor
         private static readonly CultureInfo Invariant = CultureInfo.InvariantCulture;
 
         [MenuItem(Menu + "1. Build FULL Level_121_Layout")]
-        [MenuItem("Tools/Project Spark/Levels/Create Level 121")]
         public static void BuildFull()
         {
             string source = FindSourceRoot();

@@ -1,0 +1,21 @@
+PROJECT SPARK LEVEL 127
+The Thermal Aegis / TCX-35 / TCX35-EDU-1
+Validation completed 22 November 2026 in Unity 6.3 LTS (6000.3.19f1).
+
+Campaign delivery
+The MainMenu campaign loaded the playable Level_127_Layout prefab and definition from the level layout catalog. The native manager awarded all six objectives from a clean 0/6 start. The campaign scene diff contains one appended entry after its original 120 serialized entries.
+The 660 × 520 mm source board and exact original component positions are preserved in board-local units. Its centered footprint in the game is 10.13 × 7.98 Unity units on a 15.79 × 8.54 table.
+Source preflight resolved 434 modular model records and 52 URP material files. The loaded layout placed 376 components and verified the alignment of six heat spreaders, three heat pipes and one shield. The assembled showcase stays separate from scored placements.
+TCX35-EDU-1 is a fictional educational schematic. Its 464 ordinary route pairs, 188 via spans and two W465 pads have 930 distinct native terminal positions over 46 inspection layers. W465 remains separate from the assembly count and starts open.
+Training manifest: TCX35/Data/TCX35_EDU_1_Training_Routes.csv
+SHA-256: 756193e8e707bfde6ec3bdc4b29ecccf5ec0e1a9f63127dd17a4b87f64c11dac
+
+Play Mode acceptance
+1 PASS 376 verified placements. Rejected wrong package, orientation and unseated parts. A resumed checkpoint restored the assembly contact with bench power isolated.
+2 PASS 464 native routed pairs and 188 plated spans. Verified 46 layer references, wrong-layer rejection, plating prerequisites, and a real Wire tool route. Ordinary copper could not substitute for W465.
+3 PASS Commissioned eight circuit domains with native solved readings. Loop A drew 50.0 mA, loop B drew 40.0 mA, and all 12 sensor contacts were energized. The training heater produced 40.2 W in the thermal model.
+4 PASS All 64 endurance samples passed. Simulated core range 18.4–46.9 °C, final 40.7 °C. Verified six heated samples, 16 backup-loop samples, primary recovery and an energy balance residual of 0.001 J. The commissioned checkpoint retained construction and milestones and required fresh protection evidence.
+5 PASS Three repaired native faults required independent remeasurement and a fresh trial. Q1 cut pump A to 0.0 mA and triggered backup flow. R1 drifted to 1.47× with an 11.1 °C reference discrepancy. TH1 produced 26 stale samples with maximum age 4.0 s; the independent channels stayed live.
+6 PASS Opening W465 during powered loop-B operation cut both radiator outputs with 31 samples pending. Backup cooling, the survival supply, telemetry and all sensor channels stayed live. A held-high input failed the U3 watchdog and reconnection required fresh evidence plus a manual reset. The rerun passed all 64 gate decisions, including all 16 backup-loop samples.
+
+Editor harness used the production campaign loader, native circuit solver, controller actions and objective evaluator. The screenshots and Play Mode trace are in Logs/Level127*. Device builds, physical touch input, performance profiling, the source kit's full 100-case matrix and a gameplay replay of earlier levels were outside this run. Thermal values describe the in-game simulation.
