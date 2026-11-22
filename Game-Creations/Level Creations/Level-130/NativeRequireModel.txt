@@ -1,0 +1,14 @@
+        private static GameObject RequireModel(string file)
+        {
+            string path = Source + "/Models_Native/" + Path.GetFileNameWithoutExtension(file) + ".spark130mesh";
+            GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            if (model == null)
+                throw new InvalidDataException("Native mesh asset not imported: " + path + ". Reimport Models_Native after scripts compile.");
+            MeshFilter[] filters = model.GetComponentsInChildren<MeshFilter>(true);
+            for (int i = 0; i < filters.Length; ++i)
+                if (filters[i].sharedMesh == null || filters[i].sharedMesh.vertexCount == 0)
+                    throw new InvalidDataException("Native mesh group is empty: " + path + "/" + filters[i].name);
+            if (filters.Length == 0)
+                throw new InvalidDataException("Native mesh asset contains no geometry: " + path);
+            return model;
+        }

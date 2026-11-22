@@ -705,6 +705,7 @@ namespace ProjectSpark.Gameplay
 
         private void OnGUI()
         {
+            if (ProjectSpark.UIManagement.SparkUIManager.SuppressWorkbenchAnnotations) return;
             if (!showStatus || !Active) return;
             GUI.Box(new Rect(15f, Screen.height - 105f,
                 Mathf.Min(850f, Screen.width - 30f), 85f),

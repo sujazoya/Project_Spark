@@ -15,6 +15,7 @@ namespace ProjectSpark.UI.VisualTeaching
         public Vector2 normalized = new Vector2(.5f, .5f);
         public string anchorId = "";
         public Vector2 pixelOffset = Vector2.zero;
+        [NonSerialized] internal Transform liveTarget;
     }
 
     [Serializable]
@@ -31,6 +32,7 @@ namespace ProjectSpark.UI.VisualTeaching
         public string text = "";
         [Range(12, 44)] public int fontSize = 22;
         public bool persistent = true;
+        [NonSerialized] internal bool worldGeometry;
     }
 
     [Serializable]
@@ -59,6 +61,13 @@ namespace ProjectSpark.UI.VisualTeaching
         public string caption = "Circuit schematic";
         public SparkSchematicPart[] parts = Array.Empty<SparkSchematicPart>();
         public SparkSchematicWire[] wires = Array.Empty<SparkSchematicWire>();
+        [NonSerialized] internal SparkObjectiveCard[] objectiveCards;
+    }
+
+    internal sealed class SparkObjectiveCard
+    {
+        public string Title, Description, Status;
+        public Color Accent;
     }
 
     [Serializable]
@@ -92,5 +101,7 @@ namespace ProjectSpark.UI.VisualTeaching
         public string explanation = "";
         public SparkVisualCommand[] annotations = Array.Empty<SparkVisualCommand>();
         public SparkSchematicData schematic = new SparkSchematicData();
+        [NonSerialized] internal string status;
+        [NonSerialized] internal string instruction;
     }
 }

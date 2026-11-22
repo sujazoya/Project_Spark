@@ -8,6 +8,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using ProjectSpark.Circuit;
 using ProjectSpark.Electrical;
+using ProjectSpark.UI.VisualTeaching;
 
 namespace ProjectSpark.AI.Tutorial
 {
@@ -25,6 +26,10 @@ namespace ProjectSpark.AI.Tutorial
         [SerializeField] private SparkAIVoiceController voice;
         [SerializeField] private Camera sceneCamera;
         private SparkAIWorldContext worldContext;
+        private SparkDrawCurrentLevel levelDrawing;
+        private SparkLevelLayout pendingLayout;
+        private SparkAILevelContext CurrentContext =>
+            worldContext ? worldContext.Capture() : SparkAILevelContext.Capture(levelManager);
 
         private GameObject lastHoveredInspectable;
 
@@ -321,6 +326,9 @@ public void Hide()
             if (Input.GetKeyDown(toggleKey) &&
                 (questionInput == null || !questionInput.isFocused)) Toggle();
 
+            if (pendingQuestion != null && pendingLayout != CurrentContext.Layout)
+                pendingQuestion = null;
+
             if (pendingQuestion != null && Time.unscaledTime >= pendingUntil)
             {
                 string timedOutQuestion = pendingQuestion;
@@ -599,30 +607,81 @@ private string ExplainRememberedResistor()
             Resolve();
             if (questionInput != null) questionInput.text = string.Empty;
 
-            if (routeQuestionsToExternalBrain && ExternalQuestionRequested != null)
+            var context = CurrentContext;
+            if (TryDrawRequest(question, out string visualReply, out bool drawingOpened))
+            {
+                PublishAnswer(question, visualReply);
+                if (drawingOpened) Hide();
+                return;
+            }
+            if (context.TryAnswer(question, out string verifiedReply))
+            {
+                PublishAnswer(question, verifiedReply);
+                return;
+            }
+
+            if (routeQuestionsToExternalBrain && ExternalQuestionRequested != null && context.HasEvaluation)
             {
                 pendingQuestion = question;
+                pendingLayout = context.Layout;
                 pendingUntil = Time.unscaledTime + externalAnswerTimeout;
-                SetAnswer("SPARK AI · THINKING", "Checking verified circuit context for: " + question);
+                SetAnswer("SPARK AI · THINKING", "Checking the verified level context.");
                 ExternalQuestionRequested.Invoke(question, BuildVerifiedContext());
                 return;
             }
 
+            PublishAnswer(question, LocalAnswer(question));
+        }
+
+        private void PublishAnswer(string question, string reply)
+        {
             pendingQuestion = null;
-            string reply = LocalAnswer(question);
+            pendingLayout = null;
             SetAnswer("SPARK AI · ANSWER", reply);
             AnswerReady?.Invoke(question, reply);
+        }
+
+        private bool TryDrawRequest(string question, out string reply, out bool shown)
+        {
+            reply = null;
+            shown = false;
+            string text = question.Trim().ToLowerInvariant();
+            if (!text.StartsWith("draw ") && !text.StartsWith("show ") && !text.StartsWith("teach ")) return false;
+            bool world = text.Contains("3d") || text.Contains("workbench highlight");
+            bool wiring = text.Contains("live circuit") || text.Contains("current circuit") || text.Contains("wiring");
+            bool board = text.Contains("whiteboard") || text.Contains("2d") ||
+                (text.StartsWith("draw ") && (text.Contains("level") || text.Contains("objective") || wiring));
+            if (!world && !board) return false;
+            var context = CurrentContext;
+            var requested = System.Text.RegularExpressions.Regex.Match(text, @"\blevel[\s_-]*0*(\d+)\b");
+            var loaded = System.Text.RegularExpressions.Regex.Match(context.Definition ? context.Definition.LevelId : "",
+                @"^level[\s_-]*0*(\d+)$", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            if (requested.Success && requested.Groups[1].Value != loaded.Groups[1].Value)
+            {
+                reply = $"Load Level {requested.Groups[1].Value} to see its workbench drawing.";
+                return true;
+            }
+            if (!levelDrawing) levelDrawing = FindFirstObjectByType<SparkDrawCurrentLevel>(FindObjectsInactive.Include);
+            if (!levelDrawing)
+            {
+                reply = "Visual teaching is unavailable in this scene.";
+                return true;
+            }
+            shown = world ? levelDrawing.ShowCurrentInWorld() :
+                levelDrawing.ShowCurrentOnWhiteboard(wiring, text.Contains("objective"));
+            reply = shown ? world ? "Highlighted a verified location on the current workbench." :
+                "Opened the current level on the teaching whiteboard." : world ?
+                "No current physical teaching location is available. Try a 2D objective map." :
+                "No current level drawing is available.";
+            return true;
         }
 
         /// <summary>External brain adapter calls this on the Unity main thread.</summary>
         public void DeliverExternalAnswer(string reply)
         {
-            if (pendingQuestion == null) return;
+            if (pendingQuestion == null || pendingLayout != CurrentContext.Layout) return;
             string question = pendingQuestion;
-            pendingQuestion = null;
-            if (string.IsNullOrWhiteSpace(reply)) reply = LocalAnswer(question);
-            SetAnswer("SPARK AI · ANSWER", reply);
-            AnswerReady?.Invoke(question, reply);
+            PublishAnswer(question, string.IsNullOrWhiteSpace(reply) ? LocalAnswer(question) : reply);
         }
 
        
@@ -663,6 +722,7 @@ public string BuildVerifiedContext()
         new System.Text.StringBuilder();
 
     sb.AppendLine(worldContext.BuildSnapshot());
+    if (!worldContext.Capture().HasEvaluation) return sb.ToString();
 
     // =====================================================
     // 3. CONVERSATIONAL COMPONENT MEMORY
@@ -1427,6 +1487,13 @@ public string LocalAnswer(string question)
         return "Ask Spark a question about your circuit.";
 
         
+var context = CurrentContext;
+if (context.TryAnswer(question, out string verifiedReply))
+    return verifiedReply;
+if (context.Definition && !context.HasEvaluation ||
+    !context.Definition && levelManager && levelManager.ActiveLevel)
+    return context.StateText();
+
 string diagnosticQuestion =
     question.Trim().ToLowerInvariant();
 
@@ -2244,13 +2311,9 @@ public void ExplainCircuit()
 {
     Resolve();
 
-    if (levelManager == null ||
-        levelManager.ActiveLevel == null)
+    if (!CurrentContext.HasEvaluation)
     {
-        SetAnswer(
-            "CIRCUIT STATUS",
-            "Start a level to inspect and diagnose its circuit.");
-
+        SetAnswer("CIRCUIT STATUS", CurrentContext.StateText());
         return;
     }
 
@@ -2771,13 +2834,16 @@ public void GiveHint()
 {
     Resolve();
 
-    if (levelManager == null ||
-        levelManager.ActiveLevel == null)
+    var context = CurrentContext;
+    if (!context.HasEvaluation)
     {
-        SetAnswer(
-            "SPARK AI · HINT",
-            "Start a level to receive circuit-specific hints.");
-
+        SetAnswer("SPARK AI · HINT", context.StateText());
+        return;
+    }
+    if (context.Layout.GetComponentInChildren<ISparkAILevelTeachingFocus>() is ISparkAILevelTeachingFocus focus &&
+        focus.TryGetTeachingFocus(out _, out string guidance))
+    {
+        SetAnswer("SPARK AI · NEXT STEP", guidance);
         return;
     }
 
@@ -2809,18 +2875,21 @@ public void GiveHint()
         public void OpenTutorial()
         {
             Resolve();
-            if (tutorial == null)
+            var context = CurrentContext;
+            if (!context.Definition)
             {
-                SetAnswer("TUTORIAL", "Assign SparkTutorialDirector in the Inspector.");
+                SetAnswer("TUTORIAL", context.StateText());
                 return;
             }
-            if (levelManager != null && levelManager.IsCompleted)
+            if (tutorial && tutorial.IsRunning && context.HasEvaluation)
             {
-                SetAnswer("LEVEL COMPLETE", "This level is already completed. The beginner tutorial will not restart automatically.");
+                SetAnswer("TUTORIAL", "Follow the active guided lesson for " + SparkAILevelContext.Title(context.Definition) + ".");
                 return;
             }
-            if (!tutorial.IsRunning) tutorial.BeginDefault();
-            SetAnswer("TUTORIAL", "The guided lesson is available. Follow its on-screen steps; Ask Spark stays optional.");
+            if (!levelDrawing) levelDrawing = FindFirstObjectByType<SparkDrawCurrentLevel>(FindObjectsInactive.Include);
+            bool shown = levelDrawing && levelDrawing.ShowCurrentOnWhiteboard(objectives: true);
+            SetAnswer("LEVEL TEACHING", context.Describe());
+            if (shown) Hide();
         }
 
         public void OpenDetailedHints()
@@ -3044,12 +3113,10 @@ private string GetStateSignature()
             if (status == null) return;
             string next = GetStateSignature();
             if (next != lastStateSignature) { lastStateSignature = next; hintStage = 0; }
-            if (levelManager == null || levelManager.ActiveLevel == null)
-                status.text = "NO ACTIVE LEVEL";
-            else
-                status.text = levelManager.ActiveLevel.DisplayName + "  •  " +
-                    levelManager.RuntimeState + "  •  " + levelManager.SatisfiedTargetCount + "/" +
-                    levelManager.ActiveTargetCount + " TARGETS";
+            var context = CurrentContext;
+            status.text = context.Definition
+                ? SparkAILevelContext.Title(context.Definition) + "  •  " + context.StateText().Split('\n')[0]
+                : "NO ACTIVE LEVEL";
         }
 
         
@@ -3298,37 +3365,9 @@ private void UnbindButtons()
 private string ExplainCurrentLevelBriefly()
 {
     Resolve();
-
-    if (levelManager == null ||
-        levelManager.ActiveLevel == null)
-    {
-        return "No level is currently active.";
-    }
-
-    int number = levelManager.ActiveLevelIndex + 1;
-    int total = levelManager.LevelCount;
-
-    string response =
-        "You are currently playing Level " +
-        number + " of " + total + ".\n\n" +
-        levelManager.ActiveLevel.DisplayName +
-        "\n\nStatus: " +
-        levelManager.RuntimeState +
-        "\nObjectives: " +
-        levelManager.SatisfiedTargetCount + "/" +
-        levelManager.ActiveTargetCount;
-
-    if (levelManager.IsCompleted)
-        response += "\n\nThis level is complete.";
-
-    if (levelManager.IsFailed)
-        response += "\n\nThis level has failed.";
-
-    return response;
+    return CurrentContext.Describe(detailed: false);
 }
 
-
-        
         [Header("Component Memory")]
         [SerializeField]
         private GameObject rememberedComponent;

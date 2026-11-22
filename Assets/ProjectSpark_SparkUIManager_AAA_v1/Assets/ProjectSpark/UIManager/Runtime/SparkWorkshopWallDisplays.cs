@@ -1,5 +1,9 @@
+using System.Collections.Generic;
 using System.Linq;
+using AAAUI.VFX;
+using ProjectSpark.AI.Tutorial;
 using ProjectSpark.Cameras;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +13,20 @@ namespace ProjectSpark.UIManagement
     {
         private Canvas left;
         private Canvas right;
+        private CinemachineCamera leftCamera;
+        private CinemachineCamera rightCamera;
         private SparkGameCameraRig cameraRig;
+        private RectTransform safeControls;
+        private Button masterButton;
+        private Button monitorButton;
+        private Rect lastSafeArea;
+        private Vector2Int lastScreenSize;
+        private readonly List<Canvas> hiddenCanvases = new();
+        private readonly List<GraphicRaycaster> hiddenRaycasters = new();
+        private SparkTutorialCircuitAwareness liveCoach;
+        private CanvasGroup coachOverlay;
+        private float coachOpacity;
+        private bool coachRaycasts, coachSuppressed;
 
         internal bool Mount(Transform room, SparkGameCameraRig rig)
         {
@@ -28,12 +45,21 @@ namespace ProjectSpark.UIManagement
             // Viewed from the operator side (+Z), +X in room space is left.
             left = MakeSurface(room, screens[1], "Left Wall - Master Monitor");
             right = MakeSurface(room, screens[0], "Right Wall - Workshop Computer");
+            if (cameraRig)
+            {
+                leftCamera = MakeCamera(room, "Master Panel Camera");
+                rightCamera = MakeCamera(room, "Right Wall Monitor Camera");
+                BuildControls();
+                cameraRig.WallDisplayChanged += RefreshControls;
+            }
             return true;
         }
 
-        internal void Connect(SparkUIMonitorDashboard dashboard, SparkUIManager manager, Canvas source, RectTransform computer)
+        internal void Connect(SparkUIMonitorDashboard dashboard, SparkUIManager manager, Canvas source,
+            RectTransform computer, SparkTutorialCircuitAwareness liveCoach)
         {
-            dashboard.AttachToWall(left, LocateMaster, LeaveMaster, () => Focus(right));
+            this.liveCoach = liveCoach;
+            dashboard.AttachToWall(left, LocateMaster, LeaveMaster, () => Focus(right, rightCamera));
             if (!source || !computer) return;
             var oldControls = source.GetComponent<MonitorMaximizeController>();
             if (oldControls)
@@ -78,21 +104,172 @@ namespace ProjectSpark.UIManagement
             }
         }
 
-        private void LocateMaster() => Focus(left);
+        private void LocateMaster() => Focus(left, leftCamera);
         private void LeaveMaster()
         {
             if (cameraRig && left) cameraRig.LeaveWallDisplay(left.transform);
             if (cameraRig && right) cameraRig.LeaveWallDisplay(right.transform);
         }
 
-        private void Focus(Canvas surface)
+        private void Focus(Canvas surface, CinemachineCamera view)
         {
             if (cameraRig && surface)
-                cameraRig.FocusWallDisplay((RectTransform)surface.transform);
+                cameraRig.FocusWallDisplay((RectTransform)surface.transform, view);
+        }
+
+        private void Toggle(Canvas surface, CinemachineCamera view)
+        {
+            if (cameraRig.ActiveWallDisplay == surface.transform) cameraRig.LeaveWallDisplay(surface.transform);
+            else Focus(surface, view);
+        }
+
+        private static CinemachineCamera MakeCamera(Transform room, string name)
+        {
+            var node = new GameObject(name);
+            node.SetActive(false);
+            node.transform.SetParent(room, false);
+            var view = node.AddComponent<CinemachineCamera>();
+            view.enabled = false;
+            node.SetActive(true);
+            return view;
+        }
+
+        private void BuildControls()
+        {
+            var root = new GameObject("Wall Camera Controls", typeof(RectTransform), typeof(Canvas),
+                typeof(CanvasScaler), typeof(GraphicRaycaster));
+            root.transform.SetParent(transform, false);
+            var canvas = root.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.sortingOrder = 31000;
+            var scaler = root.GetComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(1920, 1080);
+            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+            safeControls = new GameObject("Safe area", typeof(RectTransform)).GetComponent<RectTransform>();
+            safeControls.SetParent(root.transform, false);
+            masterButton = MakeButton("Master Panel", 20, () => Toggle(left, leftCamera));
+            monitorButton = MakeButton("Right Monitor", 174, () => Toggle(right, rightCamera));
+            UpdateSafeArea();
+            RefreshControls();
+        }
+
+        private Button MakeButton(string caption, float x, UnityEngine.Events.UnityAction click)
+        {
+            var node = new GameObject(caption, typeof(RectTransform), typeof(Image), typeof(Button));
+            var rect = (RectTransform)node.transform;
+            rect.SetParent(safeControls, false);
+            rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0f, 1f);
+            rect.anchoredPosition = new Vector2(x, -10f);
+            rect.sizeDelta = new Vector2(146f, 42f);
+            var image = node.GetComponent<Image>();
+            var button = node.GetComponent<Button>();
+            button.targetGraphic = image;
+            button.onClick.AddListener(click);
+            var label = new GameObject("Label", typeof(RectTransform), typeof(Text)).GetComponent<Text>();
+            label.transform.SetParent(rect, false);
+            label.rectTransform.anchorMin = Vector2.zero;
+            label.rectTransform.anchorMax = Vector2.one;
+            label.rectTransform.offsetMin = label.rectTransform.offsetMax = Vector2.zero;
+            label.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            label.fontSize = 17;
+            label.fontStyle = FontStyle.Bold;
+            label.color = new Color(.88f, .96f, 1f);
+            label.text = caption;
+            label.alignment = TextAnchor.MiddleCenter;
+            label.raycastTarget = false;
+            return button;
+        }
+
+        private void UpdateSafeArea()
+        {
+            int width = Screen.width;
+            int height = Screen.height;
+            if (width <= 0 || height <= 0) return;
+            lastScreenSize = new Vector2Int(width, height);
+            lastSafeArea = Screen.safeArea;
+            safeControls.anchorMin = new Vector2(lastSafeArea.xMin / width, lastSafeArea.yMin / height);
+            safeControls.anchorMax = new Vector2(lastSafeArea.xMax / width, lastSafeArea.yMax / height);
+            safeControls.offsetMin = safeControls.offsetMax = Vector2.zero;
+        }
+
+        private void LateUpdate()
+        {
+            if (!safeControls || !cameraRig) return;
+            if (lastScreenSize.x != Screen.width || lastScreenSize.y != Screen.height || lastSafeArea != Screen.safeArea)
+            {
+                UpdateSafeArea();
+                cameraRig.RefreshWallFraming();
+            }
+            bool available = !SignalWireBuilder.AnyWireDrawing;
+            masterButton.interactable = available;
+            monitorButton.interactable = available;
+        }
+
+        private void RefreshControls()
+        {
+            bool focused = cameraRig.ActiveWallDisplay;
+            masterButton.image.color = ButtonColor(cameraRig.ActiveWallDisplay == left.transform);
+            monitorButton.image.color = ButtonColor(cameraRig.ActiveWallDisplay == right.transform);
+            if (!focused)
+            {
+                RestoreHud();
+                return;
+            }
+            if (!coachOverlay && liveCoach)
+            {
+                var overlay = liveCoach.transform.Find("Spark_AI_LiveCircuitHUD");
+                if (overlay && !overlay.TryGetComponent<CanvasGroup>(out coachOverlay))
+                    coachOverlay = overlay.gameObject.AddComponent<CanvasGroup>();
+            }
+            if (coachOverlay && !coachSuppressed)
+            {
+                coachOpacity = coachOverlay.alpha;
+                coachRaycasts = coachOverlay.blocksRaycasts;
+                coachOverlay.alpha = 0;
+                coachOverlay.blocksRaycasts = false;
+                coachSuppressed = true;
+            }
+            var layout = cameraRig.ActiveLayout;
+            if (!layout || hiddenCanvases.Count > 0) return;
+            foreach (var canvas in layout.GetComponentsInChildren<Canvas>())
+            {
+                if (!canvas.enabled || canvas.renderMode != RenderMode.ScreenSpaceOverlay) continue;
+                canvas.enabled = false;
+                hiddenCanvases.Add(canvas);
+                if (!canvas.TryGetComponent<GraphicRaycaster>(out var raycaster) || !raycaster.enabled) continue;
+                raycaster.enabled = false;
+                hiddenRaycasters.Add(raycaster);
+            }
+        }
+
+        private static Color ButtonColor(bool selected) => selected
+            ? new Color(.07f, .33f, .45f, .99f) : new Color(.025f, .11f, .18f, .98f);
+
+        private void RestoreHud()
+        {
+            if (coachOverlay && coachSuppressed)
+            {
+                coachOverlay.alpha = coachOpacity;
+                coachOverlay.blocksRaycasts = coachRaycasts;
+            }
+            coachSuppressed = false;
+            foreach (var canvas in hiddenCanvases) if (canvas) canvas.enabled = true;
+            foreach (var raycaster in hiddenRaycasters) if (raycaster) raycaster.enabled = true;
+            hiddenCanvases.Clear();
+            hiddenRaycasters.Clear();
         }
 
         private void OnDestroy()
         {
+            if (cameraRig)
+            {
+                cameraRig.WallDisplayChanged -= RefreshControls;
+                LeaveMaster();
+            }
+            RestoreHud();
+            if (leftCamera) Destroy(leftCamera.gameObject);
+            if (rightCamera) Destroy(rightCamera.gameObject);
             if (left) Destroy(left.gameObject);
             if (right) Destroy(right.gameObject);
         }

@@ -125,8 +125,7 @@ public event Action ProgressChanged;
                     levelManager.Levels[i];
 
                 progress[i].unlocked =
-                    level != null &&
-                    level.UnlockedByDefault;
+                    !levelManager.Campaign && level && level.UnlockedByDefault;
 
                 progress[i].completed = false;
                 progress[i].completionCount = 0;
@@ -137,29 +136,21 @@ public event Action ProgressChanged;
 
         private void EnsureFirstAvailableLevel()
         {
-            if (progress == null ||
-                progress.Length == 0)
-            {
-                return;
-            }
-
-            bool anyUnlocked = false;
-
-            for (int i = 0;
-                 i < progress.Length;
-                 i++)
-            {
-                if (progress[i].unlocked)
-                {
-                    anyUnlocked = true;
-                    break;
-                }
-            }
-
-            if (anyUnlocked)
+            if (levelManager == null || progress == null)
                 return;
 
-            progress[0].unlocked = true;
+            int first = levelManager.GetFirstCampaignIndex();
+            if (!IsValidIndex(first))
+                return;
+
+            if (!levelManager.Campaign)
+            {
+                foreach (int index in levelManager.GetCampaignLevelIndices())
+                    if (IsUnlocked(index))
+                        return;
+            }
+
+            progress[first].unlocked = true;
         }
 
         // ============================================================
@@ -196,19 +187,23 @@ public event Action ProgressChanged;
                 return;
             }
 
-            int index =
-                FindLevelIndex(level);
+            MarkCompleted(levelManager.GetLevelIndex(level));
+        }
 
-            if (index < 0)
-                return;
+        private int GetUnlockableSuccessor(int index)
+        {
+            SparkLevelDefinition level = levelManager.GetLevel(index);
+            if (!autoUnlockNextLevel || !level || !level.AutoUnlockNextLevel)
+                return -1;
 
-            MarkCompleted(index);
+            int next = levelManager.GetAdjacentLevelIndex(index, 1);
+            if (!levelManager.Campaign || next < 0)
+                return next;
 
-            if (autoUnlockNextLevel &&
-                level.AutoUnlockNextLevel)
-            {
-                UnlockLevel(index + 1);
-            }
+            SparkChapterDefinition current = levelManager.Campaign.FindChapter(level);
+            SparkLevelDefinition successor = levelManager.GetLevel(next);
+            SparkChapterDefinition following = levelManager.Campaign.FindChapter(successor);
+            return following == current || levelManager.ChapterAccess.CanEnterLevel(successor) ? next : -1;
         }
 
         // ============================================================
@@ -248,7 +243,7 @@ public event Action ProgressChanged;
             if (!IsValidIndex(index))
                 return false;
 
-            if (index == 0)
+            if (levelManager && index == levelManager.GetFirstCampaignIndex())
                 return false;
 
             progress[index].unlocked = false;
@@ -272,28 +267,25 @@ public event Action ProgressChanged;
 
         public bool MarkCompleted(int index)
         {
-            if (!IsValidIndex(index))
+            if (!IsValidIndex(index) || !levelManager || !levelManager.IsCampaignLevel(index))
                 return false;
 
-            bool firstCompletion =
-                !progress[index].completed;
-
+            bool firstCompletion = !progress[index].completed;
             progress[index].completed = true;
-
             progress[index].unlocked = true;
-
             progress[index].completionCount++;
 
-            if (firstCompletion)
-            {
-                LevelCompleted?.Invoke(index);
+            int next = GetUnlockableSuccessor(index);
+            bool unlockNext = IsValidIndex(next) && !progress[next].unlocked;
+            if (unlockNext)
+                progress[next].unlocked = true;
 
-                Log(
-                    $"Level completed: {index}");
-            }
+            if (firstCompletion)
+                LevelCompleted?.Invoke(index);
+            if (unlockNext)
+                LevelUnlocked?.Invoke(next);
 
             SaveIfEnabled();
-
             return true;
         }
 
@@ -311,48 +303,32 @@ public event Action ProgressChanged;
 
         public bool CanPlayLevel(int index)
         {
-            if (!IsValidIndex(index)) return false;
-            if (IsUnlocked(index)) return true;
+            if (!IsValidIndex(index) || !levelManager || !levelManager.IsCampaignLevel(index))
+                return false;
+            if (IsUnlocked(index))
+                return true;
 
-            // Optional chapter-entry access; existing levels remain unchanged.
-            SparkChapterAccessController chapterAccess =
-                GetComponent<SparkChapterAccessController>();
-            if (chapterAccess == null || levelManager == null) return false;
-            return chapterAccess.CanEnterLevel(levelManager.GetLevel(index));
+            SparkChapterAccessController chapterAccess = levelManager.ChapterAccess;
+            if (!chapterAccess)
+                chapterAccess = GetComponent<SparkChapterAccessController>();
+            return chapterAccess && chapterAccess.CanEnterLevel(levelManager.GetLevel(index));
         }
 
         public int GetFirstUnlockedLevel()
         {
-            if (progress == null)
-                return -1;
-
-            for (int i = 0;
-                 i < progress.Length;
-                 i++)
-            {
-                if (progress[i].unlocked)
-                    return i;
-            }
-
+            if (levelManager)
+                foreach (int index in levelManager.GetCampaignLevelIndices())
+                    if (CanPlayLevel(index))
+                        return index;
             return -1;
         }
 
         public int GetFirstIncompleteLevel()
         {
-            if (progress == null)
-                return -1;
-
-            for (int i = 0;
-                 i < progress.Length;
-                 i++)
-            {
-                if (progress[i].unlocked &&
-                    !progress[i].completed)
-                {
-                    return i;
-                }
-            }
-
+            if (levelManager)
+                foreach (int index in levelManager.GetCampaignLevelIndices())
+                    if (CanPlayLevel(index) && !IsCompleted(index))
+                        return index;
             return -1;
         }
 
@@ -397,8 +373,7 @@ public event Action ProgressChanged;
                     levelManager.Levels[i];
 
                 progress[i].unlocked =
-                    level != null &&
-                    level.UnlockedByDefault;
+                    !levelManager.Campaign && level && level.UnlockedByDefault;
 
                 progress[i].completed = false;
                 progress[i].completionCount = 0;
@@ -493,8 +468,9 @@ public event Action ProgressChanged;
                         data.levels[i];
                 }
 
+                RestoreCampaignAccess();
                 EnsureFirstAvailableLevel();
-
+                ProgressChanged?.Invoke();
                 Log("Progress loaded.");
             }
             catch (Exception exception)
@@ -528,25 +504,36 @@ public event Action ProgressChanged;
         // HELPERS
         // ============================================================
 
-        private int FindLevelIndex(
-            SparkLevelDefinition level)
+        private void RestoreCampaignAccess()
         {
-            if (levelManager == null ||
-                level == null ||
-                levelManager.Levels == null)
+            if (!levelManager || !levelManager.Campaign)
+                return;
+
+            // Old campaigns occasionally registered a definition more than once.
+            for (int index = 0; index < progress.Length; index++)
             {
-                return -1;
+                int canonical = levelManager.GetLevelIndex(levelManager.GetLevel(index));
+                if (canonical < 0 || canonical == index)
+                    continue;
+
+                progress[canonical].unlocked |= progress[index].unlocked || progress[index].completed;
+                progress[canonical].completed |= progress[index].completed;
+                progress[canonical].completionCount = Mathf.Max(
+                    progress[canonical].completionCount, progress[index].completionCount);
             }
 
-            for (int i = 0;
-                 i < levelManager.Levels.Length;
-                 i++)
-            {
-                if (levelManager.Levels[i] == level)
-                    return i;
-            }
+            if (!autoUnlockNextLevel)
+                return;
 
-            return -1;
+            foreach (int index in levelManager.GetCampaignLevelIndices())
+            {
+                if (!IsCompleted(index))
+                    continue;
+
+                int successor = GetUnlockableSuccessor(index);
+                if (IsValidIndex(successor))
+                    progress[successor].unlocked = true;
+            }
         }
 
         private bool IsValidIndex(int index)

@@ -78,7 +78,11 @@ namespace ProjectSpark.UI.VisualTeaching
         public void Rebuild()
         {
             for (int i = labels.Count - 1; i >= 0; i--)
-                if (labels[i] != null) Destroy(labels[i]);
+                if (labels[i] != null)
+                {
+                    labels[i].SetActive(false);
+                    Destroy(labels[i]);
+                }
             labels.Clear();
             graphics.Clear();
             if (lines == null || diagramContent == null) return;
@@ -91,6 +95,12 @@ namespace ProjectSpark.UI.VisualTeaching
                 return;
             }
             if (captionText != null) captionText.text = data.caption;
+            if (data.objectiveCards != null)
+            {
+                DrawObjectiveCards(data.objectiveCards, size);
+                lines.Clear();
+                return;
+            }
             if (data.wires != null)
                 foreach (SparkSchematicWire wire in data.wires)
                 {
@@ -107,6 +117,70 @@ namespace ProjectSpark.UI.VisualTeaching
 
         private static Vector2 Local(Vector2 normalized, Vector2 size) =>
             new Vector2((normalized.x - .5f) * size.x, (normalized.y - .5f) * size.y);
+
+        private void DrawObjectiveCards(SparkObjectiveCard[] cards, Vector2 size)
+        {
+            if (cards.Length == 0)
+            {
+                MakeLabel("No configured objectives", Vector2.zero, Color.white, size.x * .8f, 20);
+                return;
+            }
+            int columns = size.x >= 460 && cards.Length > 1 ? 2 : 1;
+            int rows = Mathf.CeilToInt(cards.Length / (float)columns);
+            const float gutter = 10f;
+            float width = (size.x - gutter * (columns + 1)) / columns;
+            float height = Mathf.Clamp((size.y - gutter * (rows + 1)) / rows, 54f, 115f);
+            for (int i = 0; i < cards.Length; i++)
+            {
+                var item = cards[i];
+                var card = new GameObject("Objective " + (i + 1), typeof(RectTransform), typeof(Image));
+                labels.Add(card);
+                var rect = (RectTransform)card.transform;
+                rect.SetParent(diagramContent, false);
+                rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0, 1);
+                rect.anchoredPosition = new Vector2(gutter + (i % columns) * (width + gutter),
+                    -gutter - (i / columns) * (height + gutter));
+                rect.sizeDelta = new Vector2(width, height);
+                var background = card.GetComponent<Image>();
+                background.color = new Color(.037f, .095f, .137f);
+                background.raycastTarget = false;
+
+                var stripe = new GameObject("Accent", typeof(RectTransform), typeof(Image)).GetComponent<Image>();
+                stripe.transform.SetParent(rect, false);
+                stripe.rectTransform.anchorMin = new Vector2(0, 0);
+                stripe.rectTransform.anchorMax = new Vector2(0, 1);
+                stripe.rectTransform.offsetMin = Vector2.zero;
+                stripe.rectTransform.offsetMax = new Vector2(3, 0);
+                stripe.color = item.Accent;
+                stripe.raycastTarget = false;
+
+                CardLabel(rect, item.Status, item.Accent, 8, 18, 12, true);
+                CardLabel(rect, item.Title, new Color(.90f, .96f, .99f), 27, Mathf.Min(32, height - 29), 19, true);
+                if (height >= 85 && !string.IsNullOrWhiteSpace(item.Description))
+                    CardLabel(rect, item.Description, new Color(.68f, .80f, .87f), 61, height - 64, 14, false);
+            }
+        }
+
+        private static void CardLabel(RectTransform parent, string content, Color color, float top, float height, int size, bool bold)
+        {
+            var text = new GameObject("Text", typeof(RectTransform), typeof(TextMeshProUGUI)).GetComponent<TextMeshProUGUI>();
+            var rect = text.rectTransform;
+            rect.SetParent(parent, false);
+            rect.anchorMin = new Vector2(0, 1);
+            rect.anchorMax = rect.pivot = new Vector2(1, 1);
+            rect.offsetMin = new Vector2(13, -top - height);
+            rect.offsetMax = new Vector2(-8, -top);
+            text.text = content;
+            text.fontSize = size;
+            text.fontStyle = bold ? FontStyles.Bold : FontStyles.Normal;
+            text.enableAutoSizing = true;
+            text.fontSizeMin = 11;
+            text.fontSizeMax = size;
+            text.overflowMode = TextOverflowModes.Ellipsis;
+            text.alignment = TextAlignmentOptions.MidlineLeft;
+            text.color = color;
+            text.raycastTarget = false;
+        }
 
         private void Add(Vector2[] points, Color color, float width = 3f, bool closed = false)
         {

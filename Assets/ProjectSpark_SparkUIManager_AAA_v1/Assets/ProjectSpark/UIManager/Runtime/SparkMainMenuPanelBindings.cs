@@ -56,11 +56,12 @@ namespace ProjectSpark.UIManagement
             var computer=Node("ProjectSparkUI/MonitorScreen canvas/Motitor Parent");
             var monitorCanvas = workshop ? workshop.GetComponent<Canvas>() : null;
             var camera=Find<SparkGameCameraRig>();
+            var liveCoach=Find<SparkTutorialCircuitAwareness>();
             var wallDisplays=gameObject.AddComponent<SparkWorkshopWallDisplays>();
             var room=Node("PS_PRO_GAME_ROOM");
             bool wallsMounted=wallDisplays.Mount(room ? room.transform : null,camera);
             if(wallsMounted)
-                wallDisplays.Connect(dashboard,manager,monitorCanvas,computer ? computer.transform as RectTransform : null);
+                wallDisplays.Connect(dashboard,manager,monitorCanvas,computer ? computer.transform as RectTransform : null,liveCoach);
             else
             {
                 dashboard.AttachToWorkshopMonitor(monitorCanvas);
@@ -124,7 +125,6 @@ namespace ProjectSpark.UIManagement
                 Native("assistant","Ask Spark",SparkUILayer.Main,visible=>{if(visible)assistant.Show();else assistant.Hide();},
                     ()=>assistant && assistant.PanelVisible);
 
-            var liveCoach=Find<SparkTutorialCircuitAwareness>();
             if(liveCoach)
                 Native("live-coach","Live Circuit Coach",SparkUILayer.Overlay,liveCoach.SetPanelOpen,
                     ()=>liveCoach && liveCoach.PanelVisible);

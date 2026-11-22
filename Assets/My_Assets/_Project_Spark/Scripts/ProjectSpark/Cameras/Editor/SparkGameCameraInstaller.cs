@@ -1,10 +1,12 @@
 #if UNITY_EDITOR
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AAAUI.VFX;
+using ProjectSpark.AI.Tutorial;
 using ProjectSpark.Cameras;
 using ProjectSpark.Gameplay;
 using ProjectSpark.HolographicViewer;
@@ -12,7 +14,9 @@ using Unity.Cinemachine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Object=UnityEngine.Object;
 
 [InitializeOnLoad]
@@ -94,6 +98,7 @@ internal static class SparkGameCameraInstaller
         try
         {
             if(mode=="install")Install();
+            SessionState.SetBool(Running+".Walls",mode=="walls");
             SessionState.SetBool(Running,true);
             EditorApplication.EnterPlaymode();
         }
@@ -103,12 +108,136 @@ internal static class SparkGameCameraInstaller
     private static void PlayState(PlayModeStateChange state)
     {
         if(!SessionState.GetBool(Running,false))return;
-        if(state==PlayModeStateChange.EnteredPlayMode) Verify();
+        if(state==PlayModeStateChange.EnteredPlayMode)
+        {
+            if(SessionState.GetBool(Running+".Walls",false)) VerifyWalls();
+            else Verify();
+        }
         if(state==PlayModeStateChange.EnteredEditMode)
         {
             SessionState.EraseBool(Running);
+            SessionState.EraseBool(Running+".Walls");
             Record("Returned to Edit Mode.");
         }
+    }
+
+    private static async void VerifyWalls()
+    {
+        bool previousBackground=Application.runInBackground;
+        try
+        {
+            Application.runInBackground=true;
+            var output=Camera.main;
+            Check(output,"Main camera missing.");
+            var rig=output.GetComponent<SparkGameCameraRig>();
+            var brain=output.GetComponent<CinemachineBrain>();
+            var manager=Object.FindFirstObjectByType<LevelGamePlayManager>();
+            Check(rig&&brain&&manager,"MainMenu camera or campaign missing.");
+            Button master=null,monitor=null;
+            bool FindButtons()
+            {
+                var controls=GameObject.Find("Wall Camera Controls");
+                if(!controls) return false;
+                var buttons=controls.GetComponentsInChildren<Button>();
+                master=Array.Find(buttons,item=>item.name=="Master Panel");
+                monitor=Array.Find(buttons,item=>item.name=="Right Monitor");
+                return master&&monitor;
+            }
+            await Wait(()=>manager.ActiveLevel&&FindButtons(),"screen-top wall controls");
+            if (manager.LevelProgression) manager.LevelProgression.enabled=false;
+            Check(manager.StartLevel(0),"Standard level unavailable.");
+            await Wait(()=>rig.OwnsCamera&&brain.ActiveVirtualCamera?.Name=="Play Station Camera","initial room position");
+            var coach=Object.FindFirstObjectByType<SparkTutorialCircuitAwareness>(FindObjectsInactive.Include);
+            Check(coach,"Live Circuit Coach unavailable.");
+            coach.SetPanelOpen(true);
+            var overlay=coach.transform.Find("Spark_AI_LiveCircuitHUD");
+            Check(overlay&&overlay.gameObject.activeInHierarchy,"Live Circuit Coach overlay unavailable.");
+            var coachOverlay=overlay.GetComponent<CanvasGroup>();
+            float coachOpacity=coachOverlay?coachOverlay.alpha:1f;
+            var roomView=rig.SelectedView;
+            ClickWallButton(master);
+            await CheckWall(output,brain,rig,"Master Panel Camera","Left Wall - Master Monitor","Logs/MasterPanelCamera.png");
+            coachOverlay=overlay.GetComponent<CanvasGroup>();
+            Check(coachOverlay&&coachOverlay.alpha==0&&!coachOverlay.blocksRaycasts,"Live Circuit Coach overlaps the left display.");
+            ClickWallButton(monitor);
+            await CheckWall(output,brain,rig,"Right Wall Monitor Camera","Right Wall - Workshop Computer","Logs/RightWallMonitorCamera.png");
+            ClickWallButton(monitor);
+            await Wait(()=>!rig.ActiveWallDisplay&&rig.OwnsCamera&&brain.ActiveVirtualCamera?.Name=="Play Station Camera","return to room camera");
+            Check(rig.SelectedView==roomView&&Mathf.Approximately(coachOverlay.alpha,coachOpacity),
+                "Previous room view or Live Circuit Coach visibility changed.");
+            Record("PASS Room view restored by clicking the active wall button.");
+
+            var levels=(SparkLevelDefinition[])typeof(LevelGamePlayManager).GetField("levels",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(manager);
+            int recovery=Array.FindIndex(levels,definition=>definition&&definition.LevelId=="level_130");
+            Check(recovery>=0&&manager.StartLevel(recovery),"Level 130 unavailable.");
+            Canvas levelHud=null;
+            await Wait(()=>
+            {
+                levelHud=rig.ActiveLayout?rig.ActiveLayout.GetComponentInChildren<Canvas>():null;
+                return levelHud&&levelHud.enabled&&!rig.enabled&&output.orthographic;
+            },"Level 130 camera and HUD");
+            Vector3 savedPosition=output.transform.position;
+            Quaternion savedRotation=output.transform.rotation;
+            float savedSize=output.orthographicSize;
+            ClickWallButton(master);
+            await CheckWall(output,brain,rig,"Master Panel Camera","Left Wall - Master Monitor");
+            Check(!levelHud.enabled&&!levelHud.GetComponent<GraphicRaycaster>().enabled,"Workbench overlay covers or intercepts the wall.");
+            ClickWallButton(monitor);
+            await CheckWall(output,brain,rig,"Right Wall Monitor Camera","Right Wall - Workshop Computer");
+            ClickWallButton(monitor);
+            Check(!rig.ActiveWallDisplay&&!rig.enabled&&!brain.enabled&&output.orthographic&&
+                Vector3.Distance(savedPosition,output.transform.position)<.01f&&Quaternion.Angle(savedRotation,output.transform.rotation)<.1f&&
+                Mathf.Abs(savedSize-output.orthographicSize)<.01f&&levelHud.enabled&&levelHud.GetComponent<GraphicRaycaster>().enabled,
+                "Level 130 workbench pose, projection, or HUD did not restore.");
+            Record("PASS Both wall views are available over Level 130; returning restores the workbench and input.");
+            ClickWallButton(master);
+            await CheckWall(output,brain,rig,"Master Panel Camera","Left Wall - Master Monitor");
+            Check(manager.StartLevel(0),"Unable to change levels while a wall is selected.");
+            await Wait(()=>!rig.ActiveWallDisplay&&rig.OwnsCamera&&brain.ActiveVirtualCamera?.Name=="Play Station Camera","wall focus released on level change");
+            Record("PASS Changing levels releases wall focus and restores the shared camera.");
+            Record("PASS: Both screen-top wall camera buttons verified.");
+        }
+        catch(Exception error){Record("FAIL: "+error);}
+        finally
+        {
+            Application.runInBackground=previousBackground;
+            EditorApplication.ExitPlaymode();
+        }
+    }
+
+    private static void ClickWallButton(Button button)
+    {
+        Canvas.ForceUpdateCanvases();
+        var rect=(RectTransform)button.transform;
+        Vector2 point=RectTransformUtility.WorldToScreenPoint(null,rect.TransformPoint(rect.rect.center));
+        Check(point.y>Screen.height*.90f,"Wall switch is not near the screen top.");
+        var input=EventSystem.current;
+        Check(input,"EventSystem missing.");
+        var pointer=new PointerEventData(input){position=point,button=PointerEventData.InputButton.Left};
+        var hits=new List<RaycastResult>();
+        input.RaycastAll(pointer,hits);
+        Check(hits.Count>0&&hits[0].gameObject.GetComponentInParent<Button>()==button,
+            $"The top button {button.name} is blocked by {(hits.Count>0 ? hits[0].gameObject.name : "no graphic")}.");
+        ExecuteEvents.Execute(button.gameObject,pointer,ExecuteEvents.pointerClickHandler);
+    }
+
+    private static async Task CheckWall(Camera output,CinemachineBrain brain,SparkGameCameraRig rig,string camera,string wall,string screenshot=null)
+    {
+        await Wait(()=>!brain.IsBlending&&brain.ActiveVirtualCamera?.Name==camera&&rig.ActiveWallDisplay&&
+            rig.ActiveWallDisplay.name==wall,"view "+wall);
+        var display=rig.ActiveWallDisplay;
+        var corners=new Vector3[4];
+        display.GetWorldCorners(corners);
+        Check(corners.Select(output.WorldToViewportPoint).All(point=>point.z>0&&point.x>.035f&&point.x<.965f&&
+            point.y>.035f&&point.y<.965f)&&Vector3.Dot(output.transform.forward,display.forward)>.99f&&
+            display.GetComponent<Canvas>().worldCamera==output,"The wall display is clipped or uses the wrong event camera.");
+        if(screenshot!=null)
+        {
+            File.Delete(screenshot);
+            ScreenCapture.CaptureScreenshot(screenshot);
+            await Wait(()=>File.Exists(screenshot)&&new FileInfo(screenshot).Length>5000,"capture "+wall);
+        }
+        Record("PASS "+camera+" frames "+wall+" on the main output.");
     }
 
     private static async void Verify()

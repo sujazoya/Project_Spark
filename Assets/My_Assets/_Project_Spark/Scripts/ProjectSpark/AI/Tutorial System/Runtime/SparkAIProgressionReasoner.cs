@@ -1,4 +1,5 @@
 
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using ProjectSpark.Gameplay;
@@ -43,8 +44,8 @@ namespace ProjectSpark.AI.Tutorial
             int currentIndex =
                 manager.ActiveLevelIndex;
 
-            int levelCount =
-                manager.LevelCount;
+            int[] campaign = manager.GetCampaignLevelIndices().ToArray();
+            int position = System.Array.IndexOf(campaign, currentIndex) + 1;
 
             sb.AppendLine(
                 "Current level: " +
@@ -52,8 +53,7 @@ namespace ProjectSpark.AI.Tutorial
 
             sb.AppendLine(
                 "Level position: " +
-                (currentIndex + 1) +
-                "/" + levelCount);
+                position + "/" + campaign.Length);
 
             sb.AppendLine(
                 "Runtime state: " +
@@ -99,7 +99,7 @@ namespace ProjectSpark.AI.Tutorial
             // NEXT LEVEL
             // ==========================================
 
-            int nextIndex = currentIndex + 1;
+            int nextIndex = manager.GetAdjacentLevelIndex(currentIndex, 1);
 
             SparkLevelDefinition next =
                 manager.GetLevel(nextIndex);
@@ -150,7 +150,7 @@ namespace ProjectSpark.AI.Tutorial
             sb.AppendLine();
             sb.AppendLine("LEVEL ACCESS");
 
-            for (int i = 0; i < levelCount; i++)
+            foreach (int i in campaign)
             {
                 SparkLevelDefinition level =
                     manager.GetLevel(i);
@@ -180,7 +180,7 @@ namespace ProjectSpark.AI.Tutorial
                         : string.Empty;
 
                 sb.AppendLine(
-                    (i + 1) + ". " +
+                    (level.LevelNumber > 0 ? level.LevelNumber : i + 1) + ". " +
                     level.DisplayName +
                     " - " + access +
                     current);

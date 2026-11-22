@@ -276,7 +276,7 @@ namespace ProjectSpark.Gameplay
 
         private void OnGUI()
         {
-            if (ProjectSpark.UIManagement.SparkUIMonitorDashboard.IsConsoleVisible) return;
+            if (ProjectSpark.UIManagement.SparkUIManager.SuppressWorkbenchAnnotations) return;
             if (Event.current.type != EventType.Repaint || !loader || loader.ActiveLayout != layout) return;
             var camera = Camera.main;
             if (!camera) return;

@@ -1,0 +1,19 @@
+PROJECT SPARK LEVEL 130
+The Recovery Lab / H610-RECOVERY-1
+Unity 6.3 LTS (6000.3.19f1), validated 22 November 2026.
+
+Campaign and assets
+The existing MainMenu campaign loader instantiated the playable Level 130 layout, and LevelGamePlayManager awarded all six objectives from an isolated 0/6 start. The original prefab GUID is reused. The saved MainMenu scene adds just one entry after its 123 original entries, retaining their order and save indices.
+The measured tabletop footprint is 9.42 × 7.98 Unity units on the 15.79 × 8.54 table. The 200 × 236.16 mm board, all 451 original factory, structural and removable placements, and all ten diagnostic anchors retain the authored local positions. The kit audit verified 456 modular FBX/native mesh pairs, the two assembled model imports, 19 source PBR families and 57 texture files.
+H610-RECOVERY-1 defines a fictional training circuit and a synthetic ROM fixture. The 25 authored placement and logical test records are in H610ME/Data/H610_RECOVERY_1_Test_Points.csv. The manufactured board pinout and firmware remain outside this simulation.
+Training manifest SHA-256: dd855e00e78432df9e4765791b6f218e45c853f0aee0eca38a7e5aefe5be274b
+
+Play Mode acceptance
+1 PASS Recorded ten intake landmarks and five compatible service parts. The native selection ray reached the original CPU footprint. Verified keyed seating, retention, the cooler clamp, both DDR5 latches, the M.2 screw and safe isolation. The checkpoint restored intake and assembly only. Electrical and POST evidence had to be recollected.
+2 PASS The project's measurement system emitted real probe readings at standby and on both sides of EPS. Before reseating, standby was 5.00 V, upstream EPS was 12.00 V, downstream EPS was 0.00 V and VCORE was 0.00 V. The matched isolated reseat recovered approximately 12.00 V at the socket and 1.10 V at VCORE. Six fresh loaded readings qualified.
+3 PASS Powered virtual ROM stopped POST before memory training. Two faulty reads returned F09E681A and 58035FF9. The isolated training-image recovery produced two repeatable 7408CC4E reads and a clean cold POST. Repair without fresh POST was rejected.
+4 PASS A separate isolated restart was required after ROM recovery. Both DDR5 channels passed 64/64 pattern reads each, PCIe ×16 and ×1 passed 12/12 training patterns each, and NVMe passed 12/12 block CRC checks.
+5 PASS POST succeeded with 1200 RPM motor motion and 0 RPM readback. Three consecutive missing-tach samples under solved CPU load triggered a cutoff. CPU and soak current dropped while standby stayed live. The original site required isolated inspection and the matching tach spare plus an explicit reset. Fresh device and thermal qualification passed after the repair.
+6 PASS The final audit rejected reuse of the previous repair boot and demanded fresh power, POST, five devices and thermal evidence from the same later cold start. All 28 samples passed across two load pulses and cooldown. Peak 38.0 °C, recovery 34.0 °C, tach 1200 RPM. The three case journals retained ordered before/after evidence tied to the repair revision, topology and boot.
+
+The automated Play Mode run used the real campaign loader, native selection, voltage measurement system, electrical solver and objective manager. Both thermal traces were inspected in the final screenshot. Standalone builds, physical touch input, performance profiling and replay of older levels remain unverified. The final report and screenshots are in Logs/Level130*.

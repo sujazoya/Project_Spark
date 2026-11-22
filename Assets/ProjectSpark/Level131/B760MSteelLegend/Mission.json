@@ -1,0 +1,27 @@
+{
+  "level": 131,
+  "title": "Steel Legend Qualification",
+  "status": "authoring only",
+  "objectives": [
+    "Inspect board and inventory",
+    "Isolate dual EPS power fault",
+    "Qualify DDR5 training",
+    "Check PCIe and NVMe enumeration",
+    "Check cooling and fan feedback",
+    "Perform cold start audit"
+  ],
+  "faults": [
+    {
+      "target": "ATX12V2",
+      "case": "simulated seating fault"
+    },
+    {
+      "target": "DDR5_A2",
+      "case": "simulated training fault"
+    },
+    {
+      "target": "M2_1",
+      "case": "simulated enumeration fault"
+    }
+  ]
+}

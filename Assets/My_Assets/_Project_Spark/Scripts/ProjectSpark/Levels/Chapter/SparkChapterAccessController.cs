@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace ProjectSpark.Gameplay
@@ -6,7 +5,7 @@ namespace ProjectSpark.Gameplay
     /// <summary>
     /// Optional chapter entry policy. Does not modify electrical simulation,
     /// level evaluation, or legacy level completion data.
-    /// Attach to the same GameObject as SparkLevelProgression and assign a campaign.
+    /// Assign a campaign and the progression used by the level manager.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkChapterAccessController : MonoBehaviour
@@ -78,12 +77,10 @@ namespace ProjectSpark.Gameplay
         {
             SparkChapterDefinition previous = campaign.GetChapter(chapterIndex - 1);
             if (previous == null || previous.LevelCount == 0 || progression.LevelManager == null) return false;
-            SparkLevelDefinition[] all = progression.LevelManager.Levels;
-            if (all == null) return false;
             foreach (SparkLevelDefinition required in previous.Levels)
             {
                 if (required == null) return false;
-                int index = Array.IndexOf(all, required);
+                int index = progression.LevelManager.GetLevelIndex(required);
                 if (index < 0 || !progression.IsCompleted(index)) return false;
             }
             return true;

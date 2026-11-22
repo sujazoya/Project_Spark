@@ -31,6 +31,10 @@ namespace ProjectSpark.UIManagement
         public IReadOnlyList<string> History { get { return history; } }
         public string FocusedId { get { return focused ? focused.Id : "None"; } }
         public bool IsModalOpen { get { return registeredPanels.Any(p => p && p.IsVisible && (p.Layer == SparkUILayer.Modal || p.Layer == SparkUILayer.Fullscreen)); } }
+        /// <summary>Allows immediate-mode workbench annotations to yield to a top-level panel.</summary>
+        public static bool SuppressWorkbenchAnnotations =>
+            SparkUIMonitorDashboard.IsConsoleVisible || (Instance && Instance.IsModalOpen);
+
         public bool IsGameplayInputBlocked { get { return SparkUIMonitorDashboard.IsConsoleVisible || registeredPanels.Any(p => p && p.IsVisible && (p.BlocksGameplayInput || p.Layer == SparkUILayer.Modal || p.Layer == SparkUILayer.Fullscreen)); } }
         public bool IsPointerOverUI { get { return EventSystem.current && EventSystem.current.IsPointerOverGameObject(); } }
         public int OpenCount { get { return registeredPanels.Count(p => p && p.IsVisible); } }

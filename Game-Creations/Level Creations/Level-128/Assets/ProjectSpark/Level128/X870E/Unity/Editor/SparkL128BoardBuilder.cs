@@ -47,16 +47,24 @@ namespace ProjectSpark.Level128.Editor
                     throw new InvalidDataException("Unknown role: " + row[2]);
                 var p = new Part { Ref = row[0], Role = row[2], File = row[3], Position = new Vector3(float.Parse(row[4], CI), float.Parse(row[5], CI), float.Parse(row[6], CI)) };
                 if (!File.Exists(ModelPath(p.File))) throw new FileNotFoundException(ModelPath(p.File));
+                if (!File.Exists(NativePath(p.File))) throw new FileNotFoundException(NativePath(p.File));
                 result.Add(p);
             }
             return result;
         }
         private static string ModelPath(string name) => Source + "/Models_FBX/" + name;
+        private static string NativePath(string file) => Source + "/Models_Native/" + Path.GetFileNameWithoutExtension(file) + ".spark128mesh";
         private static GameObject RequireModel(string file)
         {
-            GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(ModelPath(file));
-            if (model == null || model.GetComponentInChildren<MeshFilter>(true) == null)
-                throw new InvalidDataException("FBX has no imported mesh: " + file + ". Check Unity's FBX importer log.");
+            string path = NativePath(file);
+            if (!File.Exists(path)) throw new FileNotFoundException("Missing Level 128 native mesh hotfix source: " + path);
+            GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            if (model == null) throw new InvalidDataException("Native model not imported: " + path + ". Check the Console and reimport the asset.");
+            MeshFilter[] filters = model.GetComponentsInChildren<MeshFilter>(true);
+            if (filters.Length == 0) throw new InvalidDataException("Native model has no mesh: " + path);
+            foreach (MeshFilter filter in filters)
+                if (filter.sharedMesh == null || filter.sharedMesh.vertexCount == 0 || filter.sharedMesh.GetIndexCount(0) == 0)
+                    throw new InvalidDataException("Native model has an empty mesh: " + path + " / " + filter.name);
             return model;
         }
         private static Bounds BoundsOf(GameObject obj)
@@ -76,12 +84,12 @@ namespace ProjectSpark.Level128.Editor
         }
         private static void CheckScale()
         {
-            var model = (GameObject)PrefabUtility.InstantiatePrefab(RequireModel("L128_PCB.fbx"));
+            var model = UnityEngine.Object.Instantiate(RequireModel("L128_PCB.fbx"));
             Bounds b;
             try { b = BoundsOf(model); }
             finally { UnityEngine.Object.DestroyImmediate(model); }
             if (Mathf.Abs(b.size.x - .244f) > .001f || Mathf.Abs(b.size.z - .305f) > .001f)
-                throw new InvalidDataException("PCB FBX import scale/axis mismatch: " + b.size + ". Expected X=.244 m, Z=.305 m. Do not build until fixed.");
+                throw new InvalidDataException("PCB native mesh scale/axis mismatch: " + b.size + ". Expected X=.244 m, Z=.305 m. Do not build until fixed.");
         }
         [MenuItem(Menu + "3. Validate Sources and Report Blockers")]
         public static void Validate()
@@ -97,7 +105,7 @@ namespace ProjectSpark.Level128.Editor
                 foreach (string suffix in new[] { "_BaseColor.png", "_Normal.png", "_MetallicSmoothness.png" })
                     if (!File.Exists(Source + "/Textures/" + row[0].Substring(5) + suffix)) throw new FileNotFoundException(row[0]+suffix);
             }
-            Debug.Log("[L128] Source assets imported; 710 modular FBX, two complete FBX. Electrical mappings are unapproved. No gameplay certified.");
+            Debug.Log("[L128] Native mesh assets imported; 710 modular models, two complete models. Electrical mappings are unapproved. No gameplay certified.");
         }
         private static Texture2D Texture(string key, string suffix, bool normal, bool srgb)
         {
@@ -151,7 +159,7 @@ namespace ProjectSpark.Level128.Editor
         }
         private static GameObject Instance(string file, Transform parent, Vector3 position, Dictionary<string,Material> materials)
         {
-            var go = (GameObject)PrefabUtility.InstantiatePrefab(RequireModel(file));
+            var go = UnityEngine.Object.Instantiate(RequireModel(file));
             try { go.transform.SetParent(parent,false); go.transform.localPosition = position; Bind(go, materials); return go; }
             catch { UnityEngine.Object.DestroyImmediate(go); throw; }
         }

@@ -179,10 +179,8 @@ namespace ProjectSpark.Gameplay
                 }
             }
 
-            selectedLevelIndex = Mathf.Clamp(
-                selectedLevelIndex,
-                0,
-                LevelCount - 1);
+            if (!IsValidIndex(selectedLevelIndex))
+                selectedLevelIndex = levelManager.GetFirstCampaignIndex();
 
             initialized = true;
         }
@@ -214,7 +212,7 @@ namespace ProjectSpark.Gameplay
             if (levelManager == null)
                 return false;
 
-            for (int i = 0; i < LevelCount; i++)
+            foreach (int i in levelManager.GetCampaignLevelIndices())
             {
                 SparkLevelDefinition level =
                     levelManager.GetLevel(i);
@@ -236,46 +234,24 @@ namespace ProjectSpark.Gameplay
             return false;
         }
 
-        public bool SelectNext()
-        {
-            if (LevelCount <= 0)
-                return false;
+        public int GetAdjacentSelection(int direction) =>
+            levelManager ? levelManager.GetAdjacentLevelIndex(selectedLevelIndex, direction) : -1;
 
-            int next = selectedLevelIndex + 1;
+        public bool SelectNext() => SelectLevel(GetAdjacentSelection(1));
 
-            if (next >= LevelCount)
-                return false;
+        public bool SelectPrevious() => SelectLevel(GetAdjacentSelection(-1));
 
-            return SelectLevel(next);
-        }
-
-        public bool SelectPrevious()
-        {
-            if (LevelCount <= 0)
-                return false;
-
-            int previous = selectedLevelIndex - 1;
-
-            if (previous < 0)
-                return false;
-
-            return SelectLevel(previous);
-        }
-
-        public bool SelectFirst()
-        {
-            if (LevelCount <= 0)
-                return false;
-
-            return SelectLevel(0);
-        }
+        public bool SelectFirst() => levelManager && SelectLevel(levelManager.GetFirstCampaignIndex());
 
         public bool SelectLast()
         {
-            if (LevelCount <= 0)
+            if (!levelManager)
                 return false;
 
-            return SelectLevel(LevelCount - 1);
+            int last = -1;
+            foreach (int index in levelManager.GetCampaignLevelIndices())
+                last = index;
+            return SelectLevel(last);
         }
 
         // ============================================================
@@ -307,7 +283,7 @@ namespace ProjectSpark.Gameplay
             if (LevelCount <= 0)
                 return false;
 
-            for (int i = selectedLevelIndex + 1; i < LevelCount; i++)
+            for (int i = GetAdjacentSelection(1); i >= 0; i = levelManager.GetAdjacentLevelIndex(i, 1))
             {
                 if (!IsLevelUnlocked(i))
                     continue;
@@ -448,7 +424,7 @@ namespace ProjectSpark.Gameplay
                        level.UnlockedByDefault;
             }
 
-            return progression.IsUnlocked(index);
+            return progression.CanPlayLevel(index);
         }
 
         public bool IsLevelCompleted(int index)
@@ -482,7 +458,7 @@ namespace ProjectSpark.Gameplay
             if (LevelCount <= 0)
                 return -1;
 
-            for (int i = 0; i < LevelCount; i++)
+            foreach (int i in levelManager.GetCampaignLevelIndices())
             {
                 if (IsLevelUnlocked(i))
                     return i;
@@ -496,7 +472,7 @@ namespace ProjectSpark.Gameplay
             if (LevelCount <= 0)
                 return -1;
 
-            for (int i = 0; i < LevelCount; i++)
+            foreach (int i in levelManager.GetCampaignLevelIndices())
             {
                 if (!IsLevelUnlocked(i))
                     continue;
@@ -614,9 +590,7 @@ namespace ProjectSpark.Gameplay
 
         private bool IsValidIndex(int index)
         {
-            return levelManager != null &&
-                   index >= 0 &&
-                   index < levelManager.LevelCount;
+            return levelManager && levelManager.IsCampaignLevel(index);
         }
     }
 }

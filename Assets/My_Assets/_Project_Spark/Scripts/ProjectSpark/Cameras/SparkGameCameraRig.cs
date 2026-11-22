@@ -1,3 +1,4 @@
+using System;
 using AAAUI.VFX;
 using ProjectSpark.Gameplay;
 using ProjectSpark.HolographicViewer;
@@ -26,7 +27,9 @@ namespace ProjectSpark.Cameras
         private bool ownsCamera,legacyWasEnabled,sharedOverride;
         private SparkLevelLayout overrideLayout;
         private RectTransform wallDisplay;
-        private bool wallOpenedSharedView;
+        private CinemachineCamera wallCamera;
+        private WallViewState wallState;
+        private const OutputChannels WallChannel = OutputChannels.Channel10;
         private OutputChannels levelChannel;
         private CinemachineBrain.UpdateMethods levelUpdate;
         private CinemachineBrain.BrainUpdateMethods levelBlendUpdate;
@@ -57,7 +60,23 @@ namespace ProjectSpark.Cameras
         private static readonly float[] FieldsOfView={53,55,39,43,59};
         public bool OwnsCamera=>ownsCamera;
         public int SelectedView=>activeIndex;
+        public RectTransform ActiveWallDisplay => wallDisplay;
+        public SparkLevelLayout ActiveLayout => loader ? loader.ActiveLayout : null;
         public bool ViewControlsVisible { get; set; } = true;
+        public event Action WallDisplayChanged;
+
+        private struct WallViewState
+        {
+            public Vector3 Position;
+            public Quaternion Rotation;
+            public bool Orthographic, BrainEnabled, IgnoreTimeScale, LegacyEnabled;
+            public float FieldOfView, Size, Near, Far;
+            public OutputChannels Channel;
+            public CinemachineBrain.UpdateMethods Update;
+            public CinemachineBrain.BrainUpdateMethods BlendUpdate;
+            public CinemachineBlendDefinition Blend;
+            public CinemachineBrain.LensModeOverrideSettings Lens;
+        }
 
         private void Awake()
         {
@@ -68,6 +87,11 @@ namespace ProjectSpark.Cameras
             initialNear=output.nearClipPlane;initialFar=output.farClipPlane;initialSize=output.orthographicSize;
             legacyWasEnabled=legacyViewer&&legacyViewer.enabled;
             loader=FindFirstObjectByType<SparkLevelLayoutLoader>();
+            if (loader)
+            {
+                loader.LayoutLoaded += OnLayoutLoaded;
+                loader.LayoutUnloaded += OnLayoutUnloaded;
+            }
         }
 
         private bool HasLegacyLevelCamera()
@@ -83,10 +107,9 @@ namespace ProjectSpark.Cameras
 
         private void LateUpdate()
         {
+            if (wallCamera) return;
             if(sharedOverride&&loader&&loader.ActiveLayout!=overrideLayout)
             {
-                wallDisplay=null;
-                wallOpenedSharedView=false;
                 sharedOverride=false;
                 overrideLayout=null;
             }
@@ -107,8 +130,7 @@ namespace ProjectSpark.Cameras
             pitch=Mathf.Lerp(pitch,goalPitch,blend);
             distance=Mathf.Lerp(distance,goalDistance,blend);
             pan=Vector2.Lerp(pan,goalPan,blend);
-            if (wallDisplay) ApplyWallDisplay();
-            else Apply(activeIndex,yaw,pitch,distance,pan);
+            Apply(activeIndex,yaw,pitch,distance,pan);
             brain.ManualUpdate(Time.frameCount,dt);
         }
 
@@ -157,6 +179,7 @@ namespace ProjectSpark.Cameras
         public void SelectView(int index)
         {
             if (SignalWireBuilder.AnyWireDrawing || !HasSharedViews || index < 0 || index >= views.Length) return;
+            EndWallView(true);
             if(!ownsCamera)
             {
                 if (!DedicatedCameraActive()) return;
@@ -171,8 +194,6 @@ namespace ProjectSpark.Cameras
                 overrideLayout=loader?loader.ActiveLayout:null;
                 TakeCamera();
             }
-            wallDisplay = null;
-            wallOpenedSharedView = false;
             views[activeIndex].Priority=10;
             activeIndex=index;
             ResetMotion();
@@ -181,32 +202,54 @@ namespace ProjectSpark.Cameras
             views[activeIndex].Prioritize();
         }
 
-        public void FocusWallDisplay(RectTransform display)
+        public void FocusWallDisplay(RectTransform display, CinemachineCamera view)
         {
-            if (!display || !HasSharedViews || SignalWireBuilder.AnyWireDrawing) return;
-            bool restoreDedicated = wallOpenedSharedView;
-            if (!ownsCamera && DedicatedCameraActive())
+            if (!display || !view || !output || !brain || SignalWireBuilder.AnyWireDrawing || wallCamera == view) return;
+            if (!wallCamera)
             {
-                SelectView(activeIndex);
-                restoreDedicated = sharedOverride;
+                wallState = new WallViewState
+                {
+                    Position = transform.position, Rotation = transform.rotation,
+                    Orthographic = output.orthographic, Size = output.orthographicSize,
+                    FieldOfView = output.fieldOfView, Near = output.nearClipPlane, Far = output.farClipPlane,
+                    BrainEnabled = brain.enabled, IgnoreTimeScale = brain.IgnoreTimeScale,
+                    LegacyEnabled = legacyViewer && legacyViewer.enabled, Channel = brain.ChannelMask,
+                    Update = brain.UpdateMethod, BlendUpdate = brain.BlendUpdateMethod,
+                    Blend = brain.DefaultBlend, Lens = brain.LensModeOverride
+                };
+                if (legacyViewer) legacyViewer.enabled = false;
+                brain.ChannelMask = WallChannel;
+                brain.UpdateMethod = CinemachineBrain.UpdateMethods.LateUpdate;
+                brain.BlendUpdateMethod = CinemachineBrain.BrainUpdateMethods.LateUpdate;
+                brain.IgnoreTimeScale = true;
+                brain.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.EaseInOut, .35f);
+                brain.LensModeOverride = new CinemachineBrain.LensModeOverrideSettings
+                    { Enabled = true, DefaultMode = LensSettings.OverrideModes.Perspective };
             }
-
+            else
+            {
+                wallCamera.enabled = false;
+            }
             wallDisplay = display;
-            wallOpenedSharedView = restoreDedicated;
-            ResetMotion();
+            wallCamera = view;
+            wallCamera.OutputChannel = WallChannel;
+            wallCamera.Priority = 100;
+            RefreshWallFraming();
+            wallCamera.enabled = true;
+            wallCamera.Prioritize();
+            brain.enabled = true;
+            drag = Drag.None;
+            WallDisplayChanged?.Invoke();
         }
 
         public void LeaveWallDisplay(Transform display)
         {
-            if (wallDisplay != display) return;
-            wallDisplay = null;
-            ResetMotion();
-            if (wallOpenedSharedView) ReturnToLevelView();
-            wallOpenedSharedView = false;
+            if (wallDisplay == display && !SignalWireBuilder.AnyWireDrawing) EndWallView(true);
         }
 
-        private void ApplyWallDisplay()
+        public void RefreshWallFraming()
         {
+            if (!wallDisplay || !wallCamera) return;
             var bounds = wallDisplay.rect.size;
             float height = bounds.y * Mathf.Abs(wallDisplay.lossyScale.y);
             float width = bounds.x * Mathf.Abs(wallDisplay.lossyScale.x);
@@ -214,14 +257,47 @@ namespace ProjectSpark.Cameras
             float visibleHeight = Mathf.Max(height, width / Mathf.Max(.1f, output.aspect));
             float distanceToScreen = visibleHeight * .63f / Mathf.Tan(fieldOfView * .5f * Mathf.Deg2Rad);
             Vector3 forward = wallDisplay.forward;
-            var view = views[activeIndex];
-            view.transform.SetPositionAndRotation(wallDisplay.position - forward * distanceToScreen,
+            wallCamera.transform.SetPositionAndRotation(wallDisplay.position - forward * distanceToScreen,
                 Quaternion.LookRotation(forward, wallDisplay.up));
-            var lens = view.Lens;
+            var lens = LensSettings.Default;
             lens.ModeOverride = LensSettings.OverrideModes.Perspective;
             lens.FieldOfView = fieldOfView;
             lens.NearClipPlane = .12f;
-            view.Lens = lens;
+            lens.FarClipPlane = wallState.Far;
+            wallCamera.Lens = lens;
+        }
+
+        private void OnLayoutLoaded(SparkLevelLayout layout) => EndWallView(false);
+        private void OnLayoutUnloaded() => EndWallView(false);
+
+        private void EndWallView(bool restorePose)
+        {
+            if (!wallCamera) return;
+            wallCamera.enabled = false;
+            wallCamera = null;
+            wallDisplay = null;
+            if (brain && brain.ChannelMask == WallChannel)
+            {
+                brain.ChannelMask = wallState.Channel;
+                brain.UpdateMethod = wallState.Update;
+                brain.BlendUpdateMethod = wallState.BlendUpdate;
+                brain.DefaultBlend = wallState.Blend;
+                brain.LensModeOverride = wallState.Lens;
+                brain.IgnoreTimeScale = wallState.IgnoreTimeScale;
+                brain.enabled = wallState.BrainEnabled;
+                if (brain.enabled) brain.ResetState();
+                if (restorePose)
+                {
+                    if (legacyViewer) legacyViewer.enabled = wallState.LegacyEnabled;
+                    transform.SetPositionAndRotation(wallState.Position, wallState.Rotation);
+                    output.orthographic = wallState.Orthographic;
+                    output.orthographicSize = wallState.Size;
+                    output.fieldOfView = wallState.FieldOfView;
+                    output.nearClipPlane = wallState.Near;
+                    output.farClipPlane = wallState.Far;
+                }
+            }
+            WallDisplayChanged?.Invoke();
         }
 
         public void ZoomStep(float steps)
@@ -240,6 +316,7 @@ namespace ProjectSpark.Cameras
 
         private void Update()
         {
+            if (wallCamera) return;
             if(!ownsCamera&& !DedicatedCameraActive())return;
             if(ownsCamera&&brain.ChannelMask!=OutputChannels.Channel14)return;
             if (!Application.isFocused || SignalWireBuilder.AnyWireDrawing || ProjectSpark.UIManagement.SparkUIMonitorDashboard.IsConsoleVisible)
@@ -259,7 +336,6 @@ namespace ProjectSpark.Cameras
                 if(keyboard.digit4Key.wasPressedThisFrame||keyboard.numpad4Key.wasPressedThisFrame)SelectView(3);
                 if(keyboard.digit5Key.wasPressedThisFrame||keyboard.numpad5Key.wasPressedThisFrame)SelectView(4);
             }
-            if (wallDisplay) return;
             var mouse=Mouse.current;
             if(mouse==null)return;
             bool overUI=EventSystem.current!=null&&EventSystem.current.IsPointerOverGameObject();
@@ -322,7 +398,7 @@ namespace ProjectSpark.Cameras
 
         private void OnGUI()
         {
-            if (!isActiveAndEnabled || !ViewControlsVisible || ProjectSpark.UIManagement.SparkUIMonitorDashboard.IsConsoleVisible) return;
+            if (wallCamera || !isActiveAndEnabled || !ViewControlsVisible || ProjectSpark.UIManagement.SparkUIMonitorDashboard.IsConsoleVisible) return;
             int previousDepth=GUI.depth;
             bool previousEnabled=GUI.enabled;
             GUI.depth=-100;
@@ -359,19 +435,22 @@ namespace ProjectSpark.Cameras
         private Rect ViewHudRect=>new Rect((Screen.width-ViewHudWidth)*.5f,78,ViewHudWidth,ViewHudHeight);
 
         public bool IsPointerOverViewControls(Vector2 screenPoint) =>
-            isActiveAndEnabled && ViewControlsVisible && HasSharedViews &&
+            !wallCamera && isActiveAndEnabled && ViewControlsVisible && HasSharedViews &&
             ViewHudRect.Contains(new Vector2(screenPoint.x, Screen.height - screenPoint.y));
 
         public void ReturnToLevelView()
         {
+            if (wallCamera && !SignalWireBuilder.AnyWireDrawing)
+            {
+                EndWallView(true);
+                return;
+            }
             if (!sharedOverride || SignalWireBuilder.AnyWireDrawing) return;
             RestoreLevelCamera();
         }
 
         private void RestoreLevelCamera()
         {
-            wallDisplay = null;
-            wallOpenedSharedView = false;
             sharedOverride = false;
             overrideLayout = null;
             ownsCamera = false;
@@ -388,16 +467,22 @@ namespace ProjectSpark.Cameras
 
         private void OnDisable()
         {
+            EndWallView(true);
             if (sharedOverride && loader && loader.ActiveLayout == overrideLayout)
                 RestoreLevelCamera();
             else
             {
-                wallDisplay = null;
-                wallOpenedSharedView = false;
                 sharedOverride = false;
                 overrideLayout = null;
                 ReleaseCamera();
             }
+        }
+
+        private void OnDestroy()
+        {
+            if (!loader) return;
+            loader.LayoutLoaded -= OnLayoutLoaded;
+            loader.LayoutUnloaded -= OnLayoutUnloaded;
         }
     }
 }

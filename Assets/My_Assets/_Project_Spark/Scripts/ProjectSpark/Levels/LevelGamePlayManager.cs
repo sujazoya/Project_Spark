@@ -174,6 +174,11 @@ namespace ProjectSpark.Gameplay
         [SerializeField]
         private bool enforceProgressionAccess = true;
 
+        [SerializeField] private SparkChapterAccessController chapterAccess;
+
+        public SparkChapterAccessController ChapterAccess => chapterAccess;
+        public SparkCampaignDefinition Campaign => chapterAccess ? chapterAccess.Campaign : null;
+
         // ============================================================
         // COMPATIBILITY RUNTIME DATA
         // ============================================================
@@ -191,6 +196,8 @@ namespace ProjectSpark.Gameplay
 
         public SparkElectricalSolver ElectricalSolver =>
             electricalSolver;
+
+        public SparkLevelLayoutLoader LayoutLoader => layoutLoader;
 
         public SparkLevelSceneBindings SceneBindings =>
             sceneBindings;
@@ -311,7 +318,14 @@ namespace ProjectSpark.Gameplay
             if (autoStartFirstLevel &&
                 LevelCount > 0)
             {
-                StartLevel(activeLevelIndex);
+                int index = activeLevelIndex;
+                if (Campaign)
+                {
+                    index = levelProgression ? levelProgression.GetFirstIncompleteLevel() : -1;
+                    if (index < 0)
+                        index = GetFirstCampaignIndex();
+                }
+                StartLevel(index);
             }
         }
 
@@ -355,22 +369,17 @@ public bool StartLevel(int index)
     SparkLevelDefinition level =
         GetLevel(index);
 
-    if (level == null)
+    if (!IsCampaignLevel(index))
     {
-        Log(
-            $"Cannot start level {index}: level not found.");
+        Log($"Cannot start level {index}: it is outside the active campaign.");
 
         return false;
     }
 
-    if (enforceProgressionAccess)
+    if (!CanStartLevel(index))
     {
-        if (levelProgression == null ||
-            !levelProgression.CanPlayLevel(index))
-        {
-            Log($"Level {index} is locked.");
-            return false;
-        }
+        Log($"Level {index} is locked.");
+        return false;
     }
 
     // Capture the restart request.
@@ -1573,6 +1582,72 @@ private bool PrepareLevelLayout(
             return levels[index];
         }
 
+        public int GetLevelIndex(SparkLevelDefinition level) =>
+            level && levels != null ? Array.IndexOf(levels, level) : -1;
+
+        public bool IsCampaignLevel(int index)
+        {
+            SparkLevelDefinition level = GetLevel(index);
+            return level && (!Campaign || (GetLevelIndex(level) == index && Campaign.FindChapter(level)));
+        }
+
+        public bool CanStartLevel(int index) =>
+            IsCampaignLevel(index) &&
+            (!enforceProgressionAccess || (levelProgression && levelProgression.CanPlayLevel(index)));
+
+        // Campaign order is independent of the serialized slots used by existing saves.
+        public IEnumerable<int> GetCampaignLevelIndices()
+        {
+            if (!Campaign)
+            {
+                for (int index = 0; index < LevelCount; index++)
+                    if (GetLevel(index))
+                        yield return index;
+                yield break;
+            }
+
+            foreach (SparkChapterDefinition chapter in Campaign.Chapters)
+            {
+                if (!chapter || chapter.Levels == null)
+                    continue;
+
+                foreach (SparkLevelDefinition level in chapter.Levels)
+                {
+                    int index = GetLevelIndex(level);
+                    if (index >= 0)
+                        yield return index;
+                }
+            }
+        }
+
+        public int GetFirstCampaignIndex()
+        {
+            foreach (int index in GetCampaignLevelIndices())
+                return index;
+            return -1;
+        }
+
+        public int GetAdjacentLevelIndex(int index, int direction)
+        {
+            if (direction == 0)
+                return -1;
+
+            if (!Campaign)
+                return GetLevel(index + Math.Sign(direction)) ? index + Math.Sign(direction) : -1;
+
+            int previous = -1;
+            foreach (int candidate in GetCampaignLevelIndices())
+            {
+                if (candidate == index && direction < 0)
+                    return previous;
+                if (previous == index && direction > 0 && previous >= 0)
+                    return candidate;
+                previous = candidate;
+            }
+
+            return -1;
+        }
+
         // ============================================================
         // DEBUG
         // ============================================================
@@ -1635,44 +1710,10 @@ private bool PrepareLevelLayout(
         }
 
         
-        public bool NextLevel()
-        {
-            int nextIndex = activeLevelIndex + 1;
+        public bool NextLevel() => StartLevel(GetAdjacentLevelIndex(activeLevelIndex, 1));
 
-            // Check whether another level exists.
-            SparkLevelDefinition nextLevel =
-                GetLevel(nextIndex);
+        public bool PreviousLevel() => StartLevel(GetAdjacentLevelIndex(activeLevelIndex, -1));
 
-            if (nextLevel == null)
-            {
-                Debug.Log(
-                    "[LevelGamePlayManager] Already at the last level.",
-                    this);
-
-                return false;
-            }
-
-            // StartLevel handles progression locks,
-            // prefab loading, solver refresh and evaluation.
-            return StartLevel(nextIndex);
-        }
-
-        public bool PreviousLevel()
-        {
-            int previousIndex = activeLevelIndex - 1;
-
-            // Prevent navigating before Level 1.
-            if (previousIndex < 0)
-            {
-                Debug.Log(
-                    "[LevelGamePlayManager] Already at the first level.",
-                    this);
-
-                return false;
-            }
-
-            return StartLevel(previousIndex);
-        }
         public void OnNextLevelButtonClicked()
         {
             NextLevel();

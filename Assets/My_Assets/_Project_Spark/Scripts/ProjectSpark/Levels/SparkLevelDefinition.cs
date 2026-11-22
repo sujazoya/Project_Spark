@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace ProjectSpark.Gameplay
@@ -210,7 +211,19 @@ private bool autoAdvanceOnCompletion;
         // PUBLIC PROPERTIES
         // ================================================================
 
+        private static readonly Regex NumberedId = new Regex(
+            @"^level[_ -]*(\d+)(?:$|[_ -])", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+
         public string LevelId => levelId;
+
+        public int LevelNumber
+        {
+            get
+            {
+                Match match = NumberedId.Match(levelId ?? string.Empty);
+                return match.Success && int.TryParse(match.Groups[1].Value, out int number) ? number : 0;
+            }
+        }
 
         public string DisplayName => displayName;
 

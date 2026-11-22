@@ -32,7 +32,9 @@ namespace ProjectSpark.AI.Tutorial
             if (string.IsNullOrWhiteSpace(question) || manager == null || manager.ActiveLevel == null)
                 return false;
 
-            string id = manager.ActiveLevel.LevelId;
+            var context = SparkAILevelContext.Capture(manager);
+            if (!context.HasEvaluation) return false;
+            string id = context.Definition.LevelId;
             if (!string.Equals(previousLevelId, id, StringComparison.Ordinal))
             {
                 Clear();
@@ -69,10 +71,7 @@ namespace ProjectSpark.AI.Tutorial
                 "level i am", "level im", "which stage", "what stage", "currently playing"))
             {
                 previousTopic = Topic.Level;
-                answer = "You are playing Level " + (manager.ActiveLevelIndex + 1) + " of " +
-                    manager.LevelCount + ": " + manager.ActiveLevel.DisplayName + ".\n" +
-                    "Status: " + manager.RuntimeState + ". Objectives: " +
-                    manager.SatisfiedTargetCount + "/" + manager.ActiveTargetCount + ".";
+                answer = context.Describe(detailed: false);
                 return true;
             }
 

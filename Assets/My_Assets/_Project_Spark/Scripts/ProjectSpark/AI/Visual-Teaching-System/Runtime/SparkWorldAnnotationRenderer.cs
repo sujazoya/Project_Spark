@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ProjectSpark.UI.VisualTeaching
 {
@@ -17,11 +18,15 @@ namespace ProjectSpark.UI.VisualTeaching
         {
             internal SparkVisualCommand command;
             internal TextMeshProUGUI label;
+            internal Image badge;
             internal float progress;
+            internal LineRenderer worldLine;
         }
 
         private readonly List<Annotation> items = new List<Annotation>();
         private readonly List<SparkVisualStroke> strokes = new List<SparkVisualStroke>();
+        private Material worldMaterial;
+        public int WorldGeometryCount => items.FindAll(item => item.worldLine && item.worldLine.enabled).Count;
 
         private void Awake()
         {
@@ -35,6 +40,26 @@ namespace ProjectSpark.UI.VisualTeaching
         {
             if (command == null || items.Count >= maxVisibleAnnotations) return null;
             Annotation item = new Annotation { command = command, progress = 0f };
+            if (command.worldGeometry && command.shape == SparkVisualShape.Ring)
+            {
+                if (!worldMaterial)
+                {
+                    var shader = Shader.Find("Sprites/Default");
+                    if (shader) worldMaterial = new Material(shader);
+                }
+                if (worldMaterial)
+                {
+                    var node = new GameObject("Spark 3D teaching ring", typeof(LineRenderer));
+                    node.transform.SetParent(transform, false);
+                    item.worldLine = node.GetComponent<LineRenderer>();
+                    item.worldLine.sharedMaterial = worldMaterial;
+                    item.worldLine.startColor = item.worldLine.endColor = command.color;
+                    item.worldLine.widthMultiplier = .035f;
+                    item.worldLine.positionCount = 33;
+                    item.worldLine.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                    item.worldLine.receiveShadows = false;
+                }
+            }
             if (command.shape == SparkVisualShape.Label)
             {
                 GameObject labelGo = new GameObject("AI Label", typeof(RectTransform), typeof(TextMeshProUGUI));
@@ -48,6 +73,26 @@ namespace ProjectSpark.UI.VisualTeaching
                 item.label.enableWordWrapping = true;
                 item.label.alignment = TextAlignmentOptions.Center;
                 item.label.raycastTarget = false;
+                if (command.from.liveTarget)
+                {
+                    var badgeObject = new GameObject("Workbench teaching callout", typeof(RectTransform), typeof(Image));
+                    item.badge = badgeObject.GetComponent<Image>();
+                    item.badge.raycastTarget = false;
+                    RectTransform badge = item.badge.rectTransform;
+                    badge.SetParent(drawArea, false);
+                    badge.anchorMin = badge.anchorMax = badge.pivot = new Vector2(.5f, .5f);
+                    badge.sizeDelta = new Vector2(320, 62);
+                    rect.SetParent(badge, false);
+                    rect.anchorMin = Vector2.zero;
+                    rect.anchorMax = Vector2.one;
+                    rect.offsetMin = new Vector2(12, 5);
+                    rect.offsetMax = new Vector2(-12, -5);
+                    item.label.fontStyle = FontStyles.Bold;
+                    item.label.enableAutoSizing = true;
+                    item.label.fontSizeMin = 13;
+                    item.label.fontSizeMax = command.fontSize;
+                    item.label.overflowMode = TextOverflowModes.Ellipsis;
+                }
             }
             items.Add(item);
             Redraw();
@@ -65,14 +110,20 @@ namespace ProjectSpark.UI.VisualTeaching
         {
             if (annotation == null) return;
             items.Remove(annotation);
-            if (annotation.label != null) Destroy(annotation.label.gameObject);
+            if (annotation.badge) Destroy(annotation.badge.gameObject);
+            else if (annotation.label) Destroy(annotation.label.gameObject);
+            if (annotation.worldLine) Destroy(annotation.worldLine.gameObject);
             Redraw();
         }
 
         public void ClearAll()
         {
             foreach (var item in items)
-                if (item.label != null) Destroy(item.label.gameObject);
+            {
+                if (item.badge) Destroy(item.badge.gameObject);
+                else if (item.label) Destroy(item.label.gameObject);
+                if (item.worldLine) Destroy(item.worldLine.gameObject);
+            }
             items.Clear();
             strokes.Clear();
             if (vectorGraphic != null) vectorGraphic.Clear();
@@ -84,6 +135,11 @@ namespace ProjectSpark.UI.VisualTeaching
             if (items.Count > 0) Redraw();
         }
 
+        private void OnDestroy()
+        {
+            if (worldMaterial) Destroy(worldMaterial);
+        }
+
         private void Redraw()
         {
             if (drawArea == null || vectorGraphic == null) return;
@@ -92,13 +148,40 @@ namespace ProjectSpark.UI.VisualTeaching
             {
                 SparkVisualCommand c = a.command;
                 if (c == null) continue;
+                if (a.worldLine)
+                {
+                    bool valid = TryWorldPosition(c.from, out var anchor);
+                    a.worldLine.enabled = valid && a.progress > 0;
+                    if (a.worldLine.enabled)
+                        for (int i = 0; i < a.worldLine.positionCount; i++)
+                        {
+                            float angle = 2 * Mathf.PI * i * a.progress / (a.worldLine.positionCount - 1);
+                            a.worldLine.SetPosition(i, anchor + new Vector3(.32f * Mathf.Cos(angle), .12f, .32f * Mathf.Sin(angle)));
+                        }
+                    continue;
+                }
                 bool good = TryPoint(c.from, out Vector2 start);
                 bool endGood = TryPoint(c.to, out Vector2 end);
                 if (a.label != null)
                 {
-                    a.label.gameObject.SetActive(good);
-                    if (good)
+                    if (a.badge)
                     {
+                        a.badge.gameObject.SetActive(good);
+                        if (!good) continue;
+                        var rect = a.badge.rectTransform;
+                        Vector2 half = rect.sizeDelta * .5f;
+                        Rect area = drawArea.rect;
+                        start.x = Mathf.Clamp(start.x, area.xMin + half.x + 12, area.xMax - half.x - 12);
+                        start.y = Mathf.Clamp(start.y, area.yMin + half.y + 12, area.yMax - half.y - 12);
+                        rect.anchoredPosition = start;
+                        a.badge.color = new Color(.02f, .09f, .14f, .96f * a.progress);
+                        a.label.color = new Color(.80f, .96f, 1, a.progress);
+                        if (endGood) Stroke(new[] { end, start - new Vector2(0, half.y) }, c, a.progress, false, false);
+                    }
+                    else
+                    {
+                        a.label.gameObject.SetActive(good);
+                        if (!good) continue;
                         a.label.rectTransform.anchoredPosition = start;
                         Color labelColor = c.color;
                         labelColor.a *= a.progress;
@@ -158,17 +241,32 @@ namespace ProjectSpark.UI.VisualTeaching
                                     drawArea.rect.yMin + drawArea.rect.height * point.normalized.y) + point.pixelOffset;
                 return true;
             }
-            if (!SparkTeachingAnchor.TryFind(point.anchorId, out SparkTeachingAnchor anchor)) return false;
+            if (!TryWorldPosition(point, out Vector3 position)) return false;
             if (sceneCamera == null) sceneCamera = Camera.main;
             if (sceneCamera == null) return false;
-            Vector3 view = sceneCamera.WorldToViewportPoint(anchor.WorldPosition);
+            Vector3 view = sceneCamera.WorldToViewportPoint(position);
             if (view.z <= 0f || view.x < 0f || view.x > 1f || view.y < 0f || view.y > 1f) return false;
-            Vector2 screen = sceneCamera.WorldToScreenPoint(anchor.WorldPosition);
+            Vector2 screen = sceneCamera.WorldToScreenPoint(position);
             Camera uiCamera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay
                 ? (canvas.worldCamera != null ? canvas.worldCamera : sceneCamera) : null;
             if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(drawArea, screen, uiCamera, out local))
                 return false;
             local += point.pixelOffset;
+            return true;
+        }
+
+        private static bool TryWorldPosition(SparkVisualPoint point, out Vector3 position)
+        {
+            position = default;
+            if (point == null) return false;
+            if (point.liveTarget && point.liveTarget.gameObject.activeInHierarchy)
+            {
+                position = point.liveTarget.position;
+                return true;
+            }
+            if (point.liveTarget != null || point.anchorId == "loaded-target") return false;
+            if (!SparkTeachingAnchor.TryFind(point.anchorId, out var anchor)) return false;
+            position = anchor.WorldPosition;
             return true;
         }
     }

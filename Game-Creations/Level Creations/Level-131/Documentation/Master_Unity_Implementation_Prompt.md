@@ -1,0 +1,4 @@
+# Level 131 — Steel Legend Qualification
+Use the ASRock B760M Steel Legend WiFi visual authoring assets. Keep all prior levels unchanged. Unity 6 URP, PC/mobile. Build using native mesh import first. PCB 244 x 244 mm; workshop PCB 7.51 x 7.51 units on 15.79 x 8.54 tabletop.
+
+Connect the six objectives in Mission.json to LevelGamePlayManager, SparkSelectionController, existing multimeter, SparkCircuitSystem and verified solver APIs. Diagnostic targets are visual mesh anchors only; never treat these as electrical pins or fabricated measurement evidence. Use approved compatible virtual CPU, memory, storage and cooling models, safe virtual power isolation, revision-aware evidence, and cold restart validation. Do not distribute firmware. Profile mobile and desktop, test import and compilation, verify clearances and board layout against official manual. This package does not supply actual circuit connectivity or scoring integration.

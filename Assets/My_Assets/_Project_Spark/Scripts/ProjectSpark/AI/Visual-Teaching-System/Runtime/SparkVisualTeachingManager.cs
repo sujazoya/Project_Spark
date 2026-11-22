@@ -50,6 +50,18 @@ namespace ProjectSpark.UI.VisualTeaching
         private Coroutine playback;
         private string goal;
         private string lessonTitle;
+        private string drawingInstruction;
+        internal SparkDrawCurrentLevel LevelDrawing { get; private set; }
+        private int drawingPage;
+        private int drawingPageCount;
+
+        internal void SetLevelDrawing(SparkDrawCurrentLevel drawing, int page = 0, int count = 0)
+        {
+            LevelDrawing = drawing;
+            drawingPage = page;
+            drawingPageCount = count;
+            UpdateUI();
+        }
 
         private void Awake()
         {
@@ -89,7 +101,12 @@ namespace ProjectSpark.UI.VisualTeaching
 
         public void OpenPanel() => SetPanelOpen(true);
         // Reopens whiteboard even if the previous view was world-only.
-        public void OpenTeachingBoard() { SetView(SparkTeachingView.Both); SetPanelOpen(true); }
+        public void OpenTeachingBoard()
+        {
+            if (View == SparkTeachingView.WorldOnly && LevelDrawing) LevelDrawing.SwitchView(SparkTeachingView.WhiteboardOnly);
+            else SetView(SparkTeachingView.Both);
+            SetPanelOpen(true);
+        }
         public void ClosePanel() => SetPanelOpen(false);
         public void TogglePanel() => SetPanelOpen(!PanelOpen);
 
@@ -99,9 +116,15 @@ namespace ProjectSpark.UI.VisualTeaching
             SetPanelOpen(PanelOpen);
         }
 
-        public void ViewBoth() => SetView(SparkTeachingView.Both);
-        public void ViewWhiteboard() => SetView(SparkTeachingView.WhiteboardOnly);
-        public void ViewWorld() => SetView(SparkTeachingView.WorldOnly);
+        public void ViewBoth() => SwitchView(SparkTeachingView.Both);
+        public void ViewWhiteboard() => SwitchView(SparkTeachingView.WhiteboardOnly);
+        public void ViewWorld() => SwitchView(SparkTeachingView.WorldOnly);
+
+        private void SwitchView(SparkTeachingView view)
+        {
+            if (!LevelDrawing) SetView(view);
+            else if (!LevelDrawing.SwitchView(view)) SetStatus("No physical teaching target is available for the current objective.");
+        }
 
         public void StartLesson(SparkVisualLesson lesson)
         {
@@ -121,6 +144,11 @@ namespace ProjectSpark.UI.VisualTeaching
 
         public void NextStep()
         {
+            if (LevelDrawing)
+            {
+                if (drawingPage + 1 < drawingPageCount) LevelDrawing.NextPage();
+                return;
+            }
             if (steps == null || steps.Length == 0) return;
             if (currentStepIndex >= 0 && currentStepIndex < steps.Length)
             {
@@ -142,11 +170,21 @@ namespace ProjectSpark.UI.VisualTeaching
 
         public void PreviousStep()
         {
+            if (LevelDrawing)
+            {
+                if (drawingPage > 0) LevelDrawing.PreviousPage();
+                return;
+            }
             if (currentStepIndex > 0) LoadStep(currentStepIndex - 1);
         }
 
         public void ReplayStep()
         {
+            if (LevelDrawing)
+            {
+                LevelDrawing.ReplayDrawing();
+                return;
+            }
             if (currentStepIndex >= 0 && currentStepIndex < steps.Length)
                 LoadStep(currentStepIndex);
         }
@@ -185,9 +223,21 @@ namespace ProjectSpark.UI.VisualTeaching
 
         public void ClearEverything()
         {
+            SetLevelDrawing(null);
             ClearAnnotations();
             if (schematicRenderer != null) schematicRenderer.Clear();
             SetStatus("Teaching visuals cleared.");
+        }
+
+        internal void ClearLevelPresentation()
+        {
+            ClearEverything();
+            steps = Array.Empty<SparkTeachingStep>();
+            currentStepIndex = -1;
+            lessonTitle = null;
+            goal = null;
+            UpdateUI();
+            ClosePanel();
         }
 
         public bool PresentPlanJson(string json)
@@ -211,17 +261,19 @@ namespace ProjectSpark.UI.VisualTeaching
                 SetStatus("Drawing request rejected: " + error);
                 return false;
             }
+            LevelDrawing = null;
             StopPlayback();
             if (worldRenderer != null) worldRenderer.ClearAll();
             if (schematicRenderer != null) schematicRenderer.Display(plan.schematic);
             lessonTitle = plan.title ?? "AI explanation";
             goal = plan.explanation ?? "";
+            drawingInstruction = plan.instruction;
             steps = Array.Empty<SparkTeachingStep>();
             currentStepIndex = -1;
-            SetStatus("Illustrative explanation. Check actual circuit measurements in diagnostics.");
+            SetStatus(plan.status ?? "Illustrative explanation. Check actual circuit measurements in diagnostics.");
             UpdateUI();
             playback = StartCoroutine(PlayAnnotations(plan.annotations));
-            ViewBoth();
+            SetView(SparkTeachingView.Both);
             OpenPanel();
             return true;
         }
@@ -231,6 +283,7 @@ namespace ProjectSpark.UI.VisualTeaching
             if (steps == null || index < 0 || index >= steps.Length) return;
             StopPlayback();
             if (worldRenderer != null) worldRenderer.ClearAll();
+            LevelDrawing = null;
             currentStepIndex = index;
             verifiedCurrentStep = false;
             SparkTeachingStep step = steps[index];
@@ -309,9 +362,12 @@ namespace ProjectSpark.UI.VisualTeaching
             if (titleText != null) titleText.text = string.IsNullOrEmpty(lessonTitle) ? "SPARK AI VISUAL TEACHER" : lessonTitle;
             if (goalText != null) goalText.text = string.IsNullOrEmpty(goal) ? "Circuit explanation" : goal;
             bool valid = steps != null && currentStepIndex >= 0 && currentStepIndex < steps.Length;
-            if (stepText != null) stepText.text = valid ? $"STEP {currentStepIndex + 1} / {steps.Length}" : "AI EXPLANATION";
-            if (instructionText != null) instructionText.text = valid ? steps[currentStepIndex].instruction : goal;
-            if (hintText != null) hintText.text = valid ? steps[currentStepIndex].hint : "AI drawings are illustrative until verified by the circuit simulator.";
+            if (stepText != null) stepText.text = valid ? $"STEP {currentStepIndex + 1} / {steps.Length}" :
+                LevelDrawing && drawingPageCount > 1 ? $"PAGE {drawingPage + 1} / {drawingPageCount}" : "VISUAL TEACHING";
+            if (instructionText != null) instructionText.text = valid ? steps[currentStepIndex].instruction :
+                LevelDrawing ? drawingInstruction ?? "" : goal;
+            if (hintText != null) hintText.text = valid ? steps[currentStepIndex].hint :
+                LevelDrawing ? "" : "AI drawings are illustrative until verified by the circuit simulator.";
             if (progressFill != null) progressFill.fillAmount = valid ? (float)(currentStepIndex + 1) / steps.Length : 0f;
             if (pauseButtonText != null) pauseButtonText.text = Paused ? "RESUME" : "PAUSE";
         }

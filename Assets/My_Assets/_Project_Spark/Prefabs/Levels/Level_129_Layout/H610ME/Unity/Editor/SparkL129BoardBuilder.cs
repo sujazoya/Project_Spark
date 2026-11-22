@@ -1,0 +1,252 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+namespace ProjectSpark.Level129.Editor
+{
+    public static class SparkL129BoardBuilder
+    {
+        private const string Source = "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_129_Layout/H610ME";
+        private const string Output = "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_129_Layout";
+        private const string Menu = "Tools/Project Spark/Automatic Level Generator/129/";
+        private const int ExpectedModels = 456;
+        private const int ExpectedMaterials = 19;
+        private static readonly CultureInfo CI = CultureInfo.InvariantCulture;
+        private sealed class Part
+        {
+            public string Ref, Role, File;
+            public Vector3 Position;
+        }
+
+        private static string[][] ReadRows(string file, string header, int count)
+        {
+            // The kit's generated CSV dialect contains no quoted fields or commas within values.
+            string[] lines = File.ReadAllLines(Source + "/Data/" + file);
+            if (lines.Length != count + 1 || lines[0].TrimStart('\uFEFF') != header)
+                throw new InvalidDataException(file + ": wrong schema or row count.");
+            var rows = new string[count][];
+            for (int i = 0; i < count; i++) rows[i] = lines[i+1].Split(',');
+            return rows;
+        }
+        private static List<Part> ReadParts()
+        {
+            var result = new List<Part>(ExpectedModels);
+            var refs = new HashSet<string>(StringComparer.Ordinal);
+            var names = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (string[] row in ReadRows("ModelManifest.csv", "ref,kind,role,fbx,x_m,y_m,z_m,triangles", ExpectedModels))
+            {
+                if (row.Length != 8 || !refs.Add(row[0]) || !names.Add(row[3]) ||
+                    Path.GetFileName(row[3]) != row[3] || !row[3].EndsWith(".fbx", StringComparison.OrdinalIgnoreCase))
+                    throw new InvalidDataException("Invalid or duplicate model record.");
+                if (row[2] != "factory" && row[2] != "removable" && row[2] != "structure" && row[2] != "service" && row[2] != "inspection")
+                    throw new InvalidDataException("Unknown role: " + row[2]);
+                var p = new Part { Ref = row[0], Role = row[2], File = row[3], Position = new Vector3(float.Parse(row[4], CI), float.Parse(row[5], CI), float.Parse(row[6], CI)) };
+                if (!File.Exists(ModelPath(p.File))) throw new FileNotFoundException(ModelPath(p.File));
+                if (!File.Exists(NativePath(p.File))) throw new FileNotFoundException(NativePath(p.File));
+                result.Add(p);
+            }
+            return result;
+        }
+        private static string ModelPath(string name) => Source + "/Models_FBX/" + name;
+        private static string NativePath(string file) => Source + "/Models_Native/" + Path.GetFileNameWithoutExtension(file) + ".spark129mesh";
+        private static GameObject RequireModel(string file)
+        {
+            string path = NativePath(file);
+            if (!File.Exists(path)) throw new FileNotFoundException("Missing Level 129 native mesh hotfix source: " + path);
+            GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            if (model == null) throw new InvalidDataException("Native model not imported: " + path + ". Check the Console and reimport the asset.");
+            MeshFilter[] filters = model.GetComponentsInChildren<MeshFilter>(true);
+            if (filters.Length == 0) throw new InvalidDataException("Native model has no mesh: " + path);
+            foreach (MeshFilter filter in filters)
+                if (filter.sharedMesh == null || filter.sharedMesh.vertexCount == 0 || filter.sharedMesh.GetIndexCount(0) == 0)
+                    throw new InvalidDataException("Native model has an empty mesh: " + path + " / " + filter.name);
+            return model;
+        }
+        private static Bounds BoundsOf(GameObject obj)
+        {
+            Renderer[] renderers = obj.GetComponentsInChildren<Renderer>(true);
+            if (renderers.Length == 0) throw new InvalidDataException("No Renderers on " + obj.name);
+            Bounds b = renderers[0].bounds;
+            for (int i = 1; i < renderers.Length; i++) b.Encapsulate(renderers[i].bounds);
+            return b;
+        }
+        private static void EnsureFolder(string path)
+        {
+            if (AssetDatabase.IsValidFolder(path)) return;
+            string parent = path.Substring(0, path.LastIndexOf('/'));
+            EnsureFolder(parent);
+            AssetDatabase.CreateFolder(parent, path.Substring(path.LastIndexOf('/') + 1));
+        }
+        private static void CheckScale()
+        {
+            var model = UnityEngine.Object.Instantiate(RequireModel("L129_PCB.fbx"));
+            Bounds b;
+            try { b = BoundsOf(model); }
+            finally { UnityEngine.Object.DestroyImmediate(model); }
+            if (Mathf.Abs(b.size.x - .200f) > .001f || Mathf.Abs(b.size.z - .23616f) > .001f)
+                throw new InvalidDataException("PCB native mesh scale/axis mismatch: " + b.size + ". Expected X=.200 m, Z=.23616 m. Do not build until fixed.");
+        }
+        [MenuItem(Menu + "3. Validate Sources and Report Blockers")]
+        public static void Validate()
+        {
+            var parts = ReadParts();
+            CheckScale();
+            foreach (Part p in parts) RequireModel(p.File);
+            RequireModel("L129_CompleteMotherboard.fbx");
+            RequireModel("L129_CompleteMotherboard_Batched.fbx");
+            foreach (string[] row in ReadRows("MaterialManifest.csv", "name,metallic,smoothness", ExpectedMaterials))
+            {
+                if (row.Length != 3 || !row[0].StartsWith("L129_", StringComparison.Ordinal)) throw new InvalidDataException("Material schema.");
+                foreach (string suffix in new[] { "_BaseColor.png", "_Normal.png", "_MetallicSmoothness.png" })
+                    if (!File.Exists(Source + "/Textures/" + row[0].Substring(5) + suffix)) throw new FileNotFoundException(row[0]+suffix);
+            }
+            Debug.Log("[L129] Source assets imported; 456 modular native models and two complete native models; original FBX retained. Electrical mappings are unapproved. No gameplay certified.");
+        }
+        private static Texture2D Texture(string key, string suffix, bool normal, bool srgb)
+        {
+            string path = Source + "/Textures/" + key + suffix;
+            var importer = AssetImporter.GetAtPath(path) as TextureImporter;
+            if (importer == null) throw new FileNotFoundException(path);
+            TextureImporterType type = normal ? TextureImporterType.NormalMap : TextureImporterType.Default;
+            bool changed = importer.textureType != type || importer.sRGBTexture != srgb || importer.maxTextureSize != 2048;
+            if (changed)
+            {
+                importer.textureType = type; importer.sRGBTexture = srgb; importer.maxTextureSize = 2048;
+                importer.SaveAndReimport();
+            }
+            return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+        }
+        [MenuItem(Menu + "4. Rebuild URP PBR Materials")]
+        public static void RebuildMaterials() { Materials(); Debug.Log("[L129] URP materials created/updated."); }
+        private static Dictionary<string,Material> Materials()
+        {
+            var result = new Dictionary<string,Material>(StringComparer.Ordinal);
+            Shader shader = Shader.Find("Universal Render Pipeline/Lit");
+            if (shader == null) throw new InvalidOperationException("URP Lit shader missing.");
+            EnsureFolder(Output + "/URP_PBR_Materials");
+            foreach (string[] row in ReadRows("MaterialManifest.csv", "name,metallic,smoothness", ExpectedMaterials))
+            {
+                string key = row[0].Substring(5), path = Output + "/URP_PBR_Materials/" + row[0] + ".mat";
+                Material mat = AssetDatabase.LoadAssetAtPath<Material>(path);
+                if (mat == null) { mat = new Material(shader); AssetDatabase.CreateAsset(mat, path); }
+                mat.shader = shader;
+                mat.SetColor("_BaseColor", Color.white);
+                mat.SetTexture("_BaseMap", Texture(key,"_BaseColor.png",false,true));
+                mat.SetTexture("_BumpMap", Texture(key,"_Normal.png",true,false));
+                mat.SetTexture("_MetallicGlossMap", Texture(key,"_MetallicSmoothness.png",false,false));
+                mat.SetFloat("_Metallic", 1f); // packed map already contains metallic
+                mat.SetFloat("_Smoothness", 1f); // packed alpha already contains smoothness
+                mat.EnableKeyword("_NORMALMAP"); mat.EnableKeyword("_METALLICSPECGLOSSMAP");
+                EditorUtility.SetDirty(mat); result.Add(key,mat);
+            }
+            AssetDatabase.SaveAssets(); return result;
+        }
+        private static void Bind(GameObject go, Dictionary<string,Material> materials)
+        {
+            foreach (Renderer r in go.GetComponentsInChildren<Renderer>(true))
+            {
+                string name = r.name; int split = name.LastIndexOf("__", StringComparison.Ordinal);
+                string key = split >= 0 ? name.Substring(split+2) : "";
+                if (!materials.ContainsKey(key))
+                {
+                    var mf = r.GetComponent<MeshFilter>();
+                    string meshName = mf != null && mf.sharedMesh != null ? mf.sharedMesh.name : "";
+                    foreach (string candidate in materials.Keys)
+                    {
+                        if (meshName.EndsWith("_"+candidate,StringComparison.Ordinal) || name.EndsWith("__"+candidate,StringComparison.Ordinal)) { key=candidate; break; }
+                    }
+                }
+                if (!materials.TryGetValue(key, out Material mat))
+                    throw new InvalidDataException("Unknown imported material node: " + name);
+                r.sharedMaterial = mat;
+            }
+        }
+        private static GameObject Instance(string file, Transform parent, Vector3 position, Dictionary<string,Material> materials)
+        {
+            var go = UnityEngine.Object.Instantiate(RequireModel(file));
+            try { go.transform.SetParent(parent,false); go.transform.localPosition = position; Bind(go, materials); return go; }
+            catch { UnityEngine.Object.DestroyImmediate(go); throw; }
+        }
+        private static GameObject SaveShowcase(bool batched)
+        {
+            CheckScale(); var materials=Materials();
+            string suffix = batched ? "_Batched" : "";
+            var go=Instance("L129_CompleteMotherboard"+suffix+".fbx",null,Vector3.zero,materials);
+            try
+            {
+                go.name="L129_CompleteMotherboard"+suffix+"_VISUAL_ONLY";
+                string path=Output+"/"+go.name+".prefab";
+                return PrefabUtility.SaveAsPrefabAsset(go,path);
+            }
+            finally { UnityEngine.Object.DestroyImmediate(go); }
+        }
+        [MenuItem(Menu + "5. Create COMPLETE assembled motherboard (VISUAL ONLY)")]
+        public static void Complete() { SaveShowcase(false); }
+        [MenuItem(Menu + "6. Create BATCHED motherboard (VISUAL ONLY)")]
+        public static void Batched() { SaveShowcase(true); }
+        [MenuItem(Menu + "1. Rebuild playable Silicon Workshop")]
+        public static void BuildLayout() => SparkL129PlayableBuilder.Build();
+
+        private static void BuildAuthoringLayout()
+        {
+            CheckScale(); var parts=ReadParts(); var materials=Materials(); EnsureFolder(Output);
+            string scenePath=Output+"/Level_129_Layout.unity";
+            if (File.Exists(scenePath) && !EditorUtility.DisplayDialog("Rebuild Level 129", "Overwrite the generated Level 129 authoring scene? Back up your changes first.", "Rebuild", "Cancel")) return;
+            Scene scene=EditorSceneManager.NewScene(NewSceneSetup.EmptyScene,NewSceneMode.Additive);
+            GameObject root=new GameObject("L129_ServiceLayout_AUTHORING_ONLY"); SceneManager.MoveGameObjectToScene(root,scene);
+            try
+            {
+                var board=new GameObject("FactoryBoard");board.transform.SetParent(root.transform,false);
+                var removables=new GameObject("RemovableHardware");removables.transform.SetParent(root.transform,false);
+                var service=new GameObject("ServicePartTargets_EMPTY");service.transform.SetParent(root.transform,false);
+                var layers=new GameObject("InspectionArtwork_DISABLED");layers.transform.SetParent(root.transform,false);
+                foreach (Part p in parts)
+                {
+                    if(p.Role=="service") continue;
+                    Transform parent=p.Role=="removable"?removables.transform:p.Role=="inspection"?layers.transform:board.transform;
+                    var instance=Instance(p.File,parent,p.Position,materials);instance.name=p.Ref;
+                }
+                foreach (string[] row in ReadRows("ServiceTargets.csv", "id,asset_ref,x_m,y_m,z_m,installed_at_start,footprint_verified", 4))
+                {
+                    if (row.Length != 7 || row[5] != "FALSE" || row[6] != "FALSE") throw new InvalidDataException("Unapproved service target.");
+                    AddAnchor(service.transform, row[0]+"_"+row[1], new Vector3(float.Parse(row[2],CI),float.Parse(row[3],CI),float.Parse(row[4],CI)));
+                }
+                EnsureFolder(Output + "/ServicePartPrefabs");
+                foreach (Part p in parts)
+                {
+                    if (p.Role != "service") continue;
+                    GameObject sample = Instance(p.File, null, Vector3.zero, materials);
+                    try { sample.name=p.Ref; PrefabUtility.SaveAsPrefabAsset(sample,Output+"/ServicePartPrefabs/"+p.Ref+".prefab"); }
+                    finally { UnityEngine.Object.DestroyImmediate(sample); }
+                }
+                layers.SetActive(false);
+                PrefabUtility.SaveAsPrefabAsset(root,Output+"/Level_129_Layout.prefab");
+                EditorSceneManager.SaveScene(scene,scenePath);Debug.Log("[L129] Authoring layout created. Factory visuals are not electrical components; CPU/RAM/SSD are not installed. Objectives remain blocked.");
+            }
+            finally { EditorSceneManager.CloseScene(scene,true); }
+        }
+        private static void AddAnchor(Transform parent,string name,Vector3 position)
+        { var anchor=new GameObject(name+"_NOT_INSTALLED"); anchor.transform.SetParent(parent,false); anchor.transform.localPosition=position; }
+        [MenuItem(Menu + "2. Place assembled VISUAL preview on SELECTED tabletop")]
+        public static void Tabletop()
+        {
+            var table=Selection.activeGameObject; if(table==null)throw new InvalidOperationException("Select the tabletop first.");
+            Bounds tb=BoundsOf(table);var prefab=SaveShowcase(true);
+            if(prefab==null)throw new InvalidOperationException("Showcase prefab wasn't created.");
+            var go=(GameObject)PrefabUtility.InstantiatePrefab(prefab,table.scene);try {
+                go.transform.rotation=Quaternion.Euler(0,90,0);Bounds b=BoundsOf(go);
+                if(b.size.x<=0 || b.size.z<=0 || tb.size.x<=0 || tb.size.z<=0) throw new InvalidOperationException("Invalid board/tabletop bounds.");
+                float scale=Mathf.Min(10.13f/b.size.x,7.98f/b.size.z,tb.size.x*.94f/b.size.x,tb.size.z*.94f/b.size.z);
+                go.transform.localScale=Vector3.one*scale; b=BoundsOf(go);
+                go.transform.position+=new Vector3(tb.center.x-b.center.x,tb.max.y-b.min.y+.01f,tb.center.z-b.center.z);
+                Undo.RegisterCreatedObjectUndo(go,"Place L129 visual preview");EditorSceneManager.MarkSceneDirty(table.scene);Selection.activeGameObject=go;
+            }catch{UnityEngine.Object.DestroyImmediate(go);throw;}
+        }
+    }
+}
+

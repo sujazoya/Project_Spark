@@ -1,0 +1,7 @@
+        private static GameObject RequireModel(string file)
+        {
+            GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(ModelPath(file));
+            if (model == null || model.GetComponentInChildren<MeshFilter>(true) == null)
+                throw new InvalidDataException("FBX has no imported mesh: " + file + ". Check Unity's FBX importer log.");
+            return model;
+        }

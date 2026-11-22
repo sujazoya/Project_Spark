@@ -315,6 +315,7 @@ namespace ProjectSpark.Gameplay
 
         private void OnGUI()
         {
+            if (ProjectSpark.UIManagement.SparkUIManager.SuppressWorkbenchAnnotations) return;
             if(Event.current.type!=EventType.Repaint || !Camera.main || !Active)return;
             GUI.Label(new Rect(14,Screen.height-28,430,24),"HOME: board view   |   Middle drag: pan   |   Right drag: orbit");
             if(stage==0 && placed!=null)

@@ -234455,6 +234455,7 @@ GameObject:
   - component: {fileID: 1565662870}
   - component: {fileID: 1565662871}
   - component: {fileID: 1565662872}
+  - component: {fileID: 900001610214912201}
   m_Layer: 16
   m_Name: Main_HUD
   m_TagString: Untagged
@@ -242106,6 +242107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb05a1459b8e2ba4db34ff6c3fa1a2fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAIWorldContext
+  levelManager: {fileID: 0}
+  levelLoader: {fileID: 0}
 --- !u!114 &1610167684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294438,7 +294441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778a4d28539589845bd0d9f19e47a651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkChapterAccessController
-  campaign: {fileID: 11400000, guid: 4eb6fbeffe2b0824289148d1f6e33494, type: 2}
+  campaign: {fileID: 11400000, guid: 446733b31f554b739e9903c9609bce1e, type: 2}
   progression: {fileID: 4871775207901933864}
   activeMode: 0
   profileId: Default
@@ -323163,6 +323166,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2137447389561281718}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &900001610214912201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565662865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c461eb29098a4f289c24018eb852f712, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkLevelDetailsButton
+  levelManager: {fileID: 8565763376412791690}
+  drawing: {fileID: 1445614107}
+  teaching: {fileID: 1445614098}
+  previousLevel: {fileID: 660296782}
+  nextLevel: {fileID: 1772144183}
+  labelStyle: {fileID: 867240989}
 --- !u!1 &908214644362338235
 GameObject:
   m_ObjectHideFlags: 0
@@ -364170,7 +364191,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 560dc279cb2ca1546b14885a0099de88, type: 2}
   - {fileID: 11400000, guid: b213517b77191254994ddc168785d3be, type: 2}
   - {fileID: 11400000, guid: d6881b3ddf9701047a1cbb032103d9f1, type: 2}
-  activeLevelIndex: 113
+  - {fileID: 11400000, guid: 89d106ff06959ad4d9efe4b7259b57f7, type: 2}
+  - {fileID: 11400000, guid: 28b80c5216033d44d9014da7b58a88eb, type: 2}
+  - {fileID: 11400000, guid: f62763110b9c3694491e2b1993207f64, type: 2}
+  - {fileID: 11400000, guid: ad595eae9db157842a964ba0ee7019f9, type: 2}
+  - {fileID: 11400000, guid: a7cc4dc7515cde745bae0a1ca0d06174, type: 2}
+  activeLevelIndex: 0
   layoutLoader: {fileID: 350401877}
   runtimeState: 0
   autoStartFirstLevel: 1
@@ -364181,7 +364207,8 @@ MonoBehaviour:
   verboseLogging: 0
   showRuntimeState: 1
   levelProgression: {fileID: 4871775207901933864}
-  enforceProgressionAccess: 0
+  enforceProgressionAccess: 1
+  chapterAccess: {fileID: 1959975702}
 --- !u!114 &8570788760503519887
 MonoBehaviour:
   m_ObjectHideFlags: 0

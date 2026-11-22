@@ -244,8 +244,7 @@ namespace ProjectSpark.Gameplay
             int index =
                 selector.SelectedLevelIndex;
 
-            int count =
-                selector.LevelCount;
+            int number = level.LevelNumber > 0 ? level.LevelNumber : index + 1;
 
             // --------------------------------------------------------
             // TEXT
@@ -254,14 +253,14 @@ namespace ProjectSpark.Gameplay
             if (levelNumberText != null)
             {
                 levelNumberText.text =
-                    $"LEVEL {index + 1:00}";
+                    $"LEVEL {number:00}";
             }
 
             if (levelNameText != null)
             {
                 levelNameText.text =
                     string.IsNullOrWhiteSpace(level.DisplayName)
-                        ? $"LEVEL {index + 1}"
+                        ? $"LEVEL {number}"
                         : level.DisplayName;
             }
 
@@ -295,11 +294,11 @@ namespace ProjectSpark.Gameplay
             // --------------------------------------------------------
 
             if (previousButton != null)
-                previousButton.interactable = index > 0;
+                previousButton.interactable = selector.GetAdjacentSelection(-1) >= 0;
 
             if (nextButton != null)
                 nextButton.interactable =
-                    index < count - 1;
+                    selector.GetAdjacentSelection(1) >= 0;
 
             if (startButton != null)
                 startButton.interactable = unlocked;

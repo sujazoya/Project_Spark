@@ -1,13 +1,12 @@
 using System;
+using ProjectSpark.AI.Tutorial;
 using ProjectSpark.Gameplay;
 using UnityEngine;
 
 namespace ProjectSpark.UI.VisualTeaching
 {
     /// <summary>
-    /// Selects an authored drawing by the active level manager's LevelId.
-    /// Retries until presentation succeeds; does not cache failed level selections.
-    /// Does not inspect or modify any electrical circuit.
+    /// Presents the loaded layout's authored drawing or an objective map and read-only workbench views.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkDrawCurrentLevel : MonoBehaviour
@@ -28,6 +27,13 @@ namespace ProjectSpark.UI.VisualTeaching
 
         private string lastDisplayedLevelId = string.Empty;
         private bool hasDrawn;
+        private SparkLevelLayout lastDisplayedLayout;
+        private SparkTeachingView currentView;
+        private int displayedEvidence;
+        private bool generatedPage;
+        private bool objectivesOnly;
+        private bool wiring;
+        private int boardPage;
         private float nextCheckTime;
         private float nextWarningTime;
 
@@ -36,25 +42,24 @@ namespace ProjectSpark.UI.VisualTeaching
         {
             get
             {
-                SparkLevelDrawingAsset drawing = GetCurrentDrawing();
-                return drawing != null ? drawing.PageCount : 0;
+                var context = ResolveContext();
+                var drawing = FindDrawing(context.Definition ? NormalizeId(context.Definition.LevelId) : "");
+                return !objectivesOnly && drawing && drawing.PageCount > 0 ? drawing.PageCount : SparkAILevelVisuals.ObjectivePageCount(context.Definition);
             }
         }
         public string CurrentLevelId
         {
             get
             {
-                Resolve();
-                // In the single-scene project, the layout loader owns the active layout.
-                // The gameplay manager's ActiveLevel can lag behind a manual level switch.
-                if (levelLoader != null && levelLoader.HasActiveLayout &&
-                    levelLoader.ActiveLayout != null &&
-                    levelLoader.ActiveLayout.LevelDefinition != null)
-                    return NormalizeId(levelLoader.ActiveLayout.LevelDefinition.LevelId);
-
-                var level = levelGameplayManager != null ? levelGameplayManager.ActiveLevel : null;
-                return level != null ? NormalizeId(level.LevelId) : string.Empty;
+                var level = ResolveContext().Definition;
+                return level ? NormalizeId(level.LevelId) : string.Empty;
             }
+        }
+
+        private SparkAILevelContext ResolveContext()
+        {
+            Resolve();
+            return SparkAILevelContext.Capture(levelGameplayManager, levelLoader);
         }
 
         private static string NormalizeId(string value) => (value ?? string.Empty).Trim();
@@ -63,10 +68,12 @@ namespace ProjectSpark.UI.VisualTeaching
 
         private void Resolve()
         {
-            if (levelLoader == null)
-                levelLoader = FindFirstObjectByType<SparkLevelLayoutLoader>(FindObjectsInactive.Include);
             if (levelGameplayManager == null)
                 levelGameplayManager = FindFirstObjectByType<LevelGamePlayManager>(FindObjectsInactive.Include);
+            if (levelGameplayManager && levelGameplayManager.LayoutLoader)
+                levelLoader = levelGameplayManager.LayoutLoader;
+            else if (levelLoader == null)
+                levelLoader = FindFirstObjectByType<SparkLevelLayoutLoader>(FindObjectsInactive.Include);
             if (teachingManager == null)
                 teachingManager = FindFirstObjectByType<SparkVisualTeachingManager>(FindObjectsInactive.Include);
         }
@@ -77,15 +84,54 @@ namespace ProjectSpark.UI.VisualTeaching
             if (Time.unscaledTime < nextCheckTime) return;
             nextCheckTime = Time.unscaledTime + Mathf.Max(0.05f, checkIntervalSeconds);
 
-            string id = CurrentLevelId;
-            if (string.IsNullOrEmpty(id) || string.Equals(id, lastDisplayedLevelId, StringComparison.OrdinalIgnoreCase))
+            var context = ResolveContext();
+            if (hasDrawn && teachingManager && teachingManager.LevelDrawing != this)
+            {
+                hasDrawn = false;
                 return;
-
-            // Don't remember an ID until PresentValidatedPlan returns true.
-            TryShowLevel(id, true);
+            }
+            bool newLayout = lastDisplayedLayout != context.Layout;
+            if (hasDrawn && !newLayout)
+            {
+                if (!teachingManager || !teachingManager.PanelOpen || teachingManager.Paused ||
+                    (!(generatedPage || wiring) && currentView != SparkTeachingView.WorldOnly) ||
+                    displayedEvidence == Evidence(context)) return;
+            }
+            if (!context.Definition)
+            {
+                if (hasDrawn && teachingManager) teachingManager.ClearLevelPresentation();
+                hasDrawn = false;
+                lastDisplayedLayout = null;
+                lastDisplayedLevelId = "";
+                return;
+            }
+            bool panelOpen = !hasDrawn || (teachingManager && teachingManager.PanelOpen);
+            bool shown = currentView == SparkTeachingView.WorldOnly ? ShowCurrentInWorld() :
+                wiring ? ShowWiring(context) : TryShowLevel(context, newLayout);
+            if (!shown)
+            {
+                if (hasDrawn && teachingManager) teachingManager.ClearLevelPresentation();
+                hasDrawn = false;
+                lastDisplayedLayout = null;
+                lastDisplayedLevelId = "";
+            }
+            else if (!panelOpen) teachingManager.ClosePanel();
         }
 
-        private SparkLevelDrawingAsset GetCurrentDrawing() => FindDrawing(CurrentLevelId);
+        private int Evidence(SparkAILevelContext context)
+        {
+            if (!context.HasEvaluation) return -1;
+            if (wiring && currentView != SparkTeachingView.WorldOnly)
+                return context.Manager.CircuitSystem ? context.Manager.CircuitSystem.TopologyVersion : -1;
+            unchecked
+            {
+                int value = (int)context.Manager.RuntimeState;
+                if (context.Manager.TargetResults != null)
+                    foreach (var result in context.Manager.TargetResults)
+                        value = value * 31 + (result.satisfied ? 1 : 0);
+                return value;
+            }
+        }
 
         private SparkLevelDrawingAsset FindDrawing(string levelId)
         {
@@ -101,9 +147,10 @@ namespace ProjectSpark.UI.VisualTeaching
         [ContextMenu("Visual Teaching / Draw Current Level")]
         public void DrawCurrentLevel()
         {
-            string id = CurrentLevelId;
-            // Explicit button invocation always returns to the asset's initial page.
-            TryShowLevel(id, true);
+            currentView = SparkTeachingView.Both;
+            wiring = false;
+            objectivesOnly = false;
+            TryShowLevel(ResolveContext(), true);
         }
 
         public void DrawCurrentLevelFromAI() => DrawCurrentLevel();
@@ -112,43 +159,87 @@ namespace ProjectSpark.UI.VisualTeaching
         public void PreviousPage() => ShowPage(currentPage - 1);
         public void ShowSolution() => ShowPage(PageCount - 1);
 
-        public bool ShowPage(int page) => TryShowPage(CurrentLevelId, page);
-
-        private bool TryShowLevel(string id, bool resetPage)
+        public bool ShowCurrentOnWhiteboard(bool liveWiring = false, bool objectives = false)
         {
-            SparkLevelDrawingAsset drawing = FindDrawing(id);
-            if (drawing == null)
-            {
-                Warn("No drawing asset found for active Level ID '" + id + "'.");
-                return false;
-            }
-            return TryShowPage(id, resetPage ? drawing.initialPage : currentPage);
+            currentView = SparkTeachingView.WhiteboardOnly;
+            wiring = liveWiring;
+            objectivesOnly = objectives;
+            var context = ResolveContext();
+            return wiring ? ShowWiring(context) : TryShowLevel(context, true);
         }
 
-        private bool TryShowPage(string id, int page)
+        public bool ShowCurrentInWorld() => SwitchView(SparkTeachingView.WorldOnly);
+
+        private bool ShowWiring(SparkAILevelContext context)
         {
-            Resolve();
-            SparkLevelDrawingAsset drawing = FindDrawing(id);
-            if (drawing == null || drawing.PageCount <= 0 || teachingManager == null)
+            var plan = SparkAILevelVisuals.LiveWiring(context);
+            if (plan != null && currentView == SparkTeachingView.Both)
+                plan.annotations = SparkAILevelVisuals.WorldFocus(context)?.annotations;
+            return Present(context, plan, 0);
+        }
+
+        internal bool SwitchView(SparkTeachingView view)
+        {
+            var context = ResolveContext();
+            if (view == SparkTeachingView.WorldOnly)
             {
-                Warn("Missing drawing/pages/teaching manager for active Level ID '" + id + "'.");
+                var plan = SparkAILevelVisuals.WorldFocus(context);
+                if (plan == null) return false;
+                currentView = view;
+                return Present(context, plan, 0);
+            }
+            currentView = view;
+            return wiring ? ShowWiring(context) : TryShowPage(context, boardPage);
+        }
+
+        internal void ReplayDrawing() => SwitchView(currentView);
+
+        public bool ShowPage(int page)
+        {
+            if (currentView == SparkTeachingView.WorldOnly) currentView = SparkTeachingView.WhiteboardOnly;
+            wiring = false;
+            return TryShowPage(ResolveContext(), page);
+        }
+
+        private bool TryShowLevel(SparkAILevelContext context, bool resetPage)
+        {
+            var drawing = context.Definition ? FindDrawing(NormalizeId(context.Definition.LevelId)) : null;
+            int initialPage = !objectivesOnly && drawing ? drawing.initialPage : 0;
+            return TryShowPage(context, resetPage ? initialPage : currentPage);
+        }
+
+        private bool TryShowPage(SparkAILevelContext context, int page)
+        {
+            if (!context.Definition || !teachingManager) return false;
+            var drawing = FindDrawing(NormalizeId(context.Definition.LevelId));
+            bool authored = !objectivesOnly && drawing && drawing.PageCount > 0;
+            int count = authored ? drawing.PageCount : SparkAILevelVisuals.ObjectivePageCount(context.Definition);
+            int selected = Mathf.Clamp(page, 0, count - 1);
+            var plan = authored ? drawing.BuildPlan(selected) : SparkAILevelVisuals.ObjectivePage(context, selected);
+            if (!authored && plan != null && currentView == SparkTeachingView.Both)
+                plan.annotations = SparkAILevelVisuals.WorldFocus(context)?.annotations;
+            if (!Present(context, plan, selected)) return false;
+            boardPage = selected;
+            return true;
+        }
+
+        private bool Present(SparkAILevelContext context, SparkVisualTeachingPlan plan, int page)
+        {
+            if (plan == null || !teachingManager) return false;
+            if (!teachingManager.PresentValidatedPlan(plan))
+            {
+                Warn("Teaching manager rejected the current drawing.");
                 return false;
             }
-
-            int selected = Mathf.Clamp(page, 0, drawing.PageCount - 1);
-            SparkVisualTeachingPlan plan = drawing.BuildPlan(selected);
-            if (plan == null || !teachingManager.PresentValidatedPlan(plan))
-            {
-                Warn("Teaching manager rejected drawing '" + drawing.name + "' for level '" + id + "'.");
-                return false;
-            }
-
-            currentPage = selected;
+            currentPage = page;
+            generatedPage = plan.schematic != null && plan.schematic.objectiveCards != null;
+            displayedEvidence = Evidence(context);
             hasDrawn = true;
-            lastDisplayedLevelId = id;
-            if (openWhiteboard) teachingManager.OpenTeachingBoard();
-            /*Debug.Log("[Level Draw] PRESENTED asset='" + drawing.name + "' level='" + id +
-                     "' page=" + (selected + 1) + "/" + drawing.PageCount + ".", this);*/
+            lastDisplayedLevelId = NormalizeId(context.Definition.LevelId);
+            lastDisplayedLayout = context.Layout;
+            teachingManager.SetLevelDrawing(this, page, wiring || currentView == SparkTeachingView.WorldOnly ? 0 : PageCount);
+            teachingManager.SetView(currentView);
+            if (openWhiteboard) teachingManager.OpenPanel();
             return true;
         }
 
