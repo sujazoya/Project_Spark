@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581588b391302d4d80156907e5be0fb, type: 3}
+  m_Name: Level_93
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkLevelDefinition
+  levelId: level_93
+  displayName: The Elemental Archive
+  description: Map a pristine geological core and qualify isolated analytical samples
+    under vacuum protection.
+  completionMode: 0
+  requiredTargetCount: 6
+  requireClosedReturn: 0
+  rejectShortCircuit: 1
+  rejectTargetShort: 1
+  allowIntermediateConnections: 1
+  requireMinimumVoltage: 0
+  minimumVoltage: 1
+  allowAnyConfiguredPowerSource: 1
+  powerSources:
+  - sourceName: CONTROL_POWER
+    positiveTerminalId: SUPPLY_POS
+    negativeTerminalId: SUPPLY_RET
+    nominalVoltage: 5
+  targets:
+  - targetId: level93_analysis_1
+    displayName: Build the Elemental Analysis Network
+    description: "Recorded from the electrical graph, valid calibrated feedback and
+      the level\u2019s verified run history."
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L93_Network
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level93_analysis_2
+    displayName: Commission the Pristine Science Laboratory
+    description: "Recorded from the electrical graph, valid calibrated feedback and
+      the level\u2019s verified run history."
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L93_Calibrated
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level93_analysis_3
+    displayName: Reveal the Hidden Mineral Archive
+    description: "Recorded from the electrical graph, valid calibrated feedback and
+      the level\u2019s verified run history."
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L93_Commissioned
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level93_analysis_4
+    displayName: Decode the Ancient Chemical Signature
+    description: "Recorded from the electrical graph, valid calibrated feedback and
+      the level\u2019s verified run history."
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L93_Endurance
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level93_analysis_5
+    displayName: Recover Three Scientific Instrument Failures
+    description: "Recorded from the electrical graph, valid calibrated feedback and
+      the level\u2019s verified run history."
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L93_Repairs
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  - targetId: level93_analysis_6
+    displayName: Restore Critical Analytical Chamber Feedback
+    description: "Recorded from the electrical graph, valid calibrated feedback and
+      the level\u2019s verified run history."
+    targetType: 5
+    targetTerminalId: 
+    requiredPositiveTerminalId: 
+    requiredNegativeTerminalId: 
+    targetComponentId: L93_Requalified
+    minimumVoltage: 4.8
+    minimumCurrent: 0
+    minimumPower: 0
+    requireElectricalEnabled: 1
+    requireConduction: 0
+    inverted: 0
+    useMaximumVoltage: 1
+    maximumVoltage: 5.2
+    useMaximumCurrent: 0
+    maximumCurrent: 0
+    useMaximumPower: 0
+    maximumPower: 0
+  failureMode: 0
+  requiredHealthyResistorIds: []
+  requireHealthyInstalledResistors: 0
+  successOutputIds: []
+  failureOutputIds: []
+  unlockNextLevelOnCompletion: 1
+  unlockedByDefault: 0
+  autoUnlockNextLevel: 1
+  autoAdvanceOnCompletion: 0

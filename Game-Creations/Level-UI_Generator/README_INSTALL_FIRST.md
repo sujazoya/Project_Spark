@@ -1,36 +1,23 @@
-# Project Spark — AAA Level Visual Architect 1.0
-Full merged AAA level-system source package plus editor-time visual generation. Unity 6.3 URP, TMP, uGUI. This is source code, not pre-rendered artwork: Unity and a functioning graphics device are required to produce real visual files. The existing campaign definitions and 3D source prefabs are not included or modified. Existing gameplay gateway remains unverified and disabled until integrated.
+# Project Spark V8 Neon — consolidated installation repair
 
-## Install (Windows PowerShell 5.1)
-Close Unity, back up the project, extract the complete ZIP outside Assets. In the extracted folder:
+This combines the ten previously distributed source packages (Visual Architect through V8 Neon) in release order, keeping the newest version of each exact path. 112 payload files, 32 C# files and 76 artwork inputs. No earlier UI package needs to be installed first. Requires the existing Project Spark game project, Unity 6 URP, TMP/uGUI and Input System. Does not supply or replace your game manager, campaign/level definitions, scene assets or save data. Compilation against your local project is not tested.
+
+Close Unity and back up or commit your project first. Extract outside Assets. Use a fresh folder. Do not mix this installer or SHA256SUMS.csv with older packages.
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File ".\Install_Spark_AAA_Visual_Architect.ps1" -UnityProjectPath "D:\Project_Spark_Master_Project\Project_Spark" -DryRun -ReplaceExisting
-powershell -ExecutionPolicy Bypass -File ".\Install_Spark_AAA_Visual_Architect.ps1" -UnityProjectPath "D:\Project_Spark_Master_Project\Project_Spark" -ReplaceExisting
+powershell -ExecutionPolicy Bypass -File ".\Install_Spark_V8_Neon_Complete.ps1" -UnityProjectPath "D:\Project_Spark_Master_Project\Project_Spark" -DryRun -ReplaceExisting
+powershell -ExecutionPolicy Bypass -File ".\Install_Spark_V8_Neon_Complete.ps1" -UnityProjectPath "D:\Project_Spark_Master_Project\Project_Spark" -ReplaceExisting
 ```
-Use -ReplaceExisting only after reviewing differences if you have customized the first kit; the installer backs up replaced sources and preserves existing .meta files. For fresh install it is optional. No changes to unrelated levels or project settings. Previous package uses the same namespace and paths; do not install a second copy under another folder.
+Review changes before the second command. Replacement is explicit, backs up existing differing files under SparkV8Neon_CompleteRepair_Backups, and leaves .meta files untouched. Matching files are skipped. No generated assets or settings are deleted. Alternate same-name C# files under Assets block installation; review their actual classes and paths before resolving any duplicate. No changes are made in dry run. Scripts are merged as supplied, not newly compiled.
 
-## First run
-1. Open Unity, let scripts compile, import TMP Essentials if needed.
-2. Tools > Project Spark > AAA Level Architect > 01 Audit and refresh campaign. Build COMPLETE AAA presentation if the panel is not already built. Close generated preview before rebuilding.
-3. Tools > Project Spark > AAA Level Visual Architect > 01 Open Visual Architect.
-4. Scan campaign and discover prefab candidates. Existing levels contain no explicit hardware-prefab refs in the supplied archive; names are only candidate suggestions. Review actual hardware identity. Approve checked unique matches in the review window; manually choose a correct prefab or imported model for missing or multiple candidates. Use visual-only static geometry prefabs. Do not choose an entire unrelated scene, camera rig or equipment from a different level.
-5. Generate selected level first. Check all five images in Project view and verify the thumbnail and mission banner in Play Mode. If approved, BUILD COMPLETE AAA VISUAL LIBRARY. Cancel safely between levels; already generated levels stay saved. Enable auto render changed approved sources only after checking the initial results. Newly discovered levels still require source approval.
-6. Validate visual library and inspect VisualAudit.txt. No unapproved level is rendered. Existing manual/edited PNGs are not overwritten without explicit replacement. Backups outside Assets in SparkAAA_VisualBackups. The source installer uses SparkAAA_InstallerBackups.
+After Unity compiles without errors, run the following menus under Tools > Project Spark:
+1. AAA Studio V5 > 02 Build Studio skin only (legacy fallback skin, chapter icons and settings).
+2. AAA Showcase V6 > 01 Build showcase presentation (legacy fallback skin).
+3. AAA Professional V8 > 01 Build complete V8 presentation (original V8 fallback sprites and status icons).
+4. AAA V8 Neon > 01 Build neon presentation.
+5. AAA V8 Neon > 03 Validate neon assets. Check configuration under 02 Configure neon colors: Neon Enabled, Colorful Chapters, Colorful Missions should be on; use intensity 0.88 if desired. Existing settings are retained except original first-build defaults. A custom environment override can hide the neon backdrop.
+6. Enter Play Mode and open Chapters using the existing native campaign panel. Do not launch the separate AAA preview scene as a replacement for your gameplay system.
 
-## Outputs
-- Generated/Thumbnails/PS-L###.png: 1024x576 original; sprite import limited to 512 default (1024 optional). Automatically used by existing pooled card system.
-- Generated/Resources/SparkAAAVisuals/PS-L###/Banner.png: 1920x1080. Loaded on selection in mission detail at runtime, fallback to thumbnail. Resource assets are packaged in builds; monitor memory on low-end mobile.
-- Generated/Visuals/PS-L###/Portrait.png: 1024x1024 opaque studio view.
-- Generated/Visuals/PS-L###/LoadingScreen.png: 1920x1080 alternate angle, ready for a future loading UI binding.
-- Generated/Visuals/PS-L###/Architecture.png: 1920x1080 top-angle technical image, not an exploded view or X-ray.
-- Generated/Editor/SparkVisualSettings.asset: source mappings, capture settings, dependency fingerprints and file hashes. Back up this asset alongside generated art. It is editor-only.
-- Generated/VisualAudit.txt, VisualCandidateReview.txt: reports.
+For missing live 3D previews only: run AAA Level Architect audit, approve correct hardware in AAA Level Visual Architect, then AAA Cinematic V3 > 01 Build complete V3. Approve the dedicated preview layer only if appropriate. This step is optional for static UI display and can update generated preview assets. Existing mission artwork is retained.
 
-## Scope and limitations
-Camera frames eight projected bounds corners with padding. Two directional lights and ambient fill, neutral opaque background, LOD0 filtering, existing shared material rendering; no invented parts. Static MeshRenderer + MeshFilter only, no particles, animated/skinned characters, Terrain, runtime circuit glow or dynamic shader states generated by gameplay. A visual-only baked prefab is needed for those. No live preview camera, true exploded render, shadow-floor composing or generated external AI artworks included. An actual Unity render can fail due to shader incompatibility or GPU/pipeline settings; blank/magenta checks are heuristic, not a quality guarantee. Extensive legitimate magenta may be rejected. No null-graphics batch rendering. Default sprite compression and resolution should be reviewed per target build. On-demand banner loading does not guarantee eviction of previously loaded textures; profile memory and use the existing project asset lifecycle if necessary.
-
-The 123 definitions and 690 targets refer to the earlier supplied archive only; actual project scan may differ. Missing slots 89–93, 96, 113 remain unavailable unless their assets exist locally. Do not overwrite Level 32 Optical Quality Sorter with a motherboard asset. No automatic approval or fabricated picture for an unresolved level. Campaign progression, original definitions, gameplay and solver logic remain authoritative and unchanged.
-
-## Integration test gate (must run in your Unity editor)
-See Assets/ProjectSpark/AAAArchitecture/Documentation/VISUAL_ARCHITECT_TESTS.md and prior INTEGRATION_AND_TESTS.md. Unity compilation, GPU rendering, Play Mode, Windows PowerShell execution and mobile builds were not run in the packaging environment. Offline packaging checks are not Unity tests.
+If you see compilation errors, share the first red error and file/line. No need to reinstall the old packages.

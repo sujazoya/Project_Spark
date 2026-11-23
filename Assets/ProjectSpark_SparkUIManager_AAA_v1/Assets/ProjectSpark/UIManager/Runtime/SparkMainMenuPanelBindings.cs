@@ -259,6 +259,7 @@ namespace ProjectSpark.UIManagement
                 levels.LevelStarted+=ScheduleLevelControls;
                 ScheduleLevelControls(levels.ActiveLevel);
             }
+            dashboard.AttachCampaign(levels, Find<SparkCampaignPanel>());
             dashboard.SetVisible(!wallsMounted);
         }
 

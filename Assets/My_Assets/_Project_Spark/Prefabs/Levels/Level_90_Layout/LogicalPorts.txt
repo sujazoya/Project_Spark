@@ -1,0 +1,352 @@
+W001_OUT_POWER_CONTROL	L90_Regulated5VControlSupply	P218	POWER_CONTROL	-10.7	1.3	6.98	Protected 5 V propulsion safety PLC supply
+W001_IN_POWER_CONTROL	L90_PropulsionSafetyPLC	P216	POWER_CONTROL	-12.0	1.3	6.98	Protected 5 V propulsion safety PLC supply
+W002_OUT_POWER_CONTROL	L90_Regulated5VControlSupply	P218	POWER_CONTROL	-10.7	1.3	6.98	Plasma ignition sequencing logic supply
+W002_IN_POWER_CONTROL	L90_PlasmaIgnitionSequencerPLC	P211	POWER_CONTROL	10.52	1.3	6.18	Plasma ignition sequencing logic supply
+W003_OUT_POWER_CONTROL	L90_Regulated5VControlSupply	P218	POWER_CONTROL	-10.7	1.3	6.98	Mission departure sequencing logic supply
+W003_IN_POWER_CONTROL	L90_AutonomousDepartureSequencingPLC	P236	POWER_CONTROL	1.0	1.3	6.98	Mission departure sequencing logic supply
+W004_OUT_POWER_CONTROL	L90_Regulated5VControlSupply	P218	POWER_CONTROL	-10.7	1.3	6.98	Thrust allocation controller logic supply
+W004_IN_POWER_CONTROL	L90_QuadEngineThrustAllocationComputer	P231	POWER_CONTROL	-1.88	1.3	6.98	Thrust allocation controller logic supply
+W005_OUT_POWER_CONTROL	L90_Regulated5VControlSupply	P218	POWER_CONTROL	-10.7	1.3	6.98	Deep-space guidance logic supply
+W005_IN_POWER_CONTROL	L90_DeepSpaceTrajectoryGuidanceComputer	P234	POWER_CONTROL	-0.3	1.3	6.98	Deep-space guidance logic supply
+W006_OUT_POWER_CONTROL	L90_Regulated5VControlSupply	P218	POWER_CONTROL	-10.7	1.3	6.98	Propulsion SCADA logic supply
+W006_IN_POWER_CONTROL	L90_MissionPropulsionSCADA	P247	POWER_CONTROL	-0.28	9.65	-9.87	Propulsion SCADA logic supply
+W007_OUT_POWER_CONTROL	L90_Regulated5VControlSupply	P218	POWER_CONTROL	-10.7	1.3	6.98	Neutralizer transducer 5 V measurement conditioning
+W007_IN_POWER_CONTROL	L90_NeutralizerCurrentTransducer	P214	POWER_CONTROL	12.1	1.3	6.18	Neutralizer transducer 5 V measurement conditioning
+W008_OUT_POWER_CONTROL	L90_Regulated5VControlSupply	P218	POWER_CONTROL	-10.7	1.3	6.98	Xenon sensor array logic supply
+W008_IN_POWER_CONTROL	L90_XenonMassFlowSensorArray	P183	POWER_CONTROL	-6.52	1.25	3.48	Xenon sensor array logic supply
+W009_OUT_POWER_CONTROL	L90_Regulated5VControlSupply	P218	POWER_CONTROL	-10.7	1.3	6.98	Magnetic current control logic supply
+W009_IN_POWER_CONTROL	L90_MagnetCurrentDriverRack	P208	POWER_CONTROL	8.2	1.3	6.18	Magnetic current control logic supply
+W010_OUT_POWER_CONTROL	L90_Regulated5VControlSupply	P218	POWER_CONTROL	-10.7	1.3	6.98	Xenon A mass flow logic power
+W010_IN_POWER_CONTROL	L90_XenonFlowControllerA	P170	POWER_CONTROL	-12.0	1.25	3.48	Xenon A mass flow logic power
+W011_OUT_POWER_CONTROL	L90_PropulsionSafetyPLC	P215	POWER_CONTROL	-12.28	1.3	6.98	Protected safety logic circuit return
+W011_IN_POWER_CONTROL	L90_Regulated5VControlSupply	P218	POWER_CONTROL	-10.7	1.3	6.98	Protected safety logic circuit return
+W012_OUT_POWER_CONTROL	L90_PlasmaIgnitionSequencerPLC	P212	POWER_CONTROL	10.8	1.3	6.18	Ignition controller protected circuit return
+W012_IN_POWER_CONTROL	L90_Regulated5VControlSupply	P218	POWER_CONTROL	-10.7	1.3	6.98	Ignition controller protected circuit return
+W013_OUT_ANALOG_FEEDBACK	L90_XenonStorageTankA	P146	ANALOG_FEEDBACK	-12.1	1.62	-1.77	Xenon tank A available propellant inventory
+W013_IN_ANALOG_FEEDBACK	L90_XenonPropellantInventoryAnalyzer	P185	ANALOG_FEEDBACK	-5.5	1.25	3.48	Xenon tank A available propellant inventory
+W014_OUT_ANALOG_FEEDBACK	L90_XenonStorageTankB	P150	ANALOG_FEEDBACK	-9.11	1.62	-1.77	Xenon tank B available propellant inventory
+W014_IN_ANALOG_FEEDBACK	L90_XenonPropellantInventoryAnalyzer	P185	ANALOG_FEEDBACK	-5.5	1.25	3.48	Xenon tank B available propellant inventory
+W015_OUT_ANALOG_FEEDBACK	L90_XenonStorageTankA	P147	ANALOG_FEEDBACK	-11.81	1.62	-1.77	Tank A regulated inlet supply measured pressure
+W015_IN_ANALOG_FEEDBACK	L90_XenonPressureRegulatorA	P160	ANALOG_FEEDBACK	-8.38	1.25	1.13	Tank A regulated inlet supply measured pressure
+W016_OUT_ANALOG_FEEDBACK	L90_XenonStorageTankB	P148	ANALOG_FEEDBACK	-9.69	1.62	-1.77	Tank B regulated inlet supply measured pressure
+W016_IN_ANALOG_FEEDBACK	L90_XenonPressureRegulatorB	P164	ANALOG_FEEDBACK	-6.8	1.25	1.13	Tank B regulated inlet supply measured pressure
+W017_OUT_ANALOG_FEEDBACK	L90_XenonPropellantInventoryAnalyzer	P184	ANALOG_FEEDBACK	-5.78	1.25	3.48	Qualified remaining xenon fuel budget
+W017_IN_ANALOG_FEEDBACK	L90_DeepSpaceTrajectoryGuidanceComputer	P233	ANALOG_FEEDBACK	-0.58	1.3	6.98	Qualified remaining xenon fuel budget
+W018_OUT_ANALOG_FEEDBACK	L90_XenonHighPressureFillInterface	P151	ANALOG_FEEDBACK	-12.28	1.25	1.13	Fill port closure verified by safety supervisor
+W018_IN_ANALOG_FEEDBACK	L90_PropulsionSafetyPLC	P215	ANALOG_FEEDBACK	-12.28	1.3	6.98	Fill port closure verified by safety supervisor
+W019_OUT_DIGITAL_CONTROL	L90_AutonomousDepartureSequencingPLC	P235	DIGITAL_CONTROL	0.72	1.3	6.98	Tank A isolate valve request
+W019_IN_DIGITAL_CONTROL	L90_XenonFeedIsolationValveA	P155	DIGITAL_CONTROL	-10.7	1.25	1.13	Tank A isolate valve request
+W020_OUT_DIGITAL_CONTROL	L90_AutonomousDepartureSequencingPLC	P235	DIGITAL_CONTROL	0.72	1.3	6.98	Tank B isolate valve request
+W020_IN_DIGITAL_CONTROL	L90_XenonFeedIsolationValveB	P159	DIGITAL_CONTROL	-9.12	1.25	1.13	Tank B isolate valve request
+W021_OUT_ANALOG_FEEDBACK	L90_XenonFeedIsolationValveA	P156	ANALOG_FEEDBACK	-10.42	1.25	1.13	Tank A isolation valve actual open feedback
+W021_IN_ANALOG_FEEDBACK	L90_XenonFourWayDistributionManifold	P166	ANALOG_FEEDBACK	-5.78	1.25	1.13	Tank A isolation valve actual open feedback
+W022_OUT_ANALOG_FEEDBACK	L90_XenonFeedIsolationValveB	P157	ANALOG_FEEDBACK	-9.68	1.25	1.13	Tank B isolation valve actual open feedback
+W022_IN_ANALOG_FEEDBACK	L90_XenonFourWayDistributionManifold	P166	ANALOG_FEEDBACK	-5.78	1.25	1.13	Tank B isolation valve actual open feedback
+W023_OUT_ANALOG_FEEDBACK	L90_XenonPressureRegulatorA	P161	ANALOG_FEEDBACK	-8.1	1.25	1.13	Regulator A measured supply pressure
+W023_IN_ANALOG_FEEDBACK	L90_XenonFourWayDistributionManifold	P166	ANALOG_FEEDBACK	-5.78	1.25	1.13	Regulator A measured supply pressure
+W024_OUT_ANALOG_FEEDBACK	L90_XenonPressureRegulatorB	P165	ANALOG_FEEDBACK	-6.52	1.25	1.13	Regulator B measured supply pressure
+W024_IN_ANALOG_FEEDBACK	L90_XenonFourWayDistributionManifold	P166	ANALOG_FEEDBACK	-5.78	1.25	1.13	Regulator B measured supply pressure
+W025_OUT_ANALOG_FEEDBACK	L90_XenonFourWayDistributionManifold	P166	ANALOG_FEEDBACK	-5.78	1.25	1.13	Thruster A actual xenon supply pressure
+W025_IN_ANALOG_FEEDBACK	L90_XenonFlowControllerA	P169	ANALOG_FEEDBACK	-12.28	1.25	3.48	Thruster A actual xenon supply pressure
+W026_OUT_ANALOG_FEEDBACK	L90_XenonFourWayDistributionManifold	P166	ANALOG_FEEDBACK	-5.78	1.25	1.13	Thruster B actual xenon supply pressure
+W026_IN_ANALOG_FEEDBACK	L90_XenonFlowControllerB	P174	ANALOG_FEEDBACK	-10.42	1.25	3.48	Thruster B actual xenon supply pressure
+W027_OUT_ANALOG_FEEDBACK	L90_XenonFourWayDistributionManifold	P166	ANALOG_FEEDBACK	-5.78	1.25	1.13	Thruster C actual xenon supply pressure
+W027_IN_ANALOG_FEEDBACK	L90_XenonFlowControllerC	P175	ANALOG_FEEDBACK	-9.68	1.25	3.48	Thruster C actual xenon supply pressure
+W028_OUT_ANALOG_FEEDBACK	L90_XenonFourWayDistributionManifold	P166	ANALOG_FEEDBACK	-5.78	1.25	1.13	Thruster D actual xenon supply pressure
+W028_IN_ANALOG_FEEDBACK	L90_XenonFlowControllerD	P179	ANALOG_FEEDBACK	-8.1	1.25	3.48	Thruster D actual xenon supply pressure
+W029_OUT_DIGITAL_CONTROL	L90_AutonomousDepartureSequencingPLC	P235	DIGITAL_CONTROL	0.72	1.3	6.98	Thruster A mass-flow request
+W029_IN_DIGITAL_CONTROL	L90_XenonFlowControllerA	P169	DIGITAL_CONTROL	-12.28	1.25	3.48	Thruster A mass-flow request
+W030_OUT_DIGITAL_CONTROL	L90_AutonomousDepartureSequencingPLC	P235	DIGITAL_CONTROL	0.72	1.3	6.98	Thruster B mass-flow request
+W030_IN_DIGITAL_CONTROL	L90_XenonFlowControllerB	P174	DIGITAL_CONTROL	-10.42	1.25	3.48	Thruster B mass-flow request
+W031_OUT_DIGITAL_CONTROL	L90_AutonomousDepartureSequencingPLC	P235	DIGITAL_CONTROL	0.72	1.3	6.98	Thruster C mass-flow request
+W031_IN_DIGITAL_CONTROL	L90_XenonFlowControllerC	P175	DIGITAL_CONTROL	-9.68	1.25	3.48	Thruster C mass-flow request
+W032_OUT_DIGITAL_CONTROL	L90_AutonomousDepartureSequencingPLC	P235	DIGITAL_CONTROL	0.72	1.3	6.98	Thruster D mass-flow request
+W032_IN_DIGITAL_CONTROL	L90_XenonFlowControllerD	P179	DIGITAL_CONTROL	-8.1	1.25	3.48	Thruster D mass-flow request
+W033_OUT_ANALOG_FEEDBACK	L90_XenonFlowControllerA	P169	ANALOG_FEEDBACK	-12.28	1.25	3.48	Actual A xenon mass-flow feedback
+W033_IN_ANALOG_FEEDBACK	L90_XenonMassFlowSensorArray	P183	ANALOG_FEEDBACK	-6.52	1.25	3.48	Actual A xenon mass-flow feedback
+W034_OUT_ANALOG_FEEDBACK	L90_XenonFlowControllerB	P174	ANALOG_FEEDBACK	-10.42	1.25	3.48	Actual B xenon mass-flow feedback
+W034_IN_ANALOG_FEEDBACK	L90_XenonMassFlowSensorArray	P183	ANALOG_FEEDBACK	-6.52	1.25	3.48	Actual B xenon mass-flow feedback
+W035_OUT_ANALOG_FEEDBACK	L90_XenonFlowControllerC	P175	ANALOG_FEEDBACK	-9.68	1.25	3.48	Actual C xenon mass-flow feedback
+W035_IN_ANALOG_FEEDBACK	L90_XenonMassFlowSensorArray	P183	ANALOG_FEEDBACK	-6.52	1.25	3.48	Actual C xenon mass-flow feedback
+W036_OUT_ANALOG_FEEDBACK	L90_XenonFlowControllerD	P179	ANALOG_FEEDBACK	-8.1	1.25	3.48	Actual D xenon mass-flow feedback
+W036_IN_ANALOG_FEEDBACK	L90_XenonMassFlowSensorArray	P183	ANALOG_FEEDBACK	-6.52	1.25	3.48	Actual D xenon mass-flow feedback
+W037_OUT_ANALOG_FEEDBACK	L90_XenonMassFlowSensorArray	P183	ANALOG_FEEDBACK	-6.52	1.25	3.48	Qualified mass-flow feedback safety cross-check
+W037_IN_ANALOG_FEEDBACK	L90_PropulsionSafetyPLC	P215	ANALOG_FEEDBACK	-12.28	1.3	6.98	Qualified mass-flow feedback safety cross-check
+W038_OUT_ANALOG_FEEDBACK	L90_XenonFlowRestrictionFaultInjector	P241	ANALOG_FEEDBACK	4.62	1.3	6.98	Injected xenon supply restriction diagnostic
+W038_IN_ANALOG_FEEDBACK	L90_XenonPropellantInventoryAnalyzer	P186	ANALOG_FEEDBACK	-5.22	1.25	3.48	Injected xenon supply restriction diagnostic
+W039_OUT_DIGITAL_CONTROL	L90_PropulsionSafetyPLC	P216	DIGITAL_CONTROL	-12.0	1.3	6.98	Protected precharge permission
+W039_IN_DIGITAL_CONTROL	L90_PPUPrechargeContactor	P202	DIGITAL_CONTROL	4.3	1.3	6.18	Protected precharge permission
+W040_OUT_DIGITAL_CONTROL	L90_PPUPrechargeContactor	P202	DIGITAL_CONTROL	4.3	1.3	6.18	Actual PPU DC bus precharge connection
+W040_IN_DIGITAL_CONTROL	L90_ProtectedPropulsionDCBus	P199	DIGITAL_CONTROL	2.72	1.3	6.18	Actual PPU DC bus precharge connection
+W041_OUT_DIGITAL_CONTROL	L90_ProtectedPropulsionDCBus	P199	DIGITAL_CONTROL	2.72	1.3	6.18	Protected DC bus PPU A enable
+W041_IN_DIGITAL_CONTROL	L90_PPUChannelA	P189	DIGITAL_CONTROL	-1.92	1.3	6.18	Protected DC bus PPU A enable
+W042_OUT_DIGITAL_CONTROL	L90_ProtectedPropulsionDCBus	P199	DIGITAL_CONTROL	2.72	1.3	6.18	Protected DC bus PPU B enable
+W042_IN_DIGITAL_CONTROL	L90_PPUChannelB	P190	DIGITAL_CONTROL	-1.18	1.3	6.18	Protected DC bus PPU B enable
+W043_OUT_DIGITAL_CONTROL	L90_ProtectedPropulsionDCBus	P199	DIGITAL_CONTROL	2.72	1.3	6.18	Protected DC bus PPU C enable
+W043_IN_DIGITAL_CONTROL	L90_PPUChannelC	P194	DIGITAL_CONTROL	0.4	1.3	6.18	Protected DC bus PPU C enable
+W044_OUT_DIGITAL_CONTROL	L90_ProtectedPropulsionDCBus	P199	DIGITAL_CONTROL	2.72	1.3	6.18	Protected DC bus PPU D enable
+W044_IN_DIGITAL_CONTROL	L90_PPUChannelD	P198	DIGITAL_CONTROL	1.98	1.3	6.18	Protected DC bus PPU D enable
+W045_OUT_ANALOG_FEEDBACK	L90_PPUCurrentShuntMonitor	P204	ANALOG_FEEDBACK	5.6	1.3	6.18	Bus current trusted supervisory measurement
+W045_IN_ANALOG_FEEDBACK	L90_PropulsionSafetyPLC	P215	ANALOG_FEEDBACK	-12.28	1.3	6.98	Bus current trusted supervisory measurement
+W046_OUT_ANALOG_FEEDBACK	L90_PPUVoltageTransducer	P205	ANALOG_FEEDBACK	6.62	1.3	6.18	Bus voltage measured supervisory feedback
+W046_IN_ANALOG_FEEDBACK	L90_PropulsionSafetyPLC	P215	ANALOG_FEEDBACK	-12.28	1.3	6.98	Bus voltage measured supervisory feedback
+W047_OUT_DIGITAL_CONTROL	L90_AutonomousDepartureSequencingPLC	P235	DIGITAL_CONTROL	0.72	1.3	6.98	PPU A mode enable
+W047_IN_DIGITAL_CONTROL	L90_PPUChannelA	P188	DIGITAL_CONTROL	-2.2	1.3	6.18	PPU A mode enable
+W048_OUT_DIGITAL_CONTROL	L90_AutonomousDepartureSequencingPLC	P235	DIGITAL_CONTROL	0.72	1.3	6.98	PPU B mode enable
+W048_IN_DIGITAL_CONTROL	L90_PPUChannelB	P192	DIGITAL_CONTROL	-0.62	1.3	6.18	PPU B mode enable
+W049_OUT_DIGITAL_CONTROL	L90_AutonomousDepartureSequencingPLC	P235	DIGITAL_CONTROL	0.72	1.3	6.98	PPU C mode enable
+W049_IN_DIGITAL_CONTROL	L90_PPUChannelC	P193	DIGITAL_CONTROL	0.12	1.3	6.18	PPU C mode enable
+W050_OUT_DIGITAL_CONTROL	L90_AutonomousDepartureSequencingPLC	P235	DIGITAL_CONTROL	0.72	1.3	6.98	PPU D mode enable
+W050_IN_DIGITAL_CONTROL	L90_PPUChannelD	P197	DIGITAL_CONTROL	1.7	1.3	6.18	PPU D mode enable
+W051_OUT_ANALOG_FEEDBACK	L90_PPUChannelA	P188	ANALOG_FEEDBACK	-2.2	1.3	6.18	PPU A discharge ready confirmation
+W051_IN_ANALOG_FEEDBACK	L90_PlasmaIgnitionSequencerPLC	P212	ANALOG_FEEDBACK	10.8	1.3	6.18	PPU A discharge ready confirmation
+W052_OUT_ANALOG_FEEDBACK	L90_PPUChannelB	P192	ANALOG_FEEDBACK	-0.62	1.3	6.18	PPU B discharge ready confirmation
+W052_IN_ANALOG_FEEDBACK	L90_PlasmaIgnitionSequencerPLC	P212	ANALOG_FEEDBACK	10.8	1.3	6.18	PPU B discharge ready confirmation
+W053_OUT_ANALOG_FEEDBACK	L90_PPUChannelC	P193	ANALOG_FEEDBACK	0.12	1.3	6.18	PPU C discharge ready confirmation
+W053_IN_ANALOG_FEEDBACK	L90_PlasmaIgnitionSequencerPLC	P212	ANALOG_FEEDBACK	10.8	1.3	6.18	PPU C discharge ready confirmation
+W054_OUT_ANALOG_FEEDBACK	L90_PPUChannelD	P197	ANALOG_FEEDBACK	1.7	1.3	6.18	PPU D discharge ready confirmation
+W054_IN_ANALOG_FEEDBACK	L90_PlasmaIgnitionSequencerPLC	P212	ANALOG_FEEDBACK	10.8	1.3	6.18	PPU D discharge ready confirmation
+W055_OUT_ANALOG_FEEDBACK	L90_PPUChannelA	P188	ANALOG_FEEDBACK	-2.2	1.3	6.18	PPU A actual electrical power telemetry
+W055_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	PPU A actual electrical power telemetry
+W056_OUT_ANALOG_FEEDBACK	L90_PPUChannelB	P192	ANALOG_FEEDBACK	-0.62	1.3	6.18	PPU B actual electrical power telemetry
+W056_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	PPU B actual electrical power telemetry
+W057_OUT_ANALOG_FEEDBACK	L90_PPUChannelC	P193	ANALOG_FEEDBACK	0.12	1.3	6.18	PPU C actual electrical power telemetry
+W057_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	PPU C actual electrical power telemetry
+W058_OUT_ANALOG_FEEDBACK	L90_PPUChannelD	P197	ANALOG_FEEDBACK	1.7	1.3	6.18	PPU D actual electrical power telemetry
+W058_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	PPU D actual electrical power telemetry
+W059_OUT_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P215	SAFETY_FEEDBACK	-12.28	1.3	6.98	PPU A independent safety shutdown override
+W059_IN_SAFETY_FEEDBACK	L90_PPUChannelA	P188	SAFETY_FEEDBACK	-2.2	1.3	6.18	PPU A independent safety shutdown override
+W060_OUT_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P215	SAFETY_FEEDBACK	-12.28	1.3	6.98	PPU B independent safety shutdown override
+W060_IN_SAFETY_FEEDBACK	L90_PPUChannelB	P192	SAFETY_FEEDBACK	-0.62	1.3	6.18	PPU B independent safety shutdown override
+W061_OUT_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P215	SAFETY_FEEDBACK	-12.28	1.3	6.98	PPU C independent safety shutdown override
+W061_IN_SAFETY_FEEDBACK	L90_PPUChannelC	P193	SAFETY_FEEDBACK	0.12	1.3	6.18	PPU C independent safety shutdown override
+W062_OUT_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P215	SAFETY_FEEDBACK	-12.28	1.3	6.98	PPU D independent safety shutdown override
+W062_IN_SAFETY_FEEDBACK	L90_PPUChannelD	P197	SAFETY_FEEDBACK	1.7	1.3	6.18	PPU D independent safety shutdown override
+W063_OUT_ANALOG_FEEDBACK	L90_PPUPrechargeContactor	P202	ANALOG_FEEDBACK	4.3	1.3	6.18	Measured main precharge contactor position
+W063_IN_ANALOG_FEEDBACK	L90_PropulsionSafetyPLC	P215	ANALOG_FEEDBACK	-12.28	1.3	6.98	Measured main precharge contactor position
+W064_OUT_ANALOG_FEEDBACK	L90_ProtectedPropulsionDCBus	P200	ANALOG_FEEDBACK	3.0	1.3	6.18	DC bus state SCADA telemetry
+W064_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P248	ANALOG_FEEDBACK	0.0	9.65	-9.87	DC bus state SCADA telemetry
+W065_OUT_DIGITAL_CONTROL	L90_PlasmaIgnitionSequencerPLC	P212	DIGITAL_CONTROL	10.8	1.3	6.18	Thruster A protected ignition request
+W065_IN_DIGITAL_CONTROL	L90_HallThrusterA	P099	DIGITAL_CONTROL	-0.87	6.13	-2.85	Thruster A protected ignition request
+W066_OUT_DIGITAL_CONTROL	L90_PlasmaIgnitionSequencerPLC	P212	DIGITAL_CONTROL	10.8	1.3	6.18	Thruster B protected ignition request
+W066_IN_DIGITAL_CONTROL	L90_HallThrusterB	P100	DIGITAL_CONTROL	0.87	6.13	-2.85	Thruster B protected ignition request
+W067_OUT_DIGITAL_CONTROL	L90_PlasmaIgnitionSequencerPLC	P212	DIGITAL_CONTROL	10.8	1.3	6.18	Thruster C protected ignition request
+W067_IN_DIGITAL_CONTROL	L90_HallThrusterC	P104	DIGITAL_CONTROL	-1.12	4.07	-2.85	Thruster C protected ignition request
+W068_OUT_DIGITAL_CONTROL	L90_PlasmaIgnitionSequencerPLC	P212	DIGITAL_CONTROL	10.8	1.3	6.18	Thruster D protected ignition request
+W068_IN_DIGITAL_CONTROL	L90_HallThrusterD	P108	DIGITAL_CONTROL	1.37	4.07	-2.85	Thruster D protected ignition request
+W069_OUT_DIGITAL_CONTROL	L90_PlasmaIgnitionSequencerPLC	P212	DIGITAL_CONTROL	10.8	1.3	6.18	Cathode A activation request
+W069_IN_DIGITAL_CONTROL	L90_HollowCathodeNeutralizerA	P127	DIGITAL_CONTROL	-2.38	1.65	-3.62	Cathode A activation request
+W070_OUT_DIGITAL_CONTROL	L90_PlasmaIgnitionSequencerPLC	P212	DIGITAL_CONTROL	10.8	1.3	6.18	Cathode B activation request
+W070_IN_DIGITAL_CONTROL	L90_HollowCathodeNeutralizerB	P131	DIGITAL_CONTROL	-0.7	1.65	-3.62	Cathode B activation request
+W071_OUT_DIGITAL_CONTROL	L90_PlasmaIgnitionSequencerPLC	P212	DIGITAL_CONTROL	10.8	1.3	6.18	Cathode C activation request
+W071_IN_DIGITAL_CONTROL	L90_HollowCathodeNeutralizerC	P135	DIGITAL_CONTROL	0.98	1.65	-3.62	Cathode C activation request
+W072_OUT_DIGITAL_CONTROL	L90_PlasmaIgnitionSequencerPLC	P212	DIGITAL_CONTROL	10.8	1.3	6.18	Cathode D activation request
+W072_IN_DIGITAL_CONTROL	L90_HollowCathodeNeutralizerD	P136	DIGITAL_CONTROL	1.82	1.65	-3.62	Cathode D activation request
+W073_OUT_ANALOG_FEEDBACK	L90_HollowCathodeNeutralizerA	P127	ANALOG_FEEDBACK	-2.38	1.65	-3.62	Cathode A measured keeper current
+W073_IN_ANALOG_FEEDBACK	L90_PlasmaIgnitionSequencerPLC	P212	ANALOG_FEEDBACK	10.8	1.3	6.18	Cathode A measured keeper current
+W074_OUT_ANALOG_FEEDBACK	L90_HollowCathodeNeutralizerB	P131	ANALOG_FEEDBACK	-0.7	1.65	-3.62	Cathode B measured keeper current
+W074_IN_ANALOG_FEEDBACK	L90_PlasmaIgnitionSequencerPLC	P212	ANALOG_FEEDBACK	10.8	1.3	6.18	Cathode B measured keeper current
+W075_OUT_ANALOG_FEEDBACK	L90_HollowCathodeNeutralizerC	P135	ANALOG_FEEDBACK	0.98	1.65	-3.62	Cathode C measured keeper current
+W075_IN_ANALOG_FEEDBACK	L90_PlasmaIgnitionSequencerPLC	P212	ANALOG_FEEDBACK	10.8	1.3	6.18	Cathode C measured keeper current
+W076_OUT_ANALOG_FEEDBACK	L90_HollowCathodeNeutralizerD	P136	ANALOG_FEEDBACK	1.82	1.65	-3.62	Cathode D measured keeper current
+W076_IN_ANALOG_FEEDBACK	L90_PlasmaIgnitionSequencerPLC	P212	ANALOG_FEEDBACK	10.8	1.3	6.18	Cathode D measured keeper current
+W077_OUT_ANALOG_FEEDBACK	L90_HallThrusterA	P098	ANALOG_FEEDBACK	-1.12	6.13	-2.85	Engine A discharge ripple measured diagnostic
+W077_IN_ANALOG_FEEDBACK	L90_HallDischargeOscillationRecorder	P228	ANALOG_FEEDBACK	-4.2	1.3	6.98	Engine A discharge ripple measured diagnostic
+W078_OUT_ANALOG_FEEDBACK	L90_HallThrusterB	P102	ANALOG_FEEDBACK	1.37	6.13	-2.85	Engine B discharge ripple measured diagnostic
+W078_IN_ANALOG_FEEDBACK	L90_HallDischargeOscillationRecorder	P228	ANALOG_FEEDBACK	-4.2	1.3	6.98	Engine B discharge ripple measured diagnostic
+W079_OUT_ANALOG_FEEDBACK	L90_HallThrusterC	P103	ANALOG_FEEDBACK	-1.37	4.07	-2.85	Engine C discharge ripple measured diagnostic
+W079_IN_ANALOG_FEEDBACK	L90_HallDischargeOscillationRecorder	P228	ANALOG_FEEDBACK	-4.2	1.3	6.98	Engine C discharge ripple measured diagnostic
+W080_OUT_ANALOG_FEEDBACK	L90_HallThrusterD	P107	ANALOG_FEEDBACK	1.12	4.07	-2.85	Engine D discharge ripple measured diagnostic
+W080_IN_ANALOG_FEEDBACK	L90_HallDischargeOscillationRecorder	P228	ANALOG_FEEDBACK	-4.2	1.3	6.98	Engine D discharge ripple measured diagnostic
+W081_OUT_ANALOG_FEEDBACK	L90_XenonAnodeDistributor	P112	ANALOG_FEEDBACK	-8.78	2.65	-4.52	Shared anode A measured xenon distribution
+W081_IN_ANALOG_FEEDBACK	L90_HallThrusterA	P098	ANALOG_FEEDBACK	-1.12	6.13	-2.85	Shared anode A measured xenon distribution
+W082_OUT_ANALOG_FEEDBACK	L90_XenonAnodeDistributor	P112	ANALOG_FEEDBACK	-8.78	2.65	-4.52	Shared anode B measured xenon distribution
+W082_IN_ANALOG_FEEDBACK	L90_HallThrusterB	P102	ANALOG_FEEDBACK	1.37	6.13	-2.85	Shared anode B measured xenon distribution
+W083_OUT_ANALOG_FEEDBACK	L90_XenonAnodeDistributor	P112	ANALOG_FEEDBACK	-8.78	2.65	-4.52	Shared anode C measured xenon distribution
+W083_IN_ANALOG_FEEDBACK	L90_HallThrusterC	P103	ANALOG_FEEDBACK	-1.37	4.07	-2.85	Shared anode C measured xenon distribution
+W084_OUT_ANALOG_FEEDBACK	L90_XenonAnodeDistributor	P112	ANALOG_FEEDBACK	-8.78	2.65	-4.52	Shared anode D measured xenon distribution
+W084_IN_ANALOG_FEEDBACK	L90_HallThrusterD	P107	ANALOG_FEEDBACK	1.12	4.07	-2.85	Shared anode D measured xenon distribution
+W085_OUT_SAFETY_FEEDBACK	L90_CathodeKeeperPowerModule	P210	SAFETY_FEEDBACK	9.5	1.3	6.18	Cathode keeper supply available confirmation
+W085_IN_SAFETY_FEEDBACK	L90_PlasmaIgnitionSequencerPLC	P212	SAFETY_FEEDBACK	10.8	1.3	6.18	Cathode keeper supply available confirmation
+W086_OUT_ANALOG_FEEDBACK	L90_NeutralizerCurrentTransducer	P214	ANALOG_FEEDBACK	12.1	1.3	6.18	Display only neutralizer current telemetry
+W086_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Display only neutralizer current telemetry
+W087_OUT_ANALOG_FEEDBACK	L90_PlasmaIgnitionSequencerPLC	P211	ANALOG_FEEDBACK	10.52	1.3	6.18	Ignition state telemetry visualization
+W087_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Ignition state telemetry visualization
+W088_OUT_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P215	SAFETY_FEEDBACK	-12.28	1.3	6.98	Independent ignition permit and stop gate
+W088_IN_SAFETY_FEEDBACK	L90_PlasmaIgnitionSequencerPLC	P211	SAFETY_FEEDBACK	10.52	1.3	6.18	Independent ignition permit and stop gate
+W089_OUT_DIGITAL_CONTROL	L90_MagnetCurrentDriverRack	P207	DIGITAL_CONTROL	7.92	1.3	6.18	Magnetic coil A commanded current
+W089_IN_DIGITAL_CONTROL	L90_MagneticCoilAssemblyA	P117	DIGITAL_CONTROL	-1.82	2.75	-2.52	Magnetic coil A commanded current
+W090_OUT_DIGITAL_CONTROL	L90_MagnetCurrentDriverRack	P207	DIGITAL_CONTROL	7.92	1.3	6.18	Magnetic coil B commanded current
+W090_IN_DIGITAL_CONTROL	L90_MagneticCoilAssemblyB	P118	DIGITAL_CONTROL	-0.98	2.75	-2.52	Magnetic coil B commanded current
+W091_OUT_DIGITAL_CONTROL	L90_MagnetCurrentDriverRack	P207	DIGITAL_CONTROL	7.92	1.3	6.18	Magnetic coil C commanded current
+W091_IN_DIGITAL_CONTROL	L90_MagneticCoilAssemblyC	P122	DIGITAL_CONTROL	0.7	2.75	-2.52	Magnetic coil C commanded current
+W092_OUT_DIGITAL_CONTROL	L90_MagnetCurrentDriverRack	P207	DIGITAL_CONTROL	7.92	1.3	6.18	Magnetic coil D commanded current
+W092_IN_DIGITAL_CONTROL	L90_MagneticCoilAssemblyD	P126	DIGITAL_CONTROL	2.38	2.75	-2.52	Magnetic coil D commanded current
+W093_OUT_ANALOG_FEEDBACK	L90_MagneticCoilAssemblyA	P117	ANALOG_FEEDBACK	-1.82	2.75	-2.52	Actual magnet coil A current
+W093_IN_ANALOG_FEEDBACK	L90_MagnetCurrentDriverRack	P207	ANALOG_FEEDBACK	7.92	1.3	6.18	Actual magnet coil A current
+W094_OUT_ANALOG_FEEDBACK	L90_MagneticCoilAssemblyB	P118	ANALOG_FEEDBACK	-0.98	2.75	-2.52	Actual magnet coil B current
+W094_IN_ANALOG_FEEDBACK	L90_MagnetCurrentDriverRack	P207	ANALOG_FEEDBACK	7.92	1.3	6.18	Actual magnet coil B current
+W095_OUT_ANALOG_FEEDBACK	L90_MagneticCoilAssemblyC	P122	ANALOG_FEEDBACK	0.7	2.75	-2.52	Actual magnet coil C current
+W095_IN_ANALOG_FEEDBACK	L90_MagnetCurrentDriverRack	P207	ANALOG_FEEDBACK	7.92	1.3	6.18	Actual magnet coil C current
+W096_OUT_ANALOG_FEEDBACK	L90_MagneticCoilAssemblyD	P126	ANALOG_FEEDBACK	2.38	2.75	-2.52	Actual magnet coil D current
+W096_IN_ANALOG_FEEDBACK	L90_MagnetCurrentDriverRack	P207	ANALOG_FEEDBACK	7.92	1.3	6.18	Actual magnet coil D current
+W097_OUT_ANALOG_FEEDBACK	L90_MagnetDriverOvertemperatureFaultInjector	P244	ANALOG_FEEDBACK	6.2	1.3	6.98	Magnet driver overheat disturbance diagnostic
+W097_IN_ANALOG_FEEDBACK	L90_MagnetCurrentDriverRack	P207	ANALOG_FEEDBACK	7.92	1.3	6.18	Magnet driver overheat disturbance diagnostic
+W098_OUT_ANALOG_FEEDBACK	L90_MagnetCurrentDriverRack	P207	ANALOG_FEEDBACK	7.92	1.3	6.18	Coil current safe operating limits
+W098_IN_ANALOG_FEEDBACK	L90_PropulsionSafetyPLC	P216	ANALOG_FEEDBACK	-12.0	1.3	6.98	Coil current safe operating limits
+W099_OUT_ANALOG_FEEDBACK	L90_HallThrusterA	P097	ANALOG_FEEDBACK	-1.37	6.13	-2.85	Engine A temperature feedback
+W099_IN_ANALOG_FEEDBACK	L90_ThermalControlPumpRack	P220	ANALOG_FEEDBACK	-9.4	1.3	6.98	Engine A temperature feedback
+W100_OUT_ANALOG_FEEDBACK	L90_HallThrusterB	P101	ANALOG_FEEDBACK	1.12	6.13	-2.85	Engine B temperature feedback
+W100_IN_ANALOG_FEEDBACK	L90_ThermalControlPumpRack	P220	ANALOG_FEEDBACK	-9.4	1.3	6.98	Engine B temperature feedback
+W101_OUT_ANALOG_FEEDBACK	L90_HallThrusterC	P105	ANALOG_FEEDBACK	-0.87	4.07	-2.85	Engine C temperature feedback
+W101_IN_ANALOG_FEEDBACK	L90_ThermalControlPumpRack	P220	ANALOG_FEEDBACK	-9.4	1.3	6.98	Engine C temperature feedback
+W102_OUT_ANALOG_FEEDBACK	L90_HallThrusterD	P106	ANALOG_FEEDBACK	0.87	4.07	-2.85	Engine D temperature feedback
+W102_IN_ANALOG_FEEDBACK	L90_ThermalControlPumpRack	P220	ANALOG_FEEDBACK	-9.4	1.3	6.98	Engine D temperature feedback
+W103_OUT_DIGITAL_CONTROL	L90_ThermalControlPumpRack	P220	DIGITAL_CONTROL	-9.4	1.3	6.98	Thermal coolant transfer pump output
+W103_IN_DIGITAL_CONTROL	L90_ThrusterHeatRejectionRadiator	P222	DIGITAL_CONTROL	-8.1	1.3	6.98	Thermal coolant transfer pump output
+W104_OUT_ANALOG_FEEDBACK	L90_ThrusterHeatRejectionRadiator	P222	ANALOG_FEEDBACK	-8.1	1.3	6.98	Radiator temperature and heat rejection safety
+W104_IN_ANALOG_FEEDBACK	L90_PropulsionSafetyPLC	P215	ANALOG_FEEDBACK	-12.28	1.3	6.98	Radiator temperature and heat rejection safety
+W105_OUT_ANALOG_FEEDBACK	L90_ThermalControlPumpRack	P219	ANALOG_FEEDBACK	-9.68	1.3	6.98	Real coolant pump temperature telemetry
+W105_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P248	ANALOG_FEEDBACK	0.0	9.65	-9.87	Real coolant pump temperature telemetry
+W106_OUT_ANALOG_FEEDBACK	L90_ThrusterHeatRejectionRadiator	P221	ANALOG_FEEDBACK	-8.38	1.3	6.98	Thermal heat rejection display only
+W106_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P248	ANALOG_FEEDBACK	0.0	9.65	-9.87	Thermal heat rejection display only
+W107_OUT_DIGITAL_CONTROL	L90_AutonomousDepartureSequencingPLC	P235	DIGITAL_CONTROL	0.72	1.3	6.98	Thermal system pump start
+W107_IN_DIGITAL_CONTROL	L90_ThermalControlPumpRack	P220	DIGITAL_CONTROL	-9.4	1.3	6.98	Thermal system pump start
+W108_OUT_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Magnetic current safety override
+W108_IN_SAFETY_FEEDBACK	L90_MagnetCurrentDriverRack	P208	SAFETY_FEEDBACK	8.2	1.3	6.18	Magnetic current safety override
+W109_OUT_SAFETY_FEEDBACK	L90_MagnetDriverOvertemperatureFaultInjector	P243	SAFETY_FEEDBACK	5.92	1.3	6.98	Magnet overtemperature independent fault state
+W109_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Magnet overtemperature independent fault state
+W110_OUT_ANALOG_FEEDBACK	L90_HallDischargeOscillationRecorder	P227	ANALOG_FEEDBACK	-4.48	1.3	6.98	Discharge instability diagnostics
+W110_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Discharge instability diagnostics
+W111_OUT_DIGITAL_CONTROL	L90_QuadEngineThrustAllocationComputer	P231	DIGITAL_CONTROL	-1.88	1.3	6.98	Quad engine gimbal demand
+W111_IN_DIGITAL_CONTROL	L90_ThrusterGimbalActuatorBank	P139	DIGITAL_CONTROL	5.32	1.65	-2.92	Quad engine gimbal demand
+W112_OUT_DIGITAL_CONTROL	L90_QuadEngineThrustAllocationComputer	P231	DIGITAL_CONTROL	-1.88	1.3	6.98	Thrust setpoint A
+W112_IN_DIGITAL_CONTROL	L90_HallThrusterA	P097	DIGITAL_CONTROL	-1.37	6.13	-2.85	Thrust setpoint A
+W113_OUT_DIGITAL_CONTROL	L90_QuadEngineThrustAllocationComputer	P231	DIGITAL_CONTROL	-1.88	1.3	6.98	Thrust setpoint B
+W113_IN_DIGITAL_CONTROL	L90_HallThrusterB	P101	DIGITAL_CONTROL	1.12	6.13	-2.85	Thrust setpoint B
+W114_OUT_DIGITAL_CONTROL	L90_QuadEngineThrustAllocationComputer	P231	DIGITAL_CONTROL	-1.88	1.3	6.98	Thrust setpoint C
+W114_IN_DIGITAL_CONTROL	L90_HallThrusterC	P105	DIGITAL_CONTROL	-0.87	4.07	-2.85	Thrust setpoint C
+W115_OUT_DIGITAL_CONTROL	L90_QuadEngineThrustAllocationComputer	P231	DIGITAL_CONTROL	-1.88	1.3	6.98	Thrust setpoint D
+W115_IN_DIGITAL_CONTROL	L90_HallThrusterD	P106	DIGITAL_CONTROL	0.87	4.07	-2.85	Thrust setpoint D
+W116_OUT_ANALOG_FEEDBACK	L90_ThrusterGimbalActuatorBank	P140	ANALOG_FEEDBACK	5.6	1.65	-2.92	Measured gimbal angles and actuator positions
+W116_IN_ANALOG_FEEDBACK	L90_GimbalAlignmentFeedbackRack	P239	ANALOG_FEEDBACK	3.32	1.3	6.98	Measured gimbal angles and actuator positions
+W117_OUT_ANALOG_FEEDBACK	L90_GimbalAlignmentFeedbackRack	P239	ANALOG_FEEDBACK	3.32	1.3	6.98	Actual thrust vector alignment telemetry
+W117_IN_ANALOG_FEEDBACK	L90_QuadEngineThrustAllocationComputer	P232	ANALOG_FEEDBACK	-1.6	1.3	6.98	Actual thrust vector alignment telemetry
+W118_OUT_ANALOG_FEEDBACK	L90_ThrusterThrustCalibrationBalance	P229	ANALOG_FEEDBACK	-3.18	1.3	6.98	Measured combined thrust validation
+W118_IN_ANALOG_FEEDBACK	L90_QuadEngineThrustAllocationComputer	P232	ANALOG_FEEDBACK	-1.6	1.3	6.98	Measured combined thrust validation
+W119_OUT_ANALOG_FEEDBACK	L90_ThrustVectorCalibrationFixture	P144	ANALOG_FEEDBACK	7.98	1.75	-2.92	Thrust balance fixture calibration
+W119_IN_ANALOG_FEEDBACK	L90_ThrusterThrustCalibrationBalance	P229	ANALOG_FEEDBACK	-3.18	1.3	6.98	Thrust balance fixture calibration
+W120_OUT_ANALOG_FEEDBACK	L90_OpticalPlumeSpectrometer	P223	ANALOG_FEEDBACK	-7.08	1.3	6.98	Optical plume temperature and spectral status
+W120_IN_ANALOG_FEEDBACK	L90_QuadEngineThrustAllocationComputer	P231	ANALOG_FEEDBACK	-1.88	1.3	6.98	Optical plume temperature and spectral status
+W121_OUT_ANALOG_FEEDBACK	L90_FaradayPlumeDiagnosticProbe	P226	ANALOG_FEEDBACK	-5.5	1.3	6.98	Plume Faraday diagnostic current
+W121_IN_ANALOG_FEEDBACK	L90_QuadEngineThrustAllocationComputer	P231	ANALOG_FEEDBACK	-1.88	1.3	6.98	Plume Faraday diagnostic current
+W122_OUT_ANALOG_FEEDBACK	L90_StarTrackerTrajectoryMonitor	P237	ANALOG_FEEDBACK	2.02	1.3	6.98	Star tracker measured inertial orientation
+W122_IN_ANALOG_FEEDBACK	L90_DeepSpaceTrajectoryGuidanceComputer	P233	ANALOG_FEEDBACK	-0.58	1.3	6.98	Star tracker measured inertial orientation
+W123_OUT_ANALOG_FEEDBACK	L90_Aurora1AttitudeAndNavigationSuite	P085	ANALOG_FEEDBACK	-0.28	6.7	-8.52	Attitude suite measured flight state
+W123_IN_ANALOG_FEEDBACK	L90_DeepSpaceTrajectoryGuidanceComputer	P233	ANALOG_FEEDBACK	-0.58	1.3	6.98	Attitude suite measured flight state
+W124_OUT_DIGITAL_CONTROL	L90_DeepSpaceTrajectoryGuidanceComputer	P233	DIGITAL_CONTROL	-0.58	1.3	6.98	Trajectory command desired thrust vector
+W124_IN_DIGITAL_CONTROL	L90_QuadEngineThrustAllocationComputer	P231	DIGITAL_CONTROL	-1.88	1.3	6.98	Trajectory command desired thrust vector
+W125_OUT_ANALOG_FEEDBACK	L90_QuadEngineThrustAllocationComputer	P231	ANALOG_FEEDBACK	-1.88	1.3	6.98	Actual integrated propulsion response
+W125_IN_ANALOG_FEEDBACK	L90_DeepSpaceTrajectoryGuidanceComputer	P233	ANALOG_FEEDBACK	-0.58	1.3	6.98	Actual integrated propulsion response
+W126_OUT_DIGITAL_CONTROL	L90_DeepSpaceTrajectoryGuidanceComputer	P233	DIGITAL_CONTROL	-0.58	1.3	6.98	Departure burn profile and mission checkpoints
+W126_IN_DIGITAL_CONTROL	L90_AutonomousDepartureSequencingPLC	P235	DIGITAL_CONTROL	0.72	1.3	6.98	Departure burn profile and mission checkpoints
+W127_OUT_DIGITAL_CONTROL	L90_AutonomousDepartureSequencingPLC	P235	DIGITAL_CONTROL	0.72	1.3	6.98	Undock station hardpoint release request
+W127_IN_DIGITAL_CONTROL	L90_SpacecraftDockingReleaseFixture	P032	DIGITAL_CONTROL	0.0	3.4	-6.07	Undock station hardpoint release request
+W128_OUT_SAFETY_FEEDBACK	L90_SpacecraftDockingReleaseFixture	P032	SAFETY_FEEDBACK	0.0	3.4	-6.07	Confirmed actual spacecraft mechanical release
+W128_IN_SAFETY_FEEDBACK	L90_AutonomousDepartureSequencingPLC	P235	SAFETY_FEEDBACK	0.72	1.3	6.98	Confirmed actual spacecraft mechanical release
+W129_OUT_ANALOG_FEEDBACK	L90_ThrustVectorMisalignmentFaultInjector	P246	ANALOG_FEEDBACK	7.5	1.3	6.98	Thruster gimbal offset diagnostic
+W129_IN_ANALOG_FEEDBACK	L90_GimbalAlignmentFeedbackRack	P240	ANALOG_FEEDBACK	3.6	1.3	6.98	Thruster gimbal offset diagnostic
+W130_OUT_DIGITAL_CONTROL	L90_AutonomousDepartureSequencingPLC	P236	DIGITAL_CONTROL	1.0	1.3	6.98	Star tracker calibration command
+W130_IN_DIGITAL_CONTROL	L90_StarTrackerTrajectoryMonitor	P238	DIGITAL_CONTROL	2.3	1.3	6.98	Star tracker calibration command
+W131_OUT_ANALOG_FEEDBACK	L90_StarTrackerTrajectoryMonitor	P238	ANALOG_FEEDBACK	2.3	1.3	6.98	Actual measured star tracker confidence
+W131_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Actual measured star tracker confidence
+W132_OUT_ANALOG_FEEDBACK	L90_DeepSpaceTrajectoryGuidanceComputer	P234	ANALOG_FEEDBACK	-0.3	1.3	6.98	Accumulated deltaV and trajectory error
+W132_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Accumulated deltaV and trajectory error
+W133_OUT_ANALOG_FEEDBACK	L90_AutonomousDepartureSequencingPLC	P236	ANALOG_FEEDBACK	1.0	1.3	6.98	Departure mission progression status
+W133_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Departure mission progression status
+W134_OUT_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Thrust permission and safe-departure permit
+W134_IN_SAFETY_FEEDBACK	L90_AutonomousDepartureSequencingPLC	P236	SAFETY_FEEDBACK	1.0	1.3	6.98	Thrust permission and safe-departure permit
+W135_OUT_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Propulsion safety permit for departure
+W135_IN_SAFETY_FEEDBACK	L90_AutonomousDepartureSequencingPLC	P236	SAFETY_FEEDBACK	1.0	1.3	6.98	Propulsion safety permit for departure
+W136_OUT_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Safety inhibit to thrust allocator
+W136_IN_SAFETY_FEEDBACK	L90_QuadEngineThrustAllocationComputer	P231	SAFETY_FEEDBACK	-1.88	1.3	6.98	Safety inhibit to thrust allocator
+W137_OUT_SAFETY_FEEDBACK	L90_PlasmaIgnitionSequencerPLC	P211	SAFETY_FEEDBACK	10.52	1.3	6.18	Actual igniter inactive confirmation
+W137_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Actual igniter inactive confirmation
+W138_OUT_SAFETY_FEEDBACK	L90_CathodeKeeperPowerModule	P210	SAFETY_FEEDBACK	9.5	1.3	6.18	Cathode keeper power disabled confirmation
+W138_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Cathode keeper power disabled confirmation
+W139_OUT_SAFETY_FEEDBACK	L90_PPUCurrentShuntMonitor	P203	SAFETY_FEEDBACK	5.32	1.3	6.18	Independent current limit comparator
+W139_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Independent current limit comparator
+W140_OUT_SAFETY_FEEDBACK	L90_PPUVoltageTransducer	P206	SAFETY_FEEDBACK	6.9	1.3	6.18	Independent voltage protection comparator
+W140_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Independent voltage protection comparator
+W141_OUT_SAFETY_FEEDBACK	L90_SpacecraftDockingReleaseFixture	P032	SAFETY_FEEDBACK	0.0	3.4	-6.07	Station docking release interlock actual state
+W141_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Station docking release interlock actual state
+W142_OUT_SAFETY_FEEDBACK	L90_ProtectedVentAndInterlockGate	P035	SAFETY_FEEDBACK	12.4	3.2	-2.47	Propulsion test chamber protected gate interlock
+W142_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Propulsion test chamber protected gate interlock
+W143_OUT_SAFETY_FEEDBACK	L90_ThermalControlPumpRack	P219	SAFETY_FEEDBACK	-9.68	1.3	6.98	Independent thermal pump running feedback
+W143_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Independent thermal pump running feedback
+W144_OUT_SAFETY_FEEDBACK	L90_XenonStorageTankA	P146	SAFETY_FEEDBACK	-12.1	1.62	-1.77	Tank A reserve safety status
+W144_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Tank A reserve safety status
+W145_OUT_SAFETY_FEEDBACK	L90_XenonStorageTankB	P150	SAFETY_FEEDBACK	-9.11	1.62	-1.77	Tank B reserve safety status
+W145_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Tank B reserve safety status
+W146_OUT_SAFETY_FEEDBACK	L90_XenonHighPressureFillInterface	P152	SAFETY_FEEDBACK	-12.0	1.25	1.13	Xenon fill valve closed and secured status
+W146_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Xenon fill valve closed and secured status
+W147_OUT_SAFETY_FEEDBACK	L90_XenonMassFlowSensorArray	P181	SAFETY_FEEDBACK	-7.08	1.25	3.48	Xenon flow independent sensor validity
+W147_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Xenon flow independent sensor validity
+W148_OUT_SAFETY_FEEDBACK	L90_HallThrusterA	P099	SAFETY_FEEDBACK	-0.87	6.13	-2.85	Thruster A actual discharge state feedback
+W148_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Thruster A actual discharge state feedback
+W149_OUT_SAFETY_FEEDBACK	L90_HallThrusterB	P100	SAFETY_FEEDBACK	0.87	6.13	-2.85	Thruster B actual discharge state feedback
+W149_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Thruster B actual discharge state feedback
+W150_OUT_SAFETY_FEEDBACK	L90_HallThrusterC	P104	SAFETY_FEEDBACK	-1.12	4.07	-2.85	Thruster C actual discharge state feedback
+W150_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Thruster C actual discharge state feedback
+W151_OUT_SAFETY_FEEDBACK	L90_HallThrusterD	P108	SAFETY_FEEDBACK	1.37	4.07	-2.85	Thruster D actual discharge state feedback
+W151_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Thruster D actual discharge state feedback
+W152_OUT_SAFETY_FEEDBACK	L90_HallDischargeOscillationRecorder	P228	SAFETY_FEEDBACK	-4.2	1.3	6.98	Discharge oscillation overlimit protection
+W152_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Discharge oscillation overlimit protection
+W153_OUT_SAFETY_FEEDBACK	L90_XenonFlowRestrictionFaultInjector	P241	SAFETY_FEEDBACK	4.62	1.3	6.98	Xenon restricted fault safety input
+W153_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Xenon restricted fault safety input
+W154_OUT_SAFETY_FEEDBACK	L90_MagnetDriverOvertemperatureFaultInjector	P243	SAFETY_FEEDBACK	5.92	1.3	6.98	Coil driver overtemperature safety input
+W154_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Coil driver overtemperature safety input
+W155_OUT_SAFETY_FEEDBACK	L90_ThrustVectorMisalignmentFaultInjector	P245	SAFETY_FEEDBACK	7.22	1.3	6.98	Gimbal misalignment fault safety input
+W155_IN_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Gimbal misalignment fault safety input
+W156_OUT_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P216	SAFETY_FEEDBACK	-12.0	1.3	6.98	Critical feedback cable health report
+W156_IN_SAFETY_FEEDBACK	L90_W157CriticalNeutralizerPatchStation	P251	SAFETY_FEEDBACK	8.72	1.35	6.98	Critical feedback cable health report
+TRUSTED_NEUTRALIZER_CURRENT_OUT	L90_NeutralizerCurrentTransducer	P214	ANALOG_FEEDBACK	12.1	1.3	6.18	CRITICAL trusted measured neutralizer current authorization
+TRUSTED_NEUTRALIZER_CURRENT_IN	L90_PropulsionSafetyPLC	P216	ANALOG_FEEDBACK	-12.0	1.3	6.98	CRITICAL trusted measured neutralizer current authorization
+W158_OUT_DIGITAL_CONTROL	L90_W157CriticalNeutralizerPatchStation	P252	DIGITAL_CONTROL	9.0	1.35	6.98	Operator explicit fault-reset request
+W158_IN_DIGITAL_CONTROL	L90_AutonomousDepartureSequencingPLC	P236	DIGITAL_CONTROL	1.0	1.3	6.98	Operator explicit fault-reset request
+W159_OUT_SAFETY_FEEDBACK	L90_PropulsionSafetyPLC	P215	SAFETY_FEEDBACK	-12.28	1.3	6.98	Independent discharge shutdown control
+W159_IN_SAFETY_FEEDBACK	L90_PlasmaIgnitionSequencerPLC	P212	SAFETY_FEEDBACK	10.8	1.3	6.18	Independent discharge shutdown control
+W160_OUT_ANALOG_FEEDBACK	L90_PropulsionSafetyPLC	P215	ANALOG_FEEDBACK	-12.28	1.3	6.98	Actual safety latch state telemetry
+W160_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Actual safety latch state telemetry
+W161_OUT_ANALOG_FEEDBACK	L90_XenonMassFlowSensorArray	P182	ANALOG_FEEDBACK	-6.8	1.25	3.48	Xenon pressure and mass flow trending
+W161_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Xenon pressure and mass flow trending
+W162_OUT_ANALOG_FEEDBACK	L90_XenonPropellantInventoryAnalyzer	P186	ANALOG_FEEDBACK	-5.22	1.25	3.48	Propellant reserve and consumption trending
+W162_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Propellant reserve and consumption trending
+W163_OUT_ANALOG_FEEDBACK	L90_ProtectedPropulsionDCBus	P200	ANALOG_FEEDBACK	3.0	1.3	6.18	PPU bus power distribution chart
+W163_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	PPU bus power distribution chart
+W164_OUT_ANALOG_FEEDBACK	L90_MagnetCurrentDriverRack	P207	ANALOG_FEEDBACK	7.92	1.3	6.18	Magnetic coil measured current telemetry
+W164_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Magnetic coil measured current telemetry
+W165_OUT_ANALOG_FEEDBACK	L90_NeutralizerCurrentTransducer	P213	ANALOG_FEEDBACK	11.82	1.3	6.18	Neutralizer current diagnostic telemetry only
+W165_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Neutralizer current diagnostic telemetry only
+W166_OUT_ANALOG_FEEDBACK	L90_OpticalPlumeSpectrometer	P224	ANALOG_FEEDBACK	-6.8	1.3	6.98	Measured plasma spectral emissions trend
+W166_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Measured plasma spectral emissions trend
+W167_OUT_ANALOG_FEEDBACK	L90_FaradayPlumeDiagnosticProbe	P225	ANALOG_FEEDBACK	-5.78	1.3	6.98	Measured plume diagnostic current trend
+W167_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Measured plume diagnostic current trend
+W168_OUT_ANALOG_FEEDBACK	L90_HallDischargeOscillationRecorder	P227	ANALOG_FEEDBACK	-4.48	1.3	6.98	Discharge high-speed oscillation record
+W168_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Discharge high-speed oscillation record
+W169_OUT_ANALOG_FEEDBACK	L90_ThrusterThrustCalibrationBalance	P230	ANALOG_FEEDBACK	-2.9	1.3	6.98	Thrust balance measured force
+W169_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Thrust balance measured force
+W170_OUT_ANALOG_FEEDBACK	L90_QuadEngineThrustAllocationComputer	P232	ANALOG_FEEDBACK	-1.6	1.3	6.98	Engine thrust allocation status
+W170_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Engine thrust allocation status
+W171_OUT_ANALOG_FEEDBACK	L90_DeepSpaceTrajectoryGuidanceComputer	P234	ANALOG_FEEDBACK	-0.3	1.3	6.98	Guidance trajectory progress
+W171_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Guidance trajectory progress
+W172_OUT_ANALOG_FEEDBACK	L90_AutonomousDepartureSequencingPLC	P235	ANALOG_FEEDBACK	0.72	1.3	6.98	Sequencer state and safety status
+W172_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Sequencer state and safety status
+W173_OUT_ANALOG_FEEDBACK	L90_GimbalAlignmentFeedbackRack	P239	ANALOG_FEEDBACK	3.32	1.3	6.98	Actual gimbal alignment margins
+W173_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Actual gimbal alignment margins
+W174_OUT_ANALOG_FEEDBACK	L90_XenonFlowRestrictionFaultInjector	P241	ANALOG_FEEDBACK	4.62	1.3	6.98	Propellant flow fault event record
+W174_IN_ANALOG_FEEDBACK	L90_DeepSpaceMissionEventRecorder	P253	ANALOG_FEEDBACK	10.22	1.35	6.98	Propellant flow fault event record
+W175_OUT_ANALOG_FEEDBACK	L90_MagnetDriverOvertemperatureFaultInjector	P243	ANALOG_FEEDBACK	5.92	1.3	6.98	Thermal disturbance event record
+W175_IN_ANALOG_FEEDBACK	L90_DeepSpaceMissionEventRecorder	P253	ANALOG_FEEDBACK	10.22	1.35	6.98	Thermal disturbance event record
+W176_OUT_ANALOG_FEEDBACK	L90_DeepSpaceMissionEventRecorder	P253	ANALOG_FEEDBACK	10.22	1.35	6.98	Authoritative objective evidence timeline
+W176_IN_ANALOG_FEEDBACK	L90_MissionPropulsionSCADA	P247	ANALOG_FEEDBACK	-0.28	9.65	-9.87	Authoritative objective evidence timeline

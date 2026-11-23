@@ -10,6 +10,7 @@ namespace ProjectSpark.Gameplay
     public sealed class SparkLevel88ArenaView : MonoBehaviour
     {
         private Transform arena;
+        private Transform stage;
         private float frameScale=1f;
         private Camera camera;
         private Transform room;
@@ -48,9 +49,12 @@ namespace ProjectSpark.Gameplay
             {Yaw=yaw;Pitch=pitch;Zoom=zoom;Pan=pan;}
         }
 
-        public void Initialize(Transform anchor)
+        public void Initialize(Transform anchor) => Initialize(anchor, anchor.Find("L88_HD_VISUAL_ART/L88_HabitatAtmosphereQualificationArenaBase"));
+
+        public void Initialize(Transform anchor, Transform fittingStage)
         {
             arena=anchor;
+            stage=fittingStage;
             room=GameObject.Find("PS_PRO_GAME_ROOM")?.transform;
             FitToTable();
             if(room)
@@ -107,7 +111,6 @@ namespace ProjectSpark.Gameplay
         {
             if(!room)return;
             var deck=room.Find("_PS_ROOM_WALKABLE_COLLIDERS/CentralTable");
-            var stage=arena.Find("L88_HD_VISUAL_ART/L88_HabitatAtmosphereQualificationArenaBase");
             if(!deck||!stage||!deck.TryGetComponent<BoxCollider>(out var table))return;
             var meshes=stage.GetComponentsInChildren<Renderer>();
             if(meshes.Length==0)return;

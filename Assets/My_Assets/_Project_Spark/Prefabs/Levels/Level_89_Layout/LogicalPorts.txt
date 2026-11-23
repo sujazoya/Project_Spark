@@ -1,0 +1,340 @@
+W001_OUT_POWER_CONTROL	L89_Protected5VControlSupply	P218	POWER_CONTROL	11.0	1.3	5.98	Protected 5 V radiation safety PLC supply
+W001_IN_POWER_CONTROL	L89_HeliosSafetyPLC	P221	POWER_CONTROL	7.9	1.4	5.98	Protected 5 V radiation safety PLC supply
+W002_OUT_POWER_CONTROL	L89_Protected5VControlSupply	P219	POWER_CONTROL	11.18	1.3	5.98	Protected 5 V sequencing PLC supply
+W002_IN_POWER_CONTROL	L89_HeliosMissionSequencingPLC	P225	POWER_CONTROL	6.48	1.4	5.98	Protected 5 V sequencing PLC supply
+W003_OUT_POWER_CONTROL	L89_Protected5VControlSupply	P217	POWER_CONTROL	10.82	1.3	5.98	Radiation detector network logic supply
+W003_IN_POWER_CONTROL	L89_DistributedDetectorNetworkGateway	P091	POWER_CONTROL	-1.66	1.45	2.58	Radiation detector network logic supply
+W004_OUT_POWER_CONTROL	L89_Protected5VControlSupply	P218	POWER_CONTROL	11.0	1.3	5.98	Motor-shield cabinet control supply
+W004_IN_POWER_CONTROL	L89_ShieldMotorDriveCabinet	P173	POWER_CONTROL	-1.55	1.35	4.5	Motor-shield cabinet control supply
+W005_OUT_POWER_CONTROL	L89_Protected5VControlSupply	P219	POWER_CONTROL	11.18	1.3	5.98	Shelter ventilation safety control supply
+W005_IN_POWER_CONTROL	L89_ShelterProtectedLifeSupportPLC	P196	POWER_CONTROL	2.89	1.35	4.5	Shelter ventilation safety control supply
+W006_OUT_POWER_CONTROL	L89_Protected5VControlSupply	P217	POWER_CONTROL	10.82	1.3	5.98	SCADA logic supply
+W006_IN_POWER_CONTROL	L89_RadiationDefenseSCADA	P226	POWER_CONTROL	-0.18	8.1	-8.32	SCADA logic supply
+W007_OUT_POWER_CONTROL	L89_Protected5VControlSupply	P218	POWER_CONTROL	11.0	1.3	5.98	Primary shelter dosimeter signal conditioning
+W007_IN_POWER_CONTROL	L89_ShelterReferenceDosimeter	P071	POWER_CONTROL	-3.2	3.0	-1.42	Primary shelter dosimeter signal conditioning
+W008_OUT_POWER_CONTROL	L89_Protected5VControlSupply	P219	POWER_CONTROL	11.18	1.3	5.98	Independent shelter dosimeter conditioning
+W008_IN_POWER_CONTROL	L89_IndependentShelterSafetyDosimeter	P075	POWER_CONTROL	3.38	3.0	-1.42	Independent shelter dosimeter conditioning
+W009_OUT_POWER_CONTROL	L89_Protected5VControlSupply	P217	POWER_CONTROL	10.82	1.3	5.98	Water-shield distribution controller power
+W009_IN_POWER_CONTROL	L89_WaterMassAllocationController	P129	POWER_CONTROL	-12.38	1.35	4.5	Water-shield distribution controller power
+W010_OUT_POWER_CONTROL	L89_Protected5VControlSupply	P218	POWER_CONTROL	11.0	1.3	5.98	Forecast instrument control power
+W010_IN_POWER_CONTROL	L89_SpaceWeatherForecastConsole	P059	POWER_CONTROL	-8.68	1.45	2.58	Forecast instrument control power
+W011_OUT_POWER_CONTROL	L89_HeliosSafetyPLC	P222	POWER_CONTROL	8.08	1.4	5.98	Safety PLC protected control return
+W011_IN_POWER_CONTROL	L89_Protected5VControlSupply	P219	POWER_CONTROL	11.18	1.3	5.98	Safety PLC protected control return
+W012_OUT_POWER_CONTROL	L89_HeliosMissionSequencingPLC	P223	POWER_CONTROL	6.12	1.4	5.98	Mission PLC protected control return
+W012_IN_POWER_CONTROL	L89_Protected5VControlSupply	P217	POWER_CONTROL	10.82	1.3	5.98	Mission PLC protected control return
+W013_OUT_ANALOG_FEEDBACK	L89_SolarEnergeticParticleTelescopeA	P026	ANALOG_FEEDBACK	-11.1	4.7	-6.72	Primary telescope measured particle count
+W013_IN_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P092	ANALOG_FEEDBACK	-1.48	1.45	2.58	Primary telescope measured particle count
+W014_OUT_ANALOG_FEEDBACK	L89_SolarEnergeticParticleTelescopeB	P030	ANALOG_FEEDBACK	-8.72	4.7	-6.72	Redundant telescope measured particle count
+W014_IN_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P093	ANALOG_FEEDBACK	-1.3	1.45	2.58	Redundant telescope measured particle count
+W015_OUT_ANALOG_FEEDBACK	L89_ChargedParticleSpectrometer	P031	ANALOG_FEEDBACK	-12.38	1.9	-3.92	Charged particle spectrometer energy channel
+W015_IN_ANALOG_FEEDBACK	L89_ProtonEnergyBinAnalyzer	P034	ANALOG_FEEDBACK	-10.58	1.9	-3.92	Charged particle spectrometer energy channel
+W016_OUT_ANALOG_FEEDBACK	L89_ProtonEnergyBinAnalyzer	P035	ANALOG_FEEDBACK	-10.4	1.9	-3.92	Proton energy-bin spectral feedback
+W016_IN_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P092	ANALOG_FEEDBACK	-1.48	1.45	2.58	Proton energy-bin spectral feedback
+W017_OUT_ANALOG_FEEDBACK	L89_HeavyIonChannelDetector	P038	ANALOG_FEEDBACK	-8.46	1.9	-3.92	Heavy-ion distribution health
+W017_IN_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P093	ANALOG_FEEDBACK	-1.3	1.45	2.58	Heavy-ion distribution health
+W018_OUT_ANALOG_FEEDBACK	L89_SolarVectorTrackingGimbal	P039	ANALOG_FEEDBACK	-9.98	4.9	-7.72	Sun tracker measured actual azimuth
+W018_IN_ANALOG_FEEDBACK	L89_HeliosMissionSequencingPLC	P223	ANALOG_FEEDBACK	6.12	1.4	5.98	Sun tracker measured actual azimuth
+W019_OUT_ANALOG_FEEDBACK	L89_ParticleCollimatorHead	P043	ANALOG_FEEDBACK	-11.0	4.1	-6.02	Collimator aperture measured state
+W019_IN_ANALOG_FEEDBACK	L89_ChargedParticleSpectrometer	P032	ANALOG_FEEDBACK	-12.2	1.9	-3.92	Collimator aperture measured state
+W020_OUT_ANALOG_FEEDBACK	L89_PrimaryParticleCounter	P047	ANALOG_FEEDBACK	-10.32	1.45	-2.72	Primary particle-counter histogram
+W020_IN_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P093	ANALOG_FEEDBACK	-1.3	1.45	2.58	Primary particle-counter histogram
+W021_OUT_ANALOG_FEEDBACK	L89_SecondaryParticleCounter	P048	ANALOG_FEEDBACK	-9.08	1.45	-2.72	Secondary particle-counter histogram
+W021_IN_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P091	ANALOG_FEEDBACK	-1.66	1.45	2.58	Secondary particle-counter histogram
+W022_OUT_ANALOG_FEEDBACK	L89_DetectorPulseShaper	P051	ANALOG_FEEDBACK	-13.09	1.45	2.58	Pulse shaping instrument actual signal quality
+W022_IN_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P092	ANALOG_FEEDBACK	-1.48	1.45	2.58	Pulse shaping instrument actual signal quality
+W023_OUT_ANALOG_FEEDBACK	L89_SpectralCalibrationSource	P055	ANALOG_FEEDBACK	-11.38	1.45	2.58	Calibrator spectral reference
+W023_IN_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P093	ANALOG_FEEDBACK	-1.3	1.45	2.58	Calibrator spectral reference
+W024_OUT_ANALOG_FEEDBACK	L89_ParticleDetectorThermalShroud	P056	ANALOG_FEEDBACK	-10.21	1.45	2.58	Detector thermal shroud sensed state
+W024_IN_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P091	ANALOG_FEEDBACK	-1.66	1.45	2.58	Detector thermal shroud sensed state
+W025_OUT_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P092	ANALOG_FEEDBACK	-1.48	1.45	2.58	Aggregated measured solar particle flux
+W025_IN_ANALOG_FEEDBACK	L89_SpaceWeatherForecastConsole	P059	ANALOG_FEEDBACK	-8.68	1.45	2.58	Aggregated measured solar particle flux
+W026_OUT_ANALOG_FEEDBACK	L89_SpaceWeatherForecastConsole	P060	ANALOG_FEEDBACK	-8.5	1.45	2.58	Qualified space-weather forecasting diagnostic
+W026_IN_ANALOG_FEEDBACK	L89_HeliosMissionSequencingPLC	P225	ANALOG_FEEDBACK	6.48	1.4	5.98	Qualified space-weather forecasting diagnostic
+W027_OUT_ANALOG_FEEDBACK	L89_StormArrivalPredictionHologram	P061	ANALOG_FEEDBACK	-7.42	1.45	2.58	Forecast-time visualization telemetry
+W027_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P226	ANALOG_FEEDBACK	-0.18	8.1	-8.32	Forecast-time visualization telemetry
+W028_OUT_ANALOG_FEEDBACK	L89_DetectorSaturationFaultInjector	P086	ANALOG_FEEDBACK	-4.36	1.45	2.58	Detector overrange diagnostic
+W028_IN_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P092	ANALOG_FEEDBACK	-1.48	1.45	2.58	Detector overrange diagnostic
+W029_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P225	DIGITAL_CONTROL	6.48	1.4	5.98	Solar gimbal tracking setpoint
+W029_IN_DIGITAL_CONTROL	L89_SolarVectorTrackingGimbal	P041	DIGITAL_CONTROL	-9.62	4.9	-7.72	Solar gimbal tracking setpoint
+W030_OUT_ANALOG_FEEDBACK	L89_SolarVectorTrackingGimbal	P039	ANALOG_FEEDBACK	-9.98	4.9	-7.72	Measured tracking collimator alignment
+W030_IN_ANALOG_FEEDBACK	L89_ParticleCollimatorHead	P042	ANALOG_FEEDBACK	-11.18	4.1	-6.02	Measured tracking collimator alignment
+W031_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P224	DIGITAL_CONTROL	6.3	1.4	5.98	Enable primary solar particle telescope
+W031_IN_DIGITAL_CONTROL	L89_SolarEnergeticParticleTelescopeA	P026	DIGITAL_CONTROL	-11.1	4.7	-6.72	Enable primary solar particle telescope
+W032_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P225	DIGITAL_CONTROL	6.48	1.4	5.98	Enable redundant solar particle telescope
+W032_IN_DIGITAL_CONTROL	L89_SolarEnergeticParticleTelescopeB	P030	DIGITAL_CONTROL	-8.72	4.7	-6.72	Enable redundant solar particle telescope
+W033_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P223	DIGITAL_CONTROL	6.12	1.4	5.98	Request calibration reference
+W033_IN_DIGITAL_CONTROL	L89_SpectralCalibrationSource	P053	DIGITAL_CONTROL	-11.74	1.45	2.58	Request calibration reference
+W034_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P224	DIGITAL_CONTROL	6.3	1.4	5.98	Primary counter acquisition gate
+W034_IN_DIGITAL_CONTROL	L89_PrimaryParticleCounter	P046	DIGITAL_CONTROL	-10.5	1.45	-2.72	Primary counter acquisition gate
+W035_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P225	DIGITAL_CONTROL	6.48	1.4	5.98	Secondary counter acquisition gate
+W035_IN_DIGITAL_CONTROL	L89_SecondaryParticleCounter	P050	DIGITAL_CONTROL	-8.72	1.45	-2.72	Secondary counter acquisition gate
+W036_OUT_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P091	ANALOG_FEEDBACK	-1.66	1.45	2.58	Redundant particle-counter consistency
+W036_IN_ANALOG_FEEDBACK	L89_DetectorRedundancyComparator	P097	ANALOG_FEEDBACK	-0.22	1.45	2.58	Redundant particle-counter consistency
+W037_OUT_ANALOG_FEEDBACK	L89_DetectorRedundancyComparator	P098	ANALOG_FEEDBACK	-0.04	1.45	2.58	Measurement health and confidence qualification
+W037_IN_ANALOG_FEEDBACK	L89_HeliosMissionSequencingPLC	P224	ANALOG_FEEDBACK	6.3	1.4	5.98	Measurement health and confidence qualification
+W038_OUT_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P093	ANALOG_FEEDBACK	-1.3	1.45	2.58	Measured space-weather visualization only
+W038_IN_ANALOG_FEEDBACK	L89_SolarStorm3DParticleHologram	P229	ANALOG_FEEDBACK	-0.09	10.8	-10.52	Measured space-weather visualization only
+W039_OUT_ANALOG_FEEDBACK	L89_ExternalDosimeterArray	P064	ANALOG_FEEDBACK	-6.18	3.7	-6.02	Exterior dosimetry measured rate
+W039_IN_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P091	ANALOG_FEEDBACK	-1.66	1.45	2.58	Exterior dosimetry measured rate
+W040_OUT_ANALOG_FEEDBACK	L89_HabitatDosimeterArray	P068	ANALOG_FEEDBACK	-4.5	3.7	-6.02	Habitat compartment measured dose-rate
+W040_IN_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P092	ANALOG_FEEDBACK	-1.48	1.45	2.58	Habitat compartment measured dose-rate
+W041_OUT_ANALOG_FEEDBACK	L89_ShelterReferenceDosimeter	P072	ANALOG_FEEDBACK	-3.02	3.0	-1.42	Shelter local non-authoritative commissioning measurement
+W041_IN_ANALOG_FEEDBACK	L89_HeliosSafetyPLC	P222	ANALOG_FEEDBACK	8.08	1.4	5.98	Shelter local non-authoritative commissioning measurement
+W042_OUT_ANALOG_FEEDBACK	L89_IndependentShelterSafetyDosimeter	P073	ANALOG_FEEDBACK	3.02	3.0	-1.42	Independent shelter radiation safety crosscheck
+W042_IN_ANALOG_FEEDBACK	L89_HeliosSafetyPLC	P220	ANALOG_FEEDBACK	7.72	1.4	5.98	Independent shelter radiation safety crosscheck
+W043_OUT_ANALOG_FEEDBACK	L89_TriaxialRadiationDoseProbe	P077	ANALOG_FEEDBACK	-5.4	1.4	-2.72	Triaxial reference instrument measured field proxy
+W043_IN_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P092	ANALOG_FEEDBACK	-1.48	1.45	2.58	Triaxial reference instrument measured field proxy
+W044_OUT_ANALOG_FEEDBACK	L89_DoseRateTransientRecorder	P081	ANALOG_FEEDBACK	-5.62	1.45	2.58	Dose-rate transient recorder
+W044_IN_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P093	ANALOG_FEEDBACK	-1.3	1.45	2.58	Dose-rate transient recorder
+W045_OUT_ANALOG_FEEDBACK	L89_DosimeterCalibrationFrame	P082	ANALOG_FEEDBACK	-7.38	1.5	-2.62	Dosimeter fictional calibration reference
+W045_IN_ANALOG_FEEDBACK	L89_ShelterReferenceDosimeter	P070	ANALOG_FEEDBACK	-3.38	3.0	-1.42	Dosimeter fictional calibration reference
+W046_OUT_ANALOG_FEEDBACK	L89_DosimeterCalibrationFrame	P083	ANALOG_FEEDBACK	-7.2	1.5	-2.62	Independent dosimeter calibration reference
+W046_IN_ANALOG_FEEDBACK	L89_IndependentShelterSafetyDosimeter	P074	ANALOG_FEEDBACK	3.2	3.0	-1.42	Independent dosimeter calibration reference
+W047_OUT_ANALOG_FEEDBACK	L89_DoseAccumulationAnalyzer	P090	ANALOG_FEEDBACK	-2.74	1.45	2.58	Run-scoped accumulated shelter dose
+W047_IN_ANALOG_FEEDBACK	L89_ShelterDoseLimitEvaluator	P102	ANALOG_FEEDBACK	1.58	1.45	2.58	Run-scoped accumulated shelter dose
+W048_OUT_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P091	ANALOG_FEEDBACK	-1.66	1.45	2.58	Spectral acquisition repeatability
+W048_IN_ANALOG_FEEDBACK	L89_DetectorRedundancyComparator	P097	ANALOG_FEEDBACK	-0.22	1.45	2.58	Spectral acquisition repeatability
+W049_OUT_ANALOG_FEEDBACK	L89_DetectorRedundancyComparator	P098	ANALOG_FEEDBACK	-0.04	1.45	2.58	Validated instrument-fusion confidence
+W049_IN_ANALOG_FEEDBACK	L89_ShelterDoseLimitEvaluator	P101	ANALOG_FEEDBACK	1.4	1.45	2.58	Validated instrument-fusion confidence
+W050_OUT_ANALOG_FEEDBACK	L89_ShelterDoseLimitEvaluator	P102	ANALOG_FEEDBACK	1.58	1.45	2.58	Dose-budget exceedance risk to protection
+W050_IN_ANALOG_FEEDBACK	L89_HeliosSafetyPLC	P222	ANALOG_FEEDBACK	8.08	1.4	5.98	Dose-budget exceedance risk to protection
+W051_OUT_ANALOG_FEEDBACK	L89_ExternalDosimeterArray	P064	ANALOG_FEEDBACK	-6.18	3.7	-6.02	External dose-area heatmap visualization
+W051_IN_ANALOG_FEEDBACK	L89_RadiationHeatmapHologram	P094	ANALOG_FEEDBACK	-6.08	7.0	-9.42	External dose-area heatmap visualization
+W052_OUT_ANALOG_FEEDBACK	L89_HabitatDosimeterArray	P068	ANALOG_FEEDBACK	-4.5	3.7	-6.02	Habitat dose-area heatmap visualization
+W052_IN_ANALOG_FEEDBACK	L89_RadiationHeatmapHologram	P095	ANALOG_FEEDBACK	-5.9	7.0	-9.42	Habitat dose-area heatmap visualization
+W053_OUT_ANALOG_FEEDBACK	L89_ShelterReferenceDosimeter	P072	ANALOG_FEEDBACK	-3.02	3.0	-1.42	Display-only shelter dose telemetry
+W053_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P228	ANALOG_FEEDBACK	0.18	8.1	-8.32	Display-only shelter dose telemetry
+W054_OUT_ANALOG_FEEDBACK	L89_IndependentShelterSafetyDosimeter	P073	ANALOG_FEEDBACK	3.02	3.0	-1.42	Display-only independent shelter reading
+W054_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P226	ANALOG_FEEDBACK	-0.18	8.1	-8.32	Display-only independent shelter reading
+W055_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P224	DIGITAL_CONTROL	6.3	1.4	5.98	Initiate dosimeter calibration
+W055_IN_DIGITAL_CONTROL	L89_DosimeterCalibrationFrame	P083	DIGITAL_CONTROL	-7.2	1.5	-2.62	Initiate dosimeter calibration
+W056_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P225	DIGITAL_CONTROL	6.48	1.4	5.98	Capture transient radiation trace
+W056_IN_DIGITAL_CONTROL	L89_DoseRateTransientRecorder	P081	DIGITAL_CONTROL	-5.62	1.45	2.58	Capture transient radiation trace
+W057_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P223	DIGITAL_CONTROL	6.12	1.4	5.98	Select triaxial dosimeter scan mode
+W057_IN_DIGITAL_CONTROL	L89_TriaxialRadiationDoseProbe	P076	DIGITAL_CONTROL	-5.58	1.4	-2.72	Select triaxial dosimeter scan mode
+W058_OUT_ANALOG_FEEDBACK	L89_DistributedDetectorNetworkGateway	P092	ANALOG_FEEDBACK	-1.48	1.45	2.58	Validated dose-rate integration samples
+W058_IN_ANALOG_FEEDBACK	L89_DoseAccumulationAnalyzer	P089	ANALOG_FEEDBACK	-2.92	1.45	2.58	Validated dose-rate integration samples
+W059_OUT_ANALOG_FEEDBACK	L89_DoseAccumulationAnalyzer	P090	ANALOG_FEEDBACK	-2.74	1.45	2.58	Accumulated mission exposure visualization
+W059_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P228	ANALOG_FEEDBACK	0.18	8.1	-8.32	Accumulated mission exposure visualization
+W060_OUT_ANALOG_FEEDBACK	L89_ShelterDoseLimitEvaluator	P100	ANALOG_FEEDBACK	1.22	1.45	2.58	Qualified shelter dose budget assessment
+W060_IN_ANALOG_FEEDBACK	L89_HeliosMissionSequencingPLC	P223	ANALOG_FEEDBACK	6.12	1.4	5.98	Qualified shelter dose budget assessment
+W061_OUT_ANALOG_FEEDBACK	L89_DetectorSaturationFaultInjector	P086	ANALOG_FEEDBACK	-4.36	1.45	2.58	Detector overload fault report
+W061_IN_ANALOG_FEEDBACK	L89_HeliosMissionSequencingPLC	P224	ANALOG_FEEDBACK	6.3	1.4	5.98	Detector overload fault report
+W062_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P225	DIGITAL_CONTROL	6.48	1.4	5.98	Activate deterministic detector saturation test
+W062_IN_DIGITAL_CONTROL	L89_DetectorSaturationFaultInjector	P087	DIGITAL_CONTROL	-4.18	1.45	2.58	Activate deterministic detector saturation test
+W063_OUT_DIGITAL_CONTROL	L89_WaterMassAllocationController	P129	DIGITAL_CONTROL	-12.38	1.35	4.5	Port A tank shield allocation command
+W063_IN_DIGITAL_CONTROL	L89_WaterWallTankPortA	P103	DIGITAL_CONTROL	-2.33	3.4	-2.58	Port A tank shield allocation command
+W064_OUT_DIGITAL_CONTROL	L89_WaterMassAllocationController	P130	DIGITAL_CONTROL	-12.2	1.35	4.5	Port B tank shield allocation command
+W064_IN_DIGITAL_CONTROL	L89_WaterWallTankPortB	P107	DIGITAL_CONTROL	-1.1	3.4	-2.58	Port B tank shield allocation command
+W065_OUT_DIGITAL_CONTROL	L89_WaterMassAllocationController	P131	DIGITAL_CONTROL	-12.02	1.35	4.5	Starboard A tank shield allocation command
+W065_IN_DIGITAL_CONTROL	L89_WaterWallTankStarboardA	P111	DIGITAL_CONTROL	1.28	3.4	-2.58	Starboard A tank shield allocation command
+W066_OUT_DIGITAL_CONTROL	L89_WaterMassAllocationController	P129	DIGITAL_CONTROL	-12.38	1.35	4.5	Starboard B tank shield allocation command
+W066_IN_DIGITAL_CONTROL	L89_WaterWallTankStarboardB	P112	DIGITAL_CONTROL	1.97	3.4	-2.58	Starboard B tank shield allocation command
+W067_OUT_ANALOG_FEEDBACK	L89_WaterTankLevelSensorArray	P118	ANALOG_FEEDBACK	10.5	2.95	-3.82	Actual compartment water-level distribution
+W067_IN_ANALOG_FEEDBACK	L89_WaterMassAllocationController	P130	ANALOG_FEEDBACK	-12.2	1.35	4.5	Actual compartment water-level distribution
+W068_OUT_ANALOG_FEEDBACK	L89_WaterReservoirMain	P115	ANALOG_FEEDBACK	8.91	2.0	-4.78	Actual main water inventory
+W068_IN_ANALOG_FEEDBACK	L89_WaterTankLevelSensorArray	P119	ANALOG_FEEDBACK	10.68	2.95	-3.82	Actual main water inventory
+W069_OUT_DIGITAL_CONTROL	L89_WaterMassAllocationController	P129	DIGITAL_CONTROL	-12.38	1.35	4.5	Port water transfer pump start
+W069_IN_DIGITAL_CONTROL	L89_WaterTransferPumpA	P120	DIGITAL_CONTROL	10.42	1.35	-2.07	Port water transfer pump start
+W070_OUT_DIGITAL_CONTROL	L89_WaterMassAllocationController	P130	DIGITAL_CONTROL	-12.2	1.35	4.5	Starboard water transfer pump start
+W070_IN_DIGITAL_CONTROL	L89_WaterTransferPumpB	P124	DIGITAL_CONTROL	12.2	1.35	-2.07	Starboard water transfer pump start
+W071_OUT_ANALOG_FEEDBACK	L89_WaterTransferPumpA	P122	ANALOG_FEEDBACK	10.78	1.35	-2.07	Measured transfer pump A flow
+W071_IN_ANALOG_FEEDBACK	L89_WaterMassAllocationController	P131	ANALOG_FEEDBACK	-12.02	1.35	4.5	Measured transfer pump A flow
+W072_OUT_ANALOG_FEEDBACK	L89_WaterTransferPumpB	P123	ANALOG_FEEDBACK	12.02	1.35	-2.07	Measured transfer pump B flow
+W072_IN_ANALOG_FEEDBACK	L89_WaterMassAllocationController	P129	ANALOG_FEEDBACK	-12.38	1.35	4.5	Measured transfer pump B flow
+W073_OUT_DIGITAL_CONTROL	L89_WaterMassAllocationController	P130	DIGITAL_CONTROL	-12.2	1.35	4.5	Water distributor valve requested position
+W073_IN_DIGITAL_CONTROL	L89_WaterDistributionValveManifold	P127	DIGITAL_CONTROL	11.1	1.2	-0.52	Water distributor valve requested position
+W074_OUT_ANALOG_FEEDBACK	L89_WaterDistributionValveManifold	P128	ANALOG_FEEDBACK	11.28	1.2	-0.52	Distributor actual valve position
+W074_IN_ANALOG_FEEDBACK	L89_WaterMassAllocationController	P131	ANALOG_FEEDBACK	-12.02	1.35	4.5	Distributor actual valve position
+W075_OUT_ANALOG_FEEDBACK	L89_WaterWallTankPortA	P103	ANALOG_FEEDBACK	-2.33	3.4	-2.58	Port A measured shielding areal density
+W075_IN_ANALOG_FEEDBACK	L89_ShieldArealDensityAnalyzer	P132	ANALOG_FEEDBACK	-10.25	1.35	4.5	Port A measured shielding areal density
+W076_OUT_ANALOG_FEEDBACK	L89_WaterWallTankPortB	P107	ANALOG_FEEDBACK	-1.1	3.4	-2.58	Port B measured shielding areal density
+W076_IN_ANALOG_FEEDBACK	L89_ShieldArealDensityAnalyzer	P133	ANALOG_FEEDBACK	-10.07	1.35	4.5	Port B measured shielding areal density
+W077_OUT_ANALOG_FEEDBACK	L89_WaterWallTankStarboardA	P111	ANALOG_FEEDBACK	1.28	3.4	-2.58	Starboard A measured shielding areal density
+W077_IN_ANALOG_FEEDBACK	L89_ShieldArealDensityAnalyzer	P134	ANALOG_FEEDBACK	-9.89	1.35	4.5	Starboard A measured shielding areal density
+W078_OUT_ANALOG_FEEDBACK	L89_WaterWallTankStarboardB	P112	ANALOG_FEEDBACK	1.97	3.4	-2.58	Starboard B measured shielding areal density
+W078_IN_ANALOG_FEEDBACK	L89_ShieldArealDensityAnalyzer	P132	ANALOG_FEEDBACK	-10.25	1.35	4.5	Starboard B measured shielding areal density
+W079_OUT_ANALOG_FEEDBACK	L89_ShieldArealDensityAnalyzer	P133	ANALOG_FEEDBACK	-10.07	1.35	4.5	Actual mass-cover protection evaluation
+W079_IN_ANALOG_FEEDBACK	L89_ShieldingScenarioSafetyController	P213	ANALOG_FEEDBACK	11.23	1.35	4.5	Actual mass-cover protection evaluation
+W080_OUT_SAFETY_FEEDBACK	L89_ThermalWaterResourceGuard	P137	SAFETY_FEEDBACK	-7.76	1.35	4.5	Water / life support budget permit
+W080_IN_SAFETY_FEEDBACK	L89_WaterMassAllocationController	P131	SAFETY_FEEDBACK	-12.02	1.35	4.5	Water / life support budget permit
+W081_OUT_ANALOG_FEEDBACK	L89_WaterWallLeakMonitor	P139	ANALOG_FEEDBACK	-5.72	1.35	4.5	Water-wall leak inspection
+W081_IN_ANALOG_FEEDBACK	L89_WaterMassAllocationController	P129	ANALOG_FEEDBACK	-12.38	1.35	4.5	Water-wall leak inspection
+W082_OUT_SAFETY_FEEDBACK	L89_ShelterProtectedLifeSupportPLC	P195	SAFETY_FEEDBACK	2.71	1.35	4.5	Life-support resource reserve constraint
+W082_IN_SAFETY_FEEDBACK	L89_ThermalWaterResourceGuard	P136	SAFETY_FEEDBACK	-7.94	1.35	4.5	Life-support resource reserve constraint
+W083_OUT_ANALOG_FEEDBACK	L89_WaterMassAllocationController	P131	ANALOG_FEEDBACK	-12.02	1.35	4.5	Real resource allocation and transfer status
+W083_IN_ANALOG_FEEDBACK	L89_WaterPowerPriorityScheduler	P202	ANALOG_FEEDBACK	7.15	1.35	4.5	Real resource allocation and transfer status
+W084_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P223	DIGITAL_CONTROL	6.12	1.4	5.98	Approved shielding resource optimization request
+W084_IN_DIGITAL_CONTROL	L89_WaterMassAllocationController	P129	DIGITAL_CONTROL	-12.38	1.35	4.5	Approved shielding resource optimization request
+W085_OUT_DIGITAL_CONTROL	L89_ShieldMotorDriveCabinet	P173	DIGITAL_CONTROL	-1.55	1.35	4.5	Port cassette servo A drive command
+W085_IN_DIGITAL_CONTROL	L89_ServoShieldActuatorA	P155	DIGITAL_CONTROL	-3.0	1.6	-0.28	Port cassette servo A drive command
+W086_OUT_DIGITAL_CONTROL	L89_ShieldMotorDriveCabinet	P174	DIGITAL_CONTROL	-1.37	1.35	4.5	Upper cassette servo B drive command
+W086_IN_DIGITAL_CONTROL	L89_ServoShieldActuatorB	P159	DIGITAL_CONTROL	-0.82	1.6	-0.28	Upper cassette servo B drive command
+W087_OUT_DIGITAL_CONTROL	L89_ShieldMotorDriveCabinet	P172	DIGITAL_CONTROL	-1.73	1.35	4.5	Lower cassette servo C drive command
+W087_IN_DIGITAL_CONTROL	L89_ServoShieldActuatorC	P160	DIGITAL_CONTROL	0.82	1.6	-0.28	Lower cassette servo C drive command
+W088_OUT_DIGITAL_CONTROL	L89_ShieldMotorDriveCabinet	P173	DIGITAL_CONTROL	-1.55	1.35	4.5	Starboard cassette servo D drive command
+W088_IN_DIGITAL_CONTROL	L89_ServoShieldActuatorD	P164	DIGITAL_CONTROL	3.0	1.6	-0.28	Starboard cassette servo D drive command
+W089_OUT_ANALOG_FEEDBACK	L89_ServoShieldActuatorA	P156	ANALOG_FEEDBACK	-2.82	1.6	-0.28	Servo A actual carriage position
+W089_IN_ANALOG_FEEDBACK	L89_ShieldPositionEncoderRack	P171	ANALOG_FEEDBACK	-3.5	1.35	4.5	Servo A actual carriage position
+W090_OUT_ANALOG_FEEDBACK	L89_ServoShieldActuatorB	P157	ANALOG_FEEDBACK	-1.18	1.6	-0.28	Servo B actual carriage position
+W090_IN_ANALOG_FEEDBACK	L89_ShieldPositionEncoderRack	P169	ANALOG_FEEDBACK	-3.86	1.35	4.5	Servo B actual carriage position
+W091_OUT_ANALOG_FEEDBACK	L89_ServoShieldActuatorC	P161	ANALOG_FEEDBACK	1.0	1.6	-0.28	Servo C actual carriage position
+W091_IN_ANALOG_FEEDBACK	L89_ShieldPositionEncoderRack	P170	ANALOG_FEEDBACK	-3.68	1.35	4.5	Servo C actual carriage position
+W092_OUT_ANALOG_FEEDBACK	L89_ServoShieldActuatorD	P165	ANALOG_FEEDBACK	3.18	1.6	-0.28	Servo D actual carriage position
+W092_IN_ANALOG_FEEDBACK	L89_ShieldPositionEncoderRack	P171	ANALOG_FEEDBACK	-3.5	1.35	4.5	Servo D actual carriage position
+W093_OUT_ANALOG_FEEDBACK	L89_ShieldPositionEncoderRack	P169	ANALOG_FEEDBACK	-3.86	1.35	4.5	Actual shield lockable pose qualification
+W093_IN_ANALOG_FEEDBACK	L89_ShieldingScenarioSafetyController	P212	ANALOG_FEEDBACK	11.05	1.35	4.5	Actual shield lockable pose qualification
+W094_OUT_DIGITAL_CONTROL	L89_ShieldMotorDriveCabinet	P173	DIGITAL_CONTROL	-1.55	1.35	4.5	Deploy top radiation shield cassette
+W094_IN_DIGITAL_CONTROL	L89_ShieldPanelTop	P141	DIGITAL_CONTROL	0.0	6.4	-2.58	Deploy top radiation shield cassette
+W095_OUT_DIGITAL_CONTROL	L89_ShieldMotorDriveCabinet	P174	DIGITAL_CONTROL	-1.37	1.35	4.5	Deploy bottom radiation shield cassette
+W095_IN_DIGITAL_CONTROL	L89_ShieldPanelBottom	P145	DIGITAL_CONTROL	0.18	0.6	-2.58	Deploy bottom radiation shield cassette
+W096_OUT_DIGITAL_CONTROL	L89_ShieldMotorDriveCabinet	P172	DIGITAL_CONTROL	-1.73	1.35	4.5	Deploy port side radiation shield cassette
+W096_IN_DIGITAL_CONTROL	L89_ShieldPanelPort	P146	DIGITAL_CONTROL	-3.53	3.4	-2.58	Deploy port side radiation shield cassette
+W097_OUT_DIGITAL_CONTROL	L89_ShieldMotorDriveCabinet	P173	DIGITAL_CONTROL	-1.55	1.35	4.5	Deploy starboard radiation shield cassette
+W097_IN_DIGITAL_CONTROL	L89_ShieldPanelStarboard	P150	DIGITAL_CONTROL	3.35	3.4	-2.58	Deploy starboard radiation shield cassette
+W098_OUT_ANALOG_FEEDBACK	L89_ShieldPanelTop	P142	ANALOG_FEEDBACK	0.18	6.4	-2.58	Actual top cassette coverage
+W098_IN_ANALOG_FEEDBACK	L89_ShelterRadiationShieldQualityMonitor	P182	ANALOG_FEEDBACK	0.18	6.9	-2.72	Actual top cassette coverage
+W099_OUT_ANALOG_FEEDBACK	L89_ShieldPanelBottom	P143	ANALOG_FEEDBACK	-0.18	0.6	-2.58	Actual bottom cassette coverage
+W099_IN_ANALOG_FEEDBACK	L89_ShelterRadiationShieldQualityMonitor	P180	ANALOG_FEEDBACK	-0.18	6.9	-2.72	Actual bottom cassette coverage
+W100_OUT_ANALOG_FEEDBACK	L89_ShieldPanelPort	P147	ANALOG_FEEDBACK	-3.35	3.4	-2.58	Actual port cassette coverage
+W100_IN_ANALOG_FEEDBACK	L89_ShelterRadiationShieldQualityMonitor	P181	ANALOG_FEEDBACK	0.0	6.9	-2.72	Actual port cassette coverage
+W101_OUT_ANALOG_FEEDBACK	L89_ShieldPanelStarboard	P151	ANALOG_FEEDBACK	3.53	3.4	-2.58	Actual starboard cassette coverage
+W101_IN_ANALOG_FEEDBACK	L89_ShelterRadiationShieldQualityMonitor	P182	ANALOG_FEEDBACK	0.18	6.9	-2.72	Actual starboard cassette coverage
+W102_OUT_DIGITAL_CONTROL	L89_ShieldingScenarioSafetyController	P212	DIGITAL_CONTROL	11.05	1.35	4.5	Authorize mechanical shield locking
+W102_IN_DIGITAL_CONTROL	L89_ShieldLockingPinArray	P166	DIGITAL_CONTROL	-0.18	6.05	-0.28	Authorize mechanical shield locking
+W103_OUT_SAFETY_FEEDBACK	L89_ShieldLockingPinArray	P167	SAFETY_FEEDBACK	0.0	6.05	-0.28	Mechanical lock engagement sensed
+W103_IN_SAFETY_FEEDBACK	L89_ShieldingScenarioSafetyController	P213	SAFETY_FEEDBACK	11.23	1.35	4.5	Mechanical lock engagement sensed
+W104_OUT_SAFETY_FEEDBACK	L89_ShieldJammingFaultInjector	P177	SAFETY_FEEDBACK	0.76	1.35	4.5	Shield jamming actual fault state
+W104_IN_SAFETY_FEEDBACK	L89_ShieldMotorDriveCabinet	P174	SAFETY_FEEDBACK	-1.37	1.35	4.5	Shield jamming actual fault state
+W105_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P223	DIGITAL_CONTROL	6.12	1.4	5.98	Inject deterministic shield carriage jam
+W105_IN_DIGITAL_CONTROL	L89_ShieldJammingFaultInjector	P175	DIGITAL_CONTROL	0.4	1.35	4.5	Inject deterministic shield carriage jam
+W106_OUT_ANALOG_FEEDBACK	L89_ShelterRadiationShieldQualityMonitor	P181	ANALOG_FEEDBACK	0.0	6.9	-2.72	Coverage summary into 3D shield twin
+W106_IN_ANALOG_FEEDBACK	L89_ShieldCoverageDigitalTwin	P184	ANALOG_FEEDBACK	0.0	8.05	-9.52	Coverage summary into 3D shield twin
+W107_OUT_DIGITAL_CONTROL	L89_SpaceWeatherForecastConsole	P060	DIGITAL_CONTROL	-8.5	1.45	2.58	Space weather forecast configuration
+W107_IN_DIGITAL_CONTROL	L89_StormIntensityProfileGenerator	P208	DIGITAL_CONTROL	-6.22	7.6	-9.92	Space weather forecast configuration
+W108_OUT_ANALOG_FEEDBACK	L89_StormIntensityProfileGenerator	P206	ANALOG_FEEDBACK	-6.58	7.6	-9.92	Actual simulated particle event telemetry
+W108_IN_ANALOG_FEEDBACK	L89_HeliosMissionSequencingPLC	P223	ANALOG_FEEDBACK	6.12	1.4	5.98	Actual simulated particle event telemetry
+W109_OUT_ANALOG_FEEDBACK	L89_StormArrivalPredictionHologram	P062	ANALOG_FEEDBACK	-7.24	1.45	2.58	Predicted storm onset window
+W109_IN_ANALOG_FEEDBACK	L89_HeliosMissionSequencingPLC	P224	ANALOG_FEEDBACK	6.3	1.4	5.98	Predicted storm onset window
+W110_OUT_ANALOG_FEEDBACK	L89_ShieldArealDensityAnalyzer	P134	ANALOG_FEEDBACK	-9.89	1.35	4.5	Current shielding mass and reserve margin
+W110_IN_ANALOG_FEEDBACK	L89_WaterPowerPriorityScheduler	P202	ANALOG_FEEDBACK	7.15	1.35	4.5	Current shielding mass and reserve margin
+W111_OUT_ANALOG_FEEDBACK	L89_ThermalWaterResourceGuard	P135	ANALOG_FEEDBACK	-8.12	1.35	4.5	Water inventory essential-utility constraints
+W111_IN_ANALOG_FEEDBACK	L89_WaterPowerPriorityScheduler	P200	ANALOG_FEEDBACK	6.79	1.35	4.5	Water inventory essential-utility constraints
+W112_OUT_ANALOG_FEEDBACK	L89_ShelterEnvironmentalAirSupply	P187	ANALOG_FEEDBACK	5.1	1.8	-4.72	Actual shelter ventilation airflow
+W112_IN_ANALOG_FEEDBACK	L89_ShelterProtectedLifeSupportPLC	P195	ANALOG_FEEDBACK	2.71	1.35	4.5	Actual shelter ventilation airflow
+W113_OUT_ANALOG_FEEDBACK	L89_ShelterOxygenBufferInterface	P190	ANALOG_FEEDBACK	6.99	1.8	-4.72	Available oxygen buffer and partial pressure
+W113_IN_ANALOG_FEEDBACK	L89_ShelterProtectedLifeSupportPLC	P196	ANALOG_FEEDBACK	2.89	1.35	4.5	Available oxygen buffer and partial pressure
+W114_OUT_ANALOG_FEEDBACK	L89_ShelterThermalAirReclaimer	P191	ANALOG_FEEDBACK	8.32	1.8	-4.72	Shelter thermal recovery status
+W114_IN_ANALOG_FEEDBACK	L89_ShelterProtectedLifeSupportPLC	P194	ANALOG_FEEDBACK	2.53	1.35	4.5	Shelter thermal recovery status
+W115_OUT_SAFETY_FEEDBACK	L89_ShelterProtectedLifeSupportPLC	P195	SAFETY_FEEDBACK	2.71	1.35	4.5	Independent life-support permissive state
+W115_IN_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P221	SAFETY_FEEDBACK	7.9	1.4	5.98	Independent life-support permissive state
+W116_OUT_SAFETY_FEEDBACK	L89_ShelterReservePowerDistribution	P199	SAFETY_FEEDBACK	5.02	1.35	4.5	Essential shelter power distribution health
+W116_IN_SAFETY_FEEDBACK	L89_ShelterProtectedLifeSupportPLC	P196	SAFETY_FEEDBACK	2.89	1.35	4.5	Essential shelter power distribution health
+W117_OUT_DIGITAL_CONTROL	L89_WaterPowerPriorityScheduler	P200	DIGITAL_CONTROL	6.79	1.35	4.5	Protected essential load schedule
+W117_IN_DIGITAL_CONTROL	L89_ShelterReservePowerDistribution	P197	DIGITAL_CONTROL	4.66	1.35	4.5	Protected essential load schedule
+W118_OUT_ANALOG_FEEDBACK	L89_HabitatCrewShelterOccupancyEmulator	P204	ANALOG_FEEDBACK	6.4	1.5	-2.42	Occupancy-driven essential demand
+W118_IN_ANALOG_FEEDBACK	L89_WaterPowerPriorityScheduler	P201	ANALOG_FEEDBACK	6.97	1.35	4.5	Occupancy-driven essential demand
+W119_OUT_ANALOG_FEEDBACK	L89_StormIntensityProfileGenerator	P208	ANALOG_FEEDBACK	-6.22	7.6	-9.92	Measured simulated storm intensity history
+W119_IN_ANALOG_FEEDBACK	L89_ShelterDoseLimitEvaluator	P102	ANALOG_FEEDBACK	1.58	1.45	2.58	Measured simulated storm intensity history
+W120_OUT_ANALOG_FEEDBACK	L89_HighEnergySurgeFaultInjector	P209	ANALOG_FEEDBACK	8.92	1.35	4.5	High-energy surge event confirmation
+W120_IN_ANALOG_FEEDBACK	L89_HeliosMissionSequencingPLC	P223	ANALOG_FEEDBACK	6.12	1.4	5.98	High-energy surge event confirmation
+W121_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P224	DIGITAL_CONTROL	6.3	1.4	5.98	Arm and inject higher-energy event
+W121_IN_DIGITAL_CONTROL	L89_HighEnergySurgeFaultInjector	P210	DIGITAL_CONTROL	9.1	1.35	4.5	Arm and inject higher-energy event
+W122_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P225	DIGITAL_CONTROL	6.48	1.4	5.98	Start qualified simulated shelter occupation
+W122_IN_DIGITAL_CONTROL	L89_HabitatCrewShelterOccupancyEmulator	P205	DIGITAL_CONTROL	6.58	1.5	-2.42	Start qualified simulated shelter occupation
+W123_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P223	DIGITAL_CONTROL	6.12	1.4	5.98	Enable shelter ventilation
+W123_IN_DIGITAL_CONTROL	L89_ShelterEnvironmentalAirSupply	P186	DIGITAL_CONTROL	4.92	1.8	-4.72	Enable shelter ventilation
+W124_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P224	DIGITAL_CONTROL	6.3	1.4	5.98	Enable controlled thermal recovery
+W124_IN_DIGITAL_CONTROL	L89_ShelterThermalAirReclaimer	P192	DIGITAL_CONTROL	8.5	1.8	-4.72	Enable controlled thermal recovery
+W125_OUT_SAFETY_FEEDBACK	L89_ShieldingScenarioSafetyController	P214	SAFETY_FEEDBACK	11.41	1.35	4.5	Calculated shielding and shelter permit
+W125_IN_SAFETY_FEEDBACK	L89_HeliosMissionSequencingPLC	P225	SAFETY_FEEDBACK	6.48	1.4	5.98	Calculated shielding and shelter permit
+W126_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P223	DIGITAL_CONTROL	6.12	1.4	5.98	Generate contingency response plan
+W126_IN_DIGITAL_CONTROL	L89_ShelterRadiationContingencyConsole	P233	DIGITAL_CONTROL	-7.98	1.3	5.98	Generate contingency response plan
+W127_OUT_ANALOG_FEEDBACK	L89_ShelterRadiationContingencyConsole	P234	ANALOG_FEEDBACK	-7.8	1.3	5.98	Contingency handling diagnostic
+W127_IN_ANALOG_FEEDBACK	L89_HeliosMissionSequencingPLC	P224	ANALOG_FEEDBACK	6.3	1.4	5.98	Contingency handling diagnostic
+W128_OUT_ANALOG_FEEDBACK	L89_StormIntensityProfileGenerator	P208	ANALOG_FEEDBACK	-6.22	7.6	-9.92	Solar storm holographic event status
+W128_IN_ANALOG_FEEDBACK	L89_SolarStorm3DParticleHologram	P230	ANALOG_FEEDBACK	0.09	10.8	-10.52	Solar storm holographic event status
+W129_OUT_SAFETY_FEEDBACK	L89_ShelterDoorActualInterlock	P179	SAFETY_FEEDBACK	1.69	1.6	-0.27	Actual shelter door closed and latched
+W129_IN_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P220	SAFETY_FEEDBACK	7.72	1.4	5.98	Actual shelter door closed and latched
+W130_OUT_SAFETY_FEEDBACK	L89_ShieldLockingPinArray	P167	SAFETY_FEEDBACK	0.0	6.05	-0.28	Actual shield locking contact
+W130_IN_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P221	SAFETY_FEEDBACK	7.9	1.4	5.98	Actual shield locking contact
+W131_OUT_SAFETY_FEEDBACK	L89_ShelterRadiationShieldQualityMonitor	P182	SAFETY_FEEDBACK	0.18	6.9	-2.72	Shield coverage hardware health
+W131_IN_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P222	SAFETY_FEEDBACK	8.08	1.4	5.98	Shield coverage hardware health
+W132_OUT_SAFETY_FEEDBACK	L89_IndependentShelterSafetyDosimeter	P073	SAFETY_FEEDBACK	3.02	3.0	-1.42	Independent radiation dose monitoring
+W132_IN_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P220	SAFETY_FEEDBACK	7.72	1.4	5.98	Independent radiation dose monitoring
+W133_OUT_SAFETY_FEEDBACK	L89_ShelterProtectedLifeSupportPLC	P195	SAFETY_FEEDBACK	2.71	1.35	4.5	Independent life support continuity
+W133_IN_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P221	SAFETY_FEEDBACK	7.9	1.4	5.98	Independent life support continuity
+W134_OUT_SAFETY_FEEDBACK	L89_ShelterReservePowerDistribution	P199	SAFETY_FEEDBACK	5.02	1.35	4.5	Essential shelter electrical power status
+W134_IN_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P222	SAFETY_FEEDBACK	8.08	1.4	5.98	Essential shelter electrical power status
+W135_OUT_SAFETY_FEEDBACK	L89_ShieldingScenarioSafetyController	P212	SAFETY_FEEDBACK	11.05	1.35	4.5	Shielding adequacy permit
+W135_IN_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P220	SAFETY_FEEDBACK	7.72	1.4	5.98	Shielding adequacy permit
+W136_OUT_SAFETY_FEEDBACK	L89_RadiationEmergencyIsolationStation	P215	SAFETY_FEEDBACK	12.71	1.25	5.78	Emergency shelter stop input
+W136_IN_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P221	SAFETY_FEEDBACK	7.9	1.4	5.98	Emergency shelter stop input
+W137_OUT_DIGITAL_CONTROL	L89_HeliosSafetyPLC	P222	DIGITAL_CONTROL	8.08	1.4	5.98	Protected shield servo authorization
+W137_IN_DIGITAL_CONTROL	L89_ShieldMotorDriveCabinet	P174	DIGITAL_CONTROL	-1.37	1.35	4.5	Protected shield servo authorization
+W138_OUT_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P220	SAFETY_FEEDBACK	7.72	1.4	5.98	Safety PLC overall release
+W138_IN_SAFETY_FEEDBACK	L89_HeliosMissionSequencingPLC	P223	SAFETY_FEEDBACK	6.12	1.4	5.98	Safety PLC overall release
+W139_OUT_DIGITAL_CONTROL	L89_HeliosSafetyPLC	P221	DIGITAL_CONTROL	7.9	1.4	5.98	Independent shielding enable request
+W139_IN_DIGITAL_CONTROL	L89_ShieldingScenarioSafetyController	P213	DIGITAL_CONTROL	11.23	1.35	4.5	Independent shielding enable request
+W140_OUT_DIGITAL_CONTROL	L89_HeliosSafetyPLC	P222	DIGITAL_CONTROL	8.08	1.4	5.98	Emergency ventilation continuity permit
+W140_IN_DIGITAL_CONTROL	L89_ShelterProtectedLifeSupportPLC	P196	DIGITAL_CONTROL	2.89	1.35	4.5	Emergency ventilation continuity permit
+W141_OUT_DIGITAL_CONTROL	L89_HeliosSafetyPLC	P220	DIGITAL_CONTROL	7.72	1.4	5.98	Emergency isolation status request
+W141_IN_DIGITAL_CONTROL	L89_RadiationEmergencyIsolationStation	P215	DIGITAL_CONTROL	12.71	1.25	5.78	Emergency isolation status request
+W142_OUT_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P221	SAFETY_FEEDBACK	7.9	1.4	5.98	Qualified sheltered dose ceiling permission
+W142_IN_SAFETY_FEEDBACK	L89_ShelterDoseLimitEvaluator	P101	SAFETY_FEEDBACK	1.4	1.45	2.58	Qualified sheltered dose ceiling permission
+W143_OUT_DIGITAL_CONTROL	L89_HeliosSafetyPLC	P222	DIGITAL_CONTROL	8.08	1.4	5.98	Protected contingency power-mode command
+W143_IN_DIGITAL_CONTROL	L89_ShelterRadiationContingencyConsole	P235	DIGITAL_CONTROL	-7.62	1.3	5.98	Protected contingency power-mode command
+W144_OUT_SAFETY_FEEDBACK	L89_RadiationScenarioDiagnosticRecorder	P238	SAFETY_FEEDBACK	-4.98	1.3	5.98	Fault recorder event timestamp
+W144_IN_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P220	SAFETY_FEEDBACK	7.72	1.4	5.98	Fault recorder event timestamp
+W145_OUT_DIGITAL_CONTROL	L89_HeliosSafetyPLC	P221	DIGITAL_CONTROL	7.9	1.4	5.98	Latch safety trip event
+W145_IN_DIGITAL_CONTROL	L89_RadiationScenarioDiagnosticRecorder	P239	DIGITAL_CONTROL	-4.8	1.3	5.98	Latch safety trip event
+W146_OUT_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P222	SAFETY_FEEDBACK	8.08	1.4	5.98	Critical W149 patch circuit diagnostic
+W146_IN_SAFETY_FEEDBACK	L89_W149TrustedDoseFeedbackPatchStation	P236	SAFETY_FEEDBACK	-6.49	1.3	5.98	Critical W149 patch circuit diagnostic
+W147_OUT_DIGITAL_CONTROL	L89_HeliosMissionSequencingPLC	P223	DIGITAL_CONTROL	6.12	1.4	5.98	Operator explicit protection reset request
+W147_IN_DIGITAL_CONTROL	L89_HeliosSafetyPLC	P220	DIGITAL_CONTROL	7.72	1.4	5.98	Operator explicit protection reset request
+W148_OUT_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P221	SAFETY_FEEDBACK	7.9	1.4	5.98	Fault-latch event status
+W148_IN_SAFETY_FEEDBACK	L89_HeliosMissionSequencingPLC	P224	SAFETY_FEEDBACK	6.3	1.4	5.98	Fault-latch event status
+TRUSTED_SHELTER_DOSE_RATE_OUT	L89_ShelterReferenceDosimeter	P072	ANALOG_FEEDBACK	-3.02	3.0	-1.42	CRITICAL trusted shelter dose-rate measurement to independent radiation safety PLC
+TRUSTED_SHELTER_DOSE_RATE_IN	L89_HeliosSafetyPLC	P222	ANALOG_FEEDBACK	8.08	1.4	5.98	CRITICAL trusted shelter dose-rate measurement to independent radiation safety PLC
+W150_OUT_SAFETY_FEEDBACK	L89_ShieldingScenarioSafetyController	P212	SAFETY_FEEDBACK	11.05	1.35	4.5	Current shield coverage qualification
+W150_IN_SAFETY_FEEDBACK	L89_ShieldCoverageDigitalTwin	P183	SAFETY_FEEDBACK	-0.18	8.05	-9.52	Current shield coverage qualification
+W151_OUT_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P221	SAFETY_FEEDBACK	7.9	1.4	5.98	Emergency crew warning authorisation
+W151_IN_SAFETY_FEEDBACK	L89_EmergencyShelterCommunications	P244	SAFETY_FEEDBACK	-3.11	1.3	8.28	Emergency crew warning authorisation
+W152_OUT_SAFETY_FEEDBACK	L89_EmergencyShelterCommunications	P244	SAFETY_FEEDBACK	-3.11	1.3	8.28	Emergency communication equipment status
+W152_IN_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P222	SAFETY_FEEDBACK	8.08	1.4	5.98	Emergency communication equipment status
+W153_OUT_DIGITAL_CONTROL	L89_HeliosSafetyPLC	P220	DIGITAL_CONTROL	7.72	1.4	5.98	Authorization to show final certification
+W153_IN_DIGITAL_CONTROL	L89_StormShelterCertificationBeacon	P242	DIGITAL_CONTROL	0.09	12.0	-9.32	Authorization to show final certification
+W154_OUT_SAFETY_FEEDBACK	L89_StormIntensityProfileGenerator	P207	SAFETY_FEEDBACK	-6.4	7.6	-9.92	Monitored actual storm state independent verification
+W154_IN_SAFETY_FEEDBACK	L89_HeliosSafetyPLC	P221	SAFETY_FEEDBACK	7.9	1.4	5.98	Monitored actual storm state independent verification
+W155_OUT_ANALOG_FEEDBACK	L89_PrimaryParticleCounter	P047	ANALOG_FEEDBACK	-10.32	1.45	-2.72	Live primary particle detection trend
+W155_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P228	ANALOG_FEEDBACK	0.18	8.1	-8.32	Live primary particle detection trend
+W156_OUT_ANALOG_FEEDBACK	L89_SecondaryParticleCounter	P048	ANALOG_FEEDBACK	-9.08	1.45	-2.72	Live secondary particle trend
+W156_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P226	ANALOG_FEEDBACK	-0.18	8.1	-8.32	Live secondary particle trend
+W157_OUT_ANALOG_FEEDBACK	L89_DoseAccumulationAnalyzer	P089	ANALOG_FEEDBACK	-2.92	1.45	2.58	Dose integral run history
+W157_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P227	ANALOG_FEEDBACK	0.0	8.1	-8.32	Dose integral run history
+W158_OUT_ANALOG_FEEDBACK	L89_ShelterDoseLimitEvaluator	P102	ANALOG_FEEDBACK	1.58	1.45	2.58	Exposition budget and guard-band data
+W158_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P228	ANALOG_FEEDBACK	0.18	8.1	-8.32	Exposition budget and guard-band data
+W159_OUT_ANALOG_FEEDBACK	L89_WaterTankLevelSensorArray	P117	ANALOG_FEEDBACK	10.32	2.95	-3.82	Finite water shield mass visualization
+W159_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P226	ANALOG_FEEDBACK	-0.18	8.1	-8.32	Finite water shield mass visualization
+W160_OUT_ANALOG_FEEDBACK	L89_WaterMassAllocationController	P130	ANALOG_FEEDBACK	-12.2	1.35	4.5	Water transfer operation status
+W160_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P227	ANALOG_FEEDBACK	0.0	8.1	-8.32	Water transfer operation status
+W161_OUT_ANALOG_FEEDBACK	L89_ShieldPositionEncoderRack	P171	ANALOG_FEEDBACK	-3.5	1.35	4.5	Four shield encoders and lock positions
+W161_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P228	ANALOG_FEEDBACK	0.18	8.1	-8.32	Four shield encoders and lock positions
+W162_OUT_ANALOG_FEEDBACK	L89_ShelterRadiationShieldQualityMonitor	P180	ANALOG_FEEDBACK	-0.18	6.9	-2.72	Actual shielding coverage map
+W162_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P226	ANALOG_FEEDBACK	-0.18	8.1	-8.32	Actual shielding coverage map
+W163_OUT_ANALOG_FEEDBACK	L89_ShelterEnvironmentalAirSupply	P187	ANALOG_FEEDBACK	5.1	1.8	-4.72	Shelter ventilation status
+W163_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P227	ANALOG_FEEDBACK	0.0	8.1	-8.32	Shelter ventilation status
+W164_OUT_ANALOG_FEEDBACK	L89_ShelterProtectedLifeSupportPLC	P196	ANALOG_FEEDBACK	2.89	1.35	4.5	Life support capability margin
+W164_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P228	ANALOG_FEEDBACK	0.18	8.1	-8.32	Life support capability margin
+W165_OUT_ANALOG_FEEDBACK	L89_StormIntensityProfileGenerator	P206	ANALOG_FEEDBACK	-6.58	7.6	-9.92	Solar storm timeline and phase
+W165_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P226	ANALOG_FEEDBACK	-0.18	8.1	-8.32	Solar storm timeline and phase
+W166_OUT_ANALOG_FEEDBACK	L89_ShieldingScenarioSafetyController	P213	ANALOG_FEEDBACK	11.23	1.35	4.5	Independent shield safety health
+W166_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P227	ANALOG_FEEDBACK	0.0	8.1	-8.32	Independent shield safety health
+W167_OUT_ANALOG_FEEDBACK	L89_HeliosSafetyPLC	P222	ANALOG_FEEDBACK	8.08	1.4	5.98	Authoritative safety latches and validity
+W167_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P228	ANALOG_FEEDBACK	0.18	8.1	-8.32	Authoritative safety latches and validity
+W168_OUT_ANALOG_FEEDBACK	L89_HeliosMissionSequencingPLC	P223	ANALOG_FEEDBACK	6.12	1.4	5.98	Six authoritative objective progress
+W168_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P226	ANALOG_FEEDBACK	-0.18	8.1	-8.32	Six authoritative objective progress
+W169_OUT_ANALOG_FEEDBACK	L89_RadiationScenarioDiagnosticRecorder	P239	ANALOG_FEEDBACK	-4.8	1.3	5.98	Fault trace and diagnostic record
+W169_IN_ANALOG_FEEDBACK	L89_RadiationDefenseSCADA	P227	ANALOG_FEEDBACK	0.0	8.1	-8.32	Fault trace and diagnostic record
+W170_OUT_DIGITAL_CONTROL	L89_RadiationDefenseSCADA	P228	DIGITAL_CONTROL	0.18	8.1	-8.32	Read only final certification display request
+W170_IN_DIGITAL_CONTROL	L89_StormShelterCertificationBeacon	P242	DIGITAL_CONTROL	0.09	12.0	-9.32	Read only final certification display request

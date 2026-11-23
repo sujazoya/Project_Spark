@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ProjectSpark.Gameplay;
+using ProjectSpark.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,6 +46,11 @@ namespace ProjectSpark.UIManagement
         private Action locateWorkshop;
         public bool IsWallMounted => canvas && canvas.renderMode == RenderMode.WorldSpace;
         private string closeSignature;
+        private LevelGamePlayManager campaignLevels;
+        private SparkCampaignPanel campaignPanel;
+        private SparkLevelProgression campaignProgression;
+        private Text campaignProgress, campaignNext;
+        private Button campaignButton;
         private static SparkUIMonitorDashboard current;
 
         public static bool IsConsoleVisible => current && !current.IsWallMounted && current.canvas && current.canvas.gameObject.activeInHierarchy;
@@ -61,6 +68,7 @@ namespace ProjectSpark.UIManagement
         private void OnDestroy()
         {
             if (current == this) current = null;
+            UnbindCampaign();
             if (launcher) Destroy(launcher);
             if (IsWallMounted) Destroy(canvas.gameObject);
             else if (workshopScreen) Destroy(workshopScreen.gameObject);
@@ -149,6 +157,51 @@ namespace ProjectSpark.UIManagement
             RelabelButton("Button CLOSE  ×", "VIEW RIGHT WALL");
             RelabelButton("Button HIDE CONSOLE  [F8]", "VIEW WORKTOP");
             CreateCloseBar();
+        }
+
+        internal void AttachCampaign(LevelGamePlayManager levels, SparkCampaignPanel panel)
+        {
+            UnbindCampaign();
+            campaignLevels = levels;
+            campaignPanel = panel;
+            campaignProgression = levels ? levels.LevelProgression : null;
+            if (campaignProgression)
+                campaignProgression.ProgressChanged += RefreshCampaign;
+            if (campaignLevels)
+                campaignLevels.LevelStarted += OnCampaignLevelStarted;
+            RefreshCampaign();
+        }
+
+        private void UnbindCampaign()
+        {
+            if (campaignProgression)
+                campaignProgression.ProgressChanged -= RefreshCampaign;
+            if (campaignLevels)
+                campaignLevels.LevelStarted -= OnCampaignLevelStarted;
+        }
+
+        private void OnCampaignLevelStarted(SparkLevelDefinition level) => RefreshCampaign();
+
+        private void RefreshCampaign()
+        {
+            campaignButton.interactable = campaignPanel && campaignLevels && campaignLevels.Campaign;
+            if (!campaignButton.interactable)
+                return;
+
+            int completed = 0;
+            int total = 0;
+            foreach (int index in campaignLevels.GetCampaignLevelIndices())
+            {
+                total++;
+                if (campaignProgression && campaignProgression.IsCompleted(index))
+                    completed++;
+            }
+
+            int nextIndex = campaignProgression ? campaignProgression.GetFirstIncompleteLevel() :
+                campaignLevels.GetFirstCampaignIndex();
+            var next = campaignLevels.GetLevel(nextIndex);
+            campaignProgress.text = $"{campaignLevels.Campaign.ChapterCount} chapters     /     {completed} of {total} levels complete";
+            campaignNext.text = next ? $"Continue at Level {next.LevelNumber:00}  /  {next.DisplayName}" : "Campaign complete";
         }
 
         private void RelabelButton(string name, string caption)
@@ -389,10 +442,16 @@ namespace ProjectSpark.UIManagement
             Btn(root, "CLOSE ALL MANAGED PANELS", 1300, 493, 272, 46, () => { if (manager) manager.CloseAll(true); }, true, 13);
             Label(root, "Reopen panels from the registry", 1300, 545, 274, 28, 12, cyan);
 
-            Header(root, "SYSTEM DIAGNOSTICS", 234, 606, 440, 180);
-            Label(root, "Layer sorting / focus / input routing", 249, 646, 405, 28, 18, textWhite);
-            Label(root, "State transitions use unscaled time", 249, 683, 405, 26, 16, cyan);
-            Label(root, "Existing panel logic is preserved", 249, 716, 405, 26, 16, cyan);
+            Header(root, "CAMPAIGN", 234, 606, 440, 180);
+            campaignProgress = Label(root, "", 249, 643, 405, 24, 17, cyan);
+            campaignNext = Label(root, "", 249, 669, 405, 25, 16, textWhite);
+            campaignNext.horizontalOverflow = HorizontalWrapMode.Wrap;
+            campaignNext.resizeTextForBestFit = true;
+            campaignNext.resizeTextMinSize = 12;
+            campaignNext.resizeTextMaxSize = 16;
+            campaignButton = Btn(root, "OPEN LEVELS", 249, 713, 405, 48,
+                () => campaignPanel.OpenFromMasterPanel(ReturnToWorktop), true, 18);
+            campaignButton.interactable = false;
             Header(root, "RECENT UI EVENTS", 685, 606, 590, 180);
             eventLabel = Label(root, "No activity yet", 701, 642, 558, 132, 14, textWhite, TextAnchor.UpperLeft);
             Header(root, "OPERATIONS", 1286, 606, 300, 180);

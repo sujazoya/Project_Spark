@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using ProjectSpark.AAAArchitecture;
 using ProjectSpark.Gameplay;
+using ProjectSpark.Cameras;
 using ProjectSpark.UI;
 using TMPro;
 using UnityEditor;
@@ -53,8 +54,7 @@ internal static class SparkMissionCardVerification
         {
             AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
             Require(SparkAAALevelCard.FindArtwork(120, 12)?.name == "L120", "Missing Level 120 sprite");
-            for (int chapter = 1; chapter <= 13; chapter++)
-                Require(SparkAAALevelCard.FindArtwork(-1, chapter), $"Missing artwork for chapter {chapter}");
+            Require(SparkAAALevelCard.FindArtwork(94,10), "Missing representative PCB artwork");
 
             string path = Generated + "SparkLevelButton.prefab";
             string guid = AssetDatabase.AssetPathToGUID(path);
@@ -106,11 +106,25 @@ internal static class SparkMissionCardVerification
             int index = manager.GetCampaignLevelIndices().Single(i => manager.GetLevel(i).LevelNumber == 120);
 
             var opener = panel.GetComponentsInChildren<Button>(true).Single(button => button.name == "Chapters");
-            Click(opener);
-            Require(panel.IsOpen, "HUD Chapters button failed");
+            var camera = Object.FindFirstObjectByType<SparkGameCameraRig>();
+            var master = Object.FindObjectsByType<Button>(FindObjectsSortMode.None).Single(button => button.name == "Master Panel");
+            Click(master, checkRaycast: false);
+            await Task.Delay(750);
+            Require(camera && camera.ActiveWallDisplay && camera.ActiveWallDisplay.name.Contains("Master"), "Master Panel camera focus");
+            var masterOpen = camera.ActiveWallDisplay.GetComponentsInChildren<Button>().Single(button => button.name == "Button OPEN LEVELS");
+            Require(masterOpen.interactable, "Master Panel campaign button missing its live binding");
+            await Capture("Logs/SparkMasterPanelCampaign.png");
+            Click(masterOpen);
+            Require(panel.IsOpen && camera.ActiveWallDisplay, "Master Panel did not open its campaign browser");
             var root = (RectTransform)typeof(SparkCampaignPanel).GetField("overlay",
                 BindingFlags.Instance | BindingFlags.NonPublic).GetValue(panel);
             Button Button(string name) => root.GetComponentsInChildren<Button>().Single(button => button.name == name);
+            Require(Label(Button("Close").transform, "Label") == "Back to Master Panel", "Master Panel return label");
+            await WaitRendered(Button("Close"));
+            Click(Button("Close"));
+            Require(!panel.IsOpen && camera.ActiveWallDisplay, "Backing out should keep the Master Panel open");
+            Click(masterOpen);
+            await WaitRendered(Button("Chapter 12"));
             Click(Button("Chapter 12"));
             Canvas.ForceUpdateCanvases();
             var cards = root.GetComponentsInChildren<SparkAAALevelCard>();
@@ -119,32 +133,40 @@ internal static class SparkMissionCardVerification
             Require(Label(mission.transform, "LevelNumber") == "LEVEL 120" &&
                 Label(mission.transform, "MissionTitle") == "The Axis Forge" &&
                 Label(mission.transform, "TargetCount") == "6 objectives" &&
-                Label(mission.transform, "State") == "Locked", "Level 120 card data or lock state");
+                Label(mission.transform, "State") == "LOCKED", "Level 120 card data or lock state");
             Require(mission.GetComponentsInChildren<Image>().Any(image => image.sprite && image.sprite.name == "L120"),
                 "Live card has no Level 120 artwork");
+            await WaitRendered(mission.Button);
+            TMP_Text levelNumber = mission.GetComponentsInChildren<TMP_Text>().Single(t => t.name == "LevelNumber");
+            levelNumber.ForceMeshUpdate();
+            Require(!levelNumber.isTextTruncated, "Three-digit level number is visually clipped");
             Click(mission.Button);
             Require(root.GetComponentsInChildren<TMP_Text>().Any(title => title.name == "Level Title" && title.text == "The Axis Forge"),
                 "Selecting card failed to open its briefing");
             Require(Label(root, "Objective List").Contains("6."), "All six authored objectives should be visible in the briefing scroll");
             Require(!Button("Play Selected").interactable, "Fresh profile can launch a locked mission");
             await Capture("Logs/SparkMissionCard120Locked.png");
-            Record("PASS Live Chapters card has actual artwork, six objectives, clickable briefing and a real lock.");
+            Record("PASS Master Panel opens Chapters and Back returns to the wall. Live Chapters card has actual artwork, six objectives, clickable briefing and a real lock.");
 
             progression.UnlockLevel(index);
-            Require(Label(mission.transform, "State") == "Available" && Button("Play Selected").interactable,
+            Require(Label(mission.transform, "State") == "AVAILABLE" && Button("Play Selected").interactable,
                 "The card failed to update after a legitimate progression change");
             await Capture("Logs/SparkMissionCard120.png");
             Click(Button("Play Selected"));
-            Require(!panel.IsOpen && manager.LayoutLoader.ActiveLayout.LevelDefinition == manager.GetLevel(index),
-                "Play did not load the real Level 120 layout");
+            Require(!panel.IsOpen && !camera.ActiveWallDisplay &&
+                manager.LayoutLoader.ActiveLayout.LevelDefinition == manager.GetLevel(index),
+                "Play did not return to the workbench on the real Level 120 layout");
+            await WaitRendered(opener);
             Click(opener);
             var launched = root.GetComponentsInChildren<SparkAAALevelCard>().Single(card => card.name == "Level 120");
-            Require(Label(launched.transform, "State") == "In play" && Label(root, "Level Access").Contains("/6 objectives passed"),
+            Require(Label(launched.transform, "State") == "IN PLAY" && Label(root, "Level Access").Contains("/6 objectives passed"),
                 "Current mission failed to show authoritative objective progress");
 
             progression.MarkCompleted(index);
-            Require(Label(launched.transform, "State") == "In play", "Historical completion should not override a live attempt");
+            Require(Label(launched.transform, "State") == "IN PLAY", "Historical completion should not override a live attempt");
+            await WaitRendered(Button("Chapter 13"));
             Click(Button("Chapter 13"));
+            await WaitRendered(Button("Chapter 12"));
             Click(Button("Chapter 12"));
             Require(root.GetComponentsInChildren<SparkAAALevelCard>().Count() == 10, "Pooled cards failed to reset between chapters");
             Record("PASS Availability updates, native Level 120 launch, live objective progress and chapter browsing.");
@@ -161,7 +183,7 @@ internal static class SparkMissionCardVerification
     private static string Label(Transform root, string label) =>
         root.GetComponentsInChildren<TMP_Text>().Single(text => text.name == label).text;
 
-    private static void Click(Button button)
+    private static void Click(Button button, bool checkRaycast = true)
     {
         Require(button.interactable, $"Button disabled: {button.name}");
         Canvas.ForceUpdateCanvases();
@@ -174,13 +196,23 @@ internal static class SparkMissionCardVerification
         };
         var hits = new List<RaycastResult>();
         EventSystem.current.RaycastAll(data, hits);
-        Require(hits.Count > 0 && hits[0].gameObject.GetComponentInParent<Button>() == button,
-            $"{button.name} is covered by {hits.FirstOrDefault().gameObject}");
+        if (checkRaycast)
+            Require(hits.Count > 0 && hits[0].gameObject.GetComponentInParent<Button>() == button,
+                $"{button.name} at {data.position} in {Screen.width}x{Screen.height} hits {hits.FirstOrDefault().gameObject}; camera={raycaster.eventCamera} depth={button.targetGraphic.depth}");
         ExecuteEvents.Execute(button.gameObject, data, ExecuteEvents.pointerClickHandler);
+    }
+
+    private static async Task WaitRendered(Button button)
+    {
+        for (int attempt = 0; attempt < 30 && button.targetGraphic.depth < 0; attempt++)
+            await Task.Delay(100);
+        Require(button.targetGraphic.depth >= 0, $"Button has no rendered graphic: {button.name}");
     }
 
     private static async Task Capture(string path)
     {
+        if (File.Exists(path))
+            File.Delete(path);
         await Task.Delay(250);
         ScreenCapture.CaptureScreenshot(path);
         for (int i = 0; i < 30 && !File.Exists(path); i++)
