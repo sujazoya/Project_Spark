@@ -96,17 +96,63 @@ namespace ProjectSpark.AAAArchitecture.Editor
             }
             b.outputHashes=new List<string>();foreach(var data in bytes)b.outputHashes.Add(Hash(data));b.lastSignature=sig;EditorUtility.SetDirty(s);AssetDatabase.SaveAssetIfDirty(s);
         }
-        internal static void Build(bool force=false,bool replaceForeign=false,int only=0,bool rescan=true)
+        // Missing-only recovery never replaces existing images or metadata.
+        private static void RenderMissing(SparkAAAVisualSettings s,SparkAAALevel e,SparkAAAVisualBinding b,string sig,StringBuilder report)
+        {
+            var missing=new List<int>();
+            var hashes=new List<string>();
+            bool sameSignature=b.lastSignature==sig;
+            bool allCurrent=true;
+            for(int i=0;i<Names.Length;i++){
+                string path=PathFor(e.key,i);
+                string old=b.outputHashes!=null&&b.outputHashes.Count==Names.Length?b.outputHashes[i]:"";
+                if(File.Exists(path)){
+                    bool owned=!string.IsNullOrEmpty(old)&&FileHash(path)==old;
+                    hashes.Add(owned?old:"");
+                    if(!owned||!sameSignature||AssetDatabase.LoadAssetAtPath<Sprite>(path)==null)allCurrent=false;
+                    report.AppendLine("  PRESERVED: "+path);
+                }else{
+                    if(File.Exists(path+".meta"))throw new InvalidOperationException("Orphan metadata: "+path);
+                    hashes.Add("");missing.Add(i);
+                }
+            }
+            if(missing.Count==0)return;
+            var data=new Dictionary<int,byte[]>();
+            using(var studio=new SparkAAAStudio(b.prefab,s)){
+                foreach(int i in missing)data.Add(i,studio.Capture(W[i],H[i],Angles[i]));
+            }
+            var created=new List<string>();
+            try{
+                foreach(int i in missing){
+                    string path=PathFor(e.key,i);
+                    Folder(Path.GetDirectoryName(path).Replace('\\','/'));
+                    if(File.Exists(path)||File.Exists(path+".meta"))throw new IOException("Output appeared during generation: "+path);
+                    // CreateNew additionally refuses to overwrite a file created after the check.
+                    using(var stream=new FileStream(path,FileMode.CreateNew,FileAccess.Write,FileShare.None)){
+                        created.Add(path);stream.Write(data[i],0,data[i].Length);
+                    }
+                    Import(path,i,s.fullSizeThumbnails);hashes[i]=Hash(data[i]);
+                    report.AppendLine("  CREATED: "+path);
+                }
+            }catch{
+                foreach(string path in created){AssetDatabase.DeleteAsset(path);if(File.Exists(path))File.Delete(path);if(File.Exists(path+".meta"))File.Delete(path+".meta");}
+                AssetDatabase.Refresh();throw;
+            }
+            b.outputHashes=hashes;b.lastSignature=allCurrent?sig:"";
+            EditorUtility.SetDirty(s);AssetDatabase.SaveAssetIfDirty(s);
+        }
+        internal static void Build(bool force=false,bool replaceForeign=false,int only=0,bool rescan=true,int first=1,int last=int.MaxValue,bool missingOnly=false)
         {
             if(Busy||EditorApplication.isPlayingOrWillChangePlaymode||EditorApplication.isCompiling||EditorApplication.isUpdating)throw new InvalidOperationException("Visual Architect cannot render in the current editor state.");
             Busy=true;var report=new StringBuilder("PROJECT SPARK / VISUAL LIBRARY AUDIT\n"+DateTime.UtcNow.ToString("O")+"\n");int rendered=0,current=0,blocked=0,failed=0;bool cancelled=false;
             try{
                 var c=rescan?SparkAAAArchitect.Scan():Catalog();if(c==null)throw new InvalidOperationException("Build or audit campaign first.");var s=Settings();
                 for(int i=0;i<c.levels.Count;i++){
-                    var e=c.levels[i];if(only>0&&e.number!=only)continue;
+                    var e=c.levels[i];if(e.number<first||e.number>last||(only>0&&e.number!=only))continue;
                     if(EditorUtility.DisplayCancelableProgressBar("Spark AAA Visual Architect",e.key+" / "+e.title,(float)i/Mathf.Max(1,c.levels.Count))){cancelled=true;break;}
+                    if(missingOnly){bool exists=true;for(int j=0;j<Names.Length;j++)if(!File.Exists(PathFor(e.key,j))){exists=false;break;}if(exists){current++;report.AppendLine(e.key+" PRESERVED: all five image files exist");continue;}}
                     var b=Find(s,e.key);if(!Approved(e,b)){blocked++;report.AppendLine(e.key+" BLOCKED: "+(!Eligible(e)?"Missing or blocked definition":"No approved matching prefab"));continue;}
-                    try{string sig=Signature(s,e,b);if(!force&&Current(b,sig)){current++;report.AppendLine(e.key+" CURRENT");continue;}RenderLevel(s,e,b,sig,replaceForeign,report);rendered++;report.AppendLine(e.key+" GENERATED: "+AssetDatabase.GetAssetPath(b.prefab));}
+                    try{string sig=Signature(s,e,b);if(!force&&Current(b,sig)){current++;report.AppendLine(e.key+" CURRENT");continue;}if(missingOnly)RenderMissing(s,e,b,sig,report);else RenderLevel(s,e,b,sig,replaceForeign,report);rendered++;report.AppendLine(e.key+" GENERATED: "+AssetDatabase.GetAssetPath(b.prefab));}
                     catch(Exception ex){failed++;report.AppendLine(e.key+" FAILED: "+ex.Message);Debug.LogWarning("[Spark Visuals] "+e.key+": "+ex.Message);}
                 }
                 SparkAAAArchitect.Scan();

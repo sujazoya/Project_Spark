@@ -50,45 +50,85 @@ MonoBehaviour:
       minimumPower: 0
   - number: 2
     chapter: 1
-    requiredTargets: 0
+    requiredTargets: 1
     rawCompletionMode: 0
     key: PS-L002
-    guid: 
-    legacyId: 
-    title: Conflicting level definitions
-    description: 
-    sourcePath: 
-    issue: 'Duplicate candidate: Assets/Level_02.asset; Duplicate candidate: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_01/Level_02_Layout/Level_02.asset'
-    defaultUnlocked: 0
-    autoUnlock: 0
+    guid: a3bff753f4100dc44a5bf10b3b9fa418
+    legacyId: LEVEL_02
+    title: LIGHT THE BULB
+    description: POWER SSUPPLY POSETIVE TO LED ANODE. AND POWER SUPPLY NEGATIVE TO
+      LED CATHHODE. LIGHT SHOULD BE ON
+    sourcePath: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_01/Level_02_Layout/Level_02.asset
+    issue: 
+    defaultUnlocked: 1
+    autoUnlock: 1
     autoAdvance: 0
-    unlockNext: 0
-    blocked: 1
-    definition: {fileID: 0}
+    unlockNext: 1
+    blocked: 0
+    definition: {fileID: 11400000, guid: a3bff753f4100dc44a5bf10b3b9fa418, type: 2}
     thumbnail: {fileID: 0}
     bannerResourcePath: 
-    targets: []
+    targets:
+    - id: led
+      title: LED
+      description: 'LED BULB
+
+'
+      componentId: led
+      terminalId: 
+      positiveId: LED_Anode
+      negativeId: LED_Cathode
+      rawType: 3
+      minimumVoltage: 0
+      minimumCurrent: 0
+      minimumPower: 0
   - number: 3
     chapter: 1
-    requiredTargets: 0
+    requiredTargets: 2
     rawCompletionMode: 0
     key: PS-L003
-    guid: 
-    legacyId: 
-    title: Conflicting level definitions
-    description: 
-    sourcePath: 
-    issue: 'Duplicate candidate: Assets/My_Assets/_Project_Spark/Levels/Level_03/Level_03.asset;
-      Duplicate candidate: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_01/Level_03_Layout/Level_03.asset'
-    defaultUnlocked: 0
-    autoUnlock: 0
+    guid: e6a958e6cd2dd3347a75295b9f4325e3
+    legacyId: LEVEL_03
+    title: The Current Limiter
+    description: Build a circuit with a current-limiting resistor LIGHT SHOULD BE
+      ON
+    sourcePath: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_01/Level_03_Layout/Level_03.asset
+    issue: Empty or duplicate target ID at index 1 (legacy behavior unchanged)
+    defaultUnlocked: 1
+    autoUnlock: 1
     autoAdvance: 0
-    unlockNext: 0
-    blocked: 1
-    definition: {fileID: 0}
+    unlockNext: 1
+    blocked: 0
+    definition: {fileID: 11400000, guid: e6a958e6cd2dd3347a75295b9f4325e3, type: 2}
     thumbnail: {fileID: 0}
     bannerResourcePath: 
-    targets: []
+    targets:
+    - id: led
+      title: LED operates
+      description: 'LED BULB
+
+'
+      componentId: led
+      terminalId: 
+      positiveId: LED_Anode
+      negativeId: LED_Cathode
+      rawType: 3
+      minimumVoltage: 0
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: led
+      title: Safe current
+      description: 'LED BULB
+
+'
+      componentId: led
+      terminalId: 
+      positiveId: LED_Anode
+      negativeId: LED_Cathode
+      rawType: 6
+      minimumVoltage: 0
+      minimumCurrent: 0.015
+      minimumPower: 0
   - number: 4
     chapter: 1
     requiredTargets: 2
@@ -7535,104 +7575,469 @@ MonoBehaviour:
       minimumPower: 0
   - number: 89
     chapter: 9
-    requiredTargets: 0
+    requiredTargets: 6
     rawCompletionMode: 0
     key: PS-L089
-    guid: 
-    legacyId: 
-    title: Content unavailable
-    description: 
-    sourcePath: 
-    issue: No source definition discovered
+    guid: 24a02a41df111904f845a2e9ebef8f29
+    legacyId: level_89
+    title: The Helios Storm
+    description: Commission the storm shelter, qualify radiation protection and recover
+      trusted shelter feedback.
+    sourcePath: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_89_Layout/Level_89.asset
+    issue: 
     defaultUnlocked: 0
-    autoUnlock: 0
+    autoUnlock: 1
     autoAdvance: 0
-    unlockNext: 0
-    blocked: 1
-    definition: {fileID: 0}
+    unlockNext: 1
+    blocked: 0
+    definition: {fileID: 11400000, guid: 24a02a41df111904f845a2e9ebef8f29, type: 2}
     thumbnail: {fileID: 0}
     bannerResourcePath: 
-    targets: []
+    targets:
+    - id: level89_helios_1
+      title: Build the Helios Radiation Defense Network
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L89_Network
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level89_helios_2
+      title: Calibrate the Solar Radiation Observatory
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L89_Calibrated
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level89_helios_3
+      title: Commission the Radiation Storm Shelter
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L89_Commissioned
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level89_helios_4
+      title: Survive the First Complete Solar Storm
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L89_Endurance
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level89_helios_5
+      title: Recover Three Radiation Defense Failures
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L89_Repairs
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level89_helios_6
+      title: Restore Critical Shelter Radiation Feedback
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L89_Requalified
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
   - number: 90
     chapter: 9
-    requiredTargets: 0
+    requiredTargets: 6
     rawCompletionMode: 0
     key: PS-L090
-    guid: 
-    legacyId: 
-    title: Content unavailable
-    description: 
-    sourcePath: 
-    issue: No source definition discovered
+    guid: 96396fce98e8eec4cb05ff5db441e4a3
+    legacyId: level_90
+    title: The Long Burn
+    description: Commission four Hall thrusters, qualify orbital departure and recover
+      trusted neutralizer feedback.
+    sourcePath: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_90_Layout/Level_90.asset
+    issue: 
     defaultUnlocked: 0
-    autoUnlock: 0
+    autoUnlock: 1
     autoAdvance: 0
-    unlockNext: 0
-    blocked: 1
-    definition: {fileID: 0}
+    unlockNext: 1
+    blocked: 0
+    definition: {fileID: 11400000, guid: 96396fce98e8eec4cb05ff5db441e4a3, type: 2}
     thumbnail: {fileID: 0}
     bannerResourcePath: 
-    targets: []
+    targets:
+    - id: level90_propulsion_1
+      title: Build the Deep-Space Propulsion Network
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L90_Network
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level90_propulsion_2
+      title: Commission the Xenon and Power Systems
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L90_Calibrated
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level90_propulsion_3
+      title: Ignite and Stabilize the Plasma Engines
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L90_Commissioned
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level90_propulsion_4
+      title: Execute the First Deep-Space Departure
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L90_Endurance
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level90_propulsion_5
+      title: Recover Three Propulsion-System Failures
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L90_Repairs
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level90_propulsion_6
+      title: Restore Critical Plasma Neutralization Feedback
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L90_Requalified
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
   - number: 91
     chapter: 9
-    requiredTargets: 0
+    requiredTargets: 6
     rawCompletionMode: 0
     key: PS-L091
-    guid: 
-    legacyId: 
-    title: Content unavailable
-    description: 
-    sourcePath: 
-    issue: No source definition discovered
+    guid: 528965078102fae4eb9302cbd485a488
+    legacyId: level_91
+    title: The Cosmic Clock
+    description: Acquire four pulsars, resolve position and clock bias, and qualify
+      a protected course correction.
+    sourcePath: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_91_Layout/Level_91.asset
+    issue: 
     defaultUnlocked: 0
-    autoUnlock: 0
+    autoUnlock: 1
     autoAdvance: 0
-    unlockNext: 0
-    blocked: 1
-    definition: {fileID: 0}
+    unlockNext: 1
+    blocked: 0
+    definition: {fileID: 11400000, guid: 528965078102fae4eb9302cbd485a488, type: 2}
     thumbnail: {fileID: 0}
     bannerResourcePath: 
-    targets: []
+    targets:
+    - id: level91_navigation_1
+      title: Build the Cosmic Navigation Network
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L91_Network
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level91_navigation_2
+      title: Calibrate the Precision Time Observatory
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L91_Calibrated
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level91_navigation_3
+      title: Acquire the Four Celestial Clocks
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L91_Commissioned
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level91_navigation_4
+      title: Solve the Deep-Space Position and Correct Course
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L91_Endurance
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level91_navigation_5
+      title: Recover Three Deep-Space Navigation Failures
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L91_Repairs
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level91_navigation_6
+      title: Restore Critical Atomic Clock Feedback
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L91_Requalified
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
   - number: 92
     chapter: 9
-    requiredTargets: 0
+    requiredTargets: 6
     rawCompletionMode: 0
     key: PS-L092
-    guid: 
-    legacyId: 
-    title: Content unavailable
-    description: 
-    sourcePath: 
-    issue: No source definition discovered
+    guid: 2e9f7595f2d17224da05067ab067907c
+    legacyId: level_92
+    title: The Silent Core
+    description: Survey the asteroid, stabilize the lander and recover a sealed core
+      under anchor-load protection.
+    sourcePath: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_92_Layout/Level_92.asset
+    issue: 
     defaultUnlocked: 0
-    autoUnlock: 0
+    autoUnlock: 1
     autoAdvance: 0
-    unlockNext: 0
-    blocked: 1
-    definition: {fileID: 0}
+    unlockNext: 1
+    blocked: 0
+    definition: {fileID: 11400000, guid: 2e9f7595f2d17224da05067ab067907c, type: 2}
     thumbnail: {fileID: 0}
     bannerResourcePath: 
-    targets: []
+    targets:
+    - id: level92_sampling_1
+      title: Build the Asteroid Exploration Network
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L92_Network
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level92_sampling_2
+      title: Map the Hidden Geological Layers
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L92_Calibrated
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level92_sampling_3
+      title: Deploy and Stabilize the Microgravity Lander
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L92_Commissioned
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level92_sampling_4
+      title: Extract and Secure the Asteroid Core
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L92_Endurance
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level92_sampling_5
+      title: Recover Three Asteroid Sampling Failures
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L92_Repairs
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level92_sampling_6
+      title: Restore Critical Anchor Load Feedback
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L92_Requalified
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
   - number: 93
     chapter: 9
-    requiredTargets: 0
+    requiredTargets: 6
     rawCompletionMode: 0
     key: PS-L093
-    guid: 
-    legacyId: 
-    title: Content unavailable
-    description: 
-    sourcePath: 
-    issue: No source definition discovered
+    guid: 0f7732819f547ee42b4c290f05482605
+    legacyId: level_93
+    title: The Elemental Archive
+    description: Map a pristine geological core and qualify isolated analytical samples
+      under vacuum protection.
+    sourcePath: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_93_Layout/Level_93.asset
+    issue: 
     defaultUnlocked: 0
-    autoUnlock: 0
+    autoUnlock: 1
     autoAdvance: 0
-    unlockNext: 0
-    blocked: 1
-    definition: {fileID: 0}
+    unlockNext: 1
+    blocked: 0
+    definition: {fileID: 11400000, guid: 0f7732819f547ee42b4c290f05482605, type: 2}
     thumbnail: {fileID: 0}
     bannerResourcePath: 
-    targets: []
+    targets:
+    - id: level93_analysis_1
+      title: Build the Elemental Analysis Network
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L93_Network
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level93_analysis_2
+      title: Commission the Pristine Science Laboratory
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L93_Calibrated
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level93_analysis_3
+      title: Reveal the Hidden Mineral Archive
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L93_Commissioned
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level93_analysis_4
+      title: Decode the Ancient Chemical Signature
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L93_Endurance
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level93_analysis_5
+      title: Recover Three Scientific Instrument Failures
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L93_Repairs
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
+    - id: level93_analysis_6
+      title: Restore Critical Analytical Chamber Feedback
+      description: "Recorded from the electrical graph, valid calibrated feedback
+        and the level\u2019s verified run history."
+      componentId: L93_Requalified
+      terminalId: 
+      positiveId: 
+      negativeId: 
+      rawType: 5
+      minimumVoltage: 4.8
+      minimumCurrent: 0
+      minimumPower: 0
   - number: 94
     chapter: 10
     requiredTargets: 6
@@ -11008,4 +11413,4 @@ MonoBehaviour:
     first: 131
     last: 2147483647
     title: Future Missions / Review
-  scannedUtc: 2026-11-22T21:39:44.1293817Z
+  scannedUtc: 2026-11-23T17:52:26.7855343Z

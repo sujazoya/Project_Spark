@@ -76,27 +76,45 @@ namespace ProjectSpark.AAAArchitecture
         {
             if (levelNumber <= 0) return null;
             string key = "PS-L" + levelNumber.ToString("000");
+            string resourcePath = VisualResourceRoot + key + "/";
+
+            // This API is called by the active gameplay campaign after it resolves
+            // a real level definition. Exact-number artwork is presentation only;
+            // an independent catalog audit must not hide its manually supplied art.
+            Sprite artwork = Resources.Load<Sprite>(resourcePath + "Thumbnail");
+            if (artwork != null) return artwork;
 
 #if UNITY_EDITOR
-            // The visual architect stores thumbnails outside Resources.
-            // Prefer its catalog, which incorporates source approval checks.
+            Sprite editorThumbnail = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(
+                GeneratedRoot + "/Thumbnails/" + key + ".png");
+            if (editorThumbnail != null &&
+                (Application.isMobilePlatform || editorThumbnail.rect.width >= 768f))
+                return editorThumbnail;
+#endif
+
+            // Same exact-level banner path used by the mission briefing.
+            artwork = Resources.Load<Sprite>(resourcePath + "Banner");
+            if (artwork != null) return artwork;
+
+#if UNITY_EDITOR
+            if (editorThumbnail != null) return editorThumbnail;
+
+            // Catalog references are secondary fallbacks only. Keep their original
+            // approval / identity checks; never use a blocked catalog entry.
             var catalog = UnityEditor.AssetDatabase.LoadAssetAtPath<SparkAAACatalog>(
                 GeneratedRoot + "/SparkCampaignCatalog.asset");
             if (catalog != null)
             {
                 SparkAAALevel entry = catalog.Find(key);
-                if (entry == null || !entry.Present || entry.blocked) return null;
-                if (entry.thumbnail != null && (Application.isMobilePlatform || entry.thumbnail.rect.width >= 768)) return entry.thumbnail;
-                var full = string.IsNullOrEmpty(entry.bannerResourcePath) ? null : Resources.Load<Sprite>(entry.bannerResourcePath);
-                return full ? full : entry.thumbnail;
+                if (entry != null && entry.Present && !entry.blocked)
+                {
+                    if (entry.thumbnail != null) return entry.thumbnail;
+                    if (entry.bannerResourcePath == resourcePath + "Banner")
+                        return Resources.Load<Sprite>(entry.bannerResourcePath);
+                }
             }
 #endif
-            // In player builds AssetDatabase is unavailable. The visual architect
-            // already exports the mission banner under Resources. An optional
-            // exact-level Thumbnail sprite at this location takes precedence.
-            string resourcePath = VisualResourceRoot + key + "/";
-            Sprite artwork = Resources.Load<Sprite>(resourcePath + "Thumbnail");
-            return artwork != null ? artwork : Resources.Load<Sprite>(resourcePath + "Banner");
+            return null;
         }
 
         /// <summary>Existing campaign-panel API. Rebinding replaces the old click callback.</summary>
