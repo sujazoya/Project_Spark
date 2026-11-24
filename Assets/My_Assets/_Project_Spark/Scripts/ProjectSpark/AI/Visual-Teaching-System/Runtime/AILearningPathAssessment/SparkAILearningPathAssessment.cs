@@ -74,6 +74,10 @@ namespace ProjectSpark.UI.VisualTeaching
         private int practicalBankIndex = -1;
         private int practicalQuestionIndex = -1;
         private bool practicalActive;
+        private int practicalStartSolve = -1;
+        private SparkLevelLayout practicalLayout;
+        private Attempt practicalAttempt;
+        internal bool PracticalActive => practicalActive;
 
         private void Awake()
         {
@@ -173,7 +177,8 @@ namespace ProjectSpark.UI.VisualTeaching
 
         private void OnFrame(SparkVerifiedElectricalFrame frame)
         {
-            if (frame == null || frame.revision < 0 || frame.readings == null) return;
+            if (frame == null || frame.revision < 0 || frame.readings == null ||
+                string.IsNullOrWhiteSpace(frame.circuitId)) return;
             string circuit = frame.circuitId ?? string.Empty;
             if (practicalActive && !string.IsNullOrEmpty(practicalCircuitId) &&
                 !string.Equals(practicalCircuitId, circuit, StringComparison.Ordinal))
@@ -210,6 +215,9 @@ namespace ProjectSpark.UI.VisualTeaching
             string value = id ?? string.Empty;
             return prefix + value.Length + ":" + value;
         }
+
+        public bool RequiresIndependentWork => practicalActive ||
+            (PanelVisible && CurrentItem != null && CurrentAttempt != null && !CurrentAttempt.answered[questionIndex]);
 
         public bool PanelVisible => panel && panel.activeInHierarchy;
         public void Show() { Resolve(); Subscribe(); if (panel != null) panel.SetActive(true); Refresh(); }
@@ -316,12 +324,17 @@ namespace ProjectSpark.UI.VisualTeaching
             if (string.IsNullOrWhiteSpace(bank.bankId)) { message += " Bank ID missing: score was not saved."; return; }
             string bestKey = Key(ScorePrefix, bank.bankId);
             if (score > PlayerPrefs.GetInt(bestKey, -1)) PlayerPrefs.SetInt(bestKey, score);
-            if (score >= bank.passingPercent)
-                PlayerPrefs.SetInt(Key(PassedPrefix, bank.bankId), 1);
+            bool theoryPassed = score >= bank.passingPercent;
+            bool containsPractical = false;
+            if (bank.items != null) foreach (var item in bank.items)
+                if (item != null && item.kind == SparkAssessmentItemKind.VerifiedPractical) containsPractical = true;
+            bool practicalPassed = SparkProAssessmentGate.AllRequiredPracticalsPassed(bank, a.correct);
+            bool pass = theoryPassed && (!containsPractical || practicalPassed);
+            if (pass) PlayerPrefs.SetInt(Key(PassedPrefix, bank.bankId), 1);
+            if (theoryPassed && practicalPassed) SparkProAssessmentGate.RecordQualifiedPass(bank, score);
             PlayerPrefs.Save();
-            message += score >= bank.passingPercent
-                ? "  Assessment passed; local study record saved."
-                : "  Assessment incomplete for passing score; retry from RESTART BANK.";
+            message += pass ? "  Assessment passed; local study record saved."
+                : "  Assessment not passed. Required practical tasks and the minimum score must pass in the same attempt. Retry from RESTART BANK.";
         }
 
         public void RestartBank()
@@ -356,7 +369,11 @@ namespace ProjectSpark.UI.VisualTeaching
             Attempt a = CurrentAttempt;
             if (item == null || item.kind != SparkAssessmentItemKind.VerifiedPractical || a == null || a.answered[questionIndex]) return;
             CancelPractical(null);
-            if (levelManager == null || levelManager.ActiveLevel == null || levelManager.ActiveLevel.Targets == null)
+            var context = SparkAILevelContext.Capture(levelManager);
+            if (!context.HasEvaluation || levelManager.ActiveLevel.Targets == null ||
+                !levelManager.HasCurrentElectricalEvaluation ||
+                !string.IsNullOrWhiteSpace(item.requiredLevelId) &&
+                !string.Equals(item.requiredLevelId, context.Definition.LevelId, StringComparison.Ordinal))
             {
                 message = "Start a gameplay level with the required objective first."; Refresh(); return;
             }
@@ -364,9 +381,18 @@ namespace ProjectSpark.UI.VisualTeaching
             foreach (SparkLevelTarget target in levelManager.ActiveLevel.Targets)
             {
                 if (target == null || !target.IsConfigured() || string.IsNullOrWhiteSpace(target.TargetId) ||
-                    target.Type != item.requiredTargetType) continue;
+                    target.Type != item.requiredTargetType ||
+                    !string.IsNullOrWhiteSpace(item.requiredObjectiveId) &&
+                    !string.Equals(target.TargetId, item.requiredObjectiveId, StringComparison.Ordinal)) continue;
                 bool? passed = EvaluatorResult(target.TargetId);
-                if (passed.HasValue && !passed.Value) { found = target; break; }
+                if (passed != false) continue;
+                if (found != null)
+                {
+                    message = "Several pending objectives match. Use a practical with an authored target ID.";
+                    Refresh();
+                    return;
+                }
+                found = target;
             }
             if (found == null)
             {
@@ -385,6 +411,9 @@ namespace ProjectSpark.UI.VisualTeaching
             practicalLevelId = levelManager.ActiveLevel.LevelId;
             practicalCircuitId = observedCircuitId;
             startFrameSerial = frameSerial;
+            practicalLayout = context.Layout;
+            practicalAttempt = a;
+            practicalStartSolve = levelManager.LastEvaluatedSolveRevision;
             message = "Practical started for evaluator target '" +
                       (string.IsNullOrWhiteSpace(found.DisplayName) ? found.TargetId : found.DisplayName) +
                       "'. Repair using normal controls; await a new solve and evaluation.";
@@ -414,12 +443,6 @@ namespace ProjectSpark.UI.VisualTeaching
                 message = "Evaluator still reports the practical objective as PENDING.";
                 return;
             }
-            if (requireFreshSolverFrame &&
-                (frameSerial <= startFrameSerial || Time.unscaledTime - lastFrameTime > maxFrameAgeSeconds))
-            {
-                message = "Evaluator PASS observed, but fresh post-start solver evidence is missing or stale.";
-                return;
-            }
             int b = practicalBankIndex;
             int q = practicalQuestionIndex;
             if (b < 0 || q < 0 || attempts == null || b >= attempts.Length ||
@@ -427,7 +450,19 @@ namespace ProjectSpark.UI.VisualTeaching
             {
                 CancelPractical("Practical state changed. No credit awarded."); return;
             }
-            // Grant credit to the exact question originally started, even if the user navigated away.
+            var context = SparkAILevelContext.Capture(levelManager);
+            bool frameFresh = frameSerial > startFrameSerial && Time.unscaledTime - lastFrameTime <= maxFrameAgeSeconds &&
+                !string.IsNullOrWhiteSpace(observedCircuitId) && (string.IsNullOrEmpty(practicalCircuitId) ||
+                string.Equals(practicalCircuitId, observedCircuitId, StringComparison.Ordinal));
+            if (!SparkPhase4TeachingContract.CanCreditPractical(ReferenceEquals(attempts[b], practicalAttempt),
+                context.HasEvaluation && context.Layout == practicalLayout, RequiresIndependentWork, true,
+                official == true, practicalStartSolve, levelManager.LastEvaluatedSolveRevision,
+                levelManager.HasCurrentElectricalEvaluation, requireFreshSolverFrame, frameFresh))
+            {
+                message = "Evaluator PASS observed. Waiting for fresh evidence from this attempt and workbench.";
+                return;
+            }
+            // The original exam item alone receives credit.
             practicalActive = false;
             attempts[b].answered[q] = true;
             attempts[b].correct[q] = true;
@@ -443,6 +478,8 @@ namespace ProjectSpark.UI.VisualTeaching
         private void CancelPractical(string reason)
         {
             practicalActive = false;
+            practicalLayout = null;
+            practicalAttempt = null;
             practicalBankIndex = practicalQuestionIndex = -1;
             practicalLevelId = practicalTargetId = practicalCircuitId = null;
             if (!string.IsNullOrEmpty(reason)) message = reason;
@@ -451,6 +488,7 @@ namespace ProjectSpark.UI.VisualTeaching
 
         public void ShowHint()
         {
+            if (RequiresIndependentWork) { message = "Hints are available after independent submission."; Refresh(); return; }
             var item = CurrentItem;
             message = item == null ? "No question selected." :
                 string.IsNullOrWhiteSpace(item.hint) ? "Read the question and inspect the existing level requirements." : item.hint;
@@ -459,6 +497,7 @@ namespace ProjectSpark.UI.VisualTeaching
 
         public void AskSpark()
         {
+            if (RequiresIndependentWork) { message = "Submit independently before asking Spark to explain the concept."; Refresh(); return; }
             Resolve();
             var item = CurrentItem;
             if (assistant == null || item == null)

@@ -290,6 +290,16 @@ namespace ProjectSpark.Gameplay
         // EVENTS
         // ============================================================
 
+        private SparkLevelDefinition evaluatedLevel;
+        private SparkLevelSceneBindings evaluatedBindings;
+        private int evaluatedTopology = -1;
+        public int LastEvaluatedSolveRevision { get; private set; } = -1;
+        public bool HasCurrentElectricalEvaluation =>
+            ActiveLevel && ActiveLevel == evaluatedLevel && sceneBindings && sceneBindings == evaluatedBindings &&
+            circuitSystem && circuitSystem.TopologyVersion == evaluatedTopology &&
+            electricalSolver && !electricalSolver.IsDirty && !electricalSolver.IsSolving &&
+            electricalSolver.LatestSolveResult != null && electricalSolver.CompletedSolveRevision == LastEvaluatedSolveRevision;
+
         public event Action<SparkLevelDefinition> LevelStarted;
 
         public event Action<SparkLevelDefinition> LevelCompleted;
@@ -972,6 +982,11 @@ private void SetOutput(
 ApplyEvaluation(
     evaluation,
     level);
+                evaluatedLevel = level;
+                evaluatedBindings = sceneBindings;
+                evaluatedTopology = circuitSystem ? circuitSystem.TopologyVersion : -1;
+                LastEvaluatedSolveRevision = electricalSolver && !electricalSolver.IsDirty &&
+                    electricalSolver.LatestSolveResult != null ? electricalSolver.CompletedSolveRevision : -1;
 
 /// ============================================================
 // UNIVERSAL LEVEL TARGET DIAGNOSTIC

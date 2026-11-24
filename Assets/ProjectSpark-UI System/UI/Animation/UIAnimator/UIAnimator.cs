@@ -795,6 +795,8 @@ private float EaseEditor(
             return t;
     }
 }
+#endif
+
 /// <summary>
 /// Transitions the UI element to a visual state preset.
 /// This is separate from Show/Hide and is intended for
@@ -976,6 +978,5 @@ private void KillStateSequence()
     stateSequence = null;
 }
 
-#endif
     }
 }

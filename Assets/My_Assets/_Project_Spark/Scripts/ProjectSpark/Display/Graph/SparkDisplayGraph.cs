@@ -259,6 +259,7 @@ namespace ProjectSpark.Display
             }
         }
 
+#if UNITY_EDITOR
         protected override void OnValidate()
         {
             base.OnValidate();
@@ -276,6 +277,8 @@ namespace ProjectSpark.Display
 
             SetVerticesDirty();
         }
+
+#endif
 
         private void AddSegment(
             VertexHelper vertexHelper,

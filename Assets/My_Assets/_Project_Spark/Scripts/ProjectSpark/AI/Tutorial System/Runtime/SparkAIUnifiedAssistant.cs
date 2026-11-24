@@ -101,6 +101,7 @@ private void OnDestroy()
 [ContextMenu("Ask Spark / Toggle")]
 public void Toggle()
 {
+    if (liveLauncher != null) { liveLauncher(); return; }
     if (canvas == null)
     {
         Debug.LogWarning(
@@ -596,13 +597,27 @@ private string ExplainRememberedResistor()
         private void OnLevelChanged(SparkLevelDefinition _) => RefreshStatus();
         private void OnLevelFailed(SparkLevelDefinition _, string __) => RefreshStatus();
 
-        [ContextMenu("Ask Spark / Toggle")]
-       
+        private Action liveLauncher;
+        public void SetLiveLauncher(Action launcher) => liveLauncher = launcher;
 
-        /// <summary>One chat endpoint used by both the Ask button and other gameplay scripts.</summary>
+        private Func<bool> independentWorkGuard;
+        public void SetIndependentWorkGuard(Func<bool> guard) => independentWorkGuard = guard;
+        private bool IndependentWorkActive => independentWorkGuard?.Invoke() == true;
+        private const string IndependentWorkMessage = "Independent assessment is active. Complete it using the official assessment controls.";
+
+        private Action<string> executiveQuestionRouter;
+        public void SetExecutiveQuestionRouter(Action<string> router) => executiveQuestionRouter = router;
+
         public void Ask(string question)
         {
             if (string.IsNullOrWhiteSpace(question)) return;
+            if (executiveQuestionRouter != null)
+            {
+                if (questionInput != null) questionInput.text = string.Empty;
+                executiveQuestionRouter(question);
+                return;
+            }
+            if (IndependentWorkActive) { PublishAnswer(question.Trim(), IndependentWorkMessage); return; }
             question = question.Trim();
             Resolve();
             if (questionInput != null) questionInput.text = string.Empty;
@@ -633,6 +648,26 @@ private string ExplainRememberedResistor()
             PublishAnswer(question, LocalAnswer(question));
         }
 
+        // SPARK PRO: synchronous verified local endpoint. Never queues an external answer.
+        public void CancelPendingQuestionPro() { pendingQuestion = null; pendingLayout = null; pendingUntil = 0; }
+
+        public string AskVerifiedLocalPro(string question) => AskVerifiedLocalPro(question, out _);
+
+        public string AskVerifiedLocalPro(string question, out bool drawn)
+        {
+            drawn = false;
+            if (string.IsNullOrWhiteSpace(question)) return string.Empty;
+            if (IndependentWorkActive) return IndependentWorkMessage;
+            CancelPendingQuestionPro();
+            question = question.Trim(); Resolve();
+            string reply;
+            if (!TryDrawRequest(question, out reply, out drawn) &&
+                !CurrentContext.TryAnswer(question, out reply)) reply = LocalAnswer(question);
+            AnswerReady?.Invoke(question, reply);
+            if (drawn) Hide();
+            return reply;
+        }
+
         private void PublishAnswer(string question, string reply)
         {
             pendingQuestion = null;
@@ -645,6 +680,7 @@ private string ExplainRememberedResistor()
         {
             reply = null;
             shown = false;
+            if (IndependentWorkActive) return false;
             string text = question.Trim().ToLowerInvariant();
             if (!text.StartsWith("draw ") && !text.StartsWith("show ") && !text.StartsWith("teach ")) return false;
             bool world = text.Contains("3d") || text.Contains("workbench highlight");
@@ -679,7 +715,7 @@ private string ExplainRememberedResistor()
         /// <summary>External brain adapter calls this on the Unity main thread.</summary>
         public void DeliverExternalAnswer(string reply)
         {
-            if (pendingQuestion == null || pendingLayout != CurrentContext.Layout) return;
+            if (IndependentWorkActive || pendingQuestion == null || pendingLayout != CurrentContext.Layout) return;
             string question = pendingQuestion;
             PublishAnswer(question, string.IsNullOrWhiteSpace(reply) ? LocalAnswer(question) : reply);
         }
@@ -1481,6 +1517,7 @@ private static bool IsAskingCurrentLevel(string question)
        
 public string LocalAnswer(string question)
 {
+    if (IndependentWorkActive) return IndependentWorkMessage;
     Resolve();
 
     if (string.IsNullOrWhiteSpace(question))
@@ -2309,6 +2346,7 @@ private string ExplainLevelObjectives()
        
 public void ExplainCircuit()
 {
+    if (IndependentWorkActive) { SetAnswer("ASSESSMENT", IndependentWorkMessage); return; }
     Resolve();
 
     if (!CurrentContext.HasEvaluation)
@@ -2832,6 +2870,7 @@ private string FormatCompactAnswer(string source)
 
 public void GiveHint()
 {
+    if (IndependentWorkActive) { SetAnswer("ASSESSMENT", IndependentWorkMessage); return; }
     Resolve();
 
     var context = CurrentContext;
@@ -2874,6 +2913,7 @@ public void GiveHint()
 
         public void OpenTutorial()
         {
+    if (IndependentWorkActive) { SetAnswer("ASSESSMENT", IndependentWorkMessage); return; }
             Resolve();
             var context = CurrentContext;
             if (!context.Definition)
@@ -2894,6 +2934,7 @@ public void GiveHint()
 
         public void OpenDetailedHints()
         {
+    if (IndependentWorkActive) { SetAnswer("ASSESSMENT", IndependentWorkMessage); return; }
             Resolve();
             if (troubleshooter == null)
             {

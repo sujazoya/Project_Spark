@@ -5,6 +5,7 @@ using ProjectSpark.AI.Tutorial;
 using ProjectSpark.Cameras;
 using ProjectSpark.Diagnostics;
 using ProjectSpark.Gameplay;
+using ProjectSpark.SparkV5.Pro;
 using ProjectSpark.UI;
 using ProjectSpark.UI.VisualTeaching;
 using UnityEngine;
@@ -121,7 +122,11 @@ namespace ProjectSpark.UIManagement
             MaskLauncher(Node("SparkCircuitExperimentLabCanvas/OpenExperimentLab"));
             var assistant=Find<SparkAIUnifiedAssistant>();
             if(assistant)assistant.ArrangeWorkshopPanel();
-            if(assistant)
+            var executives = FindObjectsByType<SparkProExecutive>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+            var spark = executives.Length == 1 ? executives[0] : null;
+            if (executives.Length > 1)
+                Debug.LogWarning("[Spark Live] Multiple active executives found. Resolve the scene bindings.", this);
+            if(assistant && !spark)
                 Native("assistant","Ask Spark",SparkUILayer.Main,visible=>{if(visible)assistant.Show();else assistant.Hide();},
                     ()=>assistant && assistant.PanelVisible);
 
@@ -233,6 +238,16 @@ namespace ProjectSpark.UIManagement
                         fullTools.CurrentMode!=ProjectSparkThreeModeToolsPanel.DisplayMode.Hidden);
 
             var assessment=Find<SparkAILearningPathAssessment>();
+            if (spark)
+            {
+                spark.BindSession(levels, assessment);
+                var livePanel = SparkProLivePanel.Install(spark, manager);
+                if (assistant && livePanel)
+                {
+                    assistant.Hide();
+                    assistant.SetLiveLauncher(() => manager.Toggle(SparkProLivePanel.PanelId));
+                }
+            }
             if(assessment)
                 BindExisting("SparkAIAssessmentCanvas","Learning Assessments",SparkUILayer.Main,
                     visible=>{if(visible)assessment.Show();else assessment.Hide();},

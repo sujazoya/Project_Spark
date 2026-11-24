@@ -490,7 +490,7 @@ namespace ProjectSpark.UIManagement
         }
         private void Refresh()
         {
-            if (!initialized || !manager) return;
+            if (!initialized || !manager || !root || !countLabel) return;
             UpdateCloseButtons();
             countLabel.text = manager.Panels.Count.ToString();
             stackLabel.text = manager.OpenCount.ToString(); focusLabel.text = manager.FocusedId;

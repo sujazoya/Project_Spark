@@ -22,6 +22,17 @@ namespace ProjectSpark.AI
         private bool initialized;
 
         public bool IsInitialized => initialized;
+        public bool NativeSpeaking
+        {
+            get
+            {
+#if UNITY_ANDROID && !UNITY_EDITOR
+                return provider is SparkAndroidTts android && android.IsSpeaking;
+#else
+                return false;
+#endif
+            }
+        }
 
         public bool IsProviderAvailable =>
             provider != null &&
@@ -70,6 +81,11 @@ namespace ProjectSpark.AI
                 return;
             }
 
+#if UNITY_ANDROID && !UNITY_EDITOR
+            provider = new SparkAndroidTts();
+            initialized = true;
+            return;
+#else
             if (providerComponent == null)
             {
                 Debug.LogError(
@@ -98,6 +114,7 @@ namespace ProjectSpark.AI
                 $"[AI TTS BRIDGE] Initialized provider: " +
                 $"{providerComponent.GetType().Name}",
                 this);
+#endif
         }
 
         private void Subscribe()

@@ -1,0 +1,696 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &202135593741744378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2069297720821682074}
+  - component: {fileID: 3687853226100321231}
+  m_Layer: 0
+  m_Name: 5 V training supply
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2069297720821682074
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202135593741744378}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4107565084804495058}
+  - {fileID: 7302032666089708500}
+  m_Father: {fileID: 7435216127959094359}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3687853226100321231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202135593741744378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc9b7ab064925d4c89a4c809be06c9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkPowerSupply
+  objectId: 
+  displayName: 
+  interactionsEnabled: 1
+  operationalState: 0
+  componentFamily: Generic
+  electricalModelId: generic
+  electricalEnabled: 1
+  positiveTerminal: {fileID: 8350206167766364084}
+  negativeTerminal: {fileID: 9219243188931038031}
+  outputVoltage: 5
+  currentLimit: 0.1
+  state: 2
+--- !u!1 &1760922539690280747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8723623055024169351}
+  - component: {fileID: 9014637799147430726}
+  m_Layer: 0
+  m_Name: Switch in
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8723623055024169351
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760922539690280747}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3799545945109443020}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9014637799147430726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760922539690280747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
+  owner: {fileID: 8694995623020897762}
+  kind: 0
+  polarity: 0
+  runtimePolarityThreshold: 0.05
+  runtimePolarity: 0
+  acceptsInput: 1
+  providesOutput: 1
+  connectionKind: 0
+  maxConnections: 2
+--- !u!1 &2290096583651957944
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7302032666089708500}
+  - component: {fileID: 9219243188931038031}
+  m_Layer: 0
+  m_Name: Supply return
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7302032666089708500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2290096583651957944}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2069297720821682074}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9219243188931038031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2290096583651957944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
+  owner: {fileID: 3687853226100321231}
+  kind: 0
+  polarity: 0
+  runtimePolarityThreshold: 0.05
+  runtimePolarity: 0
+  acceptsInput: 1
+  providesOutput: 1
+  connectionKind: 0
+  maxConnections: 2
+--- !u!1 &3077359973904542681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7973080193293973143}
+  - component: {fileID: 4868494128604691733}
+  - component: {fileID: 5253170167945075754}
+  m_Layer: 0
+  m_Name: "1 k\u03A9 test load"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7973080193293973143
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3077359973904542681}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4555313810561075398}
+  - {fileID: 3703409642827375329}
+  m_Father: {fileID: 7435216127959094359}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4868494128604691733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3077359973904542681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eca6d37a69b88724f9d125857c1438b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkResistorBurn
+  burnedMaterial: {fileID: 0}
+  swapMaterialOnFailure: 1
+  finalBurnColor: {r: 0.045, g: 0.035, b: 0.032, a: 1}
+  meshBurnDuration: 3
+  initialBurnAmount: 0.1
+  meshBurnCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ratedWatts: 0.25
+  thermalCapacityJPerC: 0.06
+  coolingWattsPerC: 0.002
+  ambientC: 25
+  hotC: 85
+  smokeC: 120
+  flameC: 170
+  failureC: 225
+  failureExposureSeconds: 0.3
+  failureMode: 0
+  heatedRenderers: []
+  hotTint: {r: 1, g: 0.35, b: 0.06, a: 1}
+  charTint: {r: 0.075, g: 0.055, b: 0.045, a: 1}
+  charAtFailure: 1
+  heatLight: {fileID: 0}
+  maximumHeatLightIntensity: 1.5
+  flameVfx: {fileID: 0}
+  flameRateProperty: FireRate
+  flameHeatProperty: Heat
+  maximumFlameRate: 32
+  maximumFlameHeat: 1
+  smokeParticles: {fileID: 0}
+  emberParticles: {fileID: 0}
+  sparkParticles: {fileID: 0}
+  flashParticles: {fileID: 0}
+  debrisParticles: {fileID: 0}
+  maximumSmokeRate: 30
+  maximumEmberRate: 8
+  failureSparkCount: 45
+  failureSmokeCount: 24
+  failureDebrisCount: 14
+  smokeVfx: {fileID: 0}
+  failureVfx: {fileID: 0}
+  smokeRateProperty: SmokeRate
+  heatProperty: Heat
+  burstEventName: OnBurn
+  maximumGraphSmokeRate: 48
+  failureFlameSeconds: 1.3
+  failureSmokeSeconds: 4
+  failureFlashLight: {fileID: 0}
+  failureFlashIntensity: 7
+  failureFlashSeconds: 0.17
+  failureAudio: {fileID: 0}
+  onFailed:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5253170167945075754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3077359973904542681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937440cd7f931b644b50a25edf026463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkResistor
+  objectId: 
+  displayName: 
+  interactionsEnabled: 1
+  operationalState: 0
+  componentFamily: Generic
+  electricalModelId: generic
+  electricalEnabled: 1
+  terminalA: {fileID: 1189419759915363403}
+  terminalB: {fileID: 7675142413144715663}
+  resistance: 1000
+  maximumPowerWatts: 0.25
+  burnSystem: {fileID: 0}
+  circuitSystem: {fileID: 0}
+--- !u!1 &3221860041861840437
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4555313810561075398}
+  - component: {fileID: 1189419759915363403}
+  m_Layer: 0
+  m_Name: Load in
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4555313810561075398
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3221860041861840437}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7973080193293973143}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1189419759915363403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3221860041861840437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
+  owner: {fileID: 5253170167945075754}
+  kind: 0
+  polarity: 0
+  runtimePolarityThreshold: 0.05
+  runtimePolarity: 0
+  acceptsInput: 1
+  providesOutput: 1
+  connectionKind: 0
+  maxConnections: 2
+--- !u!1 &4931042291783470629
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3703409642827375329}
+  - component: {fileID: 7675142413144715663}
+  m_Layer: 0
+  m_Name: Load return
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3703409642827375329
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4931042291783470629}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7973080193293973143}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7675142413144715663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4931042291783470629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
+  owner: {fileID: 5253170167945075754}
+  kind: 0
+  polarity: 0
+  runtimePolarityThreshold: 0.05
+  runtimePolarity: 0
+  acceptsInput: 1
+  providesOutput: 1
+  connectionKind: 0
+  maxConnections: 2
+--- !u!1 &7468906674350606407
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7435216127959094359}
+  - component: {fileID: 1670819178535778274}
+  - component: {fileID: 6499851558734170355}
+  - component: {fileID: 8921734018217837230}
+  m_Layer: 0
+  m_Name: SparkProIsolatedLab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7435216127959094359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7468906674350606407}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2069297720821682074}
+  - {fileID: 3799545945109443020}
+  - {fileID: 7973080193293973143}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1670819178535778274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7468906674350606407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ef2e74c25ad6d42884a0b42306ce75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProLabCircuit
+  circuit: {fileID: 6499851558734170355}
+  solver: {fileID: 8921734018217837230}
+  control: {fileID: 8694995623020897762}
+  load: {fileID: 5253170167945075754}
+  supplyPositive: {fileID: 8350206167766364084}
+  supplyReturn: {fileID: 9219243188931038031}
+  switchIn: {fileID: 9014637799147430726}
+  switchOut: {fileID: 8101000924013007456}
+  resistorIn: {fileID: 1189419759915363403}
+  resistorOut: {fileID: 7675142413144715663}
+--- !u!114 &6499851558734170355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7468906674350606407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06bef1431eadcf34986dd7ec78e19606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Circuit.SparkCircuitSystem
+  allowParallelConnections: 0
+  automaticallyRebuildTopology: 1
+  logConnectionChanges: 0
+  logRejectedConnections: 0
+  tutorialCoach: {fileID: 0}
+  reportInvalidConnectionsToAI: 0
+  neutralWireMaterial: {fileID: 0}
+  positiveVoltageMaterial: {fileID: 0}
+  negativeVoltageMaterial: {fileID: 0}
+  positiveCurrentFlowMaterial: {fileID: 0}
+  negativeCurrentFlowMaterial: {fileID: 0}
+  shortCircuitMaterial: {fileID: 0}
+  voltageVisualThreshold: 0.001
+  currentVisualThreshold: 0.001
+--- !u!114 &8921734018217837230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7468906674350606407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99828b01ee6518545a8983584be3d03f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Electrical.SparkElectricalSolver
+  circuit: {fileID: 6499851558734170355}
+  solverRegistry: {fileID: 11400000, guid: 4cc61f3ccd37b7a40b098b3f1b83561f, type: 2}
+  autoDiscoverElectricalComponents: 1
+  componentSearchRoot: {fileID: 7435216127959094359}
+  electricalComponents: []
+  maxIterations: 16
+  convergenceTolerance: 0.000001
+  minimumResistance: 0.000001
+  floatingNodeLeakResistance: 1e+9
+  solveOnDirty: 1
+  verboseDiagnostics: 0
+  simulateTransientDevices: 0
+  timeStep: 0.016666668
+--- !u!1 &7590727235072178439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6846230750067334637}
+  - component: {fileID: 8101000924013007456}
+  m_Layer: 0
+  m_Name: Switch out
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6846230750067334637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7590727235072178439}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3799545945109443020}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8101000924013007456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7590727235072178439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
+  owner: {fileID: 8694995623020897762}
+  kind: 0
+  polarity: 0
+  runtimePolarityThreshold: 0.05
+  runtimePolarity: 0
+  acceptsInput: 1
+  providesOutput: 1
+  connectionKind: 0
+  maxConnections: 2
+--- !u!1 &8435720595343606984
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4107565084804495058}
+  - component: {fileID: 8350206167766364084}
+  m_Layer: 0
+  m_Name: Supply +
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4107565084804495058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8435720595343606984}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2069297720821682074}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8350206167766364084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8435720595343606984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762878f80e44dc34aa104297c8035f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkTerminal
+  owner: {fileID: 3687853226100321231}
+  kind: 0
+  polarity: 0
+  runtimePolarityThreshold: 0.05
+  runtimePolarity: 0
+  acceptsInput: 1
+  providesOutput: 1
+  connectionKind: 0
+  maxConnections: 2
+--- !u!1 &8894513261892338157
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3799545945109443020}
+  - component: {fileID: 8694995623020897762}
+  m_Layer: 0
+  m_Name: Series switch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3799545945109443020
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8894513261892338157}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8723623055024169351}
+  - {fileID: 6846230750067334637}
+  m_Father: {fileID: 7435216127959094359}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8694995623020897762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8894513261892338157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daa3cd4b89a947b4dbcdd45aaeb77dec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Gameplay.SparkSwitch
+  objectId: 
+  displayName: 
+  interactionsEnabled: 1
+  operationalState: 0
+  componentFamily: Generic
+  electricalModelId: generic
+  electricalEnabled: 1
+  state: 0
+  inputTerminal: {fileID: 9014637799147430726}
+  outputTerminal: {fileID: 8101000924013007456}
+  closedResistance: 0.1
+  openResistance: 1e+9
+  voltageThreshold: 0.001
+  currentThreshold: 0.001
+  runtimePolarityThreshold: 0.001

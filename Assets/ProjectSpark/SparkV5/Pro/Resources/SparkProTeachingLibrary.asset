@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 047d93233c9ec9a4ba54cb25179e0d68, type: 3}
+  m_Name: SparkProTeachingLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProTeachingLibrary
+  models:
+  - id: resistor
+    model: {fileID: 7112231723077257352, guid: eb93f0d176ec4104ebf0981dfc6e2213, type: 3}
+    description: A game resistor model. A resistor limits current and produces a
+      voltage drop when current flows.
+  - id: capacitor
+    model: {fileID: 3934464232879755693, guid: 6085128c32a65e64dbd45575396f8dca, type: 3}
+    description: A polarized capacitor model. Identify its marked leads before connecting
+      it in a practice circuit.
+  - id: led
+    model: {fileID: 919132149155446097, guid: 81ade2bd23b7965469dd800cfa32ca78, type: 3}
+    description: An LED model. An LED emits light under suitable forward current.
+  - id: diode
+    model: {fileID: 5526351283963123105, guid: db4e3e135f07bcd46946fb3501ccff44, type: 3}
+    description: A game diode model. A diode primarily conducts in its forward direction.
+  - id: transistor
+    model: {fileID: 919132149155446097, guid: 6b825b787e8042b47a46c434aadd4210, type: 3}
+    description: An illustrative transistor package. Use the specific part documentation
+      to identify each terminal.
+  - id: mosfet
+    model: {fileID: 919132149155446097, guid: 0dd053b6338356c4e9a8b94b9ee6fed9, type: 3}
+    description: An authored board MOSFET package. A MOSFET uses gate voltage to
+      control a channel.
+  - id: switch
+    model: {fileID: 919132149155446097, guid: 52ceac522d367e14d85aeca27b2e6b2e, type: 3}
+    description: A toggle switch model. The control opens or closes a connection;
+      use the actual circuit to verify its state.
+  - id: multimeter
+    model: {fileID: 919132149155446097, guid: 5dfe09e00bac8904f8112af4baa4ff5e, type: 3}
+    description: The workshop meter model. Connect in parallel for voltage, and use
+      the specified input jack for the selected mode.
+  - id: power supply
+    model: {fileID: 919132149155446097, guid: df7823fd06cd88a4c8f4de42e346dbbf, type: 3}
+    description: A training bench supply model. Read the actual supply settings and
+      measurement before drawing conclusions.
+  - id: integrated circuit
+    model: {fileID: 919132149155446097, guid: d7730908287cfb6498f85be49f44174d, type: 3}
+    description: An authored Level 120 gate driver reference. Pin assignments depend
+      on the part and its circuit documentation.
+  - id: pcb
+    model: {fileID: 919132149155446097, guid: 0dbc3732cb494e34fa01038687314bb7, type: 3}
+    description: The Level 120 board substrate. A PCB mechanically supports parts
+      and routes connections through conductive layers.
+  - id: motherboard
+    model: {fileID: 1039540876280178841, guid: 4702f88cef8f6e74490afc9743a8d76a, type: 3}
+    description: An illustrative RAX-28 model from The Axis Forge. Evaluate the live
+      board through the game solver and objectives.
+  - id: rdx-21 board
+    model: {fileID: 919132149155446097, guid: 749ccda6b2354fd47a21c7de58abc230, type: 3}
+    description: Level 113 board substrate. Compare its two protected input regions
+      with supervised W233 authorization. Use the mission diagram for terminal evidence.
+  - id: rdx-21 heartbeat controller
+    model: {fileID: 919132149155446097, guid: 3796712fbe6a73243800c755197e4015, type: 3}
+    description: The U15 package from Level 113. Study the orientation mark, then
+      trace the separate U15-to-U6 authorization path in the training schematic.
+  - id: axis forge dc link
+    model: {fileID: 919132149155446097, guid: 500d8c80571e2f34799cedcd4ad36623, type: 3}
+    description: Axis Forge capacitor-bank reference. Inspect the assembly and relate
+      stored-energy capacity to the training precharge and controlled-discharge checks.
+  - id: axis forge encoder reference
+    model: {fileID: 919132149155446097, guid: 7f9d9f6d703230744af2792cdfc5ffce, type: 3}
+    description: Authored encoder-reference plane from The Axis Forge. Compare it
+      with the mission's encoder plausibility and reference-domain checks.
+  - id: axis forge sto guard zone
+    model: {fileID: 919132149155446097, guid: 1dd86a0576d13614eb0eb8c5fe49374b, type: 3}
+    description: Teaching reference for the two torque-off channels in The Axis Forge.
+      The model illustrates location; the game evaluator verifies the safety trial.

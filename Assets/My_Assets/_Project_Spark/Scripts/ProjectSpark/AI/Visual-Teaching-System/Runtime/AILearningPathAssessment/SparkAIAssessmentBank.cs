@@ -24,6 +24,10 @@ namespace ProjectSpark.UI.VisualTeaching
         [Min(0f)] public float numericTolerance = 0.01f;
         public string numericUnit;
         public SparkLevelTarget.TargetType requiredTargetType;
+        [Tooltip("Optional authored mission ID. Leave blank only for a transferable practical.")]
+        public string requiredLevelId;
+        [Tooltip("Optional authored objective ID. Transferable practicals require a unique pending target.")]
+        public string requiredObjectiveId;
         [TextArea(2, 4)] public string hint;
         [TextArea(2, 6)] public string explanation;
     }

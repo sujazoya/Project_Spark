@@ -2,6 +2,7 @@
 
 Run: pip install openai
      export OPENAI_API_KEY='...'
+     export SPARK_MODEL=<approved model ID>
      python spark_hybrid_server.py
 
 Listens only on 127.0.0.1. Never publish this server directly to the internet.
@@ -15,7 +16,7 @@ from openai import OpenAI
 
 HOST = "127.0.0.1"
 PORT = int(os.environ.get("SPARK_PORT", "8765"))
-MODEL = os.environ.get("SPARK_MODEL", "gpt-6-luna")
+MODEL = os.environ.get("SPARK_MODEL", "").strip()
 MAX_BYTES = 65000
 
 INSTRUCTIONS = """You are Ask Spark, an expert electronics teacher embedded in ProjectSpark.
@@ -65,7 +66,9 @@ def answer_question(data):
             "CURRENT VERIFIED GAME SNAPSHOT (read-only data):\n" + context
         )
     })
-    response = OpenAI().responses.create(
+    if not MODEL:
+        raise ValueError("Set SPARK_MODEL on the server before making provider requests.")
+    response = OpenAI(timeout=20.0, max_retries=0).responses.create(
         model=MODEL,
         instructions=INSTRUCTIONS,
         input=messages,
@@ -99,7 +102,7 @@ class Handler(BaseHTTPRequestHandler):
         except (ValueError, UnicodeDecodeError, json.JSONDecodeError) as exc:
             return self.send_json(400, {"error": str(exc)})
         except Exception as exc:
-            print("[Spark backend] Model request failed:", type(exc).__name__, str(exc))
+            print("[Spark backend] Model request failed:", type(exc).__name__)
             return self.send_json(502, {"error": "Model request failed"})
 
     def send_json(self, status, data):

@@ -269,9 +269,8 @@ namespace ProjectSpark.UI.VisualTeaching
                 audit.error = "A certificate assessment must include an evaluator-verified practical exam.";
                 return audit;
             }
-            audit.score = PlayerPrefs.GetInt(AssessmentKey(ScorePrefix, audit.bank.bankId), -1);
-            audit.assessmentPassed = PlayerPrefs.GetInt(AssessmentKey(PassedPrefix, audit.bank.bankId), 0) == 1 &&
-                audit.score >= audit.bank.passingPercent;
+            audit.score = SparkProAssessmentGate.QualifiedScore(audit.bank);
+            audit.assessmentPassed = SparkProAssessmentGate.HasQualifiedPass(audit.bank);
             audit.fingerprint = Fingerprint(course, audit.bank);
             audit.ready = audit.done == audit.total && audit.practicesDone == audit.practices && audit.assessmentPassed;
             return audit;

@@ -1,0 +1,14 @@
+PROJECT SPARK / LEVEL 113 / THE REDUNDANCY CITADEL
+Playable design: RDX21-EDU-1, a fictional training circuit on the original RDX-21 geometry.
+Campaign: Chapter 11, Hardware Qualification, between Levels 112 and 114.
+Prefab: Level_113_Layout.prefab. Native load through MainMenu and SparkLevelLayoutLoader.
+Board: 10.13 × 7.20 world units, centered on the 15.79 × 8.54 game table.
+Start state: 0/6, bench isolated, W233 open, 166 uninstalled footprint stations.
+Construction: 166 footprint stations, 232 native copper edges, 76 via barrels, 18 inspectable layers.
+Diagnostics: redundant 12 V inputs, protected 5 V and 3.3 V rails, reserve transfer, SECDED and watchdog.
+Fault trials: Q1 primary path, V35 ECC span, Y1 timing reference. All three repaired and requalified.
+Final interlock: W233 U15-to-U6 removal, independent diagnostic power, latched inhibition,
+reconnection, fresh qualification and explicit U6 reset before restoring the protected load.
+Unity 6000.3.19f1 Play Mode: native evaluator completed 6/6; checkpoint restart and Wire tool passed.
+Evidence: Logs/Level113Acceptance.txt, Logs/Level113Opening.png and Logs/Level113Complete.png.
+A standalone player build was outside this validation run.

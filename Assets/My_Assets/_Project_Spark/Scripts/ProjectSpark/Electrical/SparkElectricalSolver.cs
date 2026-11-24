@@ -82,6 +82,7 @@ namespace ProjectSpark.Electrical
         // ---------------------------------------------------------------------
 
         private SparkElectricalSolveResult latestSolveResult;
+        public int CompletedSolveRevision { get; private set; }
 
         /// <summary>
         /// Latest successfully created electrical solve result.
@@ -978,6 +979,7 @@ if (currentGraph != null)
 
             latestSolveResult =
                 result;
+            CompletedSolveRevision++;
 
             // -------------------------------------------------------------
             // APPLY DEVICE STATES
@@ -2371,6 +2373,7 @@ private void ApplyZeroResult(
 
         // Publish after state application succeeds.
         latestSolveResult = result;
+        CompletedSolveRevision++;
         dirty = false;
 
         }
