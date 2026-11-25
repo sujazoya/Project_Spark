@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using ProjectSpark.AAAArchitecture;
 using ProjectSpark.UIManagement;
 using TMPro;
@@ -35,6 +35,7 @@ namespace ProjectSpark.SparkV5.Pro
         SparkProExecutive executive;
         SparkProVoiceInput microphone;
         SparkUIManager manager;
+        SparkLiveAdjustableWindow adjustableWindow;
         GameObject previousFocus;
         readonly float[] outputSamples = new float[256];
         float nextDisplayUpdate;
@@ -73,6 +74,7 @@ namespace ProjectSpark.SparkV5.Pro
             executive = value;
             manager = ui;
             microphone = executive.Microphone;
+            adjustableWindow = SparkLiveAdjustableWindow.Attach(this, shell);
             talk.Bind(microphone);
             if (microphone)
             {
@@ -199,6 +201,11 @@ namespace ProjectSpark.SparkV5.Pro
 
         private void Fit()
         {
+            if (adjustableWindow)
+            {
+                adjustableWindow.RefreshBounds();
+                return;
+            }
             Rect safe = Screen.safeArea;
             if (monitorArea == safe || Screen.width <= 0 || Screen.height <= 0)
                 return;
@@ -289,7 +296,7 @@ namespace ProjectSpark.SparkV5.Pro
             var panel = root.AddComponent<SparkProLivePanel>();
             panel.prefabVersion = CurrentPrefabVersion;
             var background = SparkAAAUIFactory.Image((RectTransform)root.transform, new Color32(1, 9, 16, 212));
-            background.raycastTarget = true;
+            background.raycastTarget = false;
             var shell = panel.shell = SparkAAAUIFactory.Rect("Console", root.transform);
             shell.anchorMin = shell.anchorMax = new Vector2(.5f, .5f);
             SparkAAAUIFactory.Image(shell, Panel);

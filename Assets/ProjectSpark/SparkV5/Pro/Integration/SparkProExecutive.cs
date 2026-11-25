@@ -80,6 +80,8 @@ namespace ProjectSpark.SparkV5.Pro
         public event Action<string> AnswerReady;
         public event Action<string> TranscriptReady;
         public string LastAnswer {get;private set;}="";
+        public LevelGamePlayManager ActiveLevelManager => levels;
+        public SparkSelectionController ActiveSelectionController => selection;
         public bool ExamMode => examinationMode || (assessment && assessment.RequiresIndependentWork);
         public void BindSession(LevelGamePlayManager manager, SparkAILearningPathAssessment examiner)
         {
@@ -272,6 +274,19 @@ namespace ProjectSpark.SparkV5.Pro
                 segmentGesture = SparkGesture.None;
                 string answer;
                 if(ExamMode){returnState=SparkState.Examining;answer="Independent examination mode is active. Spark will not provide solutions or hints. Use the official examiner to submit work.";}
+                else if (SparkLabDemonstrationDirector.TryHandleFrom(this, question, out answer))
+                {
+                    // Explicit demonstration commands take priority over generic Cortex answers.
+                    returnState = SparkState.Teaching;
+                }
+                else if (SparkLabFocusIntent.Classify(question) != SparkLabFocusIntent.Kind.None)
+                {
+                    // Explicit world-visual commands take precedence over general LED answers.
+                    returnState = SparkState.Observing;
+                    var labDirector = GetComponent<SparkLabTeachingDirector>();
+                    answer = labDirector ? labDirector.HandleVisualCommand(question) :
+                        "AAA Laboratory director is not attached. Run AAA Laboratory > AUTO Bind Prefab and Open Scenes.";
+                }
                 else if (cortex.TryAnswer(context, out var planned))
                 {
                     answer = planned.Text;
