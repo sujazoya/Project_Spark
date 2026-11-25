@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97bc9434541d10e48b9e42f11e200b46, type: 3}
+  m_Name: Lesson_led_021F8FFA
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProLessonDefinition
+  lessonId: L001/led
+  authoredObjectiveExcerpt: "LED BULB\n Connection pair LED_Anode and LED_Cathode."
+  authoredVisualReferences:
+  - "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_01/Level_01_Layout/Level_01.asset#led
+    \u2192 native objective whiteboard (criteria, no inferred wiring)"
+  authoredPracticeReferences:
+  - "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_01/Level_01_Layout/Level_01_Layout.prefab
+    \u2192 native mission practice"
+  authoredAssessmentReferences: []
+  authoredPrerequisites:
+  - 'Authored campaign entry: chapter open by default.'
+  suggestedConceptTerms: []
+  sourceFingerprint: 7CC7C940
+  reviewedBy: 
+  reviewedUtc: 
+  authoredRevision: 0
+  title: "Level 1 \u2014 LED"
+  approvedForTeaching: 1
+  aliases:
+  - LED
+  applicableLevels: 01000000
+  objectiveIds:
+  - led
+  sourceReferences:
+  - Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_01/Level_01_Layout/Level_01.asset#led
+  concept: An LED is a light-emitting diode. It normally emits light when forward
+    biased and supplied with appropriate current.
+  analogy: Think of an LED as a one-way electrical device that produces light when
+    current flows in its intended direction.
+  diagram: "Supply + \u2192 Current limiter \u2192 LED anode \u2192 LED cathode \u2192
+    Supply \u2212"
+  misconception: An LED cannot safely be connected to an arbitrary power source without
+    considering polarity, forward voltage and current limiting.
+  visualModel: led only if your hologram catalog contains that identifier
+  baseline:
+    prompt: What are the two terminals of an LED?
+    rubric:
+      kind: 1
+      acceptedTerms:
+      - anode
+      - cathode
+      expectedNumber: 0
+      absoluteTolerance: 0.01
+      expectedUnit: 
+  prediction:
+    prompt: Will an ordinary LED normally emit light when reverse biased?
+    rubric:
+      kind: 0
+      acceptedTerms: []
+      expectedNumber: 0
+      absoluteTolerance: 0.01
+      expectedUnit: 
+  practice:
+    prompt: Which LED terminal normally connects toward the positive supply through
+      a suitable current limiter?
+    rubric:
+      kind: 0
+      acceptedTerms: []
+      expectedNumber: 0
+      absoluteTolerance: 0.01
+      expectedUnit: 
+  observation: 0

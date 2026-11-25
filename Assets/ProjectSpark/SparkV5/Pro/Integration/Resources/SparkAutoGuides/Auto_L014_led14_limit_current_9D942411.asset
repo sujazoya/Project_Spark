@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbfac0e802d59084cb2072e1a19fe571, type: 3}
+  m_Name: Auto_L014_led14_limit_current_9D942411
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProAutoGuide
+  lessonId: L014/led14_limit_current
+  level: 14
+  objectiveId: led14_limit_current
+  title: "Level 14 \u2014 Protected LED Branch Current"
+  authoredRequirement: "Install 330 ohm R_LIMIT so LED branch current is 8.0-10.5
+    mA. current \u2265 8 mA. current \u2264 10.5 mA. Connection pair R_LIMIT_Input
+    and R_LIMIT_Output. Conduction required."
+  sourceAsset: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_02/Level_14_Layout/Level_14.asset
+  sourceFingerprint: 82CCE574
+  contentSignature: 3192A0A837CABE2381F5B434CF3CDD184BB0ECD05F286979A7E12A8A13869802
+  aliases:
+  - Protected LED Branch Current
+  - led14 limit current
+  authoredVisualReferences:
+  - "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_02/Level_14_Layout/Level_14.asset#led14_limit_current
+    \u2192 native objective whiteboard (criteria, no inferred wiring)"
+  authoredPracticeReferences:
+  - "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_02/Level_14_Layout/Level_14_Layout.prefab
+    \u2192 native mission practice"
+  recipeId: led
+  concept: "Authored objective: Protected LED Branch Current.\nAuthored requirement:
+    Install 330 ohm R_LIMIT so LED branch current is 8.0-10.5 mA. current \u2265
+    8 mA. current \u2264 10.5 mA. Connection pair R_LIMIT_Input and R_LIMIT_Output.
+    Conduction required.\nGeneral teaching principle: An LED has a defined anode
+    and cathode; correct polarity and suitable current control matter for normal
+    forward operation.\nOnly fresh, authoritative game evidence can establish that
+    this objective is complete."
+  analogy: A directional gate with a current limit is a useful model, although an
+    LED is not an ideal one-way switch.
+  diagram: '[Authored setup] -> [Check prerequisites] -> [Observe the game evidence]
+    -> [Verify objective]'
+  misconception: A lit LED alone does not establish that its current and power are
+    within safe ratings.
+  baseline: "Before working on \u2018Protected LED Branch Current\u2019, which component,
+    reference or condition mentioned in the authored requirement should you inspect
+    first? Explain your reasoning."
+  prediction: "For \u2018Protected LED Branch Current\u2019, what result or observation
+    would you expect if the required setup is correct? Distinguish a predicted result
+    from a measured result."
+  practice: "In Level 14, perform the objective \u2018Protected LED Branch Current\u2019
+    in the actual game laboratory. Compare fresh evidence against: Install 330 ohm
+    R_LIMIT so LED branch current is 8.0-10.5 mA. current \u2265 8 mA. current \u2264
+    10.5 mA. Connection pair R_LIMIT_Input and R_LIMIT_Output. Conduction required.\nThe
+    mission evaluator decides completion; this tutorial does not grade your answer."
+  guidedOnly: 1

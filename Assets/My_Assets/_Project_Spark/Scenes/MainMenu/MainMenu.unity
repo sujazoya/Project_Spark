@@ -8928,8 +8928,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &66573018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12649,8 +12647,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &93936371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14189,7 +14185,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 102853289}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8570788760503519887}
+        m_TargetAssemblyTypeName: ProjectSpark.Gameplay.SparkToolController, Assembly-CSharp
+        m_MethodName: OnInspectButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &102853288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32192,108 +32200,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 220290550}
   m_CullTransparentMesh: 1
---- !u!1 &225879121
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 225879122}
-  - component: {fileID: 225879125}
-  - component: {fileID: 225879124}
-  - component: {fileID: 225879123}
-  m_Layer: 0
-  m_Name: Canvas
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &225879122
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 225879121}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1214908095}
-  m_Father: {fileID: 1130325775}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
---- !u!114 &225879123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 225879121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
---- !u!114 &225879124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 225879121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0.5
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
---- !u!223 &225879125
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 225879121}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 1360671976}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!114 &226909283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49978,7 +49884,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 354953750}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8570788760503519887}
+        m_TargetAssemblyTypeName: ProjectSpark.Gameplay.SparkToolController, Assembly-CSharp
+        m_MethodName: OnRotateButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &354953749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51288,8 +51206,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &366058778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57526,8 +57442,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &407454903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60754,8 +60668,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &428579179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64343,8 +64255,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &456682593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67020,8 +66930,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &471026588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68682,8 +68590,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &482042773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68839,8 +68745,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &482806082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70956,8 +70860,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &494148649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71404,8 +71306,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &501665135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73462,8 +73362,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &518706817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74178,10 +74076,6 @@ MonoBehaviour:
   m_Script: {fileID: 547654232}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.PCBVirtualStudio.SparkPCBToolTab
-  tab: 0
-  workstation: {fileID: 0}
-  frame: {fileID: 0}
-  label: {fileID: 0}
 --- !u!114 &520773598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97006,58 +96900,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.34, z: 1.05}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &672028680
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 672028681}
-  - component: {fileID: 672028682}
-  m_Layer: 0
-  m_Name: Text Area
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &672028681
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 672028680}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1232379454}
-  - {fileID: 1388863040}
-  m_Father: {fileID: 1263653768}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.5}
-  m_SizeDelta: {x: -20, y: -13}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &672028682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 672028680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
-  m_Padding: {x: -8, y: -5, z: -8, w: -5}
-  m_Softness: {x: 0, y: 0}
 --- !u!1 &672458842
 GameObject:
   m_ObjectHideFlags: 0
@@ -106666,8 +106508,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &738368535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107912,8 +107752,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &749979792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117009,8 +116847,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &811855028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121464,8 +121300,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &834595348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126125,271 +125959,11 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &872869764
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 872869765}
-  - component: {fileID: 872869767}
-  - component: {fileID: 872869768}
-  - component: {fileID: 872869769}
-  - component: {fileID: 872869770}
-  - component: {fileID: 872869771}
-  - component: {fileID: 872869772}
-  - component: {fileID: 872869773}
-  - component: {fileID: 872869774}
-  m_Layer: 0
-  m_Name: Voice Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &872869765
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 872869764}
-  m_LocalRotation: {x: -0, y: -0, z: 0.05704127, w: 0.9983719}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1130325775}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 6.54}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1822.7603, y: 52.656036}
-  m_SizeDelta: {x: 68.00647, y: 50.651123}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &872869767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 872869764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc9ff0b5acb9dd949873272d3484c85e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIVoiceController
-  conceptDatabase: {fileID: 11400000, guid: f5e27390c19bd1e4da16d12bd98e45df, type: 2}
-  audioSource: {fileID: 872869770}
-  voiceEnabled: 1
-  interruptCurrentVoice: 1
-  defaultVolume: 1
-  logVoiceRequests: 0
---- !u!114 &872869768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 872869764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cafe61afb9ab2c49af8b66a618b632d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAITeacherController
-  teachingSession: {fileID: 1130325794}
-  voiceController: {fileID: 872869767}
-  speakAutomatically: 1
-  speakQuestions: 1
-  speakHints: 1
-  speakStrongHints: 1
-  speakExplanations: 1
-  speakSuccessMessages: 1
-  speakFailureMessages: 1
-  logTeacherPresentation: 0
---- !u!114 &872869769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 872869764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2eb9dd7432737ba4cb3fa4ff057f78a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAITTSBridge
-  voiceController: {fileID: 872869767}
-  providerComponent: {fileID: 1028260707}
---- !u!82 &872869770
+--- !u!82 &872869770 stripped
 AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 5579177051582969034, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+  m_PrefabInstance: {fileID: 3217191532133369000}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 872869764}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!114 &872869771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 872869764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cc73ee1cfbe2aa44b9ffea32647783d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILessonTeachingBridge
-  lesson: {fileID: 1336199251}
-  adaptiveTeachingController: {fileID: 1130325798}
-  startTeachingOnEnable: 0
-  requireActiveLesson: 1
---- !u!114 &872869772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 872869764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fd241e90df43474f8ae393239cf57d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIQuestionController
-  contextReasoner: {fileID: 1130325792}
-  observationCoordinator: {fileID: 1130325791}
-  voiceController: {fileID: 872869767}
-  allowQuestions: 1
-  knowledge: {fileID: 11400000, guid: c8eaed39c5a619547b32baeb7b71b1df, type: 2}
-  world: {fileID: 1130325774}
-  speakAnswers: 1
-  logQuestions: 1
---- !u!114 &872869773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 872869764}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e06271891700c7c4f998792020b6667c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Audio.SparkVoiceVisualizer
-  points: 10
-  waveLines: 1
-  animationSpeed: 3.5
-  lineWidth: 2
-  amplitudeStrength: 1.4
-  pitchStrength: 1
-  smoothing: 0.2
-  frequency: 8
-  frequencyVariation: 1.4
-  distortion: 0.35
-  startColor: {r: 0.1, g: 0.8, b: 1, a: 1}
-  middleColor: {r: 0.9, g: 0.2, b: 1, a: 1}
-  endColor: {r: 1, g: 0.3, b: 0.5, a: 1}
-  animateWhenIdle: 0
-  idleStrength: 0.025
---- !u!222 &872869774
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 872869764}
-  m_CullTransparentMesh: 1
 --- !u!1 &873548303
 GameObject:
   m_ObjectHideFlags: 0
@@ -128758,7 +128332,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 891711025}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8570788760503519887}
+        m_TargetAssemblyTypeName: ProjectSpark.Gameplay.SparkToolController, Assembly-CSharp
+        m_MethodName: OnSelectButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &891711024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135861,8 +135447,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &926035720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138819,8 +138403,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &944038273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142105,7 +141687,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 962077489}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8570788760503519887}
+        m_TargetAssemblyTypeName: ProjectSpark.Gameplay.SparkToolController, Assembly-CSharp
+        m_MethodName: OnWireButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &962077488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151344,60 +150938,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7d7f2af9997b0ae4bb937e967639d354, type: 3}
   m_PrefabInstance: {fileID: 1027899502}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1028260705
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1028260706}
-  - component: {fileID: 1028260707}
-  m_Layer: 0
-  m_Name: SparkAIPiperTTSProvider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1028260706
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1028260705}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1130325775}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1028260707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1028260705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4684edb2070cb744f873bdc27d191ed5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIPiperTTSProvider
-  piperExecutablePath: Piper/piper.exe
-  modelPath: Piper/voices\en_US-ryan-medium.onnx
-  outputDirectory: ProjectSparkVoice
-  cacheGeneratedAudio: 1
-  audioSource: {fileID: 872869770}
-  volume: 1
-  interruptCurrentSpeech: 1
-  defaultLengthScale: 1
-  useRequestSpeed: 1
-  logPiperProcess: 0
 --- !u!1 &1028662516
 GameObject:
   m_ObjectHideFlags: 0
@@ -152392,8 +151932,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &1036096683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152644,8 +152182,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &1039820960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167035,438 +166571,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1130231673}
   m_CullTransparentMesh: 1
---- !u!1 &1130325771
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1130325775}
-  - component: {fileID: 1130325774}
-  - component: {fileID: 1130325773}
-  - component: {fileID: 1130325772}
-  - component: {fileID: 1130325776}
-  - component: {fileID: 1130325783}
-  - component: {fileID: 1130325782}
-  - component: {fileID: 1130325780}
-  - component: {fileID: 1130325777}
-  - component: {fileID: 1130325785}
-  - component: {fileID: 1130325784}
-  - component: {fileID: 1130325789}
-  - component: {fileID: 1130325788}
-  - component: {fileID: 1130325787}
-  - component: {fileID: 1130325786}
-  - component: {fileID: 1130325790}
-  - component: {fileID: 1130325791}
-  - component: {fileID: 1130325792}
-  - component: {fileID: 1130325793}
-  - component: {fileID: 1130325794}
-  - component: {fileID: 1130325795}
-  - component: {fileID: 1130325796}
-  - component: {fileID: 1130325797}
-  - component: {fileID: 1130325798}
-  m_Layer: 0
-  m_Name: Spark AI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1130325772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acac52645a3b81546a98b21fcbe526ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIBrain
-  world: {fileID: 1130325774}
-  reasoner: {fileID: 1130325773}
---- !u!114 &1130325773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9de5258346fb1147bd0d3ddea98db9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIReasoner
-  world: {fileID: 1130325774}
---- !u!114 &1130325774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c108a6bb95b2dfd4db244ee1a5218e13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIWorld
-  circuitSystem: {fileID: 1496923326559127032}
-  electricalSolver: {fileID: 7054938754337955890}
-  levelGamePlayManager: {fileID: 8565763376412791690}
-  selectionController: {fileID: 6385751997237888225}
-  playerActivity: {fileID: 1130325777}
-  electronicObjectRoot: {fileID: 1212969947}
-  explicitElectronicObjects: []
---- !u!4 &1130325775
+--- !u!4 &1130325775 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 6122651904739907652, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+  m_PrefabInstance: {fileID: 3217191532133369000}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1563390574}
-  - {fileID: 872869765}
-  - {fileID: 1911076700}
-  - {fileID: 1028260706}
-  - {fileID: 1336199252}
-  - {fileID: 225879122}
-  - {fileID: 1610167668}
-  - {fileID: 1357892105}
-  m_Father: {fileID: 1212969947}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &1130325776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90099f134a66a8b43a43a90cca92659e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIMemory
-  maximumObservationCount: 128
-  brain: {fileID: 1130325772}
---- !u!114 &1130325777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 952a931bbe33897408f1c6851f7fbf7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIPlayerActivity
-  selectionController: {fileID: 6385751997237888225}
-  circuitSystem: {fileID: 1496923326559127032}
-  observeSelection: 1
-  observeCircuitChanges: 1
---- !u!114 &1130325780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58c68376b4289b44592667b1338f6bb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILearning
-  knowledge: {fileID: 11400000, guid: c8eaed39c5a619547b32baeb7b71b1df, type: 2}
-  intent: {fileID: 1130325782}
-  brain: {fileID: 1130325772}
-  successIncrease: 0.12
-  struggleDecrease: 0.1
-  repeatedMistakeDecrease: 0.05
-  masteryThreshold: 0.8
---- !u!114 &1130325782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dc73a2a27307cf43b6499373eb9ef3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIIntent
-  world: {fileID: 1130325774}
-  brain: {fileID: 1130325772}
-  playerActivity: {fileID: 1130325777}
---- !u!114 &1130325783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa781c4c80021514fa259cc83ab473a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIDirector
-  brain: {fileID: 1130325772}
-  memory: {fileID: 1130325776}
-  knowledge: {fileID: 11400000, guid: c8eaed39c5a619547b32baeb7b71b1df, type: 2}
-  observeBrainChanges: 1
---- !u!114 &1130325784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2489ca38db74393478c11d1e3c3bcdc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIConceptMistakeAnalyzer
-  world: {fileID: 1130325774}
-  lesson: {fileID: 1336199251}
-  learning: {fileID: 1130325780}
-  openCircuitConceptId: open_circuit
-  closedCircuitConceptId: closed_circuit
-  shortCircuitConceptId: short_circuit
-  polarityConceptId: polarity
-  voltageConceptId: voltage
-  currentConceptId: current
-  powerConceptId: power
-  analyzeOnlyActiveLessonConcepts: 1
-  allowFallbackToLessonConcept: 0
---- !u!114 &1130325785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18f1f82bdc83b28468a9c561a3dd6eb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIMistakeDetector
-  levelGamePlayManager: {fileID: 8565763376412791690}
-  lesson: {fileID: 1336199251}
-  learning: {fileID: 1130325780}
-  recordEvaluationStruggles: 1
-  recordRepeatedMistakes: 1
-  repeatedMistakeThreshold: 2
---- !u!114 &1130325786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 289cf5ce7efd87e4c98fdc3b4d481c88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAICircuitAnalyzer
-  world: {fileID: 1130325774}
---- !u!114 &1130325787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6ccca8f7c5543041b631a2864c10bb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIComponentReasoner
-  world: {fileID: 1130325774}
---- !u!114 &1130325788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f141b1f5f7c9a34ba281fa878b64b8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAICircuitReasoner
-  world: {fileID: 1130325774}
-  circuitAnalyzer: {fileID: 1130325786}
-  pathAnalyzer: {fileID: 1130325789}
---- !u!114 &1130325789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36cff29893c1ff740ae6a3f33506eacd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAICircuitPathAnalyzer
-  world: {fileID: 1130325774}
---- !u!114 &1130325790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d15319cd8eb8da746b44fb952cc5e907, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIElectricalReasoner
-  world: {fileID: 1130325774}
-  voltageThreshold: 0.001
-  currentThreshold: 0.000001
-  powerThreshold: 0.000001
-  comparisonTolerance: 0.0001
---- !u!114 &1130325791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd449e6b660ac7742acb39f36f1da542, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIObservationCoordinator
-  world: {fileID: 1130325774}
-  circuitAnalyzer: {fileID: 1130325786}
-  pathAnalyzer: {fileID: 1130325789}
-  circuitReasoner: {fileID: 1130325788}
-  componentReasoner: {fileID: 1130325787}
-  electricalReasoner: {fileID: 1130325790}
---- !u!114 &1130325792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b65a31fe75a8034d89c3e4ea17ef1fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIContextReasoner
-  observationCoordinator: {fileID: 1130325791}
---- !u!114 &1130325793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c23f5bacc2dc3194c84e15bd9040f456, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAITeachingReasoner
-  contextReasoner: {fileID: 1130325792}
-  defaultConfidence: 0.8
---- !u!114 &1130325794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c068a2ec1fc1944982b009288d2b67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAITeachingSession
-  teachingReasoner: {fileID: 1130325793}
-  autoStartSession: 0
-  allowAutomaticEscalation: 0
-  minimumEscalationDelay: 8
-  maximumHints: 2
---- !u!114 &1130325795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7964556f8f9541549b9ca6f71d3ad196, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIPlayerResponseObserver
-  teachingSession: {fileID: 1130325794}
-  maximumHistoryEntries: 64
---- !u!114 &1130325796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa3bad41de247174e90e608b78ddde8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILearnerModel
-  responseObserver: {fileID: 1130325795}
-  correctLearningGain: 0.12
-  incorrectLearningLoss: 0.1
-  hintPenalty: 0.02
-  successfulActionGain: 0.04
-  maximumConcepts: 128
---- !u!114 &1130325797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3c2622a30baadc41a44b24e0b1406b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIAdaptiveTeachingPlanner
-  contextReasoner: {fileID: 1130325792}
-  learnerModel: {fileID: 1130325796}
-  teachingReasoner: {fileID: 1130325793}
-  lesson: {fileID: 1336199251}
-  strugglingThreshold: 0.3
-  developingThreshold: 0.6
-  masteredThreshold: 0.9
-  maximumCandidateConcepts: 16
-  conceptProgressionPlanner: {fileID: 1911076701}
-  respectConceptPrerequisites: 1
---- !u!114 &1130325798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130325771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc716f507e93c91449ea03a1e672c6a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIAdaptiveTeachingController
-  planner: {fileID: 1130325797}
-  teachingSession: {fileID: 1130325794}
-  automaticallyBeginTeaching: 0
 --- !u!1 &1130905308
 GameObject:
   m_ObjectHideFlags: 0
@@ -179932,103 +179041,6 @@ RectTransform:
   m_AnchoredPosition: {x: 38, y: -442}
   m_SizeDelta: {x: 663, y: 30}
   m_Pivot: {x: 0, y: 1}
---- !u!1 &1214908094
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1214908095}
-  - component: {fileID: 1214908097}
-  - component: {fileID: 1214908096}
-  - component: {fileID: 1214908098}
-  m_Layer: 0
-  m_Name: AI Question Panel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1214908095
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1214908094}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1534612853}
-  - {fileID: 1263653768}
-  - {fileID: 1980530138}
-  m_Father: {fileID: 225879122}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -334, y: 100.328094}
-  m_SizeDelta: {x: 618.2495, y: 217.5549}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1214908096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1214908094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 2100000, guid: 858cd9510a74b1e4cba063004faacb0b, type: 2}
-  m_Color: {r: 0.6179246, g: 0.90164393, b: 1, a: 0.45490196}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1214908097
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1214908094}
-  m_CullTransparentMesh: 1
---- !u!114 &1214908098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1214908094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0800521e85fe8b24183ffc8a11c5eed5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIQuestionUI
-  questionController: {fileID: 872869772}
-  questionInput: {fileID: 1263653769}
-  askButton: {fileID: 1534612854}
-  answerText: {fileID: 1980530139}
-  clearInputAfterAsk: 1
-  showPlayerQuestion: 0
 --- !u!1 &1215098203
 GameObject:
   m_ObjectHideFlags: 0
@@ -182375,164 +181387,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1231783239}
-  m_CullTransparentMesh: 1
---- !u!1 &1232379453
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1232379454}
-  - component: {fileID: 1232379457}
-  - component: {fileID: 1232379456}
-  - component: {fileID: 1232379455}
-  m_Layer: 0
-  m_Name: Placeholder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1232379454
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1232379453}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 672028681}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1232379455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1232379453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
-  m_IgnoreLayout: 1
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
---- !u!114 &1232379456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1232379453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: Ask Spark...
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
-  m_sharedMaterial: {fileID: 2201847597516483309, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 2164259689
-  m_fontColor: {r: 0.41037738, g: 0.98368365, b: 1, a: 0.5}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 50.2
-  m_fontSizeBase: 14
-  m_fontWeight: 400
-  m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 2
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_characterHorizontalScale: 1
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 0
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
-  m_enableExtraPadding: 1
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_EmojiFallbackSupport: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &1232379457
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1232379453}
   m_CullTransparentMesh: 1
 --- !u!1 &1233128962
 GameObject:
@@ -187045,184 +185899,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1262842131}
   m_CullTransparentMesh: 1
---- !u!1 &1263653767
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1263653768}
-  - component: {fileID: 1263653771}
-  - component: {fileID: 1263653770}
-  - component: {fileID: 1263653769}
-  m_Layer: 0
-  m_Name: Ask InputField (TMP)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1263653768
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263653767}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 672028681}
-  m_Father: {fileID: 1214908095}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -57.7135, y: -11.0352}
-  m_SizeDelta: {x: 381.6099, y: 158.0856}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1263653769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263653767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_InputField
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1263653770}
-  m_TextViewport: {fileID: 672028681}
-  m_TextComponent: {fileID: 1388863041}
-  m_Placeholder: {fileID: 1232379456}
-  m_VerticalScrollbar: {fileID: 0}
-  m_VerticalScrollbarEventHandler: {fileID: 0}
-  m_LayoutGroup: {fileID: 0}
-  m_ScrollSensitivity: 1
-  m_ContentType: 0
-  m_InputType: 0
-  m_AsteriskChar: 42
-  m_KeyboardType: 0
-  m_LineType: 0
-  m_HideMobileInput: 0
-  m_HideSoftKeyboard: 0
-  m_CharacterValidation: 0
-  m_RegexValue: 
-  m_GlobalPointSize: 14
-  m_CharacterLimit: 0
-  m_OnEndEdit:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnSubmit:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnSelect:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnDeselect:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnTextSelection:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnEndTextSelection:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnValueChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnTouchScreenKeyboardStatusChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_CustomCaretColor: 0
-  m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 
-  m_CaretBlinkRate: 0.85
-  m_CaretWidth: 1
-  m_ReadOnly: 0
-  m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_OnFocusSelectAll: 1
-  m_ResetOnDeActivation: 1
-  m_KeepTextSelectionVisible: 0
-  m_RestoreOriginalTextOnEscape: 1
-  m_isRichTextEditingAllowed: 0
-  m_LineLimit: 0
-  isAlert: 0
-  m_InputValidator: {fileID: 0}
-  m_ShouldActivateOnSelect: 1
---- !u!114 &1263653770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263653767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 0
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1263653771
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263653767}
-  m_CullTransparentMesh: 1
 --- !u!1 &1265167423
 GameObject:
   m_ObjectHideFlags: 0
@@ -189574,8 +188250,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &1277033839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194685,8 +193359,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &1305891888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196782,8 +195454,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &1321062137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198106,8 +196776,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &1334535330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198210,88 +196878,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &1336199250
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1336199252}
-  - component: {fileID: 1336199251}
-  - component: {fileID: 1336199253}
-  m_Layer: 0
-  m_Name: SparkAILesson
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1336199251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1336199250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 765ce4286e7d2e04da0e4d00dba63686, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILesson
-  knowledge: {fileID: 11400000, guid: c8eaed39c5a619547b32baeb7b71b1df, type: 2}
-  learning: {fileID: 1130325780}
-  lessons:
-  - id: LEVEL_01
-    displayName: Complete Circuit
-    description: 
-    learningObjective: 
-    successOutcome: 
-    conceptIds:
-    - circuit_basics
-    - source
-    - circuit_path
-    - circuit_path
-    difficulty: 0
-    masteryRequirement: 0
-    requiredForLevelCompletion: 0
-    allowOptionalPractice: 0
-    requiredChallengeIds: []
-    optionalChallengeIds: []
---- !u!4 &1336199252
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1336199250}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1130325775}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1336199253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1336199250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db5991c3d9fc79f4aa360b6bce679f13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILevelLessonBridge
-  levelGamePlayManager: {fileID: 8565763376412791690}
-  lesson: {fileID: 1336199251}
-  adaptiveTeachingController: {fileID: 1130325798}
-  activateLessonOnLevelStart: 1
-  startTeachingOnLevelStart: 1
-  recordLessonSuccessOnLevelCompletion: 1
 --- !u!1 &1336417585
 GameObject:
   m_ObjectHideFlags: 0
@@ -200507,195 +199093,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1357804826}
   m_CullTransparentMesh: 1
---- !u!1001 &1357892104
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1130325775}
-    m_Modifications:
-    - target: {fileID: 2199230230995229448, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      propertyPath: voice
-      value: 
-      objectReference: {fileID: 872869770}
-    - target: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      propertyPath: m_Name
-      value: SparkV5Pro
-      objectReference: {fileID: 0}
-    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.446
-      objectReference: {fileID: 0}
-    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.76
-      objectReference: {fileID: 0}
-    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.346
-      objectReference: {fileID: 0}
-    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1357892113}
-    - targetCorrespondingSourceObject: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1357892112}
-    - targetCorrespondingSourceObject: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1357892111}
-    - targetCorrespondingSourceObject: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1357892110}
-  m_SourcePrefab: {fileID: 100100000, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
---- !u!4 &1357892105 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-  m_PrefabInstance: {fileID: 1357892104}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1357892106 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5472275554765918881, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-  m_PrefabInstance: {fileID: 1357892104}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1357892107 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-  m_PrefabInstance: {fileID: 1357892104}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1357892108 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5588146091729296097, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-  m_PrefabInstance: {fileID: 1357892104}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357892107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d54cdf10a267aa87accd40fda007cd4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProVoiceInput
---- !u!114 &1357892109 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2199230230995229448, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
-  m_PrefabInstance: {fileID: 1357892104}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357892107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcf29120959c33c457f9d072118e53bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProCharacter
---- !u!114 &1357892110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357892107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71727054461b90e0fc58c84550e42153, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProCloudExplainer
-  allowOnline: 0
-  endpoint: http://127.0.0.1:8765/ask
-  timeout: 15
-  provider: 0
-  model: 
---- !u!114 &1357892111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357892107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad360fc9add8d8f96b395159fb7f601c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProHologram
-  projectionAnchor: {fileID: 1357892106}
-  library: []
-  overrideMaterial: {fileID: 0}
-  displaySize: 0.65
-  rotate: 1
-  rotationSpeed: 18
---- !u!114 &1357892112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357892107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d36da9a89b897aa5d32ebdab470116c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProAcademy
-  profileId: default
-  persistProfile: 1
---- !u!114 &1357892113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357892107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21bcf9b806c31905e3d3f081f400c6ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProExecutive
-  assistant: {fileID: 1610167681}
-  world: {fileID: 1130325772}
-  voice: {fileID: 872869767}
-  tts: {fileID: 872869769}
-  playbackSource: {fileID: 872869770}
-  selection: {fileID: 6385751997237888225}
-  knowledge: {fileID: 11400000, guid: c8eaed39c5a619547b32baeb7b71b1df, type: 2}
-  character: {fileID: 1357892109}
-  microphone: {fileID: 1357892108}
-  academy: {fileID: 1357892112}
-  hologram: {fileID: 1357892111}
-  cloud: {fileID: 1357892110}
-  catalog: {fileID: 11400000, guid: 8bf3b68c28206d7439392cb7d5a8e5cd, type: 2}
-  playerFocus: {fileID: 1360671977}
-  speakAnswers: 1
-  speakObservationWarnings: 0
-  examinationMode: 0
-  speechStartupTimeout: 20
 --- !u!224 &1358616301 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7270785613709716744, guid: 41eb1e1299a409442ae73b8dabcd7994, type: 3}
@@ -205207,143 +203604,6 @@ Transform:
   - {fileID: 696700388}
   m_Father: {fileID: 414882289}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1388863039
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1388863040}
-  - component: {fileID: 1388863042}
-  - component: {fileID: 1388863041}
-  m_Layer: 0
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1388863040
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388863039}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 672028681}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1388863041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388863039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: "\u200B"
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
-  m_sharedMaterial: {fileID: 2201847597516483309, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294901690
-  m_fontColor: {r: 0.7311321, g: 1, b: 0.9974959, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 14
-  m_fontWeight: 400
-  m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_characterHorizontalScale: 1
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 3
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
-  m_enableExtraPadding: 1
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_EmojiFallbackSupport: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &1388863042
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388863039}
-  m_CullTransparentMesh: 1
 --- !u!1 &1389640037
 GameObject:
   m_ObjectHideFlags: 0
@@ -214471,8 +212731,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &1444371131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229038,292 +227296,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533948265}
   m_CullTransparentMesh: 1
---- !u!1 &1534612852
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1534612853}
-  - component: {fileID: 1534612856}
-  - component: {fileID: 1534612855}
-  - component: {fileID: 1534612854}
-  - component: {fileID: 1534612857}
-  m_Layer: 0
-  m_Name: Ask_Button
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1534612853
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1534612852}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1214908095}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 202.45432, y: -18}
-  m_SizeDelta: {x: 1689.6343, y: 1470.9277}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1534612854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1534612852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1534612855}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1534612855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1534612852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 13f51f37630999d439d695eb1583fd03, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1534612856
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1534612852}
-  m_CullTransparentMesh: 1
---- !u!114 &1534612857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1534612852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99c140bd9953e047944792296da9897, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkCharacterAnimationController
-  characterImage: {fileID: 1534612855}
-  characterRect: {fileID: 1534612853}
-  voiceAudioSource: {fileID: 872869770}
-  audioDrivenTalking: 1
-  audioSensitivity: 2.5
-  audioSmoothing: 12
-  idleFrames:
-  - {fileID: 190213113, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1639293984, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 606026738, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1846318902, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 236353986, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1610116116, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1153438502, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -248214161, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 336216928, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 722215207, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  idleFrameRate: 8
-  idleScaleAmount: 0.015
-  idleRotationAmount: 0.8
-  idleBreathingSpeed: 1.2
-  blinkFrames:
-  - {fileID: -1598732831, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 836849705, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1360490915, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 208669448, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 244452462, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  minimumBlinkDelay: 2.5
-  maximumBlinkDelay: 6
-  blinkFrameRate: 14
-  talkFrames:
-  - {fileID: 1334851166, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1886767801, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1300508495, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1349620633, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 2119942591, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 65721526, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1133145783, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1456880607, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -449503129, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  talkFrameRate: 14
-  talkFrameRateBoost: 12
-  minimumTalkAmplitude: 0.015
-  happyFrames:
-  - {fileID: -1545104609, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1365162174, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1349238199, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -959710361, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1744801748, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1373544049, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  happyFrameRate: 10
-  excitedFrames:
-  - {fileID: -1545104609, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1365162174, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1349238199, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -959710361, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1744801748, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  excitedFrameRate: 14
-  surprisedFrames:
-  - {fileID: 1826046923, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1674801966, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -282522701, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -2123999236, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -890382284, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1458476527, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 772184534, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -278535549, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  surprisedFrameRate: 10
-  thinkingFrames:
-  - {fileID: -427271959, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1658544954, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1598979087, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1409667562, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1216212027, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -397164998, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1382983466, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  thinkingFrameRate: 7
-  sadFrames:
-  - {fileID: 624418633, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 842047572, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1192200265, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1529192807, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -821227043, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 315161174, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -896640114, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -797334036, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  sadFrameRate: 7
-  angryFrames:
-  - {fileID: -1374390976, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1524773045, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1741367899, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1256524622, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1918262101, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 951367215, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1920903066, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  angryFrameRate: 10
-  winkFrames:
-  - {fileID: -1248965556, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 593025587, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -622717205, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 648010853, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1498188325, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1116302567, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -693857370, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  winkFrameRate: 12
-  lookLeftFrames:
-  - {fileID: 681218941, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -237503223, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1461979470, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -54053329, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1095861034, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -195616271, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1646180736, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1229611558, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  lookLeftFrameRate: 10
-  lookRightFrames:
-  - {fileID: 681218941, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -237503223, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1461979470, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -54053329, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1095861034, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -195616271, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1646180736, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1229611558, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  lookRightFrameRate: 10
-  headTiltFrames:
-  - {fileID: -1353343458, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1202466271, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -149203628, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -310110477, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -1515367445, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 164942687, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -687720916, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  headTiltFrameRate: 10
-  bounceFrames:
-  - {fileID: 617997341, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -396500061, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -779041593, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -184585040, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 943223444, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 1232427949, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: -383193030, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  - {fileID: 99186657, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
-  bounceFrameRate: 14
-  bounceScaleAmount: 0.035
-  bounceRotationAmount: 2
-  enableLivingMotion: 0
-  livingMotionSpeed: 1.4
-  livingMotionScale: 0.008
-  livingMotionRotation: 0.45
-  returnToIdleAfterOneShot: 1
-  automaticBlinking: 1
-  talkingOverridesEmotion: 1
 --- !u!1 &1536554619
 GameObject:
   m_ObjectHideFlags: 0
@@ -233670,207 +231642,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1562814360}
   m_CullTransparentMesh: 1
---- !u!1 &1563390573
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1563390574}
-  - component: {fileID: 1563390578}
-  - component: {fileID: 1563390577}
-  - component: {fileID: 1563390576}
-  - component: {fileID: 1563390575}
-  - component: {fileID: 1563390580}
-  - component: {fileID: 1563390579}
-  - component: {fileID: 1563390581}
-  - component: {fileID: 1563390582}
-  - component: {fileID: 1563390583}
-  - component: {fileID: 1563390584}
-  m_Layer: 0
-  m_Name: SparkAIChallengeController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1563390574
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563390573}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1130325775}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1563390575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563390573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886ecb37ee28bce4d8937c519c2d3a64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIChallengeGenerator
-  planner: {fileID: 1130325797}
-  lessonChallengeResolver: {fileID: 1563390584}
-  preferAuthoredChallenges: 1
---- !u!114 &1563390576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563390573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6ec77f2dda099540b3f51426762fc4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIChallengeSession
-  challengeGenerator: {fileID: 1563390575}
-  playerResponseObserver: {fileID: 1130325795}
-  automaticallyGenerateChallenge: 0
---- !u!114 &1563390577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563390573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85f0bf3c2ea803940b4c78fbee8b6f34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIChallengeEvaluator
-  challengeSession: {fileID: 1563390576}
-  requireCircuitChangeBeforeSuccess: 1
-  requireMeasurementBeforeSuccess: 0
-  requirePlayerAnswerBeforeSuccess: 0
---- !u!114 &1563390578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563390573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 600e78075e33c1a49b8b6e608ec3d36e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIChallengeController
-  challengeSession: {fileID: 1563390576}
-  challengeEvaluator: {fileID: 1563390577}
-  adaptiveTeachingController: {fileID: 1130325798}
-  automaticallyStartFirstChallenge: 0
-  automaticallyStartNextChallenge: 0
---- !u!114 &1563390579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563390573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14d85e3b96ec011448fa82298e7860ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIChallengeFeedback
-  challengeSession: {fileID: 1563390576}
-  learnerModel: {fileID: 1130325796}
-  adaptiveTeachingController: {fileID: 1130325798}
---- !u!114 &1563390580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563390573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e3973d804f2df241b565be9a1b5068c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIGameplayBridge
-  challengeController: {fileID: 1563390578}
---- !u!114 &1563390581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563390573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6dcacc9eba9fd640bd4f92665094ce7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILevelChallengeBridge
-  levelGamePlayManager: {fileID: 8565763376412791690}
-  challengeController: {fileID: 1563390578}
-  startChallengeOnLevelStart: 1
-  completeChallengeOnLevelCompletion: 1
-  resetChallengeOnLevelStart: 1
---- !u!114 &1563390582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563390573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 281c2128a07b11c4dab4a530b615f37c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILessonChallengeBridge
-  levelGamePlayManager: {fileID: 8565763376412791690}
-  lesson: {fileID: 1336199251}
-  challengeController: {fileID: 1563390578}
-  startChallengeOnLevelStart: 1
-  resetChallengeOnLevelStart: 1
-  completeChallengeOnLevelCompletion: 1
---- !u!114 &1563390583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563390573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db5991c3d9fc79f4aa360b6bce679f13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILevelLessonBridge
-  levelGamePlayManager: {fileID: 8565763376412791690}
-  lesson: {fileID: 1336199251}
-  adaptiveTeachingController: {fileID: 1130325798}
-  activateLessonOnLevelStart: 1
-  startTeachingOnLevelStart: 1
-  recordLessonSuccessOnLevelCompletion: 1
---- !u!114 &1563390584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563390573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28104a68c6fa12a47b35362259b13efd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILessonChallengeResolver
-  lesson: {fileID: 1336199251}
-  database: {fileID: 11400000, guid: 7687f6c716ecfe741bb438192ce4c2cb, type: 2}
-  logMissingChallenges: 1
-  logResolutionSummary: 0
 --- !u!1 &1564306169
 GameObject:
   m_ObjectHideFlags: 0
@@ -241871,448 +239642,50 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &1610167667
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1610167668}
-  - component: {fileID: 1610167670}
-  - component: {fileID: 1610167669}
-  - component: {fileID: 1610167683}
-  - component: {fileID: 1610167671}
-  - component: {fileID: 1610167672}
-  - component: {fileID: 1610167673}
-  - component: {fileID: 1610167674}
-  - component: {fileID: 1610167675}
-  - component: {fileID: 1610167676}
-  - component: {fileID: 1610167677}
-  - component: {fileID: 1610167679}
-  - component: {fileID: 1610167678}
-  - component: {fileID: 1610167680}
-  - component: {fileID: 1610167681}
-  - component: {fileID: 1610167682}
-  - component: {fileID: 1610167684}
-  m_Layer: 0
-  m_Name: AI_TutorialSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1610167668
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.084190734, y: -0.014301538, z: 0.0017099256, w: -0.9963456}
-  m_LocalPosition: {x: 406.80292, y: 917.07886, z: -1598.0385}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1130325775}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1610167669
+--- !u!114 &1610167671 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 7784345520141855684, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+  m_PrefabInstance: {fileID: 3217191532133369000}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42f06693867455247b00758e2f4e7060, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialGameplaySignals
-  director: {fileID: 1610167671}
-  circuit: {fileID: 1496923326559127032}
---- !u!114 &1610167670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa781c4c80021514fa259cc83ab473a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIDirector
-  brain: {fileID: 1130325772}
-  memory: {fileID: 1130325776}
-  knowledge: {fileID: 11400000, guid: c8eaed39c5a619547b32baeb7b71b1df, type: 2}
-  observeBrainChanges: 1
---- !u!114 &1610167671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 245277df4635c484f8564cc4292fc406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialDirector
-  defaultTutorial: {fileID: 11400000, guid: ef020f4b13c558d4ea87c57d63c6d70a, type: 2}
-  autoStart: 0
-  voice: {fileID: 872869767}
-  voiceEnabled: 1
-  sceneCamera: {fileID: 1360671976}
-  overlaySortingOrder: 500
-  accent: {r: 0.03, g: 0.9, b: 0.95, a: 1}
-  panelColor: {r: 0.035, g: 0.07, b: 0.12, a: 0.95}
-  enableHotkeys: 1
-  stopTutorialWhenLevelWon: 1
---- !u!114 &1610167672
+--- !u!114 &1610167674 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 4777965189874681142, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+  m_PrefabInstance: {fileID: 3217191532133369000}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 313a32fd098e2fb4996fa9fede2649f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialCinematicGuide
-  director: {fileID: 1610167671}
-  sceneCamera: {fileID: 1360671976}
-  showPointer: 0
-  pointerColor: {r: 0.02, g: 0.9, b: 1, a: 0.95}
-  pointerSize: 54
-  pointerOffset: {x: 0, y: 65}
-  pulseSpeed: 3.5
-  overlaySortingOrder: 501
-  guideCamera: 0
-  cameraTurnSpeed: 2.5
-  restoreCameraOnStepChange: 1
---- !u!114 &1610167673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b40ddd3ffdec1844bbd758a08c100db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialGhostDemonstrator
-  director: {fileID: 1610167671}
-  sceneCamera: {fileID: 1360671976}
-  demonstrations:
-  - stepId: select
-    kind: 1
-    sourceKey: shelf.resistor
-    destinationKey: 
-    startDelay: 0
-    motionSeconds: 1.5
-    endPauseSeconds: 0.5
-    replayUntilStepCompleted: 1
-    replayDelaySeconds: 2
-  - stepId: workstation
-    kind: 2
-    sourceKey: shelf.resistor
-    destinationKey: workstation.resistor
-    startDelay: 0.5
-    motionSeconds: 1.5
-    endPauseSeconds: 0.5
-    replayUntilStepCompleted: 1
-    replayDelaySeconds: 2
-  - stepId: replace
-    kind: 2
-    sourceKey: workstation.resistor
-    destinationKey: shelf.resistor
-    startDelay: 0.5
-    motionSeconds: 1.5
-    endPauseSeconds: 0.5
-    replayUntilStepCompleted: 1
-    replayDelaySeconds: 2
-  - stepId: switch
-    kind: 1
-    sourceKey: device.switch
-    destinationKey: 
-    startDelay: 0.5
-    motionSeconds: 1.5
-    endPauseSeconds: 0.5
-    replayUntilStepCompleted: 1
-    replayDelaySeconds: 2
-  - stepId: wire
-    kind: 3
-    sourceKey: terminal.start
-    destinationKey: terminal.end
-    startDelay: 0.5
-    motionSeconds: 1.5
-    endPauseSeconds: 0.5
-    replayUntilStepCompleted: 1
-    replayDelaySeconds: 2
-  sortingOrder: 520
-  cursorColor: {r: 0.04, g: 0.94, b: 1, a: 0.95}
-  trailColor: {r: 0.04, g: 0.94, b: 1, a: 0.5}
-  cursorSize: 44
-  targetResolveTimeout: 8
-  replayHotkeyF3: 1
-  logDemonstrations: 1
---- !u!114 &1610167674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34080f91445ba5b43bc2a0a7ce14c334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialMistakeCoach
-  director: {fileID: 1610167671}
-  voice: {fileID: 872869767}
-  ghost: {fileID: 1610167673}
-  speakCorrections: 1
-  replayGhostAfterRepeatedMistakes: 1
-  replayAfterCount: 3
-  minSecondsBetweenMessages: 1
-  repeatSameCorrectionAfterSeconds: 10
-  showSeconds: 6
-  logMistakes: 1
-  coachOutsideTutorial: 1
-  filterMistakesByStep: 1
-  alwaysExplainUnavailableComponents: 1
-  clearOnStepChange: 1
-  resetCooldownOnStepChange: 1
-  sortingOrder: 550
-  panelColor: {r: 0.025, g: 0.055, b: 0.09, a: 0.94}
-  accentColor: {r: 1, g: 0.68, b: 0.21, a: 1}
-  panelWidth: 650
-  panelHeight: 130
-  panelBottomRightOffset: {x: -24, y: 24}
---- !u!114 &1610167675
+--- !u!114 &1610167679 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 2659693300161220614, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+  m_PrefabInstance: {fileID: 3217191532133369000}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b87568c65d110245a46ebe4d1b3b7a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialLevelBridge
-  levelManager: {fileID: 8565763376412791690}
-  director: {fileID: 1610167671}
-  automaticallyStartTutorial: 0
-  skipTutorialForPreviouslyWonLevels: 1
-  resumeExistingTutorialProgress: 1
-  logEvents: 1
---- !u!114 &1610167676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 904ba6d8760f4394ba64cb9bd7744df5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialResistorStateBridge
-  director: {fileID: 1610167671}
-  levelManager: {fileID: 8565763376412791690}
-  voice: {fileID: 872869767}
-  resistorSlotId: Register_Slot
-  explicitWorkstationSlot: {fileID: 0}
-  completePlacementStepFromState: 1
-  updateTutorialHint: 1
-  narrateStageChanges: 0
-  requireClosedReturnForConducting: 1
-  refreshInterval: 0.25
-  meaningfulCurrentAmps: 0.0001
-  speechCooldownSeconds: 8
-  diagnostics: 0
---- !u!114 &1610167677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88bf8f62a66facb42abe16586a9a4d22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialCircuitAwareness
-  levelManager: {fileID: 8565763376412791690}
-  showOnMeaningfulStateChange: 1
-  showOnLevelStart: 1
-  refreshSeconds: 0.4
-  messageDurationSeconds: 7
-  recallKey: 285
-  logChanges: 0
-  panelSize: {x: 490, y: 170}
-  bottomRightOffset: {x: 24, y: 195}
-  sortingOrder: 540
---- !u!114 &1610167678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8047e19c405a0554cae133e518e4f005, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAICircuitDiagnosis
-  levelManager: {fileID: 8565763376412791690}
-  sceneCamera: {fileID: 1360671976}
-  diagnoseKey: 286
-  openWhenLevelFails: 0
-  closeOnLevelChange: 1
-  refreshSeconds: 0.35
-  logDiagnosis: 0
-  panelSize: {x: 560, y: 240}
-  rightCenterInset: {x: 24, y: 0}
-  sortingOrder: 565
-  markUnsatisfiedObjective: 1
-  markerColor: {r: 0.98, g: 0.66, b: 0.16, a: 1}
---- !u!114 &1610167679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2b8c92d1761b5140b43614d43106843, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAIComponentInspector
-  closeOnEscape: 1
-  closeKey: 27
-  sortingOrder: 575
-  panelSize: {x: 540, y: 250}
-  topRightInset: {x: 24, y: 100}
-  logInspections: 0
---- !u!114 &1610167680
+--- !u!114 &1610167681 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+  m_PrefabInstance: {fileID: 3217191532133369000}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7c9e887d9fa5a04a9659e59f902d403, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAIAdaptiveTroubleshooter
-  levelManager: {fileID: 8565763376412791690}
-  resistorWorkstationSlot: {fileID: 0}
-  resistorSlotId: Register_Slot
-  toggleKey: 287
-  resetHintLadderWhenStateChanges: 1
-  logChanges: 0
-  panelSize: {x: 540, y: 210}
-  topLeftOffset: {x: 24, y: -85}
-  sortingOrder: 580
---- !u!114 &1610167681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88cb31923b9a7dd45a8f76a70a4767d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAIUnifiedAssistant
-  levelManager: {fileID: 8565763376412791690}
-  tutorial: {fileID: 1610167671}
-  troubleshooter: {fileID: 1610167680}
-  voice: {fileID: 872869767}
-  sceneCamera: {fileID: 1360671976}
-  toggleKey: 288
-  speakReplies: 1
-  logActions: 1
-  inspectDistance: 25
-  inspectLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  routeQuestionsToExternalBrain: 1
-  externalAnswerTimeout: 15
-  panelSize: {x: 535, y: 330}
-  sortingOrder: 650
-  canvas: {fileID: 1395540927}
-  heading: {fileID: 312456918}
-  status: {fileID: 2077393542}
-  answer: {fileID: 111540184}
-  questionInput: {fileID: 379246995}
-  answerScroll: {fileID: 1771337520}
-  inspectButton: {fileID: 85844739}
-  explainButton: {fileID: 1575837855}
-  hintButton: {fileID: 36641517}
-  tutorialButton: {fileID: 1410989423}
-  askButton: {fileID: 918542318}
-  closeButton: {fileID: 1631657460}
-  rememberedComponent: {fileID: 0}
---- !u!114 &1610167682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb7c4e8dfaea9f14fad10c96db252da2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAIConversation
-  levelManager: {fileID: 8565763376412791690}
-  sceneCamera: {fileID: 1360671976}
-  toggleKey: 289
-  openOnStart: 0
-  inspectDistance: 25
-  inspectLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  routeToExternalBrain: 0
-  externalAnswerTimeout: 15
-  sortingOrder: 720
---- !u!114 &1610167683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb05a1459b8e2ba4db34ff6c3fa1a2fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAIWorldContext
-  levelManager: {fileID: 0}
-  levelLoader: {fileID: 0}
---- !u!114 &1610167684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610167667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 352f9c8282d7fb646b86d2c6f4486e75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAICurrentObjectiveProbe
-  componentBindingId: 
-  resistor: {fileID: 0}
 --- !u!1 &1613230564
 GameObject:
   m_ObjectHideFlags: 0
@@ -243357,8 +240730,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &1616172251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258574,8 +255945,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &1714298268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275867,8 +273236,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &1818853454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279309,8 +276676,6 @@ MonoBehaviour:
   m_Script: {fileID: 1884185297}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkAILearningHoverHint
-  owner: {fileID: 0}
-  actionId: 
 --- !u!114 &1848069956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287477,87 +284842,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1910572389}
   m_CullTransparentMesh: 1
---- !u!1 &1911076699
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1911076700}
-  - component: {fileID: 1911076703}
-  - component: {fileID: 1911076702}
-  - component: {fileID: 1911076701}
-  m_Layer: 0
-  m_Name: SparkAICurriculum
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1911076700
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1911076699}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1130325775}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1911076701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1911076699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9662679c1d4f51349a2802c751aefae3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIConceptProgressionPlanner
-  progression: {fileID: 1911076702}
-  conceptDatabase: {fileID: 11400000, guid: f5e27390c19bd1e4da16d12bd98e45df, type: 2}
-  learnerModel: {fileID: 1130325796}
-  maximumPrerequisiteDepth: 8
---- !u!114 &1911076702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1911076699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db4fa704b6ff1b4fafd4503a66da349, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIConceptProgression
-  conceptDatabase: {fileID: 11400000, guid: f5e27390c19bd1e4da16d12bd98e45df, type: 2}
-  learnerModel: {fileID: 1130325796}
-  prerequisiteMasteryRequirement: 0.7
-  requireAllPrerequisites: 1
---- !u!114 &1911076703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1911076699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae80e75ee7100a64a8baecae637d354f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIConceptChallengePlanner
-  conceptProgressionPlanner: {fileID: 1911076701}
-  challengeGenerator: {fileID: 1563390575}
-  respectConceptPrerequisites: 1
 --- !u!1 &1911577275
 GameObject:
   m_ObjectHideFlags: 0
@@ -297361,280 +294645,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979422798}
   m_CullTransparentMesh: 1
---- !u!1 &1980530137
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1980530138}
-  - component: {fileID: 1980530140}
-  - component: {fileID: 1980530139}
-  - component: {fileID: 1980530142}
-  - component: {fileID: 1980530141}
-  m_Layer: 0
-  m_Name: Answer Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1980530138
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1980530137}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1214908095}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 13.0958, y: 203.2285}
-  m_SizeDelta: {x: 577.8284, y: 144.4571}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1980530139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1980530137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: 
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
-  m_sharedMaterial: {fileID: 2201847597516483309, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
-  m_fontWeight: 400
-  m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_characterHorizontalScale: 1
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_EmojiFallbackSupport: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &1980530140
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1980530137}
-  m_CullTransparentMesh: 1
---- !u!82 &1980530141
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1980530137}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 0.292
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!114 &1980530142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1980530137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b673438bbf0f8b4d9128fa626511e5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkTMPTypewriter
-  autoTypeOnEnable: 1
-  detectExternalTextChanges: 1
-  changeDebounce: 0.08
-  secondsPerCharacter: 0.025
-  startDelay: 0
-  fastMultiplier: 2.5
-  useUnscaledTime: 1
-  spaceDelayMultiplier: 0.35
-  commaPause: 0.12
-  sentencePause: 0.32
-  colonPause: 0.16
-  typingAudioSource: {fileID: 1980530141}
-  typingClip: {fileID: 8300000, guid: 4843269452556bd45bc781d91d52cccb, type: 3}
-  audioInterval: 0.035
-  minimumPitch: 0.95
-  maximumPitch: 1.05
-  typingVolume: 0.5
-  onTypingStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  onTypingCompleted:
-    m_PersistentCalls:
-      m_Calls: []
-  onCharacterRevealed:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1980748165
 GameObject:
   m_ObjectHideFlags: 0
@@ -298981,7 +295991,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1994618919}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8570788760503519887}
+        m_TargetAssemblyTypeName: ProjectSpark.Gameplay.SparkToolController, Assembly-CSharp
+        m_MethodName: OnMoveButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1994618918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341275,6 +338297,227 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &3217191532133369000
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1212969947}
+    m_Modifications:
+    - target: {fileID: 12328002148107584, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: circuit
+      value: 
+      objectReference: {fileID: 1496923326559127032}
+    - target: {fileID: 64528233903093932, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 8565763376412791690}
+    - target: {fileID: 844360801671586764, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: sceneCamera
+      value: 
+      objectReference: {fileID: 1360671976}
+    - target: {fileID: 844360801671586764, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 8565763376412791690}
+    - target: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: answer
+      value: 
+      objectReference: {fileID: 111540184}
+    - target: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1395540927}
+    - target: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: status
+      value: 
+      objectReference: {fileID: 2077393542}
+    - target: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: heading
+      value: 
+      objectReference: {fileID: 312456918}
+    - target: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: askButton
+      value: 
+      objectReference: {fileID: 918542318}
+    - target: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: hintButton
+      value: 
+      objectReference: {fileID: 36641517}
+    - target: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: closeButton
+      value: 
+      objectReference: {fileID: 1631657460}
+    - target: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: sceneCamera
+      value: 
+      objectReference: {fileID: 1360671976}
+    - target: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: answerScroll
+      value: 
+      objectReference: {fileID: 1771337520}
+    - target: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 8565763376412791690}
+    - target: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: explainButton
+      value: 
+      objectReference: {fileID: 1575837855}
+    - target: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: inspectButton
+      value: 
+      objectReference: {fileID: 85844739}
+    - target: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: questionInput
+      value: 
+      objectReference: {fileID: 379246995}
+    - target: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: tutorialButton
+      value: 
+      objectReference: {fileID: 1410989423}
+    - target: {fileID: 1749896356924344514, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: circuitSystem
+      value: 
+      objectReference: {fileID: 1496923326559127032}
+    - target: {fileID: 1749896356924344514, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: electricalSolver
+      value: 
+      objectReference: {fileID: 7054938754337955890}
+    - target: {fileID: 1749896356924344514, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: selectionController
+      value: 
+      objectReference: {fileID: 6385751997237888225}
+    - target: {fileID: 1749896356924344514, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: electronicObjectRoot
+      value: 
+      objectReference: {fileID: 1212969947}
+    - target: {fileID: 1749896356924344514, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: levelGamePlayManager
+      value: 
+      objectReference: {fileID: 8565763376412791690}
+    - target: {fileID: 2010157059098112456, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: selection
+      value: 
+      objectReference: {fileID: 6385751997237888225}
+    - target: {fileID: 2010157059098112456, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: playerFocus
+      value: 
+      objectReference: {fileID: 1360671977}
+    - target: {fileID: 2296216371904010674, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1360671976}
+    - target: {fileID: 4097539873056581116, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: sceneCamera
+      value: 
+      objectReference: {fileID: 1360671976}
+    - target: {fileID: 4613085699611490506, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: levelGamePlayManager
+      value: 
+      objectReference: {fileID: 8565763376412791690}
+    - target: {fileID: 4845289013039343265, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: circuitSystem
+      value: 
+      objectReference: {fileID: 1496923326559127032}
+    - target: {fileID: 4845289013039343265, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: selectionController
+      value: 
+      objectReference: {fileID: 6385751997237888225}
+    - target: {fileID: 5974055449780973802, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: levelGamePlayManager
+      value: 
+      objectReference: {fileID: 8565763376412791690}
+    - target: {fileID: 6122651904739907652, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6122651904739907652, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6122651904739907652, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6122651904739907652, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6122651904739907652, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6122651904739907652, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6122651904739907652, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6122651904739907652, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6122651904739907652, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6122651904739907652, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6500539421347444192, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: sceneCamera
+      value: 
+      objectReference: {fileID: 1360671976}
+    - target: {fileID: 6509339494661316678, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 8565763376412791690}
+    - target: {fileID: 7784345520141855684, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: sceneCamera
+      value: 
+      objectReference: {fileID: 1360671976}
+    - target: {fileID: 7890329279607276937, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 8565763376412791690}
+    - target: {fileID: 7896374821993990115, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: m_Name
+      value: Spark AI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8177703273686431408, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: levelGamePlayManager
+      value: 
+      objectReference: {fileID: 8565763376412791690}
+    - target: {fileID: 8385556052012692938, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: levelGamePlayManager
+      value: 
+      objectReference: {fileID: 8565763376412791690}
+    - target: {fileID: 8647603085470720260, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: sceneCamera
+      value: 
+      objectReference: {fileID: 1360671976}
+    - target: {fileID: 8647603085470720260, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 8565763376412791690}
+    - target: {fileID: 8706070484994594531, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 8565763376412791690}
+    - target: {fileID: 9201237615175838901, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: levelGamePlayManager
+      value: 
+      objectReference: {fileID: 8565763376412791690}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
 --- !u!1 &3217967983451474308
 GameObject:
   m_ObjectHideFlags: 0
@@ -364391,10 +361634,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 89d106ff06959ad4d9efe4b7259b57f7, type: 2}
   - {fileID: 11400000, guid: f62763110b9c3694491e2b1993207f64, type: 2}
   - {fileID: 11400000, guid: 77137942c85fe4943a481d57d4797485, type: 2}
-  activeLevelIndex: 129
+  activeLevelIndex: 1
   layoutLoader: {fileID: 350401877}
   runtimeState: 0
-  autoStartFirstLevel: 0
+  autoStartFirstLevel: 1
   autoEvaluate: 1
   autoAdvanceOnCompletion: 0
   preventInteractionAfterCompletion: 0

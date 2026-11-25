@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbfac0e802d59084cb2072e1a19fe571, type: 3}
+  m_Name: Auto_L130_l130_3_9CE80FF3
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProAutoGuide
+  lessonId: L130/l130_3
+  level: 130
+  objectiveId: l130_3
+  title: "Level 130 \u2014 Recover the virtual ROM and cold POST"
+  authoredRequirement: Capture both lab-ROM reads. Restore the correct fictional
+    image under isolation, then repeat initialization.
+  sourceAsset: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_130_Layout/Level_130.asset
+  sourceFingerprint: 8198034A
+  contentSignature: 43F8B880F5A896381329F3FA24C5A78B9FE909B7205ABB7C2416DD9A56968177
+  aliases:
+  - Recover the virtual ROM and cold POST
+  - l130 3
+  authoredVisualReferences:
+  - "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_130_Layout/Level_130.asset#l130_3
+    \u2192 native objective whiteboard (criteria, no inferred wiring)"
+  authoredPracticeReferences:
+  - "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_130_Layout/Level_130_Layout.prefab
+    \u2192 native mission practice"
+  recipeId: memory
+  concept: 'Authored objective: Recover the virtual ROM and cold POST.
+
+    Authored
+    requirement: Capture both lab-ROM reads. Restore the correct fictional image
+    under isolation, then repeat initialization.
+
+    General teaching principle:
+    Memory and initialization workflows require checking power, connectivity, configuration
+    and the authored test responses in the correct sequence.
+
+    Only fresh, authoritative
+    game evidence can establish that this objective is complete.'
+  analogy: A staged startup checklist helps distinguish a missing prerequisite from
+    a later failure.
+  diagram: '[Authored setup] -> [Check prerequisites] -> [Observe the game evidence]
+    -> [Verify objective]'
+  misconception: One passing startup indicator does not guarantee every memory or
+    firmware check has passed.
+  baseline: "Before working on \u2018Recover the virtual ROM and cold POST\u2019,
+    which component, reference or condition mentioned in the authored requirement
+    should you inspect first? Explain your reasoning."
+  prediction: "For \u2018Recover the virtual ROM and cold POST\u2019, what result
+    or observation would you expect if the required setup is correct? Distinguish
+    a predicted result from a measured result."
+  practice: "In Level 130, perform the objective \u2018Recover the virtual ROM and
+    cold POST\u2019 in the actual game laboratory. Compare fresh evidence against:
+    Capture both lab-ROM reads. Restore the correct fictional image under isolation,
+    then repeat initialization.\nThe mission evaluator decides completion; this tutorial
+    does not grade your answer."
+  guidedOnly: 1

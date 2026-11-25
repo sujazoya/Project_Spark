@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbfac0e802d59084cb2072e1a19fe571, type: 3}
+  m_Name: Auto_L095_level95_pcb_5_88425A90
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProAutoGuide
+  lessonId: L095/level95_pcb_5
+  level: 95
+  objectiveId: level95_pcb_5
+  title: "Level 95 \u2014 Repair all three timing faults and retest"
+  authoredRequirement: Diagnose and isolate V06, C1 and the Q1 bridge in sequence.
+    Capture a fresh powered result after each repair.
+  sourceAsset: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_95_Layout/Level_95.asset
+  sourceFingerprint: 9EA73FA1
+  contentSignature: D90EFBDC6DB858227C3529C97A9D54D26D671DDF3F493EC125BB04146111C0DA
+  aliases:
+  - Repair all three timing faults and retest
+  - level95 pcb 5
+  authoredVisualReferences:
+  - "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_95_Layout/Level_95.asset#level95_pcb_5
+    \u2192 native objective whiteboard (criteria, no inferred wiring)"
+  authoredPracticeReferences:
+  - "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_95_Layout/Level_95_Layout.prefab
+    \u2192 native mission practice"
+  recipeId: diagnostics
+  concept: 'Authored objective: Repair all three timing faults and retest.
+
+    Authored
+    requirement: Diagnose and isolate V06, C1 and the Q1 bridge in sequence. Capture
+    a fresh powered result after each repair.
+
+    General teaching principle: Troubleshooting
+    compares fresh evidence with a known reference, isolates likely causes, repairs
+    the supported issue and retests.
+
+    Only fresh, authoritative game evidence
+    can establish that this objective is complete.'
+  analogy: Debugging a chain is easier when each link is tested before replacing
+    the next.
+  diagram: '[Authored setup] -> [Check prerequisites] -> [Observe the game evidence]
+    -> [Verify objective]'
+  misconception: An absent output is a symptom, not definitive proof that one specific
+    component has failed.
+  baseline: "Before working on \u2018Repair all three timing faults and retest\u2019,
+    which component, reference or condition mentioned in the authored requirement
+    should you inspect first? Explain your reasoning."
+  prediction: "For \u2018Repair all three timing faults and retest\u2019, what result
+    or observation would you expect if the required setup is correct? Distinguish
+    a predicted result from a measured result."
+  practice: "In Level 95, perform the objective \u2018Repair all three timing faults
+    and retest\u2019 in the actual game laboratory. Compare fresh evidence against:
+    Diagnose and isolate V06, C1 and the Q1 bridge in sequence. Capture a fresh powered
+    result after each repair.\nThe mission evaluator decides completion; this tutorial
+    does not grade your answer."
+  guidedOnly: 1

@@ -1,0 +1,2929 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2246921210774514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5411245899678587060}
+  - component: {fileID: 8486225406989924498}
+  - component: {fileID: 4380875201696081373}
+  - component: {fileID: 2808010732266041671}
+  - component: {fileID: 5579177051582969034}
+  - component: {fileID: 2050468674111707429}
+  - component: {fileID: 831127101911375725}
+  - component: {fileID: 2395538483357854525}
+  - component: {fileID: 4006621010154347261}
+  m_Layer: 0
+  m_Name: Voice Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5411245899678587060
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246921210774514}
+  m_LocalRotation: {x: -0, y: -0, z: 0.05704127, w: 0.9983719}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6122651904739907652}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 6.54}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 1822.7603, y: 52.656036}
+  m_SizeDelta: {x: 68.00647, y: 50.651123}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8486225406989924498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246921210774514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc9ff0b5acb9dd949873272d3484c85e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIVoiceController
+  conceptDatabase: {fileID: 11400000, guid: f5e27390c19bd1e4da16d12bd98e45df, type: 2}
+  audioSource: {fileID: 5579177051582969034}
+  voiceEnabled: 1
+  interruptCurrentVoice: 1
+  defaultVolume: 1
+  logVoiceRequests: 0
+--- !u!114 &4380875201696081373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246921210774514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cafe61afb9ab2c49af8b66a618b632d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAITeacherController
+  teachingSession: {fileID: 4888579708791145360}
+  voiceController: {fileID: 8486225406989924498}
+  speakAutomatically: 1
+  speakQuestions: 1
+  speakHints: 1
+  speakStrongHints: 1
+  speakExplanations: 1
+  speakSuccessMessages: 1
+  speakFailureMessages: 1
+  logTeacherPresentation: 0
+--- !u!114 &2808010732266041671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246921210774514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eb9dd7432737ba4cb3fa4ff057f78a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAITTSBridge
+  voiceController: {fileID: 8486225406989924498}
+  providerComponent: {fileID: 6620232676652794318}
+--- !u!82 &5579177051582969034
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246921210774514}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &2050468674111707429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246921210774514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc73ee1cfbe2aa44b9ffea32647783d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILessonTeachingBridge
+  lesson: {fileID: 2425972660151580740}
+  adaptiveTeachingController: {fileID: 1351433167811459463}
+  startTeachingOnEnable: 0
+  requireActiveLesson: 1
+--- !u!114 &831127101911375725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246921210774514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fd241e90df43474f8ae393239cf57d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIQuestionController
+  contextReasoner: {fileID: 2870696398887945551}
+  observationCoordinator: {fileID: 3750366023349105358}
+  voiceController: {fileID: 8486225406989924498}
+  allowQuestions: 1
+  knowledge: {fileID: 11400000, guid: c8eaed39c5a619547b32baeb7b71b1df, type: 2}
+  world: {fileID: 1749896356924344514}
+  speakAnswers: 1
+  logQuestions: 1
+--- !u!114 &2395538483357854525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246921210774514}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e06271891700c7c4f998792020b6667c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.Audio.SparkVoiceVisualizer
+  points: 10
+  waveLines: 1
+  animationSpeed: 3.5
+  lineWidth: 2
+  amplitudeStrength: 1.4
+  pitchStrength: 1
+  smoothing: 0.2
+  frequency: 8
+  frequencyVariation: 1.4
+  distortion: 0.35
+  startColor: {r: 0.1, g: 0.8, b: 1, a: 1}
+  middleColor: {r: 0.9, g: 0.2, b: 1, a: 1}
+  endColor: {r: 1, g: 0.3, b: 0.5, a: 1}
+  animateWhenIdle: 0
+  idleStrength: 0.025
+--- !u!222 &4006621010154347261
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246921210774514}
+  m_CullTransparentMesh: 1
+--- !u!1 &3759156601243648
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 980671767790625516}
+  - component: {fileID: 169675694369282086}
+  - component: {fileID: 5497177604602319808}
+  m_Layer: 0
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &980671767790625516
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3759156601243648}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 274886549691294126}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &169675694369282086
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3759156601243648}
+  m_CullTransparentMesh: 1
+--- !u!114 &5497177604602319808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3759156601243648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "\u200B"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
+  m_sharedMaterial: {fileID: 2201847597516483309, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294901690
+  m_fontColor: {r: 0.7311321, g: 1, b: 0.9974959, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 72
+  m_fontSizeBase: 14
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 3
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 1
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &249018126676150342
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5778800171555542128}
+  - component: {fileID: 6620232676652794318}
+  m_Layer: 0
+  m_Name: SparkAIPiperTTSProvider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5778800171555542128
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249018126676150342}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6122651904739907652}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6620232676652794318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249018126676150342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4684edb2070cb744f873bdc27d191ed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIPiperTTSProvider
+  piperExecutablePath: Piper/piper.exe
+  modelPath: Piper/voices\en_US-ryan-medium.onnx
+  outputDirectory: ProjectSparkVoice
+  cacheGeneratedAudio: 1
+  audioSource: {fileID: 5579177051582969034}
+  volume: 1
+  interruptCurrentSpeech: 1
+  defaultLengthScale: 1
+  useRequestSpeed: 1
+  logPiperProcess: 0
+--- !u!1 &810924970656056322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5833371231814814283}
+  - component: {fileID: 2296216371904010674}
+  - component: {fileID: 2603444300836376657}
+  - component: {fileID: 3897466362602803640}
+  m_Layer: 0
+  m_Name: Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5833371231814814283
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810924970656056322}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5329983398420876222}
+  m_Father: {fileID: 6122651904739907652}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!223 &2296216371904010674
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810924970656056322}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &2603444300836376657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810924970656056322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0.5
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!114 &3897466362602803640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810924970656056322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!1 &2412251215624405650
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3686688471019256279}
+  - component: {fileID: 6442340859851508685}
+  - component: {fileID: 8630420769765706008}
+  - component: {fileID: 3701433029749532031}
+  - component: {fileID: 2218073475687609819}
+  m_Layer: 0
+  m_Name: Answer Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3686688471019256279
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412251215624405650}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5329983398420876222}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 13.0958, y: 203.2285}
+  m_SizeDelta: {x: 577.8284, y: 144.4571}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &6442340859851508685
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412251215624405650}
+  m_CullTransparentMesh: 1
+--- !u!114 &8630420769765706008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412251215624405650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
+  m_sharedMaterial: {fileID: 2201847597516483309, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3701433029749532031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412251215624405650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b673438bbf0f8b4d9128fa626511e5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.UI.SparkTMPTypewriter
+  autoTypeOnEnable: 1
+  detectExternalTextChanges: 1
+  changeDebounce: 0.08
+  secondsPerCharacter: 0.025
+  startDelay: 0
+  fastMultiplier: 2.5
+  useUnscaledTime: 1
+  spaceDelayMultiplier: 0.35
+  commaPause: 0.12
+  sentencePause: 0.32
+  colonPause: 0.16
+  typingAudioSource: {fileID: 2218073475687609819}
+  typingClip: {fileID: 8300000, guid: 4843269452556bd45bc781d91d52cccb, type: 3}
+  audioInterval: 0.035
+  minimumPitch: 0.95
+  maximumPitch: 1.05
+  typingVolume: 0.5
+  onTypingStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  onTypingCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  onCharacterRevealed:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!82 &2218073475687609819
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412251215624405650}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.292
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!1 &2936706037457694387
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4917468745492703122}
+  - component: {fileID: 827168942027115183}
+  - component: {fileID: 1735465585711561062}
+  - component: {fileID: 210226289100602162}
+  m_Layer: 0
+  m_Name: Placeholder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4917468745492703122
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2936706037457694387}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 274886549691294126}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &827168942027115183
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2936706037457694387}
+  m_CullTransparentMesh: 1
+--- !u!114 &1735465585711561062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2936706037457694387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Ask Spark...
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
+  m_sharedMaterial: {fileID: 2201847597516483309, guid: 98e8cfa0deadf634e9edd6882d974026, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 2164259689
+  m_fontColor: {r: 0.41037738, g: 0.98368365, b: 1, a: 0.5}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 50.2
+  m_fontSizeBase: 14
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 2
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 1
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &210226289100602162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2936706037457694387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 1
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!1 &4570932965051895514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4780993097640754985}
+  - component: {fileID: 9001528529738397592}
+  - component: {fileID: 8878284198663190984}
+  - component: {fileID: 2762259159772398199}
+  - component: {fileID: 5779021012766200073}
+  - component: {fileID: 2093596451767850253}
+  - component: {fileID: 2556153856232812508}
+  - component: {fileID: 5974055449780973802}
+  - component: {fileID: 8177703273686431408}
+  - component: {fileID: 4613085699611490506}
+  - component: {fileID: 3633480312680141468}
+  m_Layer: 0
+  m_Name: SparkAIChallengeController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4780993097640754985
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570932965051895514}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6122651904739907652}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9001528529738397592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570932965051895514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 600e78075e33c1a49b8b6e608ec3d36e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIChallengeController
+  challengeSession: {fileID: 2762259159772398199}
+  challengeEvaluator: {fileID: 8878284198663190984}
+  adaptiveTeachingController: {fileID: 1351433167811459463}
+  automaticallyStartFirstChallenge: 0
+  automaticallyStartNextChallenge: 0
+--- !u!114 &8878284198663190984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570932965051895514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85f0bf3c2ea803940b4c78fbee8b6f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIChallengeEvaluator
+  challengeSession: {fileID: 2762259159772398199}
+  requireCircuitChangeBeforeSuccess: 1
+  requireMeasurementBeforeSuccess: 0
+  requirePlayerAnswerBeforeSuccess: 0
+--- !u!114 &2762259159772398199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570932965051895514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6ec77f2dda099540b3f51426762fc4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIChallengeSession
+  challengeGenerator: {fileID: 5779021012766200073}
+  playerResponseObserver: {fileID: 2885569913242682578}
+  automaticallyGenerateChallenge: 0
+--- !u!114 &5779021012766200073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570932965051895514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 886ecb37ee28bce4d8937c519c2d3a64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIChallengeGenerator
+  planner: {fileID: 8634307470400321241}
+  lessonChallengeResolver: {fileID: 3633480312680141468}
+  preferAuthoredChallenges: 1
+--- !u!114 &2093596451767850253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570932965051895514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e3973d804f2df241b565be9a1b5068c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIGameplayBridge
+  challengeController: {fileID: 9001528529738397592}
+--- !u!114 &2556153856232812508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570932965051895514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d85e3b96ec011448fa82298e7860ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIChallengeFeedback
+  challengeSession: {fileID: 2762259159772398199}
+  learnerModel: {fileID: 5404854323584179692}
+  adaptiveTeachingController: {fileID: 1351433167811459463}
+--- !u!114 &5974055449780973802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570932965051895514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6dcacc9eba9fd640bd4f92665094ce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILevelChallengeBridge
+  levelGamePlayManager: {fileID: 0}
+  challengeController: {fileID: 9001528529738397592}
+  startChallengeOnLevelStart: 1
+  completeChallengeOnLevelCompletion: 1
+  resetChallengeOnLevelStart: 1
+--- !u!114 &8177703273686431408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570932965051895514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 281c2128a07b11c4dab4a530b615f37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILessonChallengeBridge
+  levelGamePlayManager: {fileID: 0}
+  lesson: {fileID: 2425972660151580740}
+  challengeController: {fileID: 9001528529738397592}
+  startChallengeOnLevelStart: 1
+  resetChallengeOnLevelStart: 1
+  completeChallengeOnLevelCompletion: 1
+--- !u!114 &4613085699611490506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570932965051895514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db5991c3d9fc79f4aa360b6bce679f13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILevelLessonBridge
+  levelGamePlayManager: {fileID: 0}
+  lesson: {fileID: 2425972660151580740}
+  adaptiveTeachingController: {fileID: 1351433167811459463}
+  activateLessonOnLevelStart: 1
+  startTeachingOnLevelStart: 1
+  recordLessonSuccessOnLevelCompletion: 1
+--- !u!114 &3633480312680141468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570932965051895514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28104a68c6fa12a47b35362259b13efd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILessonChallengeResolver
+  lesson: {fileID: 2425972660151580740}
+  database: {fileID: 11400000, guid: 7687f6c716ecfe741bb438192ce4c2cb, type: 2}
+  logMissingChallenges: 1
+  logResolutionSummary: 0
+--- !u!1 &4869348545513407639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 156293056980724681}
+  - component: {fileID: 6218427090294303967}
+  - component: {fileID: 3082344320942322982}
+  - component: {fileID: 116546442362962983}
+  - component: {fileID: 3442709308528327099}
+  m_Layer: 0
+  m_Name: Ask_Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &156293056980724681
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4869348545513407639}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5329983398420876222}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 202.45432, y: -18}
+  m_SizeDelta: {x: 1689.6343, y: 1470.9277}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &6218427090294303967
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4869348545513407639}
+  m_CullTransparentMesh: 1
+--- !u!114 &3082344320942322982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4869348545513407639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 13f51f37630999d439d695eb1583fd03, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &116546442362962983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4869348545513407639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 3082344320942322982}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &3442709308528327099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4869348545513407639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b99c140bd9953e047944792296da9897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkCharacterAnimationController
+  characterImage: {fileID: 3082344320942322982}
+  characterRect: {fileID: 156293056980724681}
+  voiceAudioSource: {fileID: 5579177051582969034}
+  audioDrivenTalking: 1
+  audioSensitivity: 2.5
+  audioSmoothing: 12
+  idleFrames:
+  - {fileID: 190213113, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1639293984, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 606026738, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1846318902, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 236353986, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1610116116, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1153438502, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -248214161, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 336216928, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 722215207, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  idleFrameRate: 8
+  idleScaleAmount: 0.015
+  idleRotationAmount: 0.8
+  idleBreathingSpeed: 1.2
+  blinkFrames:
+  - {fileID: -1598732831, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 836849705, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1360490915, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 208669448, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 244452462, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  minimumBlinkDelay: 2.5
+  maximumBlinkDelay: 6
+  blinkFrameRate: 14
+  talkFrames:
+  - {fileID: 1334851166, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1886767801, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1300508495, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1349620633, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 2119942591, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 65721526, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1133145783, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1456880607, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -449503129, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  talkFrameRate: 14
+  talkFrameRateBoost: 12
+  minimumTalkAmplitude: 0.015
+  happyFrames:
+  - {fileID: -1545104609, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1365162174, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1349238199, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -959710361, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1744801748, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1373544049, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  happyFrameRate: 10
+  excitedFrames:
+  - {fileID: -1545104609, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1365162174, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1349238199, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -959710361, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1744801748, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  excitedFrameRate: 14
+  surprisedFrames:
+  - {fileID: 1826046923, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1674801966, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -282522701, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -2123999236, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -890382284, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1458476527, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 772184534, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -278535549, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  surprisedFrameRate: 10
+  thinkingFrames:
+  - {fileID: -427271959, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1658544954, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1598979087, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1409667562, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1216212027, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -397164998, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1382983466, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  thinkingFrameRate: 7
+  sadFrames:
+  - {fileID: 624418633, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 842047572, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1192200265, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1529192807, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -821227043, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 315161174, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -896640114, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -797334036, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  sadFrameRate: 7
+  angryFrames:
+  - {fileID: -1374390976, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1524773045, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1741367899, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1256524622, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1918262101, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 951367215, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1920903066, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  angryFrameRate: 10
+  winkFrames:
+  - {fileID: -1248965556, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 593025587, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -622717205, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 648010853, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1498188325, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1116302567, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -693857370, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  winkFrameRate: 12
+  lookLeftFrames:
+  - {fileID: 681218941, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -237503223, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1461979470, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -54053329, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1095861034, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -195616271, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1646180736, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1229611558, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  lookLeftFrameRate: 10
+  lookRightFrames:
+  - {fileID: 681218941, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -237503223, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1461979470, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -54053329, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1095861034, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -195616271, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1646180736, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1229611558, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  lookRightFrameRate: 10
+  headTiltFrames:
+  - {fileID: -1353343458, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1202466271, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -149203628, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -310110477, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -1515367445, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 164942687, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -687720916, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  headTiltFrameRate: 10
+  bounceFrames:
+  - {fileID: 617997341, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -396500061, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -779041593, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -184585040, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 943223444, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 1232427949, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: -383193030, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  - {fileID: 99186657, guid: a4779cf4db65ccf46b6df9fa05c09cdd, type: 3}
+  bounceFrameRate: 14
+  bounceScaleAmount: 0.035
+  bounceRotationAmount: 2
+  enableLivingMotion: 0
+  livingMotionSpeed: 1.4
+  livingMotionScale: 0.008
+  livingMotionRotation: 0.45
+  returnToIdleAfterOneShot: 1
+  automaticBlinking: 1
+  talkingOverridesEmotion: 1
+--- !u!1 &5044831006914672432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2909738179580097039}
+  - component: {fileID: 7469652855160491392}
+  - component: {fileID: 12328002148107584}
+  - component: {fileID: 512264053072072415}
+  - component: {fileID: 7784345520141855684}
+  - component: {fileID: 4097539873056581116}
+  - component: {fileID: 6500539421347444192}
+  - component: {fileID: 4777965189874681142}
+  - component: {fileID: 7890329279607276937}
+  - component: {fileID: 8706070484994594531}
+  - component: {fileID: 6509339494661316678}
+  - component: {fileID: 2659693300161220614}
+  - component: {fileID: 844360801671586764}
+  - component: {fileID: 64528233903093932}
+  - component: {fileID: 1074602042914073231}
+  - component: {fileID: 8647603085470720260}
+  - component: {fileID: 3756609503056016745}
+  m_Layer: 0
+  m_Name: AI_TutorialSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2909738179580097039
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.084190734, y: -0.014301538, z: 0.0017099256, w: -0.9963456}
+  m_LocalPosition: {x: 406.80292, y: 917.07886, z: -1598.0385}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6122651904739907652}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7469652855160491392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa781c4c80021514fa259cc83ab473a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIDirector
+  brain: {fileID: 3327365130416590379}
+  memory: {fileID: 121488243691729656}
+  knowledge: {fileID: 11400000, guid: c8eaed39c5a619547b32baeb7b71b1df, type: 2}
+  observeBrainChanges: 1
+--- !u!114 &12328002148107584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42f06693867455247b00758e2f4e7060, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialGameplaySignals
+  director: {fileID: 7784345520141855684}
+  circuit: {fileID: 0}
+--- !u!114 &512264053072072415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb05a1459b8e2ba4db34ff6c3fa1a2fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAIWorldContext
+  levelManager: {fileID: 0}
+  levelLoader: {fileID: 0}
+--- !u!114 &7784345520141855684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 245277df4635c484f8564cc4292fc406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialDirector
+  defaultTutorial: {fileID: 11400000, guid: ef020f4b13c558d4ea87c57d63c6d70a, type: 2}
+  autoStart: 0
+  voice: {fileID: 8486225406989924498}
+  voiceEnabled: 1
+  sceneCamera: {fileID: 0}
+  overlaySortingOrder: 500
+  accent: {r: 0.03, g: 0.9, b: 0.95, a: 1}
+  panelColor: {r: 0.035, g: 0.07, b: 0.12, a: 0.95}
+  enableHotkeys: 1
+  stopTutorialWhenLevelWon: 1
+--- !u!114 &4097539873056581116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 313a32fd098e2fb4996fa9fede2649f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialCinematicGuide
+  director: {fileID: 7784345520141855684}
+  sceneCamera: {fileID: 0}
+  showPointer: 0
+  pointerColor: {r: 0.02, g: 0.9, b: 1, a: 0.95}
+  pointerSize: 54
+  pointerOffset: {x: 0, y: 65}
+  pulseSpeed: 3.5
+  overlaySortingOrder: 501
+  guideCamera: 0
+  cameraTurnSpeed: 2.5
+  restoreCameraOnStepChange: 1
+--- !u!114 &6500539421347444192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b40ddd3ffdec1844bbd758a08c100db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialGhostDemonstrator
+  director: {fileID: 7784345520141855684}
+  sceneCamera: {fileID: 0}
+  demonstrations:
+  - stepId: select
+    kind: 1
+    sourceKey: shelf.resistor
+    destinationKey: 
+    startDelay: 0
+    motionSeconds: 1.5
+    endPauseSeconds: 0.5
+    replayUntilStepCompleted: 1
+    replayDelaySeconds: 2
+  - stepId: workstation
+    kind: 2
+    sourceKey: shelf.resistor
+    destinationKey: workstation.resistor
+    startDelay: 0.5
+    motionSeconds: 1.5
+    endPauseSeconds: 0.5
+    replayUntilStepCompleted: 1
+    replayDelaySeconds: 2
+  - stepId: replace
+    kind: 2
+    sourceKey: workstation.resistor
+    destinationKey: shelf.resistor
+    startDelay: 0.5
+    motionSeconds: 1.5
+    endPauseSeconds: 0.5
+    replayUntilStepCompleted: 1
+    replayDelaySeconds: 2
+  - stepId: switch
+    kind: 1
+    sourceKey: device.switch
+    destinationKey: 
+    startDelay: 0.5
+    motionSeconds: 1.5
+    endPauseSeconds: 0.5
+    replayUntilStepCompleted: 1
+    replayDelaySeconds: 2
+  - stepId: wire
+    kind: 3
+    sourceKey: terminal.start
+    destinationKey: terminal.end
+    startDelay: 0.5
+    motionSeconds: 1.5
+    endPauseSeconds: 0.5
+    replayUntilStepCompleted: 1
+    replayDelaySeconds: 2
+  sortingOrder: 520
+  cursorColor: {r: 0.04, g: 0.94, b: 1, a: 0.95}
+  trailColor: {r: 0.04, g: 0.94, b: 1, a: 0.5}
+  cursorSize: 44
+  targetResolveTimeout: 8
+  replayHotkeyF3: 1
+  logDemonstrations: 1
+--- !u!114 &4777965189874681142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34080f91445ba5b43bc2a0a7ce14c334, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialMistakeCoach
+  director: {fileID: 7784345520141855684}
+  voice: {fileID: 8486225406989924498}
+  ghost: {fileID: 6500539421347444192}
+  speakCorrections: 1
+  replayGhostAfterRepeatedMistakes: 1
+  replayAfterCount: 3
+  minSecondsBetweenMessages: 1
+  repeatSameCorrectionAfterSeconds: 10
+  showSeconds: 6
+  logMistakes: 1
+  coachOutsideTutorial: 1
+  filterMistakesByStep: 1
+  alwaysExplainUnavailableComponents: 1
+  clearOnStepChange: 1
+  resetCooldownOnStepChange: 1
+  sortingOrder: 550
+  panelColor: {r: 0.025, g: 0.055, b: 0.09, a: 0.94}
+  accentColor: {r: 1, g: 0.68, b: 0.21, a: 1}
+  panelWidth: 650
+  panelHeight: 130
+  panelBottomRightOffset: {x: -24, y: 24}
+--- !u!114 &7890329279607276937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b87568c65d110245a46ebe4d1b3b7a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialLevelBridge
+  levelManager: {fileID: 0}
+  director: {fileID: 7784345520141855684}
+  automaticallyStartTutorial: 0
+  skipTutorialForPreviouslyWonLevels: 1
+  resumeExistingTutorialProgress: 1
+  logEvents: 1
+--- !u!114 &8706070484994594531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 904ba6d8760f4394ba64cb9bd7744df5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialResistorStateBridge
+  director: {fileID: 7784345520141855684}
+  levelManager: {fileID: 0}
+  voice: {fileID: 8486225406989924498}
+  resistorSlotId: Register_Slot
+  explicitWorkstationSlot: {fileID: 0}
+  completePlacementStepFromState: 1
+  updateTutorialHint: 1
+  narrateStageChanges: 0
+  requireClosedReturnForConducting: 1
+  refreshInterval: 0.25
+  meaningfulCurrentAmps: 0.0001
+  speechCooldownSeconds: 8
+  diagnostics: 0
+--- !u!114 &6509339494661316678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88bf8f62a66facb42abe16586a9a4d22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkTutorialCircuitAwareness
+  levelManager: {fileID: 0}
+  showOnMeaningfulStateChange: 1
+  showOnLevelStart: 1
+  refreshSeconds: 0.4
+  messageDurationSeconds: 7
+  recallKey: 285
+  logChanges: 0
+  panelSize: {x: 490, y: 170}
+  bottomRightOffset: {x: 24, y: 195}
+  sortingOrder: 540
+--- !u!114 &2659693300161220614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b8c92d1761b5140b43614d43106843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAIComponentInspector
+  closeOnEscape: 1
+  closeKey: 27
+  sortingOrder: 575
+  panelSize: {x: 540, y: 250}
+  topRightInset: {x: 24, y: 100}
+  logInspections: 0
+--- !u!114 &844360801671586764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8047e19c405a0554cae133e518e4f005, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAICircuitDiagnosis
+  levelManager: {fileID: 0}
+  sceneCamera: {fileID: 0}
+  diagnoseKey: 286
+  openWhenLevelFails: 0
+  closeOnLevelChange: 1
+  refreshSeconds: 0.35
+  logDiagnosis: 0
+  panelSize: {x: 560, y: 240}
+  rightCenterInset: {x: 24, y: 0}
+  sortingOrder: 565
+  markUnsatisfiedObjective: 1
+  markerColor: {r: 0.98, g: 0.66, b: 0.16, a: 1}
+--- !u!114 &64528233903093932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c9e887d9fa5a04a9659e59f902d403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAIAdaptiveTroubleshooter
+  levelManager: {fileID: 0}
+  resistorWorkstationSlot: {fileID: 0}
+  resistorSlotId: Register_Slot
+  toggleKey: 287
+  resetHintLadderWhenStateChanges: 1
+  logChanges: 0
+  panelSize: {x: 540, y: 210}
+  topLeftOffset: {x: 24, y: -85}
+  sortingOrder: 580
+--- !u!114 &1074602042914073231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88cb31923b9a7dd45a8f76a70a4767d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAIUnifiedAssistant
+  levelManager: {fileID: 0}
+  tutorial: {fileID: 7784345520141855684}
+  troubleshooter: {fileID: 64528233903093932}
+  voice: {fileID: 8486225406989924498}
+  sceneCamera: {fileID: 0}
+  toggleKey: 288
+  speakReplies: 1
+  logActions: 1
+  inspectDistance: 25
+  inspectLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  routeQuestionsToExternalBrain: 1
+  externalAnswerTimeout: 15
+  panelSize: {x: 535, y: 330}
+  sortingOrder: 650
+  canvas: {fileID: 0}
+  heading: {fileID: 0}
+  status: {fileID: 0}
+  answer: {fileID: 0}
+  questionInput: {fileID: 0}
+  answerScroll: {fileID: 0}
+  inspectButton: {fileID: 0}
+  explainButton: {fileID: 0}
+  hintButton: {fileID: 0}
+  tutorialButton: {fileID: 0}
+  askButton: {fileID: 0}
+  closeButton: {fileID: 0}
+  rememberedComponent: {fileID: 0}
+--- !u!114 &8647603085470720260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7c4e8dfaea9f14fad10c96db252da2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAIConversation
+  levelManager: {fileID: 0}
+  sceneCamera: {fileID: 0}
+  toggleKey: 289
+  openOnStart: 0
+  inspectDistance: 25
+  inspectLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  routeToExternalBrain: 0
+  externalAnswerTimeout: 15
+  sortingOrder: 720
+--- !u!114 &3756609503056016745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5044831006914672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 352f9c8282d7fb646b86d2c6f4486e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.Tutorial.SparkAICurrentObjectiveProbe
+  componentBindingId: 
+  resistor: {fileID: 0}
+--- !u!1 &5071024500718784890
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7229617688425525483}
+  - component: {fileID: 9057351532756503926}
+  - component: {fileID: 7623417616302639252}
+  - component: {fileID: 2169512500394272663}
+  m_Layer: 0
+  m_Name: Ask InputField (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7229617688425525483
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5071024500718784890}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 274886549691294126}
+  m_Father: {fileID: 5329983398420876222}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -57.7135, y: -11.0352}
+  m_SizeDelta: {x: 381.6099, y: 158.0856}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &9057351532756503926
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5071024500718784890}
+  m_CullTransparentMesh: 1
+--- !u!114 &7623417616302639252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5071024500718784890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2169512500394272663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5071024500718784890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_InputField
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 7623417616302639252}
+  m_TextViewport: {fileID: 274886549691294126}
+  m_TextComponent: {fileID: 5497177604602319808}
+  m_Placeholder: {fileID: 1735465585711561062}
+  m_VerticalScrollbar: {fileID: 0}
+  m_VerticalScrollbarEventHandler: {fileID: 0}
+  m_LayoutGroup: {fileID: 0}
+  m_ScrollSensitivity: 1
+  m_ContentType: 0
+  m_InputType: 0
+  m_AsteriskChar: 42
+  m_KeyboardType: 0
+  m_LineType: 0
+  m_HideMobileInput: 0
+  m_HideSoftKeyboard: 0
+  m_CharacterValidation: 0
+  m_RegexValue: 
+  m_GlobalPointSize: 14
+  m_CharacterLimit: 0
+  m_OnEndEdit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSubmit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelect:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnDeselect:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnTextSelection:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnEndTextSelection:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnTouchScreenKeyboardStatusChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_CustomCaretColor: 0
+  m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
+  m_Text: 
+  m_CaretBlinkRate: 0.85
+  m_CaretWidth: 1
+  m_ReadOnly: 0
+  m_RichText: 1
+  m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_OnFocusSelectAll: 1
+  m_ResetOnDeActivation: 1
+  m_KeepTextSelectionVisible: 0
+  m_RestoreOriginalTextOnEscape: 1
+  m_isRichTextEditingAllowed: 0
+  m_LineLimit: 0
+  isAlert: 0
+  m_InputValidator: {fileID: 0}
+  m_ShouldActivateOnSelect: 1
+--- !u!1 &6248426589911549066
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 274886549691294126}
+  - component: {fileID: 3152651597602376394}
+  m_Layer: 0
+  m_Name: Text Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &274886549691294126
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6248426589911549066}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4917468745492703122}
+  - {fileID: 980671767790625516}
+  m_Father: {fileID: 7229617688425525483}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -0.5}
+  m_SizeDelta: {x: -20, y: -13}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3152651597602376394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6248426589911549066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
+  m_Padding: {x: -8, y: -5, z: -8, w: -5}
+  m_Softness: {x: 0, y: 0}
+--- !u!1 &7896374821993990115
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6122651904739907652}
+  - component: {fileID: 1749896356924344514}
+  - component: {fileID: 607624817858918652}
+  - component: {fileID: 3327365130416590379}
+  - component: {fileID: 121488243691729656}
+  - component: {fileID: 4516102948369292188}
+  - component: {fileID: 4292158549780499597}
+  - component: {fileID: 1332695059483291504}
+  - component: {fileID: 4845289013039343265}
+  - component: {fileID: 9201237615175838901}
+  - component: {fileID: 8570468693984423567}
+  - component: {fileID: 1886665328942923498}
+  - component: {fileID: 1219093520780737501}
+  - component: {fileID: 8259582168435317231}
+  - component: {fileID: 6820499317688093860}
+  - component: {fileID: 2338504003466813248}
+  - component: {fileID: 3750366023349105358}
+  - component: {fileID: 2870696398887945551}
+  - component: {fileID: 2487559007402327968}
+  - component: {fileID: 4888579708791145360}
+  - component: {fileID: 2885569913242682578}
+  - component: {fileID: 5404854323584179692}
+  - component: {fileID: 8634307470400321241}
+  - component: {fileID: 1351433167811459463}
+  m_Layer: 0
+  m_Name: Spark AI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6122651904739907652
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4780993097640754985}
+  - {fileID: 5411245899678587060}
+  - {fileID: 8423278415660599620}
+  - {fileID: 5778800171555542128}
+  - {fileID: 7168745497162182940}
+  - {fileID: 5833371231814814283}
+  - {fileID: 2909738179580097039}
+  - {fileID: 8187146224616235761}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1749896356924344514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c108a6bb95b2dfd4db244ee1a5218e13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIWorld
+  circuitSystem: {fileID: 0}
+  electricalSolver: {fileID: 0}
+  levelGamePlayManager: {fileID: 0}
+  selectionController: {fileID: 0}
+  playerActivity: {fileID: 4845289013039343265}
+  electronicObjectRoot: {fileID: 0}
+  explicitElectronicObjects: []
+--- !u!114 &607624817858918652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9de5258346fb1147bd0d3ddea98db9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIReasoner
+  world: {fileID: 1749896356924344514}
+--- !u!114 &3327365130416590379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acac52645a3b81546a98b21fcbe526ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIBrain
+  world: {fileID: 1749896356924344514}
+  reasoner: {fileID: 607624817858918652}
+--- !u!114 &121488243691729656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90099f134a66a8b43a43a90cca92659e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIMemory
+  maximumObservationCount: 128
+  brain: {fileID: 3327365130416590379}
+--- !u!114 &4516102948369292188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa781c4c80021514fa259cc83ab473a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIDirector
+  brain: {fileID: 3327365130416590379}
+  memory: {fileID: 121488243691729656}
+  knowledge: {fileID: 11400000, guid: c8eaed39c5a619547b32baeb7b71b1df, type: 2}
+  observeBrainChanges: 1
+--- !u!114 &4292158549780499597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dc73a2a27307cf43b6499373eb9ef3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIIntent
+  world: {fileID: 1749896356924344514}
+  brain: {fileID: 3327365130416590379}
+  playerActivity: {fileID: 4845289013039343265}
+--- !u!114 &1332695059483291504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c68376b4289b44592667b1338f6bb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILearning
+  knowledge: {fileID: 11400000, guid: c8eaed39c5a619547b32baeb7b71b1df, type: 2}
+  intent: {fileID: 4292158549780499597}
+  brain: {fileID: 3327365130416590379}
+  successIncrease: 0.12
+  struggleDecrease: 0.1
+  repeatedMistakeDecrease: 0.05
+  masteryThreshold: 0.8
+--- !u!114 &4845289013039343265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 952a931bbe33897408f1c6851f7fbf7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIPlayerActivity
+  selectionController: {fileID: 0}
+  circuitSystem: {fileID: 0}
+  observeSelection: 1
+  observeCircuitChanges: 1
+--- !u!114 &9201237615175838901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18f1f82bdc83b28468a9c561a3dd6eb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIMistakeDetector
+  levelGamePlayManager: {fileID: 0}
+  lesson: {fileID: 2425972660151580740}
+  learning: {fileID: 1332695059483291504}
+  recordEvaluationStruggles: 1
+  recordRepeatedMistakes: 1
+  repeatedMistakeThreshold: 2
+--- !u!114 &8570468693984423567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2489ca38db74393478c11d1e3c3bcdc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIConceptMistakeAnalyzer
+  world: {fileID: 1749896356924344514}
+  lesson: {fileID: 2425972660151580740}
+  learning: {fileID: 1332695059483291504}
+  openCircuitConceptId: open_circuit
+  closedCircuitConceptId: closed_circuit
+  shortCircuitConceptId: short_circuit
+  polarityConceptId: polarity
+  voltageConceptId: voltage
+  currentConceptId: current
+  powerConceptId: power
+  analyzeOnlyActiveLessonConcepts: 1
+  allowFallbackToLessonConcept: 0
+--- !u!114 &1886665328942923498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36cff29893c1ff740ae6a3f33506eacd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAICircuitPathAnalyzer
+  world: {fileID: 1749896356924344514}
+--- !u!114 &1219093520780737501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f141b1f5f7c9a34ba281fa878b64b8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAICircuitReasoner
+  world: {fileID: 1749896356924344514}
+  circuitAnalyzer: {fileID: 6820499317688093860}
+  pathAnalyzer: {fileID: 1886665328942923498}
+--- !u!114 &8259582168435317231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6ccca8f7c5543041b631a2864c10bb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIComponentReasoner
+  world: {fileID: 1749896356924344514}
+--- !u!114 &6820499317688093860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289cf5ce7efd87e4c98fdc3b4d481c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAICircuitAnalyzer
+  world: {fileID: 1749896356924344514}
+--- !u!114 &2338504003466813248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d15319cd8eb8da746b44fb952cc5e907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIElectricalReasoner
+  world: {fileID: 1749896356924344514}
+  voltageThreshold: 0.001
+  currentThreshold: 0.000001
+  powerThreshold: 0.000001
+  comparisonTolerance: 0.0001
+--- !u!114 &3750366023349105358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd449e6b660ac7742acb39f36f1da542, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIObservationCoordinator
+  world: {fileID: 1749896356924344514}
+  circuitAnalyzer: {fileID: 6820499317688093860}
+  pathAnalyzer: {fileID: 1886665328942923498}
+  circuitReasoner: {fileID: 1219093520780737501}
+  componentReasoner: {fileID: 8259582168435317231}
+  electricalReasoner: {fileID: 2338504003466813248}
+--- !u!114 &2870696398887945551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b65a31fe75a8034d89c3e4ea17ef1fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIContextReasoner
+  observationCoordinator: {fileID: 3750366023349105358}
+--- !u!114 &2487559007402327968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c23f5bacc2dc3194c84e15bd9040f456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAITeachingReasoner
+  contextReasoner: {fileID: 2870696398887945551}
+  defaultConfidence: 0.8
+--- !u!114 &4888579708791145360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96c068a2ec1fc1944982b009288d2b67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAITeachingSession
+  teachingReasoner: {fileID: 2487559007402327968}
+  autoStartSession: 0
+  allowAutomaticEscalation: 0
+  minimumEscalationDelay: 8
+  maximumHints: 2
+--- !u!114 &2885569913242682578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7964556f8f9541549b9ca6f71d3ad196, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIPlayerResponseObserver
+  teachingSession: {fileID: 4888579708791145360}
+  maximumHistoryEntries: 64
+--- !u!114 &5404854323584179692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa3bad41de247174e90e608b78ddde8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILearnerModel
+  responseObserver: {fileID: 2885569913242682578}
+  correctLearningGain: 0.12
+  incorrectLearningLoss: 0.1
+  hintPenalty: 0.02
+  successfulActionGain: 0.04
+  maximumConcepts: 128
+--- !u!114 &8634307470400321241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3c2622a30baadc41a44b24e0b1406b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIAdaptiveTeachingPlanner
+  contextReasoner: {fileID: 2870696398887945551}
+  learnerModel: {fileID: 5404854323584179692}
+  teachingReasoner: {fileID: 2487559007402327968}
+  lesson: {fileID: 2425972660151580740}
+  strugglingThreshold: 0.3
+  developingThreshold: 0.6
+  masteredThreshold: 0.9
+  maximumCandidateConcepts: 16
+  conceptProgressionPlanner: {fileID: 5392397882344908144}
+  respectConceptPrerequisites: 1
+--- !u!114 &1351433167811459463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896374821993990115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc716f507e93c91449ea03a1e672c6a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIAdaptiveTeachingController
+  planner: {fileID: 8634307470400321241}
+  teachingSession: {fileID: 4888579708791145360}
+  automaticallyBeginTeaching: 0
+--- !u!1 &8944173056927718732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5329983398420876222}
+  - component: {fileID: 3276245114263115469}
+  - component: {fileID: 5692379314770694217}
+  - component: {fileID: 6208876410245700932}
+  m_Layer: 0
+  m_Name: AI Question Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5329983398420876222
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8944173056927718732}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 156293056980724681}
+  - {fileID: 7229617688425525483}
+  - {fileID: 3686688471019256279}
+  m_Father: {fileID: 5833371231814814283}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -334, y: 100.328094}
+  m_SizeDelta: {x: 618.2495, y: 217.5549}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3276245114263115469
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8944173056927718732}
+  m_CullTransparentMesh: 1
+--- !u!114 &5692379314770694217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8944173056927718732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 2100000, guid: 858cd9510a74b1e4cba063004faacb0b, type: 2}
+  m_Color: {r: 0.6179246, g: 0.90164393, b: 1, a: 0.45490196}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6208876410245700932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8944173056927718732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0800521e85fe8b24183ffc8a11c5eed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIQuestionUI
+  questionController: {fileID: 831127101911375725}
+  questionInput: {fileID: 2169512500394272663}
+  askButton: {fileID: 116546442362962983}
+  answerText: {fileID: 8630420769765706008}
+  clearInputAfterAsk: 1
+  showPlayerQuestion: 0
+--- !u!1 &9062053150157078991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7168745497162182940}
+  - component: {fileID: 2425972660151580740}
+  - component: {fileID: 8385556052012692938}
+  m_Layer: 0
+  m_Name: SparkAILesson
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7168745497162182940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9062053150157078991}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6122651904739907652}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2425972660151580740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9062053150157078991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765ce4286e7d2e04da0e4d00dba63686, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILesson
+  knowledge: {fileID: 11400000, guid: c8eaed39c5a619547b32baeb7b71b1df, type: 2}
+  learning: {fileID: 1332695059483291504}
+  lessons:
+  - id: LEVEL_01
+    displayName: Complete Circuit
+    description: 
+    learningObjective: 
+    successOutcome: 
+    conceptIds:
+    - circuit_basics
+    - source
+    - circuit_path
+    - circuit_path
+    difficulty: 0
+    masteryRequirement: 0
+    requiredForLevelCompletion: 0
+    allowOptionalPractice: 0
+    requiredChallengeIds: []
+    optionalChallengeIds: []
+--- !u!114 &8385556052012692938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9062053150157078991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db5991c3d9fc79f4aa360b6bce679f13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAILevelLessonBridge
+  levelGamePlayManager: {fileID: 0}
+  lesson: {fileID: 2425972660151580740}
+  adaptiveTeachingController: {fileID: 1351433167811459463}
+  activateLessonOnLevelStart: 1
+  startTeachingOnLevelStart: 1
+  recordLessonSuccessOnLevelCompletion: 1
+--- !u!1 &9186046714033677120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8423278415660599620}
+  - component: {fileID: 1536851502327384709}
+  - component: {fileID: 2593263879601427088}
+  - component: {fileID: 5392397882344908144}
+  m_Layer: 0
+  m_Name: SparkAICurriculum
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8423278415660599620
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9186046714033677120}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6122651904739907652}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1536851502327384709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9186046714033677120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae80e75ee7100a64a8baecae637d354f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIConceptChallengePlanner
+  conceptProgressionPlanner: {fileID: 5392397882344908144}
+  challengeGenerator: {fileID: 5779021012766200073}
+  respectConceptPrerequisites: 1
+--- !u!114 &2593263879601427088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9186046714033677120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db4fa704b6ff1b4fafd4503a66da349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIConceptProgression
+  conceptDatabase: {fileID: 11400000, guid: f5e27390c19bd1e4da16d12bd98e45df, type: 2}
+  learnerModel: {fileID: 5404854323584179692}
+  prerequisiteMasteryRequirement: 0.7
+  requireAllPrerequisites: 1
+--- !u!114 &5392397882344908144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9186046714033677120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9662679c1d4f51349a2802c751aefae3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.AI.SparkAIConceptProgressionPlanner
+  progression: {fileID: 2593263879601427088}
+  conceptDatabase: {fileID: 11400000, guid: f5e27390c19bd1e4da16d12bd98e45df, type: 2}
+  learnerModel: {fileID: 5404854323584179692}
+  maximumPrerequisiteDepth: 8
+--- !u!1001 &3855044934285881290
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6122651904739907652}
+    m_Modifications:
+    - target: {fileID: 2199230230995229448, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: voice
+      value: 
+      objectReference: {fileID: 5579177051582969034}
+    - target: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: m_Name
+      value: SparkV5Pro
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358099554444385794, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: tts
+      value: 
+      objectReference: {fileID: 2808010732266041671}
+    - target: {fileID: 3358099554444385794, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: voice
+      value: 
+      objectReference: {fileID: 8486225406989924498}
+    - target: {fileID: 3358099554444385794, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: world
+      value: 
+      objectReference: {fileID: 3327365130416590379}
+    - target: {fileID: 3358099554444385794, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: assistant
+      value: 
+      objectReference: {fileID: 1074602042914073231}
+    - target: {fileID: 3358099554444385794, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: playbackSource
+      value: 
+      objectReference: {fileID: 5579177051582969034}
+    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.446
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.346
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+--- !u!4 &8187146224616235761 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+  m_PrefabInstance: {fileID: 3855044934285881290}
+  m_PrefabAsset: {fileID: 0}

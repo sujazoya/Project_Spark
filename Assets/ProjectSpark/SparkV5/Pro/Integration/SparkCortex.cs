@@ -162,6 +162,11 @@ namespace ProjectSpark.SparkV5.Pro
             if (Regex.IsMatch(q, @"\b(what happens if|what if i|suppose i)\b")) return SparkIntent.Predict;
             if (Regex.IsMatch(q, @"\b(show me what you mean|point it out|show the (actual )?(diagram|schematic)|walk me through the diagram)\b")) return SparkIntent.Show;
             if (Regex.IsMatch(q, @"\b(where (can|do) i (learn|practice)|which (level|mission).* (cover|teach|involve)|levels (about|on|with)|find (a )?level (about|with))\b")) return SparkIntent.Search;
+            // SPARK_TEACHING_RUNTIME_V3_ROUTING: lesson requests precede general level descriptions.
+            if (Regex.IsMatch(q, @"\b(teach me|start (a |the )?(lesson|tutorial)|walk me through|guide me through|show me step by step|step by step|ask me (a |one )?question|quiz me|can you teach)\b"))
+                return SparkIntent.Lesson;
+            if (Regex.IsMatch(q, @"\b(continue (the|this|our) lesson|go to (the )?next (lesson )?step|next question)\b"))
+                return SparkIntent.Resume;
             if (Regex.IsMatch(q, @"\b(level|mission)\s+(\d+|one|two|three|four|five|six|seven|eight|nine|ten|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)\b") &&
                 Regex.IsMatch(q, @"\b(explain|teach|about|unlock|prerequisite|requirement|objective|complete)\w*\b")) return SparkIntent.LevelDetails;
             if (Regex.IsMatch(q, @"\b(which chapter|current chapter|current campaign|campaign size)\b")) return SparkIntent.Campaign;
@@ -191,6 +196,13 @@ namespace ProjectSpark.SparkV5.Pro
                 reply = new Reply("Independent examination is active. Submit your work using the official examiner.", SparkState.Examining);
                 return true;
             }
+            // SPARK_PRACTICAL_COACH_V4: narrow, evidence-grounded practical requests.
+            // Runs before legacy fallbacks, without interrupting lesson answers or resume.
+            if (SparkProPracticalCoach.TryRespond(context, teacher.Active, out Reply practicalReply))
+            {
+                reply = practicalReply;
+                return true;
+            }
             if (Intent == SparkIntent.Legacy)
             {
                 string q = Normalize(context.Question);
@@ -199,6 +211,20 @@ namespace ProjectSpark.SparkV5.Pro
                 if (teacher.HasSession && (q is "next" or "continue" or "next step" or "hint")) Intent = SparkIntent.Resume;
                 if (teacher.AcceptsResponse && Regex.IsMatch(q, @"^(more|less|same|open|closed|yes|no|[+\-]?\d|zero|one|two|increase|decrease)\b"))
                     Intent = SparkIntent.Answer;
+                // SPARK_TEACHING_RUNTIME_V3_RESPONSES: recognize natural short answers during a lesson.
+                // Explicit gameplay/diagnostic intents were already classified before this fallback.
+                if (Intent == SparkIntent.Legacy && teacher.AcceptsResponse &&
+                    q.Length > 0 && q.Length <= 250 &&
+                    !Regex.IsMatch(q, @"^(what|why|how|where|when|who|which|explain|show|teach|start|stop|pause|resume|cancel|next|help|tell|can|could|would|should|will|do|does|did|is|are)\b"))
+                    Intent = SparkIntent.Answer;
+
+                if (Intent == SparkIntent.Legacy && SparkProCoreConcepts.TryExplain(q, out string primer))
+                {
+                    reply = new Reply(primer + (teacher.HasSession
+                        ? "\nYour lesson is still active. Answer its current question or say 'continue the lesson'."
+                        : string.Empty), SparkState.Teaching, SparkGesture.Explain);
+                    return true;
+                }
                 if (Intent == SparkIntent.Legacy) return false;
             }
 

@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbfac0e802d59084cb2072e1a19fe571, type: 3}
+  m_Name: Auto_L104_l104_3_C122AFB8
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProAutoGuide
+  lessonId: L104/l104_3
+  level: 104
+  objectiveId: l104_3
+  title: "Level 104 \u2014 Initialize both DDR4 devices"
+  authoredRequirement: Verify VDD, VPP, VTT, VREF, CK and command readiness before
+    initializing both devices.
+  sourceAsset: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_104_Layout/Level_104.asset
+  sourceFingerprint: CB65936A
+  contentSignature: 7DBDDE632D73BFEAE8CFA74CBA710A693894EFCB07531D321572F24879623510
+  aliases:
+  - Initialize both DDR4 devices
+  - l104 3
+  authoredVisualReferences:
+  - "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_104_Layout/Level_104.asset#l104_3
+    \u2192 native objective whiteboard (criteria, no inferred wiring)"
+  authoredPracticeReferences:
+  - "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_104_Layout/Level_104_Layout.prefab
+    \u2192 native mission practice"
+  recipeId: memory
+  concept: 'Authored objective: Initialize both DDR4 devices.
+
+    Authored requirement:
+    Verify VDD, VPP, VTT, VREF, CK and command readiness before initializing both
+    devices.
+
+    General teaching principle: Memory and initialization workflows
+    require checking power, connectivity, configuration and the authored test responses
+    in the correct sequence.
+
+    Only fresh, authoritative game evidence can establish
+    that this objective is complete.'
+  analogy: A staged startup checklist helps distinguish a missing prerequisite from
+    a later failure.
+  diagram: '[Authored setup] -> [Check prerequisites] -> [Observe the game evidence]
+    -> [Verify objective]'
+  misconception: One passing startup indicator does not guarantee every memory or
+    firmware check has passed.
+  baseline: "Before working on \u2018Initialize both DDR4 devices\u2019, which component,
+    reference or condition mentioned in the authored requirement should you inspect
+    first? Explain your reasoning."
+  prediction: "For \u2018Initialize both DDR4 devices\u2019, what result or observation
+    would you expect if the required setup is correct? Distinguish a predicted result
+    from a measured result."
+  practice: "In Level 104, perform the objective \u2018Initialize both DDR4 devices\u2019
+    in the actual game laboratory. Compare fresh evidence against: Verify VDD, VPP,
+    VTT, VREF, CK and command readiness before initializing both devices.\nThe mission
+    evaluator decides completion; this tutorial does not grade your answer."
+  guidedOnly: 1
