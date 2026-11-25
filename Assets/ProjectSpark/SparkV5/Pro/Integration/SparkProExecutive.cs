@@ -274,6 +274,16 @@ namespace ProjectSpark.SparkV5.Pro
                 segmentGesture = SparkGesture.None;
                 string answer;
                 if(ExamMode){returnState=SparkState.Examining;answer="Independent examination mode is active. Spark will not provide solutions or hints. Use the official examiner to submit work.";}
+                else if (SparkNativeWireDirector.TryHandleFrom(this, question, out answer))
+                {
+                    // Native player's original wire tool, before legacy graph-only v8.
+                    returnState = SparkState.Teaching;
+                }
+                else if (SparkLabAutonomyAgent.TryHandleFrom(this, question, out answer))
+                {
+                    // Direct, typed in-game actions before generic Cortex information answers.
+                    returnState = SparkState.Teaching;
+                }
                 else if (SparkLabDemonstrationDirector.TryHandleFrom(this, question, out answer))
                 {
                     // Explicit demonstration commands take priority over generic Cortex answers.
