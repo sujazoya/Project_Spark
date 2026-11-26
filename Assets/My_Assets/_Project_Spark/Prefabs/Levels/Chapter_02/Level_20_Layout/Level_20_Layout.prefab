@@ -2984,6 +2984,7 @@ GameObject:
   - component: {fileID: 4884912259729910043}
   - component: {fileID: 2066452323722450864}
   - component: {fileID: 726128201871058856}
+  - component: {fileID: 2495172562535132702}
   m_Layer: 15
   m_Name: Power_Switch
   m_TagString: Untagged
@@ -4336,8 +4337,8 @@ MonoBehaviour:
   deviceType: 1
   authoritativeStateComponent: {fileID: 8332730328991508192}
   stateMemberName: State
-  onStateValue: Closed
-  offStateValue: Open
+  onStateValue: Active
+  offStateValue: Standby
   nativeOn:
     m_PersistentCalls:
       m_Calls: []
@@ -31801,3 +31802,28 @@ MonoBehaviour:
   solvedVoltage: 0
   solvedCurrent: 0
   filamentHeat: 0
+
+--- !u!114 &2495172562535132702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974214298456433834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2619a3ad7708b5748be4aeecc0e0118e, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkEngineeringDevicePort
+  deviceId: Power_Switch
+  deviceType: 0
+  authoritativeStateComponent: {fileID: 7210292987224861824}
+  stateMemberName: State
+  onStateValue: Closed
+  offStateValue: Open
+  nativeOn:
+    m_PersistentCalls:
+      m_Calls: []
+  nativeOff:
+    m_PersistentCalls:
+      m_Calls: []

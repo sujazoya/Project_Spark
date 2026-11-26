@@ -564,14 +564,23 @@ string arguments =
         Task<string> standardOutputTask =
             process.StandardOutput.ReadToEndAsync();
 
-        await Task.Run(
-            () => process.WaitForExit());
+        Task exit = Task.Run(() => process.WaitForExit());
+        if (await Task.WhenAny(exit, Task.Delay(TimeSpan.FromSeconds(20))) != exit)
+        {
+            if (ReferenceEquals(activeProcess, process))
+                UnityEngine.Debug.LogWarning("[AI PIPER] Synthesis timed out. The written response is still available.", this);
+            return false;
+        }
+        await exit;
 
         string standardError =
             await standardErrorTask;
 
         string standardOutput =
             await standardOutputTask;
+
+        // A newer narration or an explicit stop can terminate this process.
+        if (!ReferenceEquals(activeProcess, process)) return false;
 
         int exitCode =
             process.ExitCode;

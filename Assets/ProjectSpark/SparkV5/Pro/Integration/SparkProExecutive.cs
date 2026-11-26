@@ -269,10 +269,10 @@ namespace ProjectSpark.SparkV5.Pro
             submitting=true;returnState=SparkState.Idle;
             if (microphone) microphone.YieldForResponse();
             try{
-                // Spark Engineering v14: controls approved AI actions before legacy routes.
-                if (SparkEngineeringControlHub.TryHandleFrom(this, question, out string sparkModeResponseV14))
+                if (SparkEngineeringDeviceOperator.TryHandleFrom(this, q, out string controlResponse) ||
+                    SparkEngineeringControlHub.TryHandleFrom(this, question, out controlResponse))
                 {
-                    Publish(sparkModeResponseV14, speakAnswers);
+                    Publish(controlResponse, speakAnswers);
                     return;
                 }
 if(cloud)cloud.Cancel();if(assistant)assistant.CancelPendingQuestionPro();StopSpeech();if(world&&world.IsInitialized)world.ObserveNow();if(warning)return;if(character)character.SetState(SparkState.Thinking);
@@ -281,10 +281,18 @@ if(cloud)cloud.Cancel();if(assistant)assistant.CancelPendingQuestionPro();StopSp
                 segmentGesture = SparkGesture.None;
                 string answer;
                 if(ExamMode){returnState=SparkState.Examining;answer="Independent examination mode is active. Spark will not provide solutions or hints. Use the official examiner to submit work.";}
+                else if (q is "spark inspect mission" or "spark mission status" or "spark export mission report")
+                {
+                    var advisor = GetComponent<SparkEngineeringMissionAdvisor>();
+                    answer = !advisor ? "Mission Advisor is unavailable." :
+                        q == "spark export mission report" ? advisor.ExportLastReport() : advisor.Inspect();
+                    returnState = SparkState.Observing;
+                }
                 else if (SparkV5FlightController.TryHandleFrom(this, question, out answer))
                 {
                     returnState = SparkState.Teaching;
                 }
+                else if (SparkTelescopicArmCommands.TryHandleFrom(this, question, out answer)) { } // SPARK_V18_TELESCOPIC
                 else if (SparkNativeWireAutoEngineer.TryHandleFrom(this, question, out answer))
                 {
                     // Reviewed practice wiring and player demonstration recorder; ahead of generic Cortex.
@@ -602,9 +610,15 @@ if(cloud)cloud.Cancel();if(assistant)assistant.CancelPendingQuestionPro();StopSp
         /// </summary>
         public void PublishWirePerformanceNarration(string message)
         {
-            if (ExamMode || string.IsNullOrWhiteSpace(message)) return;
+            PublishScheduledWireNarration(message, true);
+        }
+
+        internal bool PublishScheduledWireNarration(string message, bool allowSpeech)
+        {
+            if (ExamMode || string.IsNullOrWhiteSpace(message)) return false;
             if (message.Length > 260) message = message.Substring(0, 260);
-            Publish(message, speakAnswers && SpeechOutputAvailable);
+            Publish(message, false);
+            return allowSpeech && !warning && speakAnswers && SpeechOutputAvailable && voice.SpeakText(message);
         }
 
         void Publish(string answer,bool speak)

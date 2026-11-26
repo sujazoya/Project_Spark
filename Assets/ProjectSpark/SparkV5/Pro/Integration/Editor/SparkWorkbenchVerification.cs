@@ -21,6 +21,7 @@ namespace ProjectSpark.SparkV5.Pro.Editor
         private const string Boot = "Assets/My_Assets/_Project_Spark/Scenes/Boot/Bootstrap.unity";
         private const string Report = "Logs/SparkWorkbenchVerification.txt";
         private const string FlightReport = "Logs/SparkFlightV13Repair/Verification.txt";
+        private const string CableReportFolder = "Logs/SparkMasterAudit/NativeWireVisualRepair";
         private const string Request = "Logs/SparkWorkbench/run.request";
         private const string Flag = "Spark.Workbench.Verification";
         private const string Source = "Battery_negative";
@@ -39,8 +40,6 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             File.WriteAllText(Request, "");
         }
 
-        [MenuItem("Project Spark/Spark V5 Pro/AAA Laboratory/Test Level 20 Flight and Native Wires")]
-      
 [MenuItem("Project Spark/Spark V5 Pro/AAA Laboratory/Test Level 20 Flight and Native Wires")]
 private static void QueueFlight()
 {
@@ -78,10 +77,13 @@ private static void QueueFlight()
                 EditorApplication.isPlayingOrWillChangePlaymode || !File.Exists(Request)) return;
             string request = File.ReadAllText(Request).Trim();
             bool testBoot = request == "boot";
-            bool testFlight = request == "flight";
+            bool testCable = request == "cable" || request == "cable-before";
+            bool testFlight = request == "flight" || testCable;
             File.Delete(Request);
             if (testFlight) Directory.CreateDirectory(Path.GetDirectoryName(FlightReport));
-            SessionState.SetString(Flag + ".report", testFlight ? FlightReport : Report);
+            if (testCable) Directory.CreateDirectory(CableReportFolder);
+            SessionState.SetString(Flag + ".report", testCable
+                ? Path.Combine(CableReportFolder, request + ".txt") : testFlight ? FlightReport : Report);
             File.WriteAllText(SessionState.GetString(Flag + ".report", Report),
                 "Spark MainMenu verification " + DateTimeOffset.Now + Environment.NewLine);
             bool useOpenMainMenu = EditorSceneManager.GetActiveScene().path == Scene;
@@ -95,6 +97,7 @@ private static void QueueFlight()
             SessionState.SetString(Flag + ".previous", AssetDatabase.GetAssetPath(EditorSceneManager.playModeStartScene) ?? "");
             SessionState.SetBool(Flag + ".boot", testBoot);
             SessionState.SetBool(Flag + ".flight", testFlight);
+            SessionState.SetString(Flag + ".cable", testCable ? request : "");
             SessionState.SetBool(Flag, true);
             EditorSceneManager.playModeStartScene =
                 useOpenMainMenu ? null : AssetDatabase.LoadAssetAtPath<SceneAsset>(testBoot ? Boot : Scene);
@@ -111,6 +114,7 @@ private static void QueueFlight()
                 SessionState.EraseString(Flag + ".previous");
                 SessionState.EraseBool(Flag + ".boot");
                 SessionState.EraseBool(Flag + ".flight");
+                SessionState.EraseString(Flag + ".cable");
                 SessionState.EraseBool(Flag);
                 Log("Returned to Edit Mode.");
                 SessionState.EraseString(Flag + ".report");
@@ -132,7 +136,7 @@ private static void QueueFlight()
                 }, "Bootstrap to MainMenu");
                 if (startedAtBoot) Log("PASS Bootstrap loaded the configured MainMenu scene.");
                 if (SessionState.GetBool(Flag + ".flight", false))
-                    await SparkFlightLevel20Verification.Verify(Log);
+                    await SparkFlightLevel20Verification.Verify(Log, SessionState.GetString(Flag + ".cable", ""));
                 else
                     await Verify();
                 Log("PASS Verification complete.");
@@ -143,6 +147,14 @@ private static void QueueFlight()
                 Application.runInBackground = background;
                 EditorApplication.ExitPlaymode();
             }
+        }
+
+        [MenuItem("Project Spark/Spark V5 Pro/AAA Laboratory/Test AAA Native Cable Visuals")]
+        private static void QueueCableVisuals()
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(Request));
+            File.WriteAllText(Request, "cable");
+            EditorApplication.delayCall += Poll;
         }
 
         private static async Task Verify()

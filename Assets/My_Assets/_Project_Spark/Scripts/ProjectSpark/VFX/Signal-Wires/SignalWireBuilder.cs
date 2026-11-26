@@ -1474,6 +1474,44 @@ public void CancelWire()
             }
         }
 
+        public bool TryUpdateExternalTerminalPointer(Vector3 worldPosition)
+        {
+            if (!externalInputControl || !drawing || !currentPath || !startTerminal) return false;
+            if (!targetCamera) targetCamera = Camera.main;
+            if (!targetCamera) return false;
+            Vector3 screen = targetCamera.WorldToScreenPoint(worldPosition);
+            if (screen.z <= 0f) return false;
+            UpdateWireFromScreenPosition(screen);
+            return true;
+        }
+
+        public bool TryUpdateExternalTerminalEndpoint(Vector3 worldPosition)
+        {
+            if (!externalInputControl || !drawing || !currentPath || !startTerminal) return false;
+            UpdateTerminalPreview(worldPosition);
+            return true;
+        }
+
+        public bool TrySetExternalCableShape(Vector3[] worldPoints)
+        {
+            if (!externalInputControl || !drawing || !currentPath || !startTerminal ||
+                worldPoints == null || worldPoints.Length < 2 || !pathManager) return false;
+            var mesh = pathManager.CurrentMesh;
+            if (!mesh) return false;
+            currentPath.Clear();
+            currentPath.AddPoint(startTerminal.transform.position);
+            for (int i = 1; i < worldPoints.Length - 1; i++)
+            {
+                Vector3 point = worldPoints[i];
+                currentPath.AddPoint(point);
+            }
+            currentEnd = worldPoints[worldPoints.Length - 1];
+            currentPath.SetPreviewPoint(currentEnd);
+            mesh.UseSimulatedTerminalShape();
+            Rebuild();
+            return true;
+        }
+
         /// <summary>
         /// Records a sparse polyline from the actual drag, not a generated arc.
         /// SignalPath.AddPoint is append-only in the supplied API: sample at a

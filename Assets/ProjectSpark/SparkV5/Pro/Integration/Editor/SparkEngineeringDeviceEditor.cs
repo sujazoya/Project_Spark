@@ -78,11 +78,15 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             var port = go.GetComponent<SparkEngineeringDevicePort>();
             if (!port) port = Undo.AddComponent<SparkEngineeringDevicePort>(go);
             SparkPowerSupply power = go.GetComponent<SparkPowerSupply>();
-            if (power) { Undo.RecordObject(port,"Configure Spark power-supply state probe"); port.EditorInitializePower(power); }
+            var control = go.GetComponent<SparkSwitch>();
+            Undo.RecordObject(port, "Configure typed Spark device control");
+            if (power) port.EditorInitializePower(power);
+            else if (control) port.EditorInitializeSwitch(control);
             EditorUtility.SetDirty(port);
             EditorSceneManager.MarkSceneDirty(go.scene);
             Selection.activeGameObject = go;
-            Debug.Log("[Spark Devices v16] Device port added to " + go.name + ". Configure exact DeviceId, REAL state component, and native ON/OFF UnityEvents in Inspector. No action is auto-wired.");
+            Debug.Log("[Spark Devices v16] Device port added to " + go.name +
+                ". Typed power and switch ports use their native gameplay methods. Other devices need configured callbacks.");
         }
         [MenuItem(Menu + "35 - Diagnose Physical Device Operator v16 (Read-Only)")]
         private static void Diagnose()

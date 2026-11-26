@@ -19,8 +19,6 @@ namespace ProjectSpark.SparkV5.Pro
         [SerializeField] private SignalWireBuilder playerBuilder;
         [SerializeField] private SparkProExecutive executive;
         [SerializeField] private bool findActiveBuilderAutomatically = true;
-        [Header("Native cable routing")]
-        [SerializeField] private bool driveRealFreehandRoute = true;
         [SerializeField] private bool verbose;
 
         private readonly List<SparkCircuitConnection> connections = new List<SparkCircuitConnection>(8);
@@ -36,6 +34,7 @@ namespace ProjectSpark.SparkV5.Pro
         private bool configurationCaptured;
         private bool active;
         private bool sourceAttached;
+        private bool usePlayerPointer;
         private ulong lastAIConnectionId;
         private SparkCircuitSystem lastCircuit;
         private SignalWireBuilder lastBuilder;
@@ -44,6 +43,8 @@ namespace ProjectSpark.SparkV5.Pro
         public string LastError => lastError;
         public SignalWireBuilder ResolvedPlayerBuilder => engagedBuilder != null ? engagedBuilder : playerBuilder;
         public bool IsWiring => active;
+        public SparkTerminal ActiveDestination => active ? destination : null;
+        public bool UsesPlayerPointer => active && usePlayerPointer;
         public ulong LastAIConnectionId => lastAIConnectionId;
         public override bool IsConfigured
         {
@@ -119,7 +120,10 @@ namespace ProjectSpark.SparkV5.Pro
             return false;
         }
 
-        public override bool Begin(SparkTerminal a, SparkTerminal b, out string error)
+        public override bool Begin(SparkTerminal a, SparkTerminal b, out string error) =>
+            Begin(a, b, false, out error);
+
+        internal bool Begin(SparkTerminal a, SparkTerminal b, bool playerPointer, out string error)
         {
             error = null;
             if (active)
@@ -186,12 +190,13 @@ namespace ProjectSpark.SparkV5.Pro
             configurationCaptured = true;
             active = true;
             sourceAttached = false;
+            usePlayerPointer = playerPointer;
             // Configure the SAME builder the player uses. No electrical change yet.
             candidate.SetWireDrawingMode(WireDrawingMode.TerminalToTerminal);
-            if (driveRealFreehandRoute)
+            if (!playerPointer)
             {
-                candidate.SetTerminalCableRouting(TerminalCableRouting.FreehandDrag);
-                candidate.SetTerminalInputStyle(TerminalWireInputStyle.DragAndRelease);
+                candidate.SetTerminalCableRouting(TerminalCableRouting.Straight);
+                candidate.SetTerminalInputStyle(TerminalWireInputStyle.ClickToConnect);
             }
             candidate.SetExternalInputControl(true);
             if (verbose) Debug.Log("[Spark Native v10] Player wire builder reserved: " + candidate.name, this);
@@ -248,10 +253,18 @@ namespace ProjectSpark.SparkV5.Pro
                 error = "Invalid wire endpoint coordinates.";
                 return false;
             }
-            // This updates the SAME SignalPathMesh that mouse dragging uses.
-            engagedBuilder.UpdateWire(worldPosition);
-            return true;
+            if (!usePlayerPointer && engagedBuilder.TryUpdateExternalTerminalEndpoint(worldPosition)) return true;
+            error = "This cable session does not accept a physical endpoint update.";
+            return false;
         }
+
+        internal bool MovePlayerPointer(Vector3 position) =>
+            active && sourceAttached && usePlayerPointer && engagedBuilder &&
+            engagedBuilder.TryUpdateExternalTerminalPointer(position);
+
+        internal bool ShowCableShape(Vector3[] worldPoints) =>
+            active && sourceAttached && !usePlayerPointer && engagedBuilder &&
+            engagedBuilder.TrySetExternalCableShape(worldPoints);
 
         public override bool AttachDestination(SparkTerminal b, out string error)
         {

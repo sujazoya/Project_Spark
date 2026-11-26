@@ -55,6 +55,13 @@ namespace AAAUI.VFX
             hasPreview = false;
         }
 
+        internal void CopyRenderPointsTo(List<Vector3> destination)
+        {
+            destination.Clear();
+            destination.AddRange(runtimePoints);
+            if (hasPreview) destination.Add(previewPoint);
+        }
+
 
         public Vector3[] GetRenderPoints()
         {

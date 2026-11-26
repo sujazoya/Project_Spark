@@ -21,6 +21,8 @@ namespace ProjectSpark.SparkV5.Pro
         private SparkProExecutive executive;
         private SparkEngineeringControlHub hub;
         private SparkNativeWireDirector director;
+        private SparkNativeWireCinematic performer;
+        private SparkNativeWireAutoEngineer legacyAuto;
         private SparkEngineeringDevicePort proposed;
         private bool proposedOn;
         private LevelGamePlayManager proposedLevel;
@@ -39,6 +41,8 @@ namespace ProjectSpark.SparkV5.Pro
             executive = GetComponent<SparkProExecutive>();
             hub = GetComponent<SparkEngineeringControlHub>();
             director = GetComponent<SparkNativeWireDirector>();
+            performer = GetComponent<SparkNativeWireCinematic>();
+            legacyAuto = GetComponent<SparkNativeWireAutoEngineer>();
         }
         private void OnEnable() { SceneManager.activeSceneChanged += SceneChanged; }
         private void OnDisable()
@@ -50,7 +54,11 @@ namespace ProjectSpark.SparkV5.Pro
         { Invalidate("Scene changed; proposal cancelled. No further device action will be dispatched."); }
         private void Invalidate(string why)
         {
-            if (operation != null) StopCoroutine(operation);
+            if (operation != null)
+            {
+                StopCoroutine(operation);
+                if (performer && performer.IsPerforming) performer.CancelPerformance();
+            }
             operation = null;
             operationLevel = null;
             operationRoot = null;
@@ -80,7 +88,7 @@ namespace ProjectSpark.SparkV5.Pro
                 error = "Official evaluator reports level failure.";
             else if (hub.Mode != SparkEngineeringControlHub.OperatingMode.Assisted)
                 error = "Use Assisted mode and explicitly approve one device action. Manual mode is player-only; Auto mode follows reviewed plans.";
-            else if (hub.IsExecuting || (director && director.IsBusy))
+            else if (hub.IsExecuting || (director && director.IsBusy) || (legacyAuto && legacyAuto.IsExecuting))
                 error = "Native wiring is busy; do not change device state during a cable operation.";
             return error == null;
         }
@@ -146,10 +154,19 @@ namespace ProjectSpark.SparkV5.Pro
             if (!port || !port.gameObject.activeInHierarchy || !port.transform.IsChildOf(context.Layout.transform))
             { why = "Device is inactive or not part of the active level."; return false; }
             if (!port.TryRead(out _, out why)) return false;
-            if (!port.HasNativeAction(desired))
-            { why = "No REAL player/device callback connected for this action. Bind it in the port Inspector."; return false; }
+            if (!port.CanOperate(desired, this, out why)) return false;
             if (port.Kind == SparkEngineeringDevicePort.DeviceType.VirtualPowerSupply && desired)
-                return WiringReadyForPowerOn(manager, context, out why);
+            {
+                if (!WiringReadyForPowerOn(manager, context, out why)) return false;
+                if (!manager.HasCurrentElectricalEvaluation)
+                { why = "Await a fresh electrical evaluation before energizing."; return false; }
+                var graph = manager.ElectricalSolver.CurrentGraph;
+                var supply = port.Supply;
+                if (graph == null || !graph.TryGetNode(supply.PositiveTerminal, out int positive) ||
+                    !graph.TryGetNode(supply.NegativeTerminal, out int negative) || positive == negative ||
+                    manager.SourceShorted || manager.TargetShorted || manager.Overloaded)
+                { why = "The authoritative solver does not verify separate, safe supply terminals."; return false; }
+            }
             if (requirePowerOffForNonPowerActions &&
                 port.Kind != SparkEngineeringDevicePort.DeviceType.VirtualPowerSupply &&
                 !AllVirtualPowerOff(context))
@@ -172,14 +189,18 @@ namespace ProjectSpark.SparkV5.Pro
                 bool read = p.TryRead(out bool isOn, out string evidence);
                 sb.Append(p.DeviceId).Append(" [").Append(p.Kind).Append("] ")
                   .Append(read ? (isOn ? "ON/CLOSED " : "OFF/OPEN ") : "UNVERIFIED ")
-                  .Append(evidence).Append(" | callbacks on=").Append(p.HasNativeAction(true))
-                  .Append(" off=").Append(p.HasNativeAction(false)).AppendLine();
+                  .Append(evidence).Append(" | native on=").Append(p.HasNativeAction(true))
+                  .Append(" off=").Append(p.HasNativeAction(false))
+                  .Append(" | physical control=").Append(p.PhysicalControl ? p.PhysicalControl.name : "unbound").AppendLine();
             }
             return Publish(sb.ToString());
         }
         public string Propose(string id, bool turnOn)
         {
             if (operation != null) return Publish("Another native device action is still awaiting verification.");
+            proposed = null;
+            proposedLevel = null;
+            proposedRoot = null;
             if (!Context(out var manager, out var context, out string why)) return Publish(why);
             var port = FindPort(context, id, out why);
             if (!port) return Publish(why);
@@ -218,26 +239,60 @@ namespace ProjectSpark.SparkV5.Pro
             { Finish("Unable to verify existing device state: " + problem); yield break; }
             if (current == desired)
             { Finish("Already in requested state; no native command was dispatched. " + problem); yield break; }
-            if (!port.TryInvokeNative(desired, out string dispatch))
-            { Finish("Native callback rejected: " + dispatch); yield break; }
+            var solver = manager.ElectricalSolver;
+            if (!solver) { Finish("The authoritative electrical solver is unavailable."); yield break; }
+            int previousSolve = solver.CompletedSolveRevision;
+            bool dispatched = false;
+            string dispatch = null;
+            bool StillAuthorized() => Context(out var currentManager, out var currentLevel, out _) &&
+                currentManager == operationLevel && currentLevel.Layout.transform == operationRoot &&
+                Preflight(port, desired, currentManager, currentLevel, out _);
+            void Dispatch() => dispatched = StillAuthorized() && port.TryInvokeNative(desired, this, out dispatch);
+            var control = port.PhysicalControl;
+            if (control)
+            {
+                if (!performer || !director)
+                { Finish("The device's physical approach is unavailable."); yield break; }
+                yield return performer.OperateDevice(control, director.Workbench, operationRoot, StillAuthorized, Dispatch);
+            }
+            else Dispatch();
+            if (!dispatched)
+            { Finish("Native operation was rejected before confirmation. " + (dispatch ?? (control ? performer.LastError : null))); yield break; }
             float deadline = Time.realtimeSinceStartup + stateConfirmationTimeout;
             while (Time.realtimeSinceStartup < deadline)
             {
+                if (port && port.Supply && desired && manager && manager.LayoutLoader &&
+                    manager.LayoutLoader.ActiveLayout && manager.LayoutLoader.ActiveLayout.transform == operationRoot &&
+                    manager.HasCurrentElectricalEvaluation && manager.LastEvaluatedSolveRevision > previousSolve &&
+                    (manager.SourceShorted || manager.TargetShorted || manager.Overloaded))
+                {
+                    bool stopped = port.TryInvokeNative(false, this, out _) && !port.Supply.IsOutputActive;
+                    Finish(stopped ? "Safety stopped the virtual supply after an electrical fault." :
+                        "Electrical fault detected. Turn off the virtual supply with the player control.");
+                    yield break;
+                }
                 if (!Context(out manager, out context, out problem) ||
                     manager != operationLevel || context.Layout.transform != operationRoot || !port)
                 {
                     Finish("UNCERTAIN: Context changed after native action was dispatched. Inspect real device state manually.");
                     yield break;
                 }
-                if (port.TryRead(out current, out problem) && current == desired)
+                bool freshSolve = solver && !solver.IsDirty && !solver.IsSolving &&
+                    solver.LatestSolveResult != null && solver.CompletedSolveRevision > previousSolve;
+                bool needsEvaluator = port.Supply && desired;
+                if (port.TryRead(out current, out problem) && current == desired && freshSolve &&
+                    (!needsEvaluator || manager.HasCurrentElectricalEvaluation))
                 {
                     Finish("VERIFIED: Real device state changed to " + (desired ? "ON/CLOSED" : "OFF/OPEN") +
-                        " (" + problem + "). Mission completion remains evaluator-controlled.");
+                        " (" + problem + "). Fresh native solver result confirmed." +
+                        (control ? "" : " No physical control point is authored for this device."));
                     yield break;
                 }
                 yield return new WaitForSecondsRealtime(0.08f);
             }
-            Finish("UNVERIFIED after native callback: device did not report requested state within timeout. Inspect it; no success claimed.");
+            if (port && port.Supply && desired && port.Supply.IsOutputActive)
+                port.TryInvokeNative(false, this, out _);
+            Finish("UNVERIFIED after native action. Inspect the device and solver state.");
         }
         private void Finish(string outcome)
         {
@@ -248,6 +303,7 @@ namespace ProjectSpark.SparkV5.Pro
             proposedLevel = null;
             proposedRoot = null;
             Publish(outcome);
+            if (executive) executive.PublishWirePerformanceNarration(outcome);
         }
         public string Cancel()
         {

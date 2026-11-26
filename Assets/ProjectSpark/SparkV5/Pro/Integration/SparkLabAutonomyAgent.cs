@@ -98,6 +98,10 @@ namespace ProjectSpark.SparkV5.Pro
         public string Handle(SparkLabActionCommand.Request request)
         {
             if (!executive) executive = GetComponent<SparkProExecutive>();
+            if (GetComponent<SparkEngineeringControlHub>() && request.Type is
+                SparkLabActionCommand.Kind.PreviewWire or SparkLabActionCommand.Kind.ConfirmWire or
+                SparkLabActionCommand.Kind.RunApprovedPlan or SparkLabActionCommand.Kind.UndoLastWire)
+                return "Use the Engineering Control Hub for approved native wiring.";
             if (request.Type == SparkLabActionCommand.Kind.Help)
                 return "Action commands: 'draw wire from TerminalID to TerminalID' (preview only), " +
                     "'confirm wire', 'cancel wire', 'undo last AI wire', 'preview level solution', " +

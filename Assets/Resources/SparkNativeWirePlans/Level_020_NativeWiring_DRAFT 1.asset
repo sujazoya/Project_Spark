@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40ebcf8b65b1fbc45bd845c5d1ea13e0, type: 3}
+  m_Name: Level_020_NativeWiring_DRAFT 1
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkNativeWiringPlan
+  levelNumber: 20
+  layoutName: Level_20_Layout
+  schematicReference: 
+  reviewedBy: 
+  approved: 0
+  approvedDigest: 
+  wires:
+  - fromId: SwitchOutput
+    toId: R_LTOP_Input
+  - fromId: R_LTOP_Output
+    toId: Battery_negative__1_
+  - fromId: R_LBOTTOM_Input
+    toId: Battery_negative__1_
+  - fromId: Battery_negative__1_
+    toId: LCD_Terminal_B
+  - fromId: R_LTOP_Input
+    toId: R_RTOP_Input
+  - fromId: R_RTOP_Output
+    toId: Battery_negative__2_
+  - fromId: Battery_negative__2_
+    toId: R_RBOTTOM_Input
+  - fromId: Battery_negative
+    toId: R_LBOTTOM_Output
+  - fromId: R_LBOTTOM_Output
+    toId: R_RBOTTOM_Output
+  - fromId: Battery_negative__2_
+    toId: LCD_Terminal_A

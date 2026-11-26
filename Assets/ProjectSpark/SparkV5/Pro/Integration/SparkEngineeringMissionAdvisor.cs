@@ -100,6 +100,15 @@ namespace ProjectSpark.SparkV5.Pro
                 .Append(manager.IsFailed ? "FAILED" : manager.IsCompleted ? "COMPLETED" : "in progress")
                 .Append(" | Independent exam: ").Append(executive.ExamMode ? "YES" : "no")
                 .AppendLine();
+            report.AppendLine(context.StateText());
+            foreach (var objective in context.Definition.Targets)
+            {
+                if (objective == null) continue;
+                bool? satisfied = context.Status(objective);
+                report.Append(" • ").Append(SparkAILevelContext.TargetName(objective))
+                    .Append(satisfied == true ? " [passed]" : satisfied == false ? " [pending]" : " [unverified]")
+                    .AppendLine();
+            }
 
             SparkPowerSupply[] supplies = context.Layout.GetComponentsInChildren<SparkPowerSupply>(true);
             int activeSupplies = 0;
@@ -111,6 +120,11 @@ namespace ProjectSpark.SparkV5.Pro
 
             if (executive.ExamMode || manager.IsFailed || activeSupplies > 0)
                 report.AppendLine("SAFETY: Automatic physical wiring must not begin in this state.");
+            if (executive.ExamMode)
+            {
+                report.AppendLine("Independent examination is active. Reviewed instructions are hidden.");
+                return Complete(report);
+            }
             if (director && director.IsBusy)
                 report.AppendLine("STATUS: Native wire director is currently busy. No new wire action should start.");
 
@@ -205,6 +219,7 @@ namespace ProjectSpark.SparkV5.Pro
             string folder = Path.Combine(Application.persistentDataPath, "SparkEngineeringAdvisor");
             try
             {
+                Inspect();
                 Directory.CreateDirectory(folder);
                 string path = Path.Combine(folder,
                     "Mission_" + DateTime.UtcNow.ToString("yyyyMMdd_HHmmss_fff") + ".txt");

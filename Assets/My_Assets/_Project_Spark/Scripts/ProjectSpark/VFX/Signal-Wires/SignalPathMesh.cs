@@ -39,6 +39,9 @@ namespace AAAUI.VFX
         private Mesh mesh;
         private readonly List<Vector3> curve = new List<Vector3>(128);
         private readonly List<float> distances = new List<float>(128);
+        private Vector3[] cableVertices, cableNormals;
+        private Vector2[] cableUV;
+        private int[] cableTriangles;
         private const float Epsilon = 0.000001f;
 
         public MeshFilter MeshFilter => GetComponent<MeshFilter>();
@@ -59,6 +62,7 @@ namespace AAAUI.VFX
         // Only enabled for newly created TerminalToTerminal wires.
         // None of these fields change legacy-prefab appearance.
         private bool useTerminalCable;
+        private bool useSimulatedTerminalShape;
         private TerminalCableRouting terminalRouting;
         private Transform anchor1;
         private Transform anchor2;
@@ -92,7 +96,7 @@ namespace AAAUI.VFX
             if (!useTerminalCable || !followAnchors || anchor1 == null ||
                 anchor2 == null || points.Length < 2) return points;
 
-            if (!HasManualRoute && terminalRouting != TerminalCableRouting.FreehandDrag)
+            if (!HasManualRoute && !useSimulatedTerminalShape && terminalRouting != TerminalCableRouting.FreehandDrag)
                 return new[] { anchor1.position, anchor2.position };
 
             // Preserve bends while endpoints travel. Distribute displacement
@@ -193,6 +197,7 @@ namespace AAAUI.VFX
         public void ConfigureTerminalCable(TerminalCableRouting routing)
         {
             useTerminalCable = true;
+            useSimulatedTerminalShape = false;
             terminalRouting = routing;
             anchor1 = null;
             anchor2 = null;
@@ -259,13 +264,22 @@ namespace AAAUI.VFX
             if (!gameObject.scene.IsValid()) return;
             if (path == null) path = GetComponent<SignalPath>();
             if (path == null) { ClearMesh(); return; }
-            Vector3[] points = GetEffectiveRoutePoints();
-            if (points == null || points.Length < 2) { ClearMesh(); return; }
-            BuildCurve(points);
+            if (useSimulatedTerminalShape && path.HasPreview && !HasManualRoute)
+            {
+                path.CopyRenderPointsTo(curve);
+                CalculateCurveDistances();
+            }
+            else BuildCurve(GetEffectiveRoutePoints());
             if (curve.Count < 2) { ClearMesh(); return; }
             EnsureMesh();
             if (mesh == null) return;
             BuildTube();
+        }
+
+        internal void UseSimulatedTerminalShape()
+        {
+            if (!useSimulatedTerminalShape && mesh) mesh.MarkDynamic();
+            useSimulatedTerminalShape = true;
         }
 
        
@@ -293,7 +307,9 @@ private void BuildCurve(Vector3[] points)
 
     if (useTerminalCable)
     {
-        if (terminalRouting == TerminalCableRouting.FreehandDrag && controls.Count > 2)
+        if (useSimulatedTerminalShape && !HasManualRoute)
+            curve.AddRange(controls);
+        else if (terminalRouting == TerminalCableRouting.FreehandDrag && controls.Count > 2)
             BuildFreehandCurve(controls);
         else if (terminalRouting == TerminalCableRouting.FreehandDrag)
         {
@@ -550,10 +566,20 @@ private void BuildCurve(Vector3[] points)
             int stride = sides + 1; // duplicated seam vertex for correct UV wrapping
             int bodyVertices = rings * stride;
             int extraVertices = capEnds ? 2 : 0;
-            var vertices = new Vector3[bodyVertices + extraVertices];
-            var normals = new Vector3[vertices.Length];
-            var uv = new Vector2[vertices.Length];
-            var triangles = new int[(rings - 1) * sides * 6 + (capEnds ? sides * 6 : 0)];
+            int vertexCount = bodyVertices + extraVertices;
+            int triangleCount = (rings - 1) * sides * 6 + (capEnds ? sides * 6 : 0);
+            if (cableVertices == null || cableVertices.Length != vertexCount)
+            {
+                cableVertices = new Vector3[vertexCount];
+                cableNormals = new Vector3[vertexCount];
+                cableUV = new Vector2[vertexCount];
+            }
+            if (cableTriangles == null || cableTriangles.Length != triangleCount)
+                cableTriangles = new int[triangleCount];
+            var vertices = cableVertices;
+            var normals = cableNormals;
+            var uv = cableUV;
+            var triangles = cableTriangles;
 
             Vector3 prevTangent = Tangent(0);
             Vector3 normal = InitialNormal(prevTangent);
@@ -578,7 +604,7 @@ private void BuildCurve(Vector3[] points)
     transform.InverseTransformPoint(
         curve[i] +
         (useTerminalCable ? Vector3.zero : Vector3.up * 0.08f) +
-        radial * radius);
+        radial * (useSimulatedTerminalShape && (i == 0 || i == rings - 1) ? radius * 1.3f : radius));
                     normals[index] = transform.InverseTransformDirection(radial).normalized;
                     float totalLength =
     Mathf.Max(
@@ -663,6 +689,12 @@ if (capEnds)
             mesh.triangles = triangles;
             mesh.RecalculateTangents();
             if (recalculateBounds) mesh.RecalculateBounds();
+            if (!useSimulatedTerminalShape || !path.HasPreview)
+            {
+                cableVertices = cableNormals = null;
+                cableUV = null;
+                cableTriangles = null;
+            }
         }
 
         private void EnsureMesh()

@@ -2849,6 +2849,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6122651904739907652}
     m_Modifications:
+    - target: {fileID: 2162043668225740932, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 3169094668180927682}
+    - target: {fileID: 2162043668225740932, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: executive
+      value: 
+      objectReference: {fileID: 2010157059098112456}
     - target: {fileID: 2199230230995229448, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
       propertyPath: voice
       value: 
@@ -2877,13 +2885,21 @@ PrefabInstance:
       propertyPath: playbackSource
       value: 
       objectReference: {fileID: 5579177051582969034}
+    - target: {fileID: 4072729083951253046, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: executive
+      value: 
+      objectReference: {fileID: 2010157059098112456}
+    - target: {fileID: 4072729083951253046, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: inspector
+      value: 
+      objectReference: {fileID: 1481177206151338281}
     - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.446
       objectReference: {fileID: 0}
     - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.74
+      value: 0.718
       objectReference: {fileID: 0}
     - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2933,6 +2949,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4362593751911970820}
+    - targetCorrespondingSourceObject: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2917198575527411317}
   m_SourcePrefab: {fileID: 100100000, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
 --- !u!1 &1383085092576617812 stripped
 GameObject:
@@ -2951,9 +2970,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d980e392d55068d4b8fd8796e58a4039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkNativeWireDirector
-  executive: {fileID: 0}
-  character: {fileID: 0}
+  executive: {fileID: 2010157059098112456}
+  character: {fileID: 3169094668180927682}
   playerWirePort: {fileID: 4362593751911970820}
+  workbench: {fileID: 0}
+  requireWorkbenchNavigation: 1
   requireVirtualPowerOff: 1
   routingSeconds: 2.5
   gesturePauseSeconds: 0.35
@@ -3005,10 +3026,90 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkAINativeSignalWirePort
   playerBuilder: {fileID: 0}
-  executive: {fileID: 0}
+  executive: {fileID: 2010157059098112456}
   findActiveBuilderAutomatically: 1
-  driveRealFreehandRoute: 1
   verbose: 0
+--- !u!114 &2917198575527411317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383085092576617812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed83805d4af71634a8c000154b1e4e54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkTelescopicArms
+  character: {fileID: 0}
+  executive: {fileID: 0}
+  allowLeftArm: 1
+  maximumReach: 6
+  extensionSpeed: 3.25
+  retractionSpeed: 3.75
+  connectorGripOffset: 0.045
+  elbowBend: 0.06
+  elbowFraction: 0.52
+  arrivalTolerance: 0.07
+  checkArmCollision: 1
+  obstructionLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  armCollisionRadius: 0.022
+  shoulderClearance: 0.12
+  tipClearance: 0.16
+  synchronizeAllRigCopies: 1
+  stretchOriginalArmMeshes: 1
+  showJointBridges: 1
+  bridgeRadius: 0.016
+  bridgeActivationRatio: 1.12
+  showTelescopicSleeves: 1
+  showMechanicalStages: 1
+  stagesPerLimb: 5
+  baseSleeveRadius: 0.026
+  tipSleeveRadius: 0.014
+  collarLength: 0.018
+  stageOverlap: 0.08
+  extensionVisualThreshold: 1.09
+  useExistingFingerTips: 1
+  fallbackGripOffsetLocal: {x: 0, y: 0, z: 0.045}
+  alignWristTowardContact: 0
+  handAlignmentSpeed: 8
+  allowEditorDebugPanel: 0
+  debugTerminalId: SwitchOutput
+--- !u!114 &1481177206151338281 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2445995708164683491, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+  m_PrefabInstance: {fileID: 3855044934285881290}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383085092576617812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075eaf35f9eb78845a3b7b652f026852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkLabTeachingDirector
+--- !u!114 &2010157059098112456 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3358099554444385794, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+  m_PrefabInstance: {fileID: 3855044934285881290}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383085092576617812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21bcf9b806c31905e3d3f081f400c6ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProExecutive
+--- !u!114 &3169094668180927682 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2199230230995229448, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+  m_PrefabInstance: {fileID: 3855044934285881290}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383085092576617812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcf29120959c33c457f9d072118e53bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProCharacter
 --- !u!4 &8187146224616235761 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}

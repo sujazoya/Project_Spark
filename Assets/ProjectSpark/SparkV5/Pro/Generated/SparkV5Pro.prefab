@@ -10396,6 +10396,9 @@ GameObject:
   - component: {fileID: 3222860996812415636}
   - component: {fileID: 5767512077013935577}
   - component: {fileID: 289515229696914559}
+  - component: {fileID: 838297402631126670}
+  - component: {fileID: 7208809013741093937}
+  - component: {fileID: 7929432604626806747}
   m_Layer: 0
   m_Name: SparkV5Pro
   m_TagString: Untagged
@@ -11104,7 +11107,6 @@ MonoBehaviour:
   playerBuilder: {fileID: 0}
   executive: {fileID: 0}
   findActiveBuilderAutomatically: 1
-  driveRealFreehandRoute: 1
   verbose: 0
 --- !u!114 &4938413770724245470
 MonoBehaviour:
@@ -11151,7 +11153,22 @@ MonoBehaviour:
   ikBlendSpeed: 14
   handTipOffset: 0.045
   useLeftHandForSupport: 1
-  announceEachWire: 1
+  announceEachWire: 0
+  cableRestLength: 0
+  handlingAllowance: 0.9
+  cableSegments: 24
+  cableIterations: 7
+  cableGravity: 1
+  cableDamping: 0.09
+  cableBendStiffness: 0.12
+  cableCollisionRadius: 0.02
+  maximumCableExtension: 0.025
+  cableCollisionLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  insertionDistance: 0.035
+  insertionSeconds: 0.22
+  settlingTolerance: 0.003
 --- !u!114 &1013516680786271103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11253,6 +11270,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 146476b6bd41b7b44b1c086000b00c4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkEngineeringDevicePanel
+--- !u!114 &838297402631126670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2760260586610461342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dab0d61e44982e448b59bc9656924b50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkAAANarrationDirector
+  executive: {fileID: 0}
+  publishLiveText: 1
+  enableSpeechWhenAvailable: 1
+  stageCooldownSeconds: 1.2
+  speechStartupGraceSeconds: 4
+  maxQueuedStages: 4
+--- !u!114 &7208809013741093937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2760260586610461342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bd84979306d99c489aac45ee96f07a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkAAAWireVisualGuard
+  nativePort: {fileID: 0}
+  diagnosticInterval: 0.4
+  warnAboutRecordedRoutePoints: 1
+--- !u!114 &7929432604626806747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2760260586610461342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed83805d4af71634a8c000154b1e4e54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkTelescopicArms
+  character: {fileID: 0}
+  executive: {fileID: 0}
+  allowLeftArm: 1
+  maximumReach: 6
+  extensionSpeed: 3.25
+  retractionSpeed: 3.75
+  connectorGripOffset: 0.045
+  elbowBend: 0.06
+  elbowFraction: 0.52
+  arrivalTolerance: 0.07
+  checkArmCollision: 1
+  obstructionLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  armCollisionRadius: 0.022
+  shoulderClearance: 0.12
+  tipClearance: 0.16
+  showTelescopicSleeves: 1
+  metalMaterial: {fileID: 0}
+  pistonMaterial: {fileID: 0}
+  sleeveRadius: 0.032
+  pistonRadius: 0.018
+  allowEditorDebugPanel: 0
+  debugTerminalId: SwitchOutput
 --- !u!1 &2779743260599996315
 GameObject:
   m_ObjectHideFlags: 0

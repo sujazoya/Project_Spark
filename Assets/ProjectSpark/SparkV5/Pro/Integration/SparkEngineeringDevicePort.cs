@@ -8,10 +8,8 @@ using ProjectSpark.Gameplay;
 namespace ProjectSpark.SparkV5.Pro
 {
     /// <summary>
-    /// One explicit, authored bridge to a REAL player/gameplay control.
-    /// The two persistent UnityEvents must be bound in the Inspector to that control.
-    /// The port never writes circuit state or uses reflection to set any field/property.
-    /// Only an independent read of the authoritative component can verify success.
+    /// Authored bridge to an existing gameplay control. Power and switch ports use
+    /// their typed APIs. Custom devices may use authored callbacks and readback.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class SparkEngineeringDevicePort : MonoBehaviour
@@ -32,8 +30,41 @@ namespace ProjectSpark.SparkV5.Pro
 
         public string DeviceId => deviceId;
         public DeviceType Kind => deviceType;
+        public SparkPowerSupply Supply => deviceType == DeviceType.VirtualPowerSupply
+            ? (authoritativeStateComponent ? authoritativeStateComponent as SparkPowerSupply : GetComponent<SparkPowerSupply>()) : null;
+        public SparkSwitch Switch => deviceType == DeviceType.Switch
+            ? (authoritativeStateComponent ? authoritativeStateComponent as SparkSwitch : GetComponent<SparkSwitch>()) : null;
+        public Transform PhysicalControl
+        {
+            get
+            {
+                var lever = Switch ? GetComponent<SwitchLeverController>() : null;
+                return lever && lever.Switch == Switch ? lever.LeverTransform : null;
+            }
+        }
         public bool HasNativeAction(bool turnOn) =>
-            (turnOn ? nativeOn : nativeOff).GetPersistentEventCount() > 0;
+            Supply || Switch || (deviceType == DeviceType.OtherVerifiedDevice &&
+                (turnOn ? nativeOn : nativeOff).GetPersistentEventCount() > 0);
+
+        public bool CanOperate(bool turnOn, MonoBehaviour interactor, out string reason)
+        {
+            var device = Supply ? (SparkElectronicObject)Supply : Switch;
+            if (!device)
+            {
+                reason = HasNativeAction(turnOn) ? null : "No verified native device action is available.";
+                return reason == null;
+            }
+            if (Supply && (Supply.State == SparkPowerSupplyState.Fault || (turnOn && !Supply.ElectricalEnabled)))
+            {
+                reason = "The supply is faulted or electrically disabled.";
+                return false;
+            }
+            return device.CanInteract(CreateContext(device, interactor), out reason);
+        }
+
+        private SparkInteractionContext CreateContext(SparkElectronicObject device, MonoBehaviour interactor) =>
+            new SparkInteractionContext(interactor, device, SparkInteractionType.Toggle, SparkToolType.Select,
+                PhysicalControl ? PhysicalControl.position : device.transform.position, Vector3.up, default, device.gameObject);
 
         public bool TryRead(out bool isOn, out string evidence)
         {
@@ -41,20 +72,26 @@ namespace ProjectSpark.SparkV5.Pro
             evidence = null;
             if (!gameObject.activeInHierarchy)
             { evidence = "Device GameObject is inactive."; return false; }
-            Component source = authoritativeStateComponent;
-            if (!source && deviceType == DeviceType.VirtualPowerSupply)
-                source = GetComponent<SparkPowerSupply>();
-            if (!source)
-            { evidence = "No real authoritative state component bound."; return false; }
             if (deviceType == DeviceType.VirtualPowerSupply)
             {
-                SparkPowerSupply supply = source as SparkPowerSupply;
+                SparkPowerSupply supply = Supply;
                 if (!supply)
                 { evidence = "Power port must use a SparkPowerSupply state component."; return false; }
                 isOn = supply.IsOutputActive;
-                evidence = "SparkPowerSupply.IsOutputActive=" + isOn;
+                evidence = "SparkPowerSupply.State=" + supply.State + ", IsOutputActive=" + isOn;
                 return true;
             }
+            if (deviceType == DeviceType.Switch)
+            {
+                var control = Switch;
+                if (!control) { evidence = "Switch port requires a SparkSwitch."; return false; }
+                isOn = control.IsClosed;
+                evidence = "SparkSwitch.State=" + control.State;
+                return true;
+            }
+            Component source = authoritativeStateComponent;
+            if (!source)
+            { evidence = "No real authoritative state component bound."; return false; }
             if (string.IsNullOrWhiteSpace(stateMemberName))
             { evidence = "The exact real state member name was not configured."; return false; }
             const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public;
@@ -90,9 +127,22 @@ namespace ProjectSpark.SparkV5.Pro
             return true;
         }
 
-        public bool TryInvokeNative(bool turnOn, out string status)
+        public bool TryInvokeNative(bool turnOn, MonoBehaviour interactor, out string status)
         {
-            status = null;
+            if (!CanOperate(turnOn, interactor, out status)) return false;
+            if (Supply)
+            {
+                var result = Supply.SetOutput(turnOn, CreateContext(Supply, interactor));
+                status = result.Message;
+                return result.Succeeded;
+            }
+            if (Switch)
+            {
+                if (Switch.IsClosed == turnOn) return true;
+                var result = Switch.Toggle(CreateContext(Switch, interactor));
+                status = result.Message;
+                return result.Succeeded;
+            }
             UnityEvent action = turnOn ? nativeOn : nativeOff;
             if (action.GetPersistentEventCount() == 0)
             { status = "No Inspector-bound native player/device action. Refusing simulated operation."; return false; }
@@ -106,6 +156,17 @@ namespace ProjectSpark.SparkV5.Pro
         {
             deviceType = DeviceType.VirtualPowerSupply;
             authoritativeStateComponent = supply;
+            onStateValue = nameof(SparkPowerSupplyState.Active);
+            offStateValue = nameof(SparkPowerSupplyState.Standby);
+            if (string.IsNullOrWhiteSpace(deviceId)) deviceId = gameObject.name;
+        }
+
+        public void EditorInitializeSwitch(SparkSwitch control)
+        {
+            deviceType = DeviceType.Switch;
+            authoritativeStateComponent = control;
+            onStateValue = nameof(SparkSwitchState.Closed);
+            offStateValue = nameof(SparkSwitchState.Open);
             if (string.IsNullOrWhiteSpace(deviceId)) deviceId = gameObject.name;
         }
 #endif

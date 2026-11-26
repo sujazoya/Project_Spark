@@ -245,6 +245,8 @@ namespace ProjectSpark.SparkV5.Pro
         }
         private string StartApprovedPlan()
         {
+            if (GetComponent<SparkEngineeringControlHub>())
+                return Reply("The Engineering Control Hub owns reviewed plan execution in this scene.");
             if (executing != null || recording) return Reply("Finish the current auto-wiring operation first.");
             if (!director) return Reply("Native Wire Director is not bound.");
             if (!TryContext(out var level, out string error)) return Reply(error);

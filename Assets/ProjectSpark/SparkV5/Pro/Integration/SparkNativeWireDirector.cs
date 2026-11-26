@@ -37,6 +37,7 @@ namespace ProjectSpark.SparkV5.Pro
         private LevelGamePlayManager levelManager;
         private Coroutine wireRoutine;
         private bool cancelling;
+        private SparkAAANarrationDirector narration;
         private SparkTerminal lastCompletedA, lastCompletedB;
         public string LastStatus { get; private set; } = "Native player Wire Tool has not been connected.";
         public bool IsBusy => wireRoutine != null;
@@ -61,6 +62,7 @@ namespace ProjectSpark.SparkV5.Pro
             if (!executive) executive = GetComponent<SparkProExecutive>();
             if (!character) character = GetComponent<SparkProCharacter>();
             if (!playerWirePort) playerWirePort = GetComponent<SparkAINativeWirePort>();
+            narration = GetComponent<SparkAAANarrationDirector>();
         }
         private void OnEnable() { SceneManager.activeSceneChanged += SceneChanged; }
         private void OnDisable() { SceneManager.activeSceneChanged -= SceneChanged; Cancel(); }
@@ -108,6 +110,9 @@ namespace ProjectSpark.SparkV5.Pro
         public bool TryStartApprovedStep(string sourceId, string destinationId, out string feedback)
         {
             feedback = null;
+            var hub = GetComponent<SparkEngineeringControlHub>();
+            if (hub && (!hub.IsExecuting || hub.Mode == SparkEngineeringControlHub.OperatingMode.Manual))
+            { feedback = "The Engineering Control Hub must own the approved wiring action."; return false; }
             if (wireRoutine != null) { feedback = "Native wire action already running."; return false; }
             if (pendingA || pendingB)
             { feedback = "An unconfirmed manual wire is pending. Cancel it before auto wiring."; return false; }
@@ -282,7 +287,8 @@ namespace ProjectSpark.SparkV5.Pro
                 wireRoutine = null;
                 string completed = Report("Spark connected the physical player cable and verified the circuit link. " +
                     "Current and mission completion still require fresh solver and evaluator evidence.");
-                if (executive) executive.PublishWirePerformanceNarration(completed);
+                if (narration) narration.Announce(SparkAAANarrationDirector.Milestone.Verified, b.name);
+                else if (executive) executive.PublishWirePerformanceNarration(completed);
                 yield break;
             }
             // Existing tested 10-wire v11 action follows unchanged as the fallback.
@@ -357,6 +363,7 @@ namespace ProjectSpark.SparkV5.Pro
         }
         private void Fail(string why)
         {
+            if (narration) narration.Announce(SparkAAANarrationDirector.Milestone.Stopped);
             // Stop hand tracking and restore the existing NavMeshAgent state.
             SparkNativeWireCinematic cinematicV122 = GetComponent<SparkNativeWireCinematic>();
             if (cinematicV122) cinematicV122.CancelPerformance();
@@ -368,6 +375,7 @@ namespace ProjectSpark.SparkV5.Pro
         }
         public void Cancel()
         {
+            if (wireRoutine != null && narration) narration.BeginWire();
             cancelling = true;
             SparkNativeWireCinematic cinematicV122 = GetComponent<SparkNativeWireCinematic>();
             if (cinematicV122) cinematicV122.CancelPerformance();

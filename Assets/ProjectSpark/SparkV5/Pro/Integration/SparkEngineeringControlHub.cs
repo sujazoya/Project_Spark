@@ -37,6 +37,7 @@ namespace ProjectSpark.SparkV5.Pro
         private SparkProExecutive executive;
         private SparkNativeWireDirector director;
         private SparkNativeWireAutoEngineer existingRecorder;
+        private SparkEngineeringDeviceOperator deviceOperator;
         private SparkNativeWiringPlan[] loadedPlans;
         private Coroutine activeRoutine;
         private SparkCircuitSystem activeCircuit;
@@ -78,6 +79,7 @@ namespace ProjectSpark.SparkV5.Pro
             executive = GetComponent<SparkProExecutive>();
             director = GetComponent<SparkNativeWireDirector>();
             existingRecorder = GetComponent<SparkNativeWireAutoEngineer>();
+            deviceOperator = GetComponent<SparkEngineeringDeviceOperator>();
             mode = startingMode;
             Reload();
         }
@@ -150,6 +152,7 @@ namespace ProjectSpark.SparkV5.Pro
                 // Changing owner cancels only the AI's unfinished native operation;
                 // confirmed connections remain in the actual player wire registry.
                 CancelInternal("Tool ownership changed; unfinished Spark action cancelled.", true);
+                if (deviceOperator) deviceOperator.Cancel();
                 ClearPending();
             }
             mode = next;
@@ -298,6 +301,7 @@ namespace ProjectSpark.SparkV5.Pro
         public string ApproveSuggested()
         {
             if (mode != OperatingMode.Assisted) return Message("This command requires Assisted mode.");
+            if (deviceOperator && deviceOperator.IsBusy) return Message("A device action already owns Spark's hands.");
             if (IsExecuting || (director && director.IsBusy)) return Message("A wiring action is already running.");
             if (string.IsNullOrEmpty(pendingFrom) || !pendingRoot || !pendingPlan)
                 return Message("No current suggestion. Use 'spark suggest next wire' first.");
@@ -315,8 +319,8 @@ namespace ProjectSpark.SparkV5.Pro
             if (manager.CircuitSystem.HasConnectionBetween(a, b))
             { ClearPending(); return Message("This wire is already connected. Nothing changed."); }
             if (!director) return Message("Native player wire director is missing.");
-            if (existingRecorder && existingRecorder.IsExecuting)
-                return Message("The original Auto Engineer is currently using the player wire tool.");
+            if (existingRecorder && (existingRecorder.IsExecuting || existingRecorder.IsRecording))
+                return Message("Finish player-wire recording or the existing action before approving a wire.");
             string sourceId = pendingFrom, destinationId = pendingTo;
             SparkNativeWiringPlan confirmedPlan = pendingPlan;
             ClearPending();
@@ -421,6 +425,7 @@ private IEnumerator ExecuteSingle(
         public string StartAuto()
         {
             if (mode != OperatingMode.Auto) return Message("Select Auto AI mode first.");
+            if (deviceOperator && deviceOperator.IsBusy) return Message("A device action already owns Spark's hands.");
             if (IsExecuting || (director && director.IsBusy)) return Message("A wiring operation is already active.");
             if (existingRecorder && (existingRecorder.IsExecuting || existingRecorder.IsRecording))
                 return Message("Stop the v11 recorder or existing automation before starting v14.");
@@ -452,7 +457,7 @@ private IEnumerator ExecuteSingle(
             {
                 while (pauseRequested && !cancelRequested)
                 {
-                    SetPhase(ExecutionPhase.Paused);
+                    if (phase != ExecutionPhase.Paused) SetPhase(ExecutionPhase.Paused);
                     if (!ContextMatches(out string pausedError))
                     { FinishFailure("While paused: " + pausedError); yield break; }
                     yield return new WaitForSecondsRealtime(0.2f);
@@ -535,6 +540,7 @@ private IEnumerator ExecuteSingle(
         public string CancelAutomation()
         {
             CancelInternal("Player cancelled. Confirmed player-native connections were not removed.", true);
+            if (deviceOperator && (deviceOperator.IsBusy || deviceOperator.Proposal != "None")) deviceOperator.Cancel();
             ClearPending();
             return Message("AI wiring cancelled; native tool released. Previously confirmed connections are retained.");
         }
@@ -605,7 +611,6 @@ private IEnumerator ExecuteSingle(
             if (!caller || string.IsNullOrWhiteSpace(question)) return false;
             string q = question.Trim().TrimEnd('?', '.', '!').ToLowerInvariant();
             if (q.StartsWith("hey spark ")) q = q.Substring(10).Trim();
-            if (SparkEngineeringDeviceOperator.TryHandleFrom(caller, q, out response)) return true;
             var hub = caller.GetComponent<SparkEngineeringControlHub>();
             if (!hub) return false; // Existing game behavior remains available until bound.
 
@@ -635,6 +640,8 @@ private IEnumerator ExecuteSingle(
                 case "spark resume automation": case "resume auto wiring":
                     response = hub.Resume(); return true;
                 case "spark cancel automation": case "cancel auto wiring": case "spark stop":
+                    response = hub.CancelAutomation(); return true;
+                case "cancel wire": case "stop wiring":
                     response = hub.CancelAutomation(); return true;
                 case "spark reload engineering plans":
                     response = hub.Message(hub.Reload()); return true;
