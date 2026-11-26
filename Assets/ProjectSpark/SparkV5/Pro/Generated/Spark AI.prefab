@@ -2883,11 +2883,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.76
+      value: 0.74
       objectReference: {fileID: 0}
     - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.346
+      value: -1.34
       objectReference: {fileID: 0}
     - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2917,11 +2917,98 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8378993145745350539, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+    - {fileID: 6258590074350375025, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+    - {fileID: 1912999538097163813, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4623577606415297928}
+    - targetCorrespondingSourceObject: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6751629910340579090}
+    - targetCorrespondingSourceObject: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4362593751911970820}
   m_SourcePrefab: {fileID: 100100000, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+--- !u!1 &1383085092576617812 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+  m_PrefabInstance: {fileID: 3855044934285881290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4623577606415297928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383085092576617812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d980e392d55068d4b8fd8796e58a4039, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkNativeWireDirector
+  executive: {fileID: 0}
+  character: {fileID: 0}
+  playerWirePort: {fileID: 4362593751911970820}
+  requireVirtualPowerOff: 1
+  routingSeconds: 2.5
+  gesturePauseSeconds: 0.35
+  cableLift: 0.14
+--- !u!114 &6751629910340579090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383085092576617812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce63c2bce88b9dd468fe1f0c1c65ec9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkAINativeWireUnityEventPort
+  onCreatePlayerWire:
+    m_PersistentCalls:
+      m_Calls: []
+  onAttachSource:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveFreeCableEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  onAttachDestination:
+    m_PersistentCalls:
+      m_Calls: []
+  onFinalizePlayerWire:
+    m_PersistentCalls:
+      m_Calls: []
+  onCancelPlayerWire:
+    m_PersistentCalls:
+      m_Calls: []
+  onUndoPlayerWire:
+    m_PersistentCalls:
+      m_Calls: []
+  validatePersistentListeners: 1
+--- !u!114 &4362593751911970820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383085092576617812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c602647a83027748b25194d9841ba85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkAINativeSignalWirePort
+  playerBuilder: {fileID: 0}
+  executive: {fileID: 0}
+  findActiveBuilderAutomatically: 1
+  driveRealFreehandRoute: 1
+  verbose: 0
 --- !u!4 &8187146224616235761 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}

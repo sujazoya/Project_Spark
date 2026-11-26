@@ -10388,6 +10388,14 @@ GameObject:
   - component: {fileID: 8378993145745350539}
   - component: {fileID: 6258590074350375025}
   - component: {fileID: 1912999538097163813}
+  - component: {fileID: 4938413770724245470}
+  - component: {fileID: 2487032160217664115}
+  - component: {fileID: 1013516680786271103}
+  - component: {fileID: 383137946483037431}
+  - component: {fileID: 6787923008999933352}
+  - component: {fileID: 3222860996812415636}
+  - component: {fileID: 5767512077013935577}
+  - component: {fileID: 289515229696914559}
   m_Layer: 0
   m_Name: SparkV5Pro
   m_TagString: Untagged
@@ -11041,6 +11049,8 @@ MonoBehaviour:
   executive: {fileID: 0}
   character: {fileID: 0}
   playerWirePort: {fileID: 1912999538097163813}
+  workbench: {fileID: 0}
+  requireWorkbenchNavigation: 0
   requireVirtualPowerOff: 1
   routingSeconds: 2.5
   gesturePauseSeconds: 0.35
@@ -11096,6 +11106,153 @@ MonoBehaviour:
   findActiveBuilderAutomatically: 1
   driveRealFreehandRoute: 1
   verbose: 0
+--- !u!114 &4938413770724245470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2760260586610461342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfacef59612b1fc4c9bc71d953f0a531, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkNativeWireAutoEngineer
+  executive: {fileID: 0}
+  director: {fileID: 0}
+  requireVirtualPowerOff: 1
+  perWireTimeout: 15
+  verbose: 0
+--- !u!114 &2487032160217664115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2760260586610461342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73402dc2e3ec4114ca105519b8c84a24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkNativeWireCinematic
+  character: {fileID: 0}
+  executive: {fileID: 0}
+  navigation: {fileID: 0}
+  flight: {fileID: 0}
+  autoFlyWhenWalkingCannotReach: 1
+  enableExistingAgentWhenNavMeshValid: 1
+  maximumAgentStartOffset: 0.25
+  desiredWorkbenchReach: 0.52
+  walkTimeoutSeconds: 20
+  walkingSpeed: 1
+  reachSeconds: 0.65
+  gripPauseSeconds: 0.2
+  releasePauseSeconds: 0.28
+  ikBlendSpeed: 14
+  handTipOffset: 0.045
+  useLeftHandForSupport: 1
+  announceEachWire: 1
+--- !u!114 &1013516680786271103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2760260586610461342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57876b077dab2854d92fa796c4b6538d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkV5FlightController
+  allowAutoWiringFlight: 1
+  flightSpeed: 1.75
+  takeoffRise: 0.4
+  cruiseClearance: 0.55
+  bodySweepRadius: 0.085
+  bodySweepCenterHeight: 0.24
+  motionTimeoutSeconds: 23
+  tabletopEdgeMargin: 0.35
+  maximumXDistance: 8.8
+  maximumZDistance: 5.6
+  maximumHeightAboveHome: 2.5
+  maximumBelowHome: 0.65
+  collisionLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  createSubtleThrusterParticles: 1
+  character: {fileID: 0}
+  executive: {fileID: 0}
+  groundAgent: {fileID: 0}
+--- !u!114 &383137946483037431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2760260586610461342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca1fa842bfba1064ab81226d8224be1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkEngineeringControlHub
+  startingMode: 0
+  createRuntimePanel: 1
+  maxSecondsPerCable: 120
+  requireVirtualPowerOff: 1
+  spokenActionNarration: 0
+  optionalVoiceController: {fileID: 0}
+--- !u!114 &6787923008999933352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2760260586610461342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c634dd247524d34ea9252c0bbd317c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkEngineeringMissionAdvisor
+  includeEveryPlanStep: 1
+--- !u!114 &3222860996812415636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2760260586610461342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dcbc2333cf6a74980641316a549f2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkEngineeringMissionAdvisorPanel
+  openAtStart: 0
+--- !u!114 &5767512077013935577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2760260586610461342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d545a6555d8d6714ca116c9a061e99c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkEngineeringDeviceOperator
+  stateConfirmationTimeout: 3
+  requirePowerOffForNonPowerActions: 1
+--- !u!114 &289515229696914559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2760260586610461342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 146476b6bd41b7b44b1c086000b00c4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkEngineeringDevicePanel
 --- !u!1 &2779743260599996315
 GameObject:
   m_ObjectHideFlags: 0

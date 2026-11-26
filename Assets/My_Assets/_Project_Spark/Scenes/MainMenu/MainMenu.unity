@@ -232766,6 +232766,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1569869298}
   - component: {fileID: 1569869299}
+  - component: {fileID: 3217191532133369004}
   m_Layer: 0
   m_Name: CentralTable
   m_TagString: Untagged
@@ -262721,6 +262722,64 @@ RectTransform:
   m_AnchoredPosition: {x: 415, y: -493}
   m_SizeDelta: {x: 67, y: 34}
   m_Pivot: {x: 0, y: 1}
+--- !u!1 &1753954467 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8564101874922698546, guid: fd6f226cb30598d45ba830e7a2f31933, type: 3}
+  m_PrefabInstance: {fileID: 2034912384}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1753954471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753954467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: d2a53ea7adc1ef448a1585e9565b19f0, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!65 &1753954472
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753954467}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.093, y: 0.04829999, z: 0.00034999938}
+  m_Center: {x: 1.0384623e-23, y: -0.0029999982, z: 0.012259997}
 --- !u!1 &1754777931
 GameObject:
   m_ObjectHideFlags: 0
@@ -300173,7 +300232,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -8564101874922698546, guid: fd6f226cb30598d45ba830e7a2f31933, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1753954472}
+    - targetCorrespondingSourceObject: {fileID: -8564101874922698546, guid: fd6f226cb30598d45ba830e7a2f31933, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1753954471}
   m_SourcePrefab: {fileID: 100100000, guid: fd6f226cb30598d45ba830e7a2f31933, type: 3}
 --- !u!4 &2034912385 stripped
 Transform:
@@ -338383,6 +338448,14 @@ PrefabInstance:
       propertyPath: levelManager
       value: 
       objectReference: {fileID: 8565763376412791690}
+    - target: {fileID: 1007367568355650044, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: executive
+      value: 
+      objectReference: {fileID: 3217191532133369002}
+    - target: {fileID: 1007367568355650044, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: inspector
+      value: 
+      objectReference: {fileID: 3217191532133369001}
     - target: {fileID: 1074602042914073231, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
       propertyPath: answer
       value: 
@@ -338475,14 +338548,54 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1360671976}
+    - target: {fileID: 3134155368397881166, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 3217191532133369003}
+    - target: {fileID: 3134155368397881166, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: executive
+      value: 
+      objectReference: {fileID: 3217191532133369002}
     - target: {fileID: 4097539873056581116, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
       propertyPath: sceneCamera
       value: 
       objectReference: {fileID: 1360671976}
+    - target: {fileID: 4362593751911970820, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: executive
+      value: 
+      objectReference: {fileID: 3217191532133369002}
+    - target: {fileID: 4362593751911970820, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: playerBuilder
+      value: 
+      objectReference: {fileID: 1728712522}
+    - target: {fileID: 4407726095716865624, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4613085699611490506, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
       propertyPath: levelGamePlayManager
       value: 
       objectReference: {fileID: 8565763376412791690}
+    - target: {fileID: 4623577606415297928, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 3217191532133369003}
+    - target: {fileID: 4623577606415297928, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: executive
+      value: 
+      objectReference: {fileID: 3217191532133369002}
+    - target: {fileID: 4623577606415297928, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: workbench
+      value: 
+      objectReference: {fileID: 3217191532133369004}
+    - target: {fileID: 4623577606415297928, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: requireVirtualPowerOff
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623577606415297928, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+      propertyPath: requireWorkbenchNavigation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4845289013039343265, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
       propertyPath: circuitSystem
       value: 
@@ -338561,11 +338674,7 @@ PrefabInstance:
       objectReference: {fileID: 8565763376412791690}
     - target: {fileID: 8187146224616235761, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.74
-      objectReference: {fileID: 0}
-    - target: {fileID: 8187146224616235761, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.34
+      value: 0.718
       objectReference: {fileID: 0}
     - target: {fileID: 8385556052012692938, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
       propertyPath: levelGamePlayManager
@@ -338592,6 +338701,52 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+--- !u!114 &3217191532133369001 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1481177206151338281, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+  m_PrefabInstance: {fileID: 3217191532133369000}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075eaf35f9eb78845a3b7b652f026852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkLabTeachingDirector
+--- !u!114 &3217191532133369002 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2010157059098112456, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+  m_PrefabInstance: {fileID: 3217191532133369000}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21bcf9b806c31905e3d3f081f400c6ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProExecutive
+--- !u!114 &3217191532133369003 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3169094668180927682, guid: 261849a58e01d92468ff75380a167c9f, type: 3}
+  m_PrefabInstance: {fileID: 3217191532133369000}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcf29120959c33c457f9d072118e53bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProCharacter
+--- !u!114 &3217191532133369004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569869297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be83d4e8de9e43029a58e5e9f9c8da64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkWorkbenchNavigation
+  tabletop: {fileID: 1569869299}
 --- !u!1 &3217967983451474308
 GameObject:
   m_ObjectHideFlags: 0
@@ -354725,7 +354880,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}

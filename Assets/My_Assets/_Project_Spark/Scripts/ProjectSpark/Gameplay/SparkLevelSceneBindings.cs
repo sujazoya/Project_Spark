@@ -157,6 +157,32 @@ namespace ProjectSpark.Gameplay
             if (declaredRuntimeTerminals.Contains(id) || retiredTerminalIds.Contains(id)) return false;
             return terminalLookup.TryGetValue(id, out terminal) && terminal != null;
         }
+        /// <summary>Reverse lookup of a unique LIVE stable terminal binding; never guesses from GameObject names.</summary>
+        public bool TryGetTerminalId(SparkTerminal target, out string id)
+        {
+            id = null;
+            if (!target) return false;
+            EnsureLookupCache();
+            string found = null;
+            int matches = 0;
+            foreach (KeyValuePair<string, SparkTerminal> pair in terminalLookup)
+            {
+                if (pair.Value != target) continue;
+                if (!TryGetTerminal(pair.Key, out SparkTerminal current) || current != target) continue;
+                matches++;
+                found = pair.Key;
+            }
+            foreach (KeyValuePair<string, SparkTerminal> pair in runtimeTerminalOverrides)
+            {
+                if (pair.Value != target || terminalLookup.ContainsKey(pair.Key)) continue;
+                if (!TryGetTerminal(pair.Key, out SparkTerminal current) || current != target) continue;
+                matches++;
+                found = pair.Key;
+            }
+            if (matches != 1) return false;
+            id = found;
+            return true;
+        }
         public bool HasTerminal(string id) => TryGetTerminal(id, out _);
 
         public bool TryGetComponent(string id, out SparkElectricalComponent component)

@@ -268,13 +268,28 @@ namespace ProjectSpark.SparkV5.Pro
             if(warning){Publish("A current level safety warning is active. Follow official safety instructions first.",false);return;}
             submitting=true;returnState=SparkState.Idle;
             if (microphone) microphone.YieldForResponse();
-            try{if(cloud)cloud.Cancel();if(assistant)assistant.CancelPendingQuestionPro();StopSpeech();if(world&&world.IsInitialized)world.ObserveNow();if(warning)return;if(character)character.SetState(SparkState.Thinking);
+            try{
+                // Spark Engineering v14: controls approved AI actions before legacy routes.
+                if (SparkEngineeringControlHub.TryHandleFrom(this, question, out string sparkModeResponseV14))
+                {
+                    Publish(sparkModeResponseV14, speakAnswers);
+                    return;
+                }
+if(cloud)cloud.Cancel();if(assistant)assistant.CancelPendingQuestionPro();StopSpeech();if(world&&world.IsInitialized)world.ObserveNow();if(warning)return;if(character)character.SetState(SparkState.Thinking);
                 var context = CaptureContext(question);
                 int requestRevision = cortex.Begin(context);
                 segmentGesture = SparkGesture.None;
                 string answer;
                 if(ExamMode){returnState=SparkState.Examining;answer="Independent examination mode is active. Spark will not provide solutions or hints. Use the official examiner to submit work.";}
-                else if (SparkNativeWireDirector.TryHandleFrom(this, question, out answer))
+                else if (SparkV5FlightController.TryHandleFrom(this, question, out answer))
+                {
+                    returnState = SparkState.Teaching;
+                }
+                else if (SparkNativeWireAutoEngineer.TryHandleFrom(this, question, out answer))
+                {
+                    // Reviewed practice wiring and player demonstration recorder; ahead of generic Cortex.
+                    returnState = SparkState.Teaching;
+                }                else if (SparkNativeWireDirector.TryHandleFrom(this, question, out answer))
                 {
                     // Native player's original wire tool, before legacy graph-only v8.
                     returnState = SparkState.Teaching;
@@ -578,6 +593,18 @@ namespace ProjectSpark.SparkV5.Pro
             }
             return count == 0 ? "The circuit reports no valid connections." :
                 $"The circuit reports {count} valid connections.\n{result}".TrimEnd();
+        }
+
+        /// <summary>
+        /// Reports physical wiring stages in the existing Spark Live conversation;
+        /// uses current speech output only when available and enabled.
+        /// Does not modify electrical state, assessment or game progression.
+        /// </summary>
+        public void PublishWirePerformanceNarration(string message)
+        {
+            if (ExamMode || string.IsNullOrWhiteSpace(message)) return;
+            if (message.Length > 260) message = message.Substring(0, 260);
+            Publish(message, speakAnswers && SpeechOutputAvailable);
         }
 
         void Publish(string answer,bool speak)

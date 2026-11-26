@@ -22,7 +22,10 @@ namespace ProjectSpark.SparkV5.Pro
         [SerializeField] bool animateCrest = true;
         public SparkState State { get; private set; }
         public bool WarningActive { get; private set; }
-        public AudioSource Voice => voice;
+        public AudioSource Voice => voice;       
+        
+        public NavMeshAgent NavigationAgent => agent;
+
         public Transform FocusTarget => focus;
         public event Action InterruptRequested;
         public event Action<SparkState> StateChanged;
@@ -36,6 +39,7 @@ namespace ProjectSpark.SparkV5.Pro
         SparkState requested; SparkGesture gesture; SparkMouth mouth;
         bool visemeValid, ready; float gestureEnd, blinkAt, blinkStart = -10, lastPose, amplitude, phase;
         Transform pointTarget; bool pointLeft; Vector3? pointPosition; bool walking;
+        float walkArrivalTolerance = .04f;
         static readonly string[] EyeNames={"Eye_L","Eye_R"}, BrowNames={"Brow_L","Brow_R"}, GazeNames={"Gaze_L","Gaze_R"}, ThumbNames={"Thumb_L","Thumb_R"};
         static readonly string[,] Fingers={{"Finger0_L","Finger1_L","Finger2_L","Finger3_L"},{"Finger0_R","Finger1_R","Finger2_R","Finger3_R"}};
         static readonly string[,] FingerTips={{"FingerTip0_L","FingerTip1_L","FingerTip2_L","FingerTip3_L"},{"FingerTip0_R","FingerTip1_R","FingerTip2_R","FingerTip3_R"}};
@@ -65,13 +69,18 @@ namespace ProjectSpark.SparkV5.Pro
         public void PointAtPosition(Vector3 target,bool left=false,float seconds=4) { PlayGesture(SparkGesture.Point,seconds);if(WarningActive)return;pointPosition=target;pointLeft=left; }
         public void ClearGesture(){gesture=SparkGesture.None;pointTarget=null;pointPosition=null;}
         public void Interrupt(){ClearViseme();ClearGesture();if(InterruptRequested!=null)InterruptRequested.Invoke();else if(voice)voice.Stop();requested=SparkState.Listening;}
-        public bool WalkTo(Vector3 destination)
+        public bool WalkTo(Vector3 destination) => WalkTo(destination, .04f);
+        internal bool WalkTo(Vector3 destination, float arrivalTolerance)
         { if(WarningActive || !agent || !agent.isActiveAndEnabled || !agent.isOnNavMesh)return false;
-          if(!NavMesh.SamplePosition(destination,out NavMeshHit hit, .5f,agent.areaMask))return false;
+          var filter=new NavMeshQueryFilter{agentTypeID=agent.agentTypeID,areaMask=agent.areaMask};
+          if(!NavMesh.SamplePosition(destination,out NavMeshHit hit,.25f,filter))return false;
           var path=new NavMeshPath(); if(!agent.CalculatePath(hit.position,path)||path.status!=NavMeshPathStatus.PathComplete)return false;
-          agent.isStopped=false; if(!agent.SetPath(path))return false;walking=true;return true; }
+          agent.isStopped=false; if(!agent.SetPath(path))return false;
+          walkArrivalTolerance=Mathf.Max(0f,arrivalTolerance);walking=true;return true; }
         public void StopNavigation(){walking=false;if(agent && agent.isActiveAndEnabled && agent.isOnNavMesh){agent.isStopped=true;agent.ResetPath();}}
         public Transform GetAnchor(string name){return rigs.Count>0?rigs[0].Get(name):null;}
+        internal int RigCount => rigs.Count;
+        internal Transform GetAnchor(string name, int rigIndex) => rigs[rigIndex].Get(name);
         void Awake()
         {
             block = new MaterialPropertyBlock();
@@ -101,7 +110,7 @@ namespace ProjectSpark.SparkV5.Pro
         void LateUpdate()
         {
             if(!ready)return;float now=Time.unscaledTime;if(now-lastPose<1f/poseHz)return;float dt=Mathf.Min(.1f,now-lastPose);lastPose=now;float k=1-Mathf.Exp(-13*dt);
-            if(walking && (!agent||!agent.isOnNavMesh||(!agent.pathPending&&(!agent.hasPath||agent.remainingDistance<=agent.stoppingDistance+.04f))))StopNavigation();
+            if(walking && (!agent||!agent.isOnNavMesh||(!agent.pathPending&&(!agent.hasPath||agent.remainingDistance<=agent.stoppingDistance+walkArrivalTolerance))))StopNavigation();
             bool speaking=voice && voice.isPlaying;SparkState next=WarningActive?SparkState.Warning: speaking?SparkState.Speaking:walking?SparkState.Walking:requested;
             if(next!=State){State=next;StateChanged?.Invoke(next);}
             if(now>=gestureEnd)ClearGesture();if(now>=blinkAt){blinkStart=now;blinkAt=now+UnityEngine.Random.Range(2.5f,5.2f);}

@@ -2169,6 +2169,7 @@ MonoBehaviour:
   interactable: 1
   requirePlayerLookingAtObject: 1
   switchLeverController: {fileID: 0}
+  spdtInteraction: {fileID: 0}
   shelfItem: {fileID: 0}
   objectShelf: {fileID: 0}
   manualPlacement: {fileID: 0}
@@ -3322,6 +3323,7 @@ MonoBehaviour:
   interactable: 1
   requirePlayerLookingAtObject: 0
   switchLeverController: {fileID: 4884912259729910043}
+  spdtInteraction: {fileID: 0}
   shelfItem: {fileID: 0}
   objectShelf: {fileID: 0}
   manualPlacement: {fileID: 0}
@@ -4233,6 +4235,7 @@ GameObject:
   - component: {fileID: 8332730328991508192}
   - component: {fileID: 797902974814794080}
   - component: {fileID: 6786505112335000050}
+  - component: {fileID: 2495172562535132701}
   m_Layer: 15
   m_Name: PowerSupply_01
   m_TagString: Untagged
@@ -4272,7 +4275,7 @@ MonoBehaviour:
   objectId: SparkPowerSupply_5v
   displayName: SparkPowerSuppl
   interactionsEnabled: 1
-  operationalState: 1
+  operationalState: 0
   componentFamily: Generic
   electricalModelId: generic
   electricalEnabled: 1
@@ -4280,7 +4283,7 @@ MonoBehaviour:
   negativeTerminal: {fileID: 7698657395126870455}
   outputVoltage: 5
   currentLimit: 1
-  state: 2
+  state: 0
 --- !u!65 &797902974814794080
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4317,6 +4320,30 @@ MonoBehaviour:
   key: powerSupply_01
   worldAnchor: {fileID: 0}
   screenRect: {fileID: 0}
+--- !u!114 &2495172562535132701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2982319239123319786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2619a3ad7708b5748be4aeecc0e0118e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkEngineeringDevicePort
+  deviceId: PowerSupply_01
+  deviceType: 1
+  authoritativeStateComponent: {fileID: 8332730328991508192}
+  stateMemberName: State
+  onStateValue: Closed
+  offStateValue: Open
+  nativeOn:
+    m_PersistentCalls:
+      m_Calls: []
+  nativeOff:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3103053158633248192
 GameObject:
   m_ObjectHideFlags: 0
@@ -27844,6 +27871,7 @@ MonoBehaviour:
   interactable: 1
   requirePlayerLookingAtObject: 1
   switchLeverController: {fileID: 0}
+  spdtInteraction: {fileID: 0}
   shelfItem: {fileID: 991229730783450206}
   objectShelf: {fileID: 0}
   manualPlacement: {fileID: 0}
@@ -28388,6 +28416,7 @@ MonoBehaviour:
   interactable: 1
   requirePlayerLookingAtObject: 1
   switchLeverController: {fileID: 0}
+  spdtInteraction: {fileID: 0}
   shelfItem: {fileID: 8851187757294267092}
   objectShelf: {fileID: 0}
   manualPlacement: {fileID: 0}
@@ -29137,6 +29166,7 @@ MonoBehaviour:
   interactable: 1
   requirePlayerLookingAtObject: 1
   switchLeverController: {fileID: 0}
+  spdtInteraction: {fileID: 0}
   shelfItem: {fileID: 3128681604414326796}
   objectShelf: {fileID: 0}
   manualPlacement: {fileID: 0}
@@ -29714,6 +29744,7 @@ MonoBehaviour:
   interactable: 1
   requirePlayerLookingAtObject: 1
   switchLeverController: {fileID: 0}
+  spdtInteraction: {fileID: 0}
   shelfItem: {fileID: 3367381196162472284}
   objectShelf: {fileID: 0}
   manualPlacement: {fileID: 0}
