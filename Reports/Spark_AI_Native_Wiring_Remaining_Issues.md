@@ -1,0 +1,14 @@
+# Remaining native wiring checks
+
+| Area | Status and repeatable check |
+| --- | --- |
+| Connector presentation | **UNVERIFIED.** The original rig provides fingertip positions and a grasp gesture. The changes do not add articulated finger closure around a separate connector mesh or prove socket-axis rotation. In the native cable visual fixture, pause at source contact, transit and insertion. Compare the actual fingertip midpoint and connector with the socket axis from two views. |
+| Independent walking carry | **Verified in Unity Editor.** The controlled high-terminal case passed on foot. Repeat it on an Android device to check the reduced cable segment setting and frame consistency. |
+| All route and failure cases | **UNVERIFIED.** Repeat with a lead shorter than the span, an obstruction between sockets, a removed or moved terminal, power enabled mid-action and a mid-action scene switch. Inspect the live registry and verify that already committed wires remain and the uncommitted preview is removed. |
+| Authored Level 20 wire nine | **Passed the cable visual replay and the regular replay after the alternate pickup stance change.** The earlier replay stopped at 8/10 when the live body clearance check encountered the `Contacts` collider. Compare `Logs/SparkMasterAudit/NativeWireVisualRepair/cable.txt` with `cable-before-side-clearance.txt` in the same folder. Device runs are still pending. |
+| Binding lifecycle edge cases | **UNVERIFIED for the full matrix.** The regression checks unknown, fixed, and unpopulated IDs in Level 20. In an isolated copy of a layout, add a duplicate declaration, destroy a registered runtime terminal, retire a fixed terminal and try a binding from a previous instance. Export Native Wiring Diagnostics and verify the individual rejection categories. |
+| Rendering and motion performance | **UNVERIFIED.** Profile the cable solve, arm pose and native mesh rebuild while repeating the longest Level 20 carry in a Windows development player and on an ARM64 Android device. Measure frame duration, allocations and late-pose jitter. |
+| Android device and voice | **UNVERIFIED on hardware.** Install an ARM64 development build and repeat the reviewed first wire with touch and the configured speech provider. Use typed commands as the comparison for deterministic routing. |
+| Historical semantic benchmark | **UNVERIFIED.** The 3/6 benchmark input and original audit were unavailable. The fixture exercises deterministic reviewed-wire phrases on the real executive. Re-run the supplied benchmark when its exact corpus is available. |
+
+Use **Project Spark > Spark V5 Pro > AAA Laboratory > Export Native Wiring Diagnostics** during Play Mode for measured pose and cable state. The JSON is written to `Logs/SparkTelescopicArms/NativeWiringDiagnostics.json`. Existing **Test AAA Native Cable Visuals** captures motion and native rendering evidence.

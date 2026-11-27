@@ -5,17 +5,18 @@ namespace ProjectSpark.Bootstrap
 {
     public sealed class Bootstrap : MonoBehaviour
     {
-        private const string MainMenu = "Assets/My_Assets/_Project_Spark/Scenes/MainMenu/MainMenu";
+        private const string MainMenuPath = "Assets/My_Assets/_Project_Spark/Scenes/MainMenu/MainMenu.unity";
 
         private void Start()
         {
-            if (!Application.CanStreamedLevelBeLoaded(MainMenu))
+            int buildIndex = SceneUtility.GetBuildIndexByScenePath(MainMenuPath);
+            if (buildIndex < 0)
             {
-                Debug.LogError("MainMenu must be included in the build scenes.", this);
+                Debug.LogError("The active build profile cannot load " + MainMenuPath + ".", this);
                 return;
             }
 
-            SceneManager.LoadSceneAsync(MainMenu, LoadSceneMode.Single);
+            SceneManager.LoadSceneAsync(buildIndex, LoadSceneMode.Single);
         }
     }
 }

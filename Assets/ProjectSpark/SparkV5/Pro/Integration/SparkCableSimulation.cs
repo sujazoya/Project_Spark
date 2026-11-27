@@ -7,6 +7,9 @@ namespace ProjectSpark.SparkV5.Pro
     internal sealed class SparkCableSimulation
     {
         private const float Step = 1f / 90f;
+        // The visible section of an authored lead stays within this ratio even
+        // when most of the selected lead's slack is outside the work span.
+        internal const float MaximumVisibleRatio = 1.55f;
         private static readonly ProfilerMarker SolveMarker = new ProfilerMarker("Spark.NativeCable.Solve");
         private readonly RaycastHit[] hits = new RaycastHit[12];
         private Vector3[] offsets, previousOffsets;
@@ -19,6 +22,7 @@ namespace ProjectSpark.SparkV5.Pro
         public float Extension { get; private set; }
         public int Contacts { get; private set; }
         public int Iterations { get; private set; }
+        public float LastKnotMotion => lastStepMotion;
         public bool Settled(float tolerance) => lastStepMotion <= tolerance;
 
         public void Reset(Vector3 source, Vector3 grip, int segments, float length, int iterations)
@@ -109,19 +113,32 @@ namespace ProjectSpark.SparkV5.Pro
                 offsets[i] = offset;
                 Points[i] = axisPoint + offset;
             }
-            float maxLength = Length * (1f + extensionLimit);
-            if (RouteLength(source, chord, end, 1f) > maxLength)
+            // Keep slack for carry, but don't permit a short visible span to
+            // spend all available lead on a high-frequency zigzag.
+            float maxLength = Mathf.Min(Length * (1f + extensionLimit), span * MaximumVisibleRatio);
+            float axialStep = span / end;
+            float maximumSideStep = axialStep * Mathf.Sqrt(MaximumVisibleRatio * MaximumVisibleRatio - 1f);
+            float scale = 1f;
+            for (int i = 1; i <= end; i++)
             {
-                float low = 0f, high = 1f;
+                float sideStep = Vector3.Distance(offsets[i], offsets[i - 1]);
+                if (sideStep > maximumSideStep)
+                    scale = Mathf.Min(scale, maximumSideStep / sideStep);
+            }
+            if (RouteLength(source, chord, end, scale) > maxLength)
+            {
+                float low = 0f, high = scale;
                 for (int step = 0; step < 8; step++)
                 {
                     float factor = (low + high) * .5f;
                     if (RouteLength(source, chord, end, factor) <= maxLength) low = factor;
                     else high = factor;
                 }
-                for (int i = 1; i < end; i++)
-                    Points[i] = source + chord * (i / (float)end) + (offsets[i] *= low);
+                scale = low;
             }
+            if (scale < 1f)
+                for (int i = 1; i < end; i++)
+                    Points[i] = source + chord * (i / (float)end) + (offsets[i] *= scale);
             previousSource = source;
             previousGrip = grip;
             return true;

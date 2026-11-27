@@ -40,6 +40,7 @@ namespace ProjectSpark.AI
                 callbacks.Enqueue(() => { if (generation == id) complete(transcript, confidence); });
             void Failed() => callbacks.Enqueue(() => { if (generation == id) fail(); });
             using var activity = Activity();
+            if (activity == null) { Failed(); return; }
             activity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
             {
                 if (generation != id) return;
@@ -65,7 +66,7 @@ namespace ProjectSpark.AI
         {
             int id = generation;
             using var activity = Activity();
-            activity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
+            activity?.Call("runOnUiThread", new AndroidJavaRunnable(() =>
             {
                 if (generation != id || recognizer == null) return;
                 try { recognizer.Call("stopListening"); } catch (AndroidJavaException) { }
@@ -97,6 +98,7 @@ namespace ProjectSpark.AI
             private readonly Action failure;
             internal Listener(Action<string, float> result, Action failure) : base("android.speech.RecognitionListener")
             { this.result = result; this.failure = failure; }
+            [UnityEngine.Scripting.Preserve]
             public void onResults(AndroidJavaObject bundle)
             {
                 try
@@ -110,13 +112,21 @@ namespace ProjectSpark.AI
                 catch (AndroidJavaException) { failure(); }
             }
 
+            [UnityEngine.Scripting.Preserve]
             public void onError(int code) { if (code == 6 || code == 7) result("", -1f); else failure(); }
+            [UnityEngine.Scripting.Preserve]
             public void onReadyForSpeech(AndroidJavaObject unused) { }
+            [UnityEngine.Scripting.Preserve]
             public void onBeginningOfSpeech() { }
+            [UnityEngine.Scripting.Preserve]
             public void onRmsChanged(float unused) { }
+            [UnityEngine.Scripting.Preserve]
             public void onBufferReceived(byte[] unused) { }
+            [UnityEngine.Scripting.Preserve]
             public void onEndOfSpeech() { }
+            [UnityEngine.Scripting.Preserve]
             public void onPartialResults(AndroidJavaObject unused) { }
+            [UnityEngine.Scripting.Preserve]
             public void onEvent(int code, AndroidJavaObject unused) { }
         }
     }
@@ -189,6 +199,7 @@ namespace ProjectSpark.AI
         {
             private readonly Action<int> ready;
             internal Init(Action<int> ready) : base("android.speech.tts.TextToSpeech$OnInitListener") { this.ready = ready; }
+            [UnityEngine.Scripting.Preserve]
             public void onInit(int status) => ready(status);
         }
     }

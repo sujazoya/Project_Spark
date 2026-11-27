@@ -217,6 +217,15 @@ public SparkTerminalPolarity EffectivePolarity
         public SparkElectronicObject Owner =>
             owner;
 
+        /// <summary>Distinguishes a real device bypass from a shared holder for isolated sockets.</summary>
+        public bool SharesElectricalOwnerWith(SparkTerminal other)
+        {
+            if (!other || !owner || owner != other.owner) return false;
+            // Legacy process fixtures use this unconfigured resistor solely as a socket holder.
+            return !(owner is SparkResistor resistor && !resistor.ElectricalEnabled &&
+                !resistor.TerminalA && !resistor.TerminalB);
+        }
+
         public SparkTerminalKind Kind =>
             kind;
 

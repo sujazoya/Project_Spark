@@ -83,14 +83,6 @@ namespace ProjectSpark.UI.VisualTeaching
         public SparkSchematicData schematic = new SparkSchematicData();
     }
 
-    [CreateAssetMenu(menuName = "Project Spark/AI/Visual Teaching Lesson", fileName = "SparkVisualLesson")]
-    public sealed class SparkVisualLesson : ScriptableObject
-    {
-        public string lessonId = "tutorial";
-        public string title = "Circuit Tutorial";
-        public string goal = "Learn the circuit";
-        public SparkTeachingStep[] steps = Array.Empty<SparkTeachingStep>();
-    }
 
     // Safe, data-only input boundary for an AI adapter. No code, prefab, file, URL,
     // shader, script type or arbitrary Unity method can be supplied by the AI.

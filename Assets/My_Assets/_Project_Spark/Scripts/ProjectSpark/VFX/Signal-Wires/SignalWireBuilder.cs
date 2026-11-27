@@ -287,9 +287,24 @@ public bool ExternalInputControl
             SetHoveredTerminal(null);
         }
 
-       
+#if UNITY_ANDROID && !UNITY_EDITOR
+        private void OnApplicationPause(bool paused)
+        {
+            if (paused && drawing && !externalInputControl) CancelWire();
+        }
+#endif
+
         private void Update()
 {
+#if UNITY_ANDROID && !UNITY_EDITOR
+    if (!externalInputControl && drawing &&
+        (SparkBenchPointer.Cancelled || IsPointerOverUI() || !Application.isFocused))
+    {
+        CancelWire();
+        SetHoveredTerminal(null);
+        return;
+    }
+#endif
     if (wireDrawingMode == WireDrawingMode.TerminalToTerminal)
     {
         UpdateTerminalToTerminalInput();
@@ -304,7 +319,7 @@ public bool ExternalInputControl
 
     if (!drawing)
     {
-        if (Input.GetMouseButtonDown(0))
+        if (SparkBenchPointer.Pressed)
             TryBeginWire();
 
         return;
@@ -312,13 +327,13 @@ public bool ExternalInputControl
 
     UpdateDragging();
 
-    if (Input.GetMouseButtonUp(0))
+    if (SparkBenchPointer.Released)
         EndWire();
 
-    if (Input.GetMouseButtonDown(1))
+    if (SparkBenchPointer.SecondaryPressed)
         CancelWire();
 
-    if (Input.GetKeyDown(KeyCode.Escape))
+    if (SparkBenchPointer.KeyDown(KeyCode.Escape))
         CancelWire();
 }
 
@@ -332,7 +347,7 @@ public bool ExternalInputControl
 /// </summary>
 public void EndWire()
 {
-    TryEndWire((Vector2)Input.mousePosition);
+    TryEndWire((Vector2)SparkBenchPointer.Position);
 }
 
 /// <summary>
@@ -709,7 +724,7 @@ private void ResetWireState()
         {
             if (wireDrawingMode == WireDrawingMode.TerminalToTerminal)
             {
-                SparkTerminal selectedTerminal = FindTerminalForNewMode((Vector2)Input.mousePosition);
+                SparkTerminal selectedTerminal = FindTerminalForNewMode((Vector2)SparkBenchPointer.Position);
                 if (selectedTerminal != null)
                     BeginWire(selectedTerminal, DeterminePolarity(selectedTerminal));
                 return;
@@ -717,7 +732,7 @@ private void ResetWireState()
 
             Ray ray =
                 targetCamera.ScreenPointToRay(
-                    Input.mousePosition);
+                    SparkBenchPointer.Position);
 
             if (!Physics.Raycast(
                     ray,
@@ -776,7 +791,7 @@ private WirePolarity DeterminePolarity(
         {
             if (wireDrawingMode == WireDrawingMode.TerminalToTerminal)
             {
-                UpdateWireFromScreenPosition((Vector2)Input.mousePosition);
+                UpdateWireFromScreenPosition((Vector2)SparkBenchPointer.Position);
                 return;
             }
 
@@ -791,7 +806,7 @@ private WirePolarity DeterminePolarity(
 
             Ray ray =
                 targetCamera.ScreenPointToRay(
-                    Input.mousePosition);
+                    SparkBenchPointer.Position);
 
             Transform gridTransform =
                 breadboard.GridOrigin;
@@ -1216,7 +1231,7 @@ private SparkTerminal FindTerminalAtScreenPosition(
 
             Ray ray =
                 targetCamera.ScreenPointToRay(
-                    Input.mousePosition);
+                    SparkBenchPointer.Position);
 
             RaycastHit[] hits =
                 Physics.RaycastAll(
@@ -1349,14 +1364,14 @@ public void CancelWire()
             if (targetCamera == null) return;
 
             // Cancel first: do not commit on the same frame as Escape/right-click.
-            if (drawing && (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape)))
+            if (drawing && (SparkBenchPointer.SecondaryPressed || SparkBenchPointer.KeyDown(KeyCode.Escape)))
             {
                 CancelWire();
                 SetHoveredTerminal(null);
                 return;
             }
 
-            Vector2 cursor = (Vector2)Input.mousePosition;
+            Vector2 cursor = (Vector2)SparkBenchPointer.Position;
 
             if (!drawing)
             {
@@ -1368,7 +1383,7 @@ public void CancelWire()
 
                 SparkTerminal candidate = FindTerminalForNewMode(cursor);
                 SetHoveredTerminal(candidate);
-                if (Input.GetMouseButtonDown(0) && candidate != null)
+                if (SparkBenchPointer.Pressed && candidate != null)
                     BeginWire(candidate, DeterminePolarity(candidate));
                 return;
             }
@@ -1377,10 +1392,10 @@ public void CancelWire()
 
             if (terminalInputStyle == TerminalWireInputStyle.DragAndRelease)
             {
-                if (Input.GetMouseButtonUp(0))
+                if (SparkBenchPointer.Released)
                     TryEndWire(cursor);
             }
-            else if (Input.GetMouseButtonDown(0) &&
+            else if (SparkBenchPointer.Pressed &&
                      (!avoidStartingOverUI || !IsPointerOverUI()))
             {
                 TryEndWire(cursor);
@@ -1468,7 +1483,7 @@ public void CancelWire()
             {
                 bool sampleMouseDrag = terminalCableRouting == TerminalCableRouting.FreehandDrag &&
                     terminalInputStyle == TerminalWireInputStyle.DragAndRelease &&
-                    (externalInputControl || Input.GetMouseButton(0));
+                    (externalInputControl || SparkBenchPointer.Held);
                 UpdateTerminalPreview(ray.GetPoint(distance), sampleMouseDrag,
                     screenPosition, true);
             }
@@ -1691,8 +1706,12 @@ public void CancelWire()
 
         private static bool IsPointerOverUI()
         {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            return SparkBenchPointer.IsOverUI();
+#else
             UnityEngine.EventSystems.EventSystem events = UnityEngine.EventSystems.EventSystem.current;
             return events != null && events.IsPointerOverGameObject();
+#endif
         }
 
         private void SetHoveredTerminal(SparkTerminal terminal)

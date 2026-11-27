@@ -86,7 +86,7 @@ namespace ProjectSpark.EditorTools
             SparkSchematicWire[] wires;
             switch(level)
             {
-                case 1: BuildSeries(new[] { Part("led",SparkSchematicKind.Generic,.64f,.76f,"LED",Cyan) },out parts,out wires); break;
+                case 1: BuildSeries(new[] { Part("led",SparkSchematicKind.Generic,.64f,.76f,"LED",Cyan) },out parts,out wires, starter: true); break;
                 case 2: BuildSeries(new[] { Part("r",SparkSchematicKind.Resistor,.49f,.76f,"R (fixed)",Gold), Part("led",SparkSchematicKind.Generic,.72f,.76f,"LED",Cyan) },out parts,out wires); break;
                 case 3: BuildSeries(new[] { Part("r",SparkSchematicKind.Resistor,.49f,.76f,"R (shelf)",Gold), Part("led",SparkSchematicKind.Generic,.72f,.76f,"LED",Cyan) },out parts,out wires); break;
                 case 4: BuildSeries(new[] { Part("r",SparkSchematicKind.Resistor,.49f,.76f,"Resistor",Gold), Part("led",SparkSchematicKind.Generic,.72f,.76f,"Load",Cyan) },out parts,out wires); break;
@@ -100,11 +100,12 @@ namespace ProjectSpark.EditorTools
         }
 
         // All coordinates are intentionally spread to accommodate existing label renderer.
-        private static void BuildSeries(SparkSchematicPart[] devices,out SparkSchematicPart[] parts,out SparkSchematicWire[] wires)
+        private static void BuildSeries(SparkSchematicPart[] devices,out SparkSchematicPart[] parts,out SparkSchematicWire[] wires, bool starter = false)
         {
             var list=new System.Collections.Generic.List<SparkSchematicPart> {
                 Part("battery",SparkSchematicKind.Battery,.11f,.51f,"5 V",Hot),
-                Part("switch",SparkSchematicKind.Switch,.29f,.76f,"SWITCH",Gold)
+                starter ? Part("resistor",SparkSchematicKind.Resistor,.29f,.76f,"150 Ω",Gold)
+                    : Part("switch",SparkSchematicKind.Switch,.29f,.76f,"SWITCH",Gold)
             };
             list.AddRange(devices);
             list.Add(Part("ground",SparkSchematicKind.Ground,.47f,.17f,"GND",Cold));
@@ -151,7 +152,7 @@ namespace ProjectSpark.EditorTools
             string[] notes;
             switch(level)
             {
-                case 1: notes=new[]{"Introduction to closed DC circuits: battery, switch and load.","Illustrative: Battery_positive -> switch input -> load -> Battery_negative. Use verified scene terminal IDs.","With switch ON, inspect supply voltage and load current from the solver.","Ensure an actual closed return, supported component solver definition and the level's configured objectives."}; break;
+                case 1: notes=new[]{"The fixed resistor limits current through the LED.","Connect supply positive to the resistor input, resistor output to the LED anode, and the LED cathode to supply negative.","Turn the supply on after wiring and check that the LED lights.","The level evaluator confirms the LED objective."}; break;
                 case 2: notes=new[]{"Fixed resistor and LED in a series circuit.","Illustrative: switch output -> fixed resistor -> LED anode; LED cathode -> Battery_negative.","At 5 V, a 150 Ohm resistor and nominal 2 V LED would carry about 20 mA (illustrative only).","Confirm LED polarity, resistor current, no short and level's real objective targets."}; break;
                 case 3: notes=new[]{"Current Limiter: experiment with shelf resistor choices.","Illustrative: switch output -> shelf resistor -> LED anode -> LED cathode -> Battery_negative.","Compare solver current when resistor values change; do not treat shelf items as connected until placed.","Check workbench placement, solver discovery, safe current and actual Level 3 objectives."}; break;
                 case 4: notes=new[]{"Power Challenge: observe power dissipated by a resistor/load.","Illustrative: battery -> switch -> resistor -> load -> ground. Adapt to actual Level 4 topology.","Read verified voltage, current and power; resistor power depends on V multiplied by I.","Use actual resistor power rating and SparkResistorBurn thresholds; don't infer burning solely from resistance."}; break;

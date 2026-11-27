@@ -20,6 +20,7 @@ namespace ProjectSpark.SparkV5.Pro.Editor
         private const string Request = "Logs/SparkPhase4/run.request";
         private const string BuildRequest = "Logs/SparkPhase4/windows.request";
         private const string AndroidRequest = "Logs/SparkPhase4/android-compile.request";
+        private const string Phase2BuildRequest = "Logs/SparkPhase2/build.request";
         private const string Flag = "Spark.Phase4.Play";
         private const string Level113Checkpoint = ProjectSpark.Gameplay.RedundancyCitadel.SparkLevel113Process.CheckpointKey;
         private const string Report = "Logs/SparkSuperAIFinalVerification.txt";
@@ -72,6 +73,13 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             {
                 File.Delete(BuildRequest);
                 EditorApplication.delayCall += BuildWindows;
+            }
+            else if (File.Exists(Phase2BuildRequest))
+            {
+                string platform = File.ReadAllText(Phase2BuildRequest).Trim();
+                File.Delete(Phase2BuildRequest);
+                if (platform == "windows" || platform == "android" || platform == "android-validation")
+                    EditorApplication.delayCall += () => BuildPhase2(platform);
             }
         }
 
@@ -179,6 +187,65 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             }
             catch (Exception error) { Log("FAIL Windows build " + error); }
             finally { Environment.SetEnvironmentVariable("SPARK_WINDOWS_SPEECH_PACKAGE", speech); }
+        }
+
+        private static void BuildPhase2(string platform)
+        {
+            bool android = platform == "android" || platform == "android-validation";
+            var target = android ? BuildTarget.Android : BuildTarget.StandaloneWindows64;
+            string report = platform == "android-validation" ? "Logs/SparkAndroid/Build.txt" :
+                $"Logs/SparkPhase2/{platform}-build.txt";
+            string output = android ? "Logs/SparkPhase2/Android/ProjectSpark-Phase2.apk" :
+                "Logs/SparkPhase2/Windows/ProjectSpark.exe";
+            if (platform == "android-validation") output = "Logs/SparkAndroid/ProjectSpark-Android-Development.apk";
+            bool bundle = EditorUserBuildSettings.buildAppBundle;
+            string speech = Environment.GetEnvironmentVariable("SPARK_WINDOWS_SPEECH_PACKAGE");
+            Directory.CreateDirectory(Path.GetDirectoryName(report));
+            File.WriteAllText(report, $"Started {DateTimeOffset.Now:O} for {target}.\n");
+            try
+            {
+                if (android) EditorUserBuildSettings.buildAppBundle = false;
+                if (platform == "android-validation")
+                {
+                    if (PlayerSettings.Android.targetArchitectures != AndroidArchitecture.ARM64 ||
+                        PlayerSettings.GetScriptingBackend(UnityEditor.Build.NamedBuildTarget.Android) != ScriptingImplementation.IL2CPP)
+                        throw new InvalidOperationException("Android validation requires an ARM64-only IL2CPP project.");
+                    if (PlayerSettings.Android.useCustomKeystore)
+                        throw new InvalidOperationException("Android development validation expects the local debug signing configuration.");
+                    File.AppendAllText(report, $"Unity {Application.unityVersion}, ARM64, IL2CPP, development APK.\n");
+                }
+                else if (!android && string.IsNullOrWhiteSpace(speech) && Directory.Exists("Logs/SparkSpeechPackageValidated"))
+                    Environment.SetEnvironmentVariable("SPARK_WINDOWS_SPEECH_PACKAGE", Path.GetFullPath("Logs/SparkSpeechPackageValidated"));
+                var scenes = Array.FindAll(EditorBuildSettings.scenes, scene => scene.enabled);
+                if (scenes.Length == 0 || !scenes[0].path.EndsWith("/Bootstrap.unity", StringComparison.Ordinal))
+                    throw new InvalidOperationException("The enabled build scene list must start with Bootstrap.");
+                const string lessonFolder = "Assets/My_Assets/_Project_Spark/Scripts/ProjectSpark/AI/Visual-Teaching-System/LessonLibraryLessons";
+                var lessonFiles = Directory.GetFiles(lessonFolder, "*.asset");
+                if (lessonFiles.Length == 0)
+                    throw new InvalidOperationException("The authored Visual Teaching lesson library is empty.");
+                foreach (var lessonFile in lessonFiles)
+                {
+                    var lesson = AssetDatabase.LoadAssetAtPath<UI.VisualTeaching.SparkVisualLesson>(lessonFile.Replace('\\', '/'));
+                    if (!lesson || lesson.steps == null || lesson.steps.Length == 0)
+                        throw new InvalidOperationException("Missing or empty authored lesson binding in " + lessonFile);
+                }
+                File.AppendAllText(report, $"PASS {lessonFiles.Length} authored Visual Teaching lessons deserialize with their steps.\n");
+                Directory.CreateDirectory(Path.GetDirectoryName(output));
+                var build = BuildPipeline.BuildPlayer(Array.ConvertAll(scenes, scene => scene.path), output, target,
+                    BuildOptions.Development | BuildOptions.CompressWithLz4);
+                File.AppendAllText(report, $"{build.summary.result}, errors {build.summary.totalErrors}, " +
+                    $"warnings {build.summary.totalWarnings}, bytes {build.summary.totalSize}, duration {build.summary.totalTime}.\n{output}\n");
+                foreach (var step in build.steps)
+                    foreach (var message in step.messages)
+                        if (message.type is LogType.Error or LogType.Exception or LogType.Assert)
+                            File.AppendAllText(report, $"{step.name}: {message.content}\n");
+            }
+            catch (Exception error) { File.AppendAllText(report, "Failed: " + error + "\n"); }
+            finally
+            {
+                if (android) EditorUserBuildSettings.buildAppBundle = bundle;
+                Environment.SetEnvironmentVariable("SPARK_WINDOWS_SPEECH_PACKAGE", speech);
+            }
         }
 
         private static async Task Wait(Func<bool> ready, string label)

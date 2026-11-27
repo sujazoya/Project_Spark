@@ -1,0 +1,68 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 49,
+    "layoutName": "Level_49_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_PLUS",
+            "toId": "CTRL_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "CTRL_GND"
+        },
+        {
+            "fromId": "SUPPLY_PLUS",
+            "toId": "OPTICAL_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "OPTICAL_GND"
+        },
+        {
+            "fromId": "ENCODER_A",
+            "toId": "CTRL_ENC_A"
+        },
+        {
+            "fromId": "ENCODER_B",
+            "toId": "CTRL_ENC_B"
+        },
+        {
+            "fromId": "OPTICAL_SIGNAL",
+            "toId": "CTRL_MARK_IN"
+        },
+        {
+            "fromId": "CTRL_CARR_PWM",
+            "toId": "DRIVER_PWM"
+        },
+        {
+            "fromId": "DRIVER_MOTOR_PLUS",
+            "toId": "CARRIAGE_MOTOR_PLUS"
+        },
+        {
+            "fromId": "DRIVER_MOTOR_MINUS",
+            "toId": "CARRIAGE_MOTOR_MINUS"
+        },
+        {
+            "fromId": "CTRL_CUT_TRIG",
+            "toId": "CUTTER_TRIG"
+        },
+        {
+            "fromId": "SUPPLY_PLUS",
+            "toId": "DRIVER_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "DRIVER_GND"
+        },
+        {
+            "fromId": "GUARD_NC_OUT",
+            "toId": "CTRL_GUARD_IN"
+        },
+        {
+            "fromId": "HOME_OUT",
+            "toId": "CTRL_HOME_IN"
+        }
+    ]
+}

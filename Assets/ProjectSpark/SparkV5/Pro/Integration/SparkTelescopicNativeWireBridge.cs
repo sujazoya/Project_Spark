@@ -24,6 +24,13 @@ namespace ProjectSpark.SparkV5.Pro
         public bool CinematicExtensionEnabled => enableCinematicExtension;
         public bool IsConfigured => arms && arms.IsBound;
         public float ContactWaitSeconds => maximumContactWait;
+        public bool IsRightArmResting => !arms || arms.IsRightArmResting;
+        public string ReachDiagnostic => arms ? arms.LastError : "Original arms are unbound";
+        internal bool NativeGripSettled => arms && arms.NativeGripSettled;
+        internal float GripTransitionSeconds => arms ? arms.NativeGripTransitionSeconds : .22f;
+        internal float GripAimError => arms ? arms.NativeGripAimError : float.PositiveInfinity;
+        internal bool SetGrip(float closure, float diameter, Vector3 aim = default) =>
+            IsContactActive && arms.SetNativeGrip(closure, diameter, aim);
 
         private void Awake()
         {
@@ -36,23 +43,42 @@ namespace ProjectSpark.SparkV5.Pro
                    arms.CanDrawToCinematicContact(target);
         }
 
+        internal bool CanDrawTo(Transform target, Vector3 offset) =>
+            IsContactActive && arms.CanDrawToCinematicContact(target, offset);
+
         public bool CanExtendTo(Transform target)
         {
             return enabled && enableCinematicExtension && arms &&
                    arms.CanExtendToCinematicContact(target);
         }
 
+        public bool CanReachWithOriginalHand(Transform target) =>
+            isActiveAndEnabled && enableCinematicExtension && arms &&
+            arms.CanExtendToCinematicContact(target, requireExtension: false);
+
+        internal bool CanReachFrom(Vector3 shoulder, Transform target) =>
+            isActiveAndEnabled && enableCinematicExtension && arms && arms.CanReachCinematicFrom(shoulder, target);
+
+        internal bool SetCarryTarget(Vector3 target)
+        {
+            if (!IsContactActive) return false;
+            arms.FollowCinematicGrip(target);
+            return true;
+        }
+
         /// <summary>Contact is verified against ORIGINAL fingertip grip, not wrist.</summary>
-        public IEnumerator ReachTerminal(Transform terminal, Func<bool> stillValid)
+        public IEnumerator ReachTerminal(Transform terminal, Func<bool> stillValid, bool prepareGrip = false)
         {
             LastContactSucceeded = false;
             LastError = "Reach was not started";
             if (!enabled || !enableCinematicExtension || !arms || !terminal || stillValid == null)
             { LastError = "Telescopic bridge is not configured"; yield break; }
             if (!stillValid()) { LastError = "Native wiring context changed"; yield break; }
-            if (!arms.TryReachCinematicContact(terminal))
+            if (!arms.TryReachCinematicContact(terminal, requireExtension: false))
             { LastError = arms.LastError; yield break; }
             ownsRightArm = true;
+            if (prepareGrip && !SetGrip(0f, 0f))
+            { LastError = "Original thumb and index pivots are unavailable."; ReleaseArm(); yield break; }
             float deadline = Time.realtimeSinceStartup + maximumContactWait;
             while (Time.realtimeSinceStartup < deadline)
             {
@@ -82,7 +108,6 @@ namespace ProjectSpark.SparkV5.Pro
         {
             worldGrip = Vector3.zero;
             if (!IsContactActive) return false;
-            arms.ApplyPoseNow();
             if (!arms.TryGetGripPosition(SparkTelescopicArms.ManipulatorSide.Right, out worldGrip))
             { LastError = "Actual original hand grip transform is unavailable"; return false; }
             return true;
@@ -100,12 +125,15 @@ namespace ProjectSpark.SparkV5.Pro
         /// Move an already-gripping original hand to the destination while the
         /// cinematic executor continuously updates the native cable shape.
         /// </summary>
-        public IEnumerator DrawHeldWireTo(Transform destination, Func<bool> stillValid)
+        public IEnumerator DrawHeldWireTo(Transform destination, Func<bool> stillValid) =>
+            DrawHeldWireTo(destination, stillValid, Vector3.zero, 0f);
+
+        internal IEnumerator DrawHeldWireTo(Transform destination, Func<bool> stillValid, Vector3 offset, float travelSpeed)
         {
             LastContactSucceeded = false;
             if (!IsContactActive || !destination || stillValid == null || !stillValid())
             { LastError = "No active original-hand wire grip or invalid destination"; yield break; }
-            if (!arms.MoveCinematicGripToContact(destination))
+            if (!arms.MoveCinematicGripToContact(destination, offset, travelSpeed))
             { LastError = arms.LastError; yield break; }
             float deadline = Time.realtimeSinceStartup + maximumContactWait;
             while (Time.realtimeSinceStartup < deadline)

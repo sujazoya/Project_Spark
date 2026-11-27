@@ -1,0 +1,104 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 53,
+    "layoutName": "Level_53_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_PLUS",
+            "toId": "CTRL_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "CTRL_GND"
+        },
+        {
+            "fromId": "SUPPLY_PLUS",
+            "toId": "MDRV_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "MDRV_GND"
+        },
+        {
+            "fromId": "SUPPLY_PLUS",
+            "toId": "VIB_LEFT_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "VIB_LEFT_GND"
+        },
+        {
+            "fromId": "SUPPLY_PLUS",
+            "toId": "VIB_RIGHT_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "VIB_RIGHT_GND"
+        },
+        {
+            "fromId": "SUPPLY_PLUS",
+            "toId": "BDRV_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "BDRV_GND"
+        },
+        {
+            "fromId": "CTRL_PWM",
+            "toId": "MDRV_PWM"
+        },
+        {
+            "fromId": "MDRV_MP",
+            "toId": "MOTOR_POS"
+        },
+        {
+            "fromId": "MDRV_MN",
+            "toId": "MOTOR_NEG"
+        },
+        {
+            "fromId": "VIB_LEFT_OUT",
+            "toId": "CTRL_VIB_L"
+        },
+        {
+            "fromId": "VIB_RIGHT_OUT",
+            "toId": "CTRL_VIB_R"
+        },
+        {
+            "fromId": "ENCODER_A",
+            "toId": "CTRL_ENC_A"
+        },
+        {
+            "fromId": "ENCODER_B",
+            "toId": "CTRL_ENC_B"
+        },
+        {
+            "fromId": "ENCODER_Z",
+            "toId": "CTRL_ENC_Z"
+        },
+        {
+            "fromId": "CTRL_BAL",
+            "toId": "BDRV_CMD"
+        },
+        {
+            "fromId": "BDRV_AP",
+            "toId": "PLANE_A_PLUS"
+        },
+        {
+            "fromId": "BDRV_AN",
+            "toId": "PLANE_A_NEG"
+        },
+        {
+            "fromId": "BDRV_BP",
+            "toId": "PLANE_B_PLUS"
+        },
+        {
+            "fromId": "BDRV_BN",
+            "toId": "PLANE_B_NEG"
+        },
+        {
+            "fromId": "GUARD_NC",
+            "toId": "CTRL_SAFE"
+        }
+    ]
+}

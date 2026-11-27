@@ -17,10 +17,7 @@ MonoBehaviour:
   initialPage: 0
   pages:
   - title: LEVEL 01 | Overview
-    explanation: "STARTER EXAMPLE: Confirm against the actual Level definition/layout;
-      exact terminal IDs, parts and objectives are not supplied. Introduction to
-      closed DC circuits: battery, switch and load. Author drawing only \u2014 NOT
-      verified live circuit topology or measured results."
+    explanation: The fixed resistor limits current through the LED.
     caption: PAGE 1/4 | Level 1 - Basic Circuit (Starter)
     parts:
     - id: battery
@@ -28,10 +25,10 @@ MonoBehaviour:
       position: {x: 0.11, y: 0.51}
       label: 5 V
       color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
-    - id: switch
-      kind: 5
+    - id: resistor
+      kind: 1
       position: {x: 0.29, y: 0.76}
-      label: SWITCH
+      label: 150 Ω
       color: {r: 1, g: 0.79, b: 0.3, a: 1}
     - id: led
       kind: 9
@@ -68,10 +65,7 @@ MonoBehaviour:
       energized: 0
       color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
   - title: LEVEL 01 | Connection Guide
-    explanation: "STARTER EXAMPLE: Confirm against the actual Level definition/layout;
-      exact terminal IDs, parts and objectives are not supplied. Illustrative: Battery_positive
-      -> switch input -> load -> Battery_negative. Use verified scene terminal IDs.
-      Author drawing only \u2014 NOT verified live circuit topology or measured results."
+    explanation: Connect supply positive to the resistor input, resistor output to the LED anode, and the LED cathode to supply negative.
     caption: PAGE 2/4 | Level 1 - Basic Circuit (Starter)
     parts:
     - id: battery
@@ -79,10 +73,10 @@ MonoBehaviour:
       position: {x: 0.11, y: 0.51}
       label: 5 V
       color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
-    - id: switch
-      kind: 5
+    - id: resistor
+      kind: 1
       position: {x: 0.29, y: 0.76}
-      label: SWITCH
+      label: 150 Ω
       color: {r: 1, g: 0.79, b: 0.3, a: 1}
     - id: led
       kind: 9
@@ -119,10 +113,7 @@ MonoBehaviour:
       energized: 0
       color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
   - title: LEVEL 01 | Measurements
-    explanation: "STARTER EXAMPLE: Confirm against the actual Level definition/layout;
-      exact terminal IDs, parts and objectives are not supplied. With switch ON,
-      inspect supply voltage and load current from the solver. Author drawing only
-      \u2014 NOT verified live circuit topology or measured results."
+    explanation: Turn the supply on after wiring and check that the LED lights.
     caption: PAGE 3/4 | Level 1 - Basic Circuit (Starter)
     parts:
     - id: battery
@@ -130,10 +121,10 @@ MonoBehaviour:
       position: {x: 0.11, y: 0.51}
       label: 5 V
       color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
-    - id: switch
-      kind: 5
+    - id: resistor
+      kind: 1
       position: {x: 0.29, y: 0.76}
-      label: SWITCH
+      label: 150 Ω
       color: {r: 1, g: 0.79, b: 0.3, a: 1}
     - id: led
       kind: 9
@@ -170,11 +161,7 @@ MonoBehaviour:
       energized: 0
       color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
   - title: LEVEL 01 | Solution & Checks
-    explanation: "STARTER EXAMPLE: Confirm against the actual Level definition/layout;
-      exact terminal IDs, parts and objectives are not supplied. Ensure an actual
-      closed return, supported component solver definition and the level's configured
-      objectives. Author drawing only \u2014 NOT verified live circuit topology or
-      measured results."
+    explanation: The level evaluator confirms the LED objective.
     caption: PAGE 4/4 | Level 1 - Basic Circuit (Starter)
     parts:
     - id: battery
@@ -182,10 +169,10 @@ MonoBehaviour:
       position: {x: 0.11, y: 0.51}
       label: 5 V
       color: {r: 0.98, g: 0.32, b: 0.36, a: 1}
-    - id: switch
-      kind: 5
+    - id: resistor
+      kind: 1
       position: {x: 0.29, y: 0.76}
-      label: SWITCH
+      label: 150 Ω
       color: {r: 1, g: 0.79, b: 0.3, a: 1}
     - id: led
       kind: 9

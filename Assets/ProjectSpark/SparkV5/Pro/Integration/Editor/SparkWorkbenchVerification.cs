@@ -77,13 +77,19 @@ private static void QueueFlight()
                 EditorApplication.isPlayingOrWillChangePlaymode || !File.Exists(Request)) return;
             string request = File.ReadAllText(Request).Trim();
             bool testBoot = request == "boot";
-            bool testCable = request == "cable" || request == "cable-before";
-            bool testFlight = request == "flight" || testCable;
+            bool testCable = request == "cable" || request == "cable-before" || request == "phase2";
+            bool testSwitch = request == "switch";
+            bool testV19 = request == "v19";
+            bool testStarter = request == "v19-starter";
+            bool testFlight = request == "flight" || testCable || testSwitch || testV19 || testStarter;
             File.Delete(Request);
             if (testFlight) Directory.CreateDirectory(Path.GetDirectoryName(FlightReport));
             if (testCable) Directory.CreateDirectory(CableReportFolder);
-            SessionState.SetString(Flag + ".report", testCable
-                ? Path.Combine(CableReportFolder, request + ".txt") : testFlight ? FlightReport : Report);
+            SessionState.SetString(Flag + ".report", testStarter ? "Logs/SuperAI_v19/StarterPlayMode.txt" :
+                testV19 ? "Logs/SuperAI_v19/Level20PlayMode.txt" :
+                testCable ? Path.Combine(CableReportFolder, request + ".txt") :
+                testSwitch ? Path.Combine(Path.GetDirectoryName(FlightReport), "StandingSwitch.txt") :
+                testFlight ? FlightReport : Report);
             File.WriteAllText(SessionState.GetString(Flag + ".report", Report),
                 "Spark MainMenu verification " + DateTimeOffset.Now + Environment.NewLine);
             bool useOpenMainMenu = EditorSceneManager.GetActiveScene().path == Scene;
@@ -97,10 +103,11 @@ private static void QueueFlight()
             SessionState.SetString(Flag + ".previous", AssetDatabase.GetAssetPath(EditorSceneManager.playModeStartScene) ?? "");
             SessionState.SetBool(Flag + ".boot", testBoot);
             SessionState.SetBool(Flag + ".flight", testFlight);
-            SessionState.SetString(Flag + ".cable", testCable ? request : "");
+            SessionState.SetString(Flag + ".cable", testCable || testSwitch || testV19 || testStarter ? request : "");
             SessionState.SetBool(Flag, true);
             EditorSceneManager.playModeStartScene =
-                useOpenMainMenu ? null : AssetDatabase.LoadAssetAtPath<SceneAsset>(testBoot ? Boot : Scene);
+                testBoot ? AssetDatabase.LoadAssetAtPath<SceneAsset>(Boot) :
+                useOpenMainMenu ? null : AssetDatabase.LoadAssetAtPath<SceneAsset>(Scene);
             EditorApplication.EnterPlaymode();
         }
 
@@ -126,16 +133,23 @@ private static void QueueFlight()
             {
                 Application.runInBackground = true;
                 bool startedAtBoot = SessionState.GetBool(Flag + ".boot", false);
-                int originalScene = SceneManager.GetActiveScene().handle;
-                if (startedAtBoot && SceneManager.GetActiveScene().path != Boot)
-                    EditorSceneManager.LoadSceneInPlayMode(Boot, new LoadSceneParameters(LoadSceneMode.Single));
+                if (startedAtBoot)
+                {
+                    Require(AssetDatabase.GetAssetPath(EditorSceneManager.playModeStartScene) == Boot,
+                        "The Bootstrap fixture did not select Bootstrap as the Play Mode start scene.");
+                    Log("Bootstrap selected. Active scene " + SceneManager.GetActiveScene().path +
+                        ". MainMenu build index " + SceneUtility.GetBuildIndexByScenePath(Scene) + ".");
+                }
                 await WaitFor(() =>
                 {
                     var active = SceneManager.GetActiveScene();
-                    return active.path == Scene && (!startedAtBoot || active.handle != originalScene);
-                }, "Bootstrap to MainMenu");
-                if (startedAtBoot) Log("PASS Bootstrap loaded the configured MainMenu scene.");
-                if (SessionState.GetBool(Flag + ".flight", false))
+                    return active.path == Scene;
+                }, "Bootstrap to MainMenu", startedAtBoot ? 120f : 45f);
+                if (startedAtBoot)
+                {
+                    Log("PASS Bootstrap loaded the configured MainMenu scene.");
+                }
+                else if (SessionState.GetBool(Flag + ".flight", false))
                     await SparkFlightLevel20Verification.Verify(Log, SessionState.GetString(Flag + ".cable", ""));
                 else
                     await Verify();
@@ -266,9 +280,9 @@ private static void QueueFlight()
             Require(executive.LastAnswer.Contains(expected, StringComparison.OrdinalIgnoreCase), executive.LastAnswer);
         }
 
-        private static async Task WaitFor(Func<bool> check, string stage)
+        private static async Task WaitFor(Func<bool> check, string stage, float seconds = 45f)
         {
-            float deadline = Time.realtimeSinceStartup + 45f;
+            float deadline = Time.realtimeSinceStartup + seconds;
             while (!check())
             {
                 Require(Time.realtimeSinceStartup < deadline, "Timed out waiting for " + stage);

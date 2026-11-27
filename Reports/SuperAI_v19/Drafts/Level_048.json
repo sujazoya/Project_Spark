@@ -1,0 +1,60 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 48,
+    "layoutName": "Level_48_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_PLUS",
+            "toId": "CTRL_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "CTRL_GND"
+        },
+        {
+            "fromId": "SUPPLY_PLUS",
+            "toId": "SENSOR_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "SENSOR_GND"
+        },
+        {
+            "fromId": "ENCODER_A",
+            "toId": "CTRL_ENC_A"
+        },
+        {
+            "fromId": "ENCODER_B",
+            "toId": "CTRL_ENC_B"
+        },
+        {
+            "fromId": "SENSOR_SIGNAL",
+            "toId": "CTRL_MARK_IN"
+        },
+        {
+            "fromId": "CTRL_INDEX_PWM",
+            "toId": "DRIVER_PWM"
+        },
+        {
+            "fromId": "DRIVER_MOTOR_PLUS",
+            "toId": "PRINT_MOTOR_PLUS"
+        },
+        {
+            "fromId": "DRIVER_MOTOR_MINUS",
+            "toId": "PRINT_MOTOR_MINUS"
+        },
+        {
+            "fromId": "CTRL_PRINT_TRIG",
+            "toId": "PRINT_HEAD_TRIG"
+        },
+        {
+            "fromId": "SUPPLY_PLUS",
+            "toId": "DRIVER_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "DRIVER_GND"
+        }
+    ]
+}

@@ -111,7 +111,7 @@ namespace ProjectSpark.SparkV5.Pro
         {
             feedback = null;
             var hub = GetComponent<SparkEngineeringControlHub>();
-            if (hub && (!hub.IsExecuting || hub.Mode == SparkEngineeringControlHub.OperatingMode.Manual))
+            if (hub && !hub.OwnsApprovedDispatch(sourceId, destinationId))
             { feedback = "The Engineering Control Hub must own the approved wiring action."; return false; }
             if (wireRoutine != null) { feedback = "Native wire action already running."; return false; }
             if (pendingA || pendingB)
@@ -138,10 +138,12 @@ namespace ProjectSpark.SparkV5.Pro
             level = manager ? SparkAILevelContext.Capture(manager) : default;
             error = null;
             if (!manager || !level.Definition || !level.Layout || !level.Layout.gameObject.activeInHierarchy ||
-                !manager.CircuitSystem || !level.Layout.SceneBindings)
+                !manager.CircuitSystem || !level.Layout.SceneBindings ||
+                !manager.LayoutLoader || manager.LayoutLoader.ActiveLayout != level.Layout)
             { error = "Active level, CircuitSystem or authored SceneBindings is missing."; return false; }
             if (executive.ExamMode) { error = "Independent exam mode prevents AI wiring."; return false; }
-            if (character && character.WarningActive) { error = "A character safety warning is active."; return false; }
+            if (!character || !character.isActiveAndEnabled) { error = "The original Spark character is unavailable."; return false; }
+            if (character.WarningActive) { error = "A character safety warning is active."; return false; }
             if (requireVirtualPowerOff)
             {
                 SparkPowerSupply[] supplies = level.Layout.GetComponentsInChildren<SparkPowerSupply>(true);
@@ -154,29 +156,7 @@ namespace ProjectSpark.SparkV5.Pro
         private bool TryPair(SparkAILevelContext level, string aId, string bId,
             out SparkTerminal a, out SparkTerminal b, out string error)
         {
-            a = b = null;
-            error = null;
-            if (!level.Layout.SceneBindings.TryGetTerminal(aId, out a) ||
-                !level.Layout.SceneBindings.TryGetTerminal(bId, out b) || !a || !b)
-            { error = "Exact terminal IDs were not found in active level SceneBindings."; return false; }
-            // Diagnostic v10.1: preserve all validation gates, identify the failing one.
-            if (a == b)
-            { error = "Terminal IDs resolve to the same SparkTerminal. No wire created."; return false; }
-            if (!a.gameObject.activeInHierarchy)
-            { error = "Source terminal '" + aId + "' is INACTIVE: " + a.name + ". No wire created."; return false; }
-            if (!b.gameObject.activeInHierarchy)
-            { error = "Destination terminal '" + bId + "' is INACTIVE: " + b.name + ". No wire created."; return false; }
-            if (!a.transform.IsChildOf(level.Layout.transform))
-            { error = "Source terminal '" + aId + "' is OUTSIDE active layout '" +
-                level.Layout.name + "': " + a.name + " (parent=" +
-                (a.transform.parent ? a.transform.parent.name : "NONE") + "). No wire created."; return false; }
-            if (!b.transform.IsChildOf(level.Layout.transform))
-            { error = "Destination terminal '" + bId + "' is OUTSIDE active layout '" +
-                level.Layout.name + "': " + b.name + " (parent=" +
-                (b.transform.parent ? b.transform.parent.name : "NONE") + "). No wire created."; return false; }
-            if (a.Owner && b.Owner && a.Owner == b.Owner)
-            { error = "Refusing to bypass one component by shorting its two own terminals."; return false; }
-            return true;
+            return level.Layout.SceneBindings.TryResolveLivePair(level.Layout, aId, bId, out a, out b, out error);
         }
         private string Prepare(string idA, string idB)
         {
@@ -227,8 +207,8 @@ namespace ProjectSpark.SparkV5.Pro
                 !a.gameObject.activeInHierarchy || !b.gameObject.activeInHierarchy ||
                 !TryGetContext(out var m, out var l, out _) || m != manager || m.CircuitSystem != circuit ||
                 m.IsFailed || l.Layout.transform != root ||
-                !l.Layout.SceneBindings.TryGetTerminal(fromId, out var source) || source != a ||
-                !l.Layout.SceneBindings.TryGetTerminal(toId, out var destination) || destination != b)
+                !TryPair(l, fromId, toId, out var source, out var destination, out _) ||
+                source != a || destination != b)
                 return false;
             return !beforeCommit || !circuit.HasConnectionBetween(a, b);
         }
@@ -258,18 +238,34 @@ namespace ProjectSpark.SparkV5.Pro
             SparkNativeWireCinematic cinematicV122 = GetComponent<SparkNativeWireCinematic>();
             if (cinematicV122)
             {
-                yield return null;
-                if (!StillValid(manager, circuit, root, a, b))
+                Vector3 sourceContact = a.transform.position, destinationContact = b.transform.position;
+                string interruption = null;
+                bool ReadyForCommit()
                 {
-                    Fail("Native wiring preconditions changed before physical performance.");
+                    if (!a || !a.gameObject.activeInHierarchy) interruption = "The source terminal disappeared.";
+                    else if (!b || !b.gameObject.activeInHierarchy) interruption = "The destination terminal disappeared.";
+                    else if ((a.transform.position - sourceContact).sqrMagnitude > .000225f)
+                        interruption = "The source terminal moved after approval.";
+                    else if ((b.transform.position - destinationContact).sqrMagnitude > .000225f)
+                        interruption = "The destination terminal moved after approval.";
+                    else if (StillValid(manager, circuit, root, a, b)) return true;
+                    else interruption = TryGetContext(out _, out _, out string reason)
+                        ? "The level, terminal binding or native wire authorization changed during manipulation."
+                        : reason;
+                    return false;
+                }
+                yield return null;
+                if (!ReadyForCommit())
+                {
+                    Fail(interruption);
                     yield break;
                 }
                 yield return cinematicV122.Perform(a, b, playerWirePort, workbench,
-                    () => StillValid(manager, circuit, root, a, b),
+                    ReadyForCommit,
                     () => StillValid(manager, circuit, root, a, b, beforeCommit: false));
                 if (!cinematicV122.Succeeded)
                 {
-                    Fail("Spark could not complete the physical wiring: " + cinematicV122.LastError);
+                    Fail("Spark could not complete the physical wiring: " + (interruption ?? cinematicV122.LastError));
                     yield break;
                 }
                 // The physical cable and electrical graph MUST agree before success.

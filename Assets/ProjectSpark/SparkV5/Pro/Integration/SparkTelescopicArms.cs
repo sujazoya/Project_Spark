@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using ProjectSpark.AI.Tutorial;
 using ProjectSpark.Gameplay;
+using ProjectSpark.Scanner;
+using Unity.Profiling;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -72,6 +74,10 @@ namespace ProjectSpark.SparkV5.Pro
         [SerializeField, Range(1f, 25f)] private float handAlignmentSpeed = 8f;
         [SerializeField] private bool allowEditorDebugPanel;
         [SerializeField] private string debugTerminalId = "SwitchOutput";
+        [Header("Native cable grip")]
+        [SerializeField, Range(.08f, .60f)] private float gripTransitionSeconds = .22f;
+        [SerializeField, Range(60f, 360f)] private float gripWristSpeed = 200f;
+        private static readonly ProfilerMarker PoseMarker = new ProfilerMarker("Spark.NativeHand.Pose");
 
         private sealed class Arm
         {
@@ -84,7 +90,19 @@ namespace ProjectSpark.SparkV5.Pro
             public float upperRestWorld, lowerRestWorld;
             public ArmMode mode;
             public Vector3 goal;
+            public Vector3 lastGripWorld;
+            public bool hasGripSample;
             public Transform trackedTarget;
+            public Vector3 trackedLocalPoint, trackedWorldOffset;
+            public bool useIndexTip;
+            public float indexTravelSpeed;
+            public readonly Transform[] gripJoints = new Transform[9];
+            public readonly Quaternion[] gripHome = new Quaternion[9];
+            public float closure, desiredClosure, cableDiameter;
+            public bool nativeGrip, hasWristSample;
+            public Quaternion lastWrist;
+            public Vector3 elbowPole, gripAim;
+            public float gripAperture, wristError, ikCorrection;
             public LimbMesh[] upperMeshes, lowerMeshes;
             public Transform allowedTerminalContact;
             public bool ready;
@@ -131,6 +149,10 @@ namespace ProjectSpark.SparkV5.Pro
         public bool IsActive => arms[0].mode == ArmMode.Extending || arms[0].mode == ArmMode.Holding ||
                                 arms[1].mode == ArmMode.Extending || arms[1].mode == ArmMode.Holding;
         public bool IsBound => rigReady;
+        public bool IsRightArmResting => arms[0].mode == ArmMode.Idle;
+        internal float NativeGripTransitionSeconds => gripTransitionSeconds;
+        internal bool NativeGripSettled => Mathf.Abs(arms[0].closure - arms[0].desiredClosure) < .005f;
+        internal float NativeGripAimError => arms[0].wristError;
         public string Status => string.Format("AAA original-hand arms: rig={0}; right={1}; left={2}; maximumReach={3:F2}m; rigCopies(R/L)={4}/{5}; rightGripGap={6:F3}m; leftGripGap={7:F3}m; {8}",
             rigReady, arms[0].mode, arms[1].mode, maximumReach,
             additionalRightRigs.Count + 1, additionalLeftRigs.Count + 1,
@@ -242,6 +264,14 @@ namespace ProjectSpark.SparkV5.Pro
                          FindDescendant(wrist, "Thumb_" + side);
             a.indexTip = FindDescendant(wrist, "FingerTip0_" + side) ??
                          FindDescendant(wrist, "Finger0_" + side);
+            for (int finger = 0; finger < 4; finger++)
+            {
+                a.gripJoints[finger * 2] = FindDescendant(wrist, "Finger" + finger + "_" + side);
+                a.gripJoints[finger * 2 + 1] = FindDescendant(wrist, "FingerTip" + finger + "_" + side);
+            }
+            a.gripJoints[8] = FindDescendant(wrist, "Thumb_" + side);
+            for (int joint = 0; joint < a.gripJoints.Length; joint++)
+                if (a.gripJoints[joint]) a.gripHome[joint] = a.gripJoints[joint].localRotation;
             a.mode = ArmMode.Idle;
             a.gripError = 0f;
             a.ready = a.naturalLength > 0.04f;
@@ -261,10 +291,84 @@ namespace ProjectSpark.SparkV5.Pro
         // thumb/finger contact midpoint; never use a surrogate hand GameObject.
         private Vector3 GripWorld(Arm a)
         {
+            if (a.useIndexTip && a.indexTip) return a.indexTip.position;
             if (a.explicitGrip) return a.explicitGrip.position;
             if (useExistingFingerTips && a.thumbTip && a.indexTip)
                 return Vector3.Lerp(a.thumbTip.position, a.indexTip.position, 0.55f);
             return a.wrist.TransformPoint(fallbackGripOffsetLocal);
+        }
+
+        internal bool SetNativeGrip(float closure, float diameter, Vector3 aim)
+        {
+            if (!rigReady || arms[0].mode == ArmMode.Idle || arms[0].mode == ArmMode.Retracting) return false;
+            Arm arm = arms[0];
+            arm.nativeGrip = true;
+            arm.desiredClosure = Mathf.Clamp01(closure);
+            arm.cableDiameter = Mathf.Max(0f, diameter);
+            arm.gripAim = aim;
+            return arm.thumbTip && arm.indexTip && arm.gripJoints[0] && arm.gripJoints[8];
+        }
+
+        internal void SampleNativeGrip(out float aperture, out float diameter, out float angle,
+            out float extension, out float correction, out float retractionError)
+        {
+            Arm arm = arms[0];
+            aperture = arm.gripAperture;
+            diameter = arm.cableDiameter;
+            angle = arm.wristError;
+            correction = arm.ikCorrection;
+            extension = arm.ready ? (Vector3.Distance(arm.shoulder.position, arm.elbow.position) +
+                Vector3.Distance(arm.elbow.position, arm.wrist.position)) / Mathf.Max(.001f, arm.naturalLength) : 0f;
+            retractionError = arm.ready
+                ? Mathf.Max(Vector3.Distance(arm.elbow.localPosition, arm.elbowHomeLocal),
+                    Vector3.Distance(arm.wrist.localPosition, arm.wristHomeLocal)) : 0f;
+        }
+
+        private static void PoseGrip(Arm arm, float closure)
+        {
+            for (int joint = 0; joint < arm.gripJoints.Length; joint++)
+            {
+                Transform bone = arm.gripJoints[joint];
+                if (!bone) continue;
+                // Native arm artwork uses local X for finger flexion. The
+                // ulnar fingers close progressively behind index and thumb.
+                float curl = joint == 8 ? 34f : (42f + (joint / 2) * 4f) * (joint % 2 == 0 ? 1f : .8f);
+                bone.localRotation = arm.gripHome[joint] * Quaternion.AngleAxis(-curl * closure, Vector3.right);
+            }
+            Transform thumb = arm.gripJoints[8];
+            if (!thumb || !arm.thumbTip || !arm.indexTip || arm.cableDiameter <= 0f) return;
+            Vector3 opposition = arm.indexTip.position - arm.thumbTip.position;
+            float aperture = opposition.magnitude;
+            Vector3 current = arm.thumbTip.position - thumb.position;
+            if (aperture <= arm.cableDiameter || current.sqrMagnitude <= .000001f) return;
+            Vector3 goal = current + opposition * ((aperture - arm.cableDiameter) * closure / aperture);
+            if (goal.sqrMagnitude <= .000001f) return;
+            Quaternion oppositionRotation = Quaternion.FromToRotation(current, goal) * thumb.rotation;
+            thumb.rotation = Quaternion.RotateTowards(thumb.rotation, oppositionRotation, 18f * closure);
+        }
+
+        private void ApplyNativeGrip(Arm arm, float dt)
+        {
+            arm.closure = Mathf.MoveTowards(arm.closure, arm.desiredClosure, dt / gripTransitionSeconds);
+            PoseGrip(arm, arm.closure);
+            if (!arm.thumbTip || !arm.indexTip) return;
+            float aperture = Vector3.Distance(arm.thumbTip.position, arm.indexTip.position);
+            if (aperture < arm.cableDiameter && arm.closure > 0f)
+            {
+                // Limit opposing distal pivots against the visible lead
+                // diameter. The articulated mesh still needs close-up QA.
+                float low = 0f, high = arm.closure;
+                for (int i = 0; i < 6; i++)
+                {
+                    float pose = (low + high) * .5f;
+                    PoseGrip(arm, pose);
+                    if (Vector3.Distance(arm.thumbTip.position, arm.indexTip.position) >= arm.cableDiameter) low = pose;
+                    else high = pose;
+                }
+                PoseGrip(arm, low);
+                aperture = Vector3.Distance(arm.thumbTip.position, arm.indexTip.position);
+            }
+            arm.gripAperture = aperture;
         }
 
         private static LimbMesh[] CaptureOriginalMeshes(Transform joint, Transform nextJoint)
@@ -329,6 +433,31 @@ namespace ProjectSpark.SparkV5.Pro
             return CanReachFromInternal(shoulderWorld, targetWorld, null);
         }
 
+        internal bool CanReachCinematicFrom(Vector3 shoulderWorld, Transform contact) =>
+            contact && contact.gameObject.activeInHierarchy && BindRig() &&
+            CanReachFromInternal(shoulderWorld, contact.position, contact);
+
+        internal bool CanPressFrom(Vector3 shoulderWorld, Transform control, Vector3 localPoint, Vector3 offset) =>
+            control && control.gameObject.activeInHierarchy && BindRig() && arms[0].indexTip &&
+            CanReachFromInternal(shoulderWorld, control.TransformPoint(localPoint) + offset, control);
+
+        internal bool MoveIndexToControl(Transform control, Vector3 localPoint, Vector3 offset, float travelSpeed)
+        {
+            Arm arm = arms[0];
+            if (!BindRig() || arm.mode == ArmMode.Retracting ||
+                (arm.mode != ArmMode.Idle && !arm.useIndexTip) ||
+                !CanPressFrom(arm.shoulder.position, control, localPoint, offset))
+                return false;
+            arm.useIndexTip = true;
+            arm.indexTravelSpeed = travelSpeed;
+            arm.trackedTarget = arm.allowedTerminalContact = control;
+            arm.trackedLocalPoint = localPoint;
+            arm.trackedWorldOffset = offset;
+            arm.goal = control.TransformPoint(localPoint) + offset;
+            arm.mode = ArmMode.Extending;
+            return true;
+        }
+
         private bool CanReachFromInternal(Vector3 shoulderWorld, Vector3 targetWorld, Transform contact)
         {
             if (!IsFinite(shoulderWorld) || !IsFinite(targetWorld)) { LastError = "Non-finite target position"; return false; }
@@ -349,6 +478,13 @@ namespace ProjectSpark.SparkV5.Pro
             {
                 Collider c = collisionHits[i].collider;
                 if (!c || c.transform.IsChildOf(transform)) continue;
+                // Some resistor sockets have a separate, oversized scanner
+                // selection box over a disabled mesh. Keep it pickable without
+                // treating the invisible envelope as solid arm geometry.
+                if (c is BoxCollider && c.TryGetComponent<SparkTerminal>(out _) &&
+                    c.TryGetComponent<Scanner3DHoverTarget>(out _) &&
+                    c.TryGetComponent<MeshRenderer>(out var pickMesh) && !pickMesh.enabled)
+                    continue;
                 // Only permit the actual requested terminal's own collider near the last few
                 // centimeters. Never ignore a collider obstructing the middle of the arm.
                 bool belongsToContact = contact &&
@@ -399,7 +535,7 @@ namespace ProjectSpark.SparkV5.Pro
         /// A terminal's own contact collider is allowed only near its tip.
         /// </summary>
         public bool CanExtendToCinematicContact(Transform contact,
-            ManipulatorSide side = ManipulatorSide.Right)
+            ManipulatorSide side = ManipulatorSide.Right, bool requireExtension = true)
         {
             if (!contact || !contact.gameObject.activeInHierarchy)
             { LastError = "Cinematic contact missing or inactive"; return false; }
@@ -410,7 +546,7 @@ namespace ProjectSpark.SparkV5.Pro
             if (!a.ready || a.mode != ArmMode.Idle)
             { LastError = "Original arm already owned by another action"; return false; }
             float separation = Vector3.Distance(a.shoulder.position, contact.position);
-            if (separation <= a.naturalLength + 0.06f)
+            if (requireExtension && separation <= a.naturalLength + 0.06f)
             { LastError = "Normal arm reach is sufficient; keep walk-first wiring"; return false; }
             return CanReachFromInternal(a.shoulder.position, contact.position, contact);
         }
@@ -420,9 +556,9 @@ namespace ProjectSpark.SparkV5.Pro
         /// native contact. The caller must check IsAtTarget before native attach.
         /// </summary>
         public bool TryReachCinematicContact(Transform contact,
-            ManipulatorSide side = ManipulatorSide.Right)
+            ManipulatorSide side = ManipulatorSide.Right, bool requireExtension = true)
         {
-            if (!CanExtendToCinematicContact(contact, side)) return false;
+            if (!CanExtendToCinematicContact(contact, side, requireExtension)) return false;
             Arm a = arms[(int)side];
             a.trackedTarget = contact;
             a.allowedTerminalContact = contact;
@@ -472,7 +608,9 @@ namespace ProjectSpark.SparkV5.Pro
         /// A contact target is checked against the maximum reach and arm-collision rules.
         /// No object is spawned and no electrical connectivity is modified here.
         /// </summary>
-        public bool MoveCinematicGripToContact(Transform contact)
+        public bool MoveCinematicGripToContact(Transform contact) => MoveCinematicGripToContact(contact, Vector3.zero, 0f);
+
+        internal bool MoveCinematicGripToContact(Transform contact, Vector3 offset, float travelSpeed)
         {
             if (!contact || !contact.gameObject.activeInHierarchy)
             { LastError = "Destination contact missing or inactive"; return false; }
@@ -480,20 +618,24 @@ namespace ProjectSpark.SparkV5.Pro
                 (arms[0].mode != ArmMode.Extending && arms[0].mode != ArmMode.Holding))
             { LastError = "Right original hand is not holding a native wire"; return false; }
             Arm a = arms[0];
-            if (!CanReachFromInternal(a.shoulder.position, contact.position, contact)) return false;
+            if (!CanReachFromInternal(a.shoulder.position, contact.position + offset, contact)) return false;
             a.trackedTarget = contact;
             a.allowedTerminalContact = contact;
-            a.goal = contact.position;
+            a.trackedWorldOffset = offset;
+            a.indexTravelSpeed = travelSpeed;
+            a.goal = contact.position + offset;
             a.mode = ArmMode.Extending;
             lastAppliedFrame = -1;
             LastError = "Drawing native wire toward " + contact.name;
             return true;
         }
 
-        public bool CanDrawToCinematicContact(Transform contact)
+        public bool CanDrawToCinematicContact(Transform contact) => CanDrawToCinematicContact(contact, Vector3.zero);
+
+        internal bool CanDrawToCinematicContact(Transform contact, Vector3 offset)
         {
             if (!contact || !contact.gameObject.activeInHierarchy || !BindRig()) return false;
-            return CanReachFromInternal(arms[0].shoulder.position, contact.position, contact);
+            return CanReachFromInternal(arms[0].shoulder.position, contact.position + offset, contact);
         }
 
         public void FollowCinematicGrip(Vector3 gripWorld)
@@ -511,6 +653,7 @@ namespace ProjectSpark.SparkV5.Pro
         public void ApplyPoseNow()
         {
             if (!rigReady || lastAppliedFrame == Time.frameCount) return;
+            using var profile = PoseMarker.Auto();
             lastAppliedFrame = Time.frameCount;
             float dt = Mathf.Clamp(Time.unscaledDeltaTime, 0f, 0.08f);
             Apply(arms[0], dt, "R");
@@ -534,6 +677,14 @@ namespace ProjectSpark.SparkV5.Pro
             }
             sibling.goal = source.goal;
             sibling.trackedTarget = source.trackedTarget;
+            sibling.trackedLocalPoint = source.trackedLocalPoint;
+            sibling.trackedWorldOffset = source.trackedWorldOffset;
+            sibling.useIndexTip = source.useIndexTip;
+            sibling.indexTravelSpeed = source.indexTravelSpeed;
+            sibling.nativeGrip = source.nativeGrip;
+            sibling.desiredClosure = source.desiredClosure;
+            sibling.cableDiameter = source.cableDiameter;
+            sibling.gripAim = source.gripAim;
             sibling.allowedTerminalContact = source.allowedTerminalContact;
             // Use each LOD's actual original wrist/mesh, never spawn a replacement hand.
             if (source.mode == ArmMode.Retracting) sibling.mode = ArmMode.Retracting;
@@ -579,17 +730,22 @@ namespace ProjectSpark.SparkV5.Pro
             }
             if (a.trackedTarget)
             {
-                a.goal = a.trackedTarget.position;
+                a.goal = a.trackedTarget.TransformPoint(a.trackedLocalPoint) + a.trackedWorldOffset;
                 if (!CanReachFromInternal(a.shoulder.position, a.goal, a.allowedTerminalContact))
                 { Retract(a, false); return; }
             }
             if (!SafetyAllowsReach() || (checkArmCollision &&
                 !CanReachFromInternal(a.shoulder.position, a.goal, a.allowedTerminalContact)))
             { Retract(a, false); return; }
+            if (a.nativeGrip) ApplyNativeGrip(a, dt);
             // The original hand/finger contact drives the end effector; the wrist
             // is translated by the difference between grip and target. This fixes
             // the v18.2 false success where the wrist was close but fingers were not.
-            Vector3 desiredWrist = a.wrist.position + (a.goal - GripWorld(a));
+            float speed = a.indexTravelSpeed > 0f ? Mathf.Min(extensionSpeed, a.indexTravelSpeed) : extensionSpeed;
+            float step = Mathf.Max(0f, speed * dt);
+            Vector3 previousGrip = a.hasGripSample ? a.lastGripWorld : GripWorld(a);
+            Vector3 nextGrip = Vector3.MoveTowards(previousGrip, a.goal, step);
+            Vector3 desiredWrist = a.wrist.position + (nextGrip - GripWorld(a));
             Vector3 displacement = desiredWrist - a.shoulder.position;
             float distance = displacement.magnitude;
             if (distance < 0.04f || !IsFinite(a.goal) || !IsFinite(desiredWrist))
@@ -599,9 +755,18 @@ namespace ProjectSpark.SparkV5.Pro
             Vector3 pole = Vector3.ProjectOnPlane(-transform.up, dir).normalized;
             if (pole.sqrMagnitude < 0.01f)
                 pole = Vector3.ProjectOnPlane(transform.right, dir).normalized;
+            if (a.nativeGrip)
+            {
+                Vector3 oldPole = Vector3.ProjectOnPlane(a.elbowPole, dir).normalized;
+                if (oldPole.sqrMagnitude > .01f)
+                {
+                    if (Vector3.Dot(pole, oldPole) < 0f) pole = -pole;
+                    pole = Vector3.Slerp(oldPole, pole, 1f - Mathf.Exp(-8f * dt)).normalized;
+                }
+                a.elbowPole = pole;
+            }
             Vector3 elbowGoal = a.shoulder.position +
                 dir * (distance * elbowFraction) + pole * bend;
-            float step = Mathf.Max(0f, extensionSpeed * dt);
             Vector3 previousUpper = a.elbow.position - a.shoulder.position;
             Vector3 aimedUpper = elbowGoal - a.shoulder.position;
             if (previousUpper.sqrMagnitude > 0.00001f && aimedUpper.sqrMagnitude > 0.00001f)
@@ -615,13 +780,29 @@ namespace ProjectSpark.SparkV5.Pro
             // Recalculate the wrist goal *after* those joint moves. A pre-rotation
             // goal was responsible for residual gaps such as the observed 0.031m.
             Vector3 postRotationGripOffset = GripWorld(a) - a.wrist.position;
-            Vector3 correctedWristGoal = a.goal - postRotationGripOffset;
+            Vector3 correctedWristGoal = nextGrip - postRotationGripOffset;
             if (!IsFinite(correctedWristGoal)) { Retract(a, false); return; }
-            a.wrist.position = Vector3.MoveTowards(a.wrist.position, correctedWristGoal, step);
-            if (alignWristTowardContact && a.trackedTarget)
+            // Joint rotations also move the wrist through its parent chain.
+            // Clamp the fingertip trajectory once, then compensate that motion.
+            a.wrist.position = correctedWristGoal;
+            if (a.nativeGrip)
+            {
+                Quaternion basis = a.hasWristSample ? a.lastWrist : a.wrist.rotation;
+                Vector3 palm = a.wrist.InverseTransformDirection(GripWorld(a) - a.wrist.position);
+                Vector3 aim = a.gripAim.sqrMagnitude > .001f ? a.gripAim : nextGrip - a.shoulder.position;
+                if (palm.sqrMagnitude > .000001f && aim.sqrMagnitude > .000001f)
+                {
+                    Quaternion desired = Quaternion.FromToRotation(basis * palm, aim) * basis;
+                    a.wrist.rotation = Quaternion.RotateTowards(basis, desired, gripWristSpeed * dt);
+                    a.wristError = Vector3.Angle(a.wrist.rotation * palm, aim);
+                    a.lastWrist = a.wrist.rotation;
+                    a.hasWristSample = true;
+                }
+            }
+            if ((alignWristTowardContact || a.useIndexTip) && a.trackedTarget)
             {
                 Vector3 handDirection = GripWorld(a) - a.wrist.position;
-                Vector3 targetDirection = a.goal - a.wrist.position;
+                Vector3 targetDirection = a.useIndexTip ? -transform.up : a.goal - a.wrist.position;
                 if (handDirection.sqrMagnitude > 0.00001f && targetDirection.sqrMagnitude > 0.00001f)
                 {
                     Quaternion desired = Quaternion.FromToRotation(handDirection, targetDirection) * a.wrist.rotation;
@@ -629,15 +810,13 @@ namespace ProjectSpark.SparkV5.Pro
                         Mathf.Clamp01(handAlignmentSpeed * dt));
                 }
             }
-            // If optional wrist orientation changed the fingertip offset, finish
-            // with a small, speed-limited contact correction using the *real* grip.
-            if (alignWristTowardContact && a.trackedTarget)
-            {
-                Vector3 residual = a.goal - GripWorld(a);
-                if (IsFinite(residual))
-                    a.wrist.position += Vector3.ClampMagnitude(residual, step * 0.25f);
-            }
-            a.gripError = Vector3.Distance(GripWorld(a), a.goal);
+            Vector3 correction = nextGrip - GripWorld(a);
+            a.ikCorrection = correction.magnitude;
+            a.wrist.position += correction;
+            Vector3 measuredGrip = GripWorld(a);
+            a.lastGripWorld = measuredGrip;
+            a.hasGripSample = true;
+            a.gripError = Vector3.Distance(measuredGrip, a.goal);
             // Only claim fingertip contact within the authored precision tolerance.
             a.mode = a.gripError <= precisionContactTolerance
                 ? ArmMode.Holding : ArmMode.Extending;
@@ -646,7 +825,14 @@ namespace ProjectSpark.SparkV5.Pro
         private void Retract(Arm a, bool instant)
         {
             if (!a.ready) return;
+            a.hasGripSample = false;
             a.trackedTarget = null;
+            a.trackedLocalPoint = a.trackedWorldOffset = Vector3.zero;
+            a.useIndexTip = false;
+            a.indexTravelSpeed = 0f;
+            a.nativeGrip = a.hasWristSample = false;
+            a.closure = a.desiredClosure = a.cableDiameter = 0f;
+            a.elbowPole = a.gripAim = Vector3.zero;
             a.allowedTerminalContact = null;
             if (instant)
             {

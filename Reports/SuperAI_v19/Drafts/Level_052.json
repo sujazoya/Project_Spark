@@ -1,0 +1,84 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 52,
+    "layoutName": "Level_52_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_PLUS",
+            "toId": "CTRL_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "CTRL_GND"
+        },
+        {
+            "fromId": "SUPPLY_PLUS",
+            "toId": "MDRV_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "MDRV_GND"
+        },
+        {
+            "fromId": "SUPPLY_PLUS",
+            "toId": "VIB_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "VIB_GND"
+        },
+        {
+            "fromId": "SUPPLY_PLUS",
+            "toId": "BDRV_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "BDRV_GND"
+        },
+        {
+            "fromId": "CTRL_PWM",
+            "toId": "MDRV_PWM"
+        },
+        {
+            "fromId": "MDRV_MPOS",
+            "toId": "MOTOR_POS"
+        },
+        {
+            "fromId": "MDRV_MNEG",
+            "toId": "MOTOR_NEG"
+        },
+        {
+            "fromId": "VIB_OUT",
+            "toId": "CTRL_VIB"
+        },
+        {
+            "fromId": "ENCODER_A",
+            "toId": "CTRL_EA"
+        },
+        {
+            "fromId": "ENCODER_B",
+            "toId": "CTRL_EB"
+        },
+        {
+            "fromId": "GUARD_NC",
+            "toId": "CTRL_SAFE"
+        },
+        {
+            "fromId": "CTRL_BAL",
+            "toId": "BDRV_CMD"
+        },
+        {
+            "fromId": "BDRV_OUTP",
+            "toId": "RING_POWER_POS"
+        },
+        {
+            "fromId": "BDRV_OUTN",
+            "toId": "RING_POWER_NEG"
+        },
+        {
+            "fromId": "ENCODER_Z",
+            "toId": "CTRL_EZ"
+        }
+    ]
+}

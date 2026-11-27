@@ -1,0 +1,48 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 20,
+    "layoutName": "Level_20_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SwitchOutput",
+            "toId": "R_LTOP_Input"
+        },
+        {
+            "fromId": "R_LTOP_Output",
+            "toId": "Battery_negative__1_"
+        },
+        {
+            "fromId": "R_LBOTTOM_Input",
+            "toId": "Battery_negative__1_"
+        },
+        {
+            "fromId": "Battery_negative__1_",
+            "toId": "LCD_Terminal_B"
+        },
+        {
+            "fromId": "R_LTOP_Input",
+            "toId": "R_RTOP_Input"
+        },
+        {
+            "fromId": "R_RTOP_Output",
+            "toId": "Battery_negative__2_"
+        },
+        {
+            "fromId": "Battery_negative__2_",
+            "toId": "R_RBOTTOM_Input"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "R_LBOTTOM_Output"
+        },
+        {
+            "fromId": "R_LBOTTOM_Output",
+            "toId": "R_RBOTTOM_Output"
+        },
+        {
+            "fromId": "Battery_negative__2_",
+            "toId": "LCD_Terminal_A"
+        }
+    ]
+}

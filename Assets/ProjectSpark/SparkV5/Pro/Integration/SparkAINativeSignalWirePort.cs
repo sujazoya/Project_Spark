@@ -46,6 +46,8 @@ namespace ProjectSpark.SparkV5.Pro
         public SparkTerminal ActiveDestination => active ? destination : null;
         public bool UsesPlayerPointer => active && usePlayerPointer;
         public ulong LastAIConnectionId => lastAIConnectionId;
+        internal float ActiveCableEndDiameter =>
+            realCablePath && realCablePath.TryGetComponent<SignalPathMesh>(out var mesh) ? mesh.SimulatedEndDiameter : 0f;
         public override bool IsConfigured
         {
             get
@@ -168,7 +170,7 @@ namespace ProjectSpark.SparkV5.Pro
                 error = "These terminals are already connected.";
                 return false;
             }
-            if (a.Owner && b.Owner && a.Owner == b.Owner)
+            if (a.SharesElectricalOwnerWith(b))
             {
                 error = "Refusing a direct short across the same component.";
                 return false;
@@ -262,9 +264,49 @@ namespace ProjectSpark.SparkV5.Pro
             active && sourceAttached && usePlayerPointer && engagedBuilder &&
             engagedBuilder.TryUpdateExternalTerminalPointer(position);
 
-        internal bool ShowCableShape(Vector3[] worldPoints) =>
-            active && sourceAttached && !usePlayerPointer && engagedBuilder &&
-            engagedBuilder.TrySetExternalCableShape(worldPoints);
+        internal bool ShowCableShape(SparkCableSimulation cable, float extensionLimit)
+        {
+            if (!active || !sourceAttached || usePlayerPointer || !engagedBuilder || !source)
+            { lastError = "The active native preview is unavailable."; return false; }
+            if (!TryValidateCableGeometry(cable.Points, source.transform.position, cable.Length, extensionLimit,
+                    out _, out _, out lastError))
+                return false;
+            if (engagedBuilder.TrySetExternalCableShape(cable.Points)) return true;
+            lastError = "SignalWireBuilder rejected the active cable shape.";
+            return false;
+        }
+
+        public static bool TryValidateCableGeometry(Vector3[] points, Vector3 sourcePosition,
+            float restLength, float extensionLimit, out float route, out float maximumSegmentRatio, out string reason)
+        {
+            route = maximumSegmentRatio = 0f;
+            reason = null;
+            const float positionPrecision = .001f;
+            if (points == null || points.Length < 2 || !IsFinite(sourcePosition) ||
+                !float.IsFinite(restLength) || restLength <= 0f ||
+                !float.IsFinite(extensionLimit) || extensionLimit < 0f ||
+                !IsFinite(points[0]) || !IsFinite(points[points.Length - 1]) ||
+                (points[0] - sourcePosition).sqrMagnitude > positionPrecision * positionPrecision)
+            { reason = "Cable endpoints, rest length or source position are invalid."; return false; }
+            Vector3 chord = points[points.Length - 1] - points[0];
+            float span = chord.magnitude;
+            float step = span / (points.Length - 1);
+            Vector3 axis = span > positionPrecision ? chord / span : Vector3.zero;
+            for (int i = 1; i < points.Length; i++)
+            {
+                Vector3 delta = points[i] - points[i - 1];
+                if (!IsFinite(delta) || Vector3.Dot(delta, axis) < -positionPrecision)
+                { reason = "Cable has a non-finite or backward segment."; return false; }
+                float segment = delta.magnitude;
+                route += segment;
+                maximumSegmentRatio = Mathf.Max(maximumSegmentRatio, segment / Mathf.Max(positionPrecision, step));
+            }
+            float visibleLimit = SparkCableSimulation.MaximumVisibleRatio;
+            if (route > Mathf.Min(span * visibleLimit, restLength * (1f + extensionLimit)) + positionPrecision ||
+                maximumSegmentRatio > visibleLimit + positionPrecision / Mathf.Max(positionPrecision, step))
+            { reason = $"Cable geometry exceeds the span or lead budget (route {route:F3}, span {span:F3}, peak segment ratio {maximumSegmentRatio:F3})."; return false; }
+            return true;
+        }
 
         public override bool AttachDestination(SparkTerminal b, out string error)
         {

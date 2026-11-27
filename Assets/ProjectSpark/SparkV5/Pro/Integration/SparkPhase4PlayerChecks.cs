@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ProjectSpark.AI.Tutorial;
 using ProjectSpark.Gameplay;
 using ProjectSpark.UIManagement;
+using Unity.Profiling;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -17,11 +18,122 @@ namespace ProjectSpark.SparkV5.Pro
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void VerifyStandalone()
         {
-#if !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
+            try
+            {
+                using var activity = ProjectSpark.AI.SparkAndroidRecognition.Activity();
+                using var intent = activity?.Call<AndroidJavaObject>("getIntent");
+                if (intent?.Call<bool>("getBooleanExtra", "spark.phase2.verify", false) == true)
+                    RunLevel20(Path.Combine(Application.persistentDataPath, "SparkAndroidLevel20.txt"));
+            }
+            catch (AndroidJavaException error)
+            {
+                Debug.LogWarning("Spark Android development verification intent unavailable: " + error.Message);
+            }
+#elif !UNITY_EDITOR
             string[] arguments = Environment.GetCommandLineArgs();
             int flag = Array.IndexOf(arguments, "-spark-phase4-verify");
             if (flag > 0 && flag + 1 < arguments.Length) Run(arguments[flag + 1]);
+            else
+            {
+                flag = Array.IndexOf(arguments, "-spark-phase2-verify");
+                if (flag > 0 && flag + 1 < arguments.Length) RunLevel20(arguments[flag + 1]);
+            }
 #endif
+        }
+
+        private static async void RunLevel20(string reportPath)
+        {
+            void Report(string line) => File.AppendAllText(reportPath, line + Environment.NewLine);
+            int exit = 1;
+            try
+            {
+                Application.runInBackground = true;
+                Report($"Phase 2 development-player verification on {Application.platform}. Started in " +
+                    UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + ".");
+                if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Bootstrap")
+                    throw new InvalidOperationException("The development player did not start at Bootstrap.");
+                SparkProExecutive executive = null;
+                LevelGamePlayManager manager = null;
+                await Wait(() =>
+                {
+                    if (!executive) executive = Object.FindFirstObjectByType<SparkProExecutive>();
+                    if (!manager) manager = Object.FindFirstObjectByType<LevelGamePlayManager>();
+                    return executive && manager && executive.ActiveLevelManager == manager;
+                }, "Bootstrap to MainMenu");
+                executive.SetSpeakAnswers(false);
+                Report("PASS Bootstrap initialized MainMenu and the native campaign manager.");
+                // Opt-in development-player fixture. Keep campaign access and
+                // automatic advancement from affecting this isolated replay.
+                if (manager.LevelProgression) manager.LevelProgression.enabled = false;
+                var flags = BindingFlags.Instance | BindingFlags.NonPublic;
+                typeof(LevelGamePlayManager).GetField("enforceProgressionAccess", flags).SetValue(manager, false);
+                typeof(LevelGamePlayManager).GetField("autoAdvanceOnCompletion", flags).SetValue(manager, false);
+                int level = manager.GetCampaignLevelIndices().Single(index => manager.GetLevel(index).LevelNumber == 20);
+                if (!manager.StartLevel(level)) throw new InvalidOperationException("Native Level 20 did not start.");
+                var plan = Resources.LoadAll<SparkNativeWiringPlan>("SparkNativeWirePlans")
+                    .Single(candidate => candidate.LevelNumber == 20 && candidate.IsApproved);
+                await Wait(() =>
+                {
+                    var context = SparkAILevelContext.Capture(manager);
+                    return context.HasEvaluation && manager.ActiveLevel.LevelNumber == 20 && context.Layout &&
+                        plan.Wires.All(w => context.Layout.SceneBindings.TryGetTerminal(w.fromId, out _) &&
+                            context.Layout.SceneBindings.TryGetTerminal(w.toId, out _));
+                }, "Level 20 evaluation and authored resistor slots");
+                var layout = manager.LayoutLoader.ActiveLayout;
+                var bindings = layout.SceneBindings;
+                var hub = executive.GetComponent<SparkEngineeringControlHub>();
+                var device = executive.GetComponent<SparkEngineeringDeviceOperator>();
+                var supply = layout.GetComponentInChildren<SparkPowerSupply>();
+                if (!hub || !device || !supply || supply.IsOutputActive)
+                    throw new InvalidOperationException("Wiring controls are missing or the bench is energized.");
+                using var cpu = ProfilerRecorder.StartNew(ProfilerCategory.Internal, "Main Thread");
+                using var gc = ProfilerRecorder.StartNew(ProfilerCategory.Memory, "GC Allocated In Frame");
+                using var memory = ProfilerRecorder.StartNew(ProfilerCategory.Memory, "Total Used Memory");
+                executive.Ask("spark auto mode");
+                executive.Ask("auto wire practice level");
+                if (!hub.IsExecuting) throw new InvalidOperationException(hub.LastMessage);
+                int samples = 0;
+                double cpuSum = 0, gcSum = 0;
+                long peakMemory = 0;
+                float started = Time.realtimeSinceStartup;
+                while (hub.IsExecuting)
+                {
+                    if (Time.realtimeSinceStartup - started > 300f) throw new TimeoutException("Level 20 native wiring.");
+                    samples++;
+                    if (cpu.Valid) cpuSum += cpu.LastValue;
+                    if (gc.Valid) gcSum += gc.LastValue;
+                    if (memory.Valid) peakMemory = Math.Max(peakMemory, memory.LastValue);
+                    await Task.Delay(70);
+                }
+                int wires = plan.Wires.Count(w => bindings.TryResolveLivePair(layout, w.fromId, w.toId, out var a, out var b, out _) &&
+                    manager.CircuitSystem.HasConnectionBetween(a, b));
+                Report($"Matched {wires}/{plan.Wires.Count} authored native wires in {Time.realtimeSinceStartup - started:F2}s. {hub.LastMessage}");
+                Report($"Samples {samples}, mean main thread {(cpu.Valid ? cpuSum / Math.Max(1, samples) / 1e6 : -1):F2} ms, " +
+                    $"mean GC bytes {(gc.Valid ? gcSum / Math.Max(1, samples) : -1):F0}, peak total used memory bytes {(memory.Valid ? peakMemory : -1)}.");
+                if (wires != 10) throw new InvalidOperationException("The development player did not complete all native wires.");
+                executive.Ask("spark assisted mode");
+                async Task Operate(string id, bool on)
+                {
+                    executive.Ask($"spark propose device {id} {(on ? "on" : "off")}");
+                    executive.Ask("spark approve device action");
+                    if (!device.IsBusy) throw new InvalidOperationException(device.LastStatus);
+                    await Wait(() => !device.IsBusy, id);
+                    if (!device.LastStatus.StartsWith("VERIFIED", StringComparison.Ordinal))
+                        throw new InvalidOperationException(device.LastStatus);
+                }
+                var toggle = layout.GetComponentInChildren<SparkSwitch>();
+                if (toggle.IsClosed) await Operate("Power_Switch", false);
+                await Operate("Power_Switch", true);
+                await Wait(() => manager.HasCurrentElectricalEvaluation, "fresh evaluator for power ON");
+                await Operate("PowerSupply_01", true);
+                await Wait(() => manager.SatisfiedTargetCount == 5 && manager.IsCompleted, "Level 20 powered 5/5");
+                await Operate("PowerSupply_01", false);
+                Report($"PASS 10/10 native wires, standing switch, and 5/5 powered objectives on {Application.platform}.");
+                exit = 0;
+            }
+            catch (Exception error) { Report("FAIL " + error); }
+            finally { Application.Quit(exit); }
         }
 
         private static async void Run(string reportPath)

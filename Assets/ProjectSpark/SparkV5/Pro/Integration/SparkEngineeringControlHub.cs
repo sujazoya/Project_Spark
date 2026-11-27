@@ -36,6 +36,7 @@ namespace ProjectSpark.SparkV5.Pro
 
         private SparkProExecutive executive;
         private SparkNativeWireDirector director;
+        private SparkNativeWireCinematic performer;
         private SparkNativeWireAutoEngineer existingRecorder;
         private SparkEngineeringDeviceOperator deviceOperator;
         private SparkNativeWiringPlan[] loadedPlans;
@@ -49,6 +50,7 @@ namespace ProjectSpark.SparkV5.Pro
         private int totalSteps;
         private string pendingFrom;
         private string pendingTo;
+        private string dispatchFrom, dispatchTo;
         private Transform pendingRoot;
         private SparkNativeWiringPlan pendingPlan;
         private string lastMessage = "Ready. Player owns all tools in Manual mode.";
@@ -74,10 +76,24 @@ namespace ProjectSpark.SparkV5.Pro
         public string PendingStep => string.IsNullOrEmpty(pendingFrom) ? "None" : pendingFrom + " -> " + pendingTo;
         public IReadOnlyList<string> RecentMessages => recentMessages;
 
+        internal bool OwnsApprovedDispatch(string from, string to) =>
+            IsExecuting && phase == ExecutionPhase.Running && mode != OperatingMode.Manual && !cancelRequested &&
+            string.Equals(dispatchFrom, from, StringComparison.Ordinal) &&
+            string.Equals(dispatchTo, to, StringComparison.Ordinal) && ContextMatches(out _);
+
+        private bool DispatchReviewedWire(string from, string to, out string detail)
+        {
+            dispatchFrom = from;
+            dispatchTo = to;
+            try { return director.TryStartApprovedStep(from, to, out detail); }
+            finally { dispatchFrom = dispatchTo = null; }
+        }
+
         private void Awake()
         {
             executive = GetComponent<SparkProExecutive>();
             director = GetComponent<SparkNativeWireDirector>();
+            performer = GetComponent<SparkNativeWireCinematic>();
             existingRecorder = GetComponent<SparkNativeWireAutoEngineer>();
             deviceOperator = GetComponent<SparkEngineeringDeviceOperator>();
             mode = startingMode;
@@ -95,12 +111,14 @@ namespace ProjectSpark.SparkV5.Pro
             SceneManager.activeSceneChanged += OnSceneChanged;
             if (!director) director = GetComponent<SparkNativeWireDirector>();
             if (director) director.StatusChanged += OnNativeStatus;
+            if (performer) performer.StageChanged += OnNativeStage;
         }
 
         private void OnDisable()
         {
             SceneManager.activeSceneChanged -= OnSceneChanged;
             if (director) director.StatusChanged -= OnNativeStatus;
+            if (performer) performer.StageChanged -= OnNativeStage;
             CancelInternal("Control hub disabled; unfinished AI work cancelled.", true);
         }
 
@@ -111,11 +129,25 @@ namespace ProjectSpark.SparkV5.Pro
             Reload();
         }
 
+#if UNITY_ANDROID && !UNITY_EDITOR
+        private void OnApplicationPause(bool paused)
+        {
+            if (!paused) return;
+            if (IsExecuting || director && director.IsBusy)
+                CancelInternal("Android suspended Spark. Unfinished native wiring cancelled.", true);
+            if (deviceOperator && (deviceOperator.IsBusy || deviceOperator.Proposal != "None"))
+                deviceOperator.Cancel();
+            if (PendingStep != "None") ClearPending();
+        }
+#endif
+
         private void OnNativeStatus(string information)
         {
             if (IsExecuting && !string.IsNullOrWhiteSpace(information))
                 Note("Native tool: " + information, false);
         }
+
+        private void OnNativeStage() => StateChanged?.Invoke();
 
         private void Note(string message, bool narrate = true)
         {
@@ -198,7 +230,8 @@ namespace ProjectSpark.SparkV5.Pro
             level = manager ? SparkAILevelContext.Capture(manager) : default;
             error = null;
             if (!executive || !manager || !level.Definition || !level.Layout ||
-                !level.Layout.gameObject.activeInHierarchy || !level.Layout.SceneBindings || !manager.CircuitSystem)
+                !level.Layout.gameObject.activeInHierarchy || !level.Layout.SceneBindings || !manager.CircuitSystem ||
+                !manager.LayoutLoader || manager.LayoutLoader.ActiveLayout != level.Layout)
                 error = "No active authored level/layout, bindings, or circuit system.";
             else if (executive.ExamMode)
                 error = "Independent exam mode forbids AI construction.";
@@ -210,7 +243,7 @@ namespace ProjectSpark.SparkV5.Pro
         private static string LayoutKey(string name) =>
             (name ?? string.Empty).Replace("(Clone)", string.Empty).Trim();
 
-        private SparkNativeWiringPlan FindApprovedPlan(SparkAILevelContext level, out string error)
+        private SparkNativeWiringPlan FindApprovedPlan(SparkAILevelContext level, out string error, bool requireRevision = false)
         {
             error = "No unique approved, unchanged practice plan matches this level/layout.";
             SparkNativeWiringPlan match = null;
@@ -226,61 +259,128 @@ namespace ProjectSpark.SparkV5.Pro
                 if (match) { error = "More than one approved plan matches: remove the ambiguity."; return null; }
                 match = p;
             }
+            if (match && (requireRevision || match.HasRevisionReview))
+            {
+                var prefab = executive.ActiveLevelManager.LayoutLoader.ActiveSourcePrefab;
+                if (!match.MatchesReviewedLayout(level.Definition, prefab, out error)) return null;
+#if UNITY_EDITOR
+                if (SparkNativeWiringPlan.AuthoredRevision(level.Definition, prefab) != match.ReviewedRevision)
+                { error = "Authored layout or level definition changed after review."; return null; }
+#endif
+            }
             if (match) error = null;
             return match;
         }
 
-        private bool PowerSafe(SparkAILevelContext level)
+        public string DrawCurrentLevel()
         {
-            if (!requireVirtualPowerOff) return true;
-            SparkPowerSupply[] supplies = level.Layout.GetComponentsInChildren<SparkPowerSupply>(true);
+            if (!GetContext(out var manager, out var level, out string reason)) return Message(reason);
+            if (mode == OperatingMode.Manual)
+                return Message($"Level {level.Definition.LevelNumber} is in Manual mode. Select Assisted or Auto to authorize Spark construction.");
+            return mode == OperatingMode.Assisted ? SuggestNext(requireRevision: true) : StartAuto(requireRevision: true);
+        }
+
+        private string ConstructionBlock(SparkAILevelContext level, string reason) =>
+            $"Level {level.Definition.LevelNumber} ({level.Definition.DisplayName}) has {level.Definition.TargetCount} authored objectives. " +
+            $"Construction blocked: {reason} Use Preview and the Universal Auto Draw review workflow for authored evidence.";
+
+        public string ExplainConstruction()
+        {
+            if (!GetContext(out var manager, out var level, out string reason)) return Message(reason);
+            var plan = FindApprovedPlan(level, out reason, requireRevision: true);
+            string verdict = manager.HasCurrentElectricalEvaluation
+                ? $"Evaluator: {manager.SatisfiedTargetCount}/{level.Definition.TargetCount} satisfied."
+                : "Awaiting a current electrical evaluation.";
+            if (!plan)
+                return Message($"Level {level.Definition.LevelNumber}: {reason} {verdict} " +
+                    "Review the authored layout, task requirements, and native tool capabilities before approving construction.");
+            return Message($"Level {level.Definition.LevelNumber}: {plan.Wires.Count} reviewed wires. Evidence: " +
+                $"{plan.SchematicReference}. {verdict} " + PreviewDetails(plan, manager, level));
+        }
+
+        public string ConstructionStatus()
+        {
+            var manager = executive ? executive.ActiveLevelManager : null;
+            var level = manager ? manager.ActiveLevel : null;
+            string stage = performer && performer.IsPerforming ? performer.Stage.ToString() : "Idle";
+            var layout = manager && manager.LayoutLoader ? manager.LayoutLoader.ActiveLayout : null;
+            string power = layout ? (HasActivePower(layout) ? "On" : "Off") : "Unavailable";
+            return $"Level {(level ? level.LevelNumber.ToString() : "—")}, {mode}, {phase}, " +
+                $"{completedSteps}/{totalSteps} reviewed wires. {currentAction}. Hand: {stage}. " +
+                $"Native tool: {(director && director.IsBusy ? "Busy" : "Idle")}. Power: {power}.";
+        }
+
+        private bool PowerSafe(SparkAILevelContext level) => !requireVirtualPowerOff || !HasActivePower(level.Layout);
+
+        private static bool HasActivePower(SparkLevelLayout layout)
+        {
+            SparkPowerSupply[] supplies = layout.GetComponentsInChildren<SparkPowerSupply>(true);
             for (int i = 0; i < supplies.Length; i++)
-                if (supplies[i] && supplies[i].IsOutputActive) return false;
-            return true;
+                if (supplies[i] && supplies[i].IsOutputActive) return true;
+            return false;
         }
 
         private bool ValidPair(SparkAILevelContext level, SparkNativeWiringPlan.WireStep step,
             out SparkTerminal a, out SparkTerminal b, out string error)
         {
             a = b = null;
-            error = null;
-            if (step == null || !level.Layout.SceneBindings.TryGetTerminal(step.fromId, out a) ||
-                !level.Layout.SceneBindings.TryGetTerminal(step.toId, out b) || !a || !b)
-                error = "Authored terminal IDs do not resolve: " + step?.fromId + " -> " + step?.toId;
-            else if (a == b || !a.gameObject.activeInHierarchy || !b.gameObject.activeInHierarchy ||
-                !a.transform.IsChildOf(level.Layout.transform) || !b.transform.IsChildOf(level.Layout.transform))
-                error = "Terminal is inactive, duplicated, or outside the current level.";
-            else if (a.Owner && a.Owner == b.Owner)
-                error = "Refusing a same-component terminal bypass.";
-            return error == null;
+            if (step == null)
+            { error = "The reviewed wire step is missing."; return false; }
+            return level.Layout.SceneBindings.TryResolveLivePair(level.Layout, step.fromId, step.toId, out a, out b, out error);
         }
 
         public string Preview()
         {
             if (!GetContext(out var manager, out var level, out string reason)) return Message(reason);
             var plan = FindApprovedPlan(level, out reason);
-            if (!plan) return Message(reason);
-            var result = new StringBuilder("APPROVED PRACTICE PLAN: ").Append(plan.name);
+            if (!plan)
+            {
+                SparkNativeWiringPlan candidate = null;
+                foreach (var draft in loadedPlans)
+                {
+                    if (!draft || draft.LevelNumber != level.Definition.LevelNumber ||
+                        draft.LayoutName != LayoutKey(level.Layout.name) || !draft.ValidateStructure(out _))
+                        continue;
+                    if (candidate)
+                        return Message(ConstructionBlock(level, reason + " Multiple candidate assets require Editor review."));
+                    candidate = draft;
+                }
+                return Message(candidate ? ConstructionBlock(level, reason) + "\n" +
+                    PreviewDetails(candidate, manager, level, reviewed: false) : ConstructionBlock(level, reason));
+            }
+            return Message(PreviewDetails(plan, manager, level));
+        }
+
+        private string PreviewDetails(SparkNativeWiringPlan plan, LevelGamePlayManager manager, SparkAILevelContext level,
+            bool reviewed = true)
+        {
+            var result = new StringBuilder(reviewed ? "APPROVED PRACTICE PLAN: " : "REVIEW REQUIRED: ").Append(plan.name);
             for (int i = 0; i < plan.Wires.Count; i++)
             {
                 var step = plan.Wires[i];
-                if (!ValidPair(level, step, out var a, out var b, out reason))
-                    return Message("Step " + (i + 1) + " invalid: " + reason);
+                if (!ValidPair(level, step, out var a, out var b, out string reason))
+                {
+                    result.Append('\n').Append(i + 1).Append(". ").Append(step?.fromId)
+                        .Append(" -> ").Append(step?.toId).Append(" [blocked: ").Append(reason).Append(']');
+                    continue;
+                }
                 result.Append('\n').Append(i + 1).Append(". ").Append(step.fromId)
                     .Append(" -> ").Append(step.toId)
                     .Append(manager.CircuitSystem.HasConnectionBetween(a, b) ? " [connected]" : " [pending]");
             }
-            return Message(result.ToString());
+            return result.ToString();
         }
 
-        public string SuggestNext()
+        public string SuggestNext() => SuggestNext(requireRevision: false);
+
+        private string SuggestNext(bool requireRevision)
         {
             if (mode != OperatingMode.Assisted)
                 return Message("Switch to Assisted mode to request one suggested reviewed wire.");
             if (IsExecuting || (director && director.IsBusy)) return Message("A native wiring action is already in progress.");
             if (!GetContext(out var manager, out var level, out string reason)) return Message(reason);
-            var plan = FindApprovedPlan(level, out reason);
-            if (!plan) return Message(reason);
+            var plan = FindApprovedPlan(level, out reason, requireRevision);
+            if (!plan) return Message(requireRevision ? ConstructionBlock(level, reason) : reason);
             ClearPending();
             for (int i = 0; i < plan.Wires.Count; i++)
             {
@@ -296,6 +396,20 @@ namespace ProjectSpark.SparkV5.Pro
                 return Message("SUGGESTION ONLY: " + PendingStep + ". Confirm the authored schematic, then explicitly approve this step. No cable created.");
             }
             return Message("All reviewed wiring connections are already present. The official evaluator determines remaining objectives.");
+        }
+
+        private string ShowSuggestedSource()
+        {
+            if (!GetContext(out _, out var level, out string reason)) return Message(reason);
+            if (!pendingRoot || pendingRoot != level.Layout.transform || !pendingPlan || !pendingPlan.IsApproved)
+                return Message("Suggest a reviewed wire for the active level first.");
+            if (!level.Layout.SceneBindings.TryResolveLivePair(level.Layout, pendingFrom, pendingTo, out var source, out _, out reason))
+                return Message(reason);
+            var character = GetComponent<SparkProCharacter>();
+            if (!character || !character.isActiveAndEnabled || IsExecuting)
+                return Message("The character is unavailable to point at the suggested source.");
+            character.PointAt(source.transform, false, 1f);
+            return Message("The reviewed source is " + pendingFrom + ". I'm pointing at its live terminal.");
         }
 
         public string ApproveSuggested()
@@ -356,7 +470,7 @@ private IEnumerator ExecuteSingle(
 
     // Execute the approved connection using the real
     // player-native wiring tool.
-    if (!director.TryStartApprovedStep(
+    if (!DispatchReviewedWire(
         from, to, out string detail))
     {
         FinishFailure(
@@ -422,7 +536,9 @@ private IEnumerator ExecuteSingle(
         "Further objectives remain evaluator-controlled.");
 }
 
-        public string StartAuto()
+        public string StartAuto() => StartAuto(requireRevision: false);
+
+        private string StartAuto(bool requireRevision)
         {
             if (mode != OperatingMode.Auto) return Message("Select Auto AI mode first.");
             if (deviceOperator && deviceOperator.IsBusy) return Message("A device action already owns Spark's hands.");
@@ -431,8 +547,8 @@ private IEnumerator ExecuteSingle(
                 return Message("Stop the v11 recorder or existing automation before starting v14.");
             if (!director) return Message("Native player wire director is missing.");
             if (!GetContext(out var manager, out var level, out string reason)) return Message(reason);
-            var plan = FindApprovedPlan(level, out reason);
-            if (!plan) return Message(reason);
+            var plan = FindApprovedPlan(level, out reason, requireRevision);
+            if (!plan) return Message(requireRevision ? ConstructionBlock(level, reason) : reason);
             if (!PowerSafe(level)) return Message("Turn the virtual power output OFF before AI wiring.");
             for (int i = 0; i < plan.Wires.Count; i++)
                 if (!ValidPair(level, plan.Wires[i], out _, out _, out reason))
@@ -478,7 +594,7 @@ private IEnumerator ExecuteSingle(
                     continue;
                 }
                 Note("I will approach " + step.fromId + " and carry the native cable to " + step.toId + ".");
-                if (!director.TryStartApprovedStep(step.fromId, step.toId, out string startInfo))
+                if (!DispatchReviewedWire(step.fromId, step.toId, out string startInfo))
                 { FinishFailure("Native director rejected step " + (i + 1) + ": " + startInfo); yield break; }
                 float deadline = Time.realtimeSinceStartup + maxSecondsPerCable;
                 float nextSafetyProbe = 0f;
@@ -502,9 +618,13 @@ private IEnumerator ExecuteSingle(
                 if (executive.ActiveLevelManager.IsFailed)
                 { FinishFailure("Official evaluator reported a failed level. No override attempted."); yield break; }
             }
-            string verdict = executive && executive.ActiveLevelManager && executive.ActiveLevelManager.IsCompleted
-                ? "Official level evaluator reports completed."
-                : "Wiring finished; other level objectives may remain.";
+            if (!ContextMatches(out string finalError))
+            { FinishFailure("Final evaluation interrupted: " + finalError); yield break; }
+            var evaluator = executive ? executive.ActiveLevelManager : null;
+            string verdict = evaluator && evaluator.HasCurrentElectricalEvaluation
+                ? evaluator.IsCompleted ? "Official level evaluator reports completed."
+                    : $"Official evaluator reports {evaluator.SatisfiedTargetCount}/{evaluator.ActiveLevel.TargetCount} objectives. Turn on power or complete remaining tasks through the native controls."
+                : "Wiring finished. Await a current official evaluation.";
             FinishSuccess("All approved practice wires checked. " + verdict);
         }
 
@@ -516,6 +636,9 @@ private IEnumerator ExecuteSingle(
             { error = "Active level, layout or circuit system changed."; return false; }
             if (activePlan && !activePlan.IsApproved)
             { error = "Approved plan was edited or revoked."; return false; }
+            if (activePlan && activePlan.HasRevisionReview &&
+                !activePlan.MatchesReviewedLayout(level.Definition, manager.LayoutLoader.ActiveSourcePrefab, out error))
+                return false;
             if (!PowerSafe(level))
             { error = "Virtual supply became active while wiring."; return false; }
             return true;
@@ -611,11 +734,27 @@ private IEnumerator ExecuteSingle(
             if (!caller || string.IsNullOrWhiteSpace(question)) return false;
             string q = question.Trim().TrimEnd('?', '.', '!').ToLowerInvariant();
             if (q.StartsWith("hey spark ")) q = q.Substring(10).Trim();
+            if (q.StartsWith("spark,", StringComparison.Ordinal)) q = "spark " + q.Substring(6).TrimStart();
             var hub = caller.GetComponent<SparkEngineeringControlHub>();
             if (!hub) return false; // Existing game behavior remains available until bound.
 
             switch (q)
             {
+                case "draw current level": case "spark draw current level": case "spark draw this level":
+                case "wire current level": case "spark wire current level": case "spark auto draw":
+                    response = hub.DrawCurrentLevel(); return true;
+                case "spark continue drawing":
+                    response = hub.IsPaused ? hub.Resume() : hub.DrawCurrentLevel(); return true;
+                case "spark pause drawing":
+                    response = hub.Pause(); return true;
+                case "spark resume drawing":
+                    response = hub.Resume(); return true;
+                case "spark stop drawing":
+                    response = hub.CancelAutomation(); return true;
+                case "spark drawing status":
+                    response = hub.ConstructionStatus(); return true;
+                case "spark explain current construction":
+                    response = hub.ExplainConstruction(); return true;
                 case "spark manual mode": case "manual mode":
                     response = hub.SelectMode(OperatingMode.Manual); return true;
                 case "spark assisted mode": case "assisted mode":
@@ -629,8 +768,14 @@ private IEnumerator ExecuteSingle(
                 case "preview approved wiring plan":
                     response = hub.Preview(); return true;
                 case "spark suggest next wire": case "spark suggest next step":
+                case "spark suggest the next wire": case "spark inspect the next connection":
                     response = hub.SuggestNext(); return true;
-                case "spark approve suggested wire": case "spark perform approved step":
+                case "spark show me where the source terminal is":
+                    response = hub.ShowSuggestedSource(); return true;
+                case "spark explain why this connection failed":
+                    response = hub.Message(hub.director ? hub.director.LastStatus : "The native wire director is unavailable.");
+                    return true;
+                case "spark approve suggested wire": case "spark perform approved step": case "spark connect the approved wire":
                     response = hub.ApproveSuggested(); return true;
                 case "spark start approved plan": case "auto wire practice level":
                 case "spark wire this practice level":

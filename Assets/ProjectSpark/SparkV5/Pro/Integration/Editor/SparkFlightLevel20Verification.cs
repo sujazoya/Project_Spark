@@ -10,6 +10,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using Unity.Profiling;
 using Object = UnityEngine.Object;
 
 namespace ProjectSpark.SparkV5.Pro.Editor
@@ -20,6 +21,8 @@ namespace ProjectSpark.SparkV5.Pro.Editor
 
         internal static async Task Verify(Action<string> log, string cableCase = "")
         {
+            bool v19 = cableCase == "v19";
+            VerifyCableGeometry(log);
             var director = Object.FindObjectsByType<SparkNativeWireDirector>(FindObjectsSortMode.None).Single();
             var manager = Object.FindFirstObjectByType<LevelGamePlayManager>();
             var executive = director.GetComponent<SparkProExecutive>();
@@ -42,6 +45,54 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             settings.FindProperty("autoAdvanceOnCompletion").boolValue = false;
             settings.ApplyModifiedPropertiesWithoutUndo();
             int Slot(int number) => manager.GetCampaignLevelIndices().Single(index => manager.GetLevel(index).LevelNumber == number);
+            if (cableCase == "v19-starter")
+            {
+                Require(manager.StartLevel(Slot(1)), "The native starter level did not start.");
+                await Wait(() => executive.ActiveLevelManager == manager &&
+                    SparkAILevelContext.Capture(manager).HasEvaluation && port.IsConfigured, "starter native evaluator");
+                var starter = SparkAILevelContext.Capture(manager);
+                var prefab = manager.LayoutLoader.ActiveSourcePrefab;
+                Require(SparkUniversalConstructionEditor.TryReadMissionWires(starter.Definition, prefab,
+                    out var wires, out string source, out string error), error);
+                var trial = ScriptableObject.CreateInstance<SparkNativeWiringPlan>();
+                try
+                {
+                    trial.LoadDraft(new SparkNativeWiringPlan.RecordedDraft
+                    { levelNumber = 1, layoutName = prefab.name, wires = wires });
+                    Require(trial.TryApprove("In-memory verification fixture", source, out error), error);
+                    Require(trial.ReviewAuthoredRevision(starter.Definition, prefab, out error), error);
+                    var cache = typeof(SparkEngineeringControlHub).GetField("loadedPlans",
+                        System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+                    Require(cache != null, "The approved-plan cache is missing.");
+                    cache.SetValue(hub, new[] { trial });
+                    var starterSupply = starter.Layout.GetComponentsInChildren<SparkPowerSupply>(true).Single();
+                    var interaction = new SparkInteractionContext(executive, starterSupply, SparkInteractionType.Toggle,
+                        SparkToolType.Select, starterSupply.transform.position, Vector3.up, default, starterSupply.gameObject);
+                    if (starterSupply.IsOutputActive)
+                        Require(starterSupply.SetOutput(false, interaction).Succeeded, "The starter supply did not turn off.");
+                    executive.Ask("spark auto mode");
+                    executive.Ask("hey Spark draw current level");
+                    Require(hub.IsExecuting, executive.LastAnswer);
+                    await Wait(() => !hub.IsExecuting, "starter's physical cables", 100f);
+                    foreach (var step in wires)
+                    {
+                        Require(starter.Layout.SceneBindings.TryResolveLivePair(starter.Layout, step.fromId, step.toId,
+                            out var a, out var b, out error), error);
+                        Require(manager.CircuitSystem.HasConnectionBetween(a, b), hub.LastMessage + " " + director.LastStatus);
+                    }
+                    Require(starterSupply.SetOutput(true, interaction).Succeeded, "The starter supply did not turn on.");
+                    await Wait(() => manager.IsFailed || manager.SatisfiedTargetCount == 1 && manager.IsCompleted, "starter's official objective");
+                    Require(manager.SatisfiedTargetCount == 1 && manager.IsCompleted,
+                        $"Starter result {manager.SatisfiedTargetCount}/1, failure {manager.LastFailureReason}.");
+                    log($"PASS Starter native wiring and evaluator 1/1. Review revision {trial.ReviewedRevision}.");
+                }
+                finally
+                {
+                    hub.Reload();
+                    Object.Destroy(trial);
+                }
+                return;
+            }
             Require(manager.StartLevel(Slot(20)), "Native Level 20 did not start.");
             await Wait(() => SparkAILevelContext.Capture(manager).HasEvaluation &&
                 manager.ActiveLevel.LevelNumber == 20 && port.IsConfigured, "Level 20 with native evaluator");
@@ -50,23 +101,67 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             var bindings = level.Layout.SceneBindings;
             var supply = level.Layout.GetComponentsInChildren<SparkPowerSupply>().Single();
             var powerSwitch = level.Layout.GetComponentsInChildren<SparkSwitch>().Single();
+            if (cableCase == "switch")
+            {
+                Require(!supply.IsOutputActive, "The test requires de-energized hardware.");
+                executive.Ask("spark assisted mode");
+                await VerifyStandingSwitch(executive, device, flight, agent, powerSwitch, log);
+                return;
+            }
+            Require(bindings.ResolveLiveTerminal(level.Layout, "SwitchOutput", out _) ==
+                SparkLevelSceneBindings.TerminalResolution.Resolved, "The fixed SwitchOutput binding must resolve.");
+            Require(bindings.ResolveLiveTerminal(level.Layout, "R_LTOP_Input", out _) ==
+                SparkLevelSceneBindings.TerminalResolution.RUNTIME_SLOT_UNPOPULATED,
+                "The left-top resistor must require installation in its authored workstation.");
+            Require(bindings.ResolveLiveTerminal(level.Layout, "not_a_level_20_terminal", out _) ==
+                SparkLevelSceneBindings.TerminalResolution.ID_NOT_DECLARED, "Unknown IDs must fail closed.");
+            executive.Ask("spark assisted mode");
+            if (v19)
+            {
+                executive.Ask("hey Spark draw current level");
+                Require(executive.LastAnswer.Contains("RUNTIME_SLOT_UNPOPULATED", StringComparison.Ordinal) &&
+                    !director.IsBusy, executive.LastAnswer);
+            }
+            executive.Ask("Spark, inspect the next connection.");
+            Require(executive.LastAnswer.Contains("RUNTIME_SLOT_UNPOPULATED: R_LTOP_Input", StringComparison.Ordinal),
+                "Advisor must explain the missing workstation assignment before approval.");
+            log("PASS Fixed terminal resolution, unknown ID rejection and explicit unpopulated workstation diagnosis.");
             await InstallBridgeResistors(level.Layout.transform, log);
             var plan = Resources.LoadAll<SparkNativeWiringPlan>("SparkNativeWirePlans")
                 .Single(candidate => candidate.LevelNumber == 20 && candidate.IsApproved);
             Require(plan.IsApproved && plan.Wires.Count == 10, "Level 20's reviewed ten-wire plan is required.");
             await Wait(() => plan.Wires.All(step => bindings.TryGetTerminal(step.fromId, out _) &&
                 bindings.TryGetTerminal(step.toId, out _)), "all reviewed terminal bindings after shelf placement");
+            if (v19)
+            {
+                Require(plan.ValidateStoredAuthoredRevision(out string reason), reason);
+                var tampered = Object.Instantiate(plan);
+                try
+                {
+                    var state = new SerializedObject(tampered);
+                    state.FindProperty("reviewedRevision").stringValue = "deliberate invalidation";
+                    state.ApplyModifiedPropertiesWithoutUndo();
+                    Require(!tampered.MatchesReviewedLayout(manager.ActiveLevel, manager.LayoutLoader.ActiveSourcePrefab, out _),
+                        "An edited revision retained authorization.");
+                }
+                finally { Object.Destroy(tampered); }
+                executive.Ask("spark draw this level");
+                Require(hub.PendingStep == "SwitchOutput -> R_LTOP_Input" && !director.IsBusy, executive.LastAnswer);
+                executive.Ask("spark stop drawing");
+                Require(!hub.IsExecuting && hub.PendingStep == "None", "Universal stop left the Assisted proposal active.");
+                log("PASS v19 runtime dependency, Assisted suggestion, revision invalidation and pending stop.");
+            }
             var pairs = plan.Wires.Select(step =>
             {
-                bool from = bindings.TryGetTerminal(step.fromId, out var a);
-                bool to = bindings.TryGetTerminal(step.toId, out var b);
-                Require(from && to && a && b, $"Authored terminals missing for {step.fromId} to {step.toId}.");
+                Require(bindings.TryResolveLivePair(level.Layout, step.fromId, step.toId, out var a, out var b, out string error),
+                    $"Authored terminals invalid for {step.fromId} to {step.toId}. {error}");
                 return (a, b);
             }).ToArray();
             var first = pairs[0];
+            bool phase2 = cableCase == "phase2";
             var playerProfile = (builder.DrawingMode, builder.CableRouting, builder.TerminalInputStyle, builder.ExternalInputControl);
             bool diagnosticBaseline = cableCase == "cable-before";
-            using var capture = cableCase.Length == 0 ? null : new SparkNativeCableVisualCapture(
+            using var capture = cableCase.Length == 0 || v19 ? null : new SparkNativeCableVisualCapture(
                 cableCase, builder, performer, flight, director, first.a, first.b, log);
             Require(!circuit.HasConnectionBetween(first.a, first.b), "The reported connection already exists.");
             var home = flight.transform.position;
@@ -95,6 +190,14 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             log("PASS Manual takeoff, hover and landing.");
 
             executive.Ask("spark manual mode");
+            if (v19)
+            {
+                executive.Ask("hey Spark draw current level");
+                Require(hub.Mode == SparkEngineeringControlHub.OperatingMode.Manual && !hub.IsExecuting &&
+                    executive.LastAnswer.Contains("Manual mode", StringComparison.Ordinal), executive.LastAnswer);
+                executive.Ask("spark drawing status");
+                Require(executive.LastAnswer.Contains("Level 20", StringComparison.Ordinal), executive.LastAnswer);
+            }
             executive.Ask(Preview);
             Require(!director.IsBusy && !builder.IsDrawing && !circuit.HasConnectionBetween(first.a, first.b),
                 "Manual mode must leave the player in control.");
@@ -103,12 +206,21 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             Require(executive.LastAnswer.Contains("missing", StringComparison.OrdinalIgnoreCase) && !supply.IsOutputActive,
                 "The device operator allowed an incomplete circuit to energize. " + executive.LastAnswer);
             Power(true);
-            executive.Ask("spark suggest next wire");
-            executive.Ask("spark approve suggested wire");
+            executive.Ask("Spark, suggest the next wire.");
+            executive.Ask("Spark, show me where the source terminal is.");
+            Require(executive.LastAnswer.Contains("reviewed source", StringComparison.OrdinalIgnoreCase) &&
+                !director.IsBusy, executive.LastAnswer);
+            executive.Ask("Spark, connect the approved wire.");
             Require(executive.LastAnswer.Contains("virtual power output OFF", StringComparison.OrdinalIgnoreCase) &&
                 !director.IsBusy && !builder.IsDrawing, "Energized supply did not block wiring. " + executive.LastAnswer);
             Power(false);
             executive.SetExaminationMode(true);
+            if (v19)
+            {
+                executive.Ask("spark auto draw");
+                Require(!hub.IsExecuting && executive.LastAnswer.Contains("Independent exam", StringComparison.Ordinal),
+                    executive.LastAnswer);
+            }
             executive.Ask("spark suggest next wire");
             Require(executive.LastAnswer.Contains("Independent exam", StringComparison.OrdinalIgnoreCase) &&
                 !director.IsBusy, "Exam mode did not block wiring.");
@@ -149,17 +261,92 @@ namespace ProjectSpark.SparkV5.Pro.Editor
                 "The cancelled wire failed to restore the player profile.");
             log("PASS Cancellation removed the native preview and left the circuit unchanged.");
 
-            bool walked = false, flew = false, sawRoute = false;
-            await Begin(executive, director, hub);
-            await Wait(() =>
+            if (phase2)
             {
-                walked |= agent.isActiveAndEnabled && agent.isOnNavMesh && agent.velocity.sqrMagnitude > .02f;
-                flew |= flight.IsFlying || flight.IsMoving;
-                sawRoute |= builder.IsDrawing && builder.DragRoutePointCount > 0;
-                return !director.IsBusy;
-            }, "the grounded SwitchOutput to R_LTOP_Input wire", 65f);
-            Require(!flew && flight.SuccessfulApproaches == beforeFlight && (sawRoute || diagnosticBaseline) &&
-                circuit.HasConnectionBetween(first.a, first.b), director.LastStatus);
+                async Task InterruptPreview(string name, Action change, Action restore, string reason)
+                {
+                    await Begin(executive, director, hub);
+                    await Wait(() => builder.IsDrawing || !director.IsBusy, "Phase 2 preview for " + name);
+                    Require(builder.IsDrawing, director.LastStatus);
+                    var preview = builder.CurrentPath;
+                    try
+                    {
+                        change();
+                        Physics.SyncTransforms();
+                        await Wait(() => !director.IsBusy && !hub.IsExecuting && !preview, "Phase 2 interruption " + name);
+                        Require(!builder.IsDrawing && !port.IsWiring && !circuit.HasConnectionBetween(first.a, first.b) &&
+                            playerProfile == (builder.DrawingMode, builder.CableRouting, builder.TerminalInputStyle, builder.ExternalInputControl),
+                            "Interruption failed to restore the player tool or left an unapproved link.");
+                        if (reason != null) Require(director.LastStatus.Contains(reason), director.LastStatus);
+                    }
+                    finally { restore(); Physics.SyncTransforms(); }
+                    log("PASS Live preview interruption for " + name + ". " + director.LastStatus);
+                }
+                Vector3 sourcePosition = first.a.transform.position;
+                Vector3 endPosition = first.b.transform.position;
+                await InterruptPreview("source motion", () => first.a.transform.position += Vector3.up * .03f,
+                    () => first.a.transform.position = sourcePosition, "source terminal moved");
+                await InterruptPreview("destination motion", () => first.b.transform.position += Vector3.up * .03f,
+                    () => first.b.transform.position = endPosition, "destination terminal moved");
+                await InterruptPreview("destination inactive", () => first.b.gameObject.SetActive(false),
+                    () => first.b.gameObject.SetActive(true), "destination terminal disappeared");
+                Vector3 robotPosition = default;
+                await InterruptPreview("unplanned Spark displacement", () =>
+                {
+                    robotPosition = flight.transform.position;
+                    flight.transform.position += Vector3.forward * .30f;
+                }, () => flight.transform.position = robotPosition, "position changed");
+                await InterruptPreview("mode returned to Manual", () => executive.Ask("spark manual mode"),
+                    () => executive.Ask("spark assisted mode"), null);
+                await InterruptPreview("independent exam began", () => executive.SetExaminationMode(true),
+                    () => executive.SetExaminationMode(false), null);
+                await InterruptPreview("virtual supply energized", () => Power(true), () => Power(false), null);
+                var performerSettings = new SerializedObject(performer);
+                var length = performerSettings.FindProperty("cableRestLength");
+                float usual = length.floatValue;
+                length.floatValue = .15f;
+                performerSettings.ApplyModifiedPropertiesWithoutUndo();
+                try
+                {
+                    await Begin(executive, director, hub);
+                    await Wait(() => !director.IsBusy && !hub.IsExecuting, "short lead rejection");
+                    Require(!builder.IsDrawing && !port.IsWiring && !circuit.HasConnectionBetween(first.a, first.b) &&
+                        (director.LastStatus.Contains("too short", StringComparison.OrdinalIgnoreCase) ||
+                        director.LastStatus.Contains("shorter", StringComparison.OrdinalIgnoreCase)), director.LastStatus);
+                }
+                finally { length.floatValue = usual; performerSettings.ApplyModifiedPropertiesWithoutUndo(); }
+                log("PASS Short physical lead rejected and native tool released.");
+
+                var unboundContact = first.b.gameObject.AddComponent<SparkNativeConnectorContact>();
+                try
+                {
+                    await Begin(executive, director, hub);
+                    await Wait(() => !director.IsBusy && !hub.IsExecuting, "unverified alignment rejection");
+                    Require(!builder.IsDrawing && !port.IsWiring && !circuit.HasConnectionBetween(first.a, first.b) &&
+                        director.LastStatus.Contains("destination contact frame", StringComparison.OrdinalIgnoreCase),
+                        director.LastStatus);
+                }
+                finally { Object.Destroy(unboundContact); }
+                await Wait(() => !unboundContact, "test contact component removal");
+                log("PASS A connector with an unbound mating frame was rejected before attachment.");
+            }
+
+            bool walked = false, flew = false, sawRoute = false;
+            using (var movie = phase2 ? new SparkNativeCableVisualCapture.MotionRecording("native-wire") : null)
+            {
+                await Begin(executive, director, hub);
+                await Wait(() =>
+                {
+                    walked |= agent.isActiveAndEnabled && agent.isOnNavMesh && agent.velocity.sqrMagnitude > .02f;
+                    flew |= flight.IsFlying || flight.IsMoving;
+                    sawRoute |= builder.IsDrawing && performer.IsPhysicalCable && performer.TryGetHeldCableGrip(out _);
+                    return !director.IsBusy;
+                }, "the grounded SwitchOutput to R_LTOP_Input wire", 65f);
+                if (movie != null) await Task.Delay(160);
+            }
+            Require(!flew && flight.SuccessfulApproaches == beforeFlight, "The authored grounded fixture unexpectedly used flight.");
+            Require(circuit.HasConnectionBetween(first.a, first.b), director.LastStatus);
+            Require(sawRoute || diagnosticBaseline, "No physical native cable was sampled at a measured hand grip.");
             ulong wire = port.LastAIConnectionId;
             var registries = Object.FindObjectsByType<SparkWireRegistry>(FindObjectsSortMode.None);
             Require(wire != 0 && circuit.HasConnection(wire) && registries.Any(registry => registry.TryGetWire(wire, out _)),
@@ -172,7 +359,8 @@ namespace ProjectSpark.SparkV5.Pro.Editor
                 "Native drag route must have exact endpoints and sampled interior points.");
             float referenceSpan = Vector3.Distance(points[0], points[^1]);
             float totalLength = Enumerable.Range(1, points.Length - 1).Sum(i => Vector3.Distance(points[i - 1], points[i]));
-            Require(totalLength < referenceSpan * 1.8f, "The native freehand cable developed an oversized route.");
+            Require(totalLength < referenceSpan * 1.8f,
+                $"The native cable developed an oversized route: {totalLength:F3} over a {referenceSpan:F3} span.");
             Require(playerProfile == (builder.DrawingMode, builder.CableRouting, builder.TerminalInputStyle, builder.ExternalInputControl),
                 "Native attachment failed to restore the player profile.");
             log($"PASS Authored Level 20 use of player draw, wire {wire}, walked during action {walked}, zero flight, {points.Length} points, length {totalLength:F3} for a {referenceSpan:F3} terminal span.");
@@ -185,21 +373,45 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             executive.Ask("spark auto mode");
             executive.Ask("preview approved wiring plan");
             log(executive.LastAnswer);
-            executive.Ask("auto wire practice level");
+            executive.Ask(v19 ? "hey Spark draw current level" : "auto wire practice level");
             Require(executive.LastAnswer.Contains("10", StringComparison.Ordinal) &&
                 executive.LastAnswer.Contains("AUTO started", StringComparison.OrdinalIgnoreCase), executive.LastAnswer);
-            executive.Ask("spark pause automation");
+            executive.Ask(v19 ? "spark pause drawing" : "spark pause automation");
             await Wait(() => hub.Phase == SparkEngineeringControlHub.ExecutionPhase.Paused, "Auto pause");
             Require(!director.IsBusy && !builder.IsDrawing && !auto.IsExecuting, "Auto pause left an active wire owner.");
-            executive.Ask("spark resume automation");
+            executive.Ask(v19 ? "spark resume drawing" : "spark resume automation");
             int reported = 0;
+            int carrySamples = 0, profilerSamples = 0;
+            float carryGap = 0f;
+            double mainThreadTotal = 0, gcTotal = 0;
+            using var mainThread = ProfilerRecorder.StartNew(ProfilerCategory.Internal, "Main Thread", 1);
+            using var gcAllocated = ProfilerRecorder.StartNew(ProfilerCategory.Memory, "GC Allocated In Frame", 1);
             await Wait(() =>
             {
                 int count = pairs.Count(pair => circuit.HasConnectionBetween(pair.a, pair.b));
                 if (count != reported) { reported = count; log($"Reviewed plan: {count}/10 native links."); }
+                if (performer.Stage == SparkNativeWireCinematic.CableStage.Carrying && builder.CurrentPath &&
+                    builder.CurrentPath.HasPreview && performer.TryGetHeldCableGrip(out var heldGrip))
+                {
+                    if (agent.isActiveAndEnabled && agent.isOnNavMesh && agent.velocity.sqrMagnitude > .02f)
+                    {
+                        carrySamples++;
+                        carryGap = Mathf.Max(carryGap, Vector3.Distance(heldGrip, builder.CurrentPath.PreviewPoint));
+                    }
+                    if (mainThread.Valid && gcAllocated.Valid && mainThread.Count > 0 && gcAllocated.Count > 0)
+                    {
+                        profilerSamples++;
+                        mainThreadTotal += mainThread.LastValue;
+                        gcTotal += gcAllocated.LastValue;
+                    }
+                }
                 return !hub.IsExecuting;
             }, "all ten reviewed plan wires", 360f);
             Require(reported == 10 && !director.IsBusy && !auto.IsExecuting, hub.LastMessage + " " + director.LastStatus);
+            log($"Authored plan walking carry samples: {carrySamples}; maximum grip/preview gap {carryGap:F4}.");
+            if (profilerSamples > 0)
+                log($"Editor carry counters: {profilerSamples} polls, mean main thread {mainThreadTotal / profilerSamples / 1000000d:F2} ms, " +
+                    $"mean total frame GC allocation {gcTotal / profilerSamples:F0} bytes.");
             Require(!builder.IsDrawing && !Object.FindObjectsByType<SignalPath>(FindObjectsSortMode.None).Any(path => path.HasPreview),
                 "A native preview survived the reviewed plan.");
             foreach (var pair in pairs)
@@ -216,11 +428,11 @@ namespace ProjectSpark.SparkV5.Pro.Editor
                     metric.length < Vector3.Distance(route[0], route[^1]) * 1.8f,
                     $"Malformed native wire {pair.a.name} to {pair.b.name}.");
             }
-            log("PASS v14 alone ran the reviewed plan and honored pause and resume.");
+            log(v19 ? "PASS Exact v19 command ran the reviewed plan and honored pause and resume."
+                : "PASS v14 alone ran the reviewed plan and honored pause and resume.");
             executive.Ask("spark assisted mode");
-            if (powerSwitch.IsClosed) await Operate(executive, device, "Power_Switch", false);
-            await Operate(executive, device, "Power_Switch", true);
-            Require(powerSwitch.IsClosed, "The native switch did not close.");
+            using (var movie = phase2 ? new SparkNativeCableVisualCapture.MotionRecording("standing-switch") : null)
+                await VerifyStandingSwitch(executive, device, flight, agent, powerSwitch, log, phase2);
             await Wait(() => manager.HasCurrentElectricalEvaluation, "fresh native evaluator before energizing");
             await Operate(executive, device, "PowerSupply_01", true);
             await Wait(() => manager.SatisfiedTargetCount == 5 && manager.IsCompleted,
@@ -266,22 +478,34 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             bool sawWalk = false, carriedCableWhileWalking = false;
             int gripSamples = 0;
             float largestGripGap = 0f;
-            await Begin(executive, director, hub);
-            await Wait(() =>
+            var arms = director.GetComponent<SparkTelescopicArms>();
+            Require(arms, "Original telescopic arms are required for the controlled walking fixture.");
+            float originalReach = arms.MaximumReach;
+            // The sockets are 2.4 units apart. Force two stances rather than
+            // expecting the production planner to walk with both in reach.
+            Require(arms.SetMaximumReach(1.15f), "Could not configure the controlled reach limit.");
+            try
             {
-                bool walking = !flight.IsFlying && agent.isActiveAndEnabled && agent.isOnNavMesh && agent.velocity.sqrMagnitude > .02f;
-                sawWalk |= walking;
-                if (builder.CurrentPath && builder.CurrentPath.HasPreview && performer.TryGetHeldCableGrip(out var grip))
+                await Begin(executive, director, hub);
+                await Wait(() =>
                 {
-                    gripSamples++;
-                    largestGripGap = Mathf.Max(largestGripGap, Vector3.Distance(grip, builder.CurrentPath.PreviewPoint));
-                    carriedCableWhileWalking |= walking;
-                }
-                return !director.IsBusy;
-            }, "forced walkable terminal heights", 100f);
+                    bool walking = !flight.IsFlying && agent.isActiveAndEnabled && agent.isOnNavMesh && agent.velocity.sqrMagnitude > .02f;
+                    sawWalk |= walking;
+                    if (performer.Stage == SparkNativeWireCinematic.CableStage.Carrying &&
+                        builder.CurrentPath && builder.CurrentPath.HasPreview && performer.TryGetHeldCableGrip(out var grip))
+                    {
+                        gripSamples++;
+                        largestGripGap = Mathf.Max(largestGripGap, Vector3.Distance(grip, builder.CurrentPath.PreviewPoint));
+                        carriedCableWhileWalking |= walking;
+                    }
+                    return !director.IsBusy;
+                }, "forced walkable terminal heights", 100f);
+            }
+            finally { arms.SetMaximumReach(originalReach); }
             Require(sawWalk && carriedCableWhileWalking && flight.SuccessfulApproaches == flightsBeforeGroundTest &&
                 gripSamples > 4 && largestGripGap < .015f &&
-                manager.CircuitSystem.HasConnectionBetween(highA, highB), "Spark should carry the cable on foot between reachable sockets. " + director.LastStatus);
+                manager.CircuitSystem.HasConnectionBetween(highA, highB),
+                $"Walking={sawWalk}, carrying while walking={carriedCableWhileWalking}, samples={gripSamples}, gap={largestGripGap:F4}. " + director.LastStatus);
             log($"PASS Controlled reach-height fixture: Spark carried and inserted native cable on foot, zero flight approaches, {gripSamples} hand samples and maximum gap {largestGripGap:F4}.");
 
             var panels = new[] { "SparkEngineeringV14_Overlay", "SparkMissionAdvisorV15_Overlay", "SPARK_DeviceOperatorV16_Canvas" };
@@ -308,6 +532,15 @@ namespace ProjectSpark.SparkV5.Pro.Editor
                 await Wait(() => SparkAILevelContext.Capture(manager).HasEvaluation &&
                     manager.ActiveLevel == definition && manager.TargetResults.Count > 0, "chapter evaluator");
                 log($"PASS Chapter {chapter.ChapterNumber} Level {definition.LevelNumber} loaded with {manager.TargetResults.Count} evaluator rows.");
+                if (v19 && definition.LevelNumber != plan.LevelNumber)
+                {
+                    executive.Ask("spark auto mode");
+                    executive.Ask("hey spark wire current level");
+                    Require(!hub.IsExecuting && !director.IsBusy &&
+                        executive.LastAnswer.Contains($"Level {definition.LevelNumber}", StringComparison.Ordinal) &&
+                        executive.LastAnswer.Contains("Construction blocked", StringComparison.Ordinal), executive.LastAnswer);
+                    log($"PASS Level {definition.LevelNumber} authority and missing-plan rejection.");
+                }
             }
         }
 
@@ -320,6 +553,69 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             Require(hub.IsExecuting, executive.LastAnswer);
             await Wait(() => director.IsBusy || !hub.IsExecuting, "v14 handoff to native Wire Tool");
             Require(director.IsBusy, hub.LastMessage);
+        }
+
+        private static void VerifyCableGeometry(Action<string> log)
+        {
+            Vector3 source = Vector3.zero;
+            Vector3 end = Vector3.right * 1.16f;
+            var valid = new[] { source, Vector3.right * .58f + Vector3.down * .12f, end };
+            Require(SparkAINativeSignalWirePort.TryValidateCableGeometry(valid, source, 1.30f, .025f,
+                out float route, out float segment, out string reason), reason);
+            float rise = Mathf.Sqrt(5.27f * 5.27f - .58f * .58f);
+            var historicalLength = new[] { source, new Vector3(.58f, rise, 0f), end };
+            Require(!SparkAINativeSignalWirePort.TryValidateCableGeometry(historicalLength, source, 12f, .025f,
+                out float badRoute, out _, out _) && Mathf.Abs(badRoute - 10.54f) < .001f,
+                "A 10.54-unit visual route escaped the native cable geometry guard.");
+            Require(!SparkAINativeSignalWirePort.TryValidateCableGeometry(valid, source, .8f, .025f,
+                out _, out _, out _), "An overstretched lead was accepted.");
+            Require(!SparkAINativeSignalWirePort.TryValidateCableGeometry(valid, Vector3.up * .02f, 1.30f, .025f,
+                out _, out _, out _), "A stale source position was accepted.");
+            Require(!SparkAINativeSignalWirePort.TryValidateCableGeometry(
+                new[] { source, Vector3.right, Vector3.right * .6f, end }, source, 2f, .025f,
+                out _, out _, out _), "A backward cable segment was accepted.");
+            log($"PASS Cable geometry contract. Normal {route:F3} over 1.160, peak segment {segment:F3}. " +
+                $"Rejected synthetic {badRoute:F3} route, short lead, stale source and backward segment.");
+        }
+
+        private static async Task VerifyStandingSwitch(SparkProExecutive executive, SparkEngineeringDeviceOperator device,
+            SparkV5FlightController flight, NavMeshAgent agent, SparkSwitch powerSwitch, Action<string> log, bool closeup = false)
+        {
+            var lever = powerSwitch.GetComponent<SwitchLeverController>();
+            var arm = executive.GetComponent<SparkTelescopicArms>();
+            Vector3 point = default;
+            Require(lever && arm && lever.TryGetPressPoint(out point), "The physical switch press bindings are missing.");
+            async Task VerifyPress(bool on)
+            {
+                bool previous = powerSwitch.IsClosed;
+                Require(previous != on, "Expected an actual switch state change.");
+                bool grounded = false;
+                float gap = float.PositiveInfinity;
+                Vector3 feet = default;
+                void OnChanged()
+                {
+                    if (powerSwitch.IsClosed == previous || !float.IsPositiveInfinity(gap)) return;
+                    grounded = !flight.IsFlying && agent.isOnNavMesh && !agent.hasPath &&
+                        agent.velocity.sqrMagnitude < .0004f;
+                    feet = flight.transform.position;
+                    if (arm.TryGetGripPosition(SparkTelescopicArms.ManipulatorSide.Right, out var index))
+                    {
+                        gap = Vector3.Distance(index, lever.LeverTransform.TransformPoint(point));
+                        if (closeup) SparkNativeCableVisualCapture.CaptureCloseup(on ? "switch-on" : "switch-off", flight.transform, index);
+                    }
+                }
+                powerSwitch.VisualStateChanged += OnChanged;
+                try { await Operate(executive, device, "Power_Switch", on); }
+                finally { powerSwitch.VisualStateChanged -= OnChanged; }
+                Require(grounded && powerSwitch.IsClosed == on && gap <= Mathf.Min(.005f, arm.ContactTolerance) && arm.IsRightArmResting &&
+                    Vector3.Distance(feet, flight.transform.position) < .02f,
+                    $"Switch press {on} failed standing, contact or release checks (grounded {grounded}, gap {gap:F4}, " +
+                    $"arm resting {arm.IsRightArmResting}, drift {Vector3.Distance(feet, flight.transform.position):F4}).");
+                log($"PASS Standing switch {(on ? "ON" : "OFF")}, root {feet:F3}, index gap {gap:F4} m, original arm retracted.");
+            }
+            if (!powerSwitch.IsClosed) await VerifyPress(true);
+            await VerifyPress(false);
+            await VerifyPress(true);
         }
 
         private static async Task Operate(SparkProExecutive executive, SparkEngineeringDeviceOperator device, string id, bool on)

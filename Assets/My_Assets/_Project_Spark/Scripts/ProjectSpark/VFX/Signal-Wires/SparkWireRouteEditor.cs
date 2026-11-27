@@ -1,3 +1,4 @@
+using ProjectSpark.Gameplay;
 using System;
 using System.Collections.Generic;
 using AAAUI.VFX;
@@ -222,39 +223,59 @@ namespace ProjectSpark.Gameplay
             }
         }
 
+#if UNITY_ANDROID && !UNITY_EDITOR
+        private void OnApplicationPause(bool paused)
+        {
+            if (paused) CancelTouchEdit();
+        }
+
+        private void CancelTouchEdit()
+        {
+            if (dragging) CancelDragging();
+            pendingSegmentDrag = false;
+        }
+#endif
+
         private void Update()
         {
             if (!editMode || registry == null || sceneCamera == null) return;
-            bool ctrl = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
-            if (ctrl && Input.GetKeyDown(KeyCode.Z)) { UndoRoute(); return; }
-            if (ctrl && Input.GetKeyDown(KeyCode.Y)) { RedoRoute(); return; }
-            if (Input.GetKeyDown(KeyCode.Escape))
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (SparkBenchPointer.Cancelled || SparkBenchPointer.IsOverUI() || !Application.isFocused)
+            {
+                CancelTouchEdit();
+                return;
+            }
+#endif
+            bool ctrl = SparkBenchPointer.KeyHeld(KeyCode.LeftControl) || SparkBenchPointer.KeyHeld(KeyCode.RightControl);
+            if (ctrl && SparkBenchPointer.KeyDown(KeyCode.Z)) { UndoRoute(); return; }
+            if (ctrl && SparkBenchPointer.KeyDown(KeyCode.Y)) { RedoRoute(); return; }
+            if (SparkBenchPointer.KeyDown(KeyCode.Escape))
             {
                 if (dragging) CancelDragging();
                 else DisableEditing();
                 return;
             }
-            if (Input.GetKeyDown(KeyCode.G))
+            if (SparkBenchPointer.KeyDown(KeyCode.G))
             {
                 snapToWorldGrid = !snapToWorldGrid;
                 EditorStateChanged?.Invoke();
             }
-            if (Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.Backspace))
+            if (SparkBenchPointer.KeyDown(KeyCode.Delete) || SparkBenchPointer.KeyDown(KeyCode.Backspace))
             {
                 RemoveSelectedPoint();
                 return;
             }
             if (dragging)
             {
-                if (Input.GetMouseButtonUp(0)) FinishDragging();
-                else if (Input.GetMouseButton(0)) ContinueDragging();
+                if (SparkBenchPointer.Released) FinishDragging();
+                else if (SparkBenchPointer.Held) ContinueDragging();
                 return;
             }
             if (pendingSegmentDrag)
             {
-                if (Input.GetMouseButtonUp(0)) pendingSegmentDrag = false;
-                else if (Input.GetMouseButton(0) &&
-                    ((Vector2)Input.mousePosition - pendingMouse).sqrMagnitude >= 36f)
+                if (SparkBenchPointer.Released) pendingSegmentDrag = false;
+                else if (SparkBenchPointer.Held &&
+                    ((Vector2)SparkBenchPointer.Position - pendingMouse).sqrMagnitude >= 36f)
                 {
                     pendingSegmentDrag = false;
                     if (registry.TryGetWire(pendingWireId, out SparkWireRecord pendingRecord))
@@ -270,13 +291,13 @@ namespace ProjectSpark.Gameplay
                 }
                 return;
             }
-            bool onUI = EventSystem.current != null &&
-                EventSystem.current.IsPointerOverGameObject();
-            if (onUI) return;
+#if !(UNITY_ANDROID && !UNITY_EDITOR)
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+#endif
 
             // Alt + wheel: depth-adjust the selected interior waypoint in 3D.
-            float scroll = Input.mouseScrollDelta.y;
-            if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
+            float scroll = SparkBenchPointer.ScrollY;
+            if (SparkBenchPointer.KeyHeld(KeyCode.LeftAlt) || SparkBenchPointer.KeyHeld(KeyCode.RightAlt))
             {
                 if (Mathf.Abs(scroll) > 0.001f && TryGetSelected(out SparkWireRecord target))
                 {
@@ -291,8 +312,8 @@ namespace ProjectSpark.Gameplay
                 }
             }
 
-            if (!Input.GetMouseButtonDown(0)) return;
-            Vector2 mouse = Input.mousePosition;
+            if (!SparkBenchPointer.Pressed) return;
+            Vector2 mouse = SparkBenchPointer.Position;
             SparkWireRecord selected;
             if (TryGetSelected(out selected))
             {
@@ -313,7 +334,7 @@ namespace ProjectSpark.Gameplay
             }
 
             // Shift-click a wire to add a route bend, then drag immediately.
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            if (SparkBenchPointer.KeyHeld(KeyCode.LeftShift) || SparkBenchPointer.KeyHeld(KeyCode.RightShift))
             {
                 if (TryFindWire(mouse, out SparkWireRecord near,
                     out Vector3 picked, out float d) && near != null)
@@ -407,9 +428,9 @@ namespace ProjectSpark.Gameplay
             Vector3[] route = mesh.GetEditableWorldPoints();
             if (selectedPointIndex <= 0 || selectedPointIndex >= route.Length - 1)
                 return;
-            Vector2 mouse = Input.mousePosition;
+            Vector2 mouse = SparkBenchPointer.Position;
             Vector3 next;
-            if (Input.GetKey(KeyCode.V))
+            if (SparkBenchPointer.KeyHeld(KeyCode.V))
             {
                 float unitsPerPixel = sceneCamera.orthographic
                     ? 2f * sceneCamera.orthographicSize / Mathf.Max(1f, Screen.height)

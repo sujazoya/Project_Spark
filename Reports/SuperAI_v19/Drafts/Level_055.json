@@ -1,0 +1,120 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 55,
+    "layoutName": "Level_55_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "CTRL_POS"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "CTRL_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "MD_POS"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "MD_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "LD_POS"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "LD_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "RD_POS"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "RD_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "HUB_POS"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "HUB_GND"
+        },
+        {
+            "fromId": "HUB_XL",
+            "toId": "CTRL_XL"
+        },
+        {
+            "fromId": "HUB_YL",
+            "toId": "CTRL_YL"
+        },
+        {
+            "fromId": "HUB_XR",
+            "toId": "CTRL_XR"
+        },
+        {
+            "fromId": "HUB_YR",
+            "toId": "CTRL_YR"
+        },
+        {
+            "fromId": "ENC_A",
+            "toId": "CTRL_ENC_A"
+        },
+        {
+            "fromId": "ENC_B",
+            "toId": "CTRL_ENC_B"
+        },
+        {
+            "fromId": "ENC_Z",
+            "toId": "CTRL_ENC_Z"
+        },
+        {
+            "fromId": "CTRL_PWM",
+            "toId": "MD_PWM"
+        },
+        {
+            "fromId": "MD_MPLUS",
+            "toId": "MOTOR_PLUS"
+        },
+        {
+            "fromId": "MD_MMINUS",
+            "toId": "MOTOR_MINUS"
+        },
+        {
+            "fromId": "CTRL_CMD_LEFT",
+            "toId": "LD_CMD"
+        },
+        {
+            "fromId": "CTRL_CMD_RIGHT",
+            "toId": "RD_CMD"
+        },
+        {
+            "fromId": "LD_PWRPOS",
+            "toId": "MAG_A_PWRPOS"
+        },
+        {
+            "fromId": "LD_PWRNEG",
+            "toId": "MAG_A_PWRNEG"
+        },
+        {
+            "fromId": "RD_PWRPOS",
+            "toId": "MAG_B_PWRPOS"
+        },
+        {
+            "fromId": "RD_PWRNEG",
+            "toId": "MAG_B_PWRNEG"
+        },
+        {
+            "fromId": "GUARD_NC_OUT",
+            "toId": "CTRL_SAFE"
+        },
+        {
+            "fromId": "TOUCHDOWN_OUT",
+            "toId": "CTRL_TOUCHDOWN"
+        }
+    ]
+}

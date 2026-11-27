@@ -1,0 +1,128 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 56,
+    "layoutName": "Level_56_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "CTRL_POS"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "CTRL_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "CONV_POS"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "CONV_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SENSE_POS"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "SENSE_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "CHOP_POS"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "CHOP_GND"
+        },
+        {
+            "fromId": "CONV_MPLUS",
+            "toId": "MOTOR_PLUS"
+        },
+        {
+            "fromId": "CONV_GND",
+            "toId": "MOTOR_MINUS"
+        },
+        {
+            "fromId": "ENC_A",
+            "toId": "CTRL_ENC_A"
+        },
+        {
+            "fromId": "ENC_B",
+            "toId": "CTRL_ENC_B"
+        },
+        {
+            "fromId": "ENC_Z",
+            "toId": "CTRL_ENC_Z"
+        },
+        {
+            "fromId": "CURRENT_OUT",
+            "toId": "CTRL_CURRENT"
+        },
+        {
+            "fromId": "CONV_POS",
+            "toId": "CTRL_BUS_V"
+        },
+        {
+            "fromId": "CAP_VSENSE",
+            "toId": "CTRL_CAP_V"
+        },
+        {
+            "fromId": "CONV_STORE_PLUS",
+            "toId": "PROT_IN_PLUS"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "PROT_IN_MINUS"
+        },
+        {
+            "fromId": "PROT_OUT_PLUS",
+            "toId": "CAP_PLUS"
+        },
+        {
+            "fromId": "PROT_IN_MINUS",
+            "toId": "CAP_MINUS"
+        },
+        {
+            "fromId": "CTRL_REGEN",
+            "toId": "CONV_REGEN"
+        },
+        {
+            "fromId": "CTRL_PWM",
+            "toId": "CONV_PWM"
+        },
+        {
+            "fromId": "CTRL_CHOP",
+            "toId": "CHOP_CMD"
+        },
+        {
+            "fromId": "CHOP_RPLUS",
+            "toId": "BRAKE_PLUS"
+        },
+        {
+            "fromId": "CHOP_GND",
+            "toId": "BRAKE_MINUS"
+        },
+        {
+            "fromId": "GUARD_OUT",
+            "toId": "CTRL_SAFE"
+        },
+        {
+            "fromId": "CTRL_REUSE",
+            "toId": "LOAD_ENABLE"
+        },
+        {
+            "fromId": "METER_OUT",
+            "toId": "CTRL_METER"
+        },
+        {
+            "fromId": "PROT_IN_PLUS",
+            "toId": "CTRL_PROTECTION"
+        },
+        {
+            "fromId": "LOAD_OUT",
+            "toId": "CONV_LOAD"
+        }
+    ]
+}

@@ -181,6 +181,12 @@ namespace ProjectSpark.SparkV5.Pro
         }
 
         private void InterruptForPushToTalk() => InterruptCore(false);
+#if UNITY_ANDROID && !UNITY_EDITOR
+        private void OnApplicationPause(bool paused)
+        {
+            if (paused) InterruptCore(false);
+        }
+#endif
         public void Interrupt() => InterruptCore(true);
 
         private void InterruptCore(bool cancelCapture)

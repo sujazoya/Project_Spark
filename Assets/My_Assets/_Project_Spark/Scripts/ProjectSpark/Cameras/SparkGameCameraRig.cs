@@ -17,6 +17,11 @@ namespace ProjectSpark.Cameras
         [SerializeField] private Transform room;
         [SerializeField] private HolographicViewerCamera legacyViewer;
         private Camera output;
+#if UNITY_ANDROID && !UNITY_EDITOR
+        private int cameraTouchA, cameraTouchB;
+        private Vector2 cameraTouchCenter, cameraTouchSpan;
+        private Vector2Int cameraTouchViewport;
+#endif
         private CinemachineBrain brain;
         private SparkLevelLayoutLoader loader;
         private Vector3 initialPosition;
@@ -321,6 +326,9 @@ namespace ProjectSpark.Cameras
             if(ownsCamera&&brain.ChannelMask!=OutputChannels.Channel14)return;
             if (!Application.isFocused || SignalWireBuilder.AnyWireDrawing || ProjectSpark.UIManagement.SparkUIMonitorDashboard.IsConsoleVisible)
             {
+#if UNITY_ANDROID && !UNITY_EDITOR
+                cameraTouchA = cameraTouchB = 0;
+#endif
                 drag=Drag.None;goalYaw=yaw;goalPitch=pitch;goalDistance=distance;goalPan=pan;
                 return;
             }
@@ -336,6 +344,9 @@ namespace ProjectSpark.Cameras
                 if(keyboard.digit4Key.wasPressedThisFrame||keyboard.numpad4Key.wasPressedThisFrame)SelectView(3);
                 if(keyboard.digit5Key.wasPressedThisFrame||keyboard.numpad5Key.wasPressedThisFrame)SelectView(4);
             }
+#if UNITY_ANDROID && !UNITY_EDITOR
+            UpdateTouchCamera();
+#else
             var mouse=Mouse.current;
             if(mouse==null)return;
             bool overUI=EventSystem.current!=null&&EventSystem.current.IsPointerOverGameObject();
@@ -363,7 +374,39 @@ namespace ProjectSpark.Cameras
                 float raw=mouse.scroll.ReadValue().y;
                 ZoomStep(Mathf.Clamp(Mathf.Abs(raw)>8?raw/120:raw,-3,3));
             }
+#endif
         }
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+        private void UpdateTouchCamera()
+        {
+            if (!SparkBenchPointer.TryGetCameraPair(out int firstId, out int secondId, out var first, out var second) ||
+                IsPointerOverViewControls(first) || IsPointerOverViewControls(second))
+            {
+                cameraTouchA = cameraTouchB = 0;
+                return;
+            }
+            Vector2 center = (first + second) * .5f;
+            Vector2 span = second - first;
+            var viewport = new Vector2Int(Screen.width, Screen.height);
+            if (cameraTouchA == firstId && cameraTouchB == secondId && cameraTouchViewport == viewport)
+            {
+                float scale = 720f / Mathf.Max(1, Mathf.Min(viewport.x, viewport.y));
+                Vector2 delta = (center - cameraTouchCenter) * scale;
+                goalPan = Vector2.ClampMagnitude(goalPan - delta * (.0038f * distance), 2.15f);
+                if (span.sqrMagnitude > 64f && cameraTouchSpan.sqrMagnitude > 64f)
+                {
+                    ZoomStep(Mathf.Clamp(Mathf.Log(span.magnitude / cameraTouchSpan.magnitude) * 9f, -2f, 2f));
+                    goalYaw = Mathf.Clamp(goalYaw + Vector2.SignedAngle(cameraTouchSpan, span), -95f, 95f);
+                }
+            }
+            cameraTouchA = firstId;
+            cameraTouchB = secondId;
+            cameraTouchViewport = viewport;
+            cameraTouchCenter = center;
+            cameraTouchSpan = span;
+        }
+#endif
 
         private void Apply(int index,float orbitYaw,float orbitPitch,float scale,Vector2 offset)
         {
@@ -432,7 +475,20 @@ namespace ProjectSpark.Cameras
             GUI.depth=previousDepth;
         }
 
-        private Rect ViewHudRect=>new Rect((Screen.width-ViewHudWidth)*.5f,78,ViewHudWidth,ViewHudHeight);
+        private Rect ViewHudRect
+        {
+            get
+            {
+#if UNITY_ANDROID && !UNITY_EDITOR
+                Rect safe = Screen.safeArea;
+                float width = Mathf.Min(ViewHudWidth, safe.width);
+                return new Rect(safe.center.x - width * .5f, Screen.height - safe.yMax + 78f,
+                    width, ViewHudHeight);
+#else
+                return new Rect((Screen.width - ViewHudWidth) * .5f, 78, ViewHudWidth, ViewHudHeight);
+#endif
+            }
+        }
 
         public bool IsPointerOverViewControls(Vector2 screenPoint) =>
             !wallCamera && isActiveAndEnabled && ViewControlsVisible && HasSharedViews &&

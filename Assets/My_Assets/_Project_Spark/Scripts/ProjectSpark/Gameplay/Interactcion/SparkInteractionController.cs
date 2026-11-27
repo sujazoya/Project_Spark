@@ -112,6 +112,17 @@ namespace ProjectSpark.Gameplay
 
         private void Update()
         {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (SparkBenchPointer.Cancelled || !Application.isFocused ||
+                !SparkSelectedObjectActions.SelectToolEnabled || AAAUI.VFX.SignalWireBuilder.AnyWireDrawing)
+            {
+                shelfDragHandler?.CancelDrag();
+                ClearTarget();
+                return;
+            }
+            if (!SparkBenchPointer.Held && !SparkBenchPointer.Released)
+                return;
+#endif
             if (!interactionEnabled)
             {
                 removePrompt?.ClearSelection();
@@ -120,7 +131,7 @@ namespace ProjectSpark.Gameplay
             }
 
             if (cancelShelfSelectionOnEscape &&
-                Input.GetKeyDown(KeyCode.Escape))
+                SparkBenchPointer.KeyDown(KeyCode.Escape))
             {
                 manualPlacement?.CancelSelection();
                 removePrompt?.ClearSelection();
@@ -150,7 +161,7 @@ namespace ProjectSpark.Gameplay
             UpdateTarget();
 
            
-if (Input.GetKeyDown(interactKey))
+if (SparkBenchPointer.KeyDown(interactKey))
 {
     // Select the recycle target BEFORE the drag handler
     // gets a chance to consume the mouse click.
@@ -180,7 +191,7 @@ if (Input.GetKeyDown(interactKey))
 }
 
 
-            if (Input.GetKeyDown(KeyCode.I))
+            if (SparkBenchPointer.KeyDown(KeyCode.I))
             {
                 if (currentTarget != null)
                 {
@@ -283,7 +294,7 @@ if (Input.GetKeyDown(interactKey))
                 return;
 
             Ray ray = targetCamera.ScreenPointToRay(
-                Input.mousePosition);
+                SparkBenchPointer.Position);
 
             RaycastHit[] hits = Physics.RaycastAll(
                 ray,
@@ -309,7 +320,7 @@ if (Input.GetKeyDown(interactKey))
                     continue;
 
                 if (logRaycastHits &&
-                    Input.GetKeyDown(interactKey))
+                    SparkBenchPointer.KeyDown(interactKey))
                 {
                     Debug.Log(
                         "[SparkInteraction] Raycast hit: " +
@@ -780,13 +791,24 @@ if (Input.GetKeyDown(interactKey))
         // UI
         // =====================================================
 
+#if UNITY_ANDROID && !UNITY_EDITOR
+        private void OnApplicationPause(bool paused)
+        {
+            if (paused) shelfDragHandler?.CancelDrag();
+        }
+#endif
+
         private bool IsPointerOverUI()
         {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            return ignoreClicksOverUI && SparkBenchPointer.IsOverUI();
+#else
             if (!ignoreClicksOverUI)
                 return false;
 
             return EventSystem.current != null &&
                    EventSystem.current.IsPointerOverGameObject();
+#endif
         }
 
         // =====================================================

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 namespace ProjectSpark.SparkV5.Pro
 {
     public enum SparkState { Idle, Listening, Thinking, Speaking, Teaching, Diagnosing, Warning, Success, Walking, Examining, Observing, Waiting }
-    public enum SparkGesture { None, Explain, Point, Wave, Nod, Shake, Stop, Celebrate, Think, Inspect, Count, Offer, Grasp }
+    public enum SparkGesture { None, Explain, Point, Wave, Nod, Shake, Stop, Celebrate, Think, Inspect, Count, Offer, Grasp, Press }
     public enum SparkMouth { Rest, Ah, Ai, Ee, Eh, FV, MBP, Oo, Ooh, RSn, S }
 
     // A presentation-only rig. No access to game mutation or solver APIs.
@@ -148,7 +148,20 @@ namespace ProjectSpark.SparkV5.Pro
             Rotate(r,"Shoulder_L",new Vector3(-arm*.75f-swing*.5f,0,-arm*.6f),k);Rotate(r,"Shoulder_R",new Vector3(-arm*.75f+swing*.5f,0,arm*.6f),k);
             Rotate(r,"Elbow_L",new Vector3(-arm*.65f,0,0),k);Rotate(r,"Elbow_R",new Vector3(-arm*.65f,0,0),k);
             Rotate(r,"Wrist_L",new Vector3(0,0,0),k);Rotate(r,"Wrist_R",new Vector3(0,0,active==SparkGesture.Wave?Mathf.Sin(now*9)*25:0),k);
-            for(int side=0;side<2;side++){for(int f=0;f<4;f++){bool isPoint=active==SparkGesture.Point&&side==(pointLeft?0:1);float curl=active==SparkGesture.Grasp?48:isPoint&&f!=(side==0?3:0)?55:active==SparkGesture.Count&&f>1?50:5;Rotate(r,Fingers[side,f],new Vector3(-curl,0,0),k);Rotate(r,FingerTips[side,f],new Vector3(-curl*.85f,0,0),k);}Rotate(r,ThumbNames[side],new Vector3(active==SparkGesture.Grasp?-32:0,0,0),k);}
+            for (int side = 0; side < 2; side++)
+            {
+                bool indexPose = (active == SparkGesture.Point && side == (pointLeft ? 0 : 1)) ||
+                    (active == SparkGesture.Press && side == 1);
+                for (int finger = 0; finger < 4; finger++)
+                {
+                    float curl = active == SparkGesture.Grasp ? 48 :
+                        indexPose ? (finger == (side == 0 ? 3 : 0) ? 0 : 55) :
+                        active == SparkGesture.Count && finger > 1 ? 50 : 5;
+                    Rotate(r, Fingers[side, finger], new Vector3(-curl, 0, 0), k);
+                    Rotate(r, FingerTips[side, finger], new Vector3(-curl * .85f, 0, 0), k);
+                }
+                Rotate(r, ThumbNames[side], new Vector3(active == SparkGesture.Grasp ? -32 : 0, 0, 0), k);
+            }
             if(active==SparkGesture.Point&&(pointTarget||pointPosition.HasValue)){Vector3 target=pointTarget?pointTarget.position:pointPosition.Value;AimArm(r,pointLeft?"L":"R",target,k);}
             DrawMouth(r,speaking,think,warn,happy); Color c=warn?new Color(1,.08f,.08f):happy?new Color(.15f,1,.32f):think?new Color(.58f,.23f,1):State==SparkState.Teaching?new Color(1,.65f,.08f):State==SparkState.Diagnosing?new Color(1,.32f,.06f):new Color(.15f,.95f,1);
             float glow=warn ? 1.4f+.6f*Mathf.Sin(now*8) : .8f+.18f*breathe+amplitude*.65f;

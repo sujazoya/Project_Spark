@@ -34,14 +34,15 @@ namespace ProjectSpark.SparkV5.Pro
             ? (authoritativeStateComponent ? authoritativeStateComponent as SparkPowerSupply : GetComponent<SparkPowerSupply>()) : null;
         public SparkSwitch Switch => deviceType == DeviceType.Switch
             ? (authoritativeStateComponent ? authoritativeStateComponent as SparkSwitch : GetComponent<SparkSwitch>()) : null;
-        public Transform PhysicalControl
+        internal SwitchLeverController PhysicalLever
         {
             get
             {
                 var lever = Switch ? GetComponent<SwitchLeverController>() : null;
-                return lever && lever.Switch == Switch ? lever.LeverTransform : null;
+                return lever && lever.Switch == Switch ? lever : null;
             }
         }
+        public Transform PhysicalControl => PhysicalLever ? PhysicalLever.LeverTransform : null;
         public bool HasNativeAction(bool turnOn) =>
             Supply || Switch || (deviceType == DeviceType.OtherVerifiedDevice &&
                 (turnOn ? nativeOn : nativeOff).GetPersistentEventCount() > 0);

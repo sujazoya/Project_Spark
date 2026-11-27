@@ -67,6 +67,7 @@ namespace ProjectSpark.Gameplay
         private Dictionary<string, SparkElectronicObject> electronicObjectLookup;
         private Dictionary<string, GameObject> outputLookup;
         private HashSet<string> declaredRuntimeTerminals;
+        private HashSet<string> duplicateTerminalIds;
         private HashSet<string> declaredRuntimeComponents;
         private HashSet<string> declaredRuntimeElectronicObjects;
         private bool lookupCacheBuilt;
@@ -106,11 +107,18 @@ namespace ProjectSpark.Gameplay
             electronicObjectLookup = new Dictionary<string, SparkElectronicObject>(StringComparer.Ordinal);
             outputLookup = new Dictionary<string, GameObject>(StringComparer.Ordinal);
             declaredRuntimeTerminals = Collect(runtimeTerminalIds);
+            duplicateTerminalIds = new HashSet<string>(StringComparer.Ordinal);
+            var terminalIds = new HashSet<string>(StringComparer.Ordinal);
             declaredRuntimeComponents = Collect(runtimeComponentIds);
             declaredRuntimeElectronicObjects = Collect(runtimeElectronicObjectIds);
             if (terminals != null) foreach (TerminalBinding binding in terminals)
-                if (binding != null && !string.IsNullOrWhiteSpace(binding.Id) && !terminalLookup.ContainsKey(binding.Id))
-                    terminalLookup.Add(binding.Id, binding.Terminal);
+            {
+                if (binding == null || string.IsNullOrWhiteSpace(binding.Id)) continue;
+                if (terminalIds.Add(binding.Id)) terminalLookup.Add(binding.Id, binding.Terminal);
+                else duplicateTerminalIds.Add(binding.Id);
+            }
+            if (runtimeTerminalIds != null) foreach (string id in runtimeTerminalIds)
+                if (!string.IsNullOrWhiteSpace(id) && !terminalIds.Add(id)) duplicateTerminalIds.Add(id);
             if (components != null) foreach (ComponentBinding binding in components)
                 if (binding != null && !string.IsNullOrWhiteSpace(binding.Id) && !componentLookup.ContainsKey(binding.Id))
                     componentLookup.Add(binding.Id, binding.Component);
@@ -156,6 +164,61 @@ namespace ProjectSpark.Gameplay
             // A declared runtime ID is intentionally empty until a slot is populated.
             if (declaredRuntimeTerminals.Contains(id) || retiredTerminalIds.Contains(id)) return false;
             return terminalLookup.TryGetValue(id, out terminal) && terminal != null;
+        }
+
+        public enum TerminalResolution
+        {
+            Resolved, ID_NOT_DECLARED, RUNTIME_SLOT_UNPOPULATED, FIXED_REFERENCE_MISSING,
+            TERMINAL_RETIRED, TERMINAL_INACTIVE, WRONG_ACTIVE_LAYOUT, DUPLICATE_TERMINAL_ID, STALE_REGISTRATION
+        }
+
+        /// <summary>Strict lookup for operations on the live electrical layout.</summary>
+        public TerminalResolution ResolveLiveTerminal(SparkLevelLayout activeLayout, string id, out SparkTerminal terminal)
+        {
+            terminal = null;
+            if (!activeLayout || !activeLayout.isActiveAndEnabled || activeLayout.SceneBindings != this)
+                return TerminalResolution.WRONG_ACTIVE_LAYOUT;
+            EnsureLookupCache();
+            if (string.IsNullOrWhiteSpace(id) || !IsTerminalIdDeclared(id))
+                return TerminalResolution.ID_NOT_DECLARED;
+            if (duplicateTerminalIds.Contains(id)) return TerminalResolution.DUPLICATE_TERMINAL_ID;
+
+            bool overridden = runtimeTerminalOverrides.TryGetValue(id, out var candidate);
+            if (!overridden) terminalLookup.TryGetValue(id, out candidate);
+            if (!candidate)
+            {
+                if (retiredTerminalIds.Contains(id)) return TerminalResolution.TERMINAL_RETIRED;
+                if (!ReferenceEquals(candidate, null)) return TerminalResolution.STALE_REGISTRATION;
+                if (declaredRuntimeTerminals.Contains(id)) return TerminalResolution.RUNTIME_SLOT_UNPOPULATED;
+                return overridden ? TerminalResolution.TERMINAL_RETIRED : TerminalResolution.FIXED_REFERENCE_MISSING;
+            }
+            var owner = candidate.Owner;
+            if (!owner) return TerminalResolution.STALE_REGISTRATION;
+            if (!candidate.transform.IsChildOf(activeLayout.transform) || !owner.transform.IsChildOf(activeLayout.transform))
+                return TerminalResolution.WRONG_ACTIVE_LAYOUT;
+            if (!candidate.isActiveAndEnabled || !candidate.IsOwnerActive)
+                return TerminalResolution.TERMINAL_INACTIVE;
+            terminal = candidate;
+            return TerminalResolution.Resolved;
+        }
+
+        public bool TryResolveLivePair(SparkLevelLayout activeLayout, string fromId, string toId,
+            out SparkTerminal from, out SparkTerminal to, out string error)
+        {
+            var source = ResolveLiveTerminal(activeLayout, fromId, out from);
+            var destination = ResolveLiveTerminal(activeLayout, toId, out to);
+            error = source != TerminalResolution.Resolved ? ExplainResolution(fromId, source) :
+                destination != TerminalResolution.Resolved ? ExplainResolution(toId, destination) :
+                from == to ? "Both IDs resolve to the same terminal." :
+                from.SharesElectricalOwnerWith(to) ? "Refusing a same-component terminal bypass." : null;
+            return error == null;
+        }
+
+        private static string ExplainResolution(string id, TerminalResolution resolution)
+        {
+            string detail = resolution == TerminalResolution.RUNTIME_SLOT_UNPOPULATED
+                ? " Install the required component in its authored workstation slot, then suggest the wire again." : "";
+            return resolution + ": " + id + "." + detail;
         }
         /// <summary>Reverse lookup of a unique LIVE stable terminal binding; never guesses from GameObject names.</summary>
         public bool TryGetTerminalId(SparkTerminal target, out string id)

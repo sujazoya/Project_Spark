@@ -189,8 +189,30 @@ private void Update()
 {
     pointerOverUI = IsPointerOverUI();
 
+#if UNITY_ANDROID && !UNITY_EDITOR
+    if (SparkBenchPointer.Cancelled || !Application.isFocused || pointerOverUI)
+    {
+        CancelActiveInteraction();
+        SetCurrentTarget(null);
+        return;
+    }
+    if (!SparkBenchPointer.Held && !SparkBenchPointer.Released)
+    {
+        SetCurrentTarget(null);
+        return;
+    }
+#endif
     RefreshTarget();
 
+#if UNITY_ANDROID && !UNITY_EDITOR
+    if (SparkBenchPointer.Pressed) BeginPrimaryInteraction();
+    if (SparkBenchPointer.Released)
+    {
+        if (pointerOverUI) CancelActiveInteraction();
+        else EndPrimaryInteraction();
+        return;
+    }
+#endif
     if (ActiveSession == null)
     {
         return;
@@ -300,6 +322,13 @@ private void Update()
 
         private void OnPrimaryStarted(
             InputAction.CallbackContext _)
+        {
+#if !(UNITY_ANDROID && !UNITY_EDITOR)
+            BeginPrimaryInteraction();
+#endif
+        }
+
+        private void BeginPrimaryInteraction()
         {
             if (blockWorldInputOverUI &&
                 pointerOverUI)
@@ -434,6 +463,13 @@ private void Update()
         private void OnPrimaryCanceled(
             InputAction.CallbackContext _)
         {
+#if !(UNITY_ANDROID && !UNITY_EDITOR)
+            EndPrimaryInteraction();
+#endif
+        }
+
+        private void EndPrimaryInteraction()
+        {
             if (ActiveSession == null)
             {
                 return;
@@ -492,6 +528,13 @@ private void Update()
         {
             if (!focused) CancelActiveInteraction();
         }
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+        private void OnApplicationPause(bool paused)
+        {
+            if (paused) CancelActiveInteraction();
+        }
+#endif
 
         private void OnCancelPerformed(
             InputAction.CallbackContext _)
@@ -614,6 +657,9 @@ private void Update()
 
         private Vector2 ReadPointerPosition()
         {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            return SparkBenchPointer.Position;
+#else
             if (pointerAction != null)
             {
                 return pointerAction.action
@@ -629,12 +675,17 @@ private void Update()
             return new Vector2(
                 Screen.width * 0.5f,
                 Screen.height * 0.5f);
+#endif
         }
 
         private bool IsPointerOverUI()
         {
             if (ProjectSpark.UIManagement.SparkUIMonitorDashboard.IsConsoleVisible) return true;
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (SparkBenchPointer.IsOverUI()) return true;
+#else
             if (eventSystem != null && eventSystem.IsPointerOverGameObject()) return true;
+#endif
             return interactionCamera != null &&
                 interactionCamera.TryGetComponent<ProjectSpark.Cameras.SparkGameCameraRig>(out var rig) &&
                 rig.IsPointerOverViewControls(ReadPointerPosition());

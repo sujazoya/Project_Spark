@@ -22,6 +22,7 @@ namespace AAAUI.VFX
     {
         [Header("Physical Insulation")]
         [SerializeField, Min(0.001f)] private float radius = 0.018f;
+        public float SimulatedEndDiameter => radius * 2.6f;
         [SerializeField, Range(6, 32)] private int sides = 16;
         [SerializeField, Min(0.001f)] private float uvMetersPerTile = 0.25f;
         [SerializeField] private bool capEnds = true;

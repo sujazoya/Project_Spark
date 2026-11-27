@@ -406,7 +406,7 @@ namespace ProjectSpark.SparkV5.Pro
             return CanTravel(from, target, out obstruction);
         }
 
-        internal bool IsGroundRouteClear(Vector3[] corners)
+        internal bool IsGroundRouteClear(Vector3[] corners, float lateralPadding = 0f)
         {
             if (corners.Length == 0 || !RefreshWorkspace(true)) return false;
             CaptureBody();
@@ -423,16 +423,31 @@ namespace ProjectSpark.SparkV5.Pro
                     ? Quaternion.LookRotation(heading, workspace.Up) : previous.Rotation;
                 var next = new FlightPose(corners[i], rotation);
                 if (!CanTravel(previous, next, out _)) return false;
+                // Check both sides of a carry route for the difference between
+                // ideal NavMesh corners and live steering and foot motion.
+                if (lateralPadding > 0f && heading.sqrMagnitude > .001f)
+                {
+                    Vector3 side = Vector3.Cross(workspace.Up, heading.normalized) * lateralPadding;
+                    if (!CanTravel(new FlightPose(previous.Position + side, previous.Rotation),
+                            new FlightPose(next.Position + side, next.Rotation), out _) ||
+                        !CanTravel(new FlightPose(previous.Position - side, previous.Rotation),
+                            new FlightPose(next.Position - side, next.Rotation), out _))
+                        return false;
+                }
                 previous = next;
             }
             return true;
         }
 
-        internal bool IsNextGroundStepClear(Vector3 position)
+        internal bool IsNextGroundStepClear(Vector3 position, out string obstruction)
         {
-            if (!workspace.IsCurrent) return false;
+            if (!workspace.IsCurrent)
+            {
+                obstruction = "the tabletop or its collider changed";
+                return false;
+            }
             CaptureBody();
-            return CanTravel(CurrentPose, new FlightPose(position, transform.rotation), out _);
+            return CanTravel(CurrentPose, new FlightPose(position, transform.rotation), out obstruction);
         }
 
         private IEnumerator Follow(FlightPose[] route, int count, Func<bool> valid, Transform target = null)

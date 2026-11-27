@@ -198,6 +198,27 @@ namespace ProjectSpark.Gameplay
 
         public Transform LeverTransform => leverTransform;
 
+        internal bool IsLeverMoving => isMoving;
+
+        public bool TryGetPressPoint(out Vector3 localPoint)
+        {
+            localPoint = default;
+            if (!leverTransform || !leverTransform.TryGetComponent<MeshFilter>(out var leverMesh) ||
+                !leverMesh.sharedMesh) return false;
+            Bounds bounds = leverMesh.sharedMesh.bounds;
+            // The moving lever mesh is offset from its hinge. Reach the outer
+            // face along the shaft where a finger can actually move it.
+            Vector3 shaft = bounds.center;
+            if (shaft.sqrMagnitude < .000001f)
+                shaft = leverTransform.InverseTransformDirection(Vector3.up);
+            int axis = 0;
+            if (Mathf.Abs(shaft.y) > Mathf.Abs(shaft[axis])) axis = 1;
+            if (Mathf.Abs(shaft.z) > Mathf.Abs(shaft[axis])) axis = 2;
+            localPoint = bounds.center;
+            localPoint[axis] += Mathf.Sign(shaft[axis]) * bounds.extents[axis];
+            return true;
+        }
+
         public event Action<int> PositionChanged;
 
         #endregion

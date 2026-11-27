@@ -64,19 +64,19 @@ namespace ProjectSpark.Gameplay
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (SparkBenchPointer.Cancelled || SparkBenchPointer.KeyDown(KeyCode.Escape))
             {
                 CancelDrag();
                 return;
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (SparkBenchPointer.Pressed)
                 BeginPress();
 
-            if (Input.GetMouseButton(0))
+            if (SparkBenchPointer.Held)
                 UpdateDrag();
 
-            if (Input.GetMouseButtonUp(0))
+            if (SparkBenchPointer.Released)
                 EndPress();
         }
 
@@ -143,7 +143,7 @@ namespace ProjectSpark.Gameplay
                 return;
             }
 
-            pressPosition = Input.mousePosition;
+            pressPosition = SparkBenchPointer.Position;
 
             // Placed components are moved only by dragging.
             // Their first click must not return them.
@@ -159,7 +159,7 @@ namespace ProjectSpark.Gameplay
             {
                 float distance = Vector2.Distance(
                     pressPosition,
-                    Input.mousePosition);
+                    SparkBenchPointer.Position);
 
                 if (distance < dragThresholdPixels)
                     return;
@@ -376,7 +376,7 @@ if (recycleBin != null)
                 return new RaycastHit[0];
 
             Ray ray = targetCamera.ScreenPointToRay(
-                Input.mousePosition);
+                SparkBenchPointer.Position);
 
             RaycastHit[] hits = Physics.RaycastAll(
                 ray,
@@ -413,7 +413,7 @@ if (recycleBin != null)
                 return false;
 
             return Vector2.Distance(
-                Input.mousePosition,
+                SparkBenchPointer.Position,
                 new Vector2(
                     screenPoint.x,
                     screenPoint.y)) <=
@@ -525,7 +525,7 @@ private void CreatePreview()
                 return;
 
             Ray ray = targetCamera.ScreenPointToRay(
-                Input.mousePosition);
+                SparkBenchPointer.Position);
 
             Vector3 position =
                 ray.GetPoint(previewDepth);
@@ -545,9 +545,13 @@ private void CreatePreview()
 
         private bool IsPointerOverUI()
         {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            return SparkBenchPointer.IsOverUI();
+#else
             return EventSystem.current != null &&
                    EventSystem.current
                        .IsPointerOverGameObject();
+#endif
         }
 
         public void CancelDrag()

@@ -244,16 +244,19 @@ namespace ProjectSpark.SparkV5.Pro
             int previousSolve = solver.CompletedSolveRevision;
             bool dispatched = false;
             string dispatch = null;
-            bool StillAuthorized() => Context(out var currentManager, out var currentLevel, out _) &&
-                currentManager == operationLevel && currentLevel.Layout.transform == operationRoot &&
-                Preflight(port, desired, currentManager, currentLevel, out _);
+            bool StillAuthorized()
+            {
+                return Context(out var currentManager, out var currentLevel, out dispatch) &&
+                    currentManager == operationLevel && currentLevel.Layout.transform == operationRoot &&
+                    Preflight(port, desired, currentManager, currentLevel, out dispatch);
+            }
             void Dispatch() => dispatched = StillAuthorized() && port.TryInvokeNative(desired, this, out dispatch);
             var control = port.PhysicalControl;
             if (control)
             {
                 if (!performer || !director)
                 { Finish("The device's physical approach is unavailable."); yield break; }
-                yield return performer.OperateDevice(control, director.Workbench, operationRoot, StillAuthorized, Dispatch);
+                yield return performer.OperateDevice(port.PhysicalLever, director.Workbench, operationRoot, StillAuthorized, Dispatch);
             }
             else Dispatch();
             if (!dispatched)

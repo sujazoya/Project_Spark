@@ -34,6 +34,7 @@ namespace ProjectSpark.Gameplay
         // =========================================================
 
         private SparkLevelLayout activeLayout;
+        private SparkLevelLayout activeSourcePrefab;
 
         // =========================================================
         // PUBLIC STATE
@@ -44,6 +45,11 @@ namespace ProjectSpark.Gameplay
 
         public SparkLevelLayout ActiveLayout =>
             activeLayout;
+
+        public SparkLevelLayout ActiveSourcePrefab => activeLayout ? activeSourcePrefab : null;
+
+        public SparkLevelLayout GetAuthoredPrefab(SparkLevelDefinition definition) =>
+            catalog ? catalog.GetPrefab(definition) : null;
 
         public SparkLevelSceneBindings ActiveBindings =>
             activeLayout != null
@@ -236,6 +242,7 @@ namespace ProjectSpark.Gameplay
 
                   
                     activeLayout = candidate;
+                    activeSourcePrefab = prefab;
 
                     candidate.gameObject.SetActive(prefabWasActive);
 

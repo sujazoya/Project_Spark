@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,9 @@ using AAAUI.VFX;
 using ProjectSpark.Circuit;
 using ProjectSpark.Gameplay;
 using UnityEditor;
+using UnityEditor.Recorder;
+using UnityEditor.Recorder.Encoder;
+using UnityEditor.Recorder.Input;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -26,6 +30,11 @@ namespace ProjectSpark.SparkV5.Pro.Editor
         private SparkTerminal source, destination;
         private float nextSample;
         private SignalPath lastPath;
+        private readonly HashSet<SparkNativeWireCinematic.CableStage> closeups = new();
+        private readonly StreamWriter motion;
+        private float motionSampleAt;
+        private float insertionAt;
+        private SparkNativeWireCinematic.CableStage previousStage;
 
         internal SparkNativeCableVisualCapture(string run, SignalWireBuilder builder,
             SparkNativeWireCinematic performer, SparkV5FlightController flight,
@@ -41,6 +50,11 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             Track(a, b);
             samples = new StreamWriter(Path.Combine(Folder, run + "-geometry.tsv"));
             samples.WriteLine("seconds\tframe\tphase\trouting\tdrag\troot\tsocket A\tsocket B\tgrip\tpreview end\troute A\troute B\tpoints\tvertices\tlength\tspan\tmax turn deg\tcorridor\tnonfinite\tactive previews\tmesh");
+            if (run == "phase2")
+            {
+                motion = new StreamWriter(Path.Combine(Folder, run + "-motion.tsv"));
+                motion.WriteLine("seconds\tframe\tstage\tposition gap\twrist error deg\taperture\tend diameter\tgap to diameter\textension ratio\tIK correction\trest offset\troute length\tpeak segment ratio\tstretch\tendpoint drift\tmax knot motion\tcontact sweeps\tframe ms");
+            }
             EditorApplication.update += ReadPreview;
             builder.TerminalWireConnected += ReadCompleted;
         }
@@ -52,11 +66,13 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             EditorApplication.update -= ReadPreview;
             if (builder) builder.TerminalWireConnected -= ReadCompleted;
             samples.Dispose();
+            motion?.Dispose();
         }
 
         private void ReadPreview()
         {
             if (!builder || !performer) return;
+            ReadMotion();
             var path = builder.CurrentPath;
             if (!path || (path == lastPath && Time.unscaledTime < nextSample)) return;
             string phase = path != lastPath ? "source" : performer.Stage.ToString();
@@ -65,6 +81,112 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             nextSample = Time.unscaledTime + .08f;
             Record(path, phase, builder.StartTerminal ? builder.StartTerminal : source,
                 port.ActiveDestination ? port.ActiveDestination : destination);
+        }
+
+        private void ReadMotion()
+        {
+            if (motion == null || !performer.IsPerforming ||
+                Time.unscaledTime < motionSampleAt && performer.Stage == previousStage ||
+                !performer.TryMeasureNativeMotion(out var m)) return;
+            var stage = performer.Stage;
+            if (stage != previousStage)
+            {
+                if (stage == SparkNativeWireCinematic.CableStage.Inserting) insertionAt = Time.unscaledTime;
+                if (stage == SparkNativeWireCinematic.CableStage.Attached && insertionAt > 0f)
+                    log($"Phase 2 insertion-to-native-attach interval {Time.unscaledTime - insertionAt:F3}s.");
+            }
+            previousStage = stage;
+            motionSampleAt = Time.unscaledTime + .06f;
+            motion.WriteLine(FormattableString.Invariant(
+                $"{Time.unscaledTime:F4}\t{Time.frameCount}\t{stage}\t{m.HandPositionError:F5}\t{m.WristAxisError:F2}\t{m.Aperture:F5}\t{m.EndDiameter:F5}\t{Mathf.Abs(m.Aperture - m.EndDiameter):F5}\t{m.ExtensionRatio:F3}\t{m.IkCorrection:F5}\t{m.RestOffset:F5}\t{m.PathLength:F5}\t{m.PeakSegmentRatio:F3}\t{m.CableStretch:F5}\t{m.PreviewGap:F5}\t{m.KnotMotion:F5}\t{m.CableContacts}\t{m.FrameMilliseconds:F2}"));
+            if ((stage == SparkNativeWireCinematic.CableStage.PreGrip ||
+                 stage == SparkNativeWireCinematic.CableStage.GripVerified ||
+                 stage == SparkNativeWireCinematic.CableStage.Carrying ||
+                 stage == SparkNativeWireCinematic.CableStage.Aligning ||
+                 stage == SparkNativeWireCinematic.CableStage.Inserting ||
+                 stage == SparkNativeWireCinematic.CableStage.Attached ||
+                 stage == SparkNativeWireCinematic.CableStage.Release ||
+                 stage == SparkNativeWireCinematic.CableStage.Retracting) && closeups.Add(stage))
+            {
+                var actor = director.GetComponent<SparkProCharacter>();
+                var wrist = actor ? actor.GetAnchor("Wrist_R") : null;
+                if (wrist) CaptureCloseup(stage.ToString(), director.transform, wrist.position);
+            }
+        }
+
+        internal static void CaptureCloseup(string label, Transform actor, Vector3 target)
+        {
+            var main = Camera.main;
+            if (!main) return;
+            var shot = new GameObject("Phase 2 measurement camera");
+            shot.hideFlags = HideFlags.HideAndDontSave;
+            var camera = shot.AddComponent<Camera>();
+            var frame = RenderTexture.GetTemporary(960, 720, 24);
+            Texture2D picture = null;
+            var previous = RenderTexture.active;
+            try
+            {
+                camera.CopyFrom(main);
+                camera.enabled = false;
+                camera.targetTexture = frame;
+                camera.fieldOfView = 38f;
+                camera.nearClipPlane = .025f;
+                camera.transform.position = target + actor.right * .67f + Vector3.up * .48f - actor.forward * .36f;
+                camera.transform.LookAt(target, Vector3.up);
+                camera.Render();
+                RenderTexture.active = frame;
+                picture = new Texture2D(frame.width, frame.height, TextureFormat.RGB24, false);
+                picture.ReadPixels(new Rect(0, 0, frame.width, frame.height), 0, 0);
+                picture.Apply();
+                Directory.CreateDirectory(Folder);
+                File.WriteAllBytes(Path.Combine(Folder, "phase2-" + label + ".png"), picture.EncodeToPNG());
+            }
+            finally
+            {
+                RenderTexture.active = previous;
+                camera.targetTexture = null;
+                RenderTexture.ReleaseTemporary(frame);
+                if (picture) Object.Destroy(picture);
+                Object.Destroy(shot);
+            }
+        }
+
+        internal sealed class MotionRecording : IDisposable
+        {
+            private readonly RecorderControllerSettings controllerSettings;
+            private readonly MovieRecorderSettings movie;
+            private readonly RecorderController controller;
+
+            internal MotionRecording(string label)
+            {
+                Directory.CreateDirectory(Folder);
+                controllerSettings = ScriptableObject.CreateInstance<RecorderControllerSettings>();
+                movie = ScriptableObject.CreateInstance<MovieRecorderSettings>();
+                movie.name = "Spark Phase 2 " + label;
+                movie.Enabled = true;
+                movie.CaptureAudio = false;
+                movie.OutputFile = Path.GetFullPath(Path.Combine(Folder, "phase2-" + label));
+                movie.EncoderSettings = new CoreEncoderSettings
+                {
+                    Codec = CoreEncoderSettings.OutputCodec.MP4,
+                    EncodingQuality = CoreEncoderSettings.VideoEncodingQuality.Medium
+                };
+                movie.ImageInputSettings = new GameViewInputSettings { OutputWidth = 1280, OutputHeight = 720 };
+                controllerSettings.AddRecorderSettings(movie);
+                controllerSettings.SetRecordModeToManual();
+                controllerSettings.FrameRate = 24f;
+                controllerSettings.CapFrameRate = false;
+                controller = new RecorderController(controllerSettings);
+                controller.PrepareRecording();
+                controller.StartRecording();
+            }
+
+            public void Dispose()
+            {
+                controller.StopRecording();
+                Object.Destroy(movie);
+                Object.Destroy(controllerSettings);
+            }
         }
 
         private void ReadCompleted(SparkTerminal a, SparkTerminal b, SignalPath path)

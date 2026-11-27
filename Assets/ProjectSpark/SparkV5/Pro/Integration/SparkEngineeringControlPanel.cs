@@ -25,6 +25,9 @@ namespace ProjectSpark.SparkV5.Pro
         private Button assistedButton;
         private Button autoButton;
         private Button hideButton;
+        private RectTransform screenArea;
+        private Rect lastSafeArea;
+        private Vector2Int lastScreenSize;
         private readonly Color textColor = new Color(.85f, .95f, 1f, 1f);
         private readonly Color mutedColor = new Color(.53f, .70f, .80f, 1f);
         private readonly Color accentColor = new Color(.02f, .74f, .94f, 1f);
@@ -41,6 +44,7 @@ namespace ProjectSpark.SparkV5.Pro
         {
             if (!hub) hub = GetComponent<SparkEngineeringControlHub>();
             if (hub) hub.StateChanged += Refresh;
+            Canvas.preWillRenderCanvases += ApplySafeArea;
         }
 
         private void Start()
@@ -52,6 +56,7 @@ namespace ProjectSpark.SparkV5.Pro
         private void OnDisable()
         {
             if (hub) hub.StateChanged -= Refresh;
+            Canvas.preWillRenderCanvases -= ApplySafeArea;
         }
 
         private void OnDestroy()
@@ -132,9 +137,12 @@ namespace ProjectSpark.SparkV5.Pro
             canvasRect.anchorMax = Vector2.one;
             canvasRect.offsetMin = Vector2.zero;
             canvasRect.offsetMax = Vector2.zero;
+            screenArea = Rect(UI("SafeArea"), canvasObject.transform, Vector2.zero, Vector2.one,
+                new Vector2(.5f, .5f), Vector2.zero, Vector2.zero);
+            ApplySafeArea();
 
             GameObject toggle = UI("SparkEngineering_Toggle");
-            Rect(toggle, canvasObject.transform, new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1),
+            Rect(toggle, screenArea, new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1),
                 new Vector2(16, -125), new Vector2(178, 36));
             Image toggleImage = toggle.AddComponent<Image>();
             toggleImage.color = new Color(.07f, .25f, .32f, .97f);
@@ -150,11 +158,11 @@ namespace ProjectSpark.SparkV5.Pro
             label.alignment = TextAlignmentOptions.Center;
 
             panelObject = UI("SparkEngineering_ControlPanel");
-            Rect(panelObject, canvasObject.transform, new Vector2(0, 1), new Vector2(0, 1),
+            Rect(panelObject, screenArea, new Vector2(0, 1), new Vector2(0, 1),
                 new Vector2(0, 1), new Vector2(16, -167), new Vector2(404, 455));
             Image panelBackground = panelObject.AddComponent<Image>();
             panelBackground.color = panelColor;
-            Label(panelObject.transform, "Header", "ENGINEERING CONTROL  •  v14", 19f,
+            Label(panelObject.transform, "Header", "SUPER AI  •  AUTO DRAW", 19f,
                 new Vector2(15, -13), new Vector2(370, 30), accentColor, FontStyles.Bold);
             Label(panelObject.transform, "ModeLabel", "OPERATING MODE", 12f,
                 new Vector2(15, -51), new Vector2(370, 20), mutedColor);
@@ -172,18 +180,18 @@ namespace ProjectSpark.SparkV5.Pro
                 () => hub.SuggestNext(), true);
             MakeButton(panelObject.transform, "APPROVE ONE", 272, -216, 118,
                 () => hub.ApproveSuggested());
-            MakeButton(panelObject.transform, "START AUTO", 14, -257, 120,
-                () => hub.StartAuto());
+            MakeButton(panelObject.transform, "DRAW LEVEL", 14, -257, 120,
+                () => hub.DrawCurrentLevel());
             MakeButton(panelObject.transform, "PAUSE", 143, -257, 120,
                 () => hub.Pause(), true);
             MakeButton(panelObject.transform, "RESUME", 272, -257, 118,
                 () => hub.Resume(), true);
             MakeButton(panelObject.transform, "CANCEL AI", 14, -298, 120,
                 () => hub.CancelAutomation(), true);
-            MakeButton(panelObject.transform, "RELOAD", 143, -298, 120,
-                () => hub.Reload(), true);
+            MakeButton(panelObject.transform, "EXPLAIN", 143, -298, 120,
+                () => hub.ExplainConstruction(), true);
             MakeButton(panelObject.transform, "STATUS", 272, -298, 118,
-                () => hub.Status(), true);
+                () => hub.ConstructionStatus(), true);
             Label(panelObject.transform, "LogCaption", "LAST VERIFIED ACTIONS / SAFETY LOG", 12f,
                 new Vector2(15, -345), new Vector2(375, 18), accentColor);
             logText = Label(panelObject.transform, "ActionLog", "No actions yet", 12f,
@@ -209,10 +217,7 @@ namespace ProjectSpark.SparkV5.Pro
         private void Refresh()
         {
             if (!hub || !stateText || !logText) return;
-            stateText.text = "Mode: " + hub.Mode + "  |  " + hub.Phase +
-                "\nNative tool owner: " + (hub.IsExecuting ? "SPARK" : "PLAYER") +
-                "    Progress: " + hub.CompletedSteps + "/" + hub.TotalSteps +
-                "\nNow: " + hub.CurrentAction +
+            stateText.text = hub.ConstructionStatus() +
                 "\nSuggested: " + hub.PendingStep;
             var history = hub.RecentMessages;
             var sb = new StringBuilder(512);
@@ -225,6 +230,18 @@ namespace ProjectSpark.SparkV5.Pro
             Highlight(manualButton, hub.Mode == SparkEngineeringControlHub.OperatingMode.Manual);
             Highlight(assistedButton, hub.Mode == SparkEngineeringControlHub.OperatingMode.Assisted);
             Highlight(autoButton, hub.Mode == SparkEngineeringControlHub.OperatingMode.Auto);
+        }
+
+        private void ApplySafeArea()
+        {
+            if (!screenArea || Screen.width <= 0 || Screen.height <= 0) return;
+            var safe = Screen.safeArea;
+            var size = new Vector2Int(Screen.width, Screen.height);
+            if (lastScreenSize == size && lastSafeArea == safe) return;
+            lastScreenSize = size;
+            lastSafeArea = safe;
+            screenArea.anchorMin = new Vector2(safe.xMin / size.x, safe.yMin / size.y);
+            screenArea.anchorMax = new Vector2(safe.xMax / size.x, safe.yMax / size.y);
         }
 
         private void Highlight(Button b, bool active)

@@ -18,16 +18,23 @@ namespace ProjectSpark.Gameplay.Shelf
         private void Update()
         {
             if (shelf == null || interactionCamera == null) return;
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (SparkBenchPointer.Pressed && (!ignorePointerOverUI || !SparkBenchPointer.IsOverUI()))
+                TryTouch(SparkBenchPointer.Position, -1);
+#else
             if (Input.GetMouseButtonDown(0)) TryTouch(Input.mousePosition, -1);
             for (int i = 0; i < Input.touchCount; i++)
             {
                 Touch touch = Input.GetTouch(i);
                 if (touch.phase == TouchPhase.Began) TryTouch(touch.position, touch.fingerId);
             }
+#endif
         }
         private void TryTouch(Vector2 screenPoint, int pointerId)
         {
+#if !(UNITY_ANDROID && !UNITY_EDITOR)
             if (ignorePointerOverUI && EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(pointerId)) return;
+#endif
             Ray ray = interactionCamera.ScreenPointToRay(screenPoint);
             if (!Physics.Raycast(ray, out RaycastHit hit, maximumDistance, itemLayers, QueryTriggerInteraction.Collide)) return;
             SparkShelfItem item = hit.collider.GetComponentInParent<SparkShelfItem>();
