@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 namespace ProjectSpark.SparkV5.Pro
 {
     /// <summary>
-    /// v18.4: Original Spark hand, post-rotation precision grip and nested mechanical arms.
+    /// v18.5: Original Spark hand, precision grip and collision-checked cinematic contact.
     /// Draws multi-stage mechanical sleeves only (never duplicate hands), preserves
     /// authored imported mesh scales and retains the existing native-wire APIs.
     /// No wire, circuit, inventory or level mutation; native tools stay authoritative.
@@ -393,6 +393,47 @@ namespace ProjectSpark.SparkV5.Pro
             arms[(int)side].trackedTarget = target;
             return true;
         }
+        /// <summary>
+        /// v18.5: A safe contact probe for the native cinematic executor.
+        /// This does not make a wire or edit any circuit state.
+        /// A terminal's own contact collider is allowed only near its tip.
+        /// </summary>
+        public bool CanExtendToCinematicContact(Transform contact,
+            ManipulatorSide side = ManipulatorSide.Right)
+        {
+            if (!contact || !contact.gameObject.activeInHierarchy)
+            { LastError = "Cinematic contact missing or inactive"; return false; }
+            if (side == ManipulatorSide.Left && !allowLeftArm)
+            { LastError = "Left arm disabled"; return false; }
+            if (!BindRig()) return false;
+            Arm a = arms[(int)side];
+            if (!a.ready || a.mode != ArmMode.Idle)
+            { LastError = "Original arm already owned by another action"; return false; }
+            float separation = Vector3.Distance(a.shoulder.position, contact.position);
+            if (separation <= a.naturalLength + 0.06f)
+            { LastError = "Normal arm reach is sufficient; keep walk-first wiring"; return false; }
+            return CanReachFromInternal(a.shoulder.position, contact.position, contact);
+        }
+
+        /// <summary>
+        /// Authorizes extension of the EXISTING wrist and fingertips toward a
+        /// native contact. The caller must check IsAtTarget before native attach.
+        /// </summary>
+        public bool TryReachCinematicContact(Transform contact,
+            ManipulatorSide side = ManipulatorSide.Right)
+        {
+            if (!CanExtendToCinematicContact(contact, side)) return false;
+            Arm a = arms[(int)side];
+            a.trackedTarget = contact;
+            a.allowedTerminalContact = contact;
+            a.goal = contact.position;
+            a.gripError = Vector3.Distance(GripWorld(a), a.goal);
+            a.mode = ArmMode.Extending;
+            lastAppliedFrame = -1;
+            LastError = "Reaching with the original hand toward " + contact.name;
+            return true;
+        }
+
         public bool TryReachTerminal(string id, ManipulatorSide side = ManipulatorSide.Right)
         {
             if (!executive || !executive.ActiveLevelManager)
@@ -426,6 +467,35 @@ namespace ProjectSpark.SparkV5.Pro
             return error <= precisionContactTolerance;
         }
         // Called by the existing cinematic executor before it updates the NATIVE loose cable end.
+        /// <summary>
+        /// Move the SAME extended hand toward the second native-wire socket.
+        /// A contact target is checked against the maximum reach and arm-collision rules.
+        /// No object is spawned and no electrical connectivity is modified here.
+        /// </summary>
+        public bool MoveCinematicGripToContact(Transform contact)
+        {
+            if (!contact || !contact.gameObject.activeInHierarchy)
+            { LastError = "Destination contact missing or inactive"; return false; }
+            if (!rigReady || !arms[0].ready ||
+                (arms[0].mode != ArmMode.Extending && arms[0].mode != ArmMode.Holding))
+            { LastError = "Right original hand is not holding a native wire"; return false; }
+            Arm a = arms[0];
+            if (!CanReachFromInternal(a.shoulder.position, contact.position, contact)) return false;
+            a.trackedTarget = contact;
+            a.allowedTerminalContact = contact;
+            a.goal = contact.position;
+            a.mode = ArmMode.Extending;
+            lastAppliedFrame = -1;
+            LastError = "Drawing native wire toward " + contact.name;
+            return true;
+        }
+
+        public bool CanDrawToCinematicContact(Transform contact)
+        {
+            if (!contact || !contact.gameObject.activeInHierarchy || !BindRig()) return false;
+            return CanReachFromInternal(arms[0].shoulder.position, contact.position, contact);
+        }
+
         public void FollowCinematicGrip(Vector3 gripWorld)
         {
             if (!rigReady || !IsActive) return;

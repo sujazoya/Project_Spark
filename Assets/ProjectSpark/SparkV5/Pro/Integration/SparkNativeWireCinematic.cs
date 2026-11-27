@@ -85,6 +85,7 @@ namespace ProjectSpark.SparkV5.Pro
         private Transform wristR => handRigs[0].Wrist;
         private SparkAINativeWirePort livePort;
         private bool usingCable, trackingHands, stageActive, reaching;
+        private SparkTelescopicNativeWireBridge telescopicBridge;
         private Vector3 gripTarget;
         private Vector3 appliedCableGrip;
         private float ikWeight;
@@ -128,6 +129,7 @@ namespace ProjectSpark.SparkV5.Pro
 
         public void CancelPerformance()
         {
+            if (telescopicBridge) telescopicBridge.ReleaseArm();
             if (flight && stageActive) flight.StopMotionAndHover();
             usingCable = false;
             usingPlayerPointer = false;
@@ -846,6 +848,73 @@ namespace ProjectSpark.SparkV5.Pro
             succeeded = true;
         }
 
+        /// <summary>
+        /// Optional straight-through native-wire drawing with the existing
+        /// telescopic hand. The native signal port remains the only electrical
+        /// connection authority. No pointer emulation or duplicated hands.
+        /// </summary>
+        private IEnumerator PerformTelescopicNativeCable(
+            SparkTerminal a, SparkTerminal b, SparkAINativeSignalWirePort port,
+            Transform layout, Func<bool> stillValid)
+        {
+            if (!telescopicBridge || !telescopicBridge.IsConfigured)
+            { Fail("Original-hand telescopic bridge is not bound"); yield break; }
+            float span = Vector3.Distance(a.transform.position, b.transform.position);
+            float rest = cableRestLength > 0f ? cableRestLength : span + handlingAllowance;
+            if (span > rest)
+            { Fail("Native cable rest length is shorter than terminal span"); yield break; }
+            Stage = CableStage.Prepare;
+            character.FocusOn(a.transform);
+            Narrate("Extending my original hand to the source connector.");
+            yield return telescopicBridge.ReachTerminal(a.transform, stillValid);
+            if (!telescopicBridge.LastContactSucceeded || !stillValid())
+            { Fail("Original hand missed source: " + telescopicBridge.LastError); yield break; }
+            if (!SocketIsClear(a.transform, layout)) yield break;
+            if (!port.Begin(a, b, false, out string error) || !port.AttachSource(a, out error))
+            { Fail("Native Wire Tool refused source: " + error); yield break; }
+            physicalPort = port;
+            attachedSource = a.transform;
+            Stage = CableStage.SourceAttached;
+            if (!telescopicBridge.TryGetActiveGrip(out Vector3 sourceGrip))
+            { Fail("Original fingertips unavailable after source attachment"); yield break; }
+            int segments = Application.isMobilePlatform ? Mathf.Min(16, cableSegments) : cableSegments;
+            int iterations = Application.isMobilePlatform ? Mathf.Min(4, cableIterations) : cableIterations;
+            cable.Reset(a.transform.position, sourceGrip, segments, rest, iterations);
+            usingCable = true;
+            Stage = CableStage.Grip;
+            yield return new WaitForSecondsRealtime(gripPauseSeconds);
+            if (failure != null || !stillValid()) yield break;
+            Stage = CableStage.Carrying;
+            Narrate("Drawing the real native wire with my extendable original hand.");
+            character.FocusOn(b.transform);
+            yield return telescopicBridge.DrawHeldWireTo(b.transform, stillValid);
+            if (!telescopicBridge.LastContactSucceeded || failure != null || !stillValid())
+            { Fail("Original hand could not draw wire to destination: " + telescopicBridge.LastError); yield break; }
+            Stage = CableStage.Aligning;
+            if (!telescopicBridge.VerifyGripNear(b.transform.position, out float gap))
+            { Fail("Original fingertip placement mismatch: " + gap.ToString("F4") + "m"); yield break; }
+            // Allow the current native cable mesh simulation to sample the actual
+            // hand at the destination; do not fabricate a circuit connection.
+            yield return null;
+            if (failure != null || !stillValid() || !SocketIsClear(b.transform, layout)) yield break;
+            Stage = CableStage.Inserting;
+            if (!telescopicBridge.VerifyGripNear(b.transform.position, out gap))
+            { Fail("Native connector moved away from the original hand"); yield break; }
+            if (cable.Points == null || cable.Points.Length < 2)
+            { Fail("Native cable simulation has no valid points"); yield break; }
+            cable.Points[cable.Points.Length - 1] = b.transform.position;
+            if (!port.ShowCableShape(cable.Points))
+            { Fail("Native Wire Tool rejected final cable shape"); yield break; }
+            if (!port.AttachDestination(b, out error))
+            { Fail("Native Wire Tool refused destination: " + error); yield break; }
+            usingCable = false;
+            Stage = CableStage.Attached;
+            Narrate("The native Wire Tool confirmed the connection.");
+            yield return new WaitForSecondsRealtime(releasePauseSeconds);
+            Stage = CableStage.Complete;
+            succeeded = true;
+        }
+
         internal IEnumerator OperateDevice(Transform control, SparkWorkbenchNavigation workbench,
             Transform layout, Func<bool> stillValid, Action dispatch)
         {
@@ -874,29 +943,57 @@ namespace ProjectSpark.SparkV5.Pro
         {
             failure = null;
             succeeded = false;
+            if (!telescopicBridge) telescopicBridge = GetComponent<SparkTelescopicNativeWireBridge>();
             if (stageActive) { Fail("A physical performance is already in progress."); yield break; }
             if (!a || !b || !port || stillValid == null || !stillValid())
             { Fail("Invalid native-wire task or changed game context."); yield break; }
             Transform layout = executive.ActiveLevelManager.LayoutLoader.ActiveLayout.transform;
             surfaceNavigation = workbench;
-            if (!BindRig() || !PrepareNavigation(workbench, layout))
+            if (!BindRig()) { CancelPerformance(); yield break; }
+            // Prefer the actual native cable with a single original telescopic
+            // hand when BOTH endpoints are safe from the current stance.
+            bool directTelescopicWire = port is SparkAINativeSignalWirePort &&
+                telescopicBridge && telescopicBridge.IsConfigured &&
+                telescopicBridge.CanExtendTo(a.transform) &&
+                telescopicBridge.CanDrawTo(b.transform);
+            if (!directTelescopicWire && !PrepareNavigation(workbench, layout))
             { CancelPerformance(); yield break; }
 
             stageActive = true;
             try
             {
+                if (directTelescopicWire && port is SparkAINativeSignalWirePort extendedPort)
+                {
+                    narration?.BeginWire();
+                    yield return PerformTelescopicNativeCable(a, b, extendedPort, layout, stillValid);
+                    yield break;
+                }
                 if (port is SparkAINativeSignalWirePort nativePort)
                 {
                     narration?.BeginWire();
                     yield return PerformNativeCable(a, b, nativePort, layout, stillValid, canHover);
                     yield break;
                 }
-                yield return WalkNear(a.transform, workbench, layout, stillValid);
-                if (failure != null) yield break;
+                bool extendSource = telescopicBridge && telescopicBridge.CanExtendTo(a.transform);
+                if (!extendSource)
+                {
+                    yield return WalkNear(a.transform, workbench, layout, stillValid);
+                    if (failure != null) yield break;
+                }
 
                 Narrate("First I check the source terminal " + a.name + ", then grip the cable connector.");
-                yield return Reach(a.transform, stillValid);
-                if (failure != null || !stillValid()) yield break;
+                if (extendSource)
+                {
+                    trackingHands = false;
+                    yield return telescopicBridge.ReachTerminal(a.transform, stillValid);
+                    if (!telescopicBridge.LastContactSucceeded)
+                    { Fail("Original hand could not reach source: " + telescopicBridge.LastError); yield break; }
+                }
+                else
+                {
+                    yield return Reach(a.transform, stillValid);
+                    if (failure != null || !stillValid()) yield break;
+                }
 
                 if (!port.Begin(a, b, out string error))
                 { Fail("The player wire tool refused cable pickup: " + error); yield break; }
@@ -906,16 +1003,38 @@ namespace ProjectSpark.SparkV5.Pro
                 usingCable = true;
                 livePort = port;
                 appliedCableGrip = handRigs[0].GripPoint;
+                if (extendSource && telescopicBridge &&
+                    telescopicBridge.TryGetActiveGrip(out Vector3 extendedSourceGrip))
+                    appliedCableGrip = extendedSourceGrip;
                 if (!port.MoveLooseEnd(appliedCableGrip, out error))
                 { Fail("The player wire tool refused the hand grip position: " + error); yield break; }
+                if (telescopicBridge) telescopicBridge.ReleaseArm();
                 yield return new WaitForSecondsRealtime(gripPauseSeconds);
 
-                yield return WalkNear(b.transform, workbench, layout, stillValid);
-                if (failure != null) yield break;
+                bool extendDestination = telescopicBridge && telescopicBridge.CanExtendTo(b.transform);
+                if (!extendDestination)
+                {
+                    yield return WalkNear(b.transform, workbench, layout, stillValid);
+                    if (failure != null) yield break;
+                }
                 Narrate("I'm aligning the loose cable end with " + b.name + ". Watch the connection point.");
-                yield return Reach(b.transform, stillValid);
-                if (failure != null || !stillValid()) yield break;
-                if (!port.MoveLooseEnd(handRigs[0].GripPoint, out error))
+                if (extendDestination)
+                {
+                    trackingHands = false;
+                    yield return telescopicBridge.ReachTerminal(b.transform, stillValid);
+                    if (!telescopicBridge.LastContactSucceeded)
+                    { Fail("Original hand could not reach destination: " + telescopicBridge.LastError); yield break; }
+                }
+                else
+                {
+                    yield return Reach(b.transform, stillValid);
+                    if (failure != null || !stillValid()) yield break;
+                }
+                Vector3 destinationGrip = handRigs[0].GripPoint;
+                if (extendDestination && telescopicBridge &&
+                    telescopicBridge.TryGetActiveGrip(out Vector3 extendedDestinationGrip))
+                    destinationGrip = extendedDestinationGrip;
+                if (!port.MoveLooseEnd(destinationGrip, out error))
                 { Fail("The player wire tool refused final positioning: " + error); yield break; }
                 usingCable = false;
                 livePort = null;
@@ -930,6 +1049,7 @@ namespace ProjectSpark.SparkV5.Pro
             }
             finally
             {
+                if (telescopicBridge) telescopicBridge.ReleaseArm();
                 reaching = false;
                 usingCable = false;
                 usingPlayerPointer = false;
@@ -951,6 +1071,21 @@ namespace ProjectSpark.SparkV5.Pro
                 float progress = Mathf.Clamp01((Time.realtimeSinceStartup - pointerStarted) / .85f);
                 if (!physicalPort.MovePlayerPointer(Vector3.Lerp(pointerStart, pointerEnd, progress * .94f)))
                     Fail("The player Wire Tool could not project the external drag onto its camera.");
+            }
+            if (usingCable && physicalPort && telescopicBridge && telescopicBridge.IsContactActive)
+            {
+                // The original telescopic hand alone owns the wrist. Do not
+                // run the fixed-length IK on top of the extended skeleton.
+                if (!telescopicBridge.TryGetActiveGrip(out Vector3 originalGrip))
+                { Fail("Original native-wire grip is unavailable"); return; }
+                appliedCableGrip = originalGrip;
+                if (!attachedSource || !cable.Advance(attachedSource.position, appliedCableGrip,
+                    Time.unscaledDeltaTime, cableGravity, cableDamping, cableBendStiffness,
+                    cableCollisionRadius, maximumCableExtension, cableCollisionLayers))
+                    Fail("Extended hand cannot draw cable without overstretching");
+                else if (!physicalPort.ShowCableShape(cable.Points))
+                    Fail("Native Wire Tool rejected extended-hand cable shape");
+                return;
             }
             if (!trackingHands || !HasRig) return;
             if (usingCable && !reaching && character)
@@ -996,6 +1131,8 @@ namespace ProjectSpark.SparkV5.Pro
             else if (usingCable && livePort)
             {
                 appliedCableGrip = handRigs[0].GripPoint;
+                if (telescopicBridge && telescopicBridge.TryGetActiveGrip(out Vector3 activeOriginalGrip))
+                    appliedCableGrip = activeOriginalGrip;
                 if (!livePort.MoveLooseEnd(appliedCableGrip, out string error))
                 {
                     usingCable = false;

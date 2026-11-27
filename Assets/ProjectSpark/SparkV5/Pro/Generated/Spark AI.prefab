@@ -2849,6 +2849,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6122651904739907652}
     m_Modifications:
+    - target: {fileID: 383137946483037431, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: optionalVoiceController
+      value: 
+      objectReference: {fileID: 8486225406989924498}
+    - target: {fileID: 838297402631126670, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: executive
+      value: 
+      objectReference: {fileID: 2010157059098112456}
+    - target: {fileID: 1013516680786271103, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 3169094668180927682}
+    - target: {fileID: 1013516680786271103, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: executive
+      value: 
+      objectReference: {fileID: 2010157059098112456}
+    - target: {fileID: 1013516680786271103, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: groundAgent
+      value: 
+      objectReference: {fileID: 4407726095716865624}
     - target: {fileID: 2162043668225740932, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
       propertyPath: character
       value: 
@@ -2861,6 +2881,22 @@ PrefabInstance:
       propertyPath: voice
       value: 
       objectReference: {fileID: 5579177051582969034}
+    - target: {fileID: 2487032160217664115, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: flight
+      value: 
+      objectReference: {fileID: 4282750607161668789}
+    - target: {fileID: 2487032160217664115, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 3169094668180927682}
+    - target: {fileID: 2487032160217664115, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: executive
+      value: 
+      objectReference: {fileID: 2010157059098112456}
+    - target: {fileID: 2487032160217664115, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: navigation
+      value: 
+      objectReference: {fileID: 4407726095716865624}
     - target: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
       propertyPath: m_Name
       value: SparkV5Pro
@@ -2893,6 +2929,14 @@ PrefabInstance:
       propertyPath: inspector
       value: 
       objectReference: {fileID: 1481177206151338281}
+    - target: {fileID: 4938413770724245470, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: director
+      value: 
+      objectReference: {fileID: 4623577606415297928}
+    - target: {fileID: 4938413770724245470, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: executive
+      value: 
+      objectReference: {fileID: 2010157059098112456}
     - target: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.446
@@ -2933,6 +2977,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7208809013741093937, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: nativePort
+      value: 
+      objectReference: {fileID: 4362593751911970820}
+    - target: {fileID: 9214526086658485591, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      propertyPath: overrideMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: c0ed60fc51df4b449a8ab6776d3cd25a, type: 2}
     m_RemovedComponents:
     - {fileID: 8378993145745350539, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
     - {fileID: 6258590074350375025, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
@@ -2952,6 +3004,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2917198575527411317}
+    - targetCorrespondingSourceObject: {fileID: 2760260586610461342, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8188544219476112617}
   m_SourcePrefab: {fileID: 100100000, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
 --- !u!1 &1383085092576617812 stripped
 GameObject:
@@ -3041,8 +3096,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed83805d4af71634a8c000154b1e4e54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkTelescopicArms
-  character: {fileID: 0}
-  executive: {fileID: 0}
+  character: {fileID: 3169094668180927682}
+  executive: {fileID: 2010157059098112456}
   allowLeftArm: 1
   maximumReach: 6
   extensionSpeed: 3.25
@@ -3051,6 +3106,7 @@ MonoBehaviour:
   elbowBend: 0.06
   elbowFraction: 0.52
   arrivalTolerance: 0.07
+  precisionContactTolerance: 0.007
   checkArmCollision: 1
   obstructionLayers:
     serializedVersion: 2
@@ -3070,6 +3126,8 @@ MonoBehaviour:
   tipSleeveRadius: 0.014
   collarLength: 0.018
   stageOverlap: 0.08
+  mechanicalThicknessMultiplier: 1.65
+  proximalHousingLength: 0.14
   extensionVisualThreshold: 1.09
   useExistingFingerTips: 1
   fallbackGripOffsetLocal: {x: 0, y: 0, z: 0.045}
@@ -3077,6 +3135,22 @@ MonoBehaviour:
   handAlignmentSpeed: 8
   allowEditorDebugPanel: 0
   debugTerminalId: SwitchOutput
+--- !u!114 &8188544219476112617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383085092576617812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf62d889239b4c4aaa461b3c7a8b65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkTelescopicNativeWireBridge
+  arms: {fileID: 2917198575527411317}
+  enableCinematicExtension: 1
+  maximumContactWait: 5
+  maximumNativeGripMismatch: 0.012
 --- !u!114 &1481177206151338281 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2445995708164683491, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
@@ -3110,6 +3184,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf29120959c33c457f9d072118e53bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkProCharacter
+--- !u!114 &4282750607161668789 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1013516680786271103, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+  m_PrefabInstance: {fileID: 3855044934285881290}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383085092576617812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57876b077dab2854d92fa796c4b6538d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkV5FlightController
+--- !u!195 &4407726095716865624 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 600312967923972498, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}
+  m_PrefabInstance: {fileID: 3855044934285881290}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8187146224616235761 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4963328444787658043, guid: aba6d62359bea3b4c98ad0f61966e4e3, type: 3}

@@ -10399,6 +10399,7 @@ GameObject:
   - component: {fileID: 838297402631126670}
   - component: {fileID: 7208809013741093937}
   - component: {fileID: 7929432604626806747}
+  - component: {fileID: 7977396677291486086}
   m_Layer: 0
   m_Name: SparkV5Pro
   m_TagString: Untagged
@@ -11325,6 +11326,7 @@ MonoBehaviour:
   elbowBend: 0.06
   elbowFraction: 0.52
   arrivalTolerance: 0.07
+  precisionContactTolerance: 0.007
   checkArmCollision: 1
   obstructionLayers:
     serializedVersion: 2
@@ -11332,13 +11334,43 @@ MonoBehaviour:
   armCollisionRadius: 0.022
   shoulderClearance: 0.12
   tipClearance: 0.16
+  synchronizeAllRigCopies: 1
+  stretchOriginalArmMeshes: 0
+  showJointBridges: 0
+  bridgeRadius: 0.016
+  bridgeActivationRatio: 1.12
   showTelescopicSleeves: 1
-  metalMaterial: {fileID: 0}
-  pistonMaterial: {fileID: 0}
-  sleeveRadius: 0.032
-  pistonRadius: 0.018
+  showMechanicalStages: 1
+  stagesPerLimb: 5
+  baseSleeveRadius: 0.026
+  tipSleeveRadius: 0.014
+  collarLength: 0.018
+  stageOverlap: 0.3
+  mechanicalThicknessMultiplier: 1.65
+  proximalHousingLength: 0.14
+  extensionVisualThreshold: 1.09
+  useExistingFingerTips: 1
+  fallbackGripOffsetLocal: {x: 0, y: 0, z: 0.045}
+  alignWristTowardContact: 0
+  handAlignmentSpeed: 8
   allowEditorDebugPanel: 0
   debugTerminalId: SwitchOutput
+--- !u!114 &7977396677291486086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2760260586610461342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf62d889239b4c4aaa461b3c7a8b65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkTelescopicNativeWireBridge
+  arms: {fileID: 0}
+  enableCinematicExtension: 1
+  maximumContactWait: 5
+  maximumNativeGripMismatch: 0.012
 --- !u!1 &2779743260599996315
 GameObject:
   m_ObjectHideFlags: 0
