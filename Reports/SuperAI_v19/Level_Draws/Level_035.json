@@ -1,0 +1,39 @@
+{
+  "level": 35,
+  "levelId": "level_35",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_35_Layout/Level_35_Bridge_Balance_Layout.prefab",
+  "layoutRevision": "DE82E3E292957CEBC18AAC0740FA16E3B7CC10D5295ACAC86164E99567497D7D",
+  "constructionType": "Native electrical wiring",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel35BridgeBalance.cs#GetAuthoredWireNets",
+  "terminalBindings": 10,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "6 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "Battery_positive",
+      "toId": "LU_IN"
+    },
+    {
+      "fromId": "Battery_positive",
+      "toId": "RU_IN"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "LL_OUT"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "RL_OUT"
+    },
+    {
+      "fromId": "LU_OUT",
+      "toId": "LL_IN"
+    },
+    {
+      "fromId": "RU_OUT",
+      "toId": "RL_IN"
+    }
+  ]
+}

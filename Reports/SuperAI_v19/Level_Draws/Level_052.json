@@ -1,0 +1,91 @@
+{
+  "level": 52,
+  "levelId": "level_52",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_52_Layout/Level_52_Layout.prefab",
+  "layoutRevision": "60726716BD89C394C3EDC36F299B8A0F4A6E6E5F655BE119205FAAEAC8B0D6C4",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel52Balance.cs#Wires",
+  "terminalBindings": 32,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "19 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "CTRL_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "CTRL_GND"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "MDRV_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "MDRV_GND"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "VIB_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "VIB_GND"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "BDRV_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "BDRV_GND"
+    },
+    {
+      "fromId": "CTRL_PWM",
+      "toId": "MDRV_PWM"
+    },
+    {
+      "fromId": "MDRV_MPOS",
+      "toId": "MOTOR_POS"
+    },
+    {
+      "fromId": "MDRV_MNEG",
+      "toId": "MOTOR_NEG"
+    },
+    {
+      "fromId": "VIB_OUT",
+      "toId": "CTRL_VIB"
+    },
+    {
+      "fromId": "ENCODER_A",
+      "toId": "CTRL_EA"
+    },
+    {
+      "fromId": "ENCODER_B",
+      "toId": "CTRL_EB"
+    },
+    {
+      "fromId": "GUARD_NC",
+      "toId": "CTRL_SAFE"
+    },
+    {
+      "fromId": "CTRL_BAL",
+      "toId": "BDRV_CMD"
+    },
+    {
+      "fromId": "BDRV_OUTP",
+      "toId": "RING_POWER_POS"
+    },
+    {
+      "fromId": "BDRV_OUTN",
+      "toId": "RING_POWER_NEG"
+    },
+    {
+      "fromId": "ENCODER_Z",
+      "toId": "CTRL_EZ"
+    }
+  ]
+}

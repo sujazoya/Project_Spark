@@ -1,0 +1,151 @@
+{
+  "level": 57,
+  "levelId": "level_57",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_57_Layout/Level_57_Layout.prefab",
+  "layoutRevision": "5B1B58A8514F2D8086FE1040C995247520E17CAF21F0A78D4ED5DA8E7C778DE0",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel57Grid.cs#Wires",
+  "terminalBindings": 54,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "34 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "CTRL_POS"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "CTRL_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "INV_A_DC"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "INV_A_RET"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "INV_B_DC"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "INV_B_RET"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "SENSE_DC"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "SENSE_RET"
+    },
+    {
+      "fromId": "GRID_A",
+      "toId": "BUS_A"
+    },
+    {
+      "fromId": "GRID_B",
+      "toId": "BUS_B"
+    },
+    {
+      "fromId": "GRID_C",
+      "toId": "BUS_C"
+    },
+    {
+      "fromId": "GRID_N",
+      "toId": "BUS_N"
+    },
+    {
+      "fromId": "INV_B_A",
+      "toId": "CONTACT_A"
+    },
+    {
+      "fromId": "INV_B_B",
+      "toId": "CONTACT_B"
+    },
+    {
+      "fromId": "INV_B_C",
+      "toId": "CONTACT_C"
+    },
+    {
+      "fromId": "INV_B_N",
+      "toId": "BUS_N"
+    },
+    {
+      "fromId": "BUS_A",
+      "toId": "LOAD_A"
+    },
+    {
+      "fromId": "BUS_B",
+      "toId": "LOAD_B"
+    },
+    {
+      "fromId": "BUS_C",
+      "toId": "LOAD_C"
+    },
+    {
+      "fromId": "BUS_N",
+      "toId": "LOAD_N"
+    },
+    {
+      "fromId": "BUS_A",
+      "toId": "MOTOR_A"
+    },
+    {
+      "fromId": "BUS_B",
+      "toId": "MOTOR_B"
+    },
+    {
+      "fromId": "BUS_C",
+      "toId": "MOTOR_C"
+    },
+    {
+      "fromId": "GRID_VSENSE",
+      "toId": "CTRL_GRID_V"
+    },
+    {
+      "fromId": "INV_VSENSE",
+      "toId": "CTRL_INV_V"
+    },
+    {
+      "fromId": "PHASE_OUT",
+      "toId": "CTRL_PHASE"
+    },
+    {
+      "fromId": "CTRL_CLOSE",
+      "toId": "CONTACT_CMD"
+    },
+    {
+      "fromId": "CONTACT_AUX",
+      "toId": "CTRL_CONTACT"
+    },
+    {
+      "fromId": "CT_OUT",
+      "toId": "CTRL_CURRENT"
+    },
+    {
+      "fromId": "ANALYZER_OUT",
+      "toId": "CTRL_QUALITY"
+    },
+    {
+      "fromId": "PROTECTION_OK",
+      "toId": "CTRL_PROTECT"
+    },
+    {
+      "fromId": "CTRL_ISLAND",
+      "toId": "TRANSFER_CMD"
+    },
+    {
+      "fromId": "TRANSFER_AUX",
+      "toId": "CTRL_TRANSFER"
+    },
+    {
+      "fromId": "ESTOP_NC",
+      "toId": "CTRL_ESTOP"
+    }
+  ]
+}

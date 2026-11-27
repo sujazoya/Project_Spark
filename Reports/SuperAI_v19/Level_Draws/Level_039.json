@@ -1,0 +1,43 @@
+{
+  "level": 39,
+  "levelId": "level_39",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_39_Layout/Level_39_Isolation_Gap_Layout.prefab",
+  "layoutRevision": "C7CDC26F5A6B6BDE31DC3C331E52DFA4D7CAE19EB858F9DEE34E0800489C02BD",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel39IsolationGap.cs#GetAuthoredWireNets",
+  "terminalBindings": 14,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "7 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "TX_POS",
+      "toId": "SEND_IN"
+    },
+    {
+      "fromId": "SEND_OUT",
+      "toId": "TX_R_IN"
+    },
+    {
+      "fromId": "TX_R_OUT",
+      "toId": "OPTO_A"
+    },
+    {
+      "fromId": "OPTO_K",
+      "toId": "TX_RETURN"
+    },
+    {
+      "fromId": "RX_POS",
+      "toId": "PULLUP_IN"
+    },
+    {
+      "fromId": "PULLUP_OUT",
+      "toId": "OPTO_C"
+    },
+    {
+      "fromId": "OPTO_E",
+      "toId": "RX_RETURN"
+    }
+  ]
+}

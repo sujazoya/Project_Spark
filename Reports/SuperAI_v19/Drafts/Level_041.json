@@ -1,0 +1,44 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 41,
+    "layoutName": "Level_41_Analog_Output_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "BIT2",
+            "toId": "B2_R_IN"
+        },
+        {
+            "fromId": "BIT1",
+            "toId": "B1_R_IN"
+        },
+        {
+            "fromId": "BIT0",
+            "toId": "B0_R_IN"
+        },
+        {
+            "fromId": "B2_R_OUT",
+            "toId": "LINK21_IN"
+        },
+        {
+            "fromId": "LINK21_OUT",
+            "toId": "B1_R_OUT"
+        },
+        {
+            "fromId": "LINK21_OUT",
+            "toId": "LINK10_IN"
+        },
+        {
+            "fromId": "LINK10_OUT",
+            "toId": "B0_R_OUT"
+        },
+        {
+            "fromId": "LINK10_OUT",
+            "toId": "TERM_R_IN"
+        },
+        {
+            "fromId": "TERM_OUT",
+            "toId": "DAC_RETURN"
+        }
+    ]
+}

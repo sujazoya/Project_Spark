@@ -1,0 +1,32 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 35,
+    "layoutName": "Level_35_Bridge_Balance_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "Battery_positive",
+            "toId": "LU_IN"
+        },
+        {
+            "fromId": "Battery_positive",
+            "toId": "RU_IN"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "LL_OUT"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "RL_OUT"
+        },
+        {
+            "fromId": "LU_OUT",
+            "toId": "LL_IN"
+        },
+        {
+            "fromId": "RU_OUT",
+            "toId": "RL_IN"
+        }
+    ]
+}

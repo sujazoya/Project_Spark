@@ -248,6 +248,14 @@ namespace ProjectSpark.Gameplay
                 contact.SetState(closed ? SparkSwitchState.Closed : SparkSwitchState.Open);
         }
 
+        internal SparkTerminal[][] GetAuthoredWireNets() => new[] {
+            new[] { source.PositiveTerminal, feeder.TerminalA },
+            new[] { feeder.TerminalB, pump.PositiveTerminal, auxContact.InputTerminal, demandContact.InputTerminal },
+            new[] { auxContact.OutputTerminal, fan.PositiveTerminal },
+            new[] { demandContact.OutputTerminal, demandBank.TerminalA },
+            new[] { source.NegativeTerminal, pump.NegativeTerminal, fan.NegativeTerminal, demandBank.TerminalB }
+        };
+
         private string CheckWiring(SparkElectricalNetworkGraph graph)
         {
             if (graph == null) return "Waiting for the solved circuit graph.";
@@ -265,13 +273,7 @@ namespace ProjectSpark.Gameplay
                 int aRoot=Root(an), bRoot=Root(bn);
                 if (aRoot != bRoot) parents[bRoot]=aRoot;
             }
-            var nets = new[] {
-                new[] { source.PositiveTerminal, feeder.TerminalA },
-                new[] { feeder.TerminalB, pump.PositiveTerminal, auxContact.InputTerminal, demandContact.InputTerminal },
-                new[] { auxContact.OutputTerminal, fan.PositiveTerminal },
-                new[] { demandContact.OutputTerminal, demandBank.TerminalA },
-                new[] { source.NegativeTerminal, pump.NegativeTerminal, fan.NegativeTerminal, demandBank.TerminalB }
-            };
+            var nets = GetAuthoredWireNets();
             var used=new Dictionary<int,string>();
             foreach (var net in nets)
             {

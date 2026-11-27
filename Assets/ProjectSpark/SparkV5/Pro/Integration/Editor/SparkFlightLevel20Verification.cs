@@ -45,11 +45,49 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             settings.FindProperty("autoAdvanceOnCompletion").boolValue = false;
             settings.ApplyModifiedPropertiesWithoutUndo();
             int Slot(int number) => manager.GetCampaignLevelIndices().Single(index => manager.GetLevel(index).LevelNumber == number);
-            if (cableCase == "v19-starter")
+            if (cableCase == "v191-board100")
             {
-                Require(manager.StartLevel(Slot(1)), "The native starter level did not start.");
+                const string key = SparkLevel100Process.CheckpointKey;
+                bool hadCheckpoint = PlayerPrefs.HasKey(key);
+                string checkpoint = PlayerPrefs.GetString(key, "");
+                SparkLevel100Process board = null;
+                try
+                {
+                    Require(manager.StartLevel(Slot(100)), "Native Level 100 did not load.");
+                    await Wait(() => manager.ActiveLevel.LevelNumber == 100 &&
+                        manager.LayoutLoader.ActiveLayout.GetComponentInChildren<SparkLevel100Process>(true),
+                        "bound Level 100 board");
+                    board = manager.LayoutLoader.ActiveLayout.GetComponentInChildren<SparkLevel100Process>(true);
+                    Require(board.Stage == 0 && !board.Powered && board.parts.Length > 1 &&
+                        board.parts[0].contact && !board.parts[0].contact.IsClosed,
+                        "The test needs an empty, isolated native board.");
+                    int installed = board.Installed;
+                    board.SelectFootprint(0);
+                    board.SelectPart(1);
+                    Require(!board.FitPart() && board.Installed == installed, "A wrong component was accepted.");
+                    board.SelectPart(0);
+                    Require(board.FitPart() && board.Solder(), "The native board rejected its authored part.");
+                    Require(board.parts[0].contact.IsClosed && board.Installed == installed + 1,
+                        "The native board did not register the soldered component.");
+                    Require(!manager.IsCompleted, "A single board operation unexpectedly completed the level.");
+                    log("PASS Level 100 board rejected the wrong part and registered the correctly fitted and soldered part.");
+                }
+                finally
+                {
+                    // Flush this fixture's board checkpoint before restoring the player's previous value.
+                    if (board) board.enabled = false;
+                    if (hadCheckpoint) PlayerPrefs.SetString(key, checkpoint);
+                    else PlayerPrefs.DeleteKey(key);
+                    PlayerPrefs.Save();
+                }
+                return;
+            }
+            if (cableCase is "v19-starter" or "v19-level48")
+            {
+                int mission = cableCase == "v19-starter" ? 1 : 48;
+                Require(manager.StartLevel(Slot(mission)), $"Native Level {mission} did not start.");
                 await Wait(() => executive.ActiveLevelManager == manager &&
-                    SparkAILevelContext.Capture(manager).HasEvaluation && port.IsConfigured, "starter native evaluator");
+                    SparkAILevelContext.Capture(manager).HasEvaluation && port.IsConfigured, "mission native evaluator");
                 var starter = SparkAILevelContext.Capture(manager);
                 var prefab = manager.LayoutLoader.ActiveSourcePrefab;
                 Require(SparkUniversalConstructionEditor.TryReadMissionWires(starter.Definition, prefab,
@@ -58,33 +96,87 @@ namespace ProjectSpark.SparkV5.Pro.Editor
                 try
                 {
                     trial.LoadDraft(new SparkNativeWiringPlan.RecordedDraft
-                    { levelNumber = 1, layoutName = prefab.name, wires = wires });
+                    { levelNumber = mission, layoutName = prefab.name, wires = wires });
                     Require(trial.TryApprove("In-memory verification fixture", source, out error), error);
                     Require(trial.ReviewAuthoredRevision(starter.Definition, prefab, out error), error);
                     var cache = typeof(SparkEngineeringControlHub).GetField("loadedPlans",
                         System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
                     Require(cache != null, "The approved-plan cache is missing.");
                     cache.SetValue(hub, new[] { trial });
-                    var starterSupply = starter.Layout.GetComponentsInChildren<SparkPowerSupply>(true).Single();
+                    var registration = starter.Layout.GetComponentInChildren<SparkLevel48Registration>(true);
+                    if (registration)
+                        await Wait(() => registration.statusText &&
+                            registration.statusText.text != "Build the registration circuit.", "Level 48 native controller initialization");
+                    var starterSupply = registration ? registration.source :
+                        starter.Layout.GetComponentsInChildren<SparkPowerSupply>(true).Single();
                     var interaction = new SparkInteractionContext(executive, starterSupply, SparkInteractionType.Toggle,
                         SparkToolType.Select, starterSupply.transform.position, Vector3.up, default, starterSupply.gameObject);
                     if (starterSupply.IsOutputActive)
-                        Require(starterSupply.SetOutput(false, interaction).Succeeded, "The starter supply did not turn off.");
+                    {
+                        if (registration) registration.MainPower();
+                        else Require(starterSupply.SetOutput(false, interaction).Succeeded, "The starter supply did not turn off.");
+                    }
+                    var activeSupplies = starter.Layout.GetComponentsInChildren<SparkPowerSupply>(true)
+                        .Where(supply => supply.IsOutputActive).Select(supply => supply.ObjectId).ToArray();
+                    Require(activeSupplies.Length == 0, "Mission supplies still active after isolation: " +
+                        string.Join(", ", activeSupplies));
                     executive.Ask("spark auto mode");
                     executive.Ask("hey Spark draw current level");
                     Require(hub.IsExecuting, executive.LastAnswer);
-                    await Wait(() => !hub.IsExecuting, "starter's physical cables", 100f);
+                    if (mission == 48)
+                    {
+                        var step = wires[3];
+                        Require(step.toId == "SENSOR_GND" &&
+                            starter.Layout.SceneBindings.TryResolveLivePair(starter.Layout, step.fromId, step.toId,
+                                out _, out _, out _), "The Level 48 regression must use the authored fourth wire.");
+                        var sampledStages = new System.Collections.Generic.HashSet<SparkNativeWireCinematic.CableStage>();
+                        var originalArms = character.GetComponent<SparkTelescopicArms>();
+                        await Wait(() =>
+                        {
+                            if (hub.CurrentAction.StartsWith("4/", StringComparison.Ordinal) && performer.IsPerforming &&
+                                sampledStages.Add(performer.Stage))
+                            {
+                                performer.TryMeasureNativeMotion(out var motion);
+                                if (performer.TryMeasureHeldCable(out var grip, out float rest, out float route, out _))
+                                    log($"Wire 4 {performer.Stage}: root {character.transform.position:F3}, " +
+                                        $"NavMesh {agent.isOnNavMesh}, flight {flight.IsFlying}, " +
+                                        $"shoulder {character.GetAnchor("Shoulder_R").position:F3}, " +
+                                        $"elbow {character.GetAnchor("Elbow_R").position:F3}, wrist {character.GetAnchor("Wrist_R").position:F3}, " +
+                                        $"index {character.GetAnchor("FingerTip0_R").position:F3}, cable end {grip:F3}, " +
+                                        $"extension ratio {motion.ExtensionRatio:F3}, maximum reach {originalArms.MaximumReach:F3} m, " +
+                                        $"cable {route:F3}/{rest:F3} m, cable contacts {motion.CableContacts}.");
+                            }
+                            return !hub.IsExecuting || hub.CompletedSteps >= 4;
+                        }, "previously failing Level 48 wire 4", 180f);
+                        Require(starter.Layout.SceneBindings.TryResolveLivePair(starter.Layout, step.fromId, step.toId,
+                            out var sourcePin, out var sensorGround, out error) &&
+                            manager.CircuitSystem.HasConnectionBetween(sourcePin, sensorGround),
+                            $"Wire 4 regression at {step.toId}: {hub.LastMessage} {director.LastStatus}");
+                        log($"PASS Targeted Level 48 wire 4. Native circuit registered {step.fromId} → {step.toId} at {sensorGround.transform.position:F3}.");
+                    }
+                    await Wait(() => !hub.IsExecuting, $"Level {mission}'s physical cables", mission == 1 ? 100f : 420f);
                     foreach (var step in wires)
                     {
                         Require(starter.Layout.SceneBindings.TryResolveLivePair(starter.Layout, step.fromId, step.toId,
                             out var a, out var b, out error), error);
                         Require(manager.CircuitSystem.HasConnectionBetween(a, b), hub.LastMessage + " " + director.LastStatus);
                     }
-                    Require(starterSupply.SetOutput(true, interaction).Succeeded, "The starter supply did not turn on.");
-                    await Wait(() => manager.IsFailed || manager.SatisfiedTargetCount == 1 && manager.IsCompleted, "starter's official objective");
-                    Require(manager.SatisfiedTargetCount == 1 && manager.IsCompleted,
-                        $"Starter result {manager.SatisfiedTargetCount}/1, failure {manager.LastFailureReason}.");
-                    log($"PASS Starter native wiring and evaluator 1/1. Review revision {trial.ReviewedRevision}.");
+                    log($"PASS Level {mission} exact command registered {wires.Length}/{wires.Length} native wires.");
+                    if (mission == 1)
+                    {
+                        Require(starterSupply.SetOutput(true, interaction).Succeeded, "The starter supply did not turn on.");
+                        await Wait(() => manager.IsFailed || manager.SatisfiedTargetCount == 1 && manager.IsCompleted,
+                            "starter's official objective");
+                        Require(manager.SatisfiedTargetCount == 1 && manager.IsCompleted,
+                            $"Starter result {manager.SatisfiedTargetCount}/1, failure {manager.LastFailureReason}.");
+                        log($"PASS Starter native wiring and evaluator 1/1. Review revision {trial.ReviewedRevision}.");
+                    }
+                    else
+                    {
+                        Require(registration, "The Level 48 registration controller is missing.");
+                        await VerifyRegistrationMission(registration, manager, log);
+                        log($"PASS Level 48 native wiring and evaluator 6/6. Review revision {trial.ReviewedRevision}.");
+                    }
                 }
                 finally
                 {
@@ -544,6 +636,45 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             }
         }
 
+        private static async Task VerifyRegistrationMission(SparkLevel48Registration mission,
+            LevelGamePlayManager manager, Action<string> log)
+        {
+            async Task Gate(int number)
+            {
+                await Wait(() => manager.IsFailed || manager.SatisfiedTargetCount >= number,
+                    $"Level 48 official objective {number}/6", 50f);
+                Require(!manager.IsFailed, manager.LastFailureReason);
+                log($"PASS Level 48 official evaluator {number}/6.");
+            }
+
+            mission.MainPower();
+            await Gate(1);
+            await Wait(() => mission.calibrateButton && mission.calibrateButton.interactable, "registration calibrate is available");
+            mission.Calibrate();
+            await Gate(2);
+            var modeLabel = mission.manualButton.GetComponentInChildren<UnityEngine.UI.Text>();
+            if (modeLabel.text.Contains("MANUAL", StringComparison.Ordinal)) mission.ToggleAuto();
+            mission.Speed30();
+            await Wait(() => mission.startButton && mission.startButton.interactable, "calibrated machine can start");
+            mission.StartWeb();
+            await Gate(3);
+            mission.Speed60();
+            await Gate(4);
+            mission.TestGlare();
+            await Gate(5);
+            mission.ToggleCover();
+            await Wait(() => mission.resetButton && mission.resetButton.interactable ||
+                mission.statusText && mission.statusText.text.Contains("SAFE STOP", StringComparison.Ordinal),
+                "missing registration mark stops the machine", 20f);
+            mission.ToggleCover();
+            await Wait(() => mission.resetButton && mission.resetButton.interactable, "safe reset becomes available");
+            mission.ResetFault();
+            await Wait(() => mission.startButton && mission.startButton.interactable, "recovered machine can start");
+            mission.StartWeb();
+            await Gate(6);
+            Require(manager.IsCompleted, "The official evaluator did not report Level 48 completed.");
+        }
+
         private static async Task Begin(SparkProExecutive executive, SparkNativeWireDirector director, SparkEngineeringControlHub hub)
         {
             executive.Ask("spark suggest next wire");
@@ -628,7 +759,7 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             Require(device.LastStatus.StartsWith("VERIFIED", StringComparison.Ordinal), device.LastStatus);
         }
 
-        private static async Task InstallBridgeResistors(Transform layout, Action<string> log)
+        internal static async Task InstallBridgeResistors(Transform layout, Action<string> log)
         {
             var shelf = Object.FindFirstObjectByType<SparkObjectShelf>();
             Require(shelf, "Level 20 requires the native resistor shelf.");

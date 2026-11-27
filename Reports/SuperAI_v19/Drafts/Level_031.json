@@ -1,0 +1,48 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 31,
+    "layoutName": "Level_31_SealIn_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "Battery_positive",
+            "toId": "MAIN_IN"
+        },
+        {
+            "fromId": "MAIN_OUT",
+            "toId": "STOP_IN"
+        },
+        {
+            "fromId": "MAIN_OUT",
+            "toId": "RUN_IN"
+        },
+        {
+            "fromId": "STOP_OUT",
+            "toId": "START_IN"
+        },
+        {
+            "fromId": "STOP_OUT",
+            "toId": "Hold_COM"
+        },
+        {
+            "fromId": "START_OUT",
+            "toId": "Coil_plus"
+        },
+        {
+            "fromId": "START_OUT",
+            "toId": "Hold_NO"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "Coil_minus"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "Motor_B"
+        },
+        {
+            "fromId": "RUN_OUT",
+            "toId": "Motor_A"
+        }
+    ]
+}

@@ -312,6 +312,17 @@ namespace ProjectSpark.Gameplay
 
         private static bool IsFiveVolts(float voltage) => voltage >= 4.8f && voltage <= 5.2f;
 
+        internal (SparkTerminal, SparkTerminal)[] GetAuthoredWireNets() => new[]
+        {
+            (transmitterSupply.PositiveTerminal, sendContact.InputTerminal),
+            (sendContact.OutputTerminal, transmitterResistor.TerminalA),
+            (transmitterResistor.TerminalB, transmitterLed.AnodeTerminal),
+            (transmitterLed.CathodeTerminal, transmitterSupply.NegativeTerminal),
+            (receiverSupply.PositiveTerminal, pullUp.TerminalA),
+            (pullUp.TerminalB, receiverContact.InputTerminal),
+            (receiverContact.OutputTerminal, receiverSupply.NegativeTerminal)
+        };
+
         private string CheckWiring()
         {
             bridged = groundJumper = false;
@@ -334,16 +345,7 @@ namespace ProjectSpark.Gameplay
                 if (a != b) parents[b] = a;
             }
 
-            var nets = new[]
-            {
-                (transmitterSupply.PositiveTerminal, sendContact.InputTerminal),
-                (sendContact.OutputTerminal, transmitterResistor.TerminalA),
-                (transmitterResistor.TerminalB, transmitterLed.AnodeTerminal),
-                (transmitterLed.CathodeTerminal, txReturn),
-                (receiverSupply.PositiveTerminal, pullUp.TerminalA),
-                (pullUp.TerminalB, receiverContact.InputTerminal),
-                (receiverContact.OutputTerminal, rxReturn)
-            };
+            var nets = GetAuthoredWireNets();
             var roots = new SparkTerminal[nets.Length];
             for (int i = 0; i < nets.Length; i++)
             {

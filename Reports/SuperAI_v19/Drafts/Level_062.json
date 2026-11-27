@@ -1,0 +1,224 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 62,
+    "layoutName": "Level_62_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "CTRL_POS"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "CTRL_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "PLL_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "PLL_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "DVR_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "DVR_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SENSE_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "SENSE_GND"
+        },
+        {
+            "fromId": "GRID_A",
+            "toId": "MAIN_A"
+        },
+        {
+            "fromId": "GRID_B",
+            "toId": "MAIN_B"
+        },
+        {
+            "fromId": "GRID_C",
+            "toId": "MAIN_C"
+        },
+        {
+            "fromId": "MAIN_OUT_A",
+            "toId": "INPUT_A"
+        },
+        {
+            "fromId": "MAIN_OUT_B",
+            "toId": "INPUT_B"
+        },
+        {
+            "fromId": "MAIN_OUT_C",
+            "toId": "INPUT_C"
+        },
+        {
+            "fromId": "INPUT_A",
+            "toId": "TX_A_IN"
+        },
+        {
+            "fromId": "INPUT_B",
+            "toId": "TX_B_IN"
+        },
+        {
+            "fromId": "INPUT_C",
+            "toId": "TX_C_IN"
+        },
+        {
+            "fromId": "TX_A_OUT",
+            "toId": "PROTECTED_A"
+        },
+        {
+            "fromId": "TX_B_OUT",
+            "toId": "PROTECTED_B"
+        },
+        {
+            "fromId": "TX_C_OUT",
+            "toId": "PROTECTED_C"
+        },
+        {
+            "fromId": "DVR_A",
+            "toId": "FILTER_A"
+        },
+        {
+            "fromId": "DVR_B",
+            "toId": "FILTER_B"
+        },
+        {
+            "fromId": "DVR_C",
+            "toId": "FILTER_C"
+        },
+        {
+            "fromId": "FILTER_A",
+            "toId": "TX_A_SEC"
+        },
+        {
+            "fromId": "FILTER_B",
+            "toId": "TX_B_SEC"
+        },
+        {
+            "fromId": "FILTER_C",
+            "toId": "TX_C_SEC"
+        },
+        {
+            "fromId": "STORE_POS",
+            "toId": "CONVERTER_POS"
+        },
+        {
+            "fromId": "STORE_NEG",
+            "toId": "DC_NEG"
+        },
+        {
+            "fromId": "CONVERTER_OUT",
+            "toId": "DC_POS"
+        },
+        {
+            "fromId": "DC_POS",
+            "toId": "DVR_POS"
+        },
+        {
+            "fromId": "DC_NEG",
+            "toId": "DVR_NEG"
+        },
+        {
+            "fromId": "CTRL_PRE",
+            "toId": "PRECHARGE_CMD"
+        },
+        {
+            "fromId": "LINK_OUT",
+            "toId": "CTRL_LINK"
+        },
+        {
+            "fromId": "INPUT_A",
+            "toId": "INPUT_VA"
+        },
+        {
+            "fromId": "INPUT_B",
+            "toId": "INPUT_VB"
+        },
+        {
+            "fromId": "INPUT_C",
+            "toId": "INPUT_VC"
+        },
+        {
+            "fromId": "PROTECTED_A",
+            "toId": "OUTPUT_VA"
+        },
+        {
+            "fromId": "PROTECTED_B",
+            "toId": "OUTPUT_VB"
+        },
+        {
+            "fromId": "PROTECTED_C",
+            "toId": "OUTPUT_VC"
+        },
+        {
+            "fromId": "INPUT_SENSOR_OUT",
+            "toId": "PLL_IN"
+        },
+        {
+            "fromId": "INPUT_CT",
+            "toId": "CTRL_INPUT_I"
+        },
+        {
+            "fromId": "OUTPUT_CT",
+            "toId": "CTRL_OUTPUT_I"
+        },
+        {
+            "fromId": "PROTECTED_A",
+            "toId": "MOTOR_A"
+        },
+        {
+            "fromId": "PROTECTED_B",
+            "toId": "MOTOR_B"
+        },
+        {
+            "fromId": "PROTECTED_C",
+            "toId": "MOTOR_C"
+        },
+        {
+            "fromId": "PROTECTED_A",
+            "toId": "SENSITIVE_IN"
+        },
+        {
+            "fromId": "DISTURBANCE_BUS",
+            "toId": "HEAVY_IN"
+        },
+        {
+            "fromId": "CTRL_EVENT",
+            "toId": "EVENT_CMD"
+        },
+        {
+            "fromId": "CTRL_BYPASS",
+            "toId": "BYPASS_CMD"
+        },
+        {
+            "fromId": "PROTECTION_OUT",
+            "toId": "CTRL_PROTECT"
+        },
+        {
+            "fromId": "PLL_OUT",
+            "toId": "CTRL_PHASE"
+        },
+        {
+            "fromId": "BYPASS_AUX",
+            "toId": "CTRL_AUX"
+        },
+        {
+            "fromId": "GUARD_NC",
+            "toId": "CTRL_SAFE"
+        },
+        {
+            "fromId": "INJECTION_V_FEEDBACK",
+            "toId": "DVR_V_IN"
+        }
+    ]
+}

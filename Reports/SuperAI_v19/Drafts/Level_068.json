@@ -1,0 +1,320 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 68,
+    "layoutName": "Level_68_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "PLC_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "PLC_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "IO_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "IO_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SAFE_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "SAFE_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "RTD_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "RTD_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "PID_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "PID_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "ENERGY_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "ENERGY_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "DRIVE_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "DRIVE_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "HEATER_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "HEATER_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "METER_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "METER_GND"
+        },
+        {
+            "fromId": "PLC_H_RUN",
+            "toId": "HOT_EN"
+        },
+        {
+            "fromId": "PLC_H_REF",
+            "toId": "HOT_CMD"
+        },
+        {
+            "fromId": "HOT_RPM",
+            "toId": "IO_H_RPM"
+        },
+        {
+            "fromId": "HOT_STATUS",
+            "toId": "PLC_H_OK"
+        },
+        {
+            "fromId": "HOT_TRIP",
+            "toId": "SAFE_H_TRIP"
+        },
+        {
+            "fromId": "PLC_C_RUN",
+            "toId": "COLD_EN"
+        },
+        {
+            "fromId": "PLC_C_REF",
+            "toId": "COLD_CMD"
+        },
+        {
+            "fromId": "COLD_RPM",
+            "toId": "IO_C_RPM"
+        },
+        {
+            "fromId": "COLD_TRIP",
+            "toId": "SAFE_C_TRIP"
+        },
+        {
+            "fromId": "PLC_P_RUN",
+            "toId": "PROD_EN"
+        },
+        {
+            "fromId": "PLC_P_REF",
+            "toId": "PROD_CMD"
+        },
+        {
+            "fromId": "PROD_RPM",
+            "toId": "IO_P_RPM"
+        },
+        {
+            "fromId": "PROD_STATUS",
+            "toId": "PLC_P_OK"
+        },
+        {
+            "fromId": "SAFE_HEAT",
+            "toId": "HEAT_EN"
+        },
+        {
+            "fromId": "PID_HEAT",
+            "toId": "HEAT_CMD"
+        },
+        {
+            "fromId": "HEAT_KW",
+            "toId": "IO_HEAT_KW"
+        },
+        {
+            "fromId": "HEAT_LIMIT",
+            "toId": "SAFE_LIMIT"
+        },
+        {
+            "fromId": "HEAT_TRIP",
+            "toId": "SAFE_HEAT_TRIP"
+        },
+        {
+            "fromId": "INLET_RTD",
+            "toId": "PID_INLET"
+        },
+        {
+            "fromId": "HOT_RTD",
+            "toId": "PID_HOT"
+        },
+        {
+            "fromId": "COLD_RTD",
+            "toId": "IO_COLD"
+        },
+        {
+            "fromId": "BUFFER_RTD",
+            "toId": "ENERGY_BUF"
+        },
+        {
+            "fromId": "RTD_OK",
+            "toId": "PLC_RTD_OK"
+        },
+        {
+            "fromId": "PLC_H_VALVE",
+            "toId": "HV_CMD"
+        },
+        {
+            "fromId": "HV_POS",
+            "toId": "IO_H_VALVE"
+        },
+        {
+            "fromId": "PLC_C_VALVE",
+            "toId": "CV_CMD"
+        },
+        {
+            "fromId": "CV_POS",
+            "toId": "IO_C_VALVE"
+        },
+        {
+            "fromId": "PLC_MIX",
+            "toId": "MIX_CMD"
+        },
+        {
+            "fromId": "MIX_POS",
+            "toId": "IO_MIX"
+        },
+        {
+            "fromId": "PLC_BYPASS",
+            "toId": "BYP_CMD"
+        },
+        {
+            "fromId": "BYP_POS",
+            "toId": "IO_BYPASS"
+        },
+        {
+            "fromId": "SAFE_ISO",
+            "toId": "ISO_CMD"
+        },
+        {
+            "fromId": "ISO_POS",
+            "toId": "SAFE_ISO_FB"
+        },
+        {
+            "fromId": "FLOW_P",
+            "toId": "PID_P_FLOW"
+        },
+        {
+            "fromId": "FLOW_H",
+            "toId": "SAFE_H_FLOW"
+        },
+        {
+            "fromId": "FLOW_C",
+            "toId": "SAFE_C_FLOW"
+        },
+        {
+            "fromId": "HX_DP",
+            "toId": "ENERGY_DP"
+        },
+        {
+            "fromId": "HX_FLUX",
+            "toId": "ENERGY_FLUX"
+        },
+        {
+            "fromId": "ESTOP_NC",
+            "toId": "SAFE_STOP_IN"
+        },
+        {
+            "fromId": "OVERTEMP",
+            "toId": "SAFE_OT"
+        },
+        {
+            "fromId": "PLC_RESET",
+            "toId": "SAFE_RESET"
+        },
+        {
+            "fromId": "HOT_RPM",
+            "toId": "HMI_H_RPM"
+        },
+        {
+            "fromId": "COLD_RPM",
+            "toId": "HMI_C_RPM"
+        },
+        {
+            "fromId": "PROD_RPM",
+            "toId": "HMI_P_RPM"
+        },
+        {
+            "fromId": "HEAT_KW",
+            "toId": "ENERGY_KW"
+        },
+        {
+            "fromId": "INLET_RTD",
+            "toId": "HMI_INLET"
+        },
+        {
+            "fromId": "HOT_RTD",
+            "toId": "HMI_HOT"
+        },
+        {
+            "fromId": "COLD_RTD",
+            "toId": "HMI_COLD"
+        },
+        {
+            "fromId": "BUFFER_RTD",
+            "toId": "HMI_BUF"
+        },
+        {
+            "fromId": "FLOW_P",
+            "toId": "ENERGY_P_FLOW"
+        },
+        {
+            "fromId": "FLOW_H",
+            "toId": "HMI_H_FLOW"
+        },
+        {
+            "fromId": "FLOW_C",
+            "toId": "HMI_C_FLOW"
+        },
+        {
+            "fromId": "HX_DP",
+            "toId": "FOUL_DP"
+        },
+        {
+            "fromId": "HX_FLUX",
+            "toId": "HX_RECOVERY"
+        },
+        {
+            "fromId": "ENERGY_FLUX",
+            "toId": "HMI_RECOVERY"
+        },
+        {
+            "fromId": "PLC_RTD_OK",
+            "toId": "PID_PERMIT"
+        },
+        {
+            "fromId": "SAFE_ISO",
+            "toId": "HMI_ISO"
+        },
+        {
+            "fromId": "FOUL_DP",
+            "toId": "FOUL_TEST"
+        },
+        {
+            "fromId": "PLC_P_OK",
+            "toId": "INLET_TEST"
+        },
+        {
+            "fromId": "OUTLET_RTD_OUT",
+            "toId": "PID_PRODUCT_TEMP_IN"
+        }
+    ]
+}

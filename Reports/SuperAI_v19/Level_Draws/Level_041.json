@@ -1,0 +1,51 @@
+{
+  "level": 41,
+  "levelId": "level_41",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_41_Layout/Level_41_Analog_Output_Layout.prefab",
+  "layoutRevision": "118435CF98FD749B9CE4CBFDDE1DE75FD167FCFD91F3DBF4FF8D87D6C93B5546",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel41AnalogOutput.cs#GetAuthoredWireNets",
+  "terminalBindings": 17,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "9 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "BIT2",
+      "toId": "B2_R_IN"
+    },
+    {
+      "fromId": "BIT1",
+      "toId": "B1_R_IN"
+    },
+    {
+      "fromId": "BIT0",
+      "toId": "B0_R_IN"
+    },
+    {
+      "fromId": "B2_R_OUT",
+      "toId": "LINK21_IN"
+    },
+    {
+      "fromId": "LINK21_OUT",
+      "toId": "B1_R_OUT"
+    },
+    {
+      "fromId": "LINK21_OUT",
+      "toId": "LINK10_IN"
+    },
+    {
+      "fromId": "LINK10_OUT",
+      "toId": "B0_R_OUT"
+    },
+    {
+      "fromId": "LINK10_OUT",
+      "toId": "TERM_R_IN"
+    },
+    {
+      "fromId": "TERM_OUT",
+      "toId": "DAC_RETURN"
+    }
+  ]
+}

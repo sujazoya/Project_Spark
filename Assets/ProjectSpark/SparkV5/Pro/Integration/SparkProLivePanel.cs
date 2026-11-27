@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ProjectSpark.AAAArchitecture;
 using ProjectSpark.UIManagement;
 using TMPro;
@@ -36,6 +36,11 @@ namespace ProjectSpark.SparkV5.Pro
         SparkProVoiceInput microphone;
         SparkUIManager manager;
         SparkLiveAdjustableWindow adjustableWindow;
+        SparkNexusPanel nexus;
+        Button chatTab, nexusTab;
+        bool showNexus;
+
+        internal SparkNexusPanel Nexus => nexus;
         GameObject previousFocus;
         readonly float[] outputSamples = new float[256];
         float nextDisplayUpdate;
@@ -75,6 +80,7 @@ namespace ProjectSpark.SparkV5.Pro
             manager = ui;
             microphone = executive.Microphone;
             adjustableWindow = SparkLiveAdjustableWindow.Attach(this, shell);
+            InstallNexusTabs();
             talk.Bind(microphone);
             if (microphone)
             {
@@ -82,7 +88,11 @@ namespace ProjectSpark.SparkV5.Pro
                 silence.SetValueWithoutNotify(microphone.EndSilence);
             }
             close.onClick.AddListener(() => manager.Close(PanelId));
-            options.onClick.AddListener(() => settings.gameObject.SetActive(!settings.gameObject.activeSelf));
+            options.onClick.AddListener(() =>
+            {
+                if (showNexus) SelectNexus(false);
+                settings.gameObject.SetActive(!settings.gameObject.activeSelf);
+            });
             send.onClick.AddListener(SubmitText);
             input.onSubmit.AddListener(_ => SubmitText());
             handsFree.onClick.AddListener(ToggleListening);
@@ -96,6 +106,38 @@ namespace ProjectSpark.SparkV5.Pro
             silence.onValueChanged.AddListener(value => microphone?.SetEndSilence(value));
         }
 
+        private void InstallNexusTabs()
+        {
+            if (!shell || !adjustableWindow) return;
+            var tabs = Region(shell, "Spark Live pages", 16, 0, 16, 0, 1, 1, -111, -76);
+            chatTab = MakeButton(tabs, "Chat tab", "Chat", out _, () => SelectNexus(false));
+            Anchor((RectTransform)chatTab.transform, 0, 0, .5f, 1, 0, 0, -3, 0);
+            nexusTab = MakeButton(tabs, "NEXUS tab", "NEXUS", out _, () => SelectNexus(true));
+            Anchor((RectTransform)nexusTab.transform, .5f, 0, 1, 1, 3, 0, 0, 0);
+
+            foreach (string name in new[] { "Voice visualizer", "Conversation", "Voice settings" })
+            {
+                if (!(shell.Find(name) is RectTransform section)) continue;
+                section.offsetMax -= new Vector2(0, 39);
+                if (name == "Voice visualizer") section.offsetMin -= new Vector2(0, 39);
+            }
+
+            var mount = Region(shell, "NEXUS page", 16, 116, 16, 17);
+            nexus = SparkNexusPanel.Create(executive, mount);
+            adjustableWindow.RegisterPage(tabs.gameObject, mount.gameObject, nexus.SetVisible);
+            SelectNexus(false);
+        }
+
+        internal void SelectNexus(bool value)
+        {
+            if (!nexus || !adjustableWindow) return;
+            showNexus = value;
+            settings.gameObject.SetActive(false);
+            adjustableWindow.SetNexusPage(value);
+            if (chatTab) chatTab.image.color = value ? Surface : Cyan * .43f;
+            if (nexusTab) nexusTab.image.color = value ? Cyan * .43f : Surface;
+        }
+
         private void SetVisible(bool visible)
         {
             if (visible)
@@ -104,7 +146,8 @@ namespace ProjectSpark.SparkV5.Pro
                 gameObject.SetActive(true);
                 Canvas.ForceUpdateCanvases();
                 Fit();
-                close.Select();
+                if (showNexus && nexusTab) nexusTab.Select();
+                else close.Select();
             }
             else if (gameObject.activeSelf)
             {

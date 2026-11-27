@@ -1,0 +1,455 @@
+{
+  "level": 76,
+  "levelId": "level_76",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_76_Layout/Level_76_Layout.prefab",
+  "layoutRevision": "6BBF57FEE5A8DEA675C3BA48879D3BD01784CC59CAEDF1254D1F8D0496256CE8",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel76Process.cs#Wires",
+  "terminalBindings": 170,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "110 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "PLC_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "PLC_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "IO_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "IO_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "WAVE_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "WAVE_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "RECT_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "RECT_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "REF_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "REF_GND"
+    },
+    {
+      "fromId": "WAVE_I_CMD",
+      "toId": "RECT_I_REQ"
+    },
+    {
+      "fromId": "ANODE_SUPPLY",
+      "toId": "ANODE_POWER"
+    },
+    {
+      "fromId": "CATHODE_RETURN",
+      "toId": "CATHODE_POWER"
+    },
+    {
+      "fromId": "SHUNT_OUT",
+      "toId": "IO_SHUNT"
+    },
+    {
+      "fromId": "CURRENT_OUT",
+      "toId": "WAVE_CURRENT"
+    },
+    {
+      "fromId": "CELL_V_OUT",
+      "toId": "IO_CELL_V"
+    },
+    {
+      "fromId": "ZONE_A_CMD",
+      "toId": "ANODE_A"
+    },
+    {
+      "fromId": "ZONE_B_CMD",
+      "toId": "ANODE_B"
+    },
+    {
+      "fromId": "EDGE_CMD",
+      "toId": "RING_CTRL"
+    },
+    {
+      "fromId": "CONTACT_OHM",
+      "toId": "IO_CONTACT"
+    },
+    {
+      "fromId": "DIST_REQ",
+      "toId": "ANODE_DIST"
+    },
+    {
+      "fromId": "POWER_READY",
+      "toId": "IO_POWER"
+    },
+    {
+      "fromId": "RECT_PERMIT",
+      "toId": "RECT_ENABLE"
+    },
+    {
+      "fromId": "OVERCURRENT",
+      "toId": "IO_OVER_I"
+    },
+    {
+      "fromId": "CONTACT_OK",
+      "toId": "PLC_CONTACT"
+    },
+    {
+      "fromId": "ZONE_I_OUT",
+      "toId": "IO_ZONE_I"
+    },
+    {
+      "fromId": "PLC_PUMP",
+      "toId": "PUMP_RUN"
+    },
+    {
+      "fromId": "PUMP_FLOW",
+      "toId": "IO_PUMP_FLOW"
+    },
+    {
+      "fromId": "FLOW_OUT",
+      "toId": "IO_FLOW"
+    },
+    {
+      "fromId": "FLOW_CMD",
+      "toId": "FLOW_CONTROLLER"
+    },
+    {
+      "fromId": "MANIFOLD_OUT",
+      "toId": "NOZZLE_FEED"
+    },
+    {
+      "fromId": "NOZZLE_OK",
+      "toId": "IO_NOZZLE"
+    },
+    {
+      "fromId": "FILTER_OK",
+      "toId": "IO_FILTER"
+    },
+    {
+      "fromId": "PLC_FILTER",
+      "toId": "FILTER_RUN"
+    },
+    {
+      "fromId": "RESERVOIR_FEED",
+      "toId": "PUMP_IN"
+    },
+    {
+      "fromId": "RETURN_FLOW",
+      "toId": "RESERVOIR_RETURN"
+    },
+    {
+      "fromId": "DEGAS_OK",
+      "toId": "IO_DEGAS"
+    },
+    {
+      "fromId": "PLC_DEGAS",
+      "toId": "DEGAS_RUN"
+    },
+    {
+      "fromId": "PRESSURE_OUT",
+      "toId": "IO_PRESSURE"
+    },
+    {
+      "fromId": "BUBBLE_OUT",
+      "toId": "IO_BUBBLES"
+    },
+    {
+      "fromId": "LEAK_OUT",
+      "toId": "IO_LEAK"
+    },
+    {
+      "fromId": "WASTE_LEVEL",
+      "toId": "IO_WASTE"
+    },
+    {
+      "fromId": "TEMP_OUT",
+      "toId": "IO_TEMP"
+    },
+    {
+      "fromId": "PLC_HEAT",
+      "toId": "HEAT_CMD"
+    },
+    {
+      "fromId": "HEAT_OK",
+      "toId": "IO_HEAT"
+    },
+    {
+      "fromId": "COND_OUT",
+      "toId": "IO_COND"
+    },
+    {
+      "fromId": "CONC_OUT",
+      "toId": "IO_CONC"
+    },
+    {
+      "fromId": "PLC_DOSE",
+      "toId": "ADDITIVE_CMD"
+    },
+    {
+      "fromId": "SUP_AVAIL",
+      "toId": "IO_SUP"
+    },
+    {
+      "fromId": "ACC_AVAIL",
+      "toId": "IO_ACC"
+    },
+    {
+      "fromId": "LEVEL_AVAIL",
+      "toId": "IO_LEVEL"
+    },
+    {
+      "fromId": "DOSE_OUT",
+      "toId": "IO_ADDITIVE"
+    },
+    {
+      "fromId": "ADD_FEED",
+      "toId": "BATH_DOSE"
+    },
+    {
+      "fromId": "PLC_MIX",
+      "toId": "MIXER_RUN"
+    },
+    {
+      "fromId": "MIXER_OK",
+      "toId": "IO_MIX"
+    },
+    {
+      "fromId": "THERMAL_FB",
+      "toId": "PLC_TEMP"
+    },
+    {
+      "fromId": "PLC_ROBOT",
+      "toId": "ROBOT_RUN"
+    },
+    {
+      "fromId": "ROBOT_OK",
+      "toId": "IO_ROBOT"
+    },
+    {
+      "fromId": "CASSETTE_RDY",
+      "toId": "IO_CASSETTE"
+    },
+    {
+      "fromId": "LOAD_REQ",
+      "toId": "LOAD_OP"
+    },
+    {
+      "fromId": "LIFT_SET",
+      "toId": "LIFT_CMD"
+    },
+    {
+      "fromId": "LIFT_POS",
+      "toId": "IO_LIFT"
+    },
+    {
+      "fromId": "RPM_SET",
+      "toId": "SPINDLE_CMD"
+    },
+    {
+      "fromId": "RPM_OUT",
+      "toId": "IO_RPM"
+    },
+    {
+      "fromId": "PLC_WET",
+      "toId": "PREWET_RUN"
+    },
+    {
+      "fromId": "PREWET_DONE",
+      "toId": "IO_WET"
+    },
+    {
+      "fromId": "IO_DEGAS",
+      "toId": "BUBBLE_READY"
+    },
+    {
+      "fromId": "IO_CASSETTE",
+      "toId": "SEED_CHECK"
+    },
+    {
+      "fromId": "LOAD_OP",
+      "toId": "CHAMBER_CLOSE"
+    },
+    {
+      "fromId": "IO_LIFT",
+      "toId": "CHAMBER_CLOSED"
+    },
+    {
+      "fromId": "CURRENT_OUT",
+      "toId": "POT_I"
+    },
+    {
+      "fromId": "CELL_V_OUT",
+      "toId": "POT_V"
+    },
+    {
+      "fromId": "IO_ZONE_I",
+      "toId": "THICKNESS_OUT"
+    },
+    {
+      "fromId": "WAVE_CURRENT",
+      "toId": "LOOP_VALID"
+    },
+    {
+      "fromId": "IO_SHUNT",
+      "toId": "TEST_OHM_OUT"
+    },
+    {
+      "fromId": "REFERENCE_ELECTRODE_POTENTIAL_OUT",
+      "toId": "ELECTROCHEMICAL_CONTROLLER_REFERENCE_FEEDBACK_IN"
+    },
+    {
+      "fromId": "THICKNESS_OUT",
+      "toId": "VOID_OUT"
+    },
+    {
+      "fromId": "IO_ZONE_I",
+      "toId": "FILL_OUT"
+    },
+    {
+      "fromId": "THICKNESS_OUT",
+      "toId": "OVERBURDEN_OUT"
+    },
+    {
+      "fromId": "FILL_OUT",
+      "toId": "ROUGHNESS_OUT"
+    },
+    {
+      "fromId": "IO_CONTACT",
+      "toId": "CONTACT_INTEGRITY"
+    },
+    {
+      "fromId": "SEED_CHECK",
+      "toId": "SEED_OK"
+    },
+    {
+      "fromId": "FILL_OUT",
+      "toId": "HOLO_FILL"
+    },
+    {
+      "fromId": "LOOP_VALID",
+      "toId": "REFERENCE_VALID_STATUS"
+    },
+    {
+      "fromId": "ESTOP_NC",
+      "toId": "SAFE_STOP_IN"
+    },
+    {
+      "fromId": "IO_LEAK",
+      "toId": "LEAK_TRIP"
+    },
+    {
+      "fromId": "RECT_PERMIT",
+      "toId": "RECT_DISABLE"
+    },
+    {
+      "fromId": "IO_RPM",
+      "toId": "SPINDLE_LOCK"
+    },
+    {
+      "fromId": "IO_LIFT",
+      "toId": "LIFT_LOCK"
+    },
+    {
+      "fromId": "IO_PUMP_FLOW",
+      "toId": "PUMP_LOCK"
+    },
+    {
+      "fromId": "LOOP_VALID",
+      "toId": "POT_INHIBIT"
+    },
+    {
+      "fromId": "IO_OVER_I",
+      "toId": "OVER_I_TRIP"
+    },
+    {
+      "fromId": "IO_PRESSURE",
+      "toId": "OVER_P_TRIP"
+    },
+    {
+      "fromId": "IO_TEMP",
+      "toId": "OVER_T_TRIP"
+    },
+    {
+      "fromId": "SAFE_STOP_IN",
+      "toId": "SAFETY_ALARM"
+    },
+    {
+      "fromId": "IO_OVER_I",
+      "toId": "FAULT_LATCH"
+    },
+    {
+      "fromId": "IO_CELL_V",
+      "toId": "ANALOG_SAMPLE"
+    },
+    {
+      "fromId": "PLC_PUMP",
+      "toId": "IO_ENABLE"
+    },
+    {
+      "fromId": "WAVE_CURRENT",
+      "toId": "WAVE_PHASE"
+    },
+    {
+      "fromId": "WAVE_I_CMD",
+      "toId": "WAVE_START"
+    },
+    {
+      "fromId": "ROBOT_RUN",
+      "toId": "OPERATOR_CMD"
+    },
+    {
+      "fromId": "IO_POWER",
+      "toId": "PLC_STATUS"
+    },
+    {
+      "fromId": "LOOP_VALID",
+      "toId": "SCADA_REF"
+    },
+    {
+      "fromId": "IO_SHUNT",
+      "toId": "SCADA_CURRENT"
+    },
+    {
+      "fromId": "IO_FLOW",
+      "toId": "SCADA_FLOW"
+    },
+    {
+      "fromId": "FILL_OUT",
+      "toId": "SCADA_FILL"
+    },
+    {
+      "fromId": "VOID_OUT",
+      "toId": "SCADA_VOID"
+    },
+    {
+      "fromId": "PLC_STATUS",
+      "toId": "OBJECTIVE_EVENT"
+    },
+    {
+      "fromId": "WAVE_PHASE",
+      "toId": "WAVE_TELEMETRY"
+    },
+    {
+      "fromId": "TEST_OHM_OUT",
+      "toId": "CERT_RESULT"
+    }
+  ]
+}

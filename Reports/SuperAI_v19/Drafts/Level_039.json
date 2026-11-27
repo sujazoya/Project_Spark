@@ -1,0 +1,36 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 39,
+    "layoutName": "Level_39_Isolation_Gap_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "TX_POS",
+            "toId": "SEND_IN"
+        },
+        {
+            "fromId": "SEND_OUT",
+            "toId": "TX_R_IN"
+        },
+        {
+            "fromId": "TX_R_OUT",
+            "toId": "OPTO_A"
+        },
+        {
+            "fromId": "OPTO_K",
+            "toId": "TX_RETURN"
+        },
+        {
+            "fromId": "RX_POS",
+            "toId": "PULLUP_IN"
+        },
+        {
+            "fromId": "PULLUP_OUT",
+            "toId": "OPTO_C"
+        },
+        {
+            "fromId": "OPTO_E",
+            "toId": "RX_RETURN"
+        }
+    ]
+}

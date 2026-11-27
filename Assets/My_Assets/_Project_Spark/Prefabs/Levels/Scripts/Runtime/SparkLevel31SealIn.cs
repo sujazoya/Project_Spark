@@ -271,6 +271,16 @@ namespace ProjectSpark.Gameplay
             }
         }
 
+        internal SparkTerminal[][] GetAuthoredWireNets() => new[] {
+            new[] { source.PositiveTerminal, main.InputTerminal },
+            new[] { main.OutputTerminal, stop.InputTerminal, runContact.InputTerminal },
+            new[] { stop.OutputTerminal, start.InputTerminal, relay.CommonTerminal },
+            new[] { start.OutputTerminal, relay.CoilPositiveTerminal, relay.NormallyOpenTerminal },
+            new[] { source.NegativeTerminal, relay.CoilNegativeTerminal, motor.NegativeTerminal },
+            new[] { runContact.OutputTerminal, motor.PositiveTerminal },
+            new[] { relay.NormallyClosedTerminal }
+        };
+
         private string CheckWiring(SparkElectricalNetworkGraph graph)
         {
             if (graph == null) return "Waiting for the solved circuit graph.";
@@ -289,15 +299,7 @@ namespace ProjectSpark.Gameplay
                 if (aRoot != bRoot) wires[bRoot] = aRoot;
             }
 
-            var nets = new[] {
-                new[] { source.PositiveTerminal, main.InputTerminal },
-                new[] { main.OutputTerminal, stop.InputTerminal, runContact.InputTerminal },
-                new[] { stop.OutputTerminal, start.InputTerminal, relay.CommonTerminal },
-                new[] { start.OutputTerminal, relay.CoilPositiveTerminal, relay.NormallyOpenTerminal },
-                new[] { source.NegativeTerminal, relay.CoilNegativeTerminal, motor.NegativeTerminal },
-                new[] { runContact.OutputTerminal, motor.PositiveTerminal },
-                new[] { relay.NormallyClosedTerminal }
-            };
+            var nets = GetAuthoredWireNets();
             var used = new Dictionary<int, string>();
             foreach (var net in nets)
             {

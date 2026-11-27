@@ -1,0 +1,471 @@
+{
+  "level": 77,
+  "levelId": "level_77",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_77_Layout/Level_77_Layout.prefab",
+  "layoutRevision": "64CAEA5D0D506E05ABB9C0F2FD6430EB967F812A4185A5CC9C792453C3A96485",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel77Process.cs#Wires",
+  "terminalBindings": 176,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "114 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "PLC_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "PLC_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "IO_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "IO_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "DRV_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "DRV_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "OPT_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "OPT_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "SAFE_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "SAFE_GND"
+    },
+    {
+      "fromId": "BULK_RPM_CMD",
+      "toId": "BULK_DRV_SET"
+    },
+    {
+      "fromId": "BULK_RPM_OUT",
+      "toId": "PLC_BULK_RPM"
+    },
+    {
+      "fromId": "BULK_SPIN_CMD",
+      "toId": "BULK_SPIN_SET"
+    },
+    {
+      "fromId": "BULK_SPIN_OUT",
+      "toId": "PLC_BULK_SPIN"
+    },
+    {
+      "fromId": "BULK_LIFT_CMD",
+      "toId": "BULK_LIFT_SET"
+    },
+    {
+      "fromId": "BULK_LIFT_OUT",
+      "toId": "PLC_BULK_LIFT"
+    },
+    {
+      "fromId": "BULK_FORCE_OUT",
+      "toId": "PLC_BULK_FORCE"
+    },
+    {
+      "fromId": "ZONE_FORCE_CMD",
+      "toId": "ZONE_FORCE_SET"
+    },
+    {
+      "fromId": "ZONE_FORCE_OUT",
+      "toId": "PLC_ZONE_FORCE"
+    },
+    {
+      "fromId": "SOFT_RPM_CMD",
+      "toId": "SOFT_DRV_SET"
+    },
+    {
+      "fromId": "SOFT_RPM_OUT",
+      "toId": "PLC_SOFT_RPM"
+    },
+    {
+      "fromId": "SOFT_SPIN_CMD",
+      "toId": "SOFT_SPIN_SET"
+    },
+    {
+      "fromId": "SOFT_FORCE_OUT",
+      "toId": "PLC_SOFT_FORCE"
+    },
+    {
+      "fromId": "BARR_RPM_CMD",
+      "toId": "BARR_DRV_SET"
+    },
+    {
+      "fromId": "BARR_RPM_OUT",
+      "toId": "PLC_BARR_RPM"
+    },
+    {
+      "fromId": "BARR_LIFT_CMD",
+      "toId": "BARR_LIFT_SET"
+    },
+    {
+      "fromId": "BARR_LIFT_OUT",
+      "toId": "PLC_BARR_LIFT"
+    },
+    {
+      "fromId": "TORQUE_OUT",
+      "toId": "PLC_TORQUE"
+    },
+    {
+      "fromId": "SLURRY_PUMP_CMD",
+      "toId": "SLURRY_PUMP_RUN"
+    },
+    {
+      "fromId": "SLURRY_PUMP_OUT",
+      "toId": "PLC_SLURRY_PUMP"
+    },
+    {
+      "fromId": "SLURRY_FLOW_OUT",
+      "toId": "PLC_SLURRY_FLOW"
+    },
+    {
+      "fromId": "SLURRY_NOZZLE_CMD",
+      "toId": "SLURRY_DISPENSE"
+    },
+    {
+      "fromId": "SLURRY_NOZZLE_OUT",
+      "toId": "PLC_SLURRY_NOZZLE"
+    },
+    {
+      "fromId": "PAD_CMD",
+      "toId": "PAD_RUN"
+    },
+    {
+      "fromId": "PAD_READY",
+      "toId": "PLC_PAD_READY"
+    },
+    {
+      "fromId": "BARR_PUMP_CMD",
+      "toId": "BARR_PUMP_RUN"
+    },
+    {
+      "fromId": "BARR_PUMP_OUT",
+      "toId": "PLC_BARR_PUMP"
+    },
+    {
+      "fromId": "BARR_FLOW_OUT",
+      "toId": "PLC_BARR_FLOW"
+    },
+    {
+      "fromId": "BARR_NOZZLE_OUT",
+      "toId": "PLC_BARR_NOZZLE"
+    },
+    {
+      "fromId": "SOFT_FLOW_CMD",
+      "toId": "SOFT_MANIFOLD"
+    },
+    {
+      "fromId": "SOFT_FLOW_OUT",
+      "toId": "PLC_SOFT_FLOW"
+    },
+    {
+      "fromId": "BRUSH_CMD",
+      "toId": "BRUSH_RUN"
+    },
+    {
+      "fromId": "BRUSH_RPM_OUT",
+      "toId": "PLC_BRUSH_RPM"
+    },
+    {
+      "fromId": "MEGA_CMD",
+      "toId": "MEGA_RUN"
+    },
+    {
+      "fromId": "RINSE_READY",
+      "toId": "PLC_RINSE"
+    },
+    {
+      "fromId": "DRY_RPM_OUT",
+      "toId": "PLC_DRY_RPM"
+    },
+    {
+      "fromId": "EDDY_OUT",
+      "toId": "BULK_THICKNESS"
+    },
+    {
+      "fromId": "COPPER_OPT_OUT",
+      "toId": "BULK_CLEAR_IN"
+    },
+    {
+      "fromId": "FORCE_SAMPLE",
+      "toId": "BULK_FORCE_IN"
+    },
+    {
+      "fromId": "PAD_WEAR_OUT",
+      "toId": "PAD_WEAR_IN"
+    },
+    {
+      "fromId": "COPPER_MAP_OUT",
+      "toId": "THICK_TELEM"
+    },
+    {
+      "fromId": "LOAD_TORQUE_OUT",
+      "toId": "TORQUE_TELEM"
+    },
+    {
+      "fromId": "THERMAL_OUT",
+      "toId": "PLC_TEMP"
+    },
+    {
+      "fromId": "BARRIER_MAP_OUT",
+      "toId": "PLC_BARR_MAP"
+    },
+    {
+      "fromId": "BARRIER_ENDPOINT_SPECTROMETER_SIGNAL_OUT",
+      "toId": "THREE_STAGE_CMP_CONTROLLER_ENDPOINT_IN"
+    },
+    {
+      "fromId": "WINDOW_HEALTH_OUT",
+      "toId": "OPTICS_READY"
+    },
+    {
+      "fromId": "SPECTRAL_TELEM_OUT",
+      "toId": "SCADA_SPECTRAL"
+    },
+    {
+      "fromId": "PROFILE_OUT",
+      "toId": "PLC_PROFILE"
+    },
+    {
+      "fromId": "RESIDUE_OUT",
+      "toId": "PLC_RESIDUE"
+    },
+    {
+      "fromId": "BULK_DONE_OUT",
+      "toId": "STAGE_B_PERMIT"
+    },
+    {
+      "fromId": "OPTICAL_HEALTH_OUT",
+      "toId": "OPTICAL_SAFETY_IN"
+    },
+    {
+      "fromId": "BARR_RETRACT_CMD",
+      "toId": "BARR_RETRACT"
+    },
+    {
+      "fromId": "SELECTIVITY_CMD",
+      "toId": "SELECTIVITY_START"
+    },
+    {
+      "fromId": "RATIO_OUT",
+      "toId": "PLC_RATIO"
+    },
+    {
+      "fromId": "BARR_FLUID_READY",
+      "toId": "PLC_BARR_FLUID"
+    },
+    {
+      "fromId": "BARR_FEED_CMD",
+      "toId": "BARR_FLUID_SET"
+    },
+    {
+      "fromId": "BARR_FLOW_SAMPLE",
+      "toId": "SELECT_FLOW_IN"
+    },
+    {
+      "fromId": "SOFT_FLUID_OUT",
+      "toId": "SELECT_SOFT_IN"
+    },
+    {
+      "fromId": "PLC_RATIO",
+      "toId": "SELECT_ALARM"
+    },
+    {
+      "fromId": "PLC_BARR_MAP",
+      "toId": "SELECT_CLEAR"
+    },
+    {
+      "fromId": "THICK_TELEM",
+      "toId": "SELECT_COPPER"
+    },
+    {
+      "fromId": "PLC_TEMP",
+      "toId": "SELECT_TEMP"
+    },
+    {
+      "fromId": "PLC_RATIO",
+      "toId": "SCADA_RATIO"
+    },
+    {
+      "fromId": "SELECT_SOFT_IN",
+      "toId": "SOFT_MODE"
+    },
+    {
+      "fromId": "SELECT_FLOW_IN",
+      "toId": "REMOVAL_RATIO"
+    },
+    {
+      "fromId": "POLISH_PERMIT",
+      "toId": "POLISH_ENABLE"
+    },
+    {
+      "fromId": "PLC_TEMP",
+      "toId": "CORROSION_RISK"
+    },
+    {
+      "fromId": "CORROSION_RISK",
+      "toId": "PROTECT_ENABLE"
+    },
+    {
+      "fromId": "PROTECT_ENABLE",
+      "toId": "PROTECT_STATUS"
+    },
+    {
+      "fromId": "PLC_RESIDUE",
+      "toId": "CLEAN_RESIDUE"
+    },
+    {
+      "fromId": "BRUSH_CMD",
+      "toId": "BRUSH_JOB"
+    },
+    {
+      "fromId": "PLC_BRUSH_RPM",
+      "toId": "BRUSH_DONE"
+    },
+    {
+      "fromId": "MEGA_CMD",
+      "toId": "MEGA_JOB"
+    },
+    {
+      "fromId": "MEGA_JOB",
+      "toId": "MEGA_DONE"
+    },
+    {
+      "fromId": "PLC_RINSE",
+      "toId": "RINSE_SUPPLY"
+    },
+    {
+      "fromId": "PLC_DRY_RPM",
+      "toId": "DRY_DONE"
+    },
+    {
+      "fromId": "CLEAN_RESIDUE",
+      "toId": "DEFECT_COUNT"
+    },
+    {
+      "fromId": "DEFECT_COUNT",
+      "toId": "SCADA_CLEAN"
+    },
+    {
+      "fromId": "DEFECT_COUNT",
+      "toId": "INTERLINE_LEAK"
+    },
+    {
+      "fromId": "THICK_TELEM",
+      "toId": "VIA_KELVIN"
+    },
+    {
+      "fromId": "INTERLINE_LEAK",
+      "toId": "DIELECTRIC_TEST"
+    },
+    {
+      "fromId": "DEFECT_COUNT",
+      "toId": "SURFACE_DEFECTS"
+    },
+    {
+      "fromId": "PLC_PROFILE",
+      "toId": "GEOMETRY_MAP"
+    },
+    {
+      "fromId": "PLC_RESIDUE",
+      "toId": "CONDUCTIVE_MAP"
+    },
+    {
+      "fromId": "THICK_TELEM",
+      "toId": "INCOMING_SCAN"
+    },
+    {
+      "fromId": "VIA_KELVIN",
+      "toId": "SCADA_VIA"
+    },
+    {
+      "fromId": "INTERLINE_LEAK",
+      "toId": "SCADA_ISOLATION"
+    },
+    {
+      "fromId": "DIELECTRIC_TEST",
+      "toId": "SCADA_DIELECTRIC"
+    },
+    {
+      "fromId": "GEOMETRY_MAP",
+      "toId": "WAFER_CERT"
+    },
+    {
+      "fromId": "VIA_KELVIN",
+      "toId": "TEST_CAL"
+    },
+    {
+      "fromId": "ESTOP_NC",
+      "toId": "SAFE_STOP_IN"
+    },
+    {
+      "fromId": "SAFE_STOP_IN",
+      "toId": "BULK_SAFE_OFF"
+    },
+    {
+      "fromId": "SAFE_STOP_IN",
+      "toId": "SOFT_SAFE_OFF"
+    },
+    {
+      "fromId": "SAFE_STOP_IN",
+      "toId": "BARR_SAFE_OFF"
+    },
+    {
+      "fromId": "BULK_LIFT_CMD",
+      "toId": "BULK_SAFE_LIFT"
+    },
+    {
+      "fromId": "SOFT_SPIN_CMD",
+      "toId": "SOFT_SAFE_LIFT"
+    },
+    {
+      "fromId": "BARR_RETRACT",
+      "toId": "BARR_SAFE_LIFT"
+    },
+    {
+      "fromId": "OPTICAL_SAFETY_IN",
+      "toId": "SAFE_OPTICS"
+    },
+    {
+      "fromId": "BULK_DONE_OUT",
+      "toId": "STAGE_CONTROL"
+    },
+    {
+      "fromId": "SAFE_STOP_IN",
+      "toId": "SCADA_SAFE"
+    },
+    {
+      "fromId": "STAGE_CONTROL",
+      "toId": "OPERATOR_CMD"
+    },
+    {
+      "fromId": "OPERATOR_CMD",
+      "toId": "SCADA_PLC"
+    },
+    {
+      "fromId": "SCADA_PLC",
+      "toId": "OBJECTIVE_EVENT"
+    },
+    {
+      "fromId": "WAFER_CERT",
+      "toId": "SCADA_CERT"
+    }
+  ]
+}

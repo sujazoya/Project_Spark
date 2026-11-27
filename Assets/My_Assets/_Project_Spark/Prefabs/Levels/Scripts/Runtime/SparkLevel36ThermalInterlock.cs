@@ -402,6 +402,17 @@ namespace ProjectSpark.Gameplay
             if (button != null) button.interactable = enabled;
         }
 
+        internal SparkTerminal[][] GetAuthoredWireNets() => new[]
+        {
+            new[] { source.PositiveTerminal, pullUp.TerminalA, fanContact.InputTerminal, heaterContact.InputTerminal, faultContact.InputTerminal },
+            new[] { source.NegativeTerminal, sensorReturn, fan.NegativeTerminal, heater.TerminalB, faultLed.CathodeTerminal },
+            new[] { pullUp.TerminalB, sensorInput },
+            new[] { fanContact.OutputTerminal, fan.PositiveTerminal },
+            new[] { heaterContact.OutputTerminal, heater.TerminalA },
+            new[] { faultContact.OutputTerminal, ledResistor.TerminalA },
+            new[] { ledResistor.TerminalB, faultLed.AnodeTerminal }
+        };
+
         private string CheckWiring(SparkElectricalNetworkGraph graph)
         {
             if (graph == null) return "Waiting for the solved circuit graph.";
@@ -429,16 +440,7 @@ namespace ProjectSpark.Gameplay
                     !graph.TryGetPrimaryComponentTerminals(wire, out var a, out var b)) continue;
                 Join(a, b);
             }
-            var nets = new[]
-            {
-                new[] { source.PositiveTerminal, pullUp.TerminalA, fanContact.InputTerminal, heaterContact.InputTerminal, faultContact.InputTerminal },
-                new[] { source.NegativeTerminal, sensorReturn, fan.NegativeTerminal, heater.TerminalB, faultLed.CathodeTerminal },
-                new[] { pullUp.TerminalB, sensorInput },
-                new[] { fanContact.OutputTerminal, fan.PositiveTerminal },
-                new[] { heaterContact.OutputTerminal, heater.TerminalA },
-                new[] { faultContact.OutputTerminal, ledResistor.TerminalA },
-                new[] { ledResistor.TerminalB, faultLed.AnodeTerminal }
-            };
+            var nets = GetAuthoredWireNets();
             var used = new Dictionary<int, string>();
             foreach (var net in nets)
             {

@@ -1,0 +1,103 @@
+{
+  "level": 54,
+  "levelId": "level_54",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_54_Layout/Level_54_Layout.prefab",
+  "layoutRevision": "52DE4E8FA212A0C660E824570986D56794E79FD8ABD2676147F8D81E0900BAA0",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel54Critical.cs#Wires",
+  "terminalBindings": 36,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "22 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "CTRL_POS"
+    },
+    {
+      "fromId": "SUPPLY_NEG",
+      "toId": "CTRL_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "MDRV_POS"
+    },
+    {
+      "fromId": "SUPPLY_NEG",
+      "toId": "MDRV_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "XS_POS"
+    },
+    {
+      "fromId": "SUPPLY_NEG",
+      "toId": "XS_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "YS_POS"
+    },
+    {
+      "fromId": "SUPPLY_NEG",
+      "toId": "YS_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "DDRV_POS"
+    },
+    {
+      "fromId": "SUPPLY_NEG",
+      "toId": "DDRV_GND"
+    },
+    {
+      "fromId": "CTRL_MOTOR_PWM",
+      "toId": "MDRV_PWM"
+    },
+    {
+      "fromId": "MDRV_MPOS",
+      "toId": "MOTOR_POS"
+    },
+    {
+      "fromId": "MDRV_MNEG",
+      "toId": "MOTOR_NEG"
+    },
+    {
+      "fromId": "XS_OUT",
+      "toId": "CTRL_X_IN"
+    },
+    {
+      "fromId": "YS_OUT",
+      "toId": "CTRL_Y_IN"
+    },
+    {
+      "fromId": "ENC_A",
+      "toId": "CTRL_ENC_A"
+    },
+    {
+      "fromId": "ENC_B",
+      "toId": "CTRL_ENC_B"
+    },
+    {
+      "fromId": "ENC_Z",
+      "toId": "CTRL_ENC_Z"
+    },
+    {
+      "fromId": "CTRL_DAMP_CMD",
+      "toId": "DDRV_CMD"
+    },
+    {
+      "fromId": "DDRV_ACTPOS",
+      "toId": "DAMP_POS"
+    },
+    {
+      "fromId": "DDRV_ACTNEG",
+      "toId": "DAMP_NEG"
+    },
+    {
+      "fromId": "GUARD_NC",
+      "toId": "CTRL_SAFE_IN"
+    }
+  ]
+}

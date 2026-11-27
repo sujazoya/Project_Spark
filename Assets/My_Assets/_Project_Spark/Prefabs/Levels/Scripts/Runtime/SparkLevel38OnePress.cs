@@ -493,6 +493,15 @@ namespace ProjectSpark.Gameplay
         private static bool Available(SparkElectricalComponent component) =>
             component != null && component.isActiveAndEnabled && component.ElectricalEnabled;
 
+        internal SparkTerminal[][] GetAuthoredWireNets() => new[]
+        {
+            new[] { source.PositiveTerminal, contact.InputTerminal },
+            new[] { contact.OutputTerminal, feed.TerminalA },
+            new[] { feed.TerminalB, pullDown.TerminalA, filter.TerminalA },
+            new[] { filter.TerminalB, capacitor.PositiveTerminal },
+            new[] { source.NegativeTerminal, pullDown.TerminalB, capacitor.NegativeTerminal }
+        };
+
         private string CheckWiring(SparkElectricalNetworkGraph graph)
         {
             if (graph == null) return "Waiting for the solved circuit graph.";
@@ -521,14 +530,7 @@ namespace ProjectSpark.Gameplay
                 Join(a, b);
             }
 
-            var nets = new[]
-            {
-                new[] { source.PositiveTerminal, contact.InputTerminal },
-                new[] { contact.OutputTerminal, feed.TerminalA },
-                new[] { feed.TerminalB, pullDown.TerminalA, filter.TerminalA },
-                new[] { filter.TerminalB, capacitor.PositiveTerminal },
-                new[] { source.NegativeTerminal, pullDown.TerminalB, capacitor.NegativeTerminal }
-            };
+            var nets = GetAuthoredWireNets();
             var used = new Dictionary<int, string>();
             foreach (var net in nets)
             {

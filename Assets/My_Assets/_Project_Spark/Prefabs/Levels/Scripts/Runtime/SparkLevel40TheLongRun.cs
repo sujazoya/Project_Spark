@@ -332,6 +332,15 @@ namespace ProjectSpark.Gameplay
 
         private static bool IsFinite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);
 
+        internal (SparkTerminal, SparkTerminal)[] GetAuthoredWireNets() => new[]
+        {
+            (source.PositiveTerminal, transmitter.TerminalA),
+            (transmitter.TerminalB, cable.TerminalA),
+            (cable.TerminalB, lineContact.InputTerminal),
+            (lineContact.OutputTerminal, receiver.TerminalA),
+            (receiver.TerminalB, source.NegativeTerminal)
+        };
+
         private string CheckWiring()
         {
             if (source == null || transmitter == null || cable == null || receiver == null || lineContact == null)
@@ -351,14 +360,7 @@ namespace ProjectSpark.Gameplay
                 var b = Root(wire.B);
                 if (a != b) parents[b] = a;
             }
-            var nets = new[]
-            {
-                (source.PositiveTerminal, transmitter.TerminalA),
-                (transmitter.TerminalB, cable.TerminalA),
-                (cable.TerminalB, lineContact.InputTerminal),
-                (lineContact.OutputTerminal, receiver.TerminalA),
-                (receiver.TerminalB, source.NegativeTerminal)
-            };
+            var nets = GetAuthoredWireNets();
             var used = new Dictionary<SparkTerminal, string>();
             foreach (var (a,b) in nets)
             {

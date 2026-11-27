@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40ebcf8b65b1fbc45bd845c5d1ea13e0, type: 3}
+  m_Name: Level_001_NativeWiring_Reviewed
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectSpark.SparkV5.Pro.SparkNativeWiringPlan
+  levelNumber: 1
+  layoutName: Level_01_Layout
+  schematicReference: Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_01/Level_01_Layout/Level_01.asset#description,
+    powerSources, targets
+  reviewedBy: Codex source and native gameplay review
+  approved: 1
+  approvedDigest: 8D5B9064D7C7024F05F654E6B6673B39929CBC17122754339198E74E8F10C9B0
+  reviewedDefinition: {fileID: 11400000, guid: 64a97c3041cca0b4eb8e078632d99a80, type: 2}
+  reviewedLayout: {fileID: 8861480467021309645, guid: a0ccfcfc9f8434f47be90ea1c3966b3d, type: 3}
+  reviewedRevision: 1FD69D3852C1189DA6870E541B6154651D87623F99337308E7123E41F4541D1F
+  revisionApprovalDigest: C7193EBC0E8AA2759CEF34F726CF1E1C8C57CC8D56C2AA54A682B16AACC9C502
+  wires:
+  - fromId: Battery_positive
+    toId: Register_Input
+  - fromId: Register_Output
+    toId: LED_Anode
+  - fromId: Battery_negative
+    toId: LED_Cathode

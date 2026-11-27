@@ -62,6 +62,8 @@ namespace ProjectSpark.Gameplay
         [Tooltip("Optional stable electronic-object IDs for replaceable instruments.")]
         [SerializeField] private string[] runtimeElectronicObjectIds = Array.Empty<string>();
 
+        public event Action RuntimeBindingsChanged;
+
         private Dictionary<string, SparkTerminal> terminalLookup;
         private Dictionary<string, SparkElectricalComponent> componentLookup;
         private Dictionary<string, SparkElectronicObject> electronicObjectLookup;
@@ -286,17 +288,17 @@ namespace ProjectSpark.Gameplay
         public bool SetRuntimeTerminal(string id, SparkTerminal terminal)
         {
             if (!IsTerminalIdDeclared(id)) return false;
-            runtimeTerminalOverrides[id] = terminal; return true;
+            runtimeTerminalOverrides[id] = terminal; RuntimeBindingsChanged?.Invoke(); return true;
         }
         public bool SetRuntimeComponentBinding(string id, SparkElectricalComponent component)
         {
             if (!IsComponentIdDeclared(id)) return false;
-            runtimeComponentOverrides[id] = component; return true;
+            runtimeComponentOverrides[id] = component; RuntimeBindingsChanged?.Invoke(); return true;
         }
         public bool SetRuntimeElectronicObject(string id, SparkElectronicObject electronicObject)
         {
             if (!IsElectronicObjectIdDeclared(id)) return false;
-            runtimeElectronicOverrides[id] = electronicObject; return true;
+            runtimeElectronicOverrides[id] = electronicObject; RuntimeBindingsChanged?.Invoke(); return true;
         }
         public bool RegisterRuntimeComponent(string id, SparkElectricalComponent component) =>
             component != null && SetRuntimeComponentBinding(id, component);
@@ -307,23 +309,30 @@ namespace ProjectSpark.Gameplay
             if (string.IsNullOrWhiteSpace(id) ||
                 !runtimeComponentOverrides.TryGetValue(id, out SparkElectricalComponent actual) ||
                 actual != expectedComponent) return false;
-            runtimeComponentOverrides[id] = null; return true;
+            runtimeComponentOverrides[id] = null; RuntimeBindingsChanged?.Invoke(); return true;
         }
-        public void ClearRuntimeComponentOverrides() => runtimeComponentOverrides.Clear();
+        public void ClearRuntimeComponentOverrides()
+        {
+            if (runtimeComponentOverrides.Count == 0) return;
+            runtimeComponentOverrides.Clear();
+            RuntimeBindingsChanged?.Invoke();
+        }
 
         /// <summary>Compatibility for the existing recycle flow. Only runtime instance refs are retired.</summary>
         public void RetireRuntimeBindingsOwnedBy(Transform objectRoot)
         {
             if (objectRoot == null) return;
             EnsureLookupCache();
+            bool retired = false;
             if (terminals != null) foreach (TerminalBinding entry in terminals)
                 if (entry != null && !string.IsNullOrWhiteSpace(entry.Id) && entry.Terminal != null &&
                     (entry.Terminal.transform == objectRoot || entry.Terminal.transform.IsChildOf(objectRoot)))
-                { retiredTerminalIds.Add(entry.Id); runtimeTerminalOverrides[entry.Id] = null; }
+                { retiredTerminalIds.Add(entry.Id); runtimeTerminalOverrides[entry.Id] = null; retired = true; }
             if (components != null) foreach (ComponentBinding entry in components)
                 if (entry != null && !string.IsNullOrWhiteSpace(entry.Id) && entry.Component != null &&
                     (entry.Component.transform == objectRoot || entry.Component.transform.IsChildOf(objectRoot)))
-                { retiredComponentIds.Add(entry.Id); runtimeComponentOverrides[entry.Id] = null; }
+                { retiredComponentIds.Add(entry.Id); runtimeComponentOverrides[entry.Id] = null; retired = true; }
+            if (retired) RuntimeBindingsChanged?.Invoke();
         }
 
         private static bool ValidateIds(IEnumerable<string> values, HashSet<string> ids, string kind, out string error)

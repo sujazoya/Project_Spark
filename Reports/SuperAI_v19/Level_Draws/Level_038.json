@@ -1,0 +1,43 @@
+{
+  "level": 38,
+  "levelId": "level_38",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_38_Layout/Level_38_One_Press_Layout.prefab",
+  "layoutRevision": "817ABD24B6B858564168AA9025F8B55F68F7FD56C138149D547B054381BE3455",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel38OnePress.cs#GetAuthoredWireNets",
+  "terminalBindings": 12,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "7 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "Battery_positive",
+      "toId": "SW_IN"
+    },
+    {
+      "fromId": "SW_OUT",
+      "toId": "FEED_IN"
+    },
+    {
+      "fromId": "FEED_OUT",
+      "toId": "PULLDOWN_IN"
+    },
+    {
+      "fromId": "FEED_OUT",
+      "toId": "FILTER_IN"
+    },
+    {
+      "fromId": "FILTER_OUT",
+      "toId": "CAP_PLUS"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "PULLDOWN_OUT"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "CAP_MINUS"
+    }
+  ]
+}

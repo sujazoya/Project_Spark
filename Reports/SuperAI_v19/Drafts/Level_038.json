@@ -1,0 +1,36 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 38,
+    "layoutName": "Level_38_One_Press_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "Battery_positive",
+            "toId": "SW_IN"
+        },
+        {
+            "fromId": "SW_OUT",
+            "toId": "FEED_IN"
+        },
+        {
+            "fromId": "FEED_OUT",
+            "toId": "PULLDOWN_IN"
+        },
+        {
+            "fromId": "FEED_OUT",
+            "toId": "FILTER_IN"
+        },
+        {
+            "fromId": "FILTER_OUT",
+            "toId": "CAP_PLUS"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "PULLDOWN_OUT"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "CAP_MINUS"
+        }
+    ]
+}

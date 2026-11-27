@@ -76,6 +76,7 @@ namespace ProjectSpark.SparkV5.Pro
         public bool SpeakAnswers => speakAnswers;
         public string LastTranscript { get; private set; } = string.Empty;
         public event Action ConversationChanged;
+        internal event Action NexusTick;
         public event Action VisualOpened;
         public event Action<string> AnswerReady;
         public event Action<string> TranscriptReady;
@@ -106,7 +107,7 @@ namespace ProjectSpark.SparkV5.Pro
 
         public float SampleVoice(float[] samples)
         {
-            if (!PlaybackActive || samples == null || samples.Length == 0)
+            if (!playbackSource || !playbackSource.isPlaying || samples == null || samples.Length == 0)
                 return 0;
             playbackSource.GetOutputData(samples, 0);
             float sum = 0;
@@ -207,6 +208,7 @@ namespace ProjectSpark.SparkV5.Pro
         void OnVoiceStopped(){awaitingAudio=false;wasPlaying=false;cues=null;if(character)character.ClearViseme();}
         void OnVoiceRequest(SparkAIVoiceRequest request){if(!request.IsValid || !SpeechOutputAvailable)return;lastGestureSegment=0;utterance=request.Text;awaitingAudio=true;audioUntil=Time.unscaledTime+speechStartupTimeout;previousClip=null;cues=null;wasPlaying=false;if(character)character.ClearViseme();}
         void Update(){
+            NexusTick?.Invoke();
             bool native = tts && tts.NativeSpeaking;
             if (native)
             {
@@ -248,6 +250,13 @@ namespace ProjectSpark.SparkV5.Pro
             }
             previousCompleted=s.Level.Completed;
         }
+        internal bool TrySubmitNexus(string question)
+        {
+            if (!isActiveAndEnabled || submitting || string.IsNullOrWhiteSpace(question)) return false;
+            Ask(question);
+            return true;
+        }
+
         public void Ask(string question){
             if(string.IsNullOrWhiteSpace(question)||submitting)return;question=question.Trim();if(question.Length>1000)question=question.Substring(0,1000);string q=question.ToLowerInvariant().TrimEnd('?','.','!');
             question = Regex.Replace(question, @"^hey spark(?:[,.:!]?\s+|[,.:!])", string.Empty, RegexOptions.IgnoreCase).Trim();
@@ -275,7 +284,7 @@ namespace ProjectSpark.SparkV5.Pro
             submitting=true;returnState=SparkState.Idle;
             if (microphone) microphone.YieldForResponse();
             try{
-                if (SparkEngineeringDeviceOperator.TryHandleFrom(this, q, out string controlResponse) ||
+                if (SparkEngineeringDeviceOperator.TryHandleFrom(this, Regex.Replace(question, @"[,;]\s*", " ").TrimEnd('?', '.', '!'), out string controlResponse) ||
                     SparkEngineeringControlHub.TryHandleFrom(this, question, out controlResponse))
                 {
                     Publish(controlResponse, speakAnswers);

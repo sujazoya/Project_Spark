@@ -34,6 +34,8 @@ namespace ProjectSpark.SparkV5.Pro
         public event Action StatusChanged;
         public string LastStatus => lastStatus;
         public bool IsBusy => operation != null;
+        internal int OperationRevision { get; private set; }
+        internal int VerifiedOperationRevision { get; private set; }
         public string Proposal => proposed ? proposed.DeviceId + " -> " + (proposedOn ? "ON/CLOSED" : "OFF/OPEN") : "None";
 
         private void Awake()
@@ -224,6 +226,7 @@ namespace ProjectSpark.SparkV5.Pro
             operationLevel = manager;
             operationRoot = context.Layout.transform;
             bool desired = proposedOn;
+            OperationRevision++;
             operation = StartCoroutine(Execute(port, desired));
             return Publish("Executing ONE approved native device action. Awaiting actual device-state confirmation.");
         }
@@ -286,6 +289,7 @@ namespace ProjectSpark.SparkV5.Pro
                 if (port.TryRead(out current, out problem) && current == desired && freshSolve &&
                     (!needsEvaluator || manager.HasCurrentElectricalEvaluation))
                 {
+                    VerifiedOperationRevision = OperationRevision;
                     Finish("VERIFIED: Real device state changed to " + (desired ? "ON/CLOSED" : "OFF/OPEN") +
                         " (" + problem + "). Fresh native solver result confirmed." +
                         (control ? "" : " No physical control point is authored for this device."));
@@ -332,10 +336,10 @@ namespace ProjectSpark.SparkV5.Pro
             else if (q == "spark cancel device action") result = operatorComponent.Cancel();
             else
             {
-                string spec = q.Substring("spark propose device ".Length).Trim();
+                string spec = normalized.Trim().Substring("spark propose device ".Length).Trim();
                 bool turnOn;
-                if (spec.EndsWith(" on", StringComparison.Ordinal)) { turnOn = true; spec = spec.Substring(0, spec.Length - 3).Trim(); }
-                else if (spec.EndsWith(" off", StringComparison.Ordinal)) { turnOn = false; spec = spec.Substring(0, spec.Length - 4).Trim(); }
+                if (spec.EndsWith(" on", StringComparison.OrdinalIgnoreCase)) { turnOn = true; spec = spec.Substring(0, spec.Length - 3).Trim(); }
+                else if (spec.EndsWith(" off", StringComparison.OrdinalIgnoreCase)) { turnOn = false; spec = spec.Substring(0, spec.Length - 4).Trim(); }
                 else { result = "Use: spark propose device <exact device ID> on|off"; return true; }
                 result = operatorComponent.Propose(spec, turnOn);
             }

@@ -253,6 +253,17 @@ namespace ProjectSpark.Gameplay
             if (statusText != null) statusText.text = text;
         }
 
+        internal SparkTerminal[][] GetAuthoredWireNets() => new[] {
+            new[] { source.PositiveTerminal, upFeed.InputTerminal, downFeed.InputTerminal, lampContact.InputTerminal },
+            new[] { source.NegativeTerminal, upReturn.OutputTerminal, downReturn.OutputTerminal, lamp.CathodeTerminal },
+            new[] { upFeed.OutputTerminal, upperLimit.InputTerminal },
+            new[] { downFeed.OutputTerminal, lowerLimit.InputTerminal },
+            new[] { upperLimit.OutputTerminal, motor.PositiveTerminal, downReturn.InputTerminal },
+            new[] { lowerLimit.OutputTerminal, motor.NegativeTerminal, upReturn.InputTerminal },
+            new[] { lampContact.OutputTerminal, lampResistor.TerminalA },
+            new[] { lampResistor.TerminalB, lamp.AnodeTerminal }
+        };
+
         private string CheckWiring(SparkElectricalNetworkGraph graph)
         {
             if (graph == null) return "Waiting for the electrical graph.";
@@ -271,16 +282,7 @@ namespace ProjectSpark.Gameplay
                 if (aRoot != bRoot) wires[bRoot] = aRoot;
             }
 
-            var nets = new[] {
-                new[] { source.PositiveTerminal, upFeed.InputTerminal, downFeed.InputTerminal, lampContact.InputTerminal },
-                new[] { source.NegativeTerminal, upReturn.OutputTerminal, downReturn.OutputTerminal, lamp.CathodeTerminal },
-                new[] { upFeed.OutputTerminal, upperLimit.InputTerminal },
-                new[] { downFeed.OutputTerminal, lowerLimit.InputTerminal },
-                new[] { upperLimit.OutputTerminal, motor.PositiveTerminal, downReturn.InputTerminal },
-                new[] { lowerLimit.OutputTerminal, motor.NegativeTerminal, upReturn.InputTerminal },
-                new[] { lampContact.OutputTerminal, lampResistor.TerminalA },
-                new[] { lampResistor.TerminalB, lamp.AnodeTerminal }
-            };
+            var nets = GetAuthoredWireNets();
             var used = new Dictionary<int, string>();
             foreach (var net in nets)
             {

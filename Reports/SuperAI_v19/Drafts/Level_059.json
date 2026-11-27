@@ -1,0 +1,176 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 59,
+    "layoutName": "Level_59_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "CTRL_POS"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "CTRL_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "BMS_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "BMS_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SENSE_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "SENSE_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SAFETY_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "SAFETY_GND"
+        },
+        {
+            "fromId": "BAT_POS",
+            "toId": "BMS_BAT_POS"
+        },
+        {
+            "fromId": "BAT_NEG",
+            "toId": "DC_NEG"
+        },
+        {
+            "fromId": "BMS_OUT",
+            "toId": "PRE_IN"
+        },
+        {
+            "fromId": "PRE_OUT",
+            "toId": "DC_POS"
+        },
+        {
+            "fromId": "DC_POS",
+            "toId": "INV_DC_POS"
+        },
+        {
+            "fromId": "DC_NEG",
+            "toId": "INV_DC_NEG"
+        },
+        {
+            "fromId": "CTRL_ENABLE",
+            "toId": "INV_ENABLE"
+        },
+        {
+            "fromId": "INV_A",
+            "toId": "BUS_A"
+        },
+        {
+            "fromId": "INV_B",
+            "toId": "BUS_B"
+        },
+        {
+            "fromId": "INV_C",
+            "toId": "BUS_C"
+        },
+        {
+            "fromId": "INV_STATUS",
+            "toId": "CTRL_INV"
+        },
+        {
+            "fromId": "CTRL_START",
+            "toId": "START_CMD"
+        },
+        {
+            "fromId": "DC_POS",
+            "toId": "START_POS"
+        },
+        {
+            "fromId": "DC_NEG",
+            "toId": "START_NEG"
+        },
+        {
+            "fromId": "GEN_A",
+            "toId": "QGEN_A"
+        },
+        {
+            "fromId": "GEN_B",
+            "toId": "QGEN_B"
+        },
+        {
+            "fromId": "GEN_C",
+            "toId": "QGEN_C"
+        },
+        {
+            "fromId": "GEN_V",
+            "toId": "SYNC_V"
+        },
+        {
+            "fromId": "GEN_HZ",
+            "toId": "SYNC_HZ"
+        },
+        {
+            "fromId": "SYNC_CLOSE",
+            "toId": "QGEN_CMD"
+        },
+        {
+            "fromId": "GRID_REF",
+            "toId": "QG_REF"
+        },
+        {
+            "fromId": "QG_AUX",
+            "toId": "CTRL_GRID"
+        },
+        {
+            "fromId": "BUS_A",
+            "toId": "LIGHT_FEED"
+        },
+        {
+            "fromId": "BUS_B",
+            "toId": "INSTR_FEED"
+        },
+        {
+            "fromId": "BUS_C",
+            "toId": "COOL_FEED"
+        },
+        {
+            "fromId": "BUS_A",
+            "toId": "MOTOR_A"
+        },
+        {
+            "fromId": "BUS_B",
+            "toId": "MOTOR_B"
+        },
+        {
+            "fromId": "BUS_C",
+            "toId": "MOTOR_C"
+        },
+        {
+            "fromId": "BUS_A",
+            "toId": "AUX_FEED"
+        },
+        {
+            "fromId": "BUS_A",
+            "toId": "SENSE_BUS"
+        },
+        {
+            "fromId": "SENSE_OUT",
+            "toId": "CTRL_SENSE"
+        },
+        {
+            "fromId": "METER_OUT",
+            "toId": "CTRL_METER"
+        },
+        {
+            "fromId": "BMS_STATUS",
+            "toId": "CTRL_BMS"
+        },
+        {
+            "fromId": "GUARD_NC",
+            "toId": "CTRL_SAFE"
+        }
+    ]
+}

@@ -1,0 +1,103 @@
+{
+  "level": 50,
+  "levelId": "level_50",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_50_Layout/Level_50_Layout.prefab",
+  "layoutRevision": "D081E376E9C5E731C882FBD24107AB73827AE9E04EF0252F51B1D0612D6D8AAB",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel50Factory.cs#Wires",
+  "terminalBindings": 38,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "22 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "CTRL_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "CTRL_GND"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "MARK_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "MARK_GND"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "VISION_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "VISION_GND"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "DRIVER_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "DRIVER_GND"
+    },
+    {
+      "fromId": "MARK_OUT",
+      "toId": "CTRL_MARK_IN"
+    },
+    {
+      "fromId": "ENC_A",
+      "toId": "CTRL_ENC_A"
+    },
+    {
+      "fromId": "ENC_B",
+      "toId": "CTRL_ENC_B"
+    },
+    {
+      "fromId": "CTRL_PRINT_TRIG",
+      "toId": "PRINT_HEAD_TRIG"
+    },
+    {
+      "fromId": "CTRL_CUT_TRIG",
+      "toId": "CUT_HEAD_TRIG"
+    },
+    {
+      "fromId": "VISION_PASS",
+      "toId": "CTRL_PASS_IN"
+    },
+    {
+      "fromId": "VISION_FAIL",
+      "toId": "CTRL_FAIL_IN"
+    },
+    {
+      "fromId": "CTRL_SORT_CMD",
+      "toId": "DRIVER_SORT_CMD"
+    },
+    {
+      "fromId": "DRIVER_MOTOR_PLUS",
+      "toId": "DIVERTER_MOTOR_PLUS"
+    },
+    {
+      "fromId": "DRIVER_MOTOR_MINUS",
+      "toId": "DIVERTER_MOTOR_MINUS"
+    },
+    {
+      "fromId": "DIVERTER_HOME_OUT",
+      "toId": "CTRL_DIVERTER_HOME"
+    },
+    {
+      "fromId": "GOOD_COUNT_OUT",
+      "toId": "CTRL_GOOD_COUNT"
+    },
+    {
+      "fromId": "REJECT_COUNT_OUT",
+      "toId": "CTRL_REJECT_COUNT"
+    },
+    {
+      "fromId": "SAFETY_NC_OUT",
+      "toId": "CTRL_SAFETY_IN"
+    }
+  ]
+}

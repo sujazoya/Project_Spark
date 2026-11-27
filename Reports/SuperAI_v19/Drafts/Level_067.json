@@ -1,0 +1,304 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 67,
+    "layoutName": "Level_67_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "PLC_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "PLC_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "IO_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "IO_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SAFE_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "SAFE_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "FLOW_A_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "FLOW_A_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "FLOW_B_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "FLOW_B_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "FLOW_P_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "FLOW_P_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "PID_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "PID_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "DRIVE_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "DRIVE_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "QUALITY_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "QUALITY_GND"
+        },
+        {
+            "fromId": "PLC_RUN_A",
+            "toId": "DRIVE_A_EN"
+        },
+        {
+            "fromId": "PLC_RUN_B",
+            "toId": "DRIVE_B_EN"
+        },
+        {
+            "fromId": "PLC_RUN_P",
+            "toId": "DRIVE_P_EN"
+        },
+        {
+            "fromId": "PID_REF_A",
+            "toId": "DRIVE_A_CMD"
+        },
+        {
+            "fromId": "PID_REF_B",
+            "toId": "DRIVE_B_CMD"
+        },
+        {
+            "fromId": "PID_REF_P",
+            "toId": "DRIVE_P_CMD"
+        },
+        {
+            "fromId": "DRIVE_A_TACH",
+            "toId": "IO_RPM_A"
+        },
+        {
+            "fromId": "DRIVE_B_TACH",
+            "toId": "IO_RPM_B"
+        },
+        {
+            "fromId": "DRIVE_P_TACH",
+            "toId": "IO_RPM_P"
+        },
+        {
+            "fromId": "FLOW_A_OUT",
+            "toId": "RATIO_A_IN"
+        },
+        {
+            "fromId": "FLOW_P_OUT",
+            "toId": "PID_FLOW_IN"
+        },
+        {
+            "fromId": "FLOW_OK",
+            "toId": "PLC_FLOW_OK"
+        },
+        {
+            "fromId": "LEVEL_A_OUT",
+            "toId": "IO_LEVEL_A"
+        },
+        {
+            "fromId": "LEVEL_B_OUT",
+            "toId": "IO_LEVEL_B"
+        },
+        {
+            "fromId": "LEVEL_P_OUT",
+            "toId": "LEVEL_PID_IN"
+        },
+        {
+            "fromId": "SUCTION_KPA",
+            "toId": "IO_SUCTION"
+        },
+        {
+            "fromId": "DISCHARGE_KPA",
+            "toId": "IO_DISCHARGE"
+        },
+        {
+            "fromId": "PLC_VALVE_A",
+            "toId": "VALVE_A_CMD"
+        },
+        {
+            "fromId": "VALVE_A_POS",
+            "toId": "IO_POS_A"
+        },
+        {
+            "fromId": "PLC_VALVE_B",
+            "toId": "VALVE_B_CMD"
+        },
+        {
+            "fromId": "VALVE_B_POS",
+            "toId": "IO_POS_B"
+        },
+        {
+            "fromId": "PLC_OUTLET",
+            "toId": "OUTLET_CMD"
+        },
+        {
+            "fromId": "OUTLET_POS",
+            "toId": "IO_OUTLET"
+        },
+        {
+            "fromId": "SAFE_ISOLATE",
+            "toId": "XV_CMD"
+        },
+        {
+            "fromId": "XV_POS",
+            "toId": "SAFE_XV"
+        },
+        {
+            "fromId": "PLC_MIX",
+            "toId": "MIX_EN"
+        },
+        {
+            "fromId": "MIX_RPM",
+            "toId": "IO_MIX"
+        },
+        {
+            "fromId": "QA_BLEND",
+            "toId": "RATIO_QUALITY"
+        },
+        {
+            "fromId": "QA_PASS",
+            "toId": "SAFE_RELEASE"
+        },
+        {
+            "fromId": "LEVEL_FLOW_SP",
+            "toId": "PID_SP"
+        },
+        {
+            "fromId": "RATIO_CMD",
+            "toId": "PLC_RATIO"
+        },
+        {
+            "fromId": "PLC_READY",
+            "toId": "SCADA_READY"
+        },
+        {
+            "fromId": "ESTOP_NC",
+            "toId": "SAFE_STOP_IN"
+        },
+        {
+            "fromId": "CAVITATION",
+            "toId": "PROTECT_CAV"
+        },
+        {
+            "fromId": "PROTECT_TRIP",
+            "toId": "SAFE_TRIP"
+        },
+        {
+            "fromId": "HIGH_LEVEL",
+            "toId": "SAFE_HIGH"
+        },
+        {
+            "fromId": "LOW_LEVEL",
+            "toId": "SAFE_LOW"
+        },
+        {
+            "fromId": "PLC_RESET",
+            "toId": "SAFE_RESET"
+        },
+        {
+            "fromId": "DEMAND_TEST",
+            "toId": "IO_DEMAND"
+        },
+        {
+            "fromId": "IO_RPM_A",
+            "toId": "SCADA_RPM_A"
+        },
+        {
+            "fromId": "IO_RPM_B",
+            "toId": "SCADA_RPM_B"
+        },
+        {
+            "fromId": "IO_RPM_P",
+            "toId": "SCADA_RPM_P"
+        },
+        {
+            "fromId": "FLOW_A_OUT",
+            "toId": "SCADA_FLOW_A"
+        },
+        {
+            "fromId": "FLOW_P_OUT",
+            "toId": "SCADA_FLOW_P"
+        },
+        {
+            "fromId": "LEVEL_A_OUT",
+            "toId": "SCADA_VOL_A"
+        },
+        {
+            "fromId": "LEVEL_B_OUT",
+            "toId": "SCADA_VOL_B"
+        },
+        {
+            "fromId": "LEVEL_P_OUT",
+            "toId": "SCADA_VOL_P"
+        },
+        {
+            "fromId": "SUCTION_KPA",
+            "toId": "SCADA_SUCTION"
+        },
+        {
+            "fromId": "DISCHARGE_KPA",
+            "toId": "SCADA_HEAD"
+        },
+        {
+            "fromId": "QA_BLEND",
+            "toId": "SCADA_BLEND"
+        },
+        {
+            "fromId": "PROTECT_TRIP",
+            "toId": "SCADA_TRIP"
+        },
+        {
+            "fromId": "PLC_FLOW_OK",
+            "toId": "PID_PERMIT"
+        },
+        {
+            "fromId": "PLC_READY",
+            "toId": "IO_READY"
+        },
+        {
+            "fromId": "SAFE_ISOLATE",
+            "toId": "TRANSFER_INHIBIT"
+        },
+        {
+            "fromId": "LEVEL_FLOW_SP",
+            "toId": "SCADA_FLOW_SP"
+        },
+        {
+            "fromId": "FLOW_B_OUT",
+            "toId": "RATIO_B_IN"
+        }
+    ]
+}

@@ -65,6 +65,8 @@ namespace ProjectSpark.SparkV5.Pro
 
         public event Action StateChanged;
         public OperatingMode Mode => mode;
+        internal int ModeAcknowledgement { get; private set; }
+        internal int WiringOperationRevision { get; private set; }
         public ExecutionPhase Phase => phase;
         public bool IsExecuting => activeRoutine != null;
         public bool IsPaused => pauseRequested;
@@ -188,6 +190,7 @@ namespace ProjectSpark.SparkV5.Pro
                 ClearPending();
             }
             mode = next;
+            ModeAcknowledgement++;
             if (phase == ExecutionPhase.Cancelled) SetPhase(ExecutionPhase.Idle);
             return Message("Mode: " + next + ". " +
                 (next == OperatingMode.Manual ? "Player controls construction; Spark cannot wire on its own." :
@@ -264,12 +267,19 @@ namespace ProjectSpark.SparkV5.Pro
                 var prefab = executive.ActiveLevelManager.LayoutLoader.ActiveSourcePrefab;
                 if (!match.MatchesReviewedLayout(level.Definition, prefab, out error)) return null;
 #if UNITY_EDITOR
-                if (SparkNativeWiringPlan.AuthoredRevision(level.Definition, prefab) != match.ReviewedRevision)
+                if (SparkNativeWiringPlan.AuthoredRevision(level.Definition, prefab, match.SchematicReference) != match.ReviewedRevision)
                 { error = "Authored layout or level definition changed after review."; return null; }
 #endif
             }
             if (match) error = null;
             return match;
+        }
+
+        internal SparkNativeWiringPlan GetNexusConstructionPlan(out string reason)
+        {
+            return GetContext(out _, out var level, out reason)
+                ? FindApprovedPlan(level, out reason, requireRevision: true)
+                : null;
         }
 
         public string DrawCurrentLevel()
@@ -446,6 +456,7 @@ namespace ProjectSpark.SparkV5.Pro
             totalSteps = 1;
             cancelRequested = false;
             pauseRequested = false;
+            WiringOperationRevision++;
             SetPhase(ExecutionPhase.Running);
             activeRoutine = StartCoroutine(ExecuteSingle(sourceId, destinationId, a, b));
             return Message("Approved one reviewed wire: " + currentAction + ". Spark is using the actual player tool.");
@@ -561,6 +572,7 @@ private IEnumerator ExecuteSingle(
             activeCircuit = manager.CircuitSystem;
             activePlan = plan;
             currentAction = "Preparing approved plan: " + plan.name;
+            WiringOperationRevision++;
             SetPhase(ExecutionPhase.Running);
             activeRoutine = StartCoroutine(ExecutePlan(plan));
             return Message("AUTO started: " + totalSteps + " reviewed wires using the real PLAYER Wire Tool. Pause operates between cables.");

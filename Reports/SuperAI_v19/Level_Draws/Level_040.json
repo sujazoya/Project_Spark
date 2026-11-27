@@ -1,0 +1,35 @@
+{
+  "level": 40,
+  "levelId": "level_40",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_40_Layout/Level_40_The_Long_Run_Layout.prefab",
+  "layoutRevision": "FD751DF8DC83B2017EA8BDF542F3B75F1A813B63DB484B9AF995D51EAC22FFA1",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel40TheLongRun.cs#GetAuthoredWireNets",
+  "terminalBindings": 10,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "5 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "LOOP_POS",
+      "toId": "TX_IN"
+    },
+    {
+      "fromId": "TX_OUT",
+      "toId": "CABLE_IN"
+    },
+    {
+      "fromId": "CABLE_OUT",
+      "toId": "LINE_IN"
+    },
+    {
+      "fromId": "LINE_OUT",
+      "toId": "RX_IN"
+    },
+    {
+      "fromId": "RX_OUT",
+      "toId": "LOOP_RETURN"
+    }
+  ]
+}

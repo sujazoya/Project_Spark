@@ -1,0 +1,55 @@
+{
+  "level": 33,
+  "levelId": "level_33",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_33_Layout/Level_33_Jam_Guard_Layout.prefab",
+  "layoutRevision": "DC3DD73172062EFE54ADCE729E75C96EE91C5C62BF8DE49FED022A81C52FDD56",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel33JamGuard.cs#GetAuthoredWireNets",
+  "terminalBindings": 16,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "10 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "Battery_positive",
+      "toId": "JAM_IN"
+    },
+    {
+      "fromId": "Battery_positive",
+      "toId": "RUN_IN"
+    },
+    {
+      "fromId": "JAM_OUT",
+      "toId": "R_CHARGE_IN"
+    },
+    {
+      "fromId": "Timer_Positive",
+      "toId": "R_CHARGE_OUT"
+    },
+    {
+      "fromId": "Timer_Positive",
+      "toId": "R_CLEAR_IN"
+    },
+    {
+      "fromId": "R_CLEAR_OUT",
+      "toId": "CLEAR_IN"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "Timer_Negative"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "CLEAR_OUT"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "Motor_B"
+    },
+    {
+      "fromId": "RUN_OUT",
+      "toId": "Motor_A"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 47,
+    "layoutName": "Level_47_Tension_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_PLUS_5V",
+            "toId": "CTRL_PLUS_5V"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "CTRL_GND"
+        },
+        {
+            "fromId": "CTRL_FEED_PWM",
+            "toId": "DRIVER_FEED_PWM"
+        },
+        {
+            "fromId": "CTRL_TAKEUP_PWM",
+            "toId": "DRIVER_TAKEUP_PWM"
+        },
+        {
+            "fromId": "DRIVER_FEED_PLUS",
+            "toId": "FEED_MOTOR_PLUS"
+        },
+        {
+            "fromId": "DRIVER_FEED_MINUS",
+            "toId": "FEED_MOTOR_MINUS"
+        },
+        {
+            "fromId": "DRIVER_TAKEUP_PLUS",
+            "toId": "TAKEUP_MOTOR_PLUS"
+        },
+        {
+            "fromId": "DRIVER_TAKEUP_MINUS",
+            "toId": "TAKEUP_MOTOR_MINUS"
+        },
+        {
+            "fromId": "FEED_ENC_A",
+            "toId": "CTRL_FEED_A"
+        },
+        {
+            "fromId": "FEED_ENC_B",
+            "toId": "CTRL_FEED_B"
+        },
+        {
+            "fromId": "TAKEUP_ENC_A",
+            "toId": "CTRL_TAKEUP_A"
+        },
+        {
+            "fromId": "TAKEUP_ENC_B",
+            "toId": "CTRL_TAKEUP_B"
+        },
+        {
+            "fromId": "SUPPLY_PLUS_5V",
+            "toId": "SENSOR_PLUS_5V"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "SENSOR_GND"
+        },
+        {
+            "fromId": "SENSOR_SIGNAL",
+            "toId": "CTRL_TENSION_IN"
+        }
+    ]
+}

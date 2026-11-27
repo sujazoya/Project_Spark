@@ -1,0 +1,44 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 45,
+    "layoutName": "Level_45_Governor_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_PLUS_5V",
+            "toId": "CONTROLLER_PLUS_5V"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "CONTROLLER_GND"
+        },
+        {
+            "fromId": "SUPPLY_PLUS_5V",
+            "toId": "DRIVER_PLUS_5V"
+        },
+        {
+            "fromId": "SUPPLY_RETURN",
+            "toId": "DRIVER_GND"
+        },
+        {
+            "fromId": "ENCODER_A",
+            "toId": "CONTROLLER_A"
+        },
+        {
+            "fromId": "ENCODER_B",
+            "toId": "CONTROLLER_B"
+        },
+        {
+            "fromId": "CONTROLLER_PWM_OUT",
+            "toId": "DRIVER_PWM_IN"
+        },
+        {
+            "fromId": "DRIVER_MOTOR_PLUS",
+            "toId": "MOTOR_PLUS"
+        },
+        {
+            "fromId": "DRIVER_MOTOR_MINUS",
+            "toId": "MOTOR_MINUS"
+        }
+    ]
+}

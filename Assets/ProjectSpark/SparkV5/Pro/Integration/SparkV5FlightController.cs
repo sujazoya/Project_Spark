@@ -195,7 +195,6 @@ namespace ProjectSpark.SparkV5.Pro
 
         private const float RotationSpeed = 155f;
         private const int CruiseWaypoints = 5;
-        private const float PoseTolerance = .012f;
         private static readonly float[] ReachRings = { .16f, .30f, .45f, .60f, .76f };
         private static readonly float[] ShoulderHeights = { .025f, .085f, .145f, .205f, .265f, .315f };
         private static readonly Vector2[] ApproachAngles =
@@ -458,8 +457,12 @@ namespace ProjectSpark.SparkV5.Pro
             for (int i = 0; i < count; i++)
             {
                 var destination = route[i];
-                while (Vector3.Distance(transform.position, destination.Position) > PoseTolerance ||
-                    Quaternion.Angle(transform.rotation, destination.Rotation) > 1f)
+                var origin = CurrentPose;
+                float duration = Mathf.Max(Vector3.Distance(origin.Position, destination.Position) / flightSpeed,
+                    Quaternion.Angle(origin.Rotation, destination.Rotation) / RotationSpeed);
+                if (duration <= 0f) continue;
+                float progress = 0f;
+                while (progress < 1f)
                 {
                     if (!IsSafeToFly() || (valid != null && !valid()))
                     { Fail("Flight interrupted by scene, exam, or safety state."); yield break; }
@@ -468,9 +471,12 @@ namespace ProjectSpark.SparkV5.Pro
                     if (Time.realtimeSinceStartup - started > motionTimeoutSeconds)
                     { Fail("Flight route timed out."); yield break; }
 
-                    float dt = Mathf.Min(.05f, Time.unscaledDeltaTime);
-                    var next = new FlightPose(Vector3.MoveTowards(transform.position, destination.Position, flightSpeed * dt),
-                        Quaternion.RotateTowards(transform.rotation, destination.Rotation, RotationSpeed * dt));
+                    // Sweep each larger update at low frame rates instead of losing most of the
+                    // available travel time to a 50 ms cap. The individual body sweep still applies.
+                    float dt = Mathf.Min(.15f, Time.unscaledDeltaTime);
+                    // Use the same pose interpolation that CanTravel samples for the planned corridor.
+                    progress = Mathf.Min(1f, progress + dt / duration);
+                    var next = FlightPose.Lerp(origin, destination, progress);
                     if (!CanTravel(CurrentPose, next, out string obstruction))
                     { Fail("Physical flight corridor blocked by " + obstruction + "."); yield break; }
                     transform.SetPositionAndRotation(next.Position, next.Rotation);

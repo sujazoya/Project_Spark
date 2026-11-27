@@ -340,6 +340,15 @@ namespace ProjectSpark.Gameplay
 
         private static bool Available(SparkElectricalComponent component) => component != null && component.isActiveAndEnabled && component.ElectricalEnabled;
 
+        internal SparkTerminal[][] GetAuthoredWireNets() => new[] {
+            new[] { source.PositiveTerminal, chargeContact.InputTerminal, motorContact.InputTerminal },
+            new[] { chargeContact.OutputTerminal, chargeResistor.TerminalA },
+            new[] { timerCapacitor.PositiveTerminal, chargeResistor.TerminalB, dischargeResistor.TerminalA },
+            new[] { dischargeResistor.TerminalB, clearContact.InputTerminal },
+            new[] { source.NegativeTerminal, timerCapacitor.NegativeTerminal, clearContact.OutputTerminal, motor.NegativeTerminal },
+            new[] { motorContact.OutputTerminal, motor.PositiveTerminal }
+        };
+
         private string CheckWiring(SparkElectricalNetworkGraph graph)
         {
             if (graph == null) return "Waiting for the solved circuit graph.";
@@ -358,14 +367,7 @@ namespace ProjectSpark.Gameplay
                 if (aRoot != bRoot) parents[bRoot] = aRoot;
             }
 
-            var nets = new[] {
-                new[] { source.PositiveTerminal, chargeContact.InputTerminal, motorContact.InputTerminal },
-                new[] { chargeContact.OutputTerminal, chargeResistor.TerminalA },
-                new[] { timerCapacitor.PositiveTerminal, chargeResistor.TerminalB, dischargeResistor.TerminalA },
-                new[] { dischargeResistor.TerminalB, clearContact.InputTerminal },
-                new[] { source.NegativeTerminal, timerCapacitor.NegativeTerminal, clearContact.OutputTerminal, motor.NegativeTerminal },
-                new[] { motorContact.OutputTerminal, motor.PositiveTerminal }
-            };
+            var nets = GetAuthoredWireNets();
             var used = new Dictionary<int,string>();
             foreach (var net in nets)
             {

@@ -1,0 +1,51 @@
+{
+  "level": 34,
+  "levelId": "level_34",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_34_Layout/Level_34_Priority_Power_Layout.prefab",
+  "layoutRevision": "AE173859E428076753A6BF1517D98324B9B8082CEC17D7696E7888EB5237046D",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel34PriorityPower.cs#GetAuthoredWireNets",
+  "terminalBindings": 14,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "9 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "Battery_positive",
+      "toId": "FEED_IN"
+    },
+    {
+      "fromId": "FEED_OUT",
+      "toId": "Pump_A"
+    },
+    {
+      "fromId": "FEED_OUT",
+      "toId": "AUX_IN"
+    },
+    {
+      "fromId": "FEED_OUT",
+      "toId": "DEMAND_IN"
+    },
+    {
+      "fromId": "AUX_OUT",
+      "toId": "Fan_A"
+    },
+    {
+      "fromId": "DEMAND_OUT",
+      "toId": "R_DEMAND_IN"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "Pump_B"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "Fan_B"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "R_DEMAND_OUT"
+    }
+  ]
+}

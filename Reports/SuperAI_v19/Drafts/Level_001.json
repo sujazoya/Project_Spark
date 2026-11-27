@@ -1,0 +1,20 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 1,
+    "layoutName": "Level_01_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "Battery_positive",
+            "toId": "Register_Input"
+        },
+        {
+            "fromId": "Register_Output",
+            "toId": "LED_Anode"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "LED_Cathode"
+        }
+    ]
+}

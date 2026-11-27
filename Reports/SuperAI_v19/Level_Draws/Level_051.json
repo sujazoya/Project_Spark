@@ -1,0 +1,91 @@
+{
+  "level": 51,
+  "levelId": "level_51",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_51_Layout/Level_51_Layout.prefab",
+  "layoutRevision": "52FF048689E840B178C4FFBC15D0AE08210D7C5086CBF0C2C5E48C516FC524C6",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel51Maintenance.cs#Wires",
+  "terminalBindings": 32,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "19 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "CTRL_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "CTRL_GND"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "DRIVER_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "DRIVER_GND"
+    },
+    {
+      "fromId": "CTRL_PWM_OUT",
+      "toId": "DRIVER_PWM_IN"
+    },
+    {
+      "fromId": "DRIVER_MOTOR_PLUS",
+      "toId": "SHUNT_IN"
+    },
+    {
+      "fromId": "SHUNT_OUT",
+      "toId": "MOTOR_PLUS"
+    },
+    {
+      "fromId": "DRIVER_MOTOR_MINUS",
+      "toId": "MOTOR_MINUS"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "VIB_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "VIB_GND"
+    },
+    {
+      "fromId": "VIB_OUT",
+      "toId": "CTRL_VIB_IN"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "TEMP_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "TEMP_GND"
+    },
+    {
+      "fromId": "TEMP_OUT",
+      "toId": "CTRL_TEMP_IN"
+    },
+    {
+      "fromId": "SHUNT_SENSE_PLUS",
+      "toId": "CTRL_CURRENT_PLUS"
+    },
+    {
+      "fromId": "SHUNT_SENSE_MINUS",
+      "toId": "CTRL_CURRENT_MINUS"
+    },
+    {
+      "fromId": "ENCODER_A",
+      "toId": "CTRL_ENC_A"
+    },
+    {
+      "fromId": "ENCODER_B",
+      "toId": "CTRL_ENC_B"
+    },
+    {
+      "fromId": "GUARD_NC_OUT",
+      "toId": "CTRL_SAFETY_IN"
+    }
+  ]
+}

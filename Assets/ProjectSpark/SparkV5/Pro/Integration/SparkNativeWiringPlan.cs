@@ -64,12 +64,12 @@ namespace ProjectSpark.SparkV5.Pro
         public bool ValidateStoredAuthoredRevision(out string error)
         {
             if (!MatchesReviewedLayout(reviewedDefinition, reviewedLayout, out error)) return false;
-            if (AuthoredRevision(reviewedDefinition, reviewedLayout) == reviewedRevision) return true;
+            if (AuthoredRevision(reviewedDefinition, reviewedLayout, schematicReference) == reviewedRevision) return true;
             error = "Authored layout or definition changed after review.";
             return false;
         }
 
-        public static string AuthoredRevision(SparkLevelDefinition definition, SparkLevelLayout layout)
+        public static string AuthoredRevision(SparkLevelDefinition definition, SparkLevelLayout layout, string evidence = null)
         {
             if (!definition || !layout) return string.Empty;
             string entry = UnityEditor.AssetDatabase.GetAssetPath(definition);
@@ -81,6 +81,18 @@ namespace ProjectSpark.SparkV5.Pro
             for (int i = 0; i < dependencies.Length; i++)
                 if (dependencies[i].EndsWith(".prefab", StringComparison.OrdinalIgnoreCase))
                     inputs.Append('\n').Append(dependencies[i]).Append(':').Append(HashAuthoredFile(dependencies[i]));
+            int separator = evidence?.IndexOf('#') ?? -1;
+            if (separator > 0)
+            {
+                string controller = evidence.Substring(0, separator);
+                if (controller.StartsWith("Assets/", StringComparison.Ordinal) &&
+                    controller.EndsWith(".cs", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (!UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEditor.MonoScript>(controller))
+                        return string.Empty;
+                    inputs.Append('\n').Append(controller).Append(':').Append(HashAuthoredFile(controller));
+                }
+            }
             using SHA256 sha = SHA256.Create();
             return BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(inputs.ToString()))).Replace("-", "");
         }
@@ -98,7 +110,7 @@ namespace ProjectSpark.SparkV5.Pro
             if (!IsApproved || !definition || !layout || layout.LevelDefinition != definition ||
                 LevelNumber != definition.LevelNumber || LayoutName != layout.name)
             { error = "An existing approved plan and its exact authored definition and layout are required."; return false; }
-            string revision = AuthoredRevision(definition, layout);
+            string revision = AuthoredRevision(definition, layout, schematicReference);
             if (string.IsNullOrEmpty(revision))
             { error = "The authored layout or definition is unsaved."; return false; }
             reviewedDefinition = definition;

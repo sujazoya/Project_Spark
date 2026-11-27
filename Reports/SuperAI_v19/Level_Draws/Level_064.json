@@ -1,0 +1,263 @@
+{
+  "level": 64,
+  "levelId": "level_64",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_64_Layout/Level_64_Layout.prefab",
+  "layoutRevision": "2FD60165524737E32A0CA3F8C9292BBC74819DAAC1CF0DED07A890F3AC385877",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel64Synchronism.cs#Wires",
+  "terminalBindings": 96,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "62 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "CTRL_POS"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "CTRL_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "GEN_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "GEN_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "RELAY_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "RELAY_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "PMU_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "PMU_GND"
+    },
+    {
+      "fromId": "GA_A",
+      "toId": "QA_A"
+    },
+    {
+      "fromId": "GA_B",
+      "toId": "QA_B"
+    },
+    {
+      "fromId": "GA_C",
+      "toId": "QA_C"
+    },
+    {
+      "fromId": "QA_OUT_A",
+      "toId": "BUS1_A"
+    },
+    {
+      "fromId": "QA_OUT_B",
+      "toId": "BUS1_B"
+    },
+    {
+      "fromId": "QA_OUT_C",
+      "toId": "BUS1_C"
+    },
+    {
+      "fromId": "GB_A",
+      "toId": "QB_A"
+    },
+    {
+      "fromId": "GB_B",
+      "toId": "QB_B"
+    },
+    {
+      "fromId": "GB_C",
+      "toId": "QB_C"
+    },
+    {
+      "fromId": "QB_OUT_A",
+      "toId": "BUS2_A"
+    },
+    {
+      "fromId": "QB_OUT_B",
+      "toId": "BUS2_B"
+    },
+    {
+      "fromId": "QB_OUT_C",
+      "toId": "BUS2_C"
+    },
+    {
+      "fromId": "BUS1_A",
+      "toId": "FA_IN_A"
+    },
+    {
+      "fromId": "BUS1_B",
+      "toId": "FA_IN_B"
+    },
+    {
+      "fromId": "BUS1_C",
+      "toId": "FA_IN_C"
+    },
+    {
+      "fromId": "FA_OUT_A",
+      "toId": "BUS2_A"
+    },
+    {
+      "fromId": "FA_OUT_B",
+      "toId": "BUS2_B"
+    },
+    {
+      "fromId": "FA_OUT_C",
+      "toId": "BUS2_C"
+    },
+    {
+      "fromId": "BUS1_A",
+      "toId": "FB_IN_A"
+    },
+    {
+      "fromId": "BUS1_B",
+      "toId": "FB_IN_B"
+    },
+    {
+      "fromId": "BUS1_C",
+      "toId": "FB_IN_C"
+    },
+    {
+      "fromId": "FB_OUT_A",
+      "toId": "BUS2_A"
+    },
+    {
+      "fromId": "FB_OUT_B",
+      "toId": "BUS2_B"
+    },
+    {
+      "fromId": "FB_OUT_C",
+      "toId": "BUS2_C"
+    },
+    {
+      "fromId": "CTRL_PRIME_A",
+      "toId": "PRIME_A"
+    },
+    {
+      "fromId": "CTRL_PRIME_B",
+      "toId": "PRIME_B"
+    },
+    {
+      "fromId": "ENC_A",
+      "toId": "CTRL_ENC_A"
+    },
+    {
+      "fromId": "BUS1_A",
+      "toId": "PMU1_V"
+    },
+    {
+      "fromId": "BUS2_A",
+      "toId": "PMU2_V"
+    },
+    {
+      "fromId": "PMU1_OUT",
+      "toId": "CTRL_PMU_A"
+    },
+    {
+      "fromId": "ENC_B",
+      "toId": "CTRL_ENC_B"
+    },
+    {
+      "fromId": "CTA_OUT",
+      "toId": "DIST_A_I"
+    },
+    {
+      "fromId": "CTB_OUT",
+      "toId": "DIST_B_I"
+    },
+    {
+      "fromId": "CTA_OUT",
+      "toId": "DIFF_A"
+    },
+    {
+      "fromId": "CTB_OUT",
+      "toId": "DIFF_B"
+    },
+    {
+      "fromId": "DIST_A_TRIP",
+      "toId": "FA_TRIP"
+    },
+    {
+      "fromId": "DIST_B_TRIP",
+      "toId": "FB_TRIP"
+    },
+    {
+      "fromId": "DIFF_TRIP",
+      "toId": "CTRL_DIFF"
+    },
+    {
+      "fromId": "OOS_TRIP",
+      "toId": "CTRL_OOS"
+    },
+    {
+      "fromId": "FA_AUX",
+      "toId": "CTRL_FA_AUX"
+    },
+    {
+      "fromId": "FB_AUX",
+      "toId": "CTRL_FB_AUX"
+    },
+    {
+      "fromId": "CTRL_AVR",
+      "toId": "AVR_IN"
+    },
+    {
+      "fromId": "CTRL_GOV",
+      "toId": "GOV_IN"
+    },
+    {
+      "fromId": "CTRL_PSS",
+      "toId": "PSS_IN"
+    },
+    {
+      "fromId": "PMU1_OUT",
+      "toId": "CCT_IN"
+    },
+    {
+      "fromId": "PMU2_ANGLE",
+      "toId": "ANGLE_IN"
+    },
+    {
+      "fromId": "PMU2_ANGLE",
+      "toId": "REC_IN"
+    },
+    {
+      "fromId": "CTRL_FAULT",
+      "toId": "FAULT_IN"
+    },
+    {
+      "fromId": "CTRL_BF",
+      "toId": "BF_IN"
+    },
+    {
+      "fromId": "BUS2_A",
+      "toId": "LOAD_A"
+    },
+    {
+      "fromId": "BUS2_B",
+      "toId": "LOAD_B"
+    },
+    {
+      "fromId": "BUS2_C",
+      "toId": "LOAD_C"
+    },
+    {
+      "fromId": "GUARD_NC",
+      "toId": "CTRL_SAFE"
+    },
+    {
+      "fromId": "PMU2_ANGLE",
+      "toId": "CTRL_PMU_B"
+    }
+  ]
+}

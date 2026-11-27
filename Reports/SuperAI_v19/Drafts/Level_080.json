@@ -1,0 +1,512 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 80,
+    "layoutName": "Level_80_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "PLC_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "PLC_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "TX_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "TX_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "RING_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "RING_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "RX_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "RX_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SAFE_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "SAFE_GND"
+        },
+        {
+            "fromId": "LASER_PERMIT",
+            "toId": "LASER_ENABLE"
+        },
+        {
+            "fromId": "LASER_CMD",
+            "toId": "LASER_DAC"
+        },
+        {
+            "fromId": "LAUNCH_TAP",
+            "toId": "LAUNCH_IN"
+        },
+        {
+            "fromId": "LAUNCH_TAP",
+            "toId": "SOURCE_POWER"
+        },
+        {
+            "fromId": "SHUTTER_CMD",
+            "toId": "SHUTTER_OPEN"
+        },
+        {
+            "fromId": "SHUTTER_FB",
+            "toId": "SHUTTER_CLOSED"
+        },
+        {
+            "fromId": "ATTEN_CMD",
+            "toId": "ATTEN_DAC"
+        },
+        {
+            "fromId": "ATTEN_OUT",
+            "toId": "ATTEN_IN"
+        },
+        {
+            "fromId": "COMB_OUT",
+            "toId": "COMB_LOCK"
+        },
+        {
+            "fromId": "LASER_TEMP",
+            "toId": "PLC_TEMP"
+        },
+        {
+            "fromId": "TEMP_CMD",
+            "toId": "TEC_SET"
+        },
+        {
+            "fromId": "REF_OUT",
+            "toId": "SPECTRAL_REF"
+        },
+        {
+            "fromId": "STRAY_OUT",
+            "toId": "SAFE_STRAY"
+        },
+        {
+            "fromId": "ISOLATOR_CMD",
+            "toId": "ISOLATOR_SET"
+        },
+        {
+            "fromId": "ISOLATOR_OUT",
+            "toId": "ISO_READY"
+        },
+        {
+            "fromId": "POL_OUT",
+            "toId": "POL_READY"
+        },
+        {
+            "fromId": "TAP_HEALTH",
+            "toId": "TAP_READY"
+        },
+        {
+            "fromId": "LAUNCH_TAP",
+            "toId": "SCADA_LAUNCH"
+        },
+        {
+            "fromId": "TX_CMD",
+            "toId": "TX_ENABLE"
+        },
+        {
+            "fromId": "TX_DRIVE",
+            "toId": "TX_MOD"
+        },
+        {
+            "fromId": "BIAS_CMD",
+            "toId": "MOD_BIAS"
+        },
+        {
+            "fromId": "MOD_RESP",
+            "toId": "TX_RESPONSE"
+        },
+        {
+            "fromId": "LOGIC_OUT",
+            "toId": "TX_LOGIC"
+        },
+        {
+            "fromId": "MEMORY_OUT",
+            "toId": "TX_MEMORY"
+        },
+        {
+            "fromId": "IO_OUT",
+            "toId": "TX_IO"
+        },
+        {
+            "fromId": "SENSOR_OUT",
+            "toId": "TX_SENSOR"
+        },
+        {
+            "fromId": "PRBS_CMD",
+            "toId": "PRBS_START"
+        },
+        {
+            "fromId": "PRBS_OUT",
+            "toId": "REF_PATTERN"
+        },
+        {
+            "fromId": "TX_STATUS",
+            "toId": "TX_ACTIVE"
+        },
+        {
+            "fromId": "MUX_CMD",
+            "toId": "MUX_PERMIT"
+        },
+        {
+            "fromId": "MUX_OUT",
+            "toId": "MUX_OK"
+        },
+        {
+            "fromId": "MOD_CAL",
+            "toId": "TX_CAL_OK"
+        },
+        {
+            "fromId": "ROUTE_CMD",
+            "toId": "ROUTE_IN"
+        },
+        {
+            "fromId": "ROUTE_OUT",
+            "toId": "TX_ROUTES"
+        },
+        {
+            "fromId": "TX_TELEM",
+            "toId": "SCADA_TX"
+        },
+        {
+            "fromId": "BIAS_OUT",
+            "toId": "SCADA_BIAS"
+        },
+        {
+            "fromId": "RING_CMD",
+            "toId": "RING_ENABLE"
+        },
+        {
+            "fromId": "HEAT_DAC",
+            "toId": "RING_HEAT"
+        },
+        {
+            "fromId": "TEMP_ARRAY",
+            "toId": "RING_TEMP"
+        },
+        {
+            "fromId": "CROSS_HEAT",
+            "toId": "CROSS_IN"
+        },
+        {
+            "fromId": "A_HEAT",
+            "toId": "A_DAC"
+        },
+        {
+            "fromId": "A_TEMP",
+            "toId": "A_TEMPERATURE"
+        },
+        {
+            "fromId": "B_HEAT",
+            "toId": "B_DAC"
+        },
+        {
+            "fromId": "B_TEMP",
+            "toId": "B_TEMPERATURE"
+        },
+        {
+            "fromId": "C_HEAT",
+            "toId": "C_DAC"
+        },
+        {
+            "fromId": "C_TEMP",
+            "toId": "C_TEMPERATURE"
+        },
+        {
+            "fromId": "D_HEAT",
+            "toId": "D_DAC"
+        },
+        {
+            "fromId": "D_TEMP",
+            "toId": "D_TEMPERATURE"
+        },
+        {
+            "fromId": "A_LOCK",
+            "toId": "A_RESONANCE"
+        },
+        {
+            "fromId": "B_LOCK",
+            "toId": "B_RESONANCE"
+        },
+        {
+            "fromId": "C_LOCK",
+            "toId": "C_RESONANCE"
+        },
+        {
+            "fromId": "D_LOCK",
+            "toId": "D_RESONANCE"
+        },
+        {
+            "fromId": "CROSS_CMD",
+            "toId": "CROSS_COMP"
+        },
+        {
+            "fromId": "DEMOD_OUT",
+            "toId": "DEMOD_LOCK"
+        },
+        {
+            "fromId": "TEMP_TELEM",
+            "toId": "SCADA_TEMP"
+        },
+        {
+            "fromId": "COOL_CMD",
+            "toId": "COOLING_SET"
+        },
+        {
+            "fromId": "DEMUX_CMD",
+            "toId": "DEMUX_CONFIG"
+        },
+        {
+            "fromId": "DEMUX_OUT",
+            "toId": "DEMUX_OK"
+        },
+        {
+            "fromId": "PD_CMD",
+            "toId": "PD_ENABLE"
+        },
+        {
+            "fromId": "PD_OUT",
+            "toId": "PD_CURRENT"
+        },
+        {
+            "fromId": "TIA_OUT",
+            "toId": "RX_ANALOG"
+        },
+        {
+            "fromId": "CDR_OUT",
+            "toId": "CDR_LOCK"
+        },
+        {
+            "fromId": "RX_TAP",
+            "toId": "RX_METER"
+        },
+        {
+            "fromId": "RX_TAP",
+            "toId": "SCADA_RX_TAP"
+        },
+        {
+            "fromId": "SPEC_OUT",
+            "toId": "SPEC_IN"
+        },
+        {
+            "fromId": "BUDGET_OUT",
+            "toId": "BUDGET_IN"
+        },
+        {
+            "fromId": "DROP_OUT",
+            "toId": "DROP_OK"
+        },
+        {
+            "fromId": "RX_OPTICAL_POWER_SIGNAL_OUT",
+            "toId": "LINK_SUPERVISOR_RX_POWER_IN"
+        },
+        {
+            "fromId": "RX_METER",
+            "toId": "METER_HEALTH"
+        },
+        {
+            "fromId": "RX_ANALOG",
+            "toId": "TIA_GAIN_REQ"
+        },
+        {
+            "fromId": "RX_ANALOG",
+            "toId": "TIA_ACTUAL"
+        },
+        {
+            "fromId": "PD_CURRENT",
+            "toId": "PD_READY"
+        },
+        {
+            "fromId": "SPEC_IN",
+            "toId": "SCADA_SPEC"
+        },
+        {
+            "fromId": "BUDGET_IN",
+            "toId": "SCADA_LOSS"
+        },
+        {
+            "fromId": "PRBS_START",
+            "toId": "BER_ENABLE"
+        },
+        {
+            "fromId": "REF_PATTERN",
+            "toId": "PRBS_EXPECT"
+        },
+        {
+            "fromId": "RX_ANALOG",
+            "toId": "TEST_BITS"
+        },
+        {
+            "fromId": "TEST_BITS",
+            "toId": "BER_RESULT"
+        },
+        {
+            "fromId": "TEST_BITS",
+            "toId": "EYE_RESULT"
+        },
+        {
+            "fromId": "EYE_RESULT",
+            "toId": "PAM4_QUALITY"
+        },
+        {
+            "fromId": "BER_RESULT",
+            "toId": "FEC_STATUS"
+        },
+        {
+            "fromId": "TEST_BITS",
+            "toId": "RAW_BITS"
+        },
+        {
+            "fromId": "FEC_STATUS",
+            "toId": "FEC_BITS"
+        },
+        {
+            "fromId": "CDR_LOCK",
+            "toId": "CDR_REQ"
+        },
+        {
+            "fromId": "CDR_LOCK",
+            "toId": "CLOCK_OUT"
+        },
+        {
+            "fromId": "TX_ROUTES",
+            "toId": "ROUTE_PASS"
+        },
+        {
+            "fromId": "TX_MEMORY",
+            "toId": "MEMORY_RESP"
+        },
+        {
+            "fromId": "TX_LOGIC",
+            "toId": "LOGIC_STATUS"
+        },
+        {
+            "fromId": "TX_IO",
+            "toId": "IO_STATUS"
+        },
+        {
+            "fromId": "TX_SENSOR",
+            "toId": "SENSOR_TELEM"
+        },
+        {
+            "fromId": "TAP_READY",
+            "toId": "FIBER_LOSS"
+        },
+        {
+            "fromId": "FIBER_LOSS",
+            "toId": "FAULT_STATE"
+        },
+        {
+            "fromId": "FAULT_STATE",
+            "toId": "INJECT_ENABLE"
+        },
+        {
+            "fromId": "DROP_OK",
+            "toId": "WAVEGUIDE_SCOPE"
+        },
+        {
+            "fromId": "SPECTRAL_REF",
+            "toId": "COUPON_OK"
+        },
+        {
+            "fromId": "COUPON_OK",
+            "toId": "ESD_STATUS"
+        },
+        {
+            "fromId": "TAP_READY",
+            "toId": "DOCK_SEATED"
+        },
+        {
+            "fromId": "DOCK_SEATED",
+            "toId": "EDGE_ALIGN"
+        },
+        {
+            "fromId": "DOCK_SEATED",
+            "toId": "FIBER_ID"
+        },
+        {
+            "fromId": "CROSS_IN",
+            "toId": "CROSSTALK_MAP"
+        },
+        {
+            "fromId": "DROP_OK",
+            "toId": "WAVEGUIDE_MAP"
+        },
+        {
+            "fromId": "MUX_OK",
+            "toId": "WDM_HOLOGRAM"
+        },
+        {
+            "fromId": "ROUTE_PASS",
+            "toId": "ROUTE_HOLOGRAM"
+        },
+        {
+            "fromId": "BER_RESULT",
+            "toId": "DIAGNOSTICS"
+        },
+        {
+            "fromId": "ESTOP_NC",
+            "toId": "SAFE_STOP_IN"
+        },
+        {
+            "fromId": "SAFE_STOP_IN",
+            "toId": "OVERRIDE_SAFE"
+        },
+        {
+            "fromId": "SHUTTER_CLOSED",
+            "toId": "OPTICAL_PERMIT"
+        },
+        {
+            "fromId": "OPTICAL_PERMIT",
+            "toId": "PLC_ALLOW"
+        },
+        {
+            "fromId": "ROUTE_PASS",
+            "toId": "SCADA_QUAL"
+        },
+        {
+            "fromId": "PLC_ALLOW",
+            "toId": "OPERATOR_CMD"
+        },
+        {
+            "fromId": "METER_HEALTH",
+            "toId": "RX_LOSS_TRIP"
+        },
+        {
+            "fromId": "LASER_CMD",
+            "toId": "LASER_OFF"
+        },
+        {
+            "fromId": "SHUTTER_CLOSED",
+            "toId": "FAIL_CLOSED"
+        },
+        {
+            "fromId": "METER_HEALTH",
+            "toId": "W078_VALID"
+        },
+        {
+            "fromId": "SCADA_QUAL",
+            "toId": "OBJECTIVE_EVENT"
+        },
+        {
+            "fromId": "SAFE_STOP_IN",
+            "toId": "SAFETY_ALARM"
+        }
+    ]
+}

@@ -1,0 +1,192 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 60,
+    "layoutName": "Level_60_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "CTRL_POS"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "CTRL_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "BMS_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "BMS_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SENSE_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "SENSE_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SAFETY_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "SAFETY_GND"
+        },
+        {
+            "fromId": "BAT_POS",
+            "toId": "BMS_BAT_POS"
+        },
+        {
+            "fromId": "BAT_NEG",
+            "toId": "DC_NEG"
+        },
+        {
+            "fromId": "BMS_OUT",
+            "toId": "CONV_BAT"
+        },
+        {
+            "fromId": "CONV_DC",
+            "toId": "DC_POS"
+        },
+        {
+            "fromId": "DC_POS",
+            "toId": "INV_DC_POS"
+        },
+        {
+            "fromId": "DC_NEG",
+            "toId": "INV_DC_NEG"
+        },
+        {
+            "fromId": "EMS_INV",
+            "toId": "INV_ENABLE"
+        },
+        {
+            "fromId": "INV_A",
+            "toId": "BUS_A"
+        },
+        {
+            "fromId": "INV_B",
+            "toId": "BUS_B"
+        },
+        {
+            "fromId": "INV_C",
+            "toId": "BUS_C"
+        },
+        {
+            "fromId": "PV_POS",
+            "toId": "MPPT_POS"
+        },
+        {
+            "fromId": "PV_NEG",
+            "toId": "MPPT_NEG"
+        },
+        {
+            "fromId": "MPPT_DC",
+            "toId": "DC_POS"
+        },
+        {
+            "fromId": "MPPT_RET",
+            "toId": "DC_NEG"
+        },
+        {
+            "fromId": "EMS_START",
+            "toId": "START_CMD"
+        },
+        {
+            "fromId": "DC_POS",
+            "toId": "START_POS"
+        },
+        {
+            "fromId": "DC_NEG",
+            "toId": "START_NEG"
+        },
+        {
+            "fromId": "GEN_A",
+            "toId": "QGEN_A"
+        },
+        {
+            "fromId": "GEN_B",
+            "toId": "QGEN_B"
+        },
+        {
+            "fromId": "GEN_C",
+            "toId": "QGEN_C"
+        },
+        {
+            "fromId": "GEN_SYNC",
+            "toId": "SYNC_GEN"
+        },
+        {
+            "fromId": "GRID_A",
+            "toId": "QGRID_A"
+        },
+        {
+            "fromId": "GRID_B",
+            "toId": "QGRID_B"
+        },
+        {
+            "fromId": "GRID_C",
+            "toId": "QGRID_C"
+        },
+        {
+            "fromId": "GRID_SYNC",
+            "toId": "SYNC_GRID"
+        },
+        {
+            "fromId": "BUS_A",
+            "toId": "ESS_FEED"
+        },
+        {
+            "fromId": "BUS_B",
+            "toId": "PRI_FEED"
+        },
+        {
+            "fromId": "BUS_A",
+            "toId": "MOTOR_A"
+        },
+        {
+            "fromId": "BUS_B",
+            "toId": "MOTOR_B"
+        },
+        {
+            "fromId": "BUS_C",
+            "toId": "MOTOR_C"
+        },
+        {
+            "fromId": "BUS_C",
+            "toId": "AUX_FEED"
+        },
+        {
+            "fromId": "BUS_A",
+            "toId": "SENSE_BUS"
+        },
+        {
+            "fromId": "SENSE_OUT",
+            "toId": "EMS_SENSE"
+        },
+        {
+            "fromId": "SENSE_OUT",
+            "toId": "EMS_METER"
+        },
+        {
+            "fromId": "BMS_STATUS",
+            "toId": "EMS_BMS"
+        },
+        {
+            "fromId": "MPPT_STATUS",
+            "toId": "EMS_SOLAR"
+        },
+        {
+            "fromId": "PROTECT_OUT",
+            "toId": "EMS_PROTECT"
+        },
+        {
+            "fromId": "GUARD_NC",
+            "toId": "CTRL_SAFE"
+        }
+    ]
+}

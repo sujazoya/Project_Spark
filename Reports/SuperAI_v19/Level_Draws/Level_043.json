@@ -1,0 +1,39 @@
+{
+  "level": 43,
+  "levelId": "level_43",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_43_Layout/Level_43_Position_Control_Layout.prefab",
+  "layoutRevision": "FF87BC2759E759F4E4F01433E71658F5EFA385E1EEACC3018E1EA5CCBD5B023E",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel43PositionControl.cs#CheckWiring",
+  "terminalBindings": 12,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "6 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "DRIVER_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "DRIVER_RET"
+    },
+    {
+      "fromId": "COMMAND_OUT",
+      "toId": "COMMAND_IN"
+    },
+    {
+      "fromId": "POSITION_OUT",
+      "toId": "POSITION_IN"
+    },
+    {
+      "fromId": "OUT_A",
+      "toId": "MOTOR_A"
+    },
+    {
+      "fromId": "OUT_B",
+      "toId": "MOTOR_B"
+    }
+  ]
+}

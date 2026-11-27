@@ -1,0 +1,535 @@
+{
+  "level": 81,
+  "levelId": "level_81",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_81_Layout/Level_81_Layout.prefab",
+  "layoutRevision": "A03D4FE5B20EBAB523B2051F584FE1674F50893D8C604C9A51C16EA3C6AC4AA7",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel81Process.cs#Wires",
+  "terminalBindings": 200,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "130 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "PLC_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "PLC_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "ECC_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "ECC_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "MEM_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "MEM_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "TMR_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "TMR_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "OPT_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "OPT_GND"
+    },
+    {
+      "fromId": "TASK_READY",
+      "toId": "SEQ_READY"
+    },
+    {
+      "fromId": "CORE_A_CLOCK",
+      "toId": "CORE_A_CLK"
+    },
+    {
+      "fromId": "CORE_B_CLOCK",
+      "toId": "CORE_B_CLK"
+    },
+    {
+      "fromId": "CORE_C_CLOCK",
+      "toId": "CORE_C_CLK"
+    },
+    {
+      "fromId": "WD_SYNC",
+      "toId": "WD_CLOCK"
+    },
+    {
+      "fromId": "WD_STATUS",
+      "toId": "WD_TIME"
+    },
+    {
+      "fromId": "WD_REPLY",
+      "toId": "WD_VERIFY"
+    },
+    {
+      "fromId": "SCHED_PERMIT",
+      "toId": "MISSION_SEQ"
+    },
+    {
+      "fromId": "MEM_ADDR",
+      "toId": "ECC_ADDR"
+    },
+    {
+      "fromId": "BANK_A_ADDR",
+      "toId": "MEM_A_ADDR"
+    },
+    {
+      "fromId": "BANK_B_ADDR",
+      "toId": "MEM_B_ADDR"
+    },
+    {
+      "fromId": "LOCKSTEP_OUT",
+      "toId": "SEQ_SYNC"
+    },
+    {
+      "fromId": "REF_READY",
+      "toId": "REF_VALID"
+    },
+    {
+      "fromId": "COMMAND_PERMIT",
+      "toId": "COMMAND_ENABLE"
+    },
+    {
+      "fromId": "GUIDANCE_CMD",
+      "toId": "COMPUTE_IN"
+    },
+    {
+      "fromId": "DEADLINE_OUT",
+      "toId": "DEADLINE_IN"
+    },
+    {
+      "fromId": "MEM_WORD",
+      "toId": "ECC_ENCODE"
+    },
+    {
+      "fromId": "ECC_A_OUT",
+      "toId": "BANK_A_WRITE"
+    },
+    {
+      "fromId": "ECC_B_OUT",
+      "toId": "BANK_B_WRITE"
+    },
+    {
+      "fromId": "BANK_A_READ",
+      "toId": "SYNDROME_A"
+    },
+    {
+      "fromId": "BANK_B_READ",
+      "toId": "SYNDROME_B"
+    },
+    {
+      "fromId": "SINGLE_POS",
+      "toId": "CORRECT_IN"
+    },
+    {
+      "fromId": "CORRECT_A",
+      "toId": "BANK_A_FIX"
+    },
+    {
+      "fromId": "CORRECT_B",
+      "toId": "BANK_B_FIX"
+    },
+    {
+      "fromId": "DOUBLE_BIT",
+      "toId": "DOUBLE_ALARM"
+    },
+    {
+      "fromId": "QUARANTINE_CMD",
+      "toId": "QUARANTINE_IN"
+    },
+    {
+      "fromId": "SCRUB_RATE",
+      "toId": "SCRUB_CLOCK"
+    },
+    {
+      "fromId": "SCRUB_ADDR",
+      "toId": "SCRUB_BANK"
+    },
+    {
+      "fromId": "SCRUB_QUERY",
+      "toId": "SCRUB_SYNDROME"
+    },
+    {
+      "fromId": "SCRUB_RESULT",
+      "toId": "CORR_RESULT"
+    },
+    {
+      "fromId": "SCRUB_BW",
+      "toId": "SCRUB_ALLOW"
+    },
+    {
+      "fromId": "SCRUB_LOAD",
+      "toId": "BW_TELEM"
+    },
+    {
+      "fromId": "CHECKPOINT_CMD",
+      "toId": "CHECKPOINT_IN"
+    },
+    {
+      "fromId": "VAULT_AUTH",
+      "toId": "BACKUP_ENABLE"
+    },
+    {
+      "fromId": "RECHECK_OUT",
+      "toId": "PAGE_VERIFY"
+    },
+    {
+      "fromId": "CHECKSUM_OUT",
+      "toId": "VAULT_REF"
+    },
+    {
+      "fromId": "LOCK_A",
+      "toId": "LANE_A_IN"
+    },
+    {
+      "fromId": "LOCK_B",
+      "toId": "LANE_B_IN"
+    },
+    {
+      "fromId": "LOCK_C",
+      "toId": "LANE_C_IN"
+    },
+    {
+      "fromId": "RESULT_A",
+      "toId": "VOTE_A"
+    },
+    {
+      "fromId": "RESULT_B",
+      "toId": "VOTE_B"
+    },
+    {
+      "fromId": "RESULT_C",
+      "toId": "VOTE_C"
+    },
+    {
+      "fromId": "DISAGREE_OUT",
+      "toId": "DISAGREE_IN"
+    },
+    {
+      "fromId": "FAULT_LANE",
+      "toId": "LANE_ISOLATE"
+    },
+    {
+      "fromId": "LANE_A_HEALTH",
+      "toId": "PLC_A_HEALTH"
+    },
+    {
+      "fromId": "LANE_B_HEALTH",
+      "toId": "PLC_B_HEALTH"
+    },
+    {
+      "fromId": "LANE_C_HEALTH",
+      "toId": "PLC_C_HEALTH"
+    },
+    {
+      "fromId": "INDEP_REF",
+      "toId": "REF_CHECK"
+    },
+    {
+      "fromId": "CORRELATED_OUT",
+      "toId": "CORRELATED_IN"
+    },
+    {
+      "fromId": "VOTE_PERMIT",
+      "toId": "VOTE_AUTH"
+    },
+    {
+      "fromId": "VOTE_RESULT",
+      "toId": "COMMAND_VOTE"
+    },
+    {
+      "fromId": "VOTE_RESULT",
+      "toId": "REF_GATE"
+    },
+    {
+      "fromId": "VALID_CMD",
+      "toId": "CMD_SAFE"
+    },
+    {
+      "fromId": "ACT_CMD",
+      "toId": "ACTUATE"
+    },
+    {
+      "fromId": "SENSOR_PACKET",
+      "toId": "SENSOR_IN"
+    },
+    {
+      "fromId": "NAV_PACKET",
+      "toId": "NAV_IN"
+    },
+    {
+      "fromId": "CRC_FRAME",
+      "toId": "OPTICAL_TX"
+    },
+    {
+      "fromId": "OPTICAL_RX",
+      "toId": "FRAME_IN"
+    },
+    {
+      "fromId": "CRC_OK",
+      "toId": "SEQUENCE_IN"
+    },
+    {
+      "fromId": "SEQUENCE_OUT",
+      "toId": "ORDER_VALID"
+    },
+    {
+      "fromId": "CRC_STATUS",
+      "toId": "CRC_VALID"
+    },
+    {
+      "fromId": "GAP_REQ",
+      "toId": "RETRANSMIT"
+    },
+    {
+      "fromId": "RETRY_OUT",
+      "toId": "RETRY_IN"
+    },
+    {
+      "fromId": "GOOD_PACKET",
+      "toId": "BUFFER_IN"
+    },
+    {
+      "fromId": "NAV_DATA",
+      "toId": "NAV_VALID"
+    },
+    {
+      "fromId": "OPTICAL_VALID",
+      "toId": "LINK_STATUS"
+    },
+    {
+      "fromId": "TELEMETRY_PERMIT",
+      "toId": "TELEMETRY_AUTH"
+    },
+    {
+      "fromId": "ORDER_VALID",
+      "toId": "PACKET_AGE"
+    },
+    {
+      "fromId": "CRC_VALID",
+      "toId": "DROP_FRAME"
+    },
+    {
+      "fromId": "ORDER_VALID",
+      "toId": "REPLAY_HOLD"
+    },
+    {
+      "fromId": "NAV_VALID",
+      "toId": "SENSOR_FRESH"
+    },
+    {
+      "fromId": "LINK_STATUS",
+      "toId": "SCADA_INTEGRITY"
+    },
+    {
+      "fromId": "SENSOR_IN",
+      "toId": "INJECT_CMD"
+    },
+    {
+      "fromId": "INJECT_CMD",
+      "toId": "FAULT_SEED"
+    },
+    {
+      "fromId": "BANK_A_WRITE",
+      "toId": "BANK_A_UPSET"
+    },
+    {
+      "fromId": "BANK_B_WRITE",
+      "toId": "BANK_B_UPSET"
+    },
+    {
+      "fromId": "LANE_A_IN",
+      "toId": "CORE_A_FAULT"
+    },
+    {
+      "fromId": "LANE_B_IN",
+      "toId": "CORE_B_FAULT"
+    },
+    {
+      "fromId": "LANE_C_IN",
+      "toId": "CORE_C_FAULT"
+    },
+    {
+      "fromId": "FAULT_SEED",
+      "toId": "CORREL_EVENT"
+    },
+    {
+      "fromId": "CORREL_EVENT",
+      "toId": "CORREL_PATTERN"
+    },
+    {
+      "fromId": "CORREL_PATTERN",
+      "toId": "PROPAGATION_RISK"
+    },
+    {
+      "fromId": "DOUBLE_ALARM",
+      "toId": "ECC_DIAG_ALARM"
+    },
+    {
+      "fromId": "ECC_SYNDROME_STATUS_OUT",
+      "toId": "CRITICAL_ECC_SYNDROME_IN"
+    },
+    {
+      "fromId": "DOUBLE_ALARM",
+      "toId": "ECC_HEALTH"
+    },
+    {
+      "fromId": "SCRUB_RESULT",
+      "toId": "ECC_DISPLAY"
+    },
+    {
+      "fromId": "FAULT_SEED",
+      "toId": "TRACE_DIAG"
+    },
+    {
+      "fromId": "CORRELATED_IN",
+      "toId": "COMPUTE_INHIBIT"
+    },
+    {
+      "fromId": "FRAME_IN",
+      "toId": "PACKET_FAULT"
+    },
+    {
+      "fromId": "FAULT_SEED",
+      "toId": "SCADA_FAULTS"
+    },
+    {
+      "fromId": "WD_TIME",
+      "toId": "WATCHDOG_EXPIRED"
+    },
+    {
+      "fromId": "WD_VERIFY",
+      "toId": "WATCHDOG_TRUST"
+    },
+    {
+      "fromId": "MISSION_SEQ",
+      "toId": "SAFE_HOLD"
+    },
+    {
+      "fromId": "VAULT_REF",
+      "toId": "RECOVERY_APPROVAL"
+    },
+    {
+      "fromId": "VAULT_REF",
+      "toId": "RESTORE_SUM"
+    },
+    {
+      "fromId": "RESTORE_SUM",
+      "toId": "SUM_COMPARE"
+    },
+    {
+      "fromId": "QUARANTINE_IN",
+      "toId": "QUARANTINE_STATUS"
+    },
+    {
+      "fromId": "SCRUB_CLOCK",
+      "toId": "WORD_FRESHNESS"
+    },
+    {
+      "fromId": "ECC_HEALTH",
+      "toId": "ECC_FRESHNESS"
+    },
+    {
+      "fromId": "RECOVERY_APPROVAL",
+      "toId": "RECERT_REQUEST"
+    },
+    {
+      "fromId": "PAGE_VERIFY",
+      "toId": "RECOVERY_OK"
+    },
+    {
+      "fromId": "VOTE_AUTH",
+      "toId": "VOTE_CONFIDENCE"
+    },
+    {
+      "fromId": "REF_CHECK",
+      "toId": "REF_QUAL"
+    },
+    {
+      "fromId": "ORDER_VALID",
+      "toId": "PACKET_QUAL"
+    },
+    {
+      "fromId": "FAULT_SEED",
+      "toId": "FAULT_CONSOLE"
+    },
+    {
+      "fromId": "SAFE_HOLD",
+      "toId": "MANUAL_RESET"
+    },
+    {
+      "fromId": "COMMAND_ENABLE",
+      "toId": "PROTECTED_CONTROL"
+    },
+    {
+      "fromId": "MISSION_SEQ",
+      "toId": "SUPPLY_STATUS"
+    },
+    {
+      "fromId": "ESTOP_NC",
+      "toId": "SAFE_STOP_IN"
+    },
+    {
+      "fromId": "SAFE_STOP_IN",
+      "toId": "HOLD_FEEDBACK"
+    },
+    {
+      "fromId": "FAULT_CONSOLE",
+      "toId": "INJECT_PERMIT"
+    },
+    {
+      "fromId": "SAFE_HOLD",
+      "toId": "SCADA_PLC"
+    },
+    {
+      "fromId": "ECC_HEALTH",
+      "toId": "SCADA_ECC"
+    },
+    {
+      "fromId": "QUARANTINE_STATUS",
+      "toId": "SCADA_QUARANTINE"
+    },
+    {
+      "fromId": "SCRUB_LOAD",
+      "toId": "SCADA_SCRUB"
+    },
+    {
+      "fromId": "VOTE_CONFIDENCE",
+      "toId": "SCADA_TMR"
+    },
+    {
+      "fromId": "DEADLINE_IN",
+      "toId": "SCADA_TIMING"
+    },
+    {
+      "fromId": "SCADA_INTEGRITY",
+      "toId": "SCADA_PACKET"
+    },
+    {
+      "fromId": "CMD_SAFE",
+      "toId": "MISSION_HEALTH"
+    },
+    {
+      "fromId": "MISSION_HEALTH",
+      "toId": "OBJECTIVE_CERT"
+    }
+  ]
+}

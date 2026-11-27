@@ -1,0 +1,63 @@
+{
+  "level": 46,
+  "levelId": "level_46",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_46_Layout/Level_46_Sync_Layout.prefab",
+  "layoutRevision": "09DCCE2C6F9453B3D1A6EFBF33CDF38EDE2396B72E57F40B80B16C47BAF7578C",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel46Sync.cs#CheckWiring",
+  "terminalBindings": 24,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "12 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_PLUS_5V",
+      "toId": "CTRL_PLUS_5V"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "CTRL_GND"
+    },
+    {
+      "fromId": "CTRL_MASTER_PWM",
+      "toId": "DRIVER_MASTER_PWM"
+    },
+    {
+      "fromId": "CTRL_FOLLOWER_PWM",
+      "toId": "DRIVER_FOLLOWER_PWM"
+    },
+    {
+      "fromId": "DRIVER_MASTER_PLUS",
+      "toId": "M_MOTOR_PLUS"
+    },
+    {
+      "fromId": "DRIVER_MASTER_MINUS",
+      "toId": "M_MOTOR_MINUS"
+    },
+    {
+      "fromId": "DRIVER_FOLLOWER_PLUS",
+      "toId": "F_MOTOR_PLUS"
+    },
+    {
+      "fromId": "DRIVER_FOLLOWER_MINUS",
+      "toId": "F_MOTOR_MINUS"
+    },
+    {
+      "fromId": "MASTER_ENC_A",
+      "toId": "CTRL_MASTER_A"
+    },
+    {
+      "fromId": "MASTER_ENC_B",
+      "toId": "CTRL_MASTER_B"
+    },
+    {
+      "fromId": "FOLLOWER_ENC_A",
+      "toId": "CTRL_FOLLOWER_A"
+    },
+    {
+      "fromId": "FOLLOWER_ENC_B",
+      "toId": "CTRL_FOLLOWER_B"
+    }
+  ]
+}

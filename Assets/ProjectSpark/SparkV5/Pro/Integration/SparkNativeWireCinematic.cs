@@ -502,19 +502,26 @@ namespace ProjectSpark.SparkV5.Pro
             { Fail("There is no usable ground NavMesh for " + terminal.name + "."); yield break; }
             Vector3 start = navigation.nextPosition;
             Vector3 target = terminal.position;
-            Vector3 horizontal = Vector3.ProjectOnPlane(target - start, Vector3.up);
+            Vector3 horizontal = Vector3.ProjectOnPlane(target - transform.position, Vector3.up);
             bool CanUseOriginalHand() => allowOriginalHand && telescopicBridge &&
                 telescopicBridge.CanReachWithOriginalHand(terminal);
             bool ready = CanUseOriginalHand() ||
-                (pointer ? horizontal.sqrMagnitude <= .85f * .85f : CanPhysicallyReach(target, start));
+                (pointer ? horizontal.sqrMagnitude <= .85f * .85f : CanPhysicallyReach(target, transform.position));
             if (!ready)
             {
                 var filter = new NavMeshQueryFilter { agentTypeID = navigation.agentTypeID, areaMask = navigation.areaMask };
                 bool route = pointer
                     ? TryFindPointerStance(target, start, filter, out var destination)
                     : SelectWalkingDestination(target, start, filter, out destination, out _);
+                if (!route && allowOriginalHand)
+                    route = TryFindHandStance(terminal, out destination);
                 if (!route)
-                { Fail("There is no safe walking approach to " + terminal.name + "."); yield break; }
+                {
+                    if (!pointer && autoFlyWhenWalkingCannotReach && flight && flight.AllowAutoWiringFlight)
+                        yield return WalkNear(terminal, workbench, layout, stillValid);
+                    else Fail("There is no safe walking approach to " + terminal.name + ".");
+                    yield break;
+                }
                 Narrate("I'm walking to " + terminal.name + ".");
                 if (!allowOriginalHand) yield return FollowGroundRoute(destination, stillValid);
                 else
@@ -532,7 +539,10 @@ namespace ProjectSpark.SparkV5.Pro
                     }
                 }
             }
-            if (failure == null && stillValid()) FaceWorkingTerminal(terminal);
+            if (failure != null || !stillValid()) yield break;
+            FaceWorkingTerminal(terminal);
+            if (!pointer && !CanUseOriginalHand() && !CanPhysicallyReach(terminal.position, transform.position))
+                yield return WalkNear(terminal, workbench, layout, stillValid);
         }
 
         private bool TryFindPointerStance(Vector3 target, Vector3 start, NavMeshQueryFilter filter,
@@ -895,9 +905,11 @@ namespace ProjectSpark.SparkV5.Pro
             {
                 yield return FlyNear(a.transform, stillValid, "The ground approach cannot reach both sockets safely. Checking a hovering stance.");
                 if (failure != null || !stillValid()) yield break;
-                if (telescopicBridge.CanReachWithOriginalHand(a.transform) && telescopicBridge.CanDrawTo(b.transform))
+                if (telescopicBridge.CanReachWithOriginalHand(a.transform))
                 {
-                    yield return PerformTelescopicNativeCable(a, b, port, layout, stillValid, canHover);
+                    bool needsTransfer = !telescopicBridge.CanDrawTo(b.transform);
+                    yield return PerformTelescopicNativeCable(a, b, port, layout, stillValid, canHover,
+                        flightCarry: needsTransfer);
                     yield break;
                 }
             }
@@ -974,6 +986,21 @@ namespace ProjectSpark.SparkV5.Pro
                 // A steep socket may only be reachable from its closest approach.
                 if (Vector3.Distance(shoulderR.position, b.transform.position + offset) > armReach)
                     offset = (shoulderR.position - b.transform.position).normalized * insertionDistance;
+                if (Vector3.Distance(shoulderR.position, b.transform.position + offset) > armReach)
+                {
+                    Vector3? navPosition = HasNavMesh ? navigation.nextPosition : null;
+                    var arms = GetComponent<SparkTelescopicArms>();
+                    bool clear = SocketIsClear(b.transform, layout);
+                    if (!clear) yield break;
+                    Fail($"No verified insertion stance for {b.name} {b.transform.position:F3}. " +
+                        $"Root {transform.position:F3}, navigation {navPosition}, " +
+                        $"shoulder {shoulderR.position:F3}, elbow {elbowR.position:F3}, wrist {wristR.position:F3}, " +
+                        $"fingertip grip {handRigs[0].GripPoint:F3}, cable {rest:F3} m. " +
+                        $"Motion owner: {(flight && flight.IsFlying ? "flight" : "ground")}. " +
+                        $"Original arm contact {telescopicBridge && telescopicBridge.IsContactActive}, " +
+                        $"maximum reach {(arms ? arms.MaximumReach : 0f):F3} m. Socket is clear.");
+                    yield break;
+                }
                 yield return Reach(b.transform, stillValid, offset);
                 if (failure != null || !stillValid()) yield break;
                 Stage = CableStage.Inserting;
@@ -1059,7 +1086,8 @@ namespace ProjectSpark.SparkV5.Pro
         /// </summary>
         private IEnumerator PerformTelescopicNativeCable(
             SparkTerminal a, SparkTerminal b, SparkAINativeSignalWirePort port,
-            Transform layout, Func<bool> stillValid, Func<bool> canRelease, Vector3? carryStance = null)
+            Transform layout, Func<bool> stillValid, Func<bool> canRelease, Vector3? carryStance = null,
+            bool flightCarry = false)
         {
             if (!telescopicBridge || !telescopicBridge.IsConfigured)
             { Fail("Original-hand telescopic bridge is not bound"); yield break; }
@@ -1123,14 +1151,14 @@ namespace ProjectSpark.SparkV5.Pro
             yield return null;
             Stage = CableStage.Lift;
             Vector3 lift = Vector3.up * Mathf.Max(.025f, cableDiameter);
-            if (!carryStance.HasValue && telescopicBridge.CanDrawTo(a.transform, lift))
+            if (!carryStance.HasValue && !flightCarry && telescopicBridge.CanDrawTo(a.transform, lift))
             {
                 yield return telescopicBridge.DrawHeldWireTo(a.transform, () => stillValid() && failure == null,
                     lift, lift.magnitude / telescopicBridge.GripTransitionSeconds);
                 if (!telescopicBridge.LastContactSucceeded || failure != null || !stillValid())
                 { if (failure == null) Fail("The original hand could not lift the cable end: " + telescopicBridge.LastError); yield break; }
             }
-            if (carryStance.HasValue)
+            if (carryStance.HasValue || flightCarry)
             {
                 trackingCarryPose = true;
                 float carryDeadline = Time.realtimeSinceStartup + telescopicBridge.ContactWaitSeconds;
@@ -1143,27 +1171,36 @@ namespace ProjectSpark.SparkV5.Pro
                 }
                 Stage = CableStage.Carrying;
                 Narrate("Drawing the real native wire with my extendable original hand.");
-                Vector3 workingStance = carryStance.Value;
-                for (int attempt = 0; ; attempt++)
+                if (flightCarry)
                 {
-                    string obstruction = null;
-                    yield return FollowGroundRoute(workingStance, stillValid, reason => obstruction = reason);
+                    yield return FlyNear(b.transform, () => stillValid() && failure == null,
+                        "I'm carrying the loose connector to a collision-checked hovering stance.");
                     if (failure != null || !stillValid()) yield break;
-                    if (obstruction == null) break;
-                    Vector3 rejectedStance = workingStance;
-                    if (attempt >= 2 || !TryFindHandStance(b.transform, out workingStance, candidate =>
-                        (candidate - rejectedStance).sqrMagnitude >= .09f &&
-                        TryMeasureCarryRoute(a.transform.position, candidate, out float required) && required <= rest, carrying: true))
+                }
+                else
+                {
+                    Vector3 workingStance = carryStance.Value;
+                    for (int attempt = 0; ; attempt++)
                     {
-                        Fail("Walking carry blocked by " + obstruction + ". No alternate safe route fits the lead.");
-                        yield break;
+                        string obstruction = null;
+                        yield return FollowGroundRoute(workingStance, stillValid, reason => obstruction = reason);
+                        if (failure != null || !stillValid()) yield break;
+                        if (obstruction == null) break;
+                        Vector3 rejectedStance = workingStance;
+                        if (attempt >= 2 || !TryFindHandStance(b.transform, out workingStance, candidate =>
+                            (candidate - rejectedStance).sqrMagnitude >= .09f &&
+                            TryMeasureCarryRoute(a.transform.position, candidate, out float required) && required <= rest, carrying: true))
+                        {
+                            Fail("Walking carry blocked by " + obstruction + ". No alternate safe route fits the lead.");
+                            yield break;
+                        }
                     }
                 }
                 // LateUpdate still has to validate the last authorized movement frame.
                 yield return null;
                 trackingCarryPose = false;
                 if (failure != null || !stillValid()) yield break;
-                FaceWorkingTerminal(b.transform);
+                if (!flightCarry) FaceWorkingTerminal(b.transform);
             }
             else
             {

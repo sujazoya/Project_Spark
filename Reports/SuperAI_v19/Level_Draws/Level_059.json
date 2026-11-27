@@ -1,0 +1,183 @@
+{
+  "level": 59,
+  "levelId": "level_59",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_59_Layout/Level_59_Layout.prefab",
+  "layoutRevision": "4EB605AAC9302F7CCDF9D837445D1A29A22D19B528485E04661902B19D8B06F2",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel59BlackStart.cs#Wires",
+  "terminalBindings": 66,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "42 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "CTRL_POS"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "CTRL_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "BMS_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "BMS_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "SENSE_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "SENSE_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "SAFETY_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "SAFETY_GND"
+    },
+    {
+      "fromId": "BAT_POS",
+      "toId": "BMS_BAT_POS"
+    },
+    {
+      "fromId": "BAT_NEG",
+      "toId": "DC_NEG"
+    },
+    {
+      "fromId": "BMS_OUT",
+      "toId": "PRE_IN"
+    },
+    {
+      "fromId": "PRE_OUT",
+      "toId": "DC_POS"
+    },
+    {
+      "fromId": "DC_POS",
+      "toId": "INV_DC_POS"
+    },
+    {
+      "fromId": "DC_NEG",
+      "toId": "INV_DC_NEG"
+    },
+    {
+      "fromId": "CTRL_ENABLE",
+      "toId": "INV_ENABLE"
+    },
+    {
+      "fromId": "INV_A",
+      "toId": "BUS_A"
+    },
+    {
+      "fromId": "INV_B",
+      "toId": "BUS_B"
+    },
+    {
+      "fromId": "INV_C",
+      "toId": "BUS_C"
+    },
+    {
+      "fromId": "INV_STATUS",
+      "toId": "CTRL_INV"
+    },
+    {
+      "fromId": "CTRL_START",
+      "toId": "START_CMD"
+    },
+    {
+      "fromId": "DC_POS",
+      "toId": "START_POS"
+    },
+    {
+      "fromId": "DC_NEG",
+      "toId": "START_NEG"
+    },
+    {
+      "fromId": "GEN_A",
+      "toId": "QGEN_A"
+    },
+    {
+      "fromId": "GEN_B",
+      "toId": "QGEN_B"
+    },
+    {
+      "fromId": "GEN_C",
+      "toId": "QGEN_C"
+    },
+    {
+      "fromId": "GEN_V",
+      "toId": "SYNC_V"
+    },
+    {
+      "fromId": "GEN_HZ",
+      "toId": "SYNC_HZ"
+    },
+    {
+      "fromId": "SYNC_CLOSE",
+      "toId": "QGEN_CMD"
+    },
+    {
+      "fromId": "GRID_REF",
+      "toId": "QG_REF"
+    },
+    {
+      "fromId": "QG_AUX",
+      "toId": "CTRL_GRID"
+    },
+    {
+      "fromId": "BUS_A",
+      "toId": "LIGHT_FEED"
+    },
+    {
+      "fromId": "BUS_B",
+      "toId": "INSTR_FEED"
+    },
+    {
+      "fromId": "BUS_C",
+      "toId": "COOL_FEED"
+    },
+    {
+      "fromId": "BUS_A",
+      "toId": "MOTOR_A"
+    },
+    {
+      "fromId": "BUS_B",
+      "toId": "MOTOR_B"
+    },
+    {
+      "fromId": "BUS_C",
+      "toId": "MOTOR_C"
+    },
+    {
+      "fromId": "BUS_A",
+      "toId": "AUX_FEED"
+    },
+    {
+      "fromId": "BUS_A",
+      "toId": "SENSE_BUS"
+    },
+    {
+      "fromId": "SENSE_OUT",
+      "toId": "CTRL_SENSE"
+    },
+    {
+      "fromId": "METER_OUT",
+      "toId": "CTRL_METER"
+    },
+    {
+      "fromId": "BMS_STATUS",
+      "toId": "CTRL_BMS"
+    },
+    {
+      "fromId": "GUARD_NC",
+      "toId": "CTRL_SAFE"
+    }
+  ]
+}

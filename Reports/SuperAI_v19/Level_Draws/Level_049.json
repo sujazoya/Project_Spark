@@ -1,0 +1,75 @@
+{
+  "level": 49,
+  "levelId": "level_49",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_49_Layout/Level_49_Layout.prefab",
+  "layoutRevision": "D9520C2BFD467139EE0C90C148ABA4968C010293CD0FC135D5367D6BF69FCCF6",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel49Shear.cs#Wires",
+  "terminalBindings": 26,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "15 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "CTRL_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "CTRL_GND"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "OPTICAL_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "OPTICAL_GND"
+    },
+    {
+      "fromId": "ENCODER_A",
+      "toId": "CTRL_ENC_A"
+    },
+    {
+      "fromId": "ENCODER_B",
+      "toId": "CTRL_ENC_B"
+    },
+    {
+      "fromId": "OPTICAL_SIGNAL",
+      "toId": "CTRL_MARK_IN"
+    },
+    {
+      "fromId": "CTRL_CARR_PWM",
+      "toId": "DRIVER_PWM"
+    },
+    {
+      "fromId": "DRIVER_MOTOR_PLUS",
+      "toId": "CARRIAGE_MOTOR_PLUS"
+    },
+    {
+      "fromId": "DRIVER_MOTOR_MINUS",
+      "toId": "CARRIAGE_MOTOR_MINUS"
+    },
+    {
+      "fromId": "CTRL_CUT_TRIG",
+      "toId": "CUTTER_TRIG"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "DRIVER_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "DRIVER_GND"
+    },
+    {
+      "fromId": "GUARD_NC_OUT",
+      "toId": "CTRL_GUARD_IN"
+    },
+    {
+      "fromId": "HOME_OUT",
+      "toId": "CTRL_HOME_IN"
+    }
+  ]
+}

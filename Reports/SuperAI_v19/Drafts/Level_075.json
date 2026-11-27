@@ -1,0 +1,432 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 75,
+    "layoutName": "Level_75_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "PLC_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "PLC_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "ISO_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "ISO_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "DOSE_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "DOSE_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SAFE_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "SAFE_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "FARADAY_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "FARADAY_GND"
+        },
+        {
+            "fromId": "PLC_SOURCE",
+            "toId": "SOURCE_EN"
+        },
+        {
+            "fromId": "ISO_BEAM",
+            "toId": "BEAM_POWER_EN"
+        },
+        {
+            "fromId": "EXTRACT_CMD",
+            "toId": "EXTRACT_REQ"
+        },
+        {
+            "fromId": "CARTRIDGE_OK",
+            "toId": "SOURCE_CART"
+        },
+        {
+            "fromId": "CHAMBER_OK",
+            "toId": "SOURCE_READY"
+        },
+        {
+            "fromId": "EMISSION_OUT",
+            "toId": "PLC_EMISSION"
+        },
+        {
+            "fromId": "EXTRACT_OK",
+            "toId": "PLC_EXTRACT"
+        },
+        {
+            "fromId": "SRC_CURRENT",
+            "toId": "IO_SRC_I"
+        },
+        {
+            "fromId": "EMISSION_PERMIT",
+            "toId": "SOURCE_PERMIT"
+        },
+        {
+            "fromId": "POWER_PERMIT",
+            "toId": "DOMAIN_PERMIT"
+        },
+        {
+            "fromId": "SRC_POWER",
+            "toId": "IO_SRC_PWR"
+        },
+        {
+            "fromId": "INTENSITY_SET",
+            "toId": "SOURCE_SET"
+        },
+        {
+            "fromId": "BEAM_FAULT",
+            "toId": "IO_BEAM_FLT"
+        },
+        {
+            "fromId": "TRANSPORT_IN",
+            "toId": "ENTRANCE_MON"
+        },
+        {
+            "fromId": "EXTRACTION_ENABLE",
+            "toId": "EXTRACTION_IN"
+        },
+        {
+            "fromId": "ISO_STATUS",
+            "toId": "IO_ISO_READY"
+        },
+        {
+            "fromId": "MAG_SET",
+            "toId": "FIELD_CMD"
+        },
+        {
+            "fromId": "FIELD_MON",
+            "toId": "IO_MAG_FIELD"
+        },
+        {
+            "fromId": "PURITY_OUT",
+            "toId": "IO_PURITY"
+        },
+        {
+            "fromId": "APERTURE_SET",
+            "toId": "APERTURE_CMD"
+        },
+        {
+            "fromId": "APERTURE_POS",
+            "toId": "IO_APERTURE"
+        },
+        {
+            "fromId": "ENERGY_FB",
+            "toId": "IO_ENERGY"
+        },
+        {
+            "fromId": "ENERGY_SET",
+            "toId": "SELECT_ENERGY"
+        },
+        {
+            "fromId": "NEUTRAL_OUT",
+            "toId": "IO_NEUTRAL"
+        },
+        {
+            "fromId": "SPECIES_OK",
+            "toId": "PLC_SPECIES"
+        },
+        {
+            "fromId": "SPECIES_PERMIT",
+            "toId": "PLC_SPEC_LOCK"
+        },
+        {
+            "fromId": "SELECTED_I",
+            "toId": "ANALYZER_IN"
+        },
+        {
+            "fromId": "TRANSMITTED_I",
+            "toId": "ANALYZER_OUT"
+        },
+        {
+            "fromId": "SPECIES_CAL",
+            "toId": "PURITY_CAL"
+        },
+        {
+            "fromId": "PURITY_OK",
+            "toId": "HMI_PURITY"
+        },
+        {
+            "fromId": "PLC_FOCUS",
+            "toId": "LENS_EN"
+        },
+        {
+            "fromId": "STEER_SET",
+            "toId": "STEER_CMD"
+        },
+        {
+            "fromId": "FOCUS_OUT",
+            "toId": "IO_FOCUS"
+        },
+        {
+            "fromId": "CENTROID",
+            "toId": "IO_CENTROID"
+        },
+        {
+            "fromId": "SCAN_ENABLE",
+            "toId": "XY_RUN"
+        },
+        {
+            "fromId": "SCAN_POS",
+            "toId": "IO_SCAN_POS"
+        },
+        {
+            "fromId": "BEAM_PERMIT",
+            "toId": "BLANK_ENABLE"
+        },
+        {
+            "fromId": "BLANK_POS",
+            "toId": "IO_BLANK"
+        },
+        {
+            "fromId": "PROFILE_OK",
+            "toId": "PLC_PROFILE"
+        },
+        {
+            "fromId": "BEAM_CURRENT",
+            "toId": "IO_BEAM_I"
+        },
+        {
+            "fromId": "PROFILER_REQ",
+            "toId": "PROFILE_RUN"
+        },
+        {
+            "fromId": "PROFILE_OUT",
+            "toId": "IO_PROFILE"
+        },
+        {
+            "fromId": "ISO_OVERRIDE",
+            "toId": "BLANK_OVERRIDE"
+        },
+        {
+            "fromId": "DWELL_OUT",
+            "toId": "IO_DWELL"
+        },
+        {
+            "fromId": "ROBOT_REQ",
+            "toId": "ROBOT_RUN"
+        },
+        {
+            "fromId": "ROBOT_RDY",
+            "toId": "IO_ROBOT"
+        },
+        {
+            "fromId": "LOCK_CTL",
+            "toId": "LOADLOCK_CMD"
+        },
+        {
+            "fromId": "GATE_SET",
+            "toId": "GATE_CMD"
+        },
+        {
+            "fromId": "GATE_POS",
+            "toId": "IO_GATE"
+        },
+        {
+            "fromId": "CLAMP_REQ",
+            "toId": "CHUCK_EN"
+        },
+        {
+            "fromId": "CHUCK_POS",
+            "toId": "IO_CLAMP"
+        },
+        {
+            "fromId": "ANGLE_SET",
+            "toId": "WAFER_TILT"
+        },
+        {
+            "fromId": "ANGLE_FB",
+            "toId": "IO_TILT"
+        },
+        {
+            "fromId": "REGISTER_OUT",
+            "toId": "IO_REG"
+        },
+        {
+            "fromId": "IO_REG",
+            "toId": "MASK_OK"
+        },
+        {
+            "fromId": "IO_NEUTRAL",
+            "toId": "NEUTRAL_READY"
+        },
+        {
+            "fromId": "FARADAY_CUP_CURRENT_OUT",
+            "toId": "ION_DOSE_CONTROLLER_BEAM_CURRENT_IN"
+        },
+        {
+            "fromId": "IO_BEAM_I",
+            "toId": "DOSE_UPSTREAM"
+        },
+        {
+            "fromId": "IO_PROFILE",
+            "toId": "CORNER_UNIFORM"
+        },
+        {
+            "fromId": "IO_DWELL",
+            "toId": "DOSE_REACHED"
+        },
+        {
+            "fromId": "CORNER_UNIFORM",
+            "toId": "UNIFORM_OUT"
+        },
+        {
+            "fromId": "PROFILE_OUT",
+            "toId": "PROFILE_MAP"
+        },
+        {
+            "fromId": "IO_PURITY",
+            "toId": "SPECIES_DOSE"
+        },
+        {
+            "fromId": "IO_NEUTRAL",
+            "toId": "WAFER_POTENTIAL"
+        },
+        {
+            "fromId": "WAFER_POTENTIAL",
+            "toId": "DAMAGE_WARN"
+        },
+        {
+            "fromId": "DOSE_REACHED",
+            "toId": "SHEET_RESULT"
+        },
+        {
+            "fromId": "SPECIES_DOSE",
+            "toId": "DEPTH_RESULT"
+        },
+        {
+            "fromId": "PLC_PROFILE",
+            "toId": "DEPTH_START"
+        },
+        {
+            "fromId": "DEPTH_START",
+            "toId": "SHEET_START"
+        },
+        {
+            "fromId": "UNIFORM_OUT",
+            "toId": "HMI_DOSE"
+        },
+        {
+            "fromId": "PLC_SOURCE",
+            "toId": "BACKING_EN"
+        },
+        {
+            "fromId": "BACKING_EN",
+            "toId": "TURBO_EN"
+        },
+        {
+            "fromId": "IO_ISO_READY",
+            "toId": "PRESSURE_FB"
+        },
+        {
+            "fromId": "PRESSURE_FB",
+            "toId": "THROTTLE_CMD"
+        },
+        {
+            "fromId": "PRESSURE_FB",
+            "toId": "GAS_DIAG"
+        },
+        {
+            "fromId": "WAFER_POTENTIAL",
+            "toId": "WAFER_TEMP"
+        },
+        {
+            "fromId": "WAFER_TEMP",
+            "toId": "COOLING_EN"
+        },
+        {
+            "fromId": "SHEET_START",
+            "toId": "ACTIVATE_START"
+        },
+        {
+            "fromId": "ACTIVATE_START",
+            "toId": "HEATER_STATUS"
+        },
+        {
+            "fromId": "HEATER_STATUS",
+            "toId": "ACTIVATION_TEMP"
+        },
+        {
+            "fromId": "PLC_SPECIES",
+            "toId": "SAFETY_READY"
+        },
+        {
+            "fromId": "ESTOP_NC",
+            "toId": "SAFE_STOP_IN"
+        },
+        {
+            "fromId": "SAFE_STOP_IN",
+            "toId": "ESTOP_STATUS"
+        },
+        {
+            "fromId": "IO_ISO_READY",
+            "toId": "ISO_READY"
+        },
+        {
+            "fromId": "ISO_READY",
+            "toId": "ISO_CMD"
+        },
+        {
+            "fromId": "IO_SRC_PWR",
+            "toId": "PLC_TELEMETRY"
+        },
+        {
+            "fromId": "PLC_TELEMETRY",
+            "toId": "HMI_CMD"
+        },
+        {
+            "fromId": "BEAM_PERMIT",
+            "toId": "DOSE_INHIBIT"
+        },
+        {
+            "fromId": "UNIFORM_OUT",
+            "toId": "DOSE_INTERLOCK"
+        },
+        {
+            "fromId": "WAFER_POTENTIAL",
+            "toId": "CHARGE_DIAG"
+        },
+        {
+            "fromId": "DAMAGE_WARN",
+            "toId": "HMI_DAMAGE"
+        },
+        {
+            "fromId": "ACTIVATION_TEMP",
+            "toId": "ACTIVATION_RESULT"
+        },
+        {
+            "fromId": "ACTIVATION_TEMP",
+            "toId": "HEAT_LIMIT"
+        },
+        {
+            "fromId": "DEPTH_RESULT",
+            "toId": "HMI_DEPTH"
+        },
+        {
+            "fromId": "FARADAY_CUP_CURRENT_OUT",
+            "toId": "FARADAY_VALID"
+        },
+        {
+            "fromId": "SAFE_STOP_IN",
+            "toId": "BEAM_BLANK_REQ"
+        }
+    ]
+}

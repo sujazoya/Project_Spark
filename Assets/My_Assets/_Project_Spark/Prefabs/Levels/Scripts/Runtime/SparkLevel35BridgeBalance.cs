@@ -302,6 +302,13 @@ namespace ProjectSpark.Gameplay
 
         private static bool BranchPowered(SparkResistor resistor) => Mathf.Abs(resistor.ElectricalState.Current) > .001f;
 
+        internal SparkTerminal[][] GetAuthoredWireNets() => new[] {
+            new[] { source.PositiveTerminal, leftUpper.TerminalA, rightUpper.TerminalA },
+            new[] { source.NegativeTerminal, leftLower.TerminalB, rightLower.TerminalB },
+            new[] { leftUpper.TerminalB, leftLower.TerminalA },
+            new[] { rightUpper.TerminalB, rightLower.TerminalA }
+        };
+
         private string CheckWiring(SparkElectricalNetworkGraph graph)
         {
             if (graph == null) return "Waiting for the solved circuit graph.";
@@ -329,12 +336,7 @@ namespace ProjectSpark.Gameplay
                 Join(a, b);
             }
 
-            var nets = new[] {
-                new[] { source.PositiveTerminal, leftUpper.TerminalA, rightUpper.TerminalA },
-                new[] { source.NegativeTerminal, leftLower.TerminalB, rightLower.TerminalB },
-                new[] { leftUpper.TerminalB, leftLower.TerminalA },
-                new[] { rightUpper.TerminalB, rightLower.TerminalA }
-            };
+            var nets = GetAuthoredWireNets();
             var used = new Dictionary<int,string>();
             foreach (var net in nets)
             {

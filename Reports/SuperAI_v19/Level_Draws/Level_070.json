@@ -1,0 +1,359 @@
+{
+  "level": 70,
+  "levelId": "level_70",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_70_Layout/Level_70_Layout.prefab",
+  "layoutRevision": "FDE7A3308B3AC21F6503006F37055EF2EA55BA94C607A72C2F4B4E800F5E001E",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel70Process.cs#Wires",
+  "terminalBindings": 134,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "86 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "PLC_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "PLC_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "IO_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "IO_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "PID_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "PID_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "PSY_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "PSY_GND"
+    },
+    {
+      "fromId": "PLC_SUP_RUN",
+      "toId": "SUP_RUN_IN"
+    },
+    {
+      "fromId": "PID_SUP_CMD",
+      "toId": "SUP_SPEED_IN"
+    },
+    {
+      "fromId": "SUP_TACH",
+      "toId": "IO_SUP_RPM"
+    },
+    {
+      "fromId": "PLC_RET_RUN",
+      "toId": "RET_RUN_IN"
+    },
+    {
+      "fromId": "RET_REF",
+      "toId": "RET_SPEED_IN"
+    },
+    {
+      "fromId": "RET_TACH",
+      "toId": "IO_RET_RPM"
+    },
+    {
+      "fromId": "PLC_EXH_RUN",
+      "toId": "EXH_RUN_IN"
+    },
+    {
+      "fromId": "EXH_REF",
+      "toId": "EXH_SPEED_IN"
+    },
+    {
+      "fromId": "EXH_TACH",
+      "toId": "IO_EXH_RPM"
+    },
+    {
+      "fromId": "PLC_FFU_A",
+      "toId": "FFU_A_EN"
+    },
+    {
+      "fromId": "PLC_FFU_B",
+      "toId": "FFU_B_EN"
+    },
+    {
+      "fromId": "FFU_STATUS",
+      "toId": "PLC_FFU_OK"
+    },
+    {
+      "fromId": "PLC_FRESH",
+      "toId": "FRESH_CMD"
+    },
+    {
+      "fromId": "FRESH_POS",
+      "toId": "IO_FRESH"
+    },
+    {
+      "fromId": "PID_ROOM_A",
+      "toId": "ROOM_DMP_CMD"
+    },
+    {
+      "fromId": "ROOM_DMP_POS",
+      "toId": "IO_ROOM_DMP"
+    },
+    {
+      "fromId": "PID_LOCK_B",
+      "toId": "LOCK_DMP_CMD"
+    },
+    {
+      "fromId": "LOCK_DMP_POS",
+      "toId": "IO_LOCK_DMP"
+    },
+    {
+      "fromId": "PLC_RELIEF",
+      "toId": "RELIEF_CMD"
+    },
+    {
+      "fromId": "RELIEF_POS",
+      "toId": "IO_RELIEF"
+    },
+    {
+      "fromId": "DAMPER_PERMIT",
+      "toId": "DAMPER_RUN"
+    },
+    {
+      "fromId": "RELIEF_POS",
+      "toId": "DAMPER_DIAG"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "ROOM_DP_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "ROOM_DP_GND"
+    },
+    {
+      "fromId": "ROOM_DP_MON",
+      "toId": "HMI_ROOM_DP"
+    },
+    {
+      "fromId": "ROOM_DP_OK",
+      "toId": "PLC_DP_OK"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "LOCK_DP_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "LOCK_DP_GND"
+    },
+    {
+      "fromId": "LOCK_DP_OUT",
+      "toId": "PID_LOCK_IN"
+    },
+    {
+      "fromId": "LOCK_DP_OK",
+      "toId": "IO_LOCK_VALID"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "VELOCITY_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "VELOCITY_GND"
+    },
+    {
+      "fromId": "AIR_VEL_OUT",
+      "toId": "AIR_PID_IN"
+    },
+    {
+      "fromId": "AIR_VEL_OK",
+      "toId": "PLC_AIR_OK"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "PART_ROOM_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "PART_ROOM_GND"
+    },
+    {
+      "fromId": "ROOM_PART_OUT",
+      "toId": "PLC_ROOM_PART"
+    },
+    {
+      "fromId": "ROOM_PART_OK",
+      "toId": "IO_ROOM_PART"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "PART_LOCK_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "PART_LOCK_GND"
+    },
+    {
+      "fromId": "LOCK_PART_OUT",
+      "toId": "PLC_LOCK_PART"
+    },
+    {
+      "fromId": "LOCK_PART_OK",
+      "toId": "IO_LOCK_PART"
+    },
+    {
+      "fromId": "FILTER_DP_OUT",
+      "toId": "HEPA_DP_IN"
+    },
+    {
+      "fromId": "FILTER_DP_OK",
+      "toId": "IO_HEPA_DP"
+    },
+    {
+      "fromId": "ROOM_TEMP",
+      "toId": "PSY_TEMP"
+    },
+    {
+      "fromId": "ROOM_RH",
+      "toId": "PSY_RH"
+    },
+    {
+      "fromId": "LOCK_TEMP",
+      "toId": "IO_LOCK_TEMP"
+    },
+    {
+      "fromId": "LOCK_RH",
+      "toId": "IO_LOCK_RH"
+    },
+    {
+      "fromId": "DEW_POINT",
+      "toId": "PSY_DEW"
+    },
+    {
+      "fromId": "PSY_COOL",
+      "toId": "COIL_CMD"
+    },
+    {
+      "fromId": "PSY_REHEAT",
+      "toId": "REHEAT_CMD"
+    },
+    {
+      "fromId": "PSY_HUM",
+      "toId": "HUM_CMD"
+    },
+    {
+      "fromId": "HUM_ACTIVE",
+      "toId": "IO_HUM"
+    },
+    {
+      "fromId": "DRAIN_OK",
+      "toId": "IO_DRAIN"
+    },
+    {
+      "fromId": "DAMPER_PERMIT",
+      "toId": "INNER_LOCK"
+    },
+    {
+      "fromId": "IO_LOCK_VALID",
+      "toId": "INNER_CLOSED"
+    },
+    {
+      "fromId": "DAMPER_PERMIT",
+      "toId": "OUTER_LOCK"
+    },
+    {
+      "fromId": "IO_LOCK_DMP",
+      "toId": "OUTER_CLOSED"
+    },
+    {
+      "fromId": "PLC_DP_OK",
+      "toId": "DOOR_FAULT"
+    },
+    {
+      "fromId": "ESTOP_NC",
+      "toId": "SAFE_STOP_IN"
+    },
+    {
+      "fromId": "PLC_FFU_OK",
+      "toId": "SAFE_PLC_PERMIT"
+    },
+    {
+      "fromId": "ROBOT_PERMIT",
+      "toId": "ROBOT_ENABLE"
+    },
+    {
+      "fromId": "SUP_RUN_IN",
+      "toId": "ROBOT_START"
+    },
+    {
+      "fromId": "PLC_ROOM_PART",
+      "toId": "ROBOT_BATCH"
+    },
+    {
+      "fromId": "PLC_EXH_RUN",
+      "toId": "SHOWER_EN"
+    },
+    {
+      "fromId": "IO_LOCK_PART",
+      "toId": "SHOWER_READY"
+    },
+    {
+      "fromId": "ROOM_DP_MON",
+      "toId": "PLC_DP_SET"
+    },
+    {
+      "fromId": "PID_SUP_CMD",
+      "toId": "HMI_AIR_REQ"
+    },
+    {
+      "fromId": "PID_ROOM_A",
+      "toId": "HMI_ROOM_REQ"
+    },
+    {
+      "fromId": "PID_LOCK_B",
+      "toId": "HMI_LOCK_REQ"
+    },
+    {
+      "fromId": "PSY_DEW",
+      "toId": "PLC_PSY_STATUS"
+    },
+    {
+      "fromId": "PLC_ROOM_PART",
+      "toId": "CONTAM_TRIP"
+    },
+    {
+      "fromId": "HEPA_DP_IN",
+      "toId": "BYPASS_TRIP"
+    },
+    {
+      "fromId": "FILTER_DP_OK",
+      "toId": "SCENARIO_IO"
+    },
+    {
+      "fromId": "PLC_FFU_OK",
+      "toId": "HMI_STATUS"
+    },
+    {
+      "fromId": "PLC_AIR_OK",
+      "toId": "HMI_OPERATOR"
+    },
+    {
+      "fromId": "SAFE_PLC_PERMIT",
+      "toId": "SAFETY_RESET"
+    },
+    {
+      "fromId": "ROOM_DP_OUT",
+      "toId": "CASCADE_DP_IN"
+    }
+  ]
+}

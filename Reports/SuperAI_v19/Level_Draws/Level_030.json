@@ -1,0 +1,71 @@
+{
+  "level": 30,
+  "levelId": "level_30",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_03/Level_30_Layout/Level_30_Lift_Layout.prefab",
+  "layoutRevision": "EBE0F23DA41C822E5517F580DF7492048CB8CD71C1A45302EB4BF17A3921E5BB",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel30Lift.cs#GetAuthoredWireNets",
+  "terminalBindings": 22,
+  "objectives": 5,
+  "approved": false,
+  "missingRequirement": "14 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "Battery_positive",
+      "toId": "UP_Feed_IN"
+    },
+    {
+      "fromId": "Battery_positive",
+      "toId": "DOWN_Feed_IN"
+    },
+    {
+      "fromId": "Battery_positive",
+      "toId": "Top_Lamp_IN"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "UP_Return_OUT"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "DOWN_Return_OUT"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "Lamp_K"
+    },
+    {
+      "fromId": "UP_Feed_OUT",
+      "toId": "Upper_Limit_IN"
+    },
+    {
+      "fromId": "DOWN_Feed_OUT",
+      "toId": "Lower_Limit_IN"
+    },
+    {
+      "fromId": "Upper_Limit_OUT",
+      "toId": "Motor_A"
+    },
+    {
+      "fromId": "Upper_Limit_OUT",
+      "toId": "DOWN_Return_IN"
+    },
+    {
+      "fromId": "Lower_Limit_OUT",
+      "toId": "Motor_B"
+    },
+    {
+      "fromId": "Lower_Limit_OUT",
+      "toId": "UP_Return_IN"
+    },
+    {
+      "fromId": "Top_Lamp_OUT",
+      "toId": "R_LED_IN"
+    },
+    {
+      "fromId": "R_LED_OUT",
+      "toId": "Lamp_A"
+    }
+  ]
+}

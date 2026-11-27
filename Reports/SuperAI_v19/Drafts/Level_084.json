@@ -1,0 +1,576 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 84,
+    "layoutName": "Level_84_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "ADCS_PLC_LOGIC_POWER_IN"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "FLIGHT_CONTROLLER_5V_SUPPLY_IN"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "STATE_ESTIMATOR_5V_LOGIC_IN"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "WHEEL_MOTOR_DRIVER_CONTROL_LOGIC_IN"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "MAGNETORQUER_DRIVER_CONTROL_LOGIC_IN"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "GYROSCOPE_SIGNAL_CONDITIONING_IN"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "PRIMARY_STAR_TRACKER_SIGNAL_CONDITIONING_IN"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SECONDARY_STAR_TRACKER_LOGIC_IN"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "HOLOGRAPHIC_SCADA_LOGIC_POWER_IN"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "INDEPENDENT_MOTION_SAFETY_LOGIC_POWER_IN"
+        },
+        {
+            "fromId": "WHEEL_X_REQUESTED_TORQUE_COMMAND_OUT",
+            "toId": "WHEEL_X_REQUESTED_TORQUE_COMMAND_IN"
+        },
+        {
+            "fromId": "WHEEL_X_ACTUAL_MOTOR_DRIVE_OUT",
+            "toId": "WHEEL_X_ACTUAL_MOTOR_DRIVE_IN"
+        },
+        {
+            "fromId": "WHEEL_X_SHAFT_VELOCITY_FEEDBACK_OUT",
+            "toId": "WHEEL_X_SHAFT_VELOCITY_FEEDBACK_IN"
+        },
+        {
+            "fromId": "WHEEL_X_ELECTRICAL_CURRENT_FEEDBACK_OUT",
+            "toId": "WHEEL_X_ELECTRICAL_CURRENT_FEEDBACK_IN"
+        },
+        {
+            "fromId": "WHEEL_Y_REQUESTED_TORQUE_COMMAND_OUT",
+            "toId": "WHEEL_Y_REQUESTED_TORQUE_COMMAND_IN"
+        },
+        {
+            "fromId": "WHEEL_Y_ACTUAL_MOTOR_DRIVE_OUT",
+            "toId": "WHEEL_Y_ACTUAL_MOTOR_DRIVE_IN"
+        },
+        {
+            "fromId": "WHEEL_Y_SHAFT_VELOCITY_FEEDBACK_OUT",
+            "toId": "WHEEL_Y_SHAFT_VELOCITY_FEEDBACK_IN"
+        },
+        {
+            "fromId": "WHEEL_Y_ELECTRICAL_CURRENT_FEEDBACK_OUT",
+            "toId": "WHEEL_Y_ELECTRICAL_CURRENT_FEEDBACK_IN"
+        },
+        {
+            "fromId": "WHEEL_Z_REQUESTED_TORQUE_COMMAND_OUT",
+            "toId": "WHEEL_Z_REQUESTED_TORQUE_COMMAND_IN"
+        },
+        {
+            "fromId": "WHEEL_Z_ACTUAL_MOTOR_DRIVE_OUT",
+            "toId": "WHEEL_Z_ACTUAL_MOTOR_DRIVE_IN"
+        },
+        {
+            "fromId": "WHEEL_Z_SHAFT_VELOCITY_FEEDBACK_OUT",
+            "toId": "WHEEL_Z_SHAFT_VELOCITY_FEEDBACK_IN"
+        },
+        {
+            "fromId": "WHEEL_Z_ELECTRICAL_CURRENT_FEEDBACK_OUT",
+            "toId": "WHEEL_Z_ELECTRICAL_CURRENT_FEEDBACK_IN"
+        },
+        {
+            "fromId": "WHEEL_S_REQUESTED_TORQUE_COMMAND_OUT",
+            "toId": "WHEEL_S_REQUESTED_TORQUE_COMMAND_IN"
+        },
+        {
+            "fromId": "WHEEL_S_ACTUAL_MOTOR_DRIVE_OUT",
+            "toId": "WHEEL_S_ACTUAL_MOTOR_DRIVE_IN"
+        },
+        {
+            "fromId": "WHEEL_S_SHAFT_VELOCITY_FEEDBACK_OUT",
+            "toId": "WHEEL_S_SHAFT_VELOCITY_FEEDBACK_IN"
+        },
+        {
+            "fromId": "WHEEL_S_ELECTRICAL_CURRENT_FEEDBACK_OUT",
+            "toId": "WHEEL_S_ELECTRICAL_CURRENT_FEEDBACK_IN"
+        },
+        {
+            "fromId": "WHEEL_CLUSTER_SPEED_LIMIT_FEEDBACK_OUT",
+            "toId": "WHEEL_CLUSTER_SPEED_LIMIT_FEEDBACK_IN"
+        },
+        {
+            "fromId": "WHEEL_MOTOR_CURRENT_PROTECTION_FEEDBACK_OUT",
+            "toId": "WHEEL_MOTOR_CURRENT_PROTECTION_FEEDBACK_IN"
+        },
+        {
+            "fromId": "WHEEL_THERMAL_HEALTH_FEEDBACK_OUT",
+            "toId": "WHEEL_THERMAL_HEALTH_FEEDBACK_IN"
+        },
+        {
+            "fromId": "WHEEL_THERMAL_REGULATION_REQUEST_OUT",
+            "toId": "WHEEL_THERMAL_REGULATION_REQUEST_IN"
+        },
+        {
+            "fromId": "WHEEL_SATURATION_WARNING_OUT",
+            "toId": "WHEEL_SATURATION_WARNING_IN"
+        },
+        {
+            "fromId": "WHEEL_DESATURATION_REQUEST_OUT",
+            "toId": "WHEEL_DESATURATION_REQUEST_IN"
+        },
+        {
+            "fromId": "X_MAGNETORQUER_DIPOLE_REQUEST_OUT",
+            "toId": "X_MAGNETORQUER_DIPOLE_REQUEST_IN"
+        },
+        {
+            "fromId": "X_TORQUE_ROD_DRIVE_CURRENT_OUT",
+            "toId": "X_TORQUE_ROD_DRIVE_CURRENT_IN"
+        },
+        {
+            "fromId": "X_ACTUAL_MAGNETIC_DIPOLE_RESPONSE_OUT",
+            "toId": "X_ACTUAL_MAGNETIC_DIPOLE_RESPONSE_IN"
+        },
+        {
+            "fromId": "Y_MAGNETORQUER_DIPOLE_REQUEST_OUT",
+            "toId": "Y_MAGNETORQUER_DIPOLE_REQUEST_IN"
+        },
+        {
+            "fromId": "Y_TORQUE_ROD_DRIVE_CURRENT_OUT",
+            "toId": "Y_TORQUE_ROD_DRIVE_CURRENT_IN"
+        },
+        {
+            "fromId": "Y_ACTUAL_MAGNETIC_DIPOLE_RESPONSE_OUT",
+            "toId": "Y_ACTUAL_MAGNETIC_DIPOLE_RESPONSE_IN"
+        },
+        {
+            "fromId": "Z_MAGNETORQUER_DIPOLE_REQUEST_OUT",
+            "toId": "Z_MAGNETORQUER_DIPOLE_REQUEST_IN"
+        },
+        {
+            "fromId": "Z_TORQUE_ROD_DRIVE_CURRENT_OUT",
+            "toId": "Z_TORQUE_ROD_DRIVE_CURRENT_IN"
+        },
+        {
+            "fromId": "Z_ACTUAL_MAGNETIC_DIPOLE_RESPONSE_OUT",
+            "toId": "Z_ACTUAL_MAGNETIC_DIPOLE_RESPONSE_IN"
+        },
+        {
+            "fromId": "CALIBRATED_LOCAL_MAGNETIC_FIELD_VECTOR_OUT",
+            "toId": "CALIBRATED_LOCAL_MAGNETIC_FIELD_VECTOR_IN"
+        },
+        {
+            "fromId": "ORBITAL_FIELD_ENVIRONMENT_REFERENCE_OUT",
+            "toId": "ORBITAL_FIELD_ENVIRONMENT_REFERENCE_IN"
+        },
+        {
+            "fromId": "MAGNETIC_VECTOR_MEASUREMENT_TO_ESTIMATOR_OUT",
+            "toId": "MAGNETIC_VECTOR_MEASUREMENT_TO_ESTIMATOR_IN"
+        },
+        {
+            "fromId": "ATTITUDE_AND_FIELD_DESATURATION_COORDINATION_OUT",
+            "toId": "ATTITUDE_AND_FIELD_DESATURATION_COORDINATION_IN"
+        },
+        {
+            "fromId": "ACCUMULATED_WHEEL_MOMENTUM_DUMP_STATUS_OUT",
+            "toId": "ACCUMULATED_WHEEL_MOMENTUM_DUMP_STATUS_IN"
+        },
+        {
+            "fromId": "PROTECTED_MOMENTUM_UNLOADING_AUTHORIZATION_OUT",
+            "toId": "PROTECTED_MOMENTUM_UNLOADING_AUTHORIZATION_IN"
+        },
+        {
+            "fromId": "MAGNETIC_TORQUER_SAFETY_INTERLOCK_OUT",
+            "toId": "MAGNETIC_TORQUER_SAFETY_INTERLOCK_IN"
+        },
+        {
+            "fromId": "PLC_TORQUE_MODE_SELECTION_OUT",
+            "toId": "PLC_TORQUE_MODE_SELECTION_IN"
+        },
+        {
+            "fromId": "MAGNETORQUER_AMPLIFIER_READY_FEEDBACK_OUT",
+            "toId": "MAGNETORQUER_AMPLIFIER_READY_FEEDBACK_IN"
+        },
+        {
+            "fromId": "MAGNETOMETER_MEASUREMENT_HEALTH_OUT",
+            "toId": "MAGNETOMETER_MEASUREMENT_HEALTH_IN"
+        },
+        {
+            "fromId": "DESATURATION_STATE_SCADA_FEEDBACK_OUT",
+            "toId": "DESATURATION_STATE_SCADA_FEEDBACK_IN"
+        },
+        {
+            "fromId": "RAW_GYROSCOPE_ANGULAR_RATE_MEASUREMENT_OUT",
+            "toId": "RAW_GYROSCOPE_ANGULAR_RATE_MEASUREMENT_IN"
+        },
+        {
+            "fromId": "GYROSCOPE_ZERO_RATE_CALIBRATION_COMMAND_OUT",
+            "toId": "GYROSCOPE_ZERO_RATE_CALIBRATION_COMMAND_IN"
+        },
+        {
+            "fromId": "GYRO_TEMPERATURE_BIAS_DISTURBANCE_INPUT_OUT",
+            "toId": "GYRO_TEMPERATURE_BIAS_DISTURBANCE_INPUT_IN"
+        },
+        {
+            "fromId": "GYRO_MEASUREMENT_TIMESTAMP_VALIDITY_OUT",
+            "toId": "GYRO_MEASUREMENT_TIMESTAMP_VALIDITY_IN"
+        },
+        {
+            "fromId": "PRIMARY_TRACKER_STAR_FRAME_PATTERN_OUT",
+            "toId": "PRIMARY_TRACKER_STAR_FRAME_PATTERN_IN"
+        },
+        {
+            "fromId": "CATALOG_MATCH_ACCEPTANCE_OUT",
+            "toId": "CATALOG_MATCH_ACCEPTANCE_IN"
+        },
+        {
+            "fromId": "PRIMARY_TRACKER_DIAGNOSTIC_ATTITUDE_TELEMETRY_OUT",
+            "toId": "PRIMARY_TRACKER_DIAGNOSTIC_ATTITUDE_TELEMETRY_IN"
+        },
+        {
+            "fromId": "PRIMARY_TRACKER_BAFFLE_STATE_OUT",
+            "toId": "PRIMARY_TRACKER_BAFFLE_STATE_IN"
+        },
+        {
+            "fromId": "SECONDARY_DIAGNOSTIC_TRACKER_STAR_PATTERN_OUT",
+            "toId": "SECONDARY_DIAGNOSTIC_TRACKER_STAR_PATTERN_IN"
+        },
+        {
+            "fromId": "SECONDARY_TRACKER_DIAGNOSTIC_CONFIDENCE_OUT",
+            "toId": "SECONDARY_TRACKER_DIAGNOSTIC_CONFIDENCE_IN"
+        },
+        {
+            "fromId": "COARSE_SUN_DIRECTION_MEASUREMENT_OUT",
+            "toId": "COARSE_SUN_DIRECTION_MEASUREMENT_IN"
+        },
+        {
+            "fromId": "EARTH_HORIZON_DIRECTION_MEASUREMENT_OUT",
+            "toId": "EARTH_HORIZON_DIRECTION_MEASUREMENT_IN"
+        },
+        {
+            "fromId": "MAGNETOMETER_TRI_AXIS_FIELD_MEASUREMENT_OUT",
+            "toId": "MAGNETOMETER_TRI_AXIS_FIELD_MEASUREMENT_IN"
+        },
+        {
+            "fromId": "INERTIAL_CLOCK_SYNCHRONIZATION_OUT",
+            "toId": "INERTIAL_CLOCK_SYNCHRONIZATION_IN"
+        },
+        {
+            "fromId": "ESTIMATOR_COVARIANCE_UNCERTAINTY_OUTPUT_OUT",
+            "toId": "ESTIMATOR_COVARIANCE_UNCERTAINTY_OUTPUT_IN"
+        },
+        {
+            "fromId": "COMPLEMENTARY_FUSION_STATUS_OUT",
+            "toId": "COMPLEMENTARY_FUSION_STATUS_IN"
+        },
+        {
+            "fromId": "STAR_CATALOG_VALIDATION_SUMMARY_OUT",
+            "toId": "STAR_CATALOG_VALIDATION_SUMMARY_IN"
+        },
+        {
+            "fromId": "GYROSCOPE_CALIBRATION_REPORT_OUT",
+            "toId": "GYROSCOPE_CALIBRATION_REPORT_IN"
+        },
+        {
+            "fromId": "PRIMARY_TRACKER_OPERATIONAL_HEALTH_OUT",
+            "toId": "PRIMARY_TRACKER_OPERATIONAL_HEALTH_IN"
+        },
+        {
+            "fromId": "SECONDARY_TRACKER_OPERATIONAL_HEALTH_OUT",
+            "toId": "SECONDARY_TRACKER_OPERATIONAL_HEALTH_IN"
+        },
+        {
+            "fromId": "SUN_SENSOR_VALIDITY_OUT",
+            "toId": "SUN_SENSOR_VALIDITY_IN"
+        },
+        {
+            "fromId": "HORIZON_SENSOR_VALIDITY_OUT",
+            "toId": "HORIZON_SENSOR_VALIDITY_IN"
+        },
+        {
+            "fromId": "ESTIMATED_QUATERNION_TO_FLIGHT_CONTROLLER_OUT",
+            "toId": "ESTIMATED_QUATERNION_TO_FLIGHT_CONTROLLER_IN"
+        },
+        {
+            "fromId": "ESTIMATOR_CONFIDENCE_GATE_OUT",
+            "toId": "ESTIMATOR_CONFIDENCE_GATE_IN"
+        },
+        {
+            "fromId": "SLEW_TRAJECTORY_COMMAND_OUT",
+            "toId": "SLEW_TRAJECTORY_COMMAND_IN"
+        },
+        {
+            "fromId": "DESIRED_SPACECRAFT_BODY_TORQUE_OUT",
+            "toId": "DESIRED_SPACECRAFT_BODY_TORQUE_IN"
+        },
+        {
+            "fromId": "FOUR_WHEEL_TORQUE_ALLOCATION_OUT",
+            "toId": "FOUR_WHEEL_TORQUE_ALLOCATION_IN"
+        },
+        {
+            "fromId": "REQUESTED_TARGET_QUATERNION_OUT",
+            "toId": "REQUESTED_TARGET_QUATERNION_IN"
+        },
+        {
+            "fromId": "PREDICTED_SLEW_ENDPOINT_OUT",
+            "toId": "PREDICTED_SLEW_ENDPOINT_IN"
+        },
+        {
+            "fromId": "MEASURED_POINTING_ERROR_MAGNITUDE_OUT",
+            "toId": "MEASURED_POINTING_ERROR_MAGNITUDE_IN"
+        },
+        {
+            "fromId": "MEASURED_STRUCTURAL_VIBRATION_RESPONSE_OUT",
+            "toId": "MEASURED_STRUCTURAL_VIBRATION_RESPONSE_IN"
+        },
+        {
+            "fromId": "QUALIFIED_JITTER_FILTER_OUTPUT_OUT",
+            "toId": "QUALIFIED_JITTER_FILTER_OUTPUT_IN"
+        },
+        {
+            "fromId": "EXTERNAL_DISTURBANCE_TORQUE_ESTIMATE_OUT",
+            "toId": "EXTERNAL_DISTURBANCE_TORQUE_ESTIMATE_IN"
+        },
+        {
+            "fromId": "GRAVITY_GRADIENT_TORQUE_CONTRIBUTION_OUT",
+            "toId": "GRAVITY_GRADIENT_TORQUE_CONTRIBUTION_IN"
+        },
+        {
+            "fromId": "ORBITAL_DRAG_TORQUE_CONTRIBUTION_OUT",
+            "toId": "ORBITAL_DRAG_TORQUE_CONTRIBUTION_IN"
+        },
+        {
+            "fromId": "SOLAR_PRESSURE_TORQUE_CONTRIBUTION_OUT",
+            "toId": "SOLAR_PRESSURE_TORQUE_CONTRIBUTION_IN"
+        },
+        {
+            "fromId": "SOLAR_WING_FLEXIBLE_MODE_AMPLITUDE_OUT",
+            "toId": "SOLAR_WING_FLEXIBLE_MODE_AMPLITUDE_IN"
+        },
+        {
+            "fromId": "ATTITUDE_CONTROLLER_PRECISE_TIMING_REFERENCE_OUT",
+            "toId": "ATTITUDE_CONTROLLER_PRECISE_TIMING_REFERENCE_IN"
+        },
+        {
+            "fromId": "QUATERNION_ORIENTATION_VISUALIZATION_OUT",
+            "toId": "QUATERNION_ORIENTATION_VISUALIZATION_IN"
+        },
+        {
+            "fromId": "ESTIMATOR_UNCERTAINTY_VISUALIZATION_OUT",
+            "toId": "ESTIMATOR_UNCERTAINTY_VISUALIZATION_IN"
+        },
+        {
+            "fromId": "POINTING_ACCURACY_TELEMETRY_OUT",
+            "toId": "POINTING_ACCURACY_TELEMETRY_IN"
+        },
+        {
+            "fromId": "TORQUE_ALLOCATION_TELEMETRY_OUT",
+            "toId": "TORQUE_ALLOCATION_TELEMETRY_IN"
+        },
+        {
+            "fromId": "INDEPENDENT_ATTITUDE_MOTION_SAFETY_PERMISSION_OUT",
+            "toId": "INDEPENDENT_ATTITUDE_MOTION_SAFETY_PERMISSION_IN"
+        },
+        {
+            "fromId": "STAR_TRACKER_SAMPLE_FRESHNESS_DIAGNOSTIC_OUT",
+            "toId": "STAR_TRACKER_SAMPLE_FRESHNESS_DIAGNOSTIC_IN"
+        },
+        {
+            "fromId": "STAR_TRACKER_QUATERNION_OUT",
+            "toId": "ADCS_ABSOLUTE_ATTITUDE_IN"
+        },
+        {
+            "fromId": "CRITICAL_ABSOLUTE_ATTITUDE_FEEDBACK_QUALIFICATION_OUT",
+            "toId": "CRITICAL_ABSOLUTE_ATTITUDE_FEEDBACK_QUALIFICATION_IN"
+        },
+        {
+            "fromId": "ATTITUDE_SAFETY_MODE_AUTHORIZATION_OUT",
+            "toId": "ATTITUDE_SAFETY_MODE_AUTHORIZATION_IN"
+        },
+        {
+            "fromId": "SUN_SAFE_ACQUISITION_REQUEST_OUT",
+            "toId": "SUN_SAFE_ACQUISITION_REQUEST_IN"
+        },
+        {
+            "fromId": "VALIDATED_COARSE_SUN_SAFE_TARGET_OUT",
+            "toId": "VALIDATED_COARSE_SUN_SAFE_TARGET_IN"
+        },
+        {
+            "fromId": "ABSOLUTE_FEEDBACK_LOSS_CRITICAL_EVENT_OUT",
+            "toId": "ABSOLUTE_FEEDBACK_LOSS_CRITICAL_EVENT_IN"
+        },
+        {
+            "fromId": "ADCS_PLC_PROTECTED_MOTION_RESET_REQUEST_OUT",
+            "toId": "ADCS_PLC_PROTECTED_MOTION_RESET_REQUEST_IN"
+        },
+        {
+            "fromId": "INDEPENDENT_WHEEL_DRIVER_INHIBIT_OUT",
+            "toId": "INDEPENDENT_WHEEL_DRIVER_INHIBIT_IN"
+        },
+        {
+            "fromId": "INDEPENDENT_TORQUER_CURRENT_INHIBIT_OUT",
+            "toId": "INDEPENDENT_TORQUER_CURRENT_INHIBIT_IN"
+        },
+        {
+            "fromId": "EMERGENCY_STOP_CONTACT_STATE_OUT",
+            "toId": "EMERGENCY_STOP_CONTACT_STATE_IN"
+        },
+        {
+            "fromId": "EMERGENCY_STOP_RESET_READINESS_OUT",
+            "toId": "EMERGENCY_STOP_RESET_READINESS_IN"
+        },
+        {
+            "fromId": "WHEEL_SATURATION_PROTECTION_THRESHOLD_OUT",
+            "toId": "WHEEL_SATURATION_PROTECTION_THRESHOLD_IN"
+        },
+        {
+            "fromId": "ATTITUDE_ESTIMATOR_STATUS_SUMMARY_NON_AUTHORITATIVE_OUT",
+            "toId": "ATTITUDE_ESTIMATOR_STATUS_SUMMARY_NON_AUTHORITATIVE_IN"
+        },
+        {
+            "fromId": "LATCHED_ATTITUDE_SAFE_MODE_SCADA_ALARM_OUT",
+            "toId": "LATCHED_ATTITUDE_SAFE_MODE_SCADA_ALARM_IN"
+        },
+        {
+            "fromId": "GROUND_STATION_PREDICTED_LINE_OF_SIGHT_OUT",
+            "toId": "GROUND_STATION_PREDICTED_LINE_OF_SIGHT_IN"
+        },
+        {
+            "fromId": "OPTICAL_TARGET_SLEW_REQUEST_OUT",
+            "toId": "OPTICAL_TARGET_SLEW_REQUEST_IN"
+        },
+        {
+            "fromId": "OPTICAL_POINTING_STABILIZATION_ENABLE_OUT",
+            "toId": "OPTICAL_POINTING_STABILIZATION_ENABLE_IN"
+        },
+        {
+            "fromId": "OPTICAL_LINE_OF_SIGHT_MEASUREMENT_OUT",
+            "toId": "OPTICAL_LINE_OF_SIGHT_MEASUREMENT_IN"
+        },
+        {
+            "fromId": "MISSION_PAYLOAD_BORESIGHT_REFERENCE_OUT",
+            "toId": "MISSION_PAYLOAD_BORESIGHT_REFERENCE_IN"
+        },
+        {
+            "fromId": "ACQUIRED_OPTICAL_SIGNAL_QUALITY_OUT",
+            "toId": "ACQUIRED_OPTICAL_SIGNAL_QUALITY_IN"
+        },
+        {
+            "fromId": "OPTICAL_LOCK_QUALIFICATION_FEEDBACK_OUT",
+            "toId": "OPTICAL_LOCK_QUALIFICATION_FEEDBACK_IN"
+        },
+        {
+            "fromId": "DOWNLINK_RECEIVE_QUALITY_TELEMETRY_OUT",
+            "toId": "DOWNLINK_RECEIVE_QUALITY_TELEMETRY_IN"
+        },
+        {
+            "fromId": "MOVING_GROUND_STATION_TARGET_TELEMETRY_OUT",
+            "toId": "MOVING_GROUND_STATION_TARGET_TELEMETRY_IN"
+        },
+        {
+            "fromId": "OPTICAL_TRANSMITTER_ACQUISITION_PERMIT_OUT",
+            "toId": "OPTICAL_TRANSMITTER_ACQUISITION_PERMIT_IN"
+        },
+        {
+            "fromId": "OPTICAL_TRANSMITTER_ACTUAL_EMISSION_STATUS_OUT",
+            "toId": "OPTICAL_TRANSMITTER_ACTUAL_EMISSION_STATUS_IN"
+        },
+        {
+            "fromId": "MISSION_CHIPLET_OUTGOING_DATA_PACKETS_OUT",
+            "toId": "MISSION_CHIPLET_OUTGOING_DATA_PACKETS_IN"
+        },
+        {
+            "fromId": "AVIONICS_SUPPLY_AND_HEALTH_STATUS_OUT",
+            "toId": "AVIONICS_SUPPLY_AND_HEALTH_STATUS_IN"
+        },
+        {
+            "fromId": "VERIFIED_OPTICAL_DOWNLINK_PACKET_DELIVERY_OUT",
+            "toId": "VERIFIED_OPTICAL_DOWNLINK_PACKET_DELIVERY_IN"
+        },
+        {
+            "fromId": "TWO_PASS_OPTICAL_SCHEDULE_AUTHORIZATION_OUT",
+            "toId": "TWO_PASS_OPTICAL_SCHEDULE_AUTHORIZATION_IN"
+        },
+        {
+            "fromId": "BEAM_POINTING_ERROR_TO_ANALYZER_OUT",
+            "toId": "BEAM_POINTING_ERROR_TO_ANALYZER_IN"
+        },
+        {
+            "fromId": "STRUCTURAL_JITTER_OPTICAL_QUALITY_IMPACT_OUT",
+            "toId": "STRUCTURAL_JITTER_OPTICAL_QUALITY_IMPACT_IN"
+        },
+        {
+            "fromId": "SUN_SAFE_PORT_ARRAY_POINTING_REQUEST_OUT",
+            "toId": "SUN_SAFE_PORT_ARRAY_POINTING_REQUEST_IN"
+        },
+        {
+            "fromId": "SUN_SAFE_STARBOARD_ARRAY_POINTING_REQUEST_OUT",
+            "toId": "SUN_SAFE_STARBOARD_ARRAY_POINTING_REQUEST_IN"
+        },
+        {
+            "fromId": "OPTICAL_COMMUNICATION_QUALIFICATION_LOG_OUT",
+            "toId": "OPTICAL_COMMUNICATION_QUALIFICATION_LOG_IN"
+        },
+        {
+            "fromId": "ADCS_PLC_MODE_AND_SEQUENCING_TELEMETRY_OUT",
+            "toId": "ADCS_PLC_MODE_AND_SEQUENCING_TELEMETRY_IN"
+        },
+        {
+            "fromId": "OPERATOR_MODE_REQUEST_OUT",
+            "toId": "OPERATOR_MODE_REQUEST_IN"
+        },
+        {
+            "fromId": "THREE_AXIS_CONTROL_STABILITY_QUALIFICATION_OUT",
+            "toId": "THREE_AXIS_CONTROL_STABILITY_QUALIFICATION_IN"
+        },
+        {
+            "fromId": "ESTIMATOR_READINESS_AND_CONFIDENCE_OUT",
+            "toId": "ESTIMATOR_READINESS_AND_CONFIDENCE_IN"
+        },
+        {
+            "fromId": "WHEEL_SPEED_MARGIN_CERTIFICATE_OUT",
+            "toId": "WHEEL_SPEED_MARGIN_CERTIFICATE_IN"
+        },
+        {
+            "fromId": "MAGNETIC_MOMENTUM_DUMPING_CERTIFICATE_OUT",
+            "toId": "MAGNETIC_MOMENTUM_DUMPING_CERTIFICATE_IN"
+        },
+        {
+            "fromId": "ATTITUDE_SAFE_MODE_AND_ALARM_STATUS_OUT",
+            "toId": "ATTITUDE_SAFE_MODE_AND_ALARM_STATUS_IN"
+        },
+        {
+            "fromId": "CERTIFICATION_BEACON_COMMAND_OUT",
+            "toId": "CERTIFICATION_BEACON_COMMAND_IN"
+        },
+        {
+            "fromId": "SIX_OBJECTIVE_CERTIFICATE_STATE_OUT",
+            "toId": "SIX_OBJECTIVE_CERTIFICATE_STATE_IN"
+        },
+        {
+            "fromId": "TIMESTAMPED_FLIGHT_RECORDER_EVENT_TELEMETRY_OUT",
+            "toId": "TIMESTAMPED_FLIGHT_RECORDER_EVENT_TELEMETRY_IN"
+        },
+        {
+            "fromId": "FLIGHT_EVENT_RECORDING_REQUEST_OUT",
+            "toId": "FLIGHT_EVENT_RECORDING_REQUEST_IN"
+        },
+        {
+            "fromId": "INDEPENDENT_MOTION_PROTECTION_STATUS_OUT",
+            "toId": "INDEPENDENT_MOTION_PROTECTION_STATUS_IN"
+        }
+    ]
+}

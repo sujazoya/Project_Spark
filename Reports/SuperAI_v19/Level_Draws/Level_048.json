@@ -1,0 +1,67 @@
+{
+  "level": 48,
+  "levelId": "level_48",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_48_Layout/Level_48_Layout.prefab",
+  "layoutRevision": "0B50AAB0C7B905D83BAC1D3F0868A013E79A72C183F28A3E700A9E74746E2B2B",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel48Registration.cs#RequiredWires",
+  "terminalBindings": 22,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "13 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "CTRL_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "CTRL_GND"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "SENSOR_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "SENSOR_GND"
+    },
+    {
+      "fromId": "ENCODER_A",
+      "toId": "CTRL_ENC_A"
+    },
+    {
+      "fromId": "ENCODER_B",
+      "toId": "CTRL_ENC_B"
+    },
+    {
+      "fromId": "SENSOR_SIGNAL",
+      "toId": "CTRL_MARK_IN"
+    },
+    {
+      "fromId": "CTRL_INDEX_PWM",
+      "toId": "DRIVER_PWM"
+    },
+    {
+      "fromId": "DRIVER_MOTOR_PLUS",
+      "toId": "PRINT_MOTOR_PLUS"
+    },
+    {
+      "fromId": "DRIVER_MOTOR_MINUS",
+      "toId": "PRINT_MOTOR_MINUS"
+    },
+    {
+      "fromId": "CTRL_PRINT_TRIG",
+      "toId": "PRINT_HEAD_TRIG"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "DRIVER_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "DRIVER_GND"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "level": 31,
+  "levelId": "level_31",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_31_Layout/Level_31_SealIn_Layout.prefab",
+  "layoutRevision": "B5685A01FEC5BB6AB8921502F51FA2AF36C564D665B624A921EB9EB5869DC9CA",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel31SealIn.cs#GetAuthoredWireNets",
+  "terminalBindings": 17,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "10 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "Battery_positive",
+      "toId": "MAIN_IN"
+    },
+    {
+      "fromId": "MAIN_OUT",
+      "toId": "STOP_IN"
+    },
+    {
+      "fromId": "MAIN_OUT",
+      "toId": "RUN_IN"
+    },
+    {
+      "fromId": "STOP_OUT",
+      "toId": "START_IN"
+    },
+    {
+      "fromId": "STOP_OUT",
+      "toId": "Hold_COM"
+    },
+    {
+      "fromId": "START_OUT",
+      "toId": "Coil_plus"
+    },
+    {
+      "fromId": "START_OUT",
+      "toId": "Hold_NO"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "Coil_minus"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "Motor_B"
+    },
+    {
+      "fromId": "RUN_OUT",
+      "toId": "Motor_A"
+    }
+  ]
+}

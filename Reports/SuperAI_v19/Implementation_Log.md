@@ -32,3 +32,17 @@ The Android build was cancelled when campaign Auto Draw became the active priori
 | `Assets/ProjectSpark/SparkV5/Pro/Integration/SparkAINativeSignalWirePort.cs` | Preserves the device-bypass rejection while allowing separate sockets on a passive carrier to reach the normal native checks. |
 
 The Editor derives native-wire drafts from actual controller pair tables and serialized pin references. The campaign CSV records board controllers with separate placement, routing, via, or diagnostic requirements. The generated-draft import rechecks the source before adding an unapproved project asset.
+
+The Level 1 definition and layout now specify a starter series circuit using the existing 150 ohm resistor, and the virtual supply starts in standby. The Level 1 drawing and its generator use the same route. The first run of the original two-wire instruction registered both native connections but did not satisfy the evaluator. That run is retained in Logs/SuperAI_v19/StarterOriginalPlayMode.txt.
+
+| Project-relative path | Change |
+| --- | --- |
+| `Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_01/Level_01_Layout/Level_01.asset` | Gives the three authored native connections in the mission instructions. |
+| `Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_01/Level_01_Layout/Level_01_Layout.prefab` | Sets the bench supply to standby at mission start. |
+| `Assets/My_Assets/_Project_Spark/Scripts/ProjectSpark/AI/Visual-Teaching-System/Runtime/Level Draw System/Levels/Level_01_Drawing.asset` | Shows the existing current-limiting resistor in the starter circuit. |
+| `Assets/My_Assets/_Project_Spark/Scripts/ProjectSpark/AI/Visual-Teaching-System/Runtime/Level Draw System/Levels/Creaters/Editor/SparkLevel0106DrawingAssetCreator.cs` | Keeps newly generated Level 1 drawings consistent with the saved mission. |
+
+| Additional project-relative path | Change |
+| --- | --- |
+| `Assets/Resources/SparkNativeWirePlans/Level_001_NativeWiring_Reviewed.asset` and its Unity metadata | Saves the approved three-wire Level 1 recipe after the native evaluator passed at 1/1. |
+| `Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel48Registration.cs` | Makes the Level 48 main power control isolate its main and auxiliary supplies before wiring. |

@@ -1,0 +1,391 @@
+{
+  "level": 72,
+  "levelId": "level_72",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_72_Layout/Level_72_Layout.prefab",
+  "layoutRevision": "092F5FCF3471BD00FB5D4839E95BBD7A16BEDB1EE0B839AEF2D8DB79495890BB",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel72Process.cs#Wires",
+  "terminalBindings": 146,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "94 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "PLC_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "PLC_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "IO_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "IO_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "VAC_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "VAC_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "HEAT_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "HEAT_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "PURGE_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "PURGE_GND"
+    },
+    {
+      "fromId": "PLC_BACKING",
+      "toId": "BACKING_RUN"
+    },
+    {
+      "fromId": "BACKING_SPEED",
+      "toId": "IO_BACK_RPM"
+    },
+    {
+      "fromId": "PLC_TURBO",
+      "toId": "TURBO_RUN"
+    },
+    {
+      "fromId": "TURBO_SPEED",
+      "toId": "IO_TURBO_RPM"
+    },
+    {
+      "fromId": "PLC_ISOLATION",
+      "toId": "ISOLATION_CMD"
+    },
+    {
+      "fromId": "ISOLATION_POS",
+      "toId": "IO_ISOLATION"
+    },
+    {
+      "fromId": "PID_THROTTLE",
+      "toId": "THROTTLE_CMD"
+    },
+    {
+      "fromId": "THROTTLE_POS",
+      "toId": "IO_THROTTLE"
+    },
+    {
+      "fromId": "CHAMBER_PA",
+      "toId": "PID_PRESSURE"
+    },
+    {
+      "fromId": "FORELINE_PA",
+      "toId": "IO_FORELINE"
+    },
+    {
+      "fromId": "LOADLOCK_PA",
+      "toId": "PLC_LOCK_PA"
+    },
+    {
+      "fromId": "ROUGH_PA",
+      "toId": "IO_ROUGH"
+    },
+    {
+      "fromId": "HIGH_PA",
+      "toId": "IO_HIGH"
+    },
+    {
+      "fromId": "RESIDUAL_PA",
+      "toId": "PLC_RGA"
+    },
+    {
+      "fromId": "DOSE_PERMIT",
+      "toId": "DOSE_ENABLE"
+    },
+    {
+      "fromId": "PLC_A_ENABLE",
+      "toId": "SOURCE_A_EN"
+    },
+    {
+      "fromId": "PLC_B_ENABLE",
+      "toId": "SOURCE_B_EN"
+    },
+    {
+      "fromId": "SEQ_A_CMD",
+      "toId": "VALVE_A_CMD"
+    },
+    {
+      "fromId": "SEQ_B_CMD",
+      "toId": "VALVE_B_CMD"
+    },
+    {
+      "fromId": "VALVE_A_POS",
+      "toId": "IO_A_POSITION"
+    },
+    {
+      "fromId": "VALVE_B_POS",
+      "toId": "IO_B_POSITION"
+    },
+    {
+      "fromId": "MFC_A_SET",
+      "toId": "FLOW_A_CMD"
+    },
+    {
+      "fromId": "MFC_B_SET",
+      "toId": "FLOW_B_CMD"
+    },
+    {
+      "fromId": "FLOW_A_OUT",
+      "toId": "IO_FLOW_A"
+    },
+    {
+      "fromId": "FLOW_B_OUT",
+      "toId": "IO_FLOW_B"
+    },
+    {
+      "fromId": "STOCK_A_OUT",
+      "toId": "IO_STOCK_A"
+    },
+    {
+      "fromId": "STOCK_B_OUT",
+      "toId": "IO_STOCK_B"
+    },
+    {
+      "fromId": "MIX_A_OUT",
+      "toId": "MIX_A_MON"
+    },
+    {
+      "fromId": "MIX_B_OUT",
+      "toId": "MIX_B_MON"
+    },
+    {
+      "fromId": "A_RESIDUAL",
+      "toId": "SEQ_A_RESIDUAL"
+    },
+    {
+      "fromId": "B_RESIDUAL",
+      "toId": "SEQ_B_RESIDUAL"
+    },
+    {
+      "fromId": "OVERLAP_OUT",
+      "toId": "PLC_OVERLAP"
+    },
+    {
+      "fromId": "PLC_PURGE",
+      "toId": "SOURCE_P_EN"
+    },
+    {
+      "fromId": "SEQ_PURGE_CMD",
+      "toId": "PURGE_VALVE_CMD"
+    },
+    {
+      "fromId": "PURGE_VALVE_POS",
+      "toId": "IO_PURGE_POSITION"
+    },
+    {
+      "fromId": "P_FLOW_SET",
+      "toId": "PURGE_REG_CMD"
+    },
+    {
+      "fromId": "PURGE_REG_POS",
+      "toId": "IO_PURGE_REG"
+    },
+    {
+      "fromId": "PURGE_READY",
+      "toId": "PLC_PURGE_READY"
+    },
+    {
+      "fromId": "P_STOCK_OUT",
+      "toId": "IO_PURGE_STOCK"
+    },
+    {
+      "fromId": "P_FLOW_OK",
+      "toId": "PLC_FLOW_OK"
+    },
+    {
+      "fromId": "P_SENSOR_OK",
+      "toId": "IO_P_VALID"
+    },
+    {
+      "fromId": "P_ZERO_REQ",
+      "toId": "P_ZERO_CMD"
+    },
+    {
+      "fromId": "A_CLEAR_OUT",
+      "toId": "SEQ_A_CLEAR"
+    },
+    {
+      "fromId": "B_CLEAR_OUT",
+      "toId": "SEQ_B_CLEAR"
+    },
+    {
+      "fromId": "PURGE_TRIP",
+      "toId": "IO_PURGE_ALARM"
+    },
+    {
+      "fromId": "RESIDUAL_OK",
+      "toId": "PLC_CLEAR"
+    },
+    {
+      "fromId": "PLC_GATE",
+      "toId": "GATE_CMD"
+    },
+    {
+      "fromId": "PLC_ROBOT",
+      "toId": "ROBOT_CMD"
+    },
+    {
+      "fromId": "GATE_CMD",
+      "toId": "GATE_MON"
+    },
+    {
+      "fromId": "PLC_ROBOT",
+      "toId": "ROBOT_MON"
+    },
+    {
+      "fromId": "IO_ISOLATION",
+      "toId": "TRANSFER_OK"
+    },
+    {
+      "fromId": "PLC_LOCK_PA",
+      "toId": "GATE_PRESS_OK"
+    },
+    {
+      "fromId": "PLC_ROBOT",
+      "toId": "WAFER_LIFT"
+    },
+    {
+      "fromId": "TRANSFER_OK",
+      "toId": "CHUCK_CLAMP"
+    },
+    {
+      "fromId": "DOSE_ENABLE",
+      "toId": "HEAT_PERMIT"
+    },
+    {
+      "fromId": "IO_A_POSITION",
+      "toId": "CHUCK_CLOSED"
+    },
+    {
+      "fromId": "PLC_CLEAR",
+      "toId": "ZONE_PID_EN"
+    },
+    {
+      "fromId": "PLC_RGA",
+      "toId": "ZONE_TEMP_MON"
+    },
+    {
+      "fromId": "PLC_ROBOT",
+      "toId": "METROLOGY_REQ"
+    },
+    {
+      "fromId": "IO_FLOW_A",
+      "toId": "QCM_FEED"
+    },
+    {
+      "fromId": "IO_FLOW_B",
+      "toId": "QCM_RESPONSE"
+    },
+    {
+      "fromId": "PLC_PURGE_READY",
+      "toId": "OPTICAL_ENABLE"
+    },
+    {
+      "fromId": "IO_P_VALID",
+      "toId": "OPTICAL_READY"
+    },
+    {
+      "fromId": "PLC_RGA",
+      "toId": "FILM_THICKNESS_MON"
+    },
+    {
+      "fromId": "CHUCK_CLAMP",
+      "toId": "FILM_SCAN_EN"
+    },
+    {
+      "fromId": "TRANSFER_OK",
+      "toId": "UNIFORMITY_MON"
+    },
+    {
+      "fromId": "SEQ_A_RESIDUAL",
+      "toId": "COVERAGE_MON"
+    },
+    {
+      "fromId": "SEQ_B_RESIDUAL",
+      "toId": "REACTION_MON"
+    },
+    {
+      "fromId": "PLC_OVERLAP",
+      "toId": "QUALITY_INTERLOCK"
+    },
+    {
+      "fromId": "METROLOGY_REQ",
+      "toId": "TRENCH_SCAN"
+    },
+    {
+      "fromId": "ESTOP_NC",
+      "toId": "SAFE_STOP_IN"
+    },
+    {
+      "fromId": "SAFE_STOP_IN",
+      "toId": "PLC_SAFETY"
+    },
+    {
+      "fromId": "DOSE_ENABLE",
+      "toId": "LID_LOCK"
+    },
+    {
+      "fromId": "DOSE_ENABLE",
+      "toId": "INTERLOCK_MON"
+    },
+    {
+      "fromId": "IO_PURGE_ALARM",
+      "toId": "SAFE_PURGE"
+    },
+    {
+      "fromId": "IO_ISOLATION",
+      "toId": "LOCK_STATUS"
+    },
+    {
+      "fromId": "ZONE_TEMP_MON",
+      "toId": "HEATER_ALARM"
+    },
+    {
+      "fromId": "PLC_OVERLAP",
+      "toId": "STUCK_ALARM"
+    },
+    {
+      "fromId": "PLC_CLEAR",
+      "toId": "RESET_READY"
+    },
+    {
+      "fromId": "PID_PRESSURE",
+      "toId": "HMI_PRESS"
+    },
+    {
+      "fromId": "IO_FLOW_A",
+      "toId": "HMI_REACTANT"
+    },
+    {
+      "fromId": "METROLOGY_REQ",
+      "toId": "HMI_QUALITY"
+    },
+    {
+      "fromId": "PLC_PURGE_READY",
+      "toId": "HMI_SEQUENCE"
+    },
+    {
+      "fromId": "PURGE_FLOW_TRANSMITTER_SIGNAL_OUT",
+      "toId": "ALD_SEQUENCER_PURGE_FEEDBACK_IN"
+    }
+  ]
+}

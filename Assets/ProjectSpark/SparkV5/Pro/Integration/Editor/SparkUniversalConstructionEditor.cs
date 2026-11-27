@@ -113,7 +113,10 @@ namespace ProjectSpark.SparkV5.Pro.Editor
                         if (problem != null) throw new InvalidOperationException(problem);
                         if (!reviewed.HasRevisionReview) BindRevision(reviewed, definition, prefab);
                     }
-                    if (mode == "retain-starter-review") StoreStarterReview(manager);
+                    if (mode == "retain-starter-review")
+                        StoreMissionReview(manager, 1, "StarterPlayMode.txt", "PASS Starter native wiring and evaluator 1/1.");
+                    if (mode == "retain-level48-review")
+                        StoreMissionReview(manager, 48, "Level48PlayMode.txt", "PASS Level 48 native wiring and evaluator 6/6.");
                     Scan(manager, true);
                 });
                 File.WriteAllText(proof, "PASS campaign audit and evidence export completed. " + DateTimeOffset.Now.ToString("O"));
@@ -121,26 +124,26 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             catch (Exception error) { File.WriteAllText(proof, "FAIL " + error); Debug.LogException(error); }
         }
 
-        private static void StoreStarterReview(LevelGamePlayManager manager)
+        private static void StoreMissionReview(LevelGamePlayManager manager, int levelNumber, string proof, string success)
         {
-            if (!TryFindLevel(manager, 1, out var definition, out var layout))
-                throw new InvalidOperationException("The starter level has no unique authored layout.");
+            if (!TryFindLevel(manager, levelNumber, out var definition, out var layout))
+                throw new InvalidOperationException($"Level {levelNumber} has no unique authored layout.");
             if (!TryReadMissionWires(definition, layout, out var steps, out string evidence, out string error))
                 throw new InvalidOperationException(error);
-            string revision = SparkNativeWiringPlan.AuthoredRevision(definition, layout);
-            string run = File.ReadAllText("Logs/SuperAI_v19/StarterPlayMode.txt");
-            if (!run.Contains($"PASS Starter native wiring and evaluator 1/1. Review revision {revision}.", StringComparison.Ordinal) ||
+            string revision = SparkNativeWiringPlan.AuthoredRevision(definition, layout, evidence);
+            string run = File.ReadAllText(Path.Combine("Logs/SuperAI_v19", proof));
+            if (!run.Contains($"{success} Review revision {revision}.", StringComparison.Ordinal) ||
                 !run.Contains("PASS Verification complete.", StringComparison.Ordinal) || run.Contains("FAIL ", StringComparison.Ordinal))
-                throw new InvalidOperationException("The starter's current layout has no passing native gameplay review.");
-            if (Plans().Any(plan => plan.IsApproved && plan.LevelNumber == 1 && plan.LayoutName == layout.name))
+                throw new InvalidOperationException($"Level {levelNumber}'s current layout has no passing native gameplay review.");
+            if (Plans().Any(plan => plan.IsApproved && plan.LevelNumber == levelNumber && plan.LayoutName == layout.name))
                 return;
             var planAsset = ScriptableObject.CreateInstance<SparkNativeWiringPlan>();
-            planAsset.LoadDraft(new SparkNativeWiringPlan.RecordedDraft { levelNumber = 1, layoutName = layout.name, wires = steps });
+            planAsset.LoadDraft(new SparkNativeWiringPlan.RecordedDraft { levelNumber = levelNumber, layoutName = layout.name, wires = steps });
             if (!planAsset.TryApprove("Codex source and native gameplay review", evidence, out error) ||
                 !planAsset.ReviewAuthoredRevision(definition, layout, out error))
                 throw new InvalidOperationException(error);
             const string folder = "Assets/Resources/SparkNativeWirePlans";
-            AssetDatabase.CreateAsset(planAsset, AssetDatabase.GenerateUniqueAssetPath(folder + "/Level_001_NativeWiring_Reviewed.asset"));
+            AssetDatabase.CreateAsset(planAsset, AssetDatabase.GenerateUniqueAssetPath($"{folder}/Level_{levelNumber:000}_NativeWiring_Reviewed.asset"));
             AssetDatabase.SaveAssetIfDirty(planAsset);
         }
 
@@ -246,6 +249,31 @@ namespace ProjectSpark.SparkV5.Pro.Editor
                 if (type.Namespace != "ProjectSpark.Gameplay" ||
                     !type.Name.StartsWith(prefix, StringComparison.Ordinal) || type.Name.Length == prefix.Length ||
                     char.IsDigit(type.Name[prefix.Length])) continue;
+                var netMethod = type.GetMethod("GetAuthoredWireNets", BindingFlags.Instance | BindingFlags.NonPublic);
+                if (netMethod != null)
+                {
+                    (SparkTerminal, SparkTerminal)[] edges;
+                    try
+                    {
+                        edges = netMethod.Invoke(mission, null) switch
+                        {
+                            SparkTerminal[][] nets => nets.SelectMany(net => net.Skip(1).Select(pin => (net[0], pin))).ToArray(),
+                            (SparkTerminal, SparkTerminal)[] terminalPairs => terminalPairs,
+                            _ => Array.Empty<(SparkTerminal, SparkTerminal)>()
+                        };
+                    }
+                    catch (TargetInvocationException)
+                    {
+                        evidence = AssetDatabase.GetAssetPath(MonoScript.FromMonoBehaviour(mission)) + "#GetAuthoredWireNets";
+                        error = "The bound mission could not resolve its authored net members from this prefab.";
+                        return false;
+                    }
+                    if (edges.Length == 0) continue;
+                    if (steps != null) { error = "Multiple bound mission controllers provide wire recipes."; steps = null; return false; }
+                    evidence = AssetDatabase.GetAssetPath(MonoScript.FromMonoBehaviour(mission)) + "#GetAuthoredWireNets";
+                    if (!TryMapRecipe(layout, ids, ambiguous, edges, out steps, out error)) return false;
+                    continue;
+                }
                 const BindingFlags Static = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
                 var field = type.GetField("RequiredWires", Static) ?? type.GetField("Wires", Static) ?? type.GetField("Wiring", Static);
                 var serialized = new SerializedObject(mission);
@@ -273,32 +301,59 @@ namespace ProjectSpark.SparkV5.Pro.Editor
                 if (pairs == null || pairs.Length == 0) continue;
                 string source = AssetDatabase.GetAssetPath(MonoScript.FromMonoBehaviour(mission));
                 evidence = $"{source}#{sourceMember}";
-                var found = new SparkNativeWiringPlan.WireStep[pairs.Length];
-                var seen = new HashSet<(string, string)>();
+                var terminalEdges = new (SparkTerminal, SparkTerminal)[pairs.Length];
                 for (int i = 0; i < pairs.Length; i++)
                 {
                     var (a, b) = pairs[i];
                     if (a < 0 || b < 0 || a >= pins.arraySize || b >= pins.arraySize)
                     { error = $"Authored pair {i + 1} names a missing serialized pin."; return false; }
-                    var from = pins.GetArrayElementAtIndex(a).objectReferenceValue as SparkTerminal;
-                    var to = pins.GetArrayElementAtIndex(b).objectReferenceValue as SparkTerminal;
-                    if (!from || !to || !from.Owner || !to.Owner || from == to ||
-                        !from.transform.IsChildOf(layout.transform) || !to.transform.IsChildOf(layout.transform) ||
-                        ambiguous.Contains(from) || ambiguous.Contains(to) ||
-                        !ids.TryGetValue(from, out string fromId) || !ids.TryGetValue(to, out string toId))
-                    { error = $"Authored pair {i + 1} lacks two unique, layout-owned terminal bindings."; return false; }
-                    if (from.SharesElectricalOwnerWith(to))
-                    { error = $"Authored pair {i + 1} ({fromId} → {toId}) would bypass an electrical owner."; return false; }
-                    var key = string.CompareOrdinal(fromId, toId) < 0 ? (fromId, toId) : (toId, fromId);
-                    if (!seen.Add(key)) { error = $"The mission repeats authored pair {i + 1}."; return false; }
-                    found[i] = new SparkNativeWiringPlan.WireStep { fromId = fromId, toId = toId };
+                    terminalEdges[i] = (pins.GetArrayElementAtIndex(a).objectReferenceValue as SparkTerminal,
+                        pins.GetArrayElementAtIndex(b).objectReferenceValue as SparkTerminal);
                 }
                 if (steps != null) { error = "Multiple bound mission controllers provide wire recipes."; steps = null; return false; }
-                steps = found;
+                if (!TryMapRecipe(layout, ids, ambiguous, terminalEdges, out steps, out error)) return false;
             }
             if (steps == null) return false;
             error = null;
             return true;
+        }
+
+        private static bool TryMapRecipe(SparkLevelLayout layout, Dictionary<SparkTerminal, string> ids,
+            HashSet<SparkTerminal> ambiguous, IReadOnlyList<(SparkTerminal from, SparkTerminal to)> edges,
+            out SparkNativeWiringPlan.WireStep[] steps, out string error)
+        {
+            steps = null;
+            error = null;
+            var mapped = new SparkNativeWiringPlan.WireStep[edges.Count];
+            var seen = new HashSet<(string, string)>();
+            var endpointCounts = new Dictionary<SparkTerminal, int>();
+            for (int i = 0; i < edges.Count; i++)
+            {
+                var (from, to) = edges[i];
+                if (!from || !to || !from.Owner || !to.Owner || from == to ||
+                    !from.transform.IsChildOf(layout.transform) || !to.transform.IsChildOf(layout.transform) ||
+                    ambiguous.Contains(from) || ambiguous.Contains(to) ||
+                    !ids.TryGetValue(from, out string fromId) || !ids.TryGetValue(to, out string toId))
+                { error = $"Authored pair {i + 1} lacks two unique, layout-owned terminal bindings."; return false; }
+                if (from.SharesElectricalOwnerWith(to))
+                { error = $"Authored pair {i + 1} ({fromId} → {toId}) would bypass an electrical owner."; return false; }
+                if (!from.Owner.InteractionsEnabled || !to.Owner.InteractionsEnabled)
+                { error = $"Authored pair {i + 1} ({fromId} → {toId}) uses a disabled interaction owner."; return false; }
+                var key = string.CompareOrdinal(fromId, toId) < 0 ? (fromId, toId) : (toId, fromId);
+                if (!seen.Add(key)) { error = $"The mission repeats authored pair {i + 1}."; return false; }
+                if (ExceedsCapacity(from) || ExceedsCapacity(to))
+                { error = $"Authored pair {i + 1} ({fromId} → {toId}) exceeds a terminal's wire capacity."; return false; }
+                mapped[i] = new SparkNativeWiringPlan.WireStep { fromId = fromId, toId = toId };
+            }
+            steps = mapped;
+            return true;
+
+            bool ExceedsCapacity(SparkTerminal terminal)
+            {
+                endpointCounts.TryGetValue(terminal, out int count);
+                endpointCounts[terminal] = ++count;
+                return count > terminal.MaxConnections;
+            }
         }
 
         private static bool TryReadCommissioningPairs(Type mission, int count, out (int, int)[] pairs)
@@ -387,6 +442,9 @@ namespace ProjectSpark.SparkV5.Pro.Editor
                 string missionEvidence = "", missionProblem = null;
                 bool hasMissionDraft = !plan && bindings && validation == "Authored structure validated" &&
                     TryReadMissionWires(definition, layout, out missionSteps, out missionEvidence, out missionProblem);
+                string sourceEvidence = plan ? plan.SchematicReference : missionEvidence;
+                if (sourceEvidence?.IndexOf(".cs#", StringComparison.OrdinalIgnoreCase) >= 0)
+                    revision = SparkNativeWiringPlan.AuthoredRevision(definition, layout, sourceEvidence);
                 string reason = authorized.Length > 1 ? "Duplicate approved plans." :
                     plan ? ValidateSteps(plan, layout) : hasMissionDraft
                         ? $"{missionSteps.Length} native terminal pairs from the bound mission evaluator require explicit review."

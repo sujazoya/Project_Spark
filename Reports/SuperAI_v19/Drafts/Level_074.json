@@ -1,0 +1,416 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 74,
+    "layoutName": "Level_74_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "PLC_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "PLC_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "IO_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "IO_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "STAGE_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "STAGE_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "DUV_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "DUV_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "LASER_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "LASER_GND"
+        },
+        {
+            "fromId": "PLC_WAFER",
+            "toId": "WAFER_RUN"
+        },
+        {
+            "fromId": "PLC_RETICLE",
+            "toId": "RETICLE_RUN"
+        },
+        {
+            "fromId": "WAFER_X_SET",
+            "toId": "SERVO_X_CMD"
+        },
+        {
+            "fromId": "WAFER_Y_SET",
+            "toId": "SERVO_Y_CMD"
+        },
+        {
+            "fromId": "RETICLE_X_SET",
+            "toId": "RETICLE_X_CMD"
+        },
+        {
+            "fromId": "RETICLE_Y_SET",
+            "toId": "RETICLE_Y_CMD"
+        },
+        {
+            "fromId": "WAFER_ENC_X",
+            "toId": "IO_WAFER_X"
+        },
+        {
+            "fromId": "WAFER_ENC_Y",
+            "toId": "IO_WAFER_Y"
+        },
+        {
+            "fromId": "RETICLE_ENC_X",
+            "toId": "IO_RETICLE_X"
+        },
+        {
+            "fromId": "RETICLE_ENC_Y",
+            "toId": "IO_RETICLE_Y"
+        },
+        {
+            "fromId": "WAFER_HOME",
+            "toId": "IO_WAFER_HOME"
+        },
+        {
+            "fromId": "RETICLE_HOME",
+            "toId": "IO_RET_HOME"
+        },
+        {
+            "fromId": "WAFER_READY",
+            "toId": "PLC_WAFER_RDY"
+        },
+        {
+            "fromId": "RETICLE_READY",
+            "toId": "PLC_RET_RDY"
+        },
+        {
+            "fromId": "STAGE_FAULT",
+            "toId": "IO_STAGE_FAULT"
+        },
+        {
+            "fromId": "SERVO_CURRENT",
+            "toId": "IO_SERVO_I"
+        },
+        {
+            "fromId": "PLC_LASER",
+            "toId": "LASER_EN"
+        },
+        {
+            "fromId": "LASER_VALID",
+            "toId": "IO_LASER_VALID"
+        },
+        {
+            "fromId": "LASER_REF",
+            "toId": "SYNC_ZERO"
+        },
+        {
+            "fromId": "LASER_Y_MON",
+            "toId": "IO_LASER_Y"
+        },
+        {
+            "fromId": "MARK_A",
+            "toId": "ALIGN_MARK_A"
+        },
+        {
+            "fromId": "MARK_B",
+            "toId": "ALIGN_MARK_B"
+        },
+        {
+            "fromId": "ALIGN_THETA",
+            "toId": "WAFER_THETA"
+        },
+        {
+            "fromId": "ALIGN_OK",
+            "toId": "PLC_ALIGN_OK"
+        },
+        {
+            "fromId": "HEIGHT_SENSOR",
+            "toId": "FOCUS_HEIGHT"
+        },
+        {
+            "fromId": "MAP_READY",
+            "toId": "IO_HEIGHT_MAP"
+        },
+        {
+            "fromId": "Z_SET",
+            "toId": "Z_SERVO_CMD"
+        },
+        {
+            "fromId": "TILT_X_SET",
+            "toId": "TILT_X_CMD"
+        },
+        {
+            "fromId": "TILT_Y_SET",
+            "toId": "TILT_Y_CMD"
+        },
+        {
+            "fromId": "FOCUS_ERR",
+            "toId": "IO_FOCUS_ERR"
+        },
+        {
+            "fromId": "Z_FB",
+            "toId": "IO_Z_POS"
+        },
+        {
+            "fromId": "FOCUS_OK",
+            "toId": "PLC_FOCUS_OK"
+        },
+        {
+            "fromId": "SHUTTER_PERMIT",
+            "toId": "SHUTTER_ENABLE"
+        },
+        {
+            "fromId": "PLC_DUV",
+            "toId": "DUV_RUN"
+        },
+        {
+            "fromId": "DUV_LEVEL",
+            "toId": "IO_DUV_LEVEL"
+        },
+        {
+            "fromId": "DUV_READY",
+            "toId": "PLC_DUV_RDY"
+        },
+        {
+            "fromId": "PLC_SLIT",
+            "toId": "SLIT_CMD"
+        },
+        {
+            "fromId": "SLIT_POS",
+            "toId": "IO_SLIT"
+        },
+        {
+            "fromId": "SHUTTER_POS",
+            "toId": "IO_SHUTTER"
+        },
+        {
+            "fromId": "PHOTO_CURRENT",
+            "toId": "DOSE_MEAS"
+        },
+        {
+            "fromId": "DOSE_CAL",
+            "toId": "PHOTO_ZERO"
+        },
+        {
+            "fromId": "DOSE_READY",
+            "toId": "PLC_DOSE_OK"
+        },
+        {
+            "fromId": "NA_SET",
+            "toId": "APERTURE_CMD"
+        },
+        {
+            "fromId": "NA_POS",
+            "toId": "IO_NA_POS"
+        },
+        {
+            "fromId": "LENS_TEMP",
+            "toId": "IO_LENS_TEMP"
+        },
+        {
+            "fromId": "LENS_COOL",
+            "toId": "COOL_CMD"
+        },
+        {
+            "fromId": "PLC_SPIN",
+            "toId": "COATER_RUN"
+        },
+        {
+            "fromId": "SPIN_TACH",
+            "toId": "IO_COAT_RPM"
+        },
+        {
+            "fromId": "RESIST_PUMP",
+            "toId": "COAT_PUMP_CMD"
+        },
+        {
+            "fromId": "RESIST_FLOW",
+            "toId": "IO_RESIST_FLOW"
+        },
+        {
+            "fromId": "RESIST_THICK",
+            "toId": "IO_RESIST_NM"
+        },
+        {
+            "fromId": "HOTPLATE_TEMP",
+            "toId": "IO_BAKE_TEMP"
+        },
+        {
+            "fromId": "COATER_RUN",
+            "toId": "NOZZLE_CMD"
+        },
+        {
+            "fromId": "COAT_PUMP_CMD",
+            "toId": "DISPENSE_EN"
+        },
+        {
+            "fromId": "IO_RESIST_FLOW",
+            "toId": "COATER_VALID"
+        },
+        {
+            "fromId": "IO_RESIST_NM",
+            "toId": "COAT_SCAN_RDY"
+        },
+        {
+            "fromId": "PLC_WAFER_RDY",
+            "toId": "WAFER_TRANSFER"
+        },
+        {
+            "fromId": "IO_BAKE_TEMP",
+            "toId": "SOFTBAKE_CMD"
+        },
+        {
+            "fromId": "IO_BAKE_TEMP",
+            "toId": "POSTBAKE_TEMP"
+        },
+        {
+            "fromId": "PLC_DOSE_OK",
+            "toId": "POSTBAKE_EN"
+        },
+        {
+            "fromId": "POSTBAKE_EN",
+            "toId": "DEVELOPER_EN"
+        },
+        {
+            "fromId": "DEVELOPER_EN",
+            "toId": "RINSE_EN"
+        },
+        {
+            "fromId": "RINSE_EN",
+            "toId": "SPIN_DRY_EN"
+        },
+        {
+            "fromId": "IO_COAT_RPM",
+            "toId": "DRY_SPEED_MON"
+        },
+        {
+            "fromId": "IO_RESIST_NM",
+            "toId": "CD_SCANNER_EN"
+        },
+        {
+            "fromId": "IO_FOCUS_ERR",
+            "toId": "CD_FOCUS_MON"
+        },
+        {
+            "fromId": "PLC_ALIGN_OK",
+            "toId": "OVERLAY_EN"
+        },
+        {
+            "fromId": "IO_LASER_Y",
+            "toId": "OVERLAY_POS"
+        },
+        {
+            "fromId": "IO_SHUTTER",
+            "toId": "DEFECT_CAM_EN"
+        },
+        {
+            "fromId": "SPIN_DRY_EN",
+            "toId": "METROLOGY_RDY"
+        },
+        {
+            "fromId": "ESTOP_NC",
+            "toId": "SAFE_STOP_IN"
+        },
+        {
+            "fromId": "SAFE_STOP_IN",
+            "toId": "PLC_SAFE"
+        },
+        {
+            "fromId": "SHUTTER_ENABLE",
+            "toId": "DUV_GUARD"
+        },
+        {
+            "fromId": "IO_STAGE_FAULT",
+            "toId": "TRIP_STAGE"
+        },
+        {
+            "fromId": "IO_LENS_TEMP",
+            "toId": "TRIP_LENS"
+        },
+        {
+            "fromId": "IO_SERVO_I",
+            "toId": "VIB_MONITOR"
+        },
+        {
+            "fromId": "IO_STAGE_FAULT",
+            "toId": "ISOLATOR_FAULT"
+        },
+        {
+            "fromId": "PLC_ALIGN_OK",
+            "toId": "ISOLATOR_EN"
+        },
+        {
+            "fromId": "PLC_FOCUS_OK",
+            "toId": "FOCUS_INTERLOCK"
+        },
+        {
+            "fromId": "IO_RESIST_FLOW",
+            "toId": "COAT_TRIP"
+        },
+        {
+            "fromId": "IO_WAFER_X",
+            "toId": "SYNC_WAFER_X"
+        },
+        {
+            "fromId": "IO_RETICLE_X",
+            "toId": "SYNC_RETICLE_X"
+        },
+        {
+            "fromId": "IO_LASER_VALID",
+            "toId": "SYNC_LASER_OK"
+        },
+        {
+            "fromId": "PLC_DOSE_OK",
+            "toId": "SCADA_DOSE"
+        },
+        {
+            "fromId": "PLC_FOCUS_OK",
+            "toId": "SCADA_FOCUS"
+        },
+        {
+            "fromId": "METROLOGY_RDY",
+            "toId": "SCADA_QUALITY"
+        },
+        {
+            "fromId": "PLC_SAFE",
+            "toId": "SCADA_SAFE"
+        },
+        {
+            "fromId": "IO_STAGE_FAULT",
+            "toId": "SCADA_MOTION"
+        },
+        {
+            "fromId": "IO_LENS_TEMP",
+            "toId": "SCADA_LENS"
+        },
+        {
+            "fromId": "IO_RESIST_NM",
+            "toId": "SCADA_RESIST"
+        },
+        {
+            "fromId": "PLC_ALIGN_OK",
+            "toId": "SCADA_ALIGN"
+        },
+        {
+            "fromId": "WAFER_STAGE_INTERFEROMETER_SIGNAL_OUT",
+            "toId": "STAGE_SYNCHRONIZATION_POSITION_FEEDBACK_IN"
+        }
+    ]
+}

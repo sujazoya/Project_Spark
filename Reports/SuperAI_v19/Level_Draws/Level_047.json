@@ -1,0 +1,75 @@
+{
+  "level": 47,
+  "levelId": "level_47",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_47_Layout/Level_47_Tension_Layout.prefab",
+  "layoutRevision": "38EB424D20C303DB6AA27F35192E1DFF44F3181D8D49CBB4A846322F27412303",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel47Tension.cs#CheckWiring",
+  "terminalBindings": 28,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "15 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_PLUS_5V",
+      "toId": "CTRL_PLUS_5V"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "CTRL_GND"
+    },
+    {
+      "fromId": "CTRL_FEED_PWM",
+      "toId": "DRIVER_FEED_PWM"
+    },
+    {
+      "fromId": "CTRL_TAKEUP_PWM",
+      "toId": "DRIVER_TAKEUP_PWM"
+    },
+    {
+      "fromId": "DRIVER_FEED_PLUS",
+      "toId": "FEED_MOTOR_PLUS"
+    },
+    {
+      "fromId": "DRIVER_FEED_MINUS",
+      "toId": "FEED_MOTOR_MINUS"
+    },
+    {
+      "fromId": "DRIVER_TAKEUP_PLUS",
+      "toId": "TAKEUP_MOTOR_PLUS"
+    },
+    {
+      "fromId": "DRIVER_TAKEUP_MINUS",
+      "toId": "TAKEUP_MOTOR_MINUS"
+    },
+    {
+      "fromId": "FEED_ENC_A",
+      "toId": "CTRL_FEED_A"
+    },
+    {
+      "fromId": "FEED_ENC_B",
+      "toId": "CTRL_FEED_B"
+    },
+    {
+      "fromId": "TAKEUP_ENC_A",
+      "toId": "CTRL_TAKEUP_A"
+    },
+    {
+      "fromId": "TAKEUP_ENC_B",
+      "toId": "CTRL_TAKEUP_B"
+    },
+    {
+      "fromId": "SUPPLY_PLUS_5V",
+      "toId": "SENSOR_PLUS_5V"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "SENSOR_GND"
+    },
+    {
+      "fromId": "SENSOR_SIGNAL",
+      "toId": "CTRL_TENSION_IN"
+    }
+  ]
+}

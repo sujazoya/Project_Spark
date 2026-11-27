@@ -1,0 +1,39 @@
+{
+  "level": 32,
+  "levelId": "level_32",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_32_Layout/Level_32_Optical_Sorter_Layout.prefab",
+  "layoutRevision": "2A4EFAA86BC6D69CCD04E12D3FCA279CDFC5C87B3B39D679F500CE710BAD68C5",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel32OpticalSorter.cs#GetAuthoredWireNets",
+  "terminalBindings": 10,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "6 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "Battery_positive",
+      "toId": "MAIN_IN"
+    },
+    {
+      "fromId": "MAIN_OUT",
+      "toId": "LDR_A"
+    },
+    {
+      "fromId": "MAIN_OUT",
+      "toId": "Motor_A"
+    },
+    {
+      "fromId": "LDR_B",
+      "toId": "R_DIV_IN"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "R_DIV_OUT"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "Motor_B"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 32,
+    "layoutName": "Level_32_Optical_Sorter_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "Battery_positive",
+            "toId": "MAIN_IN"
+        },
+        {
+            "fromId": "MAIN_OUT",
+            "toId": "LDR_A"
+        },
+        {
+            "fromId": "MAIN_OUT",
+            "toId": "Motor_A"
+        },
+        {
+            "fromId": "LDR_B",
+            "toId": "R_DIV_IN"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "R_DIV_OUT"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "Motor_B"
+        }
+    ]
+}

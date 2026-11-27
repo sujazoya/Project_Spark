@@ -1,0 +1,240 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 63,
+    "layoutName": "Level_63_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "CTRL_POS"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "CTRL_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "GEN_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "GEN_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "VSM_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "VSM_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SENSE_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "SENSE_GND"
+        },
+        {
+            "fromId": "GRID_A",
+            "toId": "MAIN_A"
+        },
+        {
+            "fromId": "GRID_B",
+            "toId": "MAIN_B"
+        },
+        {
+            "fromId": "GRID_C",
+            "toId": "MAIN_C"
+        },
+        {
+            "fromId": "MAIN_OUT_A",
+            "toId": "BUS_A"
+        },
+        {
+            "fromId": "MAIN_OUT_B",
+            "toId": "BUS_B"
+        },
+        {
+            "fromId": "MAIN_OUT_C",
+            "toId": "BUS_C"
+        },
+        {
+            "fromId": "GEN_A",
+            "toId": "GEN_IN_A"
+        },
+        {
+            "fromId": "GEN_B",
+            "toId": "GEN_IN_B"
+        },
+        {
+            "fromId": "GEN_C",
+            "toId": "GEN_IN_C"
+        },
+        {
+            "fromId": "GEN_OUT_A",
+            "toId": "BUS_A"
+        },
+        {
+            "fromId": "GEN_OUT_B",
+            "toId": "BUS_B"
+        },
+        {
+            "fromId": "GEN_OUT_C",
+            "toId": "BUS_C"
+        },
+        {
+            "fromId": "CTRL_PRIME",
+            "toId": "PRIME_CMD"
+        },
+        {
+            "fromId": "GEN_SPEED",
+            "toId": "CTRL_GEN_SPEED"
+        },
+        {
+            "fromId": "GEN_POWER",
+            "toId": "CTRL_GEN_POWER"
+        },
+        {
+            "fromId": "TRIP_OUT",
+            "toId": "CTRL_TRIP"
+        },
+        {
+            "fromId": "PROTECT_OUT",
+            "toId": "CTRL_GEN_AUX"
+        },
+        {
+            "fromId": "CTRL_TORQUE",
+            "toId": "MG_CMD"
+        },
+        {
+            "fromId": "MG_POS",
+            "toId": "DRIVE_POS"
+        },
+        {
+            "fromId": "MG_NEG",
+            "toId": "DRIVE_NEG"
+        },
+        {
+            "fromId": "DRIVE_DC",
+            "toId": "DC_POS"
+        },
+        {
+            "fromId": "DRIVE_RET",
+            "toId": "DC_NEG"
+        },
+        {
+            "fromId": "CTRL_DRIVE",
+            "toId": "DRIVE_ENABLE"
+        },
+        {
+            "fromId": "VIB_OUT",
+            "toId": "CTRL_VIB"
+        },
+        {
+            "fromId": "VIB_OUT",
+            "toId": "CTRL_BEARING"
+        },
+        {
+            "fromId": "BAT_POS",
+            "toId": "BMS_POS"
+        },
+        {
+            "fromId": "BAT_NEG",
+            "toId": "DC_NEG"
+        },
+        {
+            "fromId": "BMS_OUT",
+            "toId": "DC_POS"
+        },
+        {
+            "fromId": "DC_POS",
+            "toId": "INV_POS"
+        },
+        {
+            "fromId": "DC_NEG",
+            "toId": "INV_NEG"
+        },
+        {
+            "fromId": "CTRL_INV",
+            "toId": "INV_ENABLE"
+        },
+        {
+            "fromId": "INV_A",
+            "toId": "BUS_A"
+        },
+        {
+            "fromId": "INV_B",
+            "toId": "BUS_B"
+        },
+        {
+            "fromId": "INV_C",
+            "toId": "BUS_C"
+        },
+        {
+            "fromId": "FREQ_OUT",
+            "toId": "VSM_FREQ"
+        },
+        {
+            "fromId": "FREQ_OUT",
+            "toId": "DROOP_FREQ"
+        },
+        {
+            "fromId": "FREQ_OUT",
+            "toId": "DAMP_FREQ"
+        },
+        {
+            "fromId": "DROOP_OUT",
+            "toId": "CTRL_DROOP"
+        },
+        {
+            "fromId": "DAMP_OUT",
+            "toId": "CTRL_DAMP"
+        },
+        {
+            "fromId": "VSM_OUT",
+            "toId": "CTRL_VSM"
+        },
+        {
+            "fromId": "GEN_POWER",
+            "toId": "CTRL_CURRENT"
+        },
+        {
+            "fromId": "BUS_A",
+            "toId": "LOAD_A"
+        },
+        {
+            "fromId": "BUS_B",
+            "toId": "MOTOR_B"
+        },
+        {
+            "fromId": "BUS_C",
+            "toId": "RENEW_C"
+        },
+        {
+            "fromId": "FREQ_OUT",
+            "toId": "CTRL_RENEW"
+        },
+        {
+            "fromId": "CTRL_EVENT",
+            "toId": "EVENT_CMD"
+        },
+        {
+            "fromId": "FREQ_OUT",
+            "toId": "CTRL_REC"
+        },
+        {
+            "fromId": "PROTECT_OUT",
+            "toId": "CTRL_PROTECT"
+        },
+        {
+            "fromId": "GUARD_NC",
+            "toId": "CTRL_SAFE"
+        },
+        {
+            "fromId": "ENCODER_OUT",
+            "toId": "CTRL_ENCODER"
+        }
+    ]
+}

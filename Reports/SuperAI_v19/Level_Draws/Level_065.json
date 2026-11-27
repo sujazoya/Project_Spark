@@ -1,0 +1,279 @@
+{
+  "level": 65,
+  "levelId": "level_65",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_65_Layout/Level_65_Layout.prefab",
+  "layoutRevision": "342C4684652A30F66715E5D0CF25F9C97B87FC811FE661902EAA135F145C7E3C",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel65Factory.cs#Wires",
+  "terminalBindings": 104,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "66 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "CTRL_POS"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "CTRL_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "IO_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "IO_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "VISION_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "VISION_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "SERVO_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "SERVO_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "MOTOR_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "MOTOR_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "ENC_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "ENC_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "EYE_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "EYE_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "SAFE_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "SAFE_GND"
+    },
+    {
+      "fromId": "PLC_RUN",
+      "toId": "DRIVE_RUN"
+    },
+    {
+      "fromId": "PLC_SPEED",
+      "toId": "DRIVE_SPEED"
+    },
+    {
+      "fromId": "PLC_RUN",
+      "toId": "BELT_ENABLE"
+    },
+    {
+      "fromId": "PLC_SPEED",
+      "toId": "BELT_REF"
+    },
+    {
+      "fromId": "DRIVE_OK",
+      "toId": "PLC_DRIVE_OK"
+    },
+    {
+      "fromId": "DRIVE_FAULT",
+      "toId": "PLC_DRIVE_FAULT"
+    },
+    {
+      "fromId": "PLC_RUN",
+      "toId": "FEED_ENABLE"
+    },
+    {
+      "fromId": "PLC_RUN",
+      "toId": "SYNC_ENABLE"
+    },
+    {
+      "fromId": "PLC_SPEED",
+      "toId": "SYNC_REF"
+    },
+    {
+      "fromId": "EYE_OUT",
+      "toId": "PLC_ENTRY"
+    },
+    {
+      "fromId": "EYE_OUT",
+      "toId": "CAM_TRIGGER"
+    },
+    {
+      "fromId": "PLC_RUN",
+      "toId": "LIGHT_ENABLE"
+    },
+    {
+      "fromId": "CAM_READY",
+      "toId": "PLC_CAM_READY"
+    },
+    {
+      "fromId": "CAM_FRAME",
+      "toId": "VISION_IN"
+    },
+    {
+      "fromId": "VISION_OUT",
+      "toId": "PLC_CLASS"
+    },
+    {
+      "fromId": "VISION_OUT",
+      "toId": "QUALITY_IN"
+    },
+    {
+      "fromId": "VISION_VALID",
+      "toId": "PLC_VISION_VALID"
+    },
+    {
+      "fromId": "DEFECT_OUT",
+      "toId": "PLC_DEFECT"
+    },
+    {
+      "fromId": "PLC_ROBOT",
+      "toId": "SERVO_ENABLE"
+    },
+    {
+      "fromId": "PLC_ROBOT",
+      "toId": "MOTION_ENABLE"
+    },
+    {
+      "fromId": "PLC_ROBOT",
+      "toId": "ROBOT_HOME"
+    },
+    {
+      "fromId": "MOTION_CMD",
+      "toId": "SERVO_BUS"
+    },
+    {
+      "fromId": "JOINT_OUT",
+      "toId": "MOTION_FEEDBACK"
+    },
+    {
+      "fromId": "MOTION_DONE",
+      "toId": "PLC_DONE"
+    },
+    {
+      "fromId": "HOME_OK",
+      "toId": "PLC_HOME_OK"
+    },
+    {
+      "fromId": "SERVO_FAULT",
+      "toId": "PLC_SERVO_FAULT"
+    },
+    {
+      "fromId": "PLC_GRIP",
+      "toId": "PUMP_ENABLE"
+    },
+    {
+      "fromId": "VAC_OUT",
+      "toId": "PLC_VAC"
+    },
+    {
+      "fromId": "VAC_OUT",
+      "toId": "GRIP_CONFIRM"
+    },
+    {
+      "fromId": "PLC_RELEASE",
+      "toId": "GRIP_RELEASE"
+    },
+    {
+      "fromId": "PUMP_FAULT",
+      "toId": "PLC_PUMP_FAULT"
+    },
+    {
+      "fromId": "PLC_REJECT",
+      "toId": "VALVE_ENABLE"
+    },
+    {
+      "fromId": "AIR_OK",
+      "toId": "PLC_AIR"
+    },
+    {
+      "fromId": "GATE_EXT",
+      "toId": "PLC_EXT"
+    },
+    {
+      "fromId": "GATE_RET",
+      "toId": "PLC_RET"
+    },
+    {
+      "fromId": "GATE_FAULT",
+      "toId": "PLC_GATE_FAULT"
+    },
+    {
+      "fromId": "SYNC_OUT",
+      "toId": "SORT_A"
+    },
+    {
+      "fromId": "SYNC_OUT",
+      "toId": "SORT_B"
+    },
+    {
+      "fromId": "SYNC_OUT",
+      "toId": "SORT_C"
+    },
+    {
+      "fromId": "BIN_A",
+      "toId": "PLC_BIN_A"
+    },
+    {
+      "fromId": "BIN_B",
+      "toId": "PLC_BIN_B"
+    },
+    {
+      "fromId": "BIN_C",
+      "toId": "PLC_BIN_C"
+    },
+    {
+      "fromId": "BIN_REJECT",
+      "toId": "PLC_BIN_REJECT"
+    },
+    {
+      "fromId": "GUARD_NC",
+      "toId": "CTRL_SAFE"
+    },
+    {
+      "fromId": "GUARD_NC",
+      "toId": "SAFE_DOOR"
+    },
+    {
+      "fromId": "ESTOP_NC",
+      "toId": "SAFE_ESTOP"
+    },
+    {
+      "fromId": "CURTAIN_NC",
+      "toId": "SAFE_CURTAIN"
+    },
+    {
+      "fromId": "PROD_READY",
+      "toId": "HMI_RUN"
+    },
+    {
+      "fromId": "ENC_RATE",
+      "toId": "HMI_SPEED"
+    },
+    {
+      "fromId": "ENC_PULSE",
+      "toId": "PLC_ENCODER"
+    }
+  ]
+}

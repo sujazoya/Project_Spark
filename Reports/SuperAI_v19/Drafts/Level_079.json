@@ -1,0 +1,496 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 79,
+    "layoutName": "Level_79_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "PLC_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "PLC_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "VISION_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "VISION_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "MOTION_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "MOTION_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "LASER_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "LASER_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SAFE_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "SAFE_GND"
+        },
+        {
+            "fromId": "MOTION_ENABLE",
+            "toId": "GANTRY_ENABLE"
+        },
+        {
+            "fromId": "X_CMD",
+            "toId": "X_SERVO"
+        },
+        {
+            "fromId": "X_ENC",
+            "toId": "X_FEEDBACK"
+        },
+        {
+            "fromId": "Y_CMD",
+            "toId": "Y_SERVO"
+        },
+        {
+            "fromId": "Y_ENC",
+            "toId": "Y_FEEDBACK"
+        },
+        {
+            "fromId": "Z_CMD",
+            "toId": "Z_SERVO"
+        },
+        {
+            "fromId": "Z_ENC",
+            "toId": "Z_FEEDBACK"
+        },
+        {
+            "fromId": "POSE_CMD",
+            "toId": "HEXAPOD_DRIVE"
+        },
+        {
+            "fromId": "HEX_READY",
+            "toId": "POSE_READY"
+        },
+        {
+            "fromId": "NANO_X_CMD",
+            "toId": "NANO_X_DRIVE"
+        },
+        {
+            "fromId": "NANO_X_OUT",
+            "toId": "FINE_X"
+        },
+        {
+            "fromId": "NANO_Y_CMD",
+            "toId": "NANO_Y_DRIVE"
+        },
+        {
+            "fromId": "NANO_Y_OUT",
+            "toId": "FINE_Y"
+        },
+        {
+            "fromId": "THETA_CMD",
+            "toId": "THETA_DRIVE"
+        },
+        {
+            "fromId": "THETA_OUT",
+            "toId": "THETA_IN"
+        },
+        {
+            "fromId": "TILT_CMD",
+            "toId": "TILT_DRIVE"
+        },
+        {
+            "fromId": "TILT_OUT",
+            "toId": "TILT_IN"
+        },
+        {
+            "fromId": "POSE_SAFE",
+            "toId": "MOTION_INTERLOCK"
+        },
+        {
+            "fromId": "CAM_A_OUT",
+            "toId": "VISION_A"
+        },
+        {
+            "fromId": "CAM_B_OUT",
+            "toId": "VISION_B"
+        },
+        {
+            "fromId": "IR_REG_OUT",
+            "toId": "IR_REG_IN"
+        },
+        {
+            "fromId": "MOIRE_OUT",
+            "toId": "OVERLAY_DIAG"
+        },
+        {
+            "fromId": "WARP_OUT",
+            "toId": "WARP_IN"
+        },
+        {
+            "fromId": "CAM_A_RES",
+            "toId": "ALIGN_A"
+        },
+        {
+            "fromId": "CAM_B_RES",
+            "toId": "ALIGN_B"
+        },
+        {
+            "fromId": "VISION_AGREE",
+            "toId": "ALIGN_VALID"
+        },
+        {
+            "fromId": "LASER_INTERFEROMETER_POSITION_OUT",
+            "toId": "HEXAPOD_FINE_POSITION_IN"
+        },
+        {
+            "fromId": "LASER_INTERFEROMETER_POSITION_OUT",
+            "toId": "LASER_TELEM"
+        },
+        {
+            "fromId": "LASER_CMD",
+            "toId": "LASER_ENABLE"
+        },
+        {
+            "fromId": "LASER_HEALTH",
+            "toId": "SAFETY_LASER"
+        },
+        {
+            "fromId": "LASER_HEALTH",
+            "toId": "LASER_CAL_OK"
+        },
+        {
+            "fromId": "POSE_QUAL",
+            "toId": "BOND_POSE"
+        },
+        {
+            "fromId": "POSE_QUAL",
+            "toId": "OVERLAY_VIEW"
+        },
+        {
+            "fromId": "IR_CERT",
+            "toId": "REG_CERT"
+        },
+        {
+            "fromId": "WARP_COMP",
+            "toId": "WARP_AUTH"
+        },
+        {
+            "fromId": "OPTICS_VALID",
+            "toId": "MOTION_VISION"
+        },
+        {
+            "fromId": "GRIP_CMD",
+            "toId": "UPPER_GRIP"
+        },
+        {
+            "fromId": "RELEASE_OUT",
+            "toId": "CHUCK_RELEASE_MON"
+        },
+        {
+            "fromId": "CHUCK_READY",
+            "toId": "RELEASE_OK"
+        },
+        {
+            "fromId": "LOWER_CMD",
+            "toId": "BASE_GRIP"
+        },
+        {
+            "fromId": "BASE_HELD",
+            "toId": "BASE_HOLD_OK"
+        },
+        {
+            "fromId": "FORCE_CMD",
+            "toId": "FORCE_ENABLE"
+        },
+        {
+            "fromId": "FORCE_ARRAY",
+            "toId": "FORCE_IN"
+        },
+        {
+            "fromId": "CONTACT_PERMIT",
+            "toId": "CONTACT_ENABLE"
+        },
+        {
+            "fromId": "CONTACT_OUT",
+            "toId": "CONTACT_POSITION"
+        },
+        {
+            "fromId": "GAP_OUT",
+            "toId": "GAP_IN"
+        },
+        {
+            "fromId": "WAVE_OUT",
+            "toId": "WAVE_IN"
+        },
+        {
+            "fromId": "WAVE_CERT",
+            "toId": "FRONT_CERT"
+        },
+        {
+            "fromId": "CONTACT_CMD",
+            "toId": "CONTACT_REQ"
+        },
+        {
+            "fromId": "RETRACT_CMD",
+            "toId": "RETRACT_OVERRIDE"
+        },
+        {
+            "fromId": "APPROACH_OUT",
+            "toId": "SAFE_APPROACH"
+        },
+        {
+            "fromId": "CHUCK_CAL",
+            "toId": "RELEASE_CAL"
+        },
+        {
+            "fromId": "DIE_CERT",
+            "toId": "KNOWN_GOOD"
+        },
+        {
+            "fromId": "PARTICLE_OUT",
+            "toId": "PARTICLES_IN"
+        },
+        {
+            "fromId": "FLATNESS_OUT",
+            "toId": "FLATNESS_IN"
+        },
+        {
+            "fromId": "ENERGY_OUT",
+            "toId": "SURFACE_ENERGY"
+        },
+        {
+            "fromId": "CLEAN_CMD",
+            "toId": "DRY_CLEAN"
+        },
+        {
+            "fromId": "CLEAN_OUT",
+            "toId": "CLEAN_DONE"
+        },
+        {
+            "fromId": "ACTIVATE_CMD",
+            "toId": "SURFACE_ACT"
+        },
+        {
+            "fromId": "ACTIVATE_OUT",
+            "toId": "ACT_DONE"
+        },
+        {
+            "fromId": "ESD_GUARD",
+            "toId": "ESD_OK"
+        },
+        {
+            "fromId": "REJECT_SENSOR",
+            "toId": "QUARANTINE_STATE"
+        },
+        {
+            "fromId": "REJECT_CMD",
+            "toId": "REJECT_BIN"
+        },
+        {
+            "fromId": "ALIGNER_OUT",
+            "toId": "BASE_ALIGNED"
+        },
+        {
+            "fromId": "SURFACE_CERT",
+            "toId": "SURFACE_OK"
+        },
+        {
+            "fromId": "LOCK_SAFE",
+            "toId": "LOADLOCK_OK"
+        },
+        {
+            "fromId": "CONTACT_REQ",
+            "toId": "ANNEAL_ENABLE"
+        },
+        {
+            "fromId": "ANNEAL_ENABLE",
+            "toId": "HEATER_SET"
+        },
+        {
+            "fromId": "HEATER_SET",
+            "toId": "HEATER_ACTUAL"
+        },
+        {
+            "fromId": "HEATER_ACTUAL",
+            "toId": "THERMAL_TEMP"
+        },
+        {
+            "fromId": "THERMAL_TEMP",
+            "toId": "EXPANSION_TELEM"
+        },
+        {
+            "fromId": "EXPANSION_TELEM",
+            "toId": "BOND_STRESS"
+        },
+        {
+            "fromId": "HEATER_SET",
+            "toId": "THERMAL_SAMPLE"
+        },
+        {
+            "fromId": "THERMAL_TEMP",
+            "toId": "PROFILE_OK"
+        },
+        {
+            "fromId": "PROFILE_OK",
+            "toId": "THERMAL_CYCLE"
+        },
+        {
+            "fromId": "THERMAL_CYCLE",
+            "toId": "THERMAL_DONE"
+        },
+        {
+            "fromId": "BOND_STRESS",
+            "toId": "STACK_WARP"
+        },
+        {
+            "fromId": "LOADLOCK_OK",
+            "toId": "ANNEAL_SAFE"
+        },
+        {
+            "fromId": "ANNEAL_SAFE",
+            "toId": "HEATER_OFF"
+        },
+        {
+            "fromId": "PROFILE_OK",
+            "toId": "STRESS_OK"
+        },
+        {
+            "fromId": "FRONT_CERT",
+            "toId": "ACOUSTIC_REQ"
+        },
+        {
+            "fromId": "ACOUSTIC_REQ",
+            "toId": "ACOUSTIC_MAP"
+        },
+        {
+            "fromId": "WAVE_IN",
+            "toId": "IR_SCAN_REQ"
+        },
+        {
+            "fromId": "IR_SCAN_REQ",
+            "toId": "IR_VOID_MAP"
+        },
+        {
+            "fromId": "ACOUSTIC_MAP",
+            "toId": "SEAM_VIEW"
+        },
+        {
+            "fromId": "FRONT_CERT",
+            "toId": "ADHESION_RESULT"
+        },
+        {
+            "fromId": "FRONT_CERT",
+            "toId": "KELVIN_RESULT"
+        },
+        {
+            "fromId": "KELVIN_RESULT",
+            "toId": "DAISY_CHAIN"
+        },
+        {
+            "fromId": "DAISY_CHAIN",
+            "toId": "ROUTING_TEST"
+        },
+        {
+            "fromId": "ROUTING_TEST",
+            "toId": "BER_RESULT"
+        },
+        {
+            "fromId": "BER_RESULT",
+            "toId": "LINK_TEST"
+        },
+        {
+            "fromId": "LINK_TEST",
+            "toId": "SYSTEM_CERT"
+        },
+        {
+            "fromId": "ACOUSTIC_MAP",
+            "toId": "BOND_TELEM"
+        },
+        {
+            "fromId": "SYSTEM_CERT",
+            "toId": "LINK_TELEM"
+        },
+        {
+            "fromId": "ESTOP_NC",
+            "toId": "SAFE_STOP_IN"
+        },
+        {
+            "fromId": "SAFE_STOP_IN",
+            "toId": "GANTRY_OFF"
+        },
+        {
+            "fromId": "SAFE_STOP_IN",
+            "toId": "HEX_HOLD"
+        },
+        {
+            "fromId": "RELEASE_OK",
+            "toId": "RELEASE_INHIBIT"
+        },
+        {
+            "fromId": "SAFE_APPROACH",
+            "toId": "APPROACH_INHIBIT"
+        },
+        {
+            "fromId": "POSE_READY",
+            "toId": "AXIS_STATUS"
+        },
+        {
+            "fromId": "BOND_POSE",
+            "toId": "ALIGN_STATUS"
+        },
+        {
+            "fromId": "ALIGN_STATUS",
+            "toId": "PLC_STATE"
+        },
+        {
+            "fromId": "PLC_STATE",
+            "toId": "OPERATOR_CMD"
+        },
+        {
+            "fromId": "POSE_READY",
+            "toId": "POSE_TELEM"
+        },
+        {
+            "fromId": "OVERLAY_VIEW",
+            "toId": "OVERLAY_MAP"
+        },
+        {
+            "fromId": "ACOUSTIC_MAP",
+            "toId": "BOND_MAP"
+        },
+        {
+            "fromId": "ROUTING_TEST",
+            "toId": "CHIP_GRAPH"
+        },
+        {
+            "fromId": "SYSTEM_CERT",
+            "toId": "OBJECTIVE_EVENT"
+        },
+        {
+            "fromId": "SAFE_STOP_IN",
+            "toId": "MOTION_RESET"
+        },
+        {
+            "fromId": "SAFETY_LASER",
+            "toId": "FAULT_LATCH"
+        },
+        {
+            "fromId": "FAULT_LATCH",
+            "toId": "LASER_LOSS"
+        },
+        {
+            "fromId": "SYSTEM_CERT",
+            "toId": "FINAL_CERT"
+        }
+    ]
+}

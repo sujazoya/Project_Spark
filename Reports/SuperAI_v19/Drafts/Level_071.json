@@ -1,0 +1,368 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 71,
+    "layoutName": "Level_71_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "PLC_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "PLC_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "IO_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "IO_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "VAC_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "VAC_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "RF_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "RF_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "OES_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "OES_GND"
+        },
+        {
+            "fromId": "PLC_BACKING",
+            "toId": "BACKING_START"
+        },
+        {
+            "fromId": "BACKING_SPEED",
+            "toId": "PLC_BACK_RPM"
+        },
+        {
+            "fromId": "PLC_TURBO",
+            "toId": "TURBO_START"
+        },
+        {
+            "fromId": "TURBO_SPEED",
+            "toId": "IO_TURBO_RPM"
+        },
+        {
+            "fromId": "PLC_ISOLATION",
+            "toId": "ISOLATION_CMD"
+        },
+        {
+            "fromId": "ISOLATION_OPEN",
+            "toId": "IO_ISOLATION"
+        },
+        {
+            "fromId": "PID_THROTTLE",
+            "toId": "THROTTLE_CMD"
+        },
+        {
+            "fromId": "THROTTLE_POS",
+            "toId": "IO_THROTTLE"
+        },
+        {
+            "fromId": "CHAMBER_PA",
+            "toId": "PID_PRESSURE"
+        },
+        {
+            "fromId": "FORELINE_PA",
+            "toId": "PLC_FORELINE"
+        },
+        {
+            "fromId": "LOCK_PA",
+            "toId": "PLC_LOCK_PRESS"
+        },
+        {
+            "fromId": "ROUGH_PA",
+            "toId": "IO_ROUGH"
+        },
+        {
+            "fromId": "HIGH_PA",
+            "toId": "IO_HIGH"
+        },
+        {
+            "fromId": "RGA_SIGNAL",
+            "toId": "PLC_RGA"
+        },
+        {
+            "fromId": "PLC_GAS_A",
+            "toId": "GAS_A_ENABLE"
+        },
+        {
+            "fromId": "PLC_GAS_B",
+            "toId": "GAS_B_ENABLE"
+        },
+        {
+            "fromId": "MFC_A_SET",
+            "toId": "GAS_A_CMD"
+        },
+        {
+            "fromId": "MFC_B_SET",
+            "toId": "GAS_B_CMD"
+        },
+        {
+            "fromId": "GAS_A_ACT",
+            "toId": "IO_FLOW_A"
+        },
+        {
+            "fromId": "GAS_B_ACT",
+            "toId": "IO_FLOW_B"
+        },
+        {
+            "fromId": "GAS_A_LEVEL",
+            "toId": "PLC_INV_A"
+        },
+        {
+            "fromId": "GAS_B_LEVEL",
+            "toId": "PLC_INV_B"
+        },
+        {
+            "fromId": "VALVE_A_STATE",
+            "toId": "IO_VALVE_A"
+        },
+        {
+            "fromId": "VALVE_B_STATE",
+            "toId": "IO_VALVE_B"
+        },
+        {
+            "fromId": "MIX_FLOW",
+            "toId": "PLC_MIX_FLOW"
+        },
+        {
+            "fromId": "MIX_RATIO",
+            "toId": "PLC_MIX_RATIO"
+        },
+        {
+            "fromId": "RF_PERMIT",
+            "toId": "RF_ENABLE"
+        },
+        {
+            "fromId": "PLC_RF_SET",
+            "toId": "RF_POWER_CMD"
+        },
+        {
+            "fromId": "RF_FORWARD",
+            "toId": "IO_FORWARD"
+        },
+        {
+            "fromId": "RF_REFLECT",
+            "toId": "IO_REFLECT"
+        },
+        {
+            "fromId": "RF_CURRENT",
+            "toId": "MATCH_I"
+        },
+        {
+            "fromId": "RF_VOLTAGE",
+            "toId": "MATCH_V"
+        },
+        {
+            "fromId": "MATCH_A",
+            "toId": "TUNER_A_CMD"
+        },
+        {
+            "fromId": "MATCH_B",
+            "toId": "TUNER_B_CMD"
+        },
+        {
+            "fromId": "TUNER_A_POS",
+            "toId": "IO_CAP_A"
+        },
+        {
+            "fromId": "TUNER_B_POS",
+            "toId": "IO_CAP_B"
+        },
+        {
+            "fromId": "RF_ARC",
+            "toId": "PLC_ARC_STOP"
+        },
+        {
+            "fromId": "RF_READY",
+            "toId": "IO_RF_READY"
+        },
+        {
+            "fromId": "RF_TEMP",
+            "toId": "IO_RF_TEMP"
+        },
+        {
+            "fromId": "COUPLER_OK",
+            "toId": "PLC_RF_METER"
+        },
+        {
+            "fromId": "RF_FREQ",
+            "toId": "IO_FREQ"
+        },
+        {
+            "fromId": "BIAS_CMD",
+            "toId": "WAFER_BIAS"
+        },
+        {
+            "fromId": "BIAS_RD",
+            "toId": "IO_BIAS"
+        },
+        {
+            "fromId": "PLASMA_STATE",
+            "toId": "PLC_PLASMA"
+        },
+        {
+            "fromId": "PLC_GATE",
+            "toId": "GATE_CMD"
+        },
+        {
+            "fromId": "PLC_ROBOT",
+            "toId": "ROBOT_CMD"
+        },
+        {
+            "fromId": "GATE_CMD",
+            "toId": "GATE_MON"
+        },
+        {
+            "fromId": "PLC_ROBOT",
+            "toId": "ROBOT_MON"
+        },
+        {
+            "fromId": "IO_ISOLATION",
+            "toId": "TRANSFER_OK"
+        },
+        {
+            "fromId": "PLC_LOCK_PRESS",
+            "toId": "LOCK_EQUAL"
+        },
+        {
+            "fromId": "PLC_ROBOT",
+            "toId": "LIFT_CMD"
+        },
+        {
+            "fromId": "TRANSFER_OK",
+            "toId": "CLAMP_CMD"
+        },
+        {
+            "fromId": "IO_THROTTLE",
+            "toId": "CHUCK_MON"
+        },
+        {
+            "fromId": "PLC_GATE",
+            "toId": "PLC_GATE_MON"
+        },
+        {
+            "fromId": "IO_RF_READY",
+            "toId": "OES_GATE"
+        },
+        {
+            "fromId": "PLC_PLASMA",
+            "toId": "OPT_APERTURE"
+        },
+        {
+            "fromId": "IO_FLOW_A",
+            "toId": "OES_FLOW_A"
+        },
+        {
+            "fromId": "IO_FLOW_B",
+            "toId": "OES_FLOW_B"
+        },
+        {
+            "fromId": "PID_PRESSURE",
+            "toId": "OES_PRESS"
+        },
+        {
+            "fromId": "PLC_LOCK_PRESS",
+            "toId": "OES_LOCK"
+        },
+        {
+            "fromId": "PLC_PLASMA",
+            "toId": "UNIFORMITY_IN"
+        },
+        {
+            "fromId": "IO_CAP_A",
+            "toId": "RF_MATCH_A"
+        },
+        {
+            "fromId": "IO_CAP_B",
+            "toId": "RF_MATCH_B"
+        },
+        {
+            "fromId": "IO_REFLECT",
+            "toId": "MATCH_MON"
+        },
+        {
+            "fromId": "PLC_ROBOT",
+            "toId": "METROLOGY_EN"
+        },
+        {
+            "fromId": "RF_READY",
+            "toId": "METROLOGY_MON"
+        },
+        {
+            "fromId": "ESTOP_NC",
+            "toId": "SAFE_STOP_IN"
+        },
+        {
+            "fromId": "PLC_ARC_STOP",
+            "toId": "RF_ARC_TRIP"
+        },
+        {
+            "fromId": "PLC_FORELINE",
+            "toId": "VAC_PERMIT"
+        },
+        {
+            "fromId": "SAFE_STOP_IN",
+            "toId": "CHILL_PERMIT"
+        },
+        {
+            "fromId": "WAFER_BIAS",
+            "toId": "CHUCK_BIAS_MON"
+        },
+        {
+            "fromId": "IO_RF_TEMP",
+            "toId": "WAFER_TEMP"
+        },
+        {
+            "fromId": "WAFER_TEMP",
+            "toId": "CHILLER_CMD"
+        },
+        {
+            "fromId": "PLC_PLASMA",
+            "toId": "ETCH_ENABLE"
+        },
+        {
+            "fromId": "IO_FORWARD",
+            "toId": "SCADA_FWD"
+        },
+        {
+            "fromId": "IO_REFLECT",
+            "toId": "SCADA_REF"
+        },
+        {
+            "fromId": "PLC_PLASMA",
+            "toId": "SCADA_PLASMA"
+        },
+        {
+            "fromId": "PID_PRESSURE",
+            "toId": "SCADA_PRESS"
+        },
+        {
+            "fromId": "IO_FLOW_A",
+            "toId": "SCADA_GAS"
+        },
+        {
+            "fromId": "OES_SIGNAL_OUT",
+            "toId": "ENDPOINT_OPTICAL_IN"
+        }
+    ]
+}

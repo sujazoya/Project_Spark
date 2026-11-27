@@ -1,0 +1,51 @@
+{
+  "level": 45,
+  "levelId": "level_45",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_45_Layout/Level_45_Governor_Layout.prefab",
+  "layoutRevision": "845C850F0C7B66A033CA1F99C2E9847FCDC8746D764EA24256D585ED925CC31C",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel45Governor.cs#Wiring",
+  "terminalBindings": 16,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "9 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_PLUS_5V",
+      "toId": "CONTROLLER_PLUS_5V"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "CONTROLLER_GND"
+    },
+    {
+      "fromId": "SUPPLY_PLUS_5V",
+      "toId": "DRIVER_PLUS_5V"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "DRIVER_GND"
+    },
+    {
+      "fromId": "ENCODER_A",
+      "toId": "CONTROLLER_A"
+    },
+    {
+      "fromId": "ENCODER_B",
+      "toId": "CONTROLLER_B"
+    },
+    {
+      "fromId": "CONTROLLER_PWM_OUT",
+      "toId": "DRIVER_PWM_IN"
+    },
+    {
+      "fromId": "DRIVER_MOTOR_PLUS",
+      "toId": "MOTOR_PLUS"
+    },
+    {
+      "fromId": "DRIVER_MOTOR_MINUS",
+      "toId": "MOTOR_MINUS"
+    }
+  ]
+}

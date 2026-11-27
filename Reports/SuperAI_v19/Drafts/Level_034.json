@@ -1,0 +1,44 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 34,
+    "layoutName": "Level_34_Priority_Power_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "Battery_positive",
+            "toId": "FEED_IN"
+        },
+        {
+            "fromId": "FEED_OUT",
+            "toId": "Pump_A"
+        },
+        {
+            "fromId": "FEED_OUT",
+            "toId": "AUX_IN"
+        },
+        {
+            "fromId": "FEED_OUT",
+            "toId": "DEMAND_IN"
+        },
+        {
+            "fromId": "AUX_OUT",
+            "toId": "Fan_A"
+        },
+        {
+            "fromId": "DEMAND_OUT",
+            "toId": "R_DEMAND_IN"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "Pump_B"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "Fan_B"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "R_DEMAND_OUT"
+        }
+    ]
+}

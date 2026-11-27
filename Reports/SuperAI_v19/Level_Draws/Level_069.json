@@ -1,0 +1,343 @@
+{
+  "level": 69,
+  "levelId": "level_69",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_69_Layout/Level_69_Layout.prefab",
+  "layoutRevision": "625AD4B20A0FE71E2DF64CB494B33526E34FD7D2F1AE9B00D69397B06F86BBB7",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel69Process.cs#Wires",
+  "terminalBindings": 128,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "82 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "PLC_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "PLC_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "IO_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "IO_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "SAFE_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "SAFE_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "TEMP_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "TEMP_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "SH_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "SH_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "ZONE_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "ZONE_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "ENERGY_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "ENERGY_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "DRIVE_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "DRIVE_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "DEFROST_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "DEFROST_GND"
+    },
+    {
+      "fromId": "COMP_PERMIT",
+      "toId": "COMP_EN"
+    },
+    {
+      "fromId": "PLC_C_REF",
+      "toId": "DRIVE_REF"
+    },
+    {
+      "fromId": "COMP_TACH",
+      "toId": "IO_RPM"
+    },
+    {
+      "fromId": "DRIVE_READY",
+      "toId": "PLC_DRIVE_OK"
+    },
+    {
+      "fromId": "DRIVE_TRIP",
+      "toId": "SAFE_C_TRIP"
+    },
+    {
+      "fromId": "COMP_POWER",
+      "toId": "ENERGY_KW"
+    },
+    {
+      "fromId": "PLC_COND",
+      "toId": "FAN_C_CMD"
+    },
+    {
+      "fromId": "FAN_C_TACH",
+      "toId": "IO_C_FAN"
+    },
+    {
+      "fromId": "FAN_C_OK",
+      "toId": "SAFE_C_FAN"
+    },
+    {
+      "fromId": "LIQ_LINE_OK",
+      "toId": "PLC_SUBCOOL"
+    },
+    {
+      "fromId": "SH_A_CMD",
+      "toId": "EEV_A_IN"
+    },
+    {
+      "fromId": "SH_B_CMD",
+      "toId": "EEV_B_IN"
+    },
+    {
+      "fromId": "EEV_A_POS",
+      "toId": "IO_EEV_A"
+    },
+    {
+      "fromId": "EEV_B_POS",
+      "toId": "IO_EEV_B"
+    },
+    {
+      "fromId": "EEV_A_OK",
+      "toId": "PLC_EEV_A"
+    },
+    {
+      "fromId": "EEV_B_OK",
+      "toId": "PLC_EEV_B"
+    },
+    {
+      "fromId": "ZONE_A_FAN",
+      "toId": "EVAP_FAN_A"
+    },
+    {
+      "fromId": "ZONE_B_FAN",
+      "toId": "EVAP_FAN_B"
+    },
+    {
+      "fromId": "EVAP_A_TACH",
+      "toId": "IO_EF_A"
+    },
+    {
+      "fromId": "EVAP_B_TACH",
+      "toId": "IO_EF_B"
+    },
+    {
+      "fromId": "SUCTION_P",
+      "toId": "SH_PRESS_IN"
+    },
+    {
+      "fromId": "DISCHARGE_P",
+      "toId": "SAFE_HIGH_P"
+    },
+    {
+      "fromId": "LOW_P_ALARM",
+      "toId": "SAFE_LOW_P"
+    },
+    {
+      "fromId": "TRANS_P_OK",
+      "toId": "PLC_PRESS_OK"
+    },
+    {
+      "fromId": "SUCTION_T",
+      "toId": "PLC_SUCTION"
+    },
+    {
+      "fromId": "DISCHARGE_T",
+      "toId": "SAFE_DISCH_T"
+    },
+    {
+      "fromId": "LIQ_LINE_T",
+      "toId": "ENERGY_LIQ"
+    },
+    {
+      "fromId": "EVAP_B_TEMP_OUT",
+      "toId": "SH_B_TEMP_IN"
+    },
+    {
+      "fromId": "CHAMBER_A_T",
+      "toId": "ZONE_A_TEMP"
+    },
+    {
+      "fromId": "CHAMBER_B_T",
+      "toId": "ZONE_B_TEMP"
+    },
+    {
+      "fromId": "FROST_B",
+      "toId": "DEF_FROST_IN"
+    },
+    {
+      "fromId": "DEF_ENABLE",
+      "toId": "HEATER_IN"
+    },
+    {
+      "fromId": "HEATER_FB",
+      "toId": "DEF_HEAT_FB"
+    },
+    {
+      "fromId": "DRAIN_LEVEL",
+      "toId": "DEF_DRAIN_IN"
+    },
+    {
+      "fromId": "DEF_FAN_LOCK",
+      "toId": "IO_FAN_LOCK"
+    },
+    {
+      "fromId": "ESTOP_NC",
+      "toId": "SAFE_STOP_IN"
+    },
+    {
+      "fromId": "MASS_FLOW",
+      "toId": "ENERGY_FLOW"
+    },
+    {
+      "fromId": "ACC_LEVEL",
+      "toId": "SAFE_ACC"
+    },
+    {
+      "fromId": "OIL_LEVEL",
+      "toId": "SAFE_OIL"
+    },
+    {
+      "fromId": "DOOR_TEST",
+      "toId": "IO_DOOR"
+    },
+    {
+      "fromId": "PLC_RESET",
+      "toId": "SAFE_RESET"
+    },
+    {
+      "fromId": "SAFE_STATE",
+      "toId": "PLC_SAFE"
+    },
+    {
+      "fromId": "REF_CHARGE",
+      "toId": "IO_CHARGE"
+    },
+    {
+      "fromId": "COMP_TACH",
+      "toId": "HMI_RPM"
+    },
+    {
+      "fromId": "COMP_POWER",
+      "toId": "HMI_KW"
+    },
+    {
+      "fromId": "FAN_C_TACH",
+      "toId": "HMI_CFAN"
+    },
+    {
+      "fromId": "SUCTION_P",
+      "toId": "HMI_LOW_P"
+    },
+    {
+      "fromId": "DISCHARGE_P",
+      "toId": "HMI_HIGH_P"
+    },
+    {
+      "fromId": "SUCTION_T",
+      "toId": "HMI_SUCTION"
+    },
+    {
+      "fromId": "DISCHARGE_T",
+      "toId": "HMI_DISCH_T"
+    },
+    {
+      "fromId": "LIQ_LINE_T",
+      "toId": "HMI_LIQ_T"
+    },
+    {
+      "fromId": "EVAP_B_TEMP_OUT",
+      "toId": "HMI_SH_B"
+    },
+    {
+      "fromId": "CHAMBER_A_T",
+      "toId": "HMI_A_TEMP"
+    },
+    {
+      "fromId": "CHAMBER_B_T",
+      "toId": "HMI_B_TEMP"
+    },
+    {
+      "fromId": "FROST_B",
+      "toId": "HMI_FROST"
+    },
+    {
+      "fromId": "DRAIN_LEVEL",
+      "toId": "HMI_DRAIN"
+    },
+    {
+      "fromId": "MASS_FLOW",
+      "toId": "HMI_FLOW"
+    },
+    {
+      "fromId": "ACC_LEVEL",
+      "toId": "HMI_ACC"
+    },
+    {
+      "fromId": "OIL_LEVEL",
+      "toId": "HMI_OIL"
+    },
+    {
+      "fromId": "PLC_SAFE",
+      "toId": "HMI_SAFE"
+    },
+    {
+      "fromId": "EEV_A_POS",
+      "toId": "HMI_EEV_A"
+    },
+    {
+      "fromId": "EEV_B_POS",
+      "toId": "HMI_EEV_B"
+    },
+    {
+      "fromId": "FAN_C_OK",
+      "toId": "FAN_TEST"
+    },
+    {
+      "fromId": "EVAP_A_TEMP_OUT",
+      "toId": "SH_A_TEMP_IN"
+    }
+  ]
+}

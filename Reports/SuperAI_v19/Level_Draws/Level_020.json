@@ -1,0 +1,55 @@
+{
+  "level": 20,
+  "levelId": "level_20",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_02/Level_20_Layout/Level_20_Layout.prefab",
+  "layoutRevision": "C70C31231C683E5F28CEB5AB2E778E49DC094B224AA38B1BA5BEAAAAB8BF23E5",
+  "constructionType": "Native electrical wiring + Component placement + Switch/device operation",
+  "planStatus": "Approved",
+  "authoredRecipeSource": "Assets/Resources/SparkNativeWirePlans/Level_020_NativeWiring_DRAFT.asset | level-20-complete-wiring",
+  "terminalBindings": 22,
+  "objectives": 5,
+  "approved": true,
+  "missingRequirement": "",
+  "pairs": [
+    {
+      "fromId": "SwitchOutput",
+      "toId": "R_LTOP_Input"
+    },
+    {
+      "fromId": "R_LTOP_Output",
+      "toId": "Battery_negative__1_"
+    },
+    {
+      "fromId": "R_LBOTTOM_Input",
+      "toId": "Battery_negative__1_"
+    },
+    {
+      "fromId": "Battery_negative__1_",
+      "toId": "LCD_Terminal_B"
+    },
+    {
+      "fromId": "R_LTOP_Input",
+      "toId": "R_RTOP_Input"
+    },
+    {
+      "fromId": "R_RTOP_Output",
+      "toId": "Battery_negative__2_"
+    },
+    {
+      "fromId": "Battery_negative__2_",
+      "toId": "R_RBOTTOM_Input"
+    },
+    {
+      "fromId": "Battery_negative",
+      "toId": "R_LBOTTOM_Output"
+    },
+    {
+      "fromId": "R_LBOTTOM_Output",
+      "toId": "R_RBOTTOM_Output"
+    },
+    {
+      "fromId": "Battery_negative__2_",
+      "toId": "LCD_Terminal_A"
+    }
+  ]
+}

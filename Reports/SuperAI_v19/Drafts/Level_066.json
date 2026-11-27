@@ -1,0 +1,288 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 66,
+    "layoutName": "Level_66_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "PLC_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "PLC_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "IO_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "IO_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "VFD_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "VFD_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "RELAY_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "RELAY_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "CM_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "CM_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "FFT_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "FFT_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "TWIN_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "TWIN_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SENSOR_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "SENSOR_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "DRIVE_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "DRIVE_GND"
+        },
+        {
+            "fromId": "PLC_RUN",
+            "toId": "VFD_RUN"
+        },
+        {
+            "fromId": "PLC_SPEED",
+            "toId": "VFD_REF"
+        },
+        {
+            "fromId": "VFD_A",
+            "toId": "MOTOR_A"
+        },
+        {
+            "fromId": "VFD_B",
+            "toId": "MOTOR_B"
+        },
+        {
+            "fromId": "VFD_C",
+            "toId": "MOTOR_C"
+        },
+        {
+            "fromId": "VFD_OK",
+            "toId": "PLC_READY"
+        },
+        {
+            "fromId": "VFD_FAULT",
+            "toId": "RELAY_IN"
+        },
+        {
+            "fromId": "RELAY_OUT",
+            "toId": "PLC_TRIP"
+        },
+        {
+            "fromId": "VFD_REF_MON",
+            "toId": "TWIN_REF"
+        },
+        {
+            "fromId": "CT_A",
+            "toId": "CM_IA"
+        },
+        {
+            "fromId": "CT_B",
+            "toId": "CM_IB"
+        },
+        {
+            "fromId": "CT_C",
+            "toId": "CM_IC"
+        },
+        {
+            "fromId": "ENC_PULSE",
+            "toId": "CM_RPM"
+        },
+        {
+            "fromId": "ENC_PULSE",
+            "toId": "PLC_RPM"
+        },
+        {
+            "fromId": "ENC_PULSE",
+            "toId": "FFT_SPEED"
+        },
+        {
+            "fromId": "BEARING_TEMP",
+            "toId": "CM_BT"
+        },
+        {
+            "fromId": "MOTOR_TEMP",
+            "toId": "CM_MT"
+        },
+        {
+            "fromId": "IR_OUT",
+            "toId": "CM_IR"
+        },
+        {
+            "fromId": "OIL_OUT",
+            "toId": "CM_OIL"
+        },
+        {
+            "fromId": "ALIGN_OUT",
+            "toId": "CM_ALIGN"
+        },
+        {
+            "fromId": "GEAR_OUT",
+            "toId": "CM_GEAR"
+        },
+        {
+            "fromId": "VIB2_OUT",
+            "toId": "CM_VIB2"
+        },
+        {
+            "fromId": "VIB3_Y",
+            "toId": "FFT_Y"
+        },
+        {
+            "fromId": "VIB3_Z",
+            "toId": "FFT_Z"
+        },
+        {
+            "fromId": "BEARING_BT_MON",
+            "toId": "TWIN_BT"
+        },
+        {
+            "fromId": "MOTOR_MT_MON",
+            "toId": "TWIN_MT"
+        },
+        {
+            "fromId": "CT_MON",
+            "toId": "TWIN_I"
+        },
+        {
+            "fromId": "ENC_RATE",
+            "toId": "TWIN_SPEED"
+        },
+        {
+            "fromId": "FFT_OUT",
+            "toId": "CM_FFT"
+        },
+        {
+            "fromId": "FFT_OUT",
+            "toId": "AI_FFT"
+        },
+        {
+            "fromId": "CM_HEALTH",
+            "toId": "AI_HEALTH"
+        },
+        {
+            "fromId": "CM_HEALTH",
+            "toId": "TWIN_HEALTH"
+        },
+        {
+            "fromId": "AI_OUT",
+            "toId": "PLC_SERVICE"
+        },
+        {
+            "fromId": "AI_OUT",
+            "toId": "TWIN_DIAG"
+        },
+        {
+            "fromId": "CM_FFT",
+            "toId": "HMI_SPECTRUM"
+        },
+        {
+            "fromId": "CM_HEALTH",
+            "toId": "HMI_HEALTH"
+        },
+        {
+            "fromId": "PLC_COOL",
+            "toId": "FAN_IN"
+        },
+        {
+            "fromId": "PLC_RUN",
+            "toId": "CONVEYOR_RUN"
+        },
+        {
+            "fromId": "PLC_LOCK",
+            "toId": "VFD_INHIBIT"
+        },
+        {
+            "fromId": "LOCK_AUX",
+            "toId": "PLC_LOCK_FB"
+        },
+        {
+            "fromId": "MOUNT_OUT",
+            "toId": "PLC_MOUNT"
+        },
+        {
+            "fromId": "ALIGN_OUT",
+            "toId": "GAUGE_IN"
+        },
+        {
+            "fromId": "TORQUE_OUT",
+            "toId": "PLC_TORQUE"
+        },
+        {
+            "fromId": "TOOL_OUT",
+            "toId": "PLC_TOOL"
+        },
+        {
+            "fromId": "GUARD_NC",
+            "toId": "CTRL_SAFE"
+        },
+        {
+            "fromId": "GUARD_NC",
+            "toId": "PLC_DOOR"
+        },
+        {
+            "fromId": "ESTOP_NC",
+            "toId": "PLC_ESTOP"
+        },
+        {
+            "fromId": "RELAY_OUT",
+            "toId": "TWIN_TRIP"
+        },
+        {
+            "fromId": "PLC_LOCK",
+            "toId": "HMI_LOCK"
+        },
+        {
+            "fromId": "PLC_TRIP",
+            "toId": "HMI_TRIP"
+        },
+        {
+            "fromId": "CM_FFT",
+            "toId": "TWIN_SPECTRUM"
+        },
+        {
+            "fromId": "VIB3_X",
+            "toId": "FFT_X"
+        }
+    ]
+}

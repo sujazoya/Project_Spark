@@ -1,0 +1,60 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 36,
+    "layoutName": "Level_36_Thermal_Interlock_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "Battery_positive",
+            "toId": "PULLUP_IN"
+        },
+        {
+            "fromId": "Battery_positive",
+            "toId": "FAN_SW_IN"
+        },
+        {
+            "fromId": "Battery_positive",
+            "toId": "HEAT_SW_IN"
+        },
+        {
+            "fromId": "Battery_positive",
+            "toId": "FAULT_SW_IN"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "SENSOR_RETURN"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "FAN_B"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "HEATER_OUT"
+        },
+        {
+            "fromId": "Battery_negative",
+            "toId": "LED_K"
+        },
+        {
+            "fromId": "PULLUP_OUT",
+            "toId": "SENSOR_IN"
+        },
+        {
+            "fromId": "FAN_SW_OUT",
+            "toId": "FAN_A"
+        },
+        {
+            "fromId": "HEAT_SW_OUT",
+            "toId": "HEATER_IN"
+        },
+        {
+            "fromId": "FAULT_SW_OUT",
+            "toId": "LED_R_IN"
+        },
+        {
+            "fromId": "LED_R_OUT",
+            "toId": "LED_A"
+        }
+    ]
+}

@@ -1,0 +1,208 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 61,
+    "layoutName": "Level_61_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "CTRL_POS"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "CTRL_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "PLL_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "PLL_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "APF_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "APF_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "QA_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "QA_GND"
+        },
+        {
+            "fromId": "GRID_A",
+            "toId": "MAIN_A"
+        },
+        {
+            "fromId": "GRID_B",
+            "toId": "MAIN_B"
+        },
+        {
+            "fromId": "GRID_C",
+            "toId": "MAIN_C"
+        },
+        {
+            "fromId": "MAIN_OUT_A",
+            "toId": "BUS_A"
+        },
+        {
+            "fromId": "MAIN_OUT_B",
+            "toId": "BUS_B"
+        },
+        {
+            "fromId": "MAIN_OUT_C",
+            "toId": "BUS_C"
+        },
+        {
+            "fromId": "BUS_A",
+            "toId": "VS_A"
+        },
+        {
+            "fromId": "BUS_B",
+            "toId": "VS_B"
+        },
+        {
+            "fromId": "BUS_C",
+            "toId": "VS_C"
+        },
+        {
+            "fromId": "BUS_A",
+            "toId": "VFD_A"
+        },
+        {
+            "fromId": "BUS_B",
+            "toId": "VFD_B"
+        },
+        {
+            "fromId": "BUS_C",
+            "toId": "VFD_C"
+        },
+        {
+            "fromId": "VFD_OUT",
+            "toId": "MOTOR_IN"
+        },
+        {
+            "fromId": "BUS_A",
+            "toId": "RECT_A"
+        },
+        {
+            "fromId": "BUS_B",
+            "toId": "SMPS_B"
+        },
+        {
+            "fromId": "CTRL_LOAD",
+            "toId": "LOAD_ENABLE"
+        },
+        {
+            "fromId": "APF_A",
+            "toId": "BUS_A"
+        },
+        {
+            "fromId": "APF_B",
+            "toId": "BUS_B"
+        },
+        {
+            "fromId": "APF_C",
+            "toId": "BUS_C"
+        },
+        {
+            "fromId": "CTRL_FILTER",
+            "toId": "APF_ENABLE"
+        },
+        {
+            "fromId": "LINK_OUT",
+            "toId": "APF_LINK"
+        },
+        {
+            "fromId": "APF_CMD",
+            "toId": "CONVERTER_CMD"
+        },
+        {
+            "fromId": "CONVERTER_OUT",
+            "toId": "LCL_IN"
+        },
+        {
+            "fromId": "SRC_CT_A",
+            "toId": "METER_IA"
+        },
+        {
+            "fromId": "SRC_CT_B",
+            "toId": "METER_IB"
+        },
+        {
+            "fromId": "SRC_CT_C",
+            "toId": "METER_IC"
+        },
+        {
+            "fromId": "LOAD_CT_A",
+            "toId": "APF_IA"
+        },
+        {
+            "fromId": "LOAD_CT_B",
+            "toId": "APF_IB"
+        },
+        {
+            "fromId": "LOAD_CT_C",
+            "toId": "APF_IC"
+        },
+        {
+            "fromId": "VS_A",
+            "toId": "PLL_IN"
+        },
+        {
+            "fromId": "PLL_OUT",
+            "toId": "APF_PHASE"
+        },
+        {
+            "fromId": "BUS_A",
+            "toId": "CAP_A"
+        },
+        {
+            "fromId": "BUS_B",
+            "toId": "CAP_B"
+        },
+        {
+            "fromId": "BUS_C",
+            "toId": "CAP_C"
+        },
+        {
+            "fromId": "CTRL_CAP",
+            "toId": "CAP_CMD"
+        },
+        {
+            "fromId": "CAP_AUX",
+            "toId": "CTRL_CAP_SAFE"
+        },
+        {
+            "fromId": "PLL_OUT",
+            "toId": "ANALYZER_PHASE"
+        },
+        {
+            "fromId": "METER_OUT",
+            "toId": "ANALYZER_IN"
+        },
+        {
+            "fromId": "PROTECT_OUT",
+            "toId": "CTRL_PROTECT"
+        },
+        {
+            "fromId": "MAIN_FEEDBACK",
+            "toId": "CTRL_MAIN"
+        },
+        {
+            "fromId": "GUARD_NC",
+            "toId": "CTRL_SAFE"
+        },
+        {
+            "fromId": "FILTER_CURRENT_FEEDBACK",
+            "toId": "APF_CURRENT_IN"
+        }
+    ]
+}

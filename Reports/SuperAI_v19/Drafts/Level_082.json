@@ -1,0 +1,544 @@
+{
+    "schemaVersion": 1,
+    "levelNumber": 82,
+    "layoutName": "Level_82_Layout",
+    "recordedUtc": "",
+    "wires": [
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "PLC_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "PLC_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SCAN_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "SCAN_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "EMI_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "EMI_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "FIELD_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "FIELD_GND"
+        },
+        {
+            "fromId": "SUPPLY_POS",
+            "toId": "SAFE_5V"
+        },
+        {
+            "fromId": "SUPPLY_RET",
+            "toId": "SAFE_GND"
+        },
+        {
+            "fromId": "AZ_CMD",
+            "toId": "TABLE_SET"
+        },
+        {
+            "fromId": "AZ_ENCODER",
+            "toId": "AZ_RAW"
+        },
+        {
+            "fromId": "AZ_ENCODER",
+            "toId": "AZ_ACTUAL"
+        },
+        {
+            "fromId": "GEAR_CMD",
+            "toId": "TABLE_DRIVE"
+        },
+        {
+            "fromId": "GEAR_READY",
+            "toId": "GEAR_OK"
+        },
+        {
+            "fromId": "MAST_CMD",
+            "toId": "HEIGHT_SET"
+        },
+        {
+            "fromId": "MAST_ENCODER",
+            "toId": "HEIGHT_ACTUAL"
+        },
+        {
+            "fromId": "POL_CMD",
+            "toId": "POL_SET"
+        },
+        {
+            "fromId": "POL_ENCODER",
+            "toId": "POL_ACTUAL"
+        },
+        {
+            "fromId": "ANT_READY",
+            "toId": "ANT_CHECK"
+        },
+        {
+            "fromId": "ANT_MEASURE",
+            "toId": "ANT_STATUS"
+        },
+        {
+            "fromId": "XY_CMD",
+            "toId": "GANTRY_XY"
+        },
+        {
+            "fromId": "XY_ENCODER",
+            "toId": "XY_ACTUAL"
+        },
+        {
+            "fromId": "Z_CMD",
+            "toId": "GANTRY_Z"
+        },
+        {
+            "fromId": "Z_ENCODER",
+            "toId": "Z_ACTUAL"
+        },
+        {
+            "fromId": "MAG_CMD",
+            "toId": "H_PROBE"
+        },
+        {
+            "fromId": "ELEC_CMD",
+            "toId": "E_PROBE"
+        },
+        {
+            "fromId": "AZ_HOME",
+            "toId": "HOME_SET"
+        },
+        {
+            "fromId": "LISN_CMD",
+            "toId": "LISN_ENABLE"
+        },
+        {
+            "fromId": "LISN_OUT",
+            "toId": "CONDUCTED_IN"
+        },
+        {
+            "fromId": "CONDSPEC_OUT",
+            "toId": "EMI_COND"
+        },
+        {
+            "fromId": "CM_CLAMP",
+            "toId": "CM_I"
+        },
+        {
+            "fromId": "DM_CLAMP",
+            "toId": "DM_I"
+        },
+        {
+            "fromId": "CM_CAL",
+            "toId": "CM_ZERO"
+        },
+        {
+            "fromId": "DM_CAL",
+            "toId": "DM_ZERO"
+        },
+        {
+            "fromId": "BOND_MON",
+            "toId": "CHASSIS_OK"
+        },
+        {
+            "fromId": "TERM_OUT",
+            "toId": "SHIELD_TERM"
+        },
+        {
+            "fromId": "HARNESS_CM",
+            "toId": "CM_MON"
+        },
+        {
+            "fromId": "HARNESS_DM",
+            "toId": "DM_MON"
+        },
+        {
+            "fromId": "CHOKE_OUT",
+            "toId": "CHOKE_ATTEN"
+        },
+        {
+            "fromId": "LC_OUT",
+            "toId": "LC_ATTEN"
+        },
+        {
+            "fromId": "FEED_OUT",
+            "toId": "DC_PATH"
+        },
+        {
+            "fromId": "SWITCH_OUT",
+            "toId": "RIPPLE_IN"
+        },
+        {
+            "fromId": "COND_SCAN",
+            "toId": "COND_MARGIN"
+        },
+        {
+            "fromId": "BW_CMD",
+            "toId": "EMI_BW"
+        },
+        {
+            "fromId": "SPEC_REF",
+            "toId": "EMI_CAL"
+        },
+        {
+            "fromId": "CONDSPEC_OUT",
+            "toId": "SCADA_COND"
+        },
+        {
+            "fromId": "CONDUCT_CMD",
+            "toId": "CONDUCT_RUN"
+        },
+        {
+            "fromId": "RADIATE_CMD",
+            "toId": "RADIATE_RUN"
+        },
+        {
+            "fromId": "ANT_RF",
+            "toId": "EMI_RF"
+        },
+        {
+            "fromId": "EMI_OUT",
+            "toId": "SPEC_IN"
+        },
+        {
+            "fromId": "EMI_OUT",
+            "toId": "SCADA_RAD"
+        },
+        {
+            "fromId": "SPEC_CAL",
+            "toId": "SPEC_ZERO"
+        },
+        {
+            "fromId": "PRESEL_OUT",
+            "toId": "PRESEL_IN"
+        },
+        {
+            "fromId": "FILTER_CMD",
+            "toId": "EMI_FILTER"
+        },
+        {
+            "fromId": "HEIGHT_ACT",
+            "toId": "HEIGHT_TAG"
+        },
+        {
+            "fromId": "POL_ACT",
+            "toId": "POL_TAG"
+        },
+        {
+            "fromId": "AZ_ACT",
+            "toId": "AZ_TAG"
+        },
+        {
+            "fromId": "H_OUT",
+            "toId": "H_SAMPLE"
+        },
+        {
+            "fromId": "E_OUT",
+            "toId": "E_SAMPLE"
+        },
+        {
+            "fromId": "SEAM_OUT",
+            "toId": "SEAM_SAMPLE"
+        },
+        {
+            "fromId": "WORST_OUT",
+            "toId": "WORST_VALID"
+        },
+        {
+            "fromId": "PEAK_OUT",
+            "toId": "PEAK_CERT"
+        },
+        {
+            "fromId": "CAL_SRC",
+            "toId": "CAL_REF"
+        },
+        {
+            "fromId": "HEATMAP_OUT",
+            "toId": "HEATMAP_IN"
+        },
+        {
+            "fromId": "NEAR_CMD",
+            "toId": "PROBE_ENABLE"
+        },
+        {
+            "fromId": "GASKET_CMD",
+            "toId": "GASKET_SET"
+        },
+        {
+            "fromId": "GASKET_OUT",
+            "toId": "GASKET_ACT"
+        },
+        {
+            "fromId": "CLAMP_CMD",
+            "toId": "SHIELD_CLAMP"
+        },
+        {
+            "fromId": "CLAMP_OUT",
+            "toId": "CLAMP_CONTACT"
+        },
+        {
+            "fromId": "CHOKE_CMD",
+            "toId": "CHOKE_SET"
+        },
+        {
+            "fromId": "CHOKE_ACT",
+            "toId": "CHOKE_OK"
+        },
+        {
+            "fromId": "LC_CMD",
+            "toId": "LC_SET"
+        },
+        {
+            "fromId": "LC_ACT",
+            "toId": "LC_OK"
+        },
+        {
+            "fromId": "FERRITE_CMD",
+            "toId": "FERRITE_SET"
+        },
+        {
+            "fromId": "FERRITE_ACT",
+            "toId": "FERRITE_OK"
+        },
+        {
+            "fromId": "FEED_CMD",
+            "toId": "FEED_SET"
+        },
+        {
+            "fromId": "FEED_ACT",
+            "toId": "FEED_OK"
+        },
+        {
+            "fromId": "ROUTE_CMD",
+            "toId": "ROUTE_SET"
+        },
+        {
+            "fromId": "ROUTE_SET",
+            "toId": "ROUTE_ACTUAL"
+        },
+        {
+            "fromId": "CHASSIS_OK",
+            "toId": "BOND_CHECK"
+        },
+        {
+            "fromId": "BOND_CHECK",
+            "toId": "BOND_INTEGRITY"
+        },
+        {
+            "fromId": "DC_PATH",
+            "toId": "SENSOR_FILTER"
+        },
+        {
+            "fromId": "SENSOR_FILTER",
+            "toId": "SENSOR_RESP"
+        },
+        {
+            "fromId": "EMI_FILTER",
+            "toId": "RF_SWEEP_REQ"
+        },
+        {
+            "fromId": "RF_SWEEP_REQ",
+            "toId": "RF_WAVE"
+        },
+        {
+            "fromId": "RF_WAVE",
+            "toId": "IMMUNITY_OK"
+        },
+        {
+            "fromId": "IMMUNITY_OK",
+            "toId": "AMP_ACTUAL"
+        },
+        {
+            "fromId": "GASKET_ACT",
+            "toId": "FIELD_AUX"
+        },
+        {
+            "fromId": "FIELD_AUX",
+            "toId": "UNIFORMITY_CMD"
+        },
+        {
+            "fromId": "CAL_REF",
+            "toId": "FIELD_REF"
+        },
+        {
+            "fromId": "FIELD_REF",
+            "toId": "FIELD_CAL"
+        },
+        {
+            "fromId": "RF_SWEEP_REQ",
+            "toId": "SWEEP_TELEM"
+        },
+        {
+            "fromId": "RF_WAVE",
+            "toId": "COUPLE_FIXTURE"
+        },
+        {
+            "fromId": "COUPLE_FIXTURE",
+            "toId": "FIXTURE_OK"
+        },
+        {
+            "fromId": "FIXTURE_OK",
+            "toId": "FIXTURE_STOP"
+        },
+        {
+            "fromId": "SENSOR_RESP",
+            "toId": "SENSOR_CHECK"
+        },
+        {
+            "fromId": "ANT_STATUS",
+            "toId": "OPTICAL_CHECK"
+        },
+        {
+            "fromId": "GEAR_OK",
+            "toId": "CLOCK_CHECK"
+        },
+        {
+            "fromId": "OPTICAL_CHECK",
+            "toId": "MISSION_REQ"
+        },
+        {
+            "fromId": "SENSOR_CHECK",
+            "toId": "ADC_SAMPLE"
+        },
+        {
+            "fromId": "ADC_SAMPLE",
+            "toId": "ADC_DEV"
+        },
+        {
+            "fromId": "OPTICAL_CHECK",
+            "toId": "PACKET_JITTER"
+        },
+        {
+            "fromId": "CLOCK_CHECK",
+            "toId": "CLOCK_JITTER"
+        },
+        {
+            "fromId": "RIPPLE_IN",
+            "toId": "ADC_COUPLING"
+        },
+        {
+            "fromId": "CLOCK_JITTER",
+            "toId": "SPREAD_TELEM"
+        },
+        {
+            "fromId": "ADC_DEV",
+            "toId": "SENSOR_FILTERED"
+        },
+        {
+            "fromId": "LC_ATTEN",
+            "toId": "IR_THERMAL"
+        },
+        {
+            "fromId": "MISSION_REQ",
+            "toId": "WORKLOAD_OK"
+        },
+        {
+            "fromId": "WORKLOAD_OK",
+            "toId": "CMD_SAFE"
+        },
+        {
+            "fromId": "CM_MON",
+            "toId": "CM_FAULT"
+        },
+        {
+            "fromId": "BOND_INTEGRITY",
+            "toId": "RETURN_FAULT"
+        },
+        {
+            "fromId": "SEAM_SAMPLE",
+            "toId": "SEAM_FAULT"
+        },
+        {
+            "fromId": "SENSOR_RESP",
+            "toId": "DESENSE_FAULT"
+        },
+        {
+            "fromId": "CM_FAULT",
+            "toId": "DIAGNOSE"
+        },
+        {
+            "fromId": "DIAGNOSE",
+            "toId": "SCADA_REPAIR"
+        },
+        {
+            "fromId": "IMMUNITY_OK",
+            "toId": "RF_ARM_REQ"
+        },
+        {
+            "fromId": "DOOR_NC",
+            "toId": "DOOR_CLOSED_IN"
+        },
+        {
+            "fromId": "RF_FIELD_MEASURED_OUT",
+            "toId": "RF_SAFE_FIELD_FEEDBACK_IN"
+        },
+        {
+            "fromId": "FIELD_CAL",
+            "toId": "SCADA_FIELD"
+        },
+        {
+            "fromId": "AMP_PERMIT",
+            "toId": "AMP_ENABLE"
+        },
+        {
+            "fromId": "DOOR_CLOSED_IN",
+            "toId": "RF_OVERRIDE"
+        },
+        {
+            "fromId": "ESTOP_NC",
+            "toId": "SAFE_STOP_IN"
+        },
+        {
+            "fromId": "AMP_ACTUAL",
+            "toId": "AMP_DISABLED"
+        },
+        {
+            "fromId": "FIELD_CAL",
+            "toId": "FIELD_HEALTH"
+        },
+        {
+            "fromId": "FIELD_AUX",
+            "toId": "FIELD_LIMIT"
+        },
+        {
+            "fromId": "AZ_ACT",
+            "toId": "EXPOSURE_AZ"
+        },
+        {
+            "fromId": "HEIGHT_ACT",
+            "toId": "EXPOSURE_HEIGHT"
+        },
+        {
+            "fromId": "CMD_SAFE",
+            "toId": "EUT_VALID"
+        },
+        {
+            "fromId": "DOOR_CLOSED_IN",
+            "toId": "SEAL_OK"
+        },
+        {
+            "fromId": "RF_OVERRIDE",
+            "toId": "RF_LATCH"
+        },
+        {
+            "fromId": "RF_LATCH",
+            "toId": "RF_RESET"
+        },
+        {
+            "fromId": "EUT_VALID",
+            "toId": "OBJECTIVE_STATE"
+        },
+        {
+            "fromId": "OBJECTIVE_STATE",
+            "toId": "EMC_CERT"
+        }
+    ]
+}

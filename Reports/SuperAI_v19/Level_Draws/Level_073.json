@@ -1,0 +1,407 @@
+{
+  "level": 73,
+  "levelId": "level_73",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_73_Layout/Level_73_Layout.prefab",
+  "layoutRevision": "D8FDABE056D0EFD8B7EDC77904EB2D19E57A9D1EB6847E9290259C5EEB515570",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel73Process.cs#Wires",
+  "terminalBindings": 152,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "98 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "PLC_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "PLC_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "IO_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "IO_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "DRIVE_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "DRIVE_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "MET_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "MET_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "FORCE_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "FORCE_GND"
+    },
+    {
+      "fromId": "PLC_PLATEN",
+      "toId": "PLATEN_RUN"
+    },
+    {
+      "fromId": "PLC_CARRIER",
+      "toId": "CARRIER_RUN"
+    },
+    {
+      "fromId": "PLC_PL_RPM",
+      "toId": "PLATEN_SET"
+    },
+    {
+      "fromId": "PLC_CA_RPM",
+      "toId": "CARRIER_SET"
+    },
+    {
+      "fromId": "PLATEN_ENC_A",
+      "toId": "DRIVE_P_ENC_A"
+    },
+    {
+      "fromId": "PLATEN_ENC_B",
+      "toId": "DRIVE_P_ENC_B"
+    },
+    {
+      "fromId": "CARRIER_ENC_A",
+      "toId": "DRIVE_C_ENC_A"
+    },
+    {
+      "fromId": "CARRIER_ENC_B",
+      "toId": "DRIVE_C_ENC_B"
+    },
+    {
+      "fromId": "PLATEN_TORQUE",
+      "toId": "IO_P_TORQUE"
+    },
+    {
+      "fromId": "CARRIER_TORQUE",
+      "toId": "IO_C_TORQUE"
+    },
+    {
+      "fromId": "PLATEN_CURRENT",
+      "toId": "IO_P_CURRENT"
+    },
+    {
+      "fromId": "CARRIER_CURRENT",
+      "toId": "IO_C_CURRENT"
+    },
+    {
+      "fromId": "PLATEN_READY",
+      "toId": "PLC_P_READY"
+    },
+    {
+      "fromId": "CARRIER_READY",
+      "toId": "PLC_C_READY"
+    },
+    {
+      "fromId": "DRIVE_FAULT",
+      "toId": "PLC_DRIVE_ALARM"
+    },
+    {
+      "fromId": "CURRENT_OK",
+      "toId": "IO_DRIVE_OK"
+    },
+    {
+      "fromId": "CONTACT_PERMIT",
+      "toId": "CONTACT_ENABLE"
+    },
+    {
+      "fromId": "PLC_Z_MOVE",
+      "toId": "CARRIER_Z_CMD"
+    },
+    {
+      "fromId": "Z_POSITION",
+      "toId": "IO_HEAD_Z"
+    },
+    {
+      "fromId": "PID_CENTER",
+      "toId": "ZONE_CENTER"
+    },
+    {
+      "fromId": "PID_MIDDLE",
+      "toId": "ZONE_MIDDLE"
+    },
+    {
+      "fromId": "PID_EDGE",
+      "toId": "ZONE_EDGE"
+    },
+    {
+      "fromId": "PID_RING",
+      "toId": "RING_PRESSURE"
+    },
+    {
+      "fromId": "CENTER_MEAS",
+      "toId": "IO_CENTER"
+    },
+    {
+      "fromId": "MIDDLE_MEAS",
+      "toId": "IO_MIDDLE"
+    },
+    {
+      "fromId": "EDGE_MEAS",
+      "toId": "IO_EDGE"
+    },
+    {
+      "fromId": "RING_MEAS",
+      "toId": "IO_RING"
+    },
+    {
+      "fromId": "GIMBAL_POS",
+      "toId": "IO_GIMBAL"
+    },
+    {
+      "fromId": "FORCE_ZERO",
+      "toId": "PID_FORCE_ZERO"
+    },
+    {
+      "fromId": "FORCE_VALID",
+      "toId": "PLC_FORCE_VALID"
+    },
+    {
+      "fromId": "OVERFORCE",
+      "toId": "PLC_FORCE_TRIP"
+    },
+    {
+      "fromId": "FORCE_LIMIT",
+      "toId": "PID_FORCE_LIMIT"
+    },
+    {
+      "fromId": "PLC_SLURRY",
+      "toId": "PUMP_RUN"
+    },
+    {
+      "fromId": "SLURRY_SPEED",
+      "toId": "PUMP_CMD"
+    },
+    {
+      "fromId": "PUMP_TACH",
+      "toId": "IO_PUMP_RPM"
+    },
+    {
+      "fromId": "SLURRY_FLOW",
+      "toId": "IO_FLOW"
+    },
+    {
+      "fromId": "SLURRY_TEMP",
+      "toId": "IO_SL_TEMP"
+    },
+    {
+      "fromId": "CONCENTRATION",
+      "toId": "IO_CONC"
+    },
+    {
+      "fromId": "SLURRY_LEVEL",
+      "toId": "IO_TANK"
+    },
+    {
+      "fromId": "PLC_MIXER",
+      "toId": "MIXER_RUN"
+    },
+    {
+      "fromId": "PLC_NOZZLE",
+      "toId": "NOZZLE_CMD"
+    },
+    {
+      "fromId": "NOZZLE_READY",
+      "toId": "IO_NOZZLE"
+    },
+    {
+      "fromId": "PLC_COOL",
+      "toId": "COOL_RUN"
+    },
+    {
+      "fromId": "COOL_READY",
+      "toId": "IO_COOL"
+    },
+    {
+      "fromId": "INTERFACE_TEMP",
+      "toId": "IO_INTERFACE"
+    },
+    {
+      "fromId": "WASTE_LEVEL",
+      "toId": "IO_WASTE"
+    },
+    {
+      "fromId": "PLC_CONDITION",
+      "toId": "COND_RUN"
+    },
+    {
+      "fromId": "PLC_COND_ARM",
+      "toId": "COND_ARM_CMD"
+    },
+    {
+      "fromId": "COND_ARM_POS",
+      "toId": "IO_COND_ARM"
+    },
+    {
+      "fromId": "PAD_WEAR",
+      "toId": "IO_PAD_WEAR"
+    },
+    {
+      "fromId": "COND_RUN",
+      "toId": "DISC_RUN"
+    },
+    {
+      "fromId": "COND_RUN",
+      "toId": "COND_MOTOR_RUN"
+    },
+    {
+      "fromId": "IO_COND_ARM",
+      "toId": "PAD_SCAN_EN"
+    },
+    {
+      "fromId": "IO_PAD_WEAR",
+      "toId": "PLC_PAD_WARN"
+    },
+    {
+      "fromId": "IO_P_TORQUE",
+      "toId": "PAD_DRAG_MON"
+    },
+    {
+      "fromId": "IO_FLOW",
+      "toId": "PAD_WET_MON"
+    },
+    {
+      "fromId": "IO_GIMBAL",
+      "toId": "PAD_FLAT_MON"
+    },
+    {
+      "fromId": "IO_INTERFACE",
+      "toId": "PAD_TEMP_MON"
+    },
+    {
+      "fromId": "PLC_C_READY",
+      "toId": "OPTICAL_EN"
+    },
+    {
+      "fromId": "PLC_P_READY",
+      "toId": "METRO_ARM"
+    },
+    {
+      "fromId": "IO_CONC",
+      "toId": "OPTICAL_REF"
+    },
+    {
+      "fromId": "ZONE_CENTER",
+      "toId": "EDDY_EN"
+    },
+    {
+      "fromId": "IO_P_CURRENT",
+      "toId": "ENDPOINT_CURRENT"
+    },
+    {
+      "fromId": "IO_C_TORQUE",
+      "toId": "ENDPOINT_LOAD"
+    },
+    {
+      "fromId": "IO_EDGE",
+      "toId": "PROFILE_SCAN"
+    },
+    {
+      "fromId": "PLC_FORCE_VALID",
+      "toId": "PROFILE_VALID"
+    },
+    {
+      "fromId": "IO_GIMBAL",
+      "toId": "TOPOGRAPHY_IN"
+    },
+    {
+      "fromId": "IO_WASTE",
+      "toId": "DEFECT_INSPECT"
+    },
+    {
+      "fromId": "IO_MIDDLE",
+      "toId": "DISHING_MON"
+    },
+    {
+      "fromId": "IO_RING",
+      "toId": "EROSION_MON"
+    },
+    {
+      "fromId": "ESTOP_NC",
+      "toId": "SAFE_STOP_IN"
+    },
+    {
+      "fromId": "SAFE_STOP_IN",
+      "toId": "PLC_SAFE"
+    },
+    {
+      "fromId": "CONTACT_ENABLE",
+      "toId": "GUARD_LOCK"
+    },
+    {
+      "fromId": "CARRIER_Z_CMD",
+      "toId": "ROBOT_TRANSFER"
+    },
+    {
+      "fromId": "Z_POSITION",
+      "toId": "WAFER_LIFT"
+    },
+    {
+      "fromId": "IO_GIMBAL",
+      "toId": "RINSE_ENABLE"
+    },
+    {
+      "fromId": "RINSE_ENABLE",
+      "toId": "BRUSH_EN"
+    },
+    {
+      "fromId": "BRUSH_EN",
+      "toId": "SPIN_DRY_EN"
+    },
+    {
+      "fromId": "PLC_FORCE_VALID",
+      "toId": "CARRIER_CLAMP"
+    },
+    {
+      "fromId": "PLC_FORCE_TRIP",
+      "toId": "SAFETY_ALARM"
+    },
+    {
+      "fromId": "CONTACT_ENABLE",
+      "toId": "HMI_CONTACT"
+    },
+    {
+      "fromId": "IO_FLOW",
+      "toId": "HMI_SLURRY"
+    },
+    {
+      "fromId": "IO_EDGE",
+      "toId": "HMI_EDGE"
+    },
+    {
+      "fromId": "IO_P_TORQUE",
+      "toId": "HMI_LOAD"
+    },
+    {
+      "fromId": "PROFILE_VALID",
+      "toId": "HMI_METRO"
+    },
+    {
+      "fromId": "PLC_SAFE",
+      "toId": "RESET_READY"
+    },
+    {
+      "fromId": "PLC_DRIVE_ALARM",
+      "toId": "HMI_FAULT"
+    },
+    {
+      "fromId": "CARRIER_DOWNFORCE_SENSOR_OUT",
+      "toId": "MULTIZONE_PRESSURE_PID_FORCE_FEEDBACK_IN"
+    }
+  ]
+}

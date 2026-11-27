@@ -1,0 +1,167 @@
+{
+  "level": 58,
+  "levelId": "level_58",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_58_Layout/Level_58_Layout.prefab",
+  "layoutRevision": "7117D95913CAB2E81F23EACE28DC3CE8AE8C640BC3BB73C501674FBEE13DD1E2",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel58Protection.cs#Wires",
+  "terminalBindings": 60,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "38 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "CTRL_POS"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "CTRL_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "GRID_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "GRID_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "RELAY_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "RELAY_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "SENSE_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "SENSE_GND"
+    },
+    {
+      "fromId": "GRID_A",
+      "toId": "Q0_IN_A"
+    },
+    {
+      "fromId": "GRID_B",
+      "toId": "Q0_IN_B"
+    },
+    {
+      "fromId": "GRID_C",
+      "toId": "Q0_IN_C"
+    },
+    {
+      "fromId": "Q0_OUT_A",
+      "toId": "BUS_A"
+    },
+    {
+      "fromId": "Q0_OUT_B",
+      "toId": "BUS_B"
+    },
+    {
+      "fromId": "Q0_OUT_C",
+      "toId": "BUS_C"
+    },
+    {
+      "fromId": "CT0_OUT",
+      "toId": "R0_CURRENT"
+    },
+    {
+      "fromId": "CTB_OUT",
+      "toId": "R2_CURRENT"
+    },
+    {
+      "fromId": "BUS_A",
+      "toId": "Q1_IN_A"
+    },
+    {
+      "fromId": "BUS_B",
+      "toId": "Q1_IN_B"
+    },
+    {
+      "fromId": "BUS_C",
+      "toId": "Q1_IN_C"
+    },
+    {
+      "fromId": "BUS_A",
+      "toId": "Q2_IN_A"
+    },
+    {
+      "fromId": "BUS_B",
+      "toId": "Q2_IN_B"
+    },
+    {
+      "fromId": "BUS_C",
+      "toId": "Q2_IN_C"
+    },
+    {
+      "fromId": "BUS_A",
+      "toId": "Q3_IN_A"
+    },
+    {
+      "fromId": "BUS_B",
+      "toId": "Q3_IN_B"
+    },
+    {
+      "fromId": "BUS_C",
+      "toId": "Q3_IN_C"
+    },
+    {
+      "fromId": "Q1_OUT_A",
+      "toId": "LOAD_A"
+    },
+    {
+      "fromId": "Q2_OUT_B",
+      "toId": "LOAD_B"
+    },
+    {
+      "fromId": "Q3_OUT_C",
+      "toId": "LOAD_C"
+    },
+    {
+      "fromId": "CTA_OUT",
+      "toId": "R1_CURRENT"
+    },
+    {
+      "fromId": "CTC_OUT",
+      "toId": "R3_CURRENT"
+    },
+    {
+      "fromId": "R0_TRIP",
+      "toId": "Q0_TRIP"
+    },
+    {
+      "fromId": "R1_TRIP",
+      "toId": "Q1_TRIP"
+    },
+    {
+      "fromId": "R2_TRIP",
+      "toId": "Q2_TRIP"
+    },
+    {
+      "fromId": "R3_TRIP",
+      "toId": "Q3_TRIP"
+    },
+    {
+      "fromId": "Q2_AUX",
+      "toId": "CTRL_BREAKER"
+    },
+    {
+      "fromId": "BUS_A",
+      "toId": "SENSE_BUS"
+    },
+    {
+      "fromId": "SENSE_OUT",
+      "toId": "CTRL_VOLTAGE"
+    },
+    {
+      "fromId": "GUARD_NC",
+      "toId": "CTRL_SAFE"
+    }
+  ]
+}

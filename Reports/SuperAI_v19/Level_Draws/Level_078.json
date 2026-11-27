@@ -1,0 +1,487 @@
+{
+  "level": 78,
+  "levelId": "level_78",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_78_Layout/Level_78_Layout.prefab",
+  "layoutRevision": "F616AF2AB995956F99A736E792235A089121B28910EEF0D3898E3218E5BAF46E",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel78Process.cs#Wires",
+  "terminalBindings": 182,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "118 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "PLC_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "PLC_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "SCADA_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "SCADA_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "GAS_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "GAS_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "METER_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "METER_GND"
+    },
+    {
+      "fromId": "SUPPLY_POS",
+      "toId": "SAFE_5V"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "SAFE_GND"
+    },
+    {
+      "fromId": "BACK_CMD",
+      "toId": "BACK_RUN"
+    },
+    {
+      "fromId": "TURBO_CMD",
+      "toId": "TURBO_RUN"
+    },
+    {
+      "fromId": "BACK_READY",
+      "toId": "VAC_BACK_OK"
+    },
+    {
+      "fromId": "BACK_READY",
+      "toId": "VAC_DIAG"
+    },
+    {
+      "fromId": "PRESSURE_OUT",
+      "toId": "VAC_PRESSURE"
+    },
+    {
+      "fromId": "GATE_CMD",
+      "toId": "GATE_DRIVE"
+    },
+    {
+      "fromId": "GATE_CLOSED",
+      "toId": "VAC_GATE_OK"
+    },
+    {
+      "fromId": "LOADLOCK_CMD",
+      "toId": "LOCK_PUMP"
+    },
+    {
+      "fromId": "LOCK_PRESSURE",
+      "toId": "VAC_LOCK_OK"
+    },
+    {
+      "fromId": "ROBOT_CMD",
+      "toId": "ROBOT_DRIVE"
+    },
+    {
+      "fromId": "ROBOT_HOME",
+      "toId": "TRANSFER_HOME"
+    },
+    {
+      "fromId": "ALIGN_CMD",
+      "toId": "ALIGN_START"
+    },
+    {
+      "fromId": "ALIGN_OUT",
+      "toId": "TRANSFER_ALIGN"
+    },
+    {
+      "fromId": "PREP_CMD",
+      "toId": "PREP_START"
+    },
+    {
+      "fromId": "PREP_OUT",
+      "toId": "TRANSFER_SURFACE"
+    },
+    {
+      "fromId": "PREP_DONE",
+      "toId": "PLC_PREP_OK"
+    },
+    {
+      "fromId": "VAC_PERMIT",
+      "toId": "VAC_AUTH"
+    },
+    {
+      "fromId": "HUB_SAFE",
+      "toId": "TRANSFER_SAFE"
+    },
+    {
+      "fromId": "CAP_CMD",
+      "toId": "CAP_RUN"
+    },
+    {
+      "fromId": "CAP_LID_CMD",
+      "toId": "CAP_LID"
+    },
+    {
+      "fromId": "CAP_LID_OUT",
+      "toId": "CAP_INTERLOCK"
+    },
+    {
+      "fromId": "CAP_FLOW_CMD",
+      "toId": "CAP_MFC_SET"
+    },
+    {
+      "fromId": "CAP_FLOW_OUT",
+      "toId": "CAP_FLOW_IN"
+    },
+    {
+      "fromId": "CAP_RESERVOIR",
+      "toId": "OUT_CAP_FUEL"
+    },
+    {
+      "fromId": "CAP_MANIFOLD",
+      "toId": "CAP_DELIVERY"
+    },
+    {
+      "fromId": "CAP_RF_CMD",
+      "toId": "CAP_RF_RUN"
+    },
+    {
+      "fromId": "CAP_RF_OUT",
+      "toId": "CAP_MATCH_IN"
+    },
+    {
+      "fromId": "CAP_MATCH_OUT",
+      "toId": "CAP_RF_OK"
+    },
+    {
+      "fromId": "CAP_TEMP_CMD",
+      "toId": "CAP_HEAT"
+    },
+    {
+      "fromId": "CAP_TEMP_OUT",
+      "toId": "CAP_HEAT_OK"
+    },
+    {
+      "fromId": "CAP_THICK_OUT",
+      "toId": "CAP_THICK_IN"
+    },
+    {
+      "fromId": "CAP_MAP_OUT",
+      "toId": "CAP_UNIFORM"
+    },
+    {
+      "fromId": "CAP_PINHOLE_OUT",
+      "toId": "CAP_DEFECTS"
+    },
+    {
+      "fromId": "CAP_EXHAUST_CMD",
+      "toId": "CAP_THROTTLE"
+    },
+    {
+      "fromId": "LOWK_CMD",
+      "toId": "LOWK_RUN"
+    },
+    {
+      "fromId": "SHOWER_CMD",
+      "toId": "LOWK_SHOWER"
+    },
+    {
+      "fromId": "LOWK_RF_CMD",
+      "toId": "LOWK_RF_RUN"
+    },
+    {
+      "fromId": "LOWK_RF_OUT",
+      "toId": "LOWK_MATCH_IN"
+    },
+    {
+      "fromId": "LOWK_MATCH_OUT",
+      "toId": "LOWK_RF_OK"
+    },
+    {
+      "fromId": "LOWK_TEMP_CMD",
+      "toId": "LOWK_HEAT"
+    },
+    {
+      "fromId": "LOWK_TEMP_OUT",
+      "toId": "LOWK_HEAT_OK"
+    },
+    {
+      "fromId": "MATRIX_READY",
+      "toId": "LOWK_MATRIX"
+    },
+    {
+      "fromId": "POROGEN_READY",
+      "toId": "LOWK_POROGEN"
+    },
+    {
+      "fromId": "DUAL_MFC_CMD",
+      "toId": "GAS_MIXER"
+    },
+    {
+      "fromId": "MIX_FLOW_CMD",
+      "toId": "LOWK_MIX_REQ"
+    },
+    {
+      "fromId": "LOWK_FLOW_OUT",
+      "toId": "LOWK_FLOW_IN"
+    },
+    {
+      "fromId": "ION_ENERGY_OUT",
+      "toId": "DAMAGE_IN"
+    },
+    {
+      "fromId": "CHARGE_OUT",
+      "toId": "CHARGE_IN"
+    },
+    {
+      "fromId": "FTIR_OUT",
+      "toId": "BOND_IN"
+    },
+    {
+      "fromId": "LOWK_THICK_OUT",
+      "toId": "GROWTH_IN"
+    },
+    {
+      "fromId": "CURE_CMD",
+      "toId": "CURE_RUN"
+    },
+    {
+      "fromId": "CURE_DOOR_OUT",
+      "toId": "CURE_SAFE"
+    },
+    {
+      "fromId": "LAMP_CMD",
+      "toId": "UV_ENABLE"
+    },
+    {
+      "fromId": "LAMP_OUT",
+      "toId": "UV_ACTUAL"
+    },
+    {
+      "fromId": "SHUTTER_CMD",
+      "toId": "SHUTTER_SET"
+    },
+    {
+      "fromId": "SHUTTER_OUT",
+      "toId": "SHUTTER_POS"
+    },
+    {
+      "fromId": "PLATEN_CMD",
+      "toId": "CURE_SPIN"
+    },
+    {
+      "fromId": "PLATEN_OUT",
+      "toId": "CURE_RPM"
+    },
+    {
+      "fromId": "CURE_TEMP_CMD",
+      "toId": "CURE_HEAT"
+    },
+    {
+      "fromId": "CURE_TEMP_OUT",
+      "toId": "CURE_TEMP"
+    },
+    {
+      "fromId": "UV_ACTUAL",
+      "toId": "OUTGAS_IN"
+    },
+    {
+      "fromId": "OUTGAS_IN",
+      "toId": "PORE_STATUS"
+    },
+    {
+      "fromId": "PORE_STATUS",
+      "toId": "CURE_DONE"
+    },
+    {
+      "fromId": "CURE_SAFE",
+      "toId": "UV_SAFE"
+    },
+    {
+      "fromId": "GROWTH_IN",
+      "toId": "ELLIPSOMETRY"
+    },
+    {
+      "fromId": "CAP_UNIFORM",
+      "toId": "FILM_BOW"
+    },
+    {
+      "fromId": "PORE_STATUS",
+      "toId": "MOISTURE_IN"
+    },
+    {
+      "fromId": "BOND_IN",
+      "toId": "BOND_QUALITY"
+    },
+    {
+      "fromId": "ELLIPSOMETRY",
+      "toId": "RC_IN"
+    },
+    {
+      "fromId": "TRANSFER_ALIGN",
+      "toId": "COMB_READY"
+    },
+    {
+      "fromId": "COMB_READY",
+      "toId": "BIAS_STATUS"
+    },
+    {
+      "fromId": "CURE_DONE",
+      "toId": "STRESS_CMD"
+    },
+    {
+      "fromId": "DIELECTRIC_LEAKAGE_ELECTROMETER_OUT",
+      "toId": "DIELECTRIC_RELIABILITY_CONTROLLER_LEAKAGE_IN"
+    },
+    {
+      "fromId": "BIAS_STATUS",
+      "toId": "METER_HEALTH"
+    },
+    {
+      "fromId": "METER_HEALTH",
+      "toId": "TEST_TELEM"
+    },
+    {
+      "fromId": "TEST_TELEM",
+      "toId": "TDDB_GRAPH"
+    },
+    {
+      "fromId": "ELLIPSOMETRY",
+      "toId": "FILM_TELEM"
+    },
+    {
+      "fromId": "STRESS_PERMIT",
+      "toId": "STRESS_ENABLE"
+    },
+    {
+      "fromId": "TRANSFER_SURFACE",
+      "toId": "INCOMING_CHECK"
+    },
+    {
+      "fromId": "CAP_DEFECTS",
+      "toId": "PINHOLE_WARN"
+    },
+    {
+      "fromId": "CAP_UNIFORM",
+      "toId": "COVERAGE_OK"
+    },
+    {
+      "fromId": "DAMAGE_IN",
+      "toId": "DAMAGE_STATUS"
+    },
+    {
+      "fromId": "CHARGE_IN",
+      "toId": "CHARGE_WARN"
+    },
+    {
+      "fromId": "GROWTH_IN",
+      "toId": "LOWK_CERT"
+    },
+    {
+      "fromId": "CURE_TEMP",
+      "toId": "TEMP_HISTORY"
+    },
+    {
+      "fromId": "OUTGAS_IN",
+      "toId": "OUTGAS_OK"
+    },
+    {
+      "fromId": "FILM_BOW",
+      "toId": "STRESS_HEALTH"
+    },
+    {
+      "fromId": "MOISTURE_IN",
+      "toId": "MOISTURE_OK"
+    },
+    {
+      "fromId": "RC_IN",
+      "toId": "RC_RESULT"
+    },
+    {
+      "fromId": "METER_HEALTH",
+      "toId": "METER_CAL_OK"
+    },
+    {
+      "fromId": "COMB_READY",
+      "toId": "COMB_ISOLATION"
+    },
+    {
+      "fromId": "RC_RESULT",
+      "toId": "RELIABILITY_OK"
+    },
+    {
+      "fromId": "ESTOP_NC",
+      "toId": "SAFE_STOP_IN"
+    },
+    {
+      "fromId": "SAFE_STOP_IN",
+      "toId": "SAFETY_HEARTBEAT"
+    },
+    {
+      "fromId": "CAP_RF_CMD",
+      "toId": "CAP_RF_OFF"
+    },
+    {
+      "fromId": "LOWK_RF_CMD",
+      "toId": "LOWK_RF_OFF"
+    },
+    {
+      "fromId": "LAMP_CMD",
+      "toId": "UV_OFF"
+    },
+    {
+      "fromId": "STRESS_CMD",
+      "toId": "STRESS_OFF"
+    },
+    {
+      "fromId": "SAFETY_HEARTBEAT",
+      "toId": "FAULT_LATCH"
+    },
+    {
+      "fromId": "FAULT_LATCH",
+      "toId": "PLC_STATE"
+    },
+    {
+      "fromId": "PLC_STATE",
+      "toId": "OPERATOR_CMD"
+    },
+    {
+      "fromId": "RELIABILITY_OK",
+      "toId": "RELIABILITY_REQ"
+    },
+    {
+      "fromId": "METER_HEALTH",
+      "toId": "LEAK_VALID"
+    },
+    {
+      "fromId": "LEAK_VALID",
+      "toId": "LEAK_LOSS_TRIP"
+    },
+    {
+      "fromId": "TRANSFER_SAFE",
+      "toId": "TRANSFER_HOLD"
+    },
+    {
+      "fromId": "PLC_STATE",
+      "toId": "OBJECTIVE_EVENT"
+    },
+    {
+      "fromId": "RELIABILITY_OK",
+      "toId": "SCADA_CERT"
+    },
+    {
+      "fromId": "FAULT_LATCH",
+      "toId": "SCADA_ALARM"
+    }
+  ]
+}

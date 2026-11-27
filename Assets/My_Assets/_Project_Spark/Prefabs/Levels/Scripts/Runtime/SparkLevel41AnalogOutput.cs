@@ -400,6 +400,17 @@ namespace ProjectSpark.Gameplay
             component != null && component.isActiveAndEnabled && component.ElectricalEnabled;
         private static bool Healthy(SparkResistor resistor) => Available(resistor) && !resistor.IsBurned;
 
+        internal SparkTerminal[][] GetAuthoredWireNets() => new[]
+        {
+            new[] { bitOutputs[2], bitResistors[2].TerminalA },
+            new[] { bitOutputs[1], bitResistors[1].TerminalA },
+            new[] { bitOutputs[0], bitResistors[0].TerminalA },
+            new[] { bitResistors[2].TerminalB, link21.TerminalA },
+            new[] { link21.TerminalB, bitResistors[1].TerminalB, link10.TerminalA },
+            new[] { link10.TerminalB, bitResistors[0].TerminalB, termination.TerminalA },
+            new[] { terminationContact.OutputTerminal, source.NegativeTerminal }
+        };
+
         private string CheckWiring()
         {
             circuit.CopyConnections(connections);
@@ -416,16 +427,7 @@ namespace ProjectSpark.Gameplay
                 var b=Root(wire.B);
                 if (a != b) parents[b]=a;
             }
-            var nets = new[]
-            {
-                new[] { bitOutputs[2], bitResistors[2].TerminalA },
-                new[] { bitOutputs[1], bitResistors[1].TerminalA },
-                new[] { bitOutputs[0], bitResistors[0].TerminalA },
-                new[] { bitResistors[2].TerminalB, link21.TerminalA },
-                new[] { link21.TerminalB, bitResistors[1].TerminalB, link10.TerminalA },
-                new[] { link10.TerminalB, bitResistors[0].TerminalB, termination.TerminalA },
-                new[] { terminationContact.OutputTerminal, source.NegativeTerminal }
-            };
+            var nets = GetAuthoredWireNets();
             var used = new Dictionary<SparkTerminal,string>();
             if (source.PositiveTerminal == null) return "A reference terminal is missing.";
             used.Add(Root(source.PositiveTerminal),source.PositiveTerminal.name);

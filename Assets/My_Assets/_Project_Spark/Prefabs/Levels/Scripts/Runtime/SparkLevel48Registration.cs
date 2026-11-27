@@ -102,9 +102,18 @@ namespace ProjectSpark.Gameplay
         public void MainPower()
         {
             if (bindings == null) return;
-            powered = !powered;
-            if (!powered) StopWeb();
-            source.SetOutput(powered, default);
+            if (powered) StopWeb();
+            SetBenchPower(!powered);
+        }
+
+        private void SetBenchPower(bool enabled)
+        {
+            // The registration bench owns both the main supply and its auxiliary signal sources.
+            // Opening its power control must isolate all of them before the player services the wiring.
+            foreach (var supply in layout.GetComponentsInChildren<SparkPowerSupply>(true))
+                if (supply && supply != source) supply.SetOutput(enabled, default);
+            source.SetOutput(enabled, default);
+            powered = enabled;
         }
 
         public void ToggleAuto() { if (!Running && mode != Mode.Fault) auto = !auto; }
@@ -175,12 +184,12 @@ namespace ProjectSpark.Gameplay
             travel = velocity = actuator = errorMm = markLamp = motorAngle = accumulator = 0;
             detectedMarkPosition = expectedPrint = actualPrint = driveWait = 0;
             target = -1;
-            powered = auto = true;
+            auto = true;
             covered = calibrated = glarePending = glareRejected = transitioned = missingTest = recoveryReset = lastAccepted = false;
             requestedRpm = 30;
             fault = null;
             mode = Mode.Off;
-            source.SetOutput(true, default);
+            SetBenchPower(true);
             manager.QueueEvaluation();
         }
 

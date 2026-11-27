@@ -1,0 +1,35 @@
+{
+  "level": 44,
+  "levelId": "level_44",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_44_Layout/Level_44_Encoder_Layout.prefab",
+  "layoutRevision": "A4AC6C1860262A1DA988B2D218F78AF0584AB8296DA8575EC0BEFCD1A113BF51",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel44Encoder.cs#CheckWiring",
+  "terminalBindings": 10,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "5 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "DECODER_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RET",
+      "toId": "DECODER_RET"
+    },
+    {
+      "fromId": "ENC_Z",
+      "toId": "DEC_Z"
+    },
+    {
+      "fromId": "ENC_A",
+      "toId": "DEC_A"
+    },
+    {
+      "fromId": "ENC_B",
+      "toId": "DEC_B"
+    }
+  ]
+}

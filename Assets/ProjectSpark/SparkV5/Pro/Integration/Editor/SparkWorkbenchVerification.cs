@@ -81,11 +81,15 @@ private static void QueueFlight()
             bool testSwitch = request == "switch";
             bool testV19 = request == "v19";
             bool testStarter = request == "v19-starter";
-            bool testFlight = request == "flight" || testCable || testSwitch || testV19 || testStarter;
+            bool testMission48 = request == "v19-level48";
+            bool testBoard100 = request == "v191-board100";
+            bool testFlight = request == "flight" || testCable || testSwitch || testV19 || testStarter || testMission48 || testBoard100;
             File.Delete(Request);
             if (testFlight) Directory.CreateDirectory(Path.GetDirectoryName(FlightReport));
             if (testCable) Directory.CreateDirectory(CableReportFolder);
-            SessionState.SetString(Flag + ".report", testStarter ? "Logs/SuperAI_v19/StarterPlayMode.txt" :
+            SessionState.SetString(Flag + ".report", testBoard100 ? "Logs/SuperAI_v19/Level100BoardPlayMode.txt" :
+                testMission48 ? "Logs/SuperAI_v19/Level48PlayMode.txt" :
+                testStarter ? "Logs/SuperAI_v19/StarterPlayMode.txt" :
                 testV19 ? "Logs/SuperAI_v19/Level20PlayMode.txt" :
                 testCable ? Path.Combine(CableReportFolder, request + ".txt") :
                 testSwitch ? Path.Combine(Path.GetDirectoryName(FlightReport), "StandingSwitch.txt") :
@@ -103,7 +107,7 @@ private static void QueueFlight()
             SessionState.SetString(Flag + ".previous", AssetDatabase.GetAssetPath(EditorSceneManager.playModeStartScene) ?? "");
             SessionState.SetBool(Flag + ".boot", testBoot);
             SessionState.SetBool(Flag + ".flight", testFlight);
-            SessionState.SetString(Flag + ".cable", testCable || testSwitch || testV19 || testStarter ? request : "");
+            SessionState.SetString(Flag + ".cable", testCable || testSwitch || testV19 || testStarter || testMission48 || testBoard100 ? request : "");
             SessionState.SetBool(Flag, true);
             EditorSceneManager.playModeStartScene =
                 testBoot ? AssetDatabase.LoadAssetAtPath<SceneAsset>(Boot) :

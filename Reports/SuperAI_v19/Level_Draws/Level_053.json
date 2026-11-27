@@ -1,0 +1,111 @@
+{
+  "level": 53,
+  "levelId": "level_53",
+  "layout": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Level_53_Layout/Level_53_Layout.prefab",
+  "layoutRevision": "F4496DD77544C53776E7095521383A67848F0873A2DC34CBAB0E017D460F4D76",
+  "constructionType": "Native electrical wiring + Switch/device operation",
+  "planStatus": "Needs review",
+  "authoredRecipeSource": "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Scripts/Runtime/SparkLevel53Couple.cs#Wires",
+  "terminalBindings": 40,
+  "objectives": 6,
+  "approved": false,
+  "missingRequirement": "24 native terminal pairs from the bound mission evaluator require explicit review.",
+  "pairs": [
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "CTRL_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "CTRL_GND"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "MDRV_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "MDRV_GND"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "VIB_LEFT_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "VIB_LEFT_GND"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "VIB_RIGHT_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "VIB_RIGHT_GND"
+    },
+    {
+      "fromId": "SUPPLY_PLUS",
+      "toId": "BDRV_PLUS"
+    },
+    {
+      "fromId": "SUPPLY_RETURN",
+      "toId": "BDRV_GND"
+    },
+    {
+      "fromId": "CTRL_PWM",
+      "toId": "MDRV_PWM"
+    },
+    {
+      "fromId": "MDRV_MP",
+      "toId": "MOTOR_POS"
+    },
+    {
+      "fromId": "MDRV_MN",
+      "toId": "MOTOR_NEG"
+    },
+    {
+      "fromId": "VIB_LEFT_OUT",
+      "toId": "CTRL_VIB_L"
+    },
+    {
+      "fromId": "VIB_RIGHT_OUT",
+      "toId": "CTRL_VIB_R"
+    },
+    {
+      "fromId": "ENCODER_A",
+      "toId": "CTRL_ENC_A"
+    },
+    {
+      "fromId": "ENCODER_B",
+      "toId": "CTRL_ENC_B"
+    },
+    {
+      "fromId": "ENCODER_Z",
+      "toId": "CTRL_ENC_Z"
+    },
+    {
+      "fromId": "CTRL_BAL",
+      "toId": "BDRV_CMD"
+    },
+    {
+      "fromId": "BDRV_AP",
+      "toId": "PLANE_A_PLUS"
+    },
+    {
+      "fromId": "BDRV_AN",
+      "toId": "PLANE_A_NEG"
+    },
+    {
+      "fromId": "BDRV_BP",
+      "toId": "PLANE_B_PLUS"
+    },
+    {
+      "fromId": "BDRV_BN",
+      "toId": "PLANE_B_NEG"
+    },
+    {
+      "fromId": "GUARD_NC",
+      "toId": "CTRL_SAFE"
+    }
+  ]
+}

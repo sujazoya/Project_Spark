@@ -1,0 +1,1389 @@
+{
+    "commands": [
+        {
+            "id": "mode.manual",
+            "category": "Construction",
+            "phrase": "spark manual mode",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Manual",
+            "approval": "None",
+            "evidence": "Mode",
+            "aliases": [
+                "manual mode"
+            ],
+            "related": []
+        },
+        {
+            "id": "mode.assisted",
+            "category": "Construction",
+            "phrase": "spark assisted mode",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Assisted",
+            "approval": "None",
+            "evidence": "Mode",
+            "aliases": [
+                "assisted mode"
+            ],
+            "related": [
+                "wire.suggest"
+            ]
+        },
+        {
+            "id": "mode.auto",
+            "category": "Construction",
+            "phrase": "spark auto mode",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Auto",
+            "approval": "Confirm",
+            "evidence": "Mode",
+            "aliases": [
+                "auto ai mode"
+            ],
+            "related": [
+                "wire.preview",
+                "wire.draw"
+            ]
+        },
+        {
+            "id": "wire.draw",
+            "category": "Construction",
+            "phrase": "draw current level",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Auto",
+            "approval": "Confirm",
+            "evidence": "Plan",
+            "aliases": [
+                "spark draw current level",
+                "spark draw this level",
+                "wire current level",
+                "spark wire current level",
+                "spark auto draw",
+                "hey spark draw current level"
+            ],
+            "related": [
+                "wire.status",
+                "wire.pause",
+                "wire.cancel"
+            ]
+        },
+        {
+            "id": "wire.continue",
+            "category": "Construction",
+            "phrase": "spark continue drawing",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Auto",
+            "approval": "Confirm",
+            "evidence": "Resume",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "wire.pause",
+            "category": "Construction",
+            "phrase": "spark pause drawing",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Pause",
+            "aliases": [
+                "spark pause automation",
+                "pause auto wiring"
+            ],
+            "related": []
+        },
+        {
+            "id": "wire.resume",
+            "category": "Construction",
+            "phrase": "spark resume drawing",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Resume",
+            "aliases": [
+                "spark resume automation",
+                "resume auto wiring"
+            ],
+            "related": []
+        },
+        {
+            "id": "wire.cancel",
+            "category": "Construction",
+            "phrase": "spark stop drawing",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "CancelPlan",
+            "aliases": [
+                "spark cancel automation",
+                "cancel auto wiring",
+                "spark stop",
+                "cancel wire",
+                "stop wiring"
+            ],
+            "related": []
+        },
+        {
+            "id": "wire.status",
+            "category": "Construction",
+            "phrase": "spark drawing status",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "wire.explain",
+            "category": "Construction",
+            "phrase": "spark explain current construction",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "wire.engineering",
+            "category": "Construction",
+            "phrase": "spark engineering status",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "engineering status",
+                "auto wiring status"
+            ],
+            "related": []
+        },
+        {
+            "id": "wire.preview",
+            "category": "Construction",
+            "phrase": "spark preview practice plan",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "preview wiring plan",
+                "preview approved wiring plan"
+            ],
+            "related": [
+                "wire.suggest",
+                "wire.draw"
+            ]
+        },
+        {
+            "id": "wire.suggest",
+            "category": "Construction",
+            "phrase": "spark suggest next wire",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Assisted",
+            "approval": "None",
+            "evidence": "Suggestion",
+            "aliases": [
+                "spark suggest next step",
+                "spark suggest the next wire",
+                "spark inspect the next connection"
+            ],
+            "related": [
+                "wire.source",
+                "wire.approve",
+                "wire.failure"
+            ]
+        },
+        {
+            "id": "wire.source",
+            "category": "Construction",
+            "phrase": "spark show me where the source terminal is",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "wire.failure",
+            "category": "Construction",
+            "phrase": "spark explain why this connection failed",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "wire.approve",
+            "category": "Construction",
+            "phrase": "spark approve suggested wire",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Assisted",
+            "approval": "NativeProposal",
+            "evidence": "Wire",
+            "aliases": [
+                "spark perform approved step",
+                "spark connect the approved wire"
+            ],
+            "related": [
+                "work.objectives",
+                "wire.suggest"
+            ]
+        },
+        {
+            "id": "wire.approved",
+            "category": "Construction",
+            "phrase": "spark start approved plan",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Auto",
+            "approval": "Confirm",
+            "evidence": "Plan",
+            "aliases": [
+                "auto wire practice level",
+                "spark wire this practice level"
+            ],
+            "related": [
+                "wire.status"
+            ]
+        },
+        {
+            "id": "wire.reload",
+            "category": "Construction",
+            "phrase": "spark reload engineering plans",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "wire.narrate.on",
+            "category": "Construction",
+            "phrase": "spark engineering narration on",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "wire.narrate.off",
+            "category": "Construction",
+            "phrase": "spark engineering narration off",
+            "route": "Engineering",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "wire.record",
+            "category": "Construction",
+            "phrase": "start wiring recording",
+            "route": "NativeRecorder",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "record my wiring"
+            ],
+            "related": []
+        },
+        {
+            "id": "wire.record.stop",
+            "category": "Construction",
+            "phrase": "stop wiring recording",
+            "route": "NativeRecorder",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "finish wiring recording"
+            ],
+            "related": []
+        },
+        {
+            "id": "wire.record.status",
+            "category": "Construction",
+            "phrase": "spark wiring status",
+            "route": "NativeRecorder",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "wire.record.reload",
+            "category": "Construction",
+            "phrase": "reload wiring plans",
+            "route": "NativeRecorder",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "wire.native.status",
+            "category": "Construction",
+            "phrase": "native wire status",
+            "route": "NativeWire",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "real wire status"
+            ],
+            "related": []
+        },
+        {
+            "id": "wire.undo",
+            "category": "Construction",
+            "phrase": "undo last AI wire",
+            "route": "NativeWire",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "Confirm",
+            "evidence": "Observe",
+            "aliases": [
+                "undo last spark wire"
+            ],
+            "related": []
+        },
+        {
+            "id": "lab.help",
+            "category": "Construction",
+            "phrase": "agent help",
+            "route": "Lab",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "laboratory actions",
+                "what can you do in the laboratory"
+            ],
+            "related": []
+        },
+        {
+            "id": "lab.status",
+            "category": "Construction",
+            "phrase": "agent status",
+            "route": "Lab",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "auto solve status"
+            ],
+            "related": []
+        },
+        {
+            "id": "lab.preview",
+            "category": "Construction",
+            "phrase": "preview level solution",
+            "route": "Lab",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "preview assisted plan",
+                "show level wiring plan"
+            ],
+            "related": []
+        },
+        {
+            "id": "lab.guide",
+            "category": "Teaching",
+            "phrase": "show next objective in 3d",
+            "route": "Lab",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "demonstrate next objective automatically",
+                "guide me to next objective"
+            ],
+            "related": []
+        },
+        {
+            "id": "work.objectives",
+            "category": "Workbench",
+            "phrase": "which objective is pending",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": [
+                "work.evidence",
+                "wire.preview"
+            ]
+        },
+        {
+            "id": "work.evidence",
+            "category": "Workbench",
+            "phrase": "show objective evidence",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": [
+                "work.diagnose"
+            ]
+        },
+        {
+            "id": "work.diagnose",
+            "category": "Workbench",
+            "phrase": "diagnose level",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "explain pending objectives",
+                "audit bindings"
+            ],
+            "related": []
+        },
+        {
+            "id": "work.progress",
+            "category": "Workbench",
+            "phrase": "show level progress",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "work.hint",
+            "category": "Workbench",
+            "phrase": "give me a hint",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "work.connections",
+            "category": "Workbench",
+            "phrase": "show circuit connections",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "which terminals are connected"
+            ],
+            "related": []
+        },
+        {
+            "id": "work.selected",
+            "category": "Workbench",
+            "phrase": "point at selected component",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "point at this",
+                "show me this component"
+            ],
+            "related": []
+        },
+        {
+            "id": "work.positive",
+            "category": "Workbench",
+            "phrase": "show me the positive terminal",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "work.negative",
+            "category": "Workbench",
+            "phrase": "show me the negative terminal",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "work.clear",
+            "category": "Workbench",
+            "phrase": "clear highlight",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "work.inventory",
+            "category": "Workbench",
+            "phrase": "show my inventory",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "what is in my inventory",
+                "inventory"
+            ],
+            "related": []
+        },
+        {
+            "id": "work.tool",
+            "category": "Workbench",
+            "phrase": "which tool is active",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "what tool am i using"
+            ],
+            "related": []
+        },
+        {
+            "id": "work.power",
+            "category": "Workbench",
+            "phrase": "power supply settings",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "what is this power supply set to"
+            ],
+            "related": []
+        },
+        {
+            "id": "work.voltage",
+            "category": "Workbench",
+            "phrase": "what is the voltage",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "work.current",
+            "category": "Workbench",
+            "phrase": "what is the current",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "work.resistance",
+            "category": "Workbench",
+            "phrase": "what is the resistance",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "work.watts",
+            "category": "Workbench",
+            "phrase": "what is the power",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "mission.status",
+            "category": "Workbench",
+            "phrase": "spark inspect mission",
+            "route": "Mission",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "spark mission status"
+            ],
+            "related": []
+        },
+        {
+            "id": "mission.export",
+            "category": "Workbench",
+            "phrase": "spark export mission report",
+            "route": "Mission",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "device.list",
+            "category": "Robot",
+            "phrase": "spark inspect devices",
+            "route": "Devices",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "device.status",
+            "category": "Robot",
+            "phrase": "spark device status",
+            "route": "Devices",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "device.on",
+            "category": "Robot",
+            "phrase": "spark propose device {value} on",
+            "route": "Devices",
+            "parameter": "Device",
+            "mode": "Assisted",
+            "approval": "None",
+            "evidence": "Proposal",
+            "aliases": [],
+            "related": [
+                "device.approve",
+                "device.cancel"
+            ]
+        },
+        {
+            "id": "device.off",
+            "category": "Robot",
+            "phrase": "spark propose device {value} off",
+            "route": "Devices",
+            "parameter": "Device",
+            "mode": "Assisted",
+            "approval": "None",
+            "evidence": "Proposal",
+            "aliases": [],
+            "related": [
+                "device.approve",
+                "device.cancel"
+            ]
+        },
+        {
+            "id": "device.approve",
+            "category": "Robot",
+            "phrase": "spark approve device action",
+            "route": "Devices",
+            "parameter": "None",
+            "mode": "Assisted",
+            "approval": "NativeProposal",
+            "evidence": "Device",
+            "aliases": [],
+            "related": [
+                "device.status"
+            ]
+        },
+        {
+            "id": "device.cancel",
+            "category": "Robot",
+            "phrase": "spark cancel device action",
+            "route": "Devices",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "CancelDevice",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "flight.up",
+            "category": "Robot",
+            "phrase": "spark take off",
+            "route": "Flight",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Observe",
+            "aliases": [
+                "take off",
+                "spark fly"
+            ],
+            "related": []
+        },
+        {
+            "id": "flight.down",
+            "category": "Robot",
+            "phrase": "spark land",
+            "route": "Flight",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Observe",
+            "aliases": [
+                "land spark"
+            ],
+            "related": []
+        },
+        {
+            "id": "flight.hover",
+            "category": "Robot",
+            "phrase": "spark hover",
+            "route": "Flight",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Observe",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "flight.selected",
+            "category": "Robot",
+            "phrase": "spark fly to selected",
+            "route": "Flight",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Observe",
+            "aliases": [
+                "fly to selected"
+            ],
+            "related": []
+        },
+        {
+            "id": "flight.status",
+            "category": "Robot",
+            "phrase": "spark flight status",
+            "route": "Flight",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "flight status"
+            ],
+            "related": []
+        },
+        {
+            "id": "arm.status",
+            "category": "Robot",
+            "phrase": "spark arm status",
+            "route": "Arms",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "spark arms status"
+            ],
+            "related": []
+        },
+        {
+            "id": "arm.retract",
+            "category": "Robot",
+            "phrase": "spark retract arms",
+            "route": "Arms",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Observe",
+            "aliases": [
+                "spark retract arm"
+            ],
+            "related": []
+        },
+        {
+            "id": "arm.right",
+            "category": "Robot",
+            "phrase": "spark extend right arm to {value}",
+            "route": "Arms",
+            "parameter": "Terminal",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Observe",
+            "aliases": [
+                "spark reach terminal {value}"
+            ],
+            "related": []
+        },
+        {
+            "id": "arm.left",
+            "category": "Robot",
+            "phrase": "spark extend left arm to {value}",
+            "route": "Arms",
+            "parameter": "Terminal",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Observe",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "arm.range",
+            "category": "Robot",
+            "phrase": "spark set arm reach {value}",
+            "route": "Arms",
+            "parameter": "Metres",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Observe",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "teach.whiteboard",
+            "category": "Teaching",
+            "phrase": "show current level on whiteboard",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": [
+                "teach.wiring",
+                "teach.objectives"
+            ]
+        },
+        {
+            "id": "teach.wiring",
+            "category": "Teaching",
+            "phrase": "show live circuit on whiteboard",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "teach.objectives",
+            "category": "Teaching",
+            "phrase": "draw objective map in 2d",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "teach.workbench",
+            "category": "Teaching",
+            "phrase": "show current level in 3d",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "teach.draw",
+            "category": "Teaching",
+            "phrase": "draw level {value}",
+            "route": "Ask",
+            "parameter": "Level",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "teach.models",
+            "category": "Teaching",
+            "phrase": "teaching models",
+            "route": "Teaching",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": [
+                "teach.model"
+            ]
+        },
+        {
+            "id": "teach.model",
+            "category": "Teaching",
+            "phrase": "show teaching model {value}",
+            "route": "Teaching",
+            "parameter": "Text",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "show {value} in 3d"
+            ],
+            "related": []
+        },
+        {
+            "id": "teach.model.close",
+            "category": "Teaching",
+            "phrase": "close teaching model",
+            "route": "Teaching",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "teach.lesson",
+            "category": "Teaching",
+            "phrase": "teach me {value}",
+            "route": "Ask",
+            "parameter": "Text",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "teach.definition",
+            "category": "Teaching",
+            "phrase": "define {value}",
+            "route": "Ask",
+            "parameter": "Text",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "teach.online",
+            "category": "Teaching",
+            "phrase": "online explain {value}",
+            "route": "Ask",
+            "parameter": "Text",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "model explain {value}"
+            ],
+            "related": []
+        },
+        {
+            "id": "teach.practice",
+            "category": "Teaching",
+            "phrase": "practice",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "give me a practice question"
+            ],
+            "related": [
+                "teach.practice.hint",
+                "teach.answer"
+            ]
+        },
+        {
+            "id": "teach.practice.topic",
+            "category": "Teaching",
+            "phrase": "practice {value}",
+            "route": "Ask",
+            "parameter": "Text",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "teach.practice.hint",
+            "category": "Teaching",
+            "phrase": "practice hint",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "hint"
+            ],
+            "related": []
+        },
+        {
+            "id": "teach.answer",
+            "category": "Teaching",
+            "phrase": "answer {value}",
+            "route": "Ask",
+            "parameter": "Text",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "teach.lesson.pause",
+            "category": "Teaching",
+            "phrase": "pause the lesson",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "teach.lesson.resume",
+            "category": "Teaching",
+            "phrase": "continue our lesson",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "teach.lesson.next",
+            "category": "Teaching",
+            "phrase": "go to the next lesson step",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "teach.lesson.stop",
+            "category": "Teaching",
+            "phrase": "cancel the lesson",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "teach.practice.stop",
+            "category": "Teaching",
+            "phrase": "stop practice",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "teach.report",
+            "category": "Teaching",
+            "phrase": "my learning report",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "my practice report",
+                "what did i learn previously"
+            ],
+            "related": []
+        },
+        {
+            "id": "demo.diode",
+            "category": "Teaching",
+            "phrase": "demonstrate diode polarity",
+            "route": "Demo",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "demo.switch",
+            "category": "Teaching",
+            "phrase": "demonstrate a switch",
+            "route": "Demo",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "demo.meter",
+            "category": "Teaching",
+            "phrase": "demonstrate voltage measurement",
+            "route": "Demo",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "demo.next",
+            "category": "Teaching",
+            "phrase": "next demo",
+            "route": "Demo",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "continue demo",
+                "advance demo",
+                "proceed demo"
+            ],
+            "related": [
+                "demo.status",
+                "demo.repeat"
+            ]
+        },
+        {
+            "id": "demo.repeat",
+            "category": "Teaching",
+            "phrase": "repeat demo",
+            "route": "Demo",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "retry demo",
+                "redo demo",
+                "show again demo"
+            ],
+            "related": []
+        },
+        {
+            "id": "demo.stop",
+            "category": "Teaching",
+            "phrase": "stop demo",
+            "route": "Demo",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "end demo",
+                "cancel demo",
+                "close demo"
+            ],
+            "related": []
+        },
+        {
+            "id": "demo.status",
+            "category": "Teaching",
+            "phrase": "demo status",
+            "route": "Demo",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "demo progress",
+                "where are we in the demo"
+            ],
+            "related": []
+        },
+        {
+            "id": "session.chapter",
+            "category": "Session",
+            "phrase": "current chapter",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "which chapter",
+                "current campaign",
+                "explain the current mission",
+                "explain current mission"
+            ],
+            "related": []
+        },
+        {
+            "id": "session.catalog",
+            "category": "Session",
+            "phrase": "catalog coverage",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "session.level",
+            "category": "Session",
+            "phrase": "catalog level {value}",
+            "route": "Ask",
+            "parameter": "Level",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "session.stop",
+            "category": "Session",
+            "phrase": "stop speaking",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [
+                "stop",
+                "wait",
+                "wait a second",
+                "wait stop speaking"
+            ],
+            "related": []
+        },
+        {
+            "id": "session.mute",
+            "category": "Session",
+            "phrase": "mute microphone",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "session.coach.on",
+            "category": "Session",
+            "phrase": "turn proactive coaching on",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "session.coach.off",
+            "category": "Session",
+            "phrase": "turn proactive coaching off",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "None",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        },
+        {
+            "id": "session.reset",
+            "category": "Session",
+            "phrase": "reset optional personalization",
+            "route": "Ask",
+            "parameter": "None",
+            "mode": "Retain",
+            "approval": "Confirm",
+            "evidence": "Reply",
+            "aliases": [],
+            "related": []
+        }
+    ]
+}

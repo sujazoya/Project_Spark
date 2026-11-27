@@ -11,3 +11,9 @@ The wiring flow can verify a runtime slot after the player uses the native shelf
 ## Other authored sources inspected
 
 Levels 96 and 97 include resolved educational PCB pad or pin netlists. Their pad records and net membership are useful board evidence. The existing generic Wire Tool requires native layout terminal owner bindings and reviewed ordered actions for this board workflow. The netlists were not translated into cable connections. Level 124 has authored placement and blocked task records that expose unverified footprints and no bound integration authority.
+
+## Mission-controller recipes
+
+The Editor checks the active layout for exact native wire recipes in its bound mission controller. The importer compares every exported endpoint to the current controller and layout before creating an asset for review. A serialized-file audit verified 4,233 explicit pairs across Levels 43 through 93, of which 3,484 connect sockets sharing a passive carrier with no solver terminals. A draft still requires explicit review for practice execution.
+
+Some later boards have authored placement, copper, via, and diagnostic stages. Their route rows are reported with their authored component slot counts when that controller exposes them. Those boards use their own player actions and qualification workflows.
