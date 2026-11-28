@@ -9,4 +9,4 @@
 | Level and targets | `LevelGamePlayManager` owns evaluation. `SparkLevelLayoutLoader.LayoutLoaded/LayoutUnloaded` identify same-scene layout transitions. `SparkLevelSceneBindings` resolves authored terminal and object identities. |
 | Selection | `SparkSelectionController` emits selection changes. |
 | Electrical | `SparkElectricalSolver` emits solve completion/failure and provides revisions. Components hold their solved electrical state. `SparkMultimeter.ReadingChanged` carries native range, mode, stability, and units. |
-| Presentation | `SparkProLivePanel.Install` owns the Spark Live launch surface and workshop UI registration. NEXUS is a tab on that surface. `SparkLiveAdjustableWindow` owns the shared bounds, drag, resize, opacity, and collapse behavior. |
+| Presentation | `SparkProLivePanel.Install` owns the Spark Live launch surface and workshop UI registration. NEXUS is a tab on that surface. `SparkLiveAdjustableWindow` owns bounds, drag, resize, opacity, and collapse behavior. The floating window reuses that controller with a separate preference namespace and hosts the same console instance. |

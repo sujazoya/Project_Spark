@@ -37,7 +37,12 @@ namespace ProjectSpark.SparkV5.Pro
         SparkUIManager manager;
         SparkLiveAdjustableWindow adjustableWindow;
         SparkNexusPanel nexus;
-        Button chatTab, nexusTab;
+        Button chatTab, nexusTab, detachTab;
+        TMP_Text nexusTabCaption;
+        RectTransform dockedMount, floatingMount;
+        GameObject floatingFrame;
+
+        internal bool NexusDetached => floatingMount && nexus && nexus.transform.parent == floatingMount;
         bool showNexus;
 
         internal SparkNexusPanel Nexus => nexus;
@@ -112,7 +117,13 @@ namespace ProjectSpark.SparkV5.Pro
             var tabs = Region(shell, "Spark Live pages", 16, 0, 16, 0, 1, 1, -111, -76);
             chatTab = MakeButton(tabs, "Chat tab", "Chat", out _, () => SelectNexus(false));
             Anchor((RectTransform)chatTab.transform, 0, 0, .5f, 1, 0, 0, -3, 0);
-            nexusTab = MakeButton(tabs, "NEXUS tab", "NEXUS", out _, () => SelectNexus(true));
+            nexusTab = MakeButton(tabs, "NEXUS tab", "NEXUS", out nexusTabCaption, () =>
+            {
+                if (NexusDetached) ShowFloatingNexus();
+                else SelectNexus(true);
+            });
+            detachTab = MakeButton(tabs, "Detach NEXUS", "Detach", out _, DetachNexus);
+            Anchor((RectTransform)detachTab.transform, .72f, 0, 1, 1, 3, 0, 0, 0);
             Anchor((RectTransform)nexusTab.transform, .5f, 0, 1, 1, 3, 0, 0, 0);
 
             foreach (string name in new[] { "Voice visualizer", "Conversation", "Voice settings" })
@@ -122,20 +133,82 @@ namespace ProjectSpark.SparkV5.Pro
                 if (name == "Voice visualizer") section.offsetMin -= new Vector2(0, 39);
             }
 
-            var mount = Region(shell, "NEXUS page", 16, 116, 16, 17);
-            nexus = SparkNexusPanel.Create(executive, mount);
-            adjustableWindow.RegisterPage(tabs.gameObject, mount.gameObject, nexus.SetVisible);
+            dockedMount = Region(shell, "NEXUS page", 16, 116, 16, 17);
+            nexus = SparkNexusPanel.Create(executive, dockedMount);
+            adjustableWindow.RegisterPage(tabs.gameObject, dockedMount.gameObject,
+                visible => { if (!NexusDetached) nexus.SetVisible(visible); });
             SelectNexus(false);
         }
 
         internal void SelectNexus(bool value)
         {
             if (!nexus || !adjustableWindow) return;
+            if (value && NexusDetached) { ShowFloatingNexus(); return; }
             showNexus = value;
             settings.gameObject.SetActive(false);
             adjustableWindow.SetNexusPage(value);
             if (chatTab) chatTab.image.color = value ? Surface : Cyan * .43f;
-            if (nexusTab) nexusTab.image.color = value ? Cyan * .43f : Surface;
+            if (nexusTab)
+            {
+                nexusTab.image.color = value ? Cyan * .43f : Surface;
+                Anchor((RectTransform)nexusTab.transform, .5f, 0, value ? .72f : 1f, 1, 3, 0, value ? -3 : 0, 0);
+            }
+            if (detachTab) detachTab.gameObject.SetActive(value);
+        }
+
+        private void DetachNexus()
+        {
+            if (!nexus || NexusDetached || !manager) return;
+            if (!floatingFrame) BuildFloatingNexus();
+            nexus.SetVisible(false);
+            nexus.transform.SetParent(floatingMount, false);
+            nexusTabCaption.text = "Show NEXUS";
+            SelectNexus(false);
+            ShowFloatingNexus();
+        }
+
+        private void DockNexus()
+        {
+            if (!NexusDetached || !manager.Open(PanelId)) return;
+            nexus.SetVisible(false);
+            nexus.transform.SetParent(dockedMount, false);
+            floatingFrame.SetActive(false);
+            nexusTabCaption.text = "NEXUS";
+            SelectNexus(true);
+            nexusTab.Select();
+        }
+
+        private void ShowFloatingNexus()
+        {
+            if (!floatingFrame || !NexusDetached) return;
+            floatingFrame.SetActive(true);
+            Canvas.ForceUpdateCanvases();
+            nexus.SetVisible(true);
+            var header = floatingMount.parent.Find("Header");
+            var dock = header ? header.Find("Dock NEXUS") : null;
+            if (dock && dock.TryGetComponent<Button>(out var button)) button.Select();
+        }
+
+        private void BuildFloatingNexus()
+        {
+            floatingFrame = new GameObject("Floating Spark NEXUS", typeof(RectTransform), typeof(Canvas),
+                typeof(CanvasScaler), typeof(GraphicRaycaster));
+            floatingFrame.SetActive(false);
+            floatingFrame.transform.SetParent(manager.transform, false);
+            SetupCanvas(floatingFrame, 31530);
+            var console = SparkAAAUIFactory.Rect("Console", floatingFrame.transform);
+            SparkAAAUIFactory.Image(console, Panel).raycastTarget = true;
+            var header = Region(console, "Header", 16, 0, 16, 0, 1, 1, -72, -6);
+            var heading = Label(header, "Spark NEXUS", "Spark NEXUS", 22, Ink, 0, 4, 246, 6, true);
+            heading.enableAutoSizing = true;
+            heading.fontSizeMin = 13;
+            heading.fontSizeMax = 22;
+            var dock = MakeButton(header, "Dock NEXUS", "Dock", out _, DockNexus);
+            Anchor((RectTransform)dock.transform, 1, 0, 1, 1, -158, 16, -66, -16);
+            var hide = MakeButton(header, "Hide NEXUS", "Hide", out _, () => floatingFrame.SetActive(false));
+            Anchor((RectTransform)hide.transform, 1, 0, 1, 1, -60, 16, 0, -16);
+            floatingMount = Region(console, "Floating NEXUS content", 16, 78, 16, 17);
+            SparkLiveAdjustableWindow.AttachFloating(floatingFrame, console);
         }
 
         private void SetVisible(bool visible)
@@ -185,7 +258,7 @@ namespace ProjectSpark.SparkV5.Pro
                 microphone.ProviderStatusChanged -= OnProviderStatus;
                 microphone.SetHealthMonitoring(false);
             }
-            if (showVisual)
+            if (showVisual || NexusDetached)
                 microphone?.Stop();
             else
                 executive.EndLiveSession();
@@ -200,6 +273,7 @@ namespace ProjectSpark.SparkV5.Pro
 
         private void OnDestroy()
         {
+            if (floatingFrame) Destroy(floatingFrame);
             if (manager && manager.Find(PanelId))
                 manager.Unregister(PanelId);
         }

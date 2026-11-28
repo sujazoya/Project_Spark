@@ -4,6 +4,8 @@
 
 Open **Spark Live** in the workshop and select the **NEXUS** tab. Switch to **Chat** any time to return to the existing conversation. Both tabs share one window, UI manager, and event system. Drag the header to move it, drag an edge or corner to resize it, or use **Layout** for scale, opacity, snap, lock, and minimize. NEXUS switches to compact navigation as the window gets narrower.
 
+Select **Detach** on the NEXUS tab to open a floating window. Drag its header or resize from any edge or corner. Its **Layout** menu controls the floating window independently. **Hide** closes the floating view, and **Show NEXUS** in Spark Live reopens it. **Dock** returns the same console to Spark Live.
+
 For authoring, open **Project Spark → NEXUS → Install/Upgrade Panel**, then **Bind Existing Spark Live** and **Validate Selected Scene**. MainMenu's normal installer binds the panel automatically at runtime. The editor tools import and validate the prefab and its native route. MainMenu needs one campaign manager, the existing Spark Live installation path and its executive, and a working event system. The prefab holds the glass material and reduced-motion default. Native robot and teaching cards depend on their corresponding components being present.
 
 ## Operate

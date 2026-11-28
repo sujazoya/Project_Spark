@@ -259,6 +259,7 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             Check(console && panel.transform.IsChildOf(console) && console.Find("AAAResize7") &&
                 console.Find("Header").GetComponent<SparkLiveWindowPointer>(),
                 "NEXUS is inside the existing draggable and resizable shell.");
+            await VerifyFloatingPanel(live, panel, ui, console, nexusTab);
             chatTab.onClick.Invoke();
             Check(!panel.Visible && live.Visible, "Chat tab restores the existing Spark Live page.");
             Log("PASS NEXUS tab opens inside Spark Live, uses the shared Canvas, drag and resize shell, and switches back to Chat.");
@@ -269,6 +270,7 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             if (embeddedOnly)
             {
                 await VerifyStarterLed(manager, spark, workflow, context, commands["wire.draw"], Slot(1));
+                ui.Open(SparkProLivePanel.PanelId);
                 nexusTab.onClick.Invoke();
                 await Task.Delay(350);
                 ScreenCapture.CaptureScreenshot(Docs + "/NEXUS-Workbench.png");
@@ -382,6 +384,96 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             Log("PASS Level 20 live resistor current matches the native solver.");
             await Operate(supplyPort.DeviceId, false);
             await VerifyStarterLed(manager, spark, workflow, context, commands["wire.draw"], Slot(1));
+        }
+
+        private static async Task VerifyFloatingPanel(SparkProLivePanel live, SparkNexusPanel panel,
+            SparkUIManager ui, RectTransform dockedConsole, Button nexusTab)
+        {
+            var fixturePreferences = SparkLiveAdjustableWindow.FloatingPreferences;
+            var numbers = new Dictionary<string, float>
+            {
+                ["x"] = .36f, ["y"] = .64f, ["width"] = 545f, ["height"] = 675f, ["scale"] = .92f, ["opacity"] = 1f
+            };
+            var toggles = new Dictionary<string, int> { ["collapsed"] = 0, ["snap"] = 0, ["locked"] = 0 };
+            var savedNumbers = numbers.Keys.ToDictionary(key => key, key => PlayerPrefs.HasKey(fixturePreferences + key)
+                ? (float?)PlayerPrefs.GetFloat(fixturePreferences + key) : null);
+            var savedToggles = toggles.Keys.ToDictionary(key => key, key => PlayerPrefs.HasKey(fixturePreferences + key)
+                ? (int?)PlayerPrefs.GetInt(fixturePreferences + key) : null);
+            try
+            {
+                foreach (var entry in numbers) PlayerPrefs.SetFloat(fixturePreferences + entry.Key, entry.Value);
+                foreach (var entry in toggles) PlayerPrefs.SetInt(fixturePreferences + entry.Key, entry.Value);
+
+                static bool InsideSafeArea(RectTransform window)
+                {
+                    Rect safe = Screen.safeArea;
+                    var corners = new Vector3[4];
+                    window.GetWorldCorners(corners);
+                    return corners.All(point =>
+                    {
+                        Vector2 screen = RectTransformUtility.WorldToScreenPoint(null, point);
+                        return screen.x >= safe.xMin - 2 && screen.x <= safe.xMax + 2 &&
+                            screen.y >= safe.yMin - 2 && screen.y <= safe.yMax + 2;
+                    });
+                }
+
+                var detach = live.GetComponentsInChildren<Button>().Single(item => item.name == "Detach NEXUS");
+                await Wait(() => InsideSafeArea(dockedConsole), "docked window fits the screen safe area", 4f);
+                await Task.Delay(260);
+                ScreenCapture.CaptureScreenshot(Docs + "/NEXUS-Docked.png");
+                await Task.Delay(260);
+                Vector2 originalSize = dockedConsole.sizeDelta;
+                Vector2 originalPosition = dockedConsole.anchoredPosition;
+                detach.onClick.Invoke();
+                Check(live.NexusDetached && panel.Visible && !panel.transform.IsChildOf(dockedConsole),
+                    "Detach moved the existing console into its independent floating window.");
+                var floating = panel.GetComponentInParent<SparkLiveAdjustableWindow>();
+                Check(floating && floating.gameObject != live.gameObject, "Independent layout controller.");
+                floating.PersistLayout = false;
+                var floatingConsole = (RectTransform)floating.transform.Find("Console");
+                await Wait(() => InsideSafeArea(floatingConsole), "floating window fits the screen safe area", 4f);
+                var controls = floating.GetComponentsInChildren<Button>(true);
+                var dock = controls.Single(control => control.name == "Dock NEXUS");
+                var hide = controls.Single(control => control.name == "Hide NEXUS");
+                hide.onClick.Invoke();
+                Check(!panel.Visible && live.NexusDetached, "Hide preserves the floating state.");
+                nexusTab.onClick.Invoke();
+                Check(panel.Visible, "Spark Live can reopen the floating window.");
+                ui.Close(SparkProLivePanel.PanelId);
+                Check(panel.Visible && !live.Visible, "Floating NEXUS stays open after closing Spark Live.");
+
+                Vector2 position = floatingConsole.anchoredPosition;
+                Vector2 size = floatingConsole.sizeDelta;
+                floating.Move(new Vector2(70, -35));
+                await Wait(() => (floatingConsole.anchoredPosition - position).sqrMagnitude > 25f, "floating window move", 4f);
+                floating.Resize(new Vector2(140, -110), 1, -1);
+                await Wait(() => floatingConsole.sizeDelta.x > size.x + 10f && floatingConsole.sizeDelta.y > size.y + 10f,
+                    "floating window resize", 4f);
+                await Task.Delay(280);
+                await Wait(() => InsideSafeArea(floatingConsole), "resized window fits the screen safe area", 4f);
+                ScreenCapture.CaptureScreenshot(Docs + "/NEXUS-Floating.png");
+                await Task.Delay(280);
+
+                dock.onClick.Invoke();
+                Check(panel.Visible && live.Visible && !live.NexusDetached && panel.transform.IsChildOf(dockedConsole),
+                    "Dock reopened Spark Live and restored the same console.");
+                Check(live.Nexus == panel && Object.FindObjectsByType<SparkNexusPanel>(FindObjectsInactive.Include,
+                    FindObjectsSortMode.None).Count(item => item.BoundExecutive == panel.BoundExecutive) == 1,
+                    "Only one NEXUS instance across detach and dock.");
+                Check((dockedConsole.sizeDelta - originalSize).sqrMagnitude < 1f &&
+                    (dockedConsole.anchoredPosition - originalPosition).sqrMagnitude < 1f,
+                    "Floating changes preserve the Spark Live layout.");
+                Log("PASS NEXUS detached, stayed open independently, hid and reopened, moved, resized, stayed inside the screen safe area, and docked without changing Spark Live bounds.");
+            }
+            finally
+            {
+                foreach (var entry in savedNumbers)
+                    if (entry.Value.HasValue) PlayerPrefs.SetFloat(fixturePreferences + entry.Key, entry.Value.Value);
+                    else PlayerPrefs.DeleteKey(fixturePreferences + entry.Key);
+                foreach (var entry in savedToggles)
+                    if (entry.Value.HasValue) PlayerPrefs.SetInt(fixturePreferences + entry.Key, entry.Value.Value);
+                    else PlayerPrefs.DeleteKey(fixturePreferences + entry.Key);
+            }
         }
 
         private static async Task VerifyStarterLed(LevelGamePlayManager manager, SparkProExecutive spark,

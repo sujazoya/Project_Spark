@@ -17,7 +17,10 @@ namespace ProjectSpark.SparkV5.Pro
     [DisallowMultipleComponent]
     public sealed class SparkLiveAdjustableWindow : MonoBehaviour
     {
-        private const string Prefs = "ProjectSpark.SparkLive.Layout.v8.";
+        private const string LivePreferences = "ProjectSpark.SparkLive.Layout.v8.";
+        internal const string FloatingPreferences = "ProjectSpark.Nexus.FloatingLayout.";
+        private string preferences;
+        private bool floating;
         private const float Margin = 10f;
         private const float MinimumWidth = 425f;
         private const float MinimumHeight = 390f;
@@ -70,6 +73,8 @@ namespace ProjectSpark.SparkV5.Pro
         private bool snap = true;
         private bool locked;
         private bool initialized;
+        private bool positionLoaded;
+        internal bool PersistLayout { get; set; } = true;
         private bool dragging;
         private bool pendingSave;
         private float nextSaveTime;
@@ -81,14 +86,22 @@ namespace ProjectSpark.SparkV5.Pro
 
         public static SparkLiveAdjustableWindow Attach(SparkProLivePanel panel, RectTransform console)
         {
-            if (!panel || !console) return null;
-            var controller = panel.GetComponent<SparkLiveAdjustableWindow>();
-            if (!controller) controller = panel.gameObject.AddComponent<SparkLiveAdjustableWindow>();
-            controller.Configure(console);
+            return panel ? Attach(panel.gameObject, console, floating: false) : null;
+        }
+
+        internal static SparkLiveAdjustableWindow AttachFloating(GameObject root, RectTransform console) =>
+            Attach(root, console, floating: true);
+
+        private static SparkLiveAdjustableWindow Attach(GameObject root, RectTransform console, bool floating)
+        {
+            if (!root || !console) return null;
+            var controller = root.GetComponent<SparkLiveAdjustableWindow>();
+            if (!controller) controller = root.AddComponent<SparkLiveAdjustableWindow>();
+            controller.Configure(console, floating);
             return controller;
         }
 
-        private void Configure(RectTransform console)
+        private void Configure(RectTransform console, bool useFloatingLayout)
         {
             if (initialized) return;
             shell = console;
@@ -96,6 +109,8 @@ namespace ProjectSpark.SparkV5.Pro
             canvas = GetComponent<Canvas>();
             if (!shell || !canvasRect || !canvas) return;
             initialized = true;
+            floating = useFloatingLayout;
+            preferences = floating ? FloatingPreferences : LivePreferences;
 
             // Never allow the old full-screen dimmer to steal clicks outside the window.
             var fullscreenBackdrop = GetComponent<Image>();
@@ -124,18 +139,18 @@ namespace ProjectSpark.SparkV5.Pro
             sections = new GameObject[]
             {
                 Section("Voice visualizer"), Section("Conversation"), Section("Live transcript"),
-                Section("Question input"), Section("Controls"), Section("Footer")
+                Section("Question input"), Section("Controls"), Section("Footer"), Section("Floating NEXUS content")
             };
 
             desiredSize = new Vector2(
-                Mathf.Clamp(PlayerPrefs.GetFloat(Prefs + "width", 545f), MinimumWidth, MaximumWidth),
-                Mathf.Clamp(PlayerPrefs.GetFloat(Prefs + "height", 675f), MinimumHeight, MaximumHeight));
+                Mathf.Clamp(PlayerPrefs.GetFloat(preferences + "width", 545f), MinimumWidth, MaximumWidth),
+                Mathf.Clamp(PlayerPrefs.GetFloat(preferences + "height", 675f), MinimumHeight, MaximumHeight));
             expandedHeight = desiredSize.y;
-            desiredScale = Mathf.Clamp(PlayerPrefs.GetFloat(Prefs + "scale", .92f), MinimumScale, MaximumScale);
-            desiredOpacity = Mathf.Clamp01(PlayerPrefs.GetFloat(Prefs + "opacity", 1f));
-            collapsed = PlayerPrefs.GetInt(Prefs + "collapsed", 0) != 0;
-            snap = PlayerPrefs.GetInt(Prefs + "snap", 1) != 0;
-            locked = PlayerPrefs.GetInt(Prefs + "locked", 0) != 0;
+            desiredScale = Mathf.Clamp(PlayerPrefs.GetFloat(preferences + "scale", .92f), MinimumScale, MaximumScale);
+            desiredOpacity = Mathf.Clamp01(PlayerPrefs.GetFloat(preferences + "opacity", 1f));
+            collapsed = PlayerPrefs.GetInt(preferences + "collapsed", 0) != 0;
+            snap = PlayerPrefs.GetInt(preferences + "snap", 1) != 0;
+            locked = PlayerPrefs.GetInt(preferences + "locked", 0) != 0;
             if (collapsed) desiredSize.y = CollapsedHeight;
 
             if (header)
@@ -156,24 +171,11 @@ namespace ProjectSpark.SparkV5.Pro
             SetCollapsedSections();
             RefreshReadouts();
             dirtyBounds = true;
-            UpdateSafeBounds();
-            if (PlayerPrefs.HasKey(Prefs + "x") && PlayerPrefs.HasKey(Prefs + "y"))
-            {
-                Rect area = GetSafeCanvasRect();
-                desiredPosition = new Vector2(
-                    Mathf.Lerp(area.xMin, area.xMax, PlayerPrefs.GetFloat(Prefs + "x", .7f)),
-                    Mathf.Lerp(area.yMin, area.yMax, PlayerPrefs.GetFloat(Prefs + "y", .7f)));
-            }
-            else
-            {
-                PositionInCorner(1, 1, false);
-            }
-            ClampTargets();
-            // Immediately establish a valid layout; future changes are smoothly animated.
+            // The inactive prefab's RectTransform is not yet scaled by its Canvas.
             shell.sizeDelta = desiredSize;
-            shell.anchoredPosition = desiredPosition;
-            shell.localScale = Vector3.one * effectiveScale;
+            shell.localScale = Vector3.one * desiredScale;
             shellGroup.alpha = desiredOpacity;
+            UpdateSafeBounds();
         }
 
         private GameObject Section(string name)
@@ -191,7 +193,7 @@ namespace ProjectSpark.SparkV5.Pro
 
         private void UpdateSafeBounds()
         {
-            if (!initialized || Screen.width <= 0 || Screen.height <= 0) return;
+            if (!initialized || !isActiveAndEnabled || Screen.width <= 0 || Screen.height <= 0) return;
             Rect safe = Screen.safeArea;
             Vector2 canvasSize = canvasRect.rect.size;
             if (!dirtyBounds && safe == lastScreenSafeArea &&
@@ -202,6 +204,22 @@ namespace ProjectSpark.SparkV5.Pro
             lastCanvasSize = canvasSize;
             lastScreenWidth = Screen.width;
             lastScreenHeight = Screen.height;
+            if (!positionLoaded)
+            {
+                positionLoaded = true;
+                Rect area = GetSafeCanvasRect();
+                if (PlayerPrefs.HasKey(preferences + "x") && PlayerPrefs.HasKey(preferences + "y"))
+                {
+                    desiredPosition = new Vector2(
+                        Mathf.Lerp(area.xMin, area.xMax, PlayerPrefs.GetFloat(preferences + "x", .7f)),
+                        Mathf.Lerp(area.yMin, area.yMax, PlayerPrefs.GetFloat(preferences + "y", .7f)));
+                }
+                else PositionInCorner(floating ? -1 : 1, 1, false);
+                ClampTargets();
+                shell.anchoredPosition = desiredPosition;
+                shell.localScale = new Vector3(effectiveScale, effectiveScale, 1f);
+                return;
+            }
             ClampTargets();
         }
 
@@ -210,14 +228,15 @@ namespace ProjectSpark.SparkV5.Pro
             if (!canvasRect || Screen.width <= 0 || Screen.height <= 0)
                 return new Rect(-700f, -400f, 1400f, 800f);
             Rect safe = Screen.safeArea;
-            Vector2 min;
-            Vector2 max;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvasRect, safe.min, null, out min);
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvasRect, safe.max, null, out max);
-            if (min.x > max.x) { float t = min.x; min.x = max.x; max.x = t; }
-            if (min.y > max.y) { float t = min.y; min.y = max.y; max.y = t; }
+            Rect viewport = canvas.rootCanvas.pixelRect;
+            if (viewport.width <= 0f || viewport.height <= 0f)
+                viewport = new Rect(0f, 0f, Screen.width, Screen.height);
+            Vector2 size = canvasRect.rect.size;
+            Vector2 CanvasOffset(Vector2 point) => Vector2.Scale(
+                new Vector2((point.x - viewport.xMin) / viewport.width - .5f,
+                            (point.y - viewport.yMin) / viewport.height - .5f), size);
+            Vector2 min = CanvasOffset(Vector2.Max(safe.min, viewport.min));
+            Vector2 max = CanvasOffset(Vector2.Min(safe.max, viewport.max));
             return Rect.MinMaxRect(min.x, min.y, max.x, max.y);
         }
 
@@ -274,16 +293,17 @@ namespace ProjectSpark.SparkV5.Pro
         private void SaveLayout()
         {
             pendingSave = false;
+            if (!positionLoaded || !PersistLayout) return;
             Rect area = GetSafeCanvasRect();
-            PlayerPrefs.SetFloat(Prefs + "x", Mathf.Clamp01((desiredPosition.x - area.xMin) / Mathf.Max(area.width, 1f)));
-            PlayerPrefs.SetFloat(Prefs + "y", Mathf.Clamp01((desiredPosition.y - area.yMin) / Mathf.Max(area.height, 1f)));
-            PlayerPrefs.SetFloat(Prefs + "width", desiredSize.x);
-            PlayerPrefs.SetFloat(Prefs + "height", collapsed ? expandedHeight : desiredSize.y);
-            PlayerPrefs.SetFloat(Prefs + "scale", desiredScale);
-            PlayerPrefs.SetFloat(Prefs + "opacity", desiredOpacity);
-            PlayerPrefs.SetInt(Prefs + "collapsed", collapsed ? 1 : 0);
-            PlayerPrefs.SetInt(Prefs + "snap", snap ? 1 : 0);
-            PlayerPrefs.SetInt(Prefs + "locked", locked ? 1 : 0);
+            PlayerPrefs.SetFloat(preferences + "x", Mathf.Clamp01((desiredPosition.x - area.xMin) / Mathf.Max(area.width, 1f)));
+            PlayerPrefs.SetFloat(preferences + "y", Mathf.Clamp01((desiredPosition.y - area.yMin) / Mathf.Max(area.height, 1f)));
+            PlayerPrefs.SetFloat(preferences + "width", desiredSize.x);
+            PlayerPrefs.SetFloat(preferences + "height", collapsed ? expandedHeight : desiredSize.y);
+            PlayerPrefs.SetFloat(preferences + "scale", desiredScale);
+            PlayerPrefs.SetFloat(preferences + "opacity", desiredOpacity);
+            PlayerPrefs.SetInt(preferences + "collapsed", collapsed ? 1 : 0);
+            PlayerPrefs.SetInt(preferences + "snap", snap ? 1 : 0);
+            PlayerPrefs.SetInt(preferences + "locked", locked ? 1 : 0);
             PlayerPrefs.Save();
         }
 
@@ -401,7 +421,7 @@ namespace ProjectSpark.SparkV5.Pro
             snap = true;
             locked = false;
             SetCollapsedSections();
-            PositionInCorner(1, 1);
+            PositionInCorner(floating ? -1 : 1, 1);
             RefreshReadouts();
         }
 
