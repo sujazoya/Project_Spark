@@ -137,8 +137,12 @@ namespace ProjectSpark.SparkV5.Pro
             { LastError = "No active original-hand wire grip or invalid destination"; yield break; }
             if (!arms.MoveCinematicGripToContact(destination, offset, travelSpeed))
             { LastError = arms.LastError; yield break; }
-            float deadline = Time.realtimeSinceStartup + maximumContactWait;
-            while (Time.realtimeSinceStartup < deadline)
+            // The arm intentionally caps each pose step. Count the same pose
+            // time here so a slow frame does not consume contact time the arm
+            // could not use. Keep a hard wall-clock deadline as well.
+            float simulated = 0f;
+            float deadline = Time.realtimeSinceStartup + maximumContactWait * 3f;
+            while (simulated < maximumContactWait && Time.realtimeSinceStartup < deadline)
             {
                 if (!stillValid() || !destination || !destination.gameObject.activeInHierarchy)
                 { LastError = "Native wire context changed during drawing"; ReleaseArm(); yield break; }
@@ -151,9 +155,10 @@ namespace ProjectSpark.SparkV5.Pro
                     yield break;
                 }
                 yield return null;
+                simulated += Mathf.Clamp(Time.unscaledDeltaTime, 0f, SparkTelescopicArms.MaximumPoseStepSeconds);
             }
-            LastError = "Extended fingertips did not reach destination within " +
-                maximumContactWait.ToString("F2") + "s";
+            LastError = $"Original fingertips did not reach {destination.name}. Gap {arms.RightGripError:F4} m, " +
+                $"pose time {simulated:F2}/{maximumContactWait:F2}s. {arms.LastError}";
             ReleaseArm();
         }
 

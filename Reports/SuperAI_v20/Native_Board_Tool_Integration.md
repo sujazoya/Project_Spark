@@ -18,3 +18,7 @@ The next implementation task is a typed adapter against the Level 100 process me
 | 107 | SparkLevel107Process.cs | 148 | 112 | ConnectPads, FitPart, PlateVia, SelectRoute, Solder |
 | 108 | SparkLevel108Process.cs | 156 | 118 | ConnectPads, FitPart, PlateVia, SelectRoute, Solder |
 | 110 | SparkLevel110Process.cs | 172 | 130 | ConnectRoute, Fit, PlateVia, SelectRoute, Solder |
+
+## v20.1 Level 100 adapter boundary
+
+The native process owns selected footprint, part, orientation, and circuit phase. It can verify fit and solder through its existing guarded methods and expose evidence through the installed count and the authored part contact. The existing ConnectPads method changes the circuit directly through SparkCircuitSystem. A robot adapter that draws a physical lead must use the native wire port and observe the board owner's route acceptance, rather than using ConnectPads as a substitute for motion. The assembly, routing, and diagnostic stages still require an approved action graph.

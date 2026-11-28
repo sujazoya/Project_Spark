@@ -134,6 +134,7 @@ namespace ProjectSpark.SparkV5.Pro
         private bool mechanismsReady;
         private bool rigReady;
         private int lastAppliedFrame = -1;
+        internal const float MaximumPoseStepSeconds = .08f;
         public string LastError { get; private set; } = "Not initialized";
         public float MaximumReach => maximumReach;
         internal float RightNaturalLength => rigReady ? arms[0].naturalLength : 0f;
@@ -656,7 +657,7 @@ namespace ProjectSpark.SparkV5.Pro
             if (!rigReady || lastAppliedFrame == Time.frameCount) return;
             using var profile = PoseMarker.Auto();
             lastAppliedFrame = Time.frameCount;
-            float dt = Mathf.Clamp(Time.unscaledDeltaTime, 0f, 0.08f);
+            float dt = Mathf.Clamp(Time.unscaledDeltaTime, 0f, MaximumPoseStepSeconds);
             Apply(arms[0], dt, "R");
             Apply(arms[1], dt, "L");
             if (synchronizeAllRigCopies)

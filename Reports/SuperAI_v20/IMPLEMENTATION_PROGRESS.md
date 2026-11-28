@@ -38,3 +38,11 @@ The alternate takeoff planner in SparkNativeWireCinematic tests at most 32 groun
 The first v20.1 full fixture advanced to wire 5 pickup and verified grip closure at ENCODER_A. It then stopped before registering the cable. Its live folded shoulder–elbow–wrist chain produced a reach below the minimum accepted by flight. The continuation changes the original-hand flight path to use calibrated rig length and keeps the original failure if the cable owner cancels it.
 
 The editor fixture logs each observed manipulation stage and verifies each reported connection against SparkCircuitSystem. These events do not count toward level completion without the official evaluator.
+
+### v20.1 changed files
+
+- SparkNativeWireCinematic.cs and SparkV5FlightController.cs. Validate ground paths and physical flight corridors together, retain original-hand reach, and bound recovery while the native cable stays authorized.
+- SparkTelescopicArms.cs and SparkTelescopicNativeWireBridge.cs. Expose the existing right-arm calibration, use pose time for held-wire movement with a hard wall-clock cap, and report actual fingertip gap on timeout.
+- Editor/SparkFlightLevel20Verification.cs and Editor/SparkWorkbenchVerification.cs. Add separate Play Mode logs for Levels 1, 20, and 48. Record individual Level 48 topology confirmations and manipulation evidence.
+- Editor/SparkUniversalConstructionEditor.cs, SparkConstructionEvidenceV20.json, ConstructionEvidence.json, and the two Level 12 and 13 action drafts. Recover and validate native terminal pairs from the authored replacement networks.
+- Level_1_to_130_Final_Coverage.csv, PlayMode_Verification.md, Plan_Generation_and_Evidence.md, and Native_Board_Tool_Integration.md. Record observed outcomes and separate authored evidence from approval and runtime success.
