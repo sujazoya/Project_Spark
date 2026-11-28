@@ -1,0 +1,10 @@
+# Verification scope
+
+The Unity Editor is 6000.3.19f1. NEXUS uses the existing MainMenu installation and native engineering owners. The Editor rendered the NEXUS prefab and imported its shader and material during the verification workflow.
+
+- **Managed player compilation.** Android and Windows managed C# compile smoke checks passed using Unity's Roslyn compiler, the platform references and defines from Bee, and the current project source list. These checks did not generate an APK, an executable, or an IL2CPP player.
+- **Authored campaign coverage.** The [campaign audit](Campaign-Audit.md) found all 130 level numbers and validated their authored binding tables. Two levels have a current approved Auto Draw revision. The other 128 remain subject to the existing plan review requirement.
+- **MainMenu scene state.** The [scene validation](Scene-Validation.md) found 49 existing missing-script entries in MainMenu. The NEXUS prefab imported with its script and material. No scene was saved as part of this work.
+- **Play Mode.** See [test results](Test-Results.md) for completed runtime assertions. The Level 20 run registered all ten cables, approved power through the device operator, and reached all 5/5 objectives before an extra LED assertion failed. The same run verified that Level 21 blocked Auto Draw and refreshed context in the same scene. Level 1 is the LED verification fixture. See the associated logs for each run.
+- **Additional verification.** Physical Android devices and gamepads, actual Windows and Android player packages, additive scene coverage, and complete telemetry and assistant-intent parity across all command families were outside the executed checks.
+- **Intermittent native cable result.** An earlier Level 20 run registered all ten reviewed connections. Another run aborted at cable 9 when the native telescopic controller timed out establishing fingertip contact. NEXUS reported the failure and left the partial circuit under native ownership. The captured failure is in `Logs/Nexus/PlayMode-Intermittent-Step9.md`.

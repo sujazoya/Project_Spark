@@ -40,6 +40,9 @@ namespace ProjectSpark.SparkV5.Pro
         private Canvas canvas;
         private CanvasGroup shellGroup;
         private GameObject[] sections;
+        private GameObject pageTabs, nexusPage;
+        private Action<bool> setNexusVisible;
+        private bool showNexus;
         private RectTransform menuPanel;
         private TMP_Text layoutButtonLabel;
         private TMP_Text scaleReadout;
@@ -418,11 +421,38 @@ namespace ProjectSpark.SparkV5.Pro
             SaveLayout();
         }
 
+        internal void RegisterPage(GameObject tabs, GameObject page, Action<bool> setVisible)
+        {
+            pageTabs = tabs; nexusPage = page; setNexusVisible = setVisible;
+            // Keep resize grips and the layout menu on top of page content.
+            for (int i = 0; i < 8; i++)
+            {
+                var handle = shell.Find("AAAResize" + i);
+                if (handle) handle.SetAsLastSibling();
+            }
+            if (menuPanel) menuPanel.SetAsLastSibling();
+            SetCollapsedSections();
+        }
+
+        internal void SetNexusPage(bool visible)
+        {
+            showNexus = visible;
+            if (visible && collapsed) ToggleCollapse();
+            else SetCollapsedSections();
+        }
+
         private void SetCollapsedSections()
         {
             if (sections != null)
                 for (int i = 0; i < sections.Length; i++)
-                    if (sections[i]) sections[i].SetActive(!collapsed);
+                    if (sections[i]) sections[i].SetActive(!collapsed && !showNexus);
+            if (pageTabs) pageTabs.SetActive(!collapsed);
+            if (nexusPage)
+            {
+                bool visible = !collapsed && showNexus;
+                nexusPage.SetActive(visible);
+                setNexusVisible?.Invoke(visible);
+            }
             var voiceSettings = Section("Voice settings");
             if (collapsed && voiceSettings) voiceSettings.SetActive(false);
             if (layoutButtonLabel) layoutButtonLabel.text = collapsed ? "Restore" : "Layout";
