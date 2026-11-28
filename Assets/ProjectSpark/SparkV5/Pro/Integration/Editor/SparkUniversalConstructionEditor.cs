@@ -25,6 +25,74 @@ namespace ProjectSpark.SparkV5.Pro.Editor
         static SparkUniversalConstructionEditor() => EditorApplication.update += Poll;
         public int callbackOrder => 0;
 
+        [MenuItem(Menu + "Audit v20 Construction Evidence")]
+        private static void AuditV20() => WithCampaign(manager =>
+        {
+            var entries = new List<SparkConstructionEvidence.Entry>();
+            var plans = Plans();
+            foreach (int index in manager.GetCampaignLevelIndices())
+            {
+                var level = manager.GetLevel(index);
+                if (!level) continue;
+                var entry = new SparkConstructionEvidence.Entry { level = level.LevelNumber };
+                entries.Add(entry);
+                try
+                {
+                    var layout = manager.LayoutLoader.GetAuthoredPrefab(level);
+                    if (!layout || layout.LevelDefinition != level)
+                    { entry.blocker = "Missing authored layout or matching level definition."; continue; }
+                    entry.layout = layout.name;
+                    if (!level.Validate(out string problem) || !layout.SceneBindings || !layout.SceneBindings.Validate(out problem))
+                    { entry.blocker = string.IsNullOrEmpty(problem) ? "Missing layout-owned binding table." : problem; continue; }
+
+                    var matching = plans.Where(plan => plan.IsApproved && plan.LevelNumber == level.LevelNumber &&
+                        plan.LayoutName == layout.name).ToArray();
+                    if (matching.Length > 1)
+                    { entry.blocker = "Multiple approved assets match this layout."; continue; }
+                    var approved = matching.SingleOrDefault();
+                    SparkNativeWiringPlan.WireStep[] steps;
+                    if (approved)
+                    {
+                        entry.evidence = approved.SchematicReference;
+                        steps = approved.Wires.ToArray();
+                    }
+                    else if (!TryReadMissionWires(level, layout, out steps, out entry.evidence, out problem))
+                    { entry.blocker = problem; continue; }
+
+                    var draft = ScriptableObject.CreateInstance<SparkNativeWiringPlan>();
+                    try
+                    {
+                        draft.LoadDraft(new SparkNativeWiringPlan.RecordedDraft
+                            { levelNumber = level.LevelNumber, layoutName = layout.name, wires = steps });
+                        problem = ValidateSteps(draft, layout);
+                    }
+                    finally { UnityEngine.Object.DestroyImmediate(draft); }
+                    if (!string.IsNullOrEmpty(problem)) { entry.blocker = problem; continue; }
+
+                    entry.revision = SparkNativeWiringPlan.AuthoredRevision(level, layout, entry.evidence);
+                    entry.runtimeEndpoints = steps.SelectMany(step => new[] { step.fromId, step.toId }).Distinct()
+                        .Where(id => !layout.SceneBindings.TryGetTerminal(id, out _)).OrderBy(id => id).ToArray();
+                    entry.wires = steps;
+                    if (approved && (!approved.MatchesReviewedLayout(level, layout, out problem) || approved.ReviewedRevision != entry.revision))
+                        entry.blocker = problem ?? "Approved revision differs from current authored evidence.";
+                }
+                catch (Exception failure) { entry.blocker = failure.Message; }
+            }
+
+            var report = new SparkConstructionEvidence.Campaign { levels = entries.OrderBy(entry => entry.level).ToArray() };
+            const string folder = "Reports/SuperAI_v20";
+            Directory.CreateDirectory(folder);
+            string json = JsonUtility.ToJson(report, true);
+            File.WriteAllText(Path.Combine(folder, "ConstructionEvidence.json"), json);
+            const string runtime = "Assets/Resources/SparkConstructionEvidenceV20.json";
+            if (!File.Exists(runtime) || File.ReadAllText(runtime) != json)
+            {
+                File.WriteAllText(runtime, json);
+                AssetDatabase.ImportAsset(runtime);
+            }
+            Debug.Log($"SUPER AI v20 audited {entries.Count} campaign entries; {entries.Count(entry => entry.wires?.Length > 0 && entry.blocker == null)} passed authored wiring structure checks.");
+        });
+
         [MenuItem(Menu + "Scan All 130 Levels")]
         [MenuItem(Menu + "Validate All Plans")]
         [MenuItem(Menu + "Export Campaign Report")]
@@ -96,7 +164,14 @@ namespace ProjectSpark.SparkV5.Pro.Editor
         private static void Poll()
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling ||
-                EditorApplication.isUpdating || !File.Exists(Request)) return;
+                EditorApplication.isUpdating || (!File.Exists(Request) && !File.Exists("Logs/SuperAI_v20/audit.request"))) return;
+            if (File.Exists("Logs/SuperAI_v20/audit.request"))
+            {
+                File.Delete("Logs/SuperAI_v20/audit.request");
+                try { AuditV20(); }
+                catch (Exception problem) { Debug.LogException(problem); }
+                return;
+            }
             string mode = File.ReadAllText(Request).Trim();
             File.Delete(Request);
             string proof = "Logs/SuperAI_v19/EditorValidation.txt";
@@ -199,6 +274,87 @@ namespace ProjectSpark.SparkV5.Pro.Editor
             return null;
         }
 
+        private static bool TryReadReplacementNetwork(SparkLevelDefinition definition, SparkLevelLayout layout,
+            out SparkNativeWiringPlan.WireStep[] steps, out string evidence, out string error)
+        {
+            steps = null;
+            evidence = AssetDatabase.GetAssetPath(definition) + "#description, powerSources, targets";
+            error = "The authored replacement network no longer matches its definition or bindings.";
+            bool loadedDivider = definition.LevelNumber == 13;
+            string expected = loadedDivider ? "Build a loaded 5 V voltage divider: a fixed 220 ohm R1"
+                : "Build a 5 V series-parallel network: fixed 330 ohm R1";
+            string fixedResistor = loadedDivider ? "Resistor_220" : "Resistor_330";
+            if (!definition.Description.StartsWith(expected, StringComparison.Ordinal) ||
+                definition.SourceCount != 1 || definition.TargetCount != 4 ||
+                !definition.Targets.Any(target => target.TargetComponentId == "R2_Component" &&
+                    target.RequiredPositiveTerminalId == "R2_Input" && target.RequiredNegativeTerminalId == "R2_Output"))
+                return false;
+
+            var source = definition.PowerSources[0];
+            var pairs = new List<SparkNativeWiringPlan.WireStep>();
+            void Add(string from, string to) => pairs.Add(new SparkNativeWiringPlan.WireStep { fromId = from, toId = to });
+            Add(source.PositiveTerminalId, "SwitchInput");
+            Add("SwitchOutput", fixedResistor + "_Input");
+            if (loadedDivider)
+            {
+                Add(fixedResistor + "_Output", "R2_Input");
+                Add(fixedResistor + "_Output", "Resistor_470_Input");
+                Add("R2_Output", source.NegativeTerminalId);
+            }
+            else
+            {
+                Add("SwitchOutput", "R2_Input");
+                Add("R2_Output", "Resistor_470_Input");
+                Add(fixedResistor + "_Output", source.NegativeTerminalId);
+            }
+            Add("Resistor_470_Output", source.NegativeTerminalId);
+            foreach (var pair in pairs)
+                if (!layout.SceneBindings.IsTerminalIdDeclared(pair.fromId) || !layout.SceneBindings.IsTerminalIdDeclared(pair.toId))
+                { error = $"The authored network endpoints are incomplete: {pair.fromId} → {pair.toId}."; return false; }
+            steps = pairs.ToArray();
+            error = null;
+            return true;
+        }
+
+        private static bool TryReadDividerRecipe(SparkLevelDefinition definition, SparkLevelLayout layout,
+            out SparkNativeWiringPlan.WireStep[] steps, out string evidence, out string error)
+        {
+            steps = null;
+            evidence = "";
+            error = "The level's current definition does not match the authored switched divider procedure.";
+            bool loaded = definition.LevelNumber == 19;
+            string expected = loaded
+                ? "From a switched 5 V DC supply, build a 330 ohm TOP resistor"
+                : "From a 5 V switched DC source, build a series voltage divider";
+            if (!definition.Description.StartsWith(expected, StringComparison.Ordinal) ||
+                definition.SourceCount != 1 || definition.TargetCount != 5 ||
+                !definition.Targets.Any(target => target.TargetComponentId == "R_TOP_Component") ||
+                !definition.Targets.Any(target => target.TargetComponentId == "R_BOTTOM_Component") ||
+                (loaded && !definition.Targets.Any(target => target.TargetComponentId == "R_LOAD_Component")))
+                return false;
+
+            var power = definition.PowerSources[0];
+            var pairs = new List<SparkNativeWiringPlan.WireStep>();
+            void Add(string from, string to) => pairs.Add(new SparkNativeWiringPlan.WireStep { fromId = from, toId = to });
+            Add(power.PositiveTerminalId, "SwitchInput");
+            Add("SwitchOutput", "R_TOP_Input");
+            Add("R_TOP_Output", "R_BOTTOM_Input");
+            Add("R_BOTTOM_Output", power.NegativeTerminalId);
+            if (loaded)
+            {
+                Add("R_TOP_Output", "R_LOAD_Input");
+                Add("R_LOAD_Output", power.NegativeTerminalId);
+            }
+
+            foreach (var pair in pairs)
+                if (!layout.SceneBindings.IsTerminalIdDeclared(pair.fromId) || !layout.SceneBindings.IsTerminalIdDeclared(pair.toId))
+                { error = $"The authored divider endpoints are incomplete: {pair.fromId} → {pair.toId}."; return false; }
+            steps = pairs.ToArray();
+            evidence = AssetDatabase.GetAssetPath(definition) + "#description, powerSources, targets";
+            error = null;
+            return true;
+        }
+
         internal static bool TryReadMissionWires(SparkLevelDefinition definition, SparkLevelLayout layout,
             out SparkNativeWiringPlan.WireStep[] steps, out string evidence, out string error)
         {
@@ -241,6 +397,11 @@ namespace ProjectSpark.SparkV5.Pro.Editor
                 error = null;
                 return true;
             }
+            if (number is 12 or 13)
+                return TryReadReplacementNetwork(definition, layout, out steps, out evidence, out error);
+            if (number is 18 or 19 && TryReadDividerRecipe(definition, layout, out steps, out evidence, out error))
+                return true;
+
             foreach (var mission in layout.GetComponentsInChildren<MonoBehaviour>(true))
             {
                 if (!mission) continue;

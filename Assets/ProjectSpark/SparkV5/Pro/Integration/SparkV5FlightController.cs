@@ -195,6 +195,7 @@ namespace ProjectSpark.SparkV5.Pro
 
         private const float RotationSpeed = 155f;
         private const int CruiseWaypoints = 5;
+        private const int ContactFlightReplans = 2;
         private static readonly float[] ReachRings = { .16f, .30f, .45f, .60f, .76f };
         private static readonly float[] ShoulderHeights = { .025f, .085f, .145f, .205f, .265f, .315f };
         private static readonly Vector2[] ApproachAngles =
@@ -217,6 +218,68 @@ namespace ProjectSpark.SparkV5.Pro
         private int diagnosticWaypointCount;
         private bool selectedApproach;
         private string lastApproachReport;
+        private string lastLiveCorridorBlock;
+        internal bool NoSafeContactRoute { get; private set; }
+
+        // A bounded, read-only preflight from a proposed grounded pose. Execution
+        // replans at the live stance and sweeps again on every moving frame.
+        internal bool TryPreviewContactDeparture(Vector3 position, Quaternion rotation, Transform terminal,
+            Transform shoulder, float reach, float alternateReach, Func<Vector3, bool> canReach,
+            out float cost, out string detail)
+        {
+            cost = float.PositiveInfinity;
+            detail = "Invalid terminal, rig or tabletop.";
+            if (!terminal || !shoulder || !workspace.IsCurrent || !IsSafeToFly()) return false;
+
+            var origin = new FlightPose(position, rotation);
+            if (!workspace.Contains(position))
+            { detail = "Departure outside the tabletop flight volume."; return false; }
+            if (!CanOccupy(origin, out detail)) return false;
+            Vector3 offset = Quaternion.Inverse(transform.rotation) * (shoulder.position - transform.position);
+            Vector3 radial = Vector3.ProjectOnPlane(position - terminal.position, workspace.Up);
+            radial = radial.sqrMagnitude > .001f ? radial.normalized :
+                workspace.LocalToWorld.MultiplyVector(Vector3.forward).normalized;
+            float outer = Mathf.Max(reach, alternateReach);
+            string blocker = null;
+            int rejected = 0;
+            for (int side = 0; side < 8; side++)
+            {
+                Vector3 fromSocket = Quaternion.AngleAxis(side * 45f, workspace.Up) * radial;
+                for (int posture = 0; posture < 4; posture++)
+                {
+                    var angles = ApproachAngles[posture];
+                    var facing = Quaternion.LookRotation(-fromSocket, workspace.Up) *
+                        Quaternion.AngleAxis(angles.x, Vector3.right);
+                    for (int sample = 0; sample < 4; sample++)
+                    {
+                        float radius = sample < 2 ? reach * (sample == 0 ? .3f : .6f) : outer * (sample == 2 ? .45f : .76f);
+                        float height = sample % 2 == 0 ? .085f : .145f;
+                        Vector3 hand = terminal.position + fromSocket * radius + workspace.Up * height;
+                        if ((hand - terminal.position).sqrMagnitude > outer * outer ||
+                            (canReach != null && !canReach(hand))) continue;
+                        var goal = new FlightPose(hand - facing * offset, facing);
+                        if (!workspace.Contains(goal.Position)) continue;
+                        if (!TryApproachRoute(origin, goal, out int count, out string obstruction))
+                        {
+                            blocker = obstruction ?? blocker;
+                            rejected++;
+                            continue;
+                        }
+                        float travel = 0f;
+                        var previous = origin.Position;
+                        for (int i = 0; i < count; i++)
+                        {
+                            travel += Vector3.Distance(previous, trialRoute[i].Position);
+                            previous = trialRoute[i].Position;
+                        }
+                        cost = Mathf.Min(cost, travel + radius * .35f);
+                    }
+                }
+            }
+            detail = float.IsPositiveInfinity(cost) ? $"No sampled flight corridor. {rejected} blocked. Last obstacle: {blocker ?? "none"}."
+                : $"Swept path cost {cost:F2}. {rejected} blocked alternatives.";
+            return !float.IsPositiveInfinity(cost);
+        }
 
         public string LastApproachReport => lastApproachReport ?? "No flight approach has been evaluated.";
         public int SuccessfulApproaches { get; private set; }
@@ -449,9 +512,10 @@ namespace ProjectSpark.SparkV5.Pro
             return CanTravel(CurrentPose, new FlightPose(position, transform.rotation), out obstruction);
         }
 
-        private IEnumerator Follow(FlightPose[] route, int count, Func<bool> valid, Transform target = null)
+        private IEnumerator Follow(FlightPose[] route, int count, Func<bool> valid, Transform target = null, float? approachStarted = null)
         {
-            float started = Time.realtimeSinceStartup;
+            float started = approachStarted ?? Time.realtimeSinceStartup;
+            lastLiveCorridorBlock = null;
             Vector3 targetPosition = target ? target.position : default;
             moving = true;
             for (int i = 0; i < count; i++)
@@ -478,7 +542,11 @@ namespace ProjectSpark.SparkV5.Pro
                     progress = Mathf.Min(1f, progress + dt / duration);
                     var next = FlightPose.Lerp(origin, destination, progress);
                     if (!CanTravel(CurrentPose, next, out string obstruction))
-                    { Fail("Physical flight corridor blocked by " + obstruction + "."); yield break; }
+                    {
+                        lastLiveCorridorBlock = target ? obstruction : null;
+                        Fail("Physical flight corridor blocked by " + obstruction + ".");
+                        yield break;
+                    }
                     transform.SetPositionAndRotation(next.Position, next.Rotation);
                     yield return null;
                 }
@@ -486,18 +554,85 @@ namespace ProjectSpark.SparkV5.Pro
             moving = false;
         }
 
-        public IEnumerator FlyToArmReach(Transform terminal, Transform shoulder, float usableArmReach, Func<bool> valid)
+        public IEnumerator FlyToArmReach(Transform terminal, Transform shoulder, float usableArmReach, Func<bool> valid,
+            Func<Vector3, bool> canReachWithOriginalHand = null, float alternateReach = 0f)
         {
             lastSucceeded = false;
             lastError = null;
-            if (!terminal || !shoulder || usableArmReach < .12f || valid == null || !valid())
-            { Fail("Flight target, arm rig or active game context is invalid."); yield break; }
+            NoSafeContactRoute = false;
+            if (!terminal || !shoulder)
+            { Fail("Flight needs the live terminal and original shoulder."); yield break; }
+            if (usableArmReach < .12f)
+            { Fail($"Calibrated flight reach is insufficient ({usableArmReach:F3} m)."); yield break; }
+            if (valid == null || !valid())
+            { Fail("Native action authorization ended before flight."); yield break; }
             if (!IsSafeToFly())
             { Fail("Flight approach denied by character or exam safety state."); yield break; }
             if (!RefreshWorkspace(true)) yield break;
 
-            CaptureBody();
-            Physics.SyncTransforms();
+            float started = Time.realtimeSinceStartup;
+            Vector3 originalContact = terminal.position;
+            var failedPoses = new List<FlightPose>(ContactFlightReplans);
+            string recovery = "";
+            for (int attempt = 0; attempt <= ContactFlightReplans; attempt++)
+            {
+                if (!IsSafeToFly() || !valid() || !terminal || !shoulder || !workspace.IsCurrent ||
+                    Vector3.Distance(originalContact, terminal.position) > .015f ||
+                    Time.realtimeSinceStartup - started >= motionTimeoutSeconds)
+                {
+                    Fail("Flight approach could not continue within the authorized contact and time limits." + recovery);
+                    yield break;
+                }
+
+                CaptureBody();
+                Physics.SyncTransforms();
+                float selectedReach = usableArmReach;
+                bool near = TrySelectArmApproach(terminal, shoulder, usableArmReach, failedPoses,
+                    canReachWithOriginalHand, out int waypointCount);
+                if (!near && canReachWithOriginalHand != null && alternateReach > usableArmReach + .10f)
+                {
+                    selectedReach = alternateReach;
+                    near = TrySelectArmApproach(terminal, shoulder, alternateReach, failedPoses,
+                        canReachWithOriginalHand, out waypointCount);
+                    if (near) recovery += " Used the original hand's larger collision-checked working radius.";
+                }
+                if (!near)
+                {
+                    NoSafeContactRoute = true;
+                    Fail("No safe flight approach to " + terminal.name + ". " + lastApproachReport + recovery);
+                    yield break;
+                }
+                diagnosticWaypointCount = waypointCount;
+                Array.Copy(selectedRoute, diagnosticRoute, waypointCount);
+                if (!BeginFlight()) yield break;
+                lastError = null;
+                lastApproachReport += recovery;
+                Debug.Log("[Spark Flight] " + lastApproachReport, this);
+                yield return Follow(selectedRoute, waypointCount, valid, terminal, started);
+                if (string.IsNullOrEmpty(lastError))
+                {
+                    if (!valid() || !terminal || !shoulder || Vector3.Distance(shoulder.position, terminal.position) > selectedReach ||
+                        (canReachWithOriginalHand != null && !canReachWithOriginalHand(shoulder.position)))
+                    {
+                        Fail("Actual shoulder-to-terminal distance exceeds the measured reach at the final flight pose.");
+                        yield break;
+                    }
+                    lastSucceeded = true;
+                    SuccessfulApproaches++;
+                    yield break;
+                }
+
+                if (string.IsNullOrEmpty(lastLiveCorridorBlock) || attempt == ContactFlightReplans || !airborne)
+                    yield break;
+                recovery += $" Live sweep stopped at {transform.position:F3} on {lastLiveCorridorBlock}. " +
+                    $"Replanning from the last safe pose ({attempt + 1}/{ContactFlightReplans}).";
+                failedPoses.Add(approach);
+            }
+        }
+
+        private bool TrySelectArmApproach(Transform terminal, Transform shoulder, float usableArmReach,
+            List<FlightPose> failedPoses, Func<Vector3, bool> canReach, out int selectedWaypoints)
+        {
             candidates.Clear();
             selectedApproach = false;
             diagnosticTarget = terminal.position;
@@ -507,7 +642,7 @@ namespace ProjectSpark.SparkV5.Pro
             if (outward.sqrMagnitude < .01f) outward = workspace.LocalToWorld.MultiplyVector(Vector3.forward);
             outward.Normalize();
             float bestScore = float.PositiveInfinity;
-            int selectedWaypoints = 0;
+            selectedWaypoints = 0;
             var counts = new int[5];
             var blockers = new Dictionary<string, int>(StringComparer.Ordinal);
             Vector3 firstCandidate = default;
@@ -532,8 +667,12 @@ namespace ProjectSpark.SparkV5.Pro
                 string obstacle = null;
                 if (radius * radius + height * height > (usableArmReach - .018f) * (usableArmReach - .018f))
                     result = Rejection.Reach;
+                else if (NearFailedApproach(pose, failedPoses))
+                    continue;
                 else if (!workspace.Contains(pose.Position))
                     result = Rejection.Outside;
+                else if (canReach != null && !canReach(shoulderPosition))
+                    result = Rejection.Reach;
                 else if (!CanOccupy(pose, out obstacle))
                     result = Rejection.Occupied;
                 else if (!TryApproachRoute(CurrentPose, pose, out int routeCount, out obstacle))
@@ -570,23 +709,16 @@ namespace ProjectSpark.SparkV5.Pro
                 $"occupied {counts[(int)Rejection.Occupied]}, blocked route {counts[(int)Rejection.Corridor]}, clear routes {counts[(int)Rejection.Clear]}. " +
                 $"Main blocker {blocker} ({blockerCount}). " +
                 (selectedApproach ? $"Selected {approach.Position:F3}, rotation {approach.Rotation.eulerAngles:F1}." : "No approach selected.");
-            if (!selectedApproach)
-            { Fail("No safe flight approach to " + terminal.name + ". " + lastApproachReport); yield break; }
+            return selectedApproach;
+        }
 
-            diagnosticWaypointCount = selectedWaypoints;
-            Array.Copy(selectedRoute, diagnosticRoute, selectedWaypoints);
-            if (!BeginFlight()) yield break;
-            Debug.Log("[Spark Flight] " + lastApproachReport, this);
-            yield return Follow(selectedRoute, selectedWaypoints, valid, terminal);
-            if (!string.IsNullOrEmpty(lastError)) yield break;
-            if (!valid() || !terminal || !shoulder || Vector3.Distance(shoulder.position, terminal.position) > usableArmReach)
-            {
-                Fail("Actual shoulder-to-terminal distance exceeds the measured reach at the final flight pose.");
-                yield break;
-            }
-
-            lastSucceeded = true;
-            SuccessfulApproaches++;
+        private static bool NearFailedApproach(FlightPose pose, List<FlightPose> failedPoses)
+        {
+            foreach (var failed in failedPoses)
+                if ((pose.Position - failed.Position).sqrMagnitude < .12f * .12f &&
+                    Quaternion.Angle(pose.Rotation, failed.Rotation) < 12f)
+                    return true;
+            return false;
         }
 
         internal IEnumerator RiseToSafeHover(Func<bool> valid)

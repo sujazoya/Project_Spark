@@ -136,6 +136,7 @@ namespace ProjectSpark.SparkV5.Pro
         private int lastAppliedFrame = -1;
         public string LastError { get; private set; } = "Not initialized";
         public float MaximumReach => maximumReach;
+        internal float RightNaturalLength => rigReady ? arms[0].naturalLength : 0f;
         public float ReachTimeoutSeconds => Mathf.Max(1.0f, maximumReach / Mathf.Max(0.1f, extensionSpeed) + 0.7f);
         public bool SetMaximumReach(float meters)
         {

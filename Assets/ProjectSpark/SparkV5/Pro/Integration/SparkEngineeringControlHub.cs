@@ -287,6 +287,8 @@ namespace ProjectSpark.SparkV5.Pro
             if (!GetContext(out var manager, out var level, out string reason)) return Message(reason);
             if (mode == OperatingMode.Manual)
                 return Message($"Level {level.Definition.LevelNumber} is in Manual mode. Select Assisted or Auto to authorize Spark construction.");
+            if (!FindApprovedPlan(level, out _, requireRevision: true))
+                return Preview(requireCurrentRevision: true);
             return mode == OperatingMode.Assisted ? SuggestNext(requireRevision: true) : StartAuto(requireRevision: true);
         }
 
@@ -339,10 +341,12 @@ namespace ProjectSpark.SparkV5.Pro
             return level.Layout.SceneBindings.TryResolveLivePair(level.Layout, step.fromId, step.toId, out a, out b, out error);
         }
 
-        public string Preview()
+        public string Preview() => Preview(requireCurrentRevision: false);
+
+        private string Preview(bool requireCurrentRevision)
         {
             if (!GetContext(out var manager, out var level, out string reason)) return Message(reason);
-            var plan = FindApprovedPlan(level, out reason);
+            var plan = FindApprovedPlan(level, out reason, requireCurrentRevision);
             if (!plan)
             {
                 SparkNativeWiringPlan candidate = null;
@@ -355,8 +359,10 @@ namespace ProjectSpark.SparkV5.Pro
                         return Message(ConstructionBlock(level, reason + " Multiple candidate assets require Editor review."));
                     candidate = draft;
                 }
-                return Message(candidate ? ConstructionBlock(level, reason) + "\n" +
-                    PreviewDetails(candidate, manager, level, reviewed: false) : ConstructionBlock(level, reason));
+                string detail = candidate ? PreviewDetails(candidate, manager, level, reviewed: false) :
+                    SparkConstructionEvidence.Preview(level);
+                return Message(ConstructionBlock(level, reason) +
+                    (string.IsNullOrWhiteSpace(detail) ? "" : "\n" + detail));
             }
             return Message(PreviewDetails(plan, manager, level));
         }
@@ -765,8 +771,17 @@ private IEnumerator ExecuteSingle(
                     response = hub.CancelAutomation(); return true;
                 case "spark drawing status":
                     response = hub.ConstructionStatus(); return true;
-                case "spark explain current construction":
+                case "spark explain current construction": case "spark inspect current level":
                     response = hub.ExplainConstruction(); return true;
+                case "spark preview construction":
+                    response = hub.Preview(requireCurrentRevision: true); return true;
+                case "spark explain next action":
+                    response = hub.Message(hub.ConstructionStatus() + "\nPending reviewed suggestion: " + hub.PendingStep);
+                    return true;
+                case "spark explain construction failure":
+                    response = hub.Message(hub.ConstructionStatus() + "\nLast native tool result: " +
+                        (hub.director ? hub.director.LastStatus : "Unavailable"));
+                    return true;
                 case "spark manual mode": case "manual mode":
                     response = hub.SelectMode(OperatingMode.Manual); return true;
                 case "spark assisted mode": case "assisted mode":

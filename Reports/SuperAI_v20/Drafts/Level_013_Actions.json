@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "level": 13,
+  "layout": "Level_13_Layout",
+  "approvalStatus": "UNAPPROVED DRAFT",
+  "layoutRevision": "Pending Unity audit",
+  "evidence": [
+    "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_02/Level_13_Layout/Level_13.asset#description,powerSources,targets",
+    "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_02/Level_13_Layout/Level_13_Layout.prefab#bindings,workstations"
+  ],
+  "actions": [
+    {
+      "id": "isolate",
+      "kind": "ConfigurePowerSupply",
+      "dependsOn": [],
+      "nativeTool": "Native player power control",
+      "target": {
+        "target": "PowerSupply_01",
+        "outputActive": false
+      },
+      "safety": "No wiring or placement while output is energized",
+      "verify": "Native supply is off",
+      "recover": "Stop and report the native precondition or evaluation failure"
+    },
+    {
+      "id": "replace-r2",
+      "kind": "PlaceComponent",
+      "dependsOn": [
+        "isolate"
+      ],
+      "nativeTool": "SparkObjectShelf and SparkLevelWorkstationBindingBridge",
+      "target": {
+        "slot": "Register_Slot_2",
+        "component": "R2_Component",
+        "valueOhms": 330
+      },
+      "safety": "Require verified power-off and current layout authorization",
+      "verify": "Correct installed resistor registers both R2 terminals",
+      "recover": "Stop and report the native precondition or evaluation failure"
+    },
+    {
+      "id": "wire-1",
+      "kind": "ConnectNativeWire",
+      "dependsOn": [
+        "replace-r2"
+      ],
+      "nativeTool": "Native Wire Tool",
+      "target": {
+        "from": "Battery_positive",
+        "to": "SwitchInput"
+      },
+      "safety": "Require verified power-off and current layout authorization",
+      "verify": "SparkCircuitSystem registers both endpoints",
+      "recover": "Stop and report the native precondition or evaluation failure"
+    },
+    {
+      "id": "wire-2",
+      "kind": "ConnectNativeWire",
+      "dependsOn": [
+        "wire-1"
+      ],
+      "nativeTool": "Native Wire Tool",
+      "target": {
+        "from": "SwitchOutput",
+        "to": "Resistor_220_Input"
+      },
+      "safety": "Require verified power-off and current layout authorization",
+      "verify": "SparkCircuitSystem registers both endpoints",
+      "recover": "Stop and report the native precondition or evaluation failure"
+    },
+    {
+      "id": "wire-3",
+      "kind": "ConnectNativeWire",
+      "dependsOn": [
+        "wire-2"
+      ],
+      "nativeTool": "Native Wire Tool",
+      "target": {
+        "from": "Resistor_220_Output",
+        "to": "R2_Input"
+      },
+      "safety": "Require verified power-off and current layout authorization",
+      "verify": "SparkCircuitSystem registers both endpoints",
+      "recover": "Stop and report the native precondition or evaluation failure"
+    },
+    {
+      "id": "wire-4",
+      "kind": "ConnectNativeWire",
+      "dependsOn": [
+        "wire-3"
+      ],
+      "nativeTool": "Native Wire Tool",
+      "target": {
+        "from": "Resistor_220_Output",
+        "to": "Resistor_470_Input"
+      },
+      "safety": "Require verified power-off and current layout authorization",
+      "verify": "SparkCircuitSystem registers both endpoints",
+      "recover": "Stop and report the native precondition or evaluation failure"
+    },
+    {
+      "id": "wire-5",
+      "kind": "ConnectNativeWire",
+      "dependsOn": [
+        "wire-4"
+      ],
+      "nativeTool": "Native Wire Tool",
+      "target": {
+        "from": "R2_Output",
+        "to": "Battery_negative"
+      },
+      "safety": "Require verified power-off and current layout authorization",
+      "verify": "SparkCircuitSystem registers both endpoints",
+      "recover": "Stop and report the native precondition or evaluation failure"
+    },
+    {
+      "id": "wire-6",
+      "kind": "ConnectNativeWire",
+      "dependsOn": [
+        "wire-5"
+      ],
+      "nativeTool": "Native Wire Tool",
+      "target": {
+        "from": "Resistor_470_Output",
+        "to": "Battery_negative"
+      },
+      "safety": "Require verified power-off and current layout authorization",
+      "verify": "SparkCircuitSystem registers both endpoints",
+      "recover": "Stop and report the native precondition or evaluation failure"
+    },
+    {
+      "id": "verify",
+      "kind": "VerifyObjective",
+      "dependsOn": [
+        "wire-6"
+      ],
+      "nativeTool": "LevelGamePlayManager and SparkElectricalSolver",
+      "target": {
+        "operatorPrerequisite": "Official power-on procedure, following topology and safety checks"
+      },
+      "safety": "Fresh solver evidence only after approved player power procedure",
+      "verify": "Four official objectives confirmed in a fresh electrical evaluation",
+      "recover": "Stop and report the native precondition or evaluation failure"
+    }
+  ]
+}

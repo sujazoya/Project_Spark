@@ -79,15 +79,21 @@ private static void QueueFlight()
             bool testBoot = request == "boot";
             bool testCable = request == "cable" || request == "cable-before" || request == "phase2";
             bool testSwitch = request == "switch";
-            bool testV19 = request == "v19";
-            bool testStarter = request == "v19-starter";
-            bool testMission48 = request == "v19-level48";
+            bool testV19 = request is "v19" or "v201-level20";
+            bool testStarter = request is "v19-starter" or "v201-level1";
+            bool testV20Wire10 = request == "v20-level48-wire10";
+            bool testV20Mission48 = request == "v20-level48" || testV20Wire10 || request == "v201-level48";
+            bool testMission48 = request == "v19-level48" || testV20Mission48;
             bool testBoard100 = request == "v191-board100";
             bool testFlight = request == "flight" || testCable || testSwitch || testV19 || testStarter || testMission48 || testBoard100;
             File.Delete(Request);
             if (testFlight) Directory.CreateDirectory(Path.GetDirectoryName(FlightReport));
             if (testCable) Directory.CreateDirectory(CableReportFolder);
+            if (testV20Mission48 || request.StartsWith("v201-", StringComparison.Ordinal)) Directory.CreateDirectory("Logs/SuperAI_v20");
             SessionState.SetString(Flag + ".report", testBoard100 ? "Logs/SuperAI_v19/Level100BoardPlayMode.txt" :
+                testV20Wire10 ? "Logs/SuperAI_v20/Level48Wire10.txt" :
+                request.StartsWith("v201-", StringComparison.Ordinal) ? $"Logs/SuperAI_v20/{request}.txt" :
+                testV20Mission48 ? "Logs/SuperAI_v20/Level48PlayMode.txt" :
                 testMission48 ? "Logs/SuperAI_v19/Level48PlayMode.txt" :
                 testStarter ? "Logs/SuperAI_v19/StarterPlayMode.txt" :
                 testV19 ? "Logs/SuperAI_v19/Level20PlayMode.txt" :

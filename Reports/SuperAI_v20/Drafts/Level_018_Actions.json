@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "level": 18,
+  "layout": "Level_18_Layout",
+  "approvalStatus": "UNAPPROVED DRAFT",
+  "layoutRevision": "AB64DF1340343F81400D04A06F7782E3C76AA3A99D805C97AD52CB6E88767DC3",
+  "evidence": [
+    "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_02/Level_18_Layout/Level_18.asset#description,powerSources,targets",
+    "Assets/My_Assets/_Project_Spark/Prefabs/Levels/Chapter_02/Level_18_Layout/Level_18_Layout.prefab#scene bindings and workstation registrations"
+  ],
+  "actions": [
+    {
+      "id": "inspect",
+      "kind": "Inspect",
+      "dependsOn": [],
+      "nativeTool": "LevelGamePlayManager",
+      "target": {
+        "level": 18
+      },
+      "safety": "Same loaded layout",
+      "verify": "Authored layout and bindings resolve",
+      "recover": "Stop if level or binding is absent"
+    },
+    {
+      "id": "isolate",
+      "kind": "ConfigurePowerSupply",
+      "dependsOn": [
+        "inspect"
+      ],
+      "nativeTool": "Native player power control",
+      "target": {
+        "componentId": "PowerSupply_01",
+        "outputActive": false
+      },
+      "safety": "Player isolation required for this draft",
+      "verify": "Native supply reports no output and fresh solve",
+      "recover": "Stop and request native isolation"
+    },
+    {
+      "id": "install-R_TOP",
+      "kind": "PlaceComponent",
+      "dependsOn": [
+        "isolate"
+      ],
+      "nativeTool": "SparkObjectShelf / authored workstation",
+      "target": {
+        "slot": "Register_Slot_RED",
+        "componentId": "R_TOP_Component",
+        "resistanceOhms": 330
+      },
+      "safety": "Power off",
+      "verify": "Slot registers R_TOP_Input and R_TOP_Output with the specified resistor",
+      "recover": "Stop if matching inventory or runtime slot is unavailable"
+    },
+    {
+      "id": "install-R_BOTTOM",
+      "kind": "PlaceComponent",
+      "dependsOn": [
+        "isolate"
+      ],
+      "nativeTool": "SparkObjectShelf / authored workstation",
+      "target": {
+        "slot": "Register_Slot_GREEN",
+        "componentId": "R_BOTTOM_Component",
+        "resistanceOhms": 470
+      },
+      "safety": "Power off",
+      "verify": "Slot registers R_BOTTOM_Input and R_BOTTOM_Output with the specified resistor",
+      "recover": "Stop if matching inventory or runtime slot is unavailable"
+    },
+    {
+      "id": "wire-1",
+      "kind": "ConnectNativeWire",
+      "dependsOn": [
+        "isolate",
+        "install-R_TOP",
+        "install-R_BOTTOM"
+      ],
+      "nativeTool": "Native Wire Tool",
+      "target": {
+        "from": "Battery_positive",
+        "to": "SwitchInput"
+      },
+      "safety": "Power off, endpoints unchanged and compatible",
+      "verify": "SparkCircuitSystem registers the exact pair",
+      "recover": "Recheck bindings, capacity and reach, then stop if blocked"
+    },
+    {
+      "id": "wire-2",
+      "kind": "ConnectNativeWire",
+      "dependsOn": [
+        "wire-1"
+      ],
+      "nativeTool": "Native Wire Tool",
+      "target": {
+        "from": "SwitchOutput",
+        "to": "R_TOP_Input"
+      },
+      "safety": "Power off, endpoints unchanged and compatible",
+      "verify": "SparkCircuitSystem registers the exact pair",
+      "recover": "Recheck bindings, capacity and reach, then stop if blocked"
+    },
+    {
+      "id": "wire-3",
+      "kind": "ConnectNativeWire",
+      "dependsOn": [
+        "wire-2"
+      ],
+      "nativeTool": "Native Wire Tool",
+      "target": {
+        "from": "R_TOP_Output",
+        "to": "R_BOTTOM_Input"
+      },
+      "safety": "Power off, endpoints unchanged and compatible",
+      "verify": "SparkCircuitSystem registers the exact pair",
+      "recover": "Recheck bindings, capacity and reach, then stop if blocked"
+    },
+    {
+      "id": "wire-4",
+      "kind": "ConnectNativeWire",
+      "dependsOn": [
+        "wire-3"
+      ],
+      "nativeTool": "Native Wire Tool",
+      "target": {
+        "from": "R_BOTTOM_Output",
+        "to": "Battery_negative"
+      },
+      "safety": "Power off, endpoints unchanged and compatible",
+      "verify": "SparkCircuitSystem registers the exact pair",
+      "recover": "Recheck bindings, capacity and reach, then stop if blocked"
+    },
+    {
+      "id": "verify-topology",
+      "kind": "VerifyElectricalTopology",
+      "dependsOn": [
+        "wire-4"
+      ],
+      "nativeTool": "SparkCircuitSystem / SparkElectricalSolver",
+      "target": {
+        "level": 18
+      },
+      "safety": "Keep output isolated until electrical validation",
+      "verify": "All authored pairs present and supply terminals are separate",
+      "recover": "Stop on missing or unsafe topology"
+    },
+    {
+      "id": "close-switch",
+      "kind": "OperateSwitch",
+      "dependsOn": [
+        "verify-topology"
+      ],
+      "nativeTool": "Native player switch control",
+      "target": {
+        "terminals": [
+          "SwitchInput",
+          "SwitchOutput"
+        ],
+        "closed": true
+      },
+      "safety": "Requires explicit authorized control when implemented",
+      "verify": "Native SparkSwitch state closed",
+      "recover": "Stop if unavailable or unauthorized"
+    },
+    {
+      "id": "energize",
+      "kind": "ConfigurePowerSupply",
+      "dependsOn": [
+        "close-switch"
+      ],
+      "nativeTool": "Native player power control",
+      "target": {
+        "componentId": "PowerSupply_01",
+        "outputActive": true
+      },
+      "safety": "Only after native topology checks and explicit authorization",
+      "verify": "Active native supply and fresh solver output",
+      "recover": "Isolate on a native fault"
+    },
+    {
+      "id": "verify-objectives",
+      "kind": "VerifyObjective",
+      "dependsOn": [
+        "energize"
+      ],
+      "nativeTool": "LevelGamePlayManager",
+      "target": {
+        "requiredTargets": 5
+      },
+      "safety": "Fresh solve for the active layout",
+      "verify": "Official evaluator confirms all five objectives",
+      "recover": "Report actual failing objective IDs"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using ProjectSpark.Gameplay;
 using UnityEngine;
 using UnityEngine.AI;
@@ -471,7 +472,7 @@ namespace ProjectSpark.SparkV5.Pro
                 if (!autoFlyWhenWalkingCannotReach)
                 { Fail("The socket is above standing reach and automatic flight is disabled."); yield break; }
                 narration?.Announce(SparkAAANarrationDirector.Milestone.Flight);
-                yield return WalkNear(terminal, workbench, layout, stillValid);
+                yield return WalkNear(terminal, workbench, layout, stillValid, allowOriginalHand);
                 yield break;
             }
 
@@ -518,7 +519,7 @@ namespace ProjectSpark.SparkV5.Pro
                 if (!route)
                 {
                     if (!pointer && autoFlyWhenWalkingCannotReach && flight && flight.AllowAutoWiringFlight)
-                        yield return WalkNear(terminal, workbench, layout, stillValid);
+                        yield return WalkNear(terminal, workbench, layout, stillValid, allowOriginalHand);
                     else Fail("There is no safe walking approach to " + terminal.name + ".");
                     yield break;
                 }
@@ -542,7 +543,7 @@ namespace ProjectSpark.SparkV5.Pro
             if (failure != null || !stillValid()) yield break;
             FaceWorkingTerminal(terminal);
             if (!pointer && !CanUseOriginalHand() && !CanPhysicallyReach(terminal.position, transform.position))
-                yield return WalkNear(terminal, workbench, layout, stillValid);
+                yield return WalkNear(terminal, workbench, layout, stillValid, allowOriginalHand);
         }
 
         private bool TryFindPointerStance(Vector3 target, Vector3 start, NavMeshQueryFilter filter,
@@ -577,9 +578,11 @@ namespace ProjectSpark.SparkV5.Pro
         }
 
         private IEnumerator WalkNear(Transform terminal, SparkWorkbenchNavigation workbench,
-            Transform layout, Func<bool> stillValid)
+            Transform layout, Func<bool> stillValid, bool allowOriginalHand = false)
         {
             if (!stillValid() || !terminal) { Fail("Target or level changed before walking."); yield break; }
+            bool CanUseOriginalHand() => allowOriginalHand && telescopicBridge &&
+                telescopicBridge.CanReachWithOriginalHand(terminal);
             Vector3 point = terminal.position;
             Vector3 destination = default;
             string routeError = null;
@@ -601,19 +604,19 @@ namespace ProjectSpark.SparkV5.Pro
                     {
                         yield return FollowGroundRoute(destination, stillValid);
                         if (failure == null)
-                            yield return FlyNear(terminal, stillValid, "I'm at the nearest safe walking position. Taking flight to reach the socket.");
+                            yield return FlyNear(terminal, stillValid, "I'm at the nearest safe walking position. Taking flight to reach the socket.", originalHand: allowOriginalHand);
                         yield break;
                     }
                 }
                 if (!canWalk)
                 {
-                    if (Vector3.Distance(shoulderR.position, point) <= ArmLength() - handTipOffset - .025f)
+                    if (CanUseOriginalHand() || Vector3.Distance(shoulderR.position, point) <= ArmLength() - handTipOffset - .025f)
                         yield break;
-                    yield return FlyNear(terminal, stillValid, "There is no safe walking route within reach. Continuing by flight.");
+                    yield return FlyNear(terminal, stillValid, "There is no safe walking route within reach. Continuing by flight.", originalHand: allowOriginalHand);
                     yield break;
                 }
             }
-            if (CanPhysicallyReach(point, transform.position))
+            if (CanUseOriginalHand() || CanPhysicallyReach(point, transform.position))
             {
                 FaceWorkingTerminal(terminal);
                 Narrate("I'm already within reach of " + terminal.name + ". Moving my hand into position.");
@@ -638,7 +641,7 @@ namespace ProjectSpark.SparkV5.Pro
                         yield return FollowGroundRoute(launch, stillValid);
                         if (failure != null) yield break;
                     }
-                    yield return FlyNear(terminal, stillValid, "The terminal is beyond my standing reach. Taking flight for the connection.");
+                    yield return FlyNear(terminal, stillValid, "The terminal is beyond my standing reach. Taking flight for the connection.", originalHand: allowOriginalHand);
                     yield break;
                 }
                 Fail("Cannot physically approach " + terminal.name + ": " +
@@ -649,10 +652,10 @@ namespace ProjectSpark.SparkV5.Pro
             yield return FollowGroundRoute(destination, stillValid);
             if (failure != null) yield break;
             FaceWorkingTerminal(terminal);
-            if (!CanPhysicallyReach(terminal.position, transform.position))
+            if (!CanUseOriginalHand() && !CanPhysicallyReach(terminal.position, transform.position))
             {
                 if (autoFlyWhenWalkingCannotReach && flight && flight.AllowAutoWiringFlight)
-                    yield return FlyNear(terminal, stillValid, "Taking flight to finish the physical approach.");
+                    yield return FlyNear(terminal, stillValid, "Taking flight to finish the physical approach.", originalHand: allowOriginalHand);
                 else Fail("Spark arrived outside real arm reach.");
             }
         }
@@ -778,18 +781,123 @@ namespace ProjectSpark.SparkV5.Pro
                 TryFindLaunchPosition(terminal, landing, filter, out launch);
         }
 
-        private IEnumerator FlyNear(Transform terminal, Func<bool> stillValid, string announcement)
+        private IEnumerator FlyNear(Transform terminal, Func<bool> stillValid, string announcement, bool originalHand = false)
         {
             if (!flight || !flight.AllowAutoWiringFlight)
             { Fail("Autonomous flight is unavailable or disabled."); yield break; }
             if (!string.IsNullOrEmpty(announcement)) Narrate(announcement);
-            yield return flight.FlyToArmReach(terminal, shoulderR,
-                ArmLength() - handTipOffset - 0.025f, stillValid);
+            Func<Vector3, bool> canReach = originalHand && telescopicBridge && telescopicBridge.IsConfigured
+                ? shoulder => telescopicBridge.CanReachFrom(shoulder, terminal)
+                : null;
+            // A folded or telescoped arm can temporarily move the live elbow and
+            // wrist. Use calibrated limb length while the original rig owns the hand.
+            float limbLength = canReach != null ? telescopicBridge.OriginalNaturalLength : ArmLength();
+            float naturalReach = limbLength - handTipOffset - .025f;
+            // Search within a practical body standoff. The native hand still checks actual extension and clearance.
+            float alternateReach = canReach != null ? Mathf.Min(1.75f, telescopicBridge.OriginalHandReach) : 0f;
+            yield return flight.FlyToArmReach(terminal, shoulderR, naturalReach, stillValid, canReach, alternateReach);
+            if (failure != null) yield break;
+            string initialFailure = flight.LastError;
+            if (!flight.LastOperationSucceeded && flight.NoSafeContactRoute && flight.IsFlying &&
+                trackingCarryPose && physicalPort && stillValid() && terminal)
+            {
+                Vector3 from = transform.position;
+                Vector3 target = terminal.position;
+                bool SafeHover() => stillValid() && failure == null && terminal &&
+                    (terminal.position - target).sqrMagnitude <= .015f * .015f;
+                yield return flight.RiseToSafeHover(SafeHover);
+                if (failure != null) yield break;
+                if (SafeHover() && (transform.position - from).sqrMagnitude > .01f)
+                {
+                    Debug.Log($"[Spark takeoff] Retrying carry to {terminal.name} after a swept hover escape " +
+                        $"from {from:F3} to {transform.position:F3}. Original block: {initialFailure}", this);
+                    yield return flight.FlyToArmReach(terminal, shoulderR, naturalReach, SafeHover, canReach, alternateReach);
+                    if (failure != null) yield break;
+                }
+            }
+            if (!flight.LastOperationSucceeded && flight.NoSafeContactRoute && !flight.IsFlying &&
+                physicalPort == null && HasNavMesh && stillValid() && terminal)
+            {
+                Vector3 contact = terminal.position;
+                var rejected = new List<Vector3>(2);
+                for (int attempt = 0; attempt < 2 && !flight.LastOperationSucceeded; attempt++)
+                {
+                    if (!stillValid() || !terminal || (terminal.position - contact).sqrMagnitude > .015f * .015f ||
+                        !HasNavMesh || flight.IsFlying) break;
+                    if (!TryFindAlternateDeparture(terminal, naturalReach, alternateReach, canReach, rejected, out var stance))
+                        break;
+                    rejected.Add(stance);
+                    Narrate("The original takeoff is blocked. I'm walking to a verified alternate departure.");
+                    string groundBlock = null;
+                    yield return FollowGroundRoute(stance, stillValid, reason => groundBlock = reason);
+                    if (failure != null || !stillValid()) yield break;
+                    if (groundBlock != null)
+                    {
+                        Debug.Log($"[Spark takeoff] Live walk to {stance:F3} blocked by {groundBlock}.", this);
+                        continue;
+                    }
+                    if (!terminal || (terminal.position - contact).sqrMagnitude > .015f * .015f)
+                    { Fail("The terminal moved during the alternate takeoff approach."); yield break; }
+                    yield return flight.FlyToArmReach(terminal, shoulderR, naturalReach, stillValid, canReach, alternateReach);
+                    if (!flight.LastOperationSucceeded && !flight.NoSafeContactRoute) break;
+                }
+            }
             if (!flight.LastOperationSucceeded)
-            { Fail("Flight approach failed: " + flight.LastError); yield break; }
-            if (Vector3.Distance(shoulderR.position, terminal.position) > ArmLength() - handTipOffset - .025f)
+            { if (failure == null) Fail("Flight approach failed: " + (flight.LastError ?? initialFailure)); yield break; }
+            if (canReach != null ? !canReach(shoulderR.position) :
+                Vector3.Distance(shoulderR.position, terminal.position) > naturalReach)
                 Fail("Flight ended, but the real wrist/arm cannot physically reach " + terminal.name + ".");
             else Narrate("I'm hovering within arm reach of " + terminal.name + ".");
+        }
+
+        private bool TryFindAlternateDeparture(Transform terminal, float reach, float alternateReach,
+            Func<Vector3, bool> canReach, List<Vector3> rejected, out Vector3 stance)
+        {
+            stance = default;
+            Vector3 start = navigation.nextPosition;
+            Vector3 target = terminal.position;
+            var filter = new NavMeshQueryFilter { agentTypeID = navigation.agentTypeID, areaMask = navigation.areaMask };
+            var path = new NavMeshPath();
+            var positions = new List<Vector3>(32);
+            float best = float.PositiveInfinity;
+            int groundRejected = 0, flightRejected = 0;
+            string lastBlock = null;
+            Physics.SyncTransforms();
+            foreach (var center in new[] { start, new Vector3(target.x, start.y, target.z) })
+            foreach (float radius in new[] { .85f, 1.65f })
+            for (int direction = 0; direction < 8; direction++)
+            {
+                float angle = direction * Mathf.PI / 4f;
+                Vector3 point = center + new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * radius;
+                if (!NavMesh.SamplePosition(point, out var hit, .22f, filter) ||
+                    Mathf.Abs(hit.position.y - start.y) > .12f || (hit.position - start).sqrMagnitude < .36f ||
+                    positions.Exists(p => (p - hit.position).sqrMagnitude < .09f) ||
+                    rejected.Exists(p => (p - hit.position).sqrMagnitude < .16f)) continue;
+                positions.Add(hit.position);
+                if (!NavMesh.CalculatePath(start, hit.position, filter, path) || path.status != NavMeshPathStatus.PathComplete ||
+                    !GroundRouteIsClear(path, .04f))
+                { groundRejected++; continue; }
+                var corners = path.corners;
+                if (corners.Length < 2) { groundRejected++; continue; }
+                float walk = 0f;
+                for (int i = 1; i < corners.Length; i++) walk += Vector3.Distance(corners[i - 1], corners[i]);
+                if (walk > walkingSpeed * (walkTimeoutSeconds - 2f) || walk >= best) continue;
+                var facing = GroundFacing(corners[^1], corners[^2]);
+                if (!flight.TryPreviewContactDeparture(hit.position, facing, terminal, shoulderR, reach,
+                    alternateReach, canReach, out float air, out lastBlock))
+                { flightRejected++; continue; }
+                float cost = walk + air;
+                if (cost >= best) continue;
+                best = cost;
+                stance = hit.position;
+            }
+            bool found = !float.IsPositiveInfinity(best);
+            Debug.Log($"[Spark takeoff] {terminal.name} {target:F3}; root {transform.position:F3}, rotation " +
+                $"{transform.rotation.eulerAngles:F1}; shoulder {shoulderR.position:F3}, elbow {elbowR.position:F3}, " +
+                $"wrist {wristR.position:F3}; reach {reach:F3}/{alternateReach:F3}; sampled {positions.Count}, " +
+                $"ground rejected {groundRejected}, flight rejected {flightRejected}; last preflight {lastBlock ?? "none"}. " +
+                (found ? $"Selected {stance:F3}, combined cost {best:F2}." : "No valid alternate departure."), this);
+            return found;
         }
 
         private IEnumerator Reach(Transform terminal, Func<bool> stillValid, Vector3 offset = default)
@@ -843,6 +951,14 @@ namespace ProjectSpark.SparkV5.Pro
                 yield return PerformTelescopicNativeCable(a, b, port, layout, stillValid, canHover);
                 yield break;
             }
+            if (flight && flight.IsFlying && telescopicBridge &&
+                Vector3.Distance(shoulderR.position, a.transform.position) > armReach &&
+                telescopicBridge.CanReachWithOriginalHand(a.transform))
+            {
+                yield return PerformTelescopicNativeCable(a, b, port, layout, stillValid, canHover, flightCarry: true);
+                yield break;
+            }
+
             if (belowFixedReach && HasNavMesh && telescopicBridge && telescopicBridge.IsRightArmResting)
             {
                 Vector3 localShoulder = Quaternion.Inverse(transform.rotation) * (shoulderR.position - transform.position);
@@ -903,7 +1019,7 @@ namespace ProjectSpark.SparkV5.Pro
             if (belowFixedReach && autoFlyWhenWalkingCannotReach && flight && flight.AllowAutoWiringFlight &&
                 telescopicBridge && telescopicBridge.IsRightArmResting)
             {
-                yield return FlyNear(a.transform, stillValid, "The ground approach cannot reach both sockets safely. Checking a hovering stance.");
+                yield return FlyNear(a.transform, stillValid, "The ground approach cannot reach both sockets safely. Checking a hovering stance.", originalHand: true);
                 if (failure != null || !stillValid()) yield break;
                 if (telescopicBridge.CanReachWithOriginalHand(a.transform))
                 {
@@ -1174,7 +1290,7 @@ namespace ProjectSpark.SparkV5.Pro
                 if (flightCarry)
                 {
                     yield return FlyNear(b.transform, () => stillValid() && failure == null,
-                        "I'm carrying the loose connector to a collision-checked hovering stance.");
+                        "I'm carrying the loose connector to a collision-checked hovering stance.", originalHand: true);
                     if (failure != null || !stillValid()) yield break;
                 }
                 else

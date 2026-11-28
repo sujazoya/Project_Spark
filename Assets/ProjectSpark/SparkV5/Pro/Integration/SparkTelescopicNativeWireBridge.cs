@@ -24,6 +24,8 @@ namespace ProjectSpark.SparkV5.Pro
         public bool CinematicExtensionEnabled => enableCinematicExtension;
         public bool IsConfigured => arms && arms.IsBound;
         public float ContactWaitSeconds => maximumContactWait;
+        internal float OriginalHandReach => IsConfigured && enableCinematicExtension ? arms.MaximumReach : 0f;
+        internal float OriginalNaturalLength => IsConfigured ? arms.RightNaturalLength : 0f;
         public bool IsRightArmResting => !arms || arms.IsRightArmResting;
         public string ReachDiagnostic => arms ? arms.LastError : "Original arms are unbound";
         internal bool NativeGripSettled => arms && arms.NativeGripSettled;

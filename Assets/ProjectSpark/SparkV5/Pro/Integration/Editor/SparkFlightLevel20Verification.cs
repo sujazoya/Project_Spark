@@ -21,7 +21,7 @@ namespace ProjectSpark.SparkV5.Pro.Editor
 
         internal static async Task Verify(Action<string> log, string cableCase = "")
         {
-            bool v19 = cableCase == "v19";
+            bool v19 = cableCase is "v19" or "v201-level20";
             VerifyCableGeometry(log);
             var director = Object.FindObjectsByType<SparkNativeWireDirector>(FindObjectsSortMode.None).Single();
             var manager = Object.FindFirstObjectByType<LevelGamePlayManager>();
@@ -82,9 +82,9 @@ namespace ProjectSpark.SparkV5.Pro.Editor
                 }
                 return;
             }
-            if (cableCase is "v19-starter" or "v19-level48")
+            if (cableCase is "v19-starter" or "v19-level48" or "v20-level48" or "v20-level48-wire10" or "v201-level1" or "v201-level48")
             {
-                int mission = cableCase == "v19-starter" ? 1 : 48;
+                int mission = cableCase is "v19-starter" or "v201-level1" ? 1 : 48;
                 Require(manager.StartLevel(Slot(mission)), $"Native Level {mission} did not start.");
                 await Wait(() => executive.ActiveLevelManager == manager &&
                     SparkAILevelContext.Capture(manager).HasEvaluation && port.IsConfigured, "mission native evaluator");
@@ -92,6 +92,14 @@ namespace ProjectSpark.SparkV5.Pro.Editor
                 var prefab = manager.LayoutLoader.ActiveSourcePrefab;
                 Require(SparkUniversalConstructionEditor.TryReadMissionWires(starter.Definition, prefab,
                     out var wires, out string source, out string error), error);
+                bool wire10Only = cableCase == "v20-level48-wire10";
+                if (wire10Only)
+                {
+                    Require(wires.Length >= 10 && wires[9].fromId == "DRIVER_MOTOR_MINUS" &&
+                        wires[9].toId == "PRINT_MOTOR_MINUS", "The wire-10 evidence changed.");
+                    wires = new[] { wires[9] };
+                    log("Isolated native wire-10 test from a fresh Level 48. The preceding nine wires are outside this fixture.");
+                }
                 var trial = ScriptableObject.CreateInstance<SparkNativeWiringPlan>();
                 try
                 {
@@ -123,7 +131,42 @@ namespace ProjectSpark.SparkV5.Pro.Editor
                     executive.Ask("spark auto mode");
                     executive.Ask("hey Spark draw current level");
                     Require(hub.IsExecuting, executive.LastAnswer);
-                    if (mission == 48)
+                    if (cableCase == "v201-level48")
+                    {
+                        var seen = new System.Collections.Generic.HashSet<(int, SparkNativeWireCinematic.CableStage, bool)>();
+                        int verified = 0;
+                        var originalArms = character.GetComponent<SparkTelescopicArms>();
+                        await Wait(() =>
+                        {
+                            while (verified < hub.CompletedSteps)
+                            {
+                                var previous = wires[verified++];
+                                bool found = starter.Layout.SceneBindings.TryResolveLivePair(starter.Layout, previous.fromId,
+                                    previous.toId, out var from, out var to, out _) &&
+                                    manager.CircuitSystem.HasConnectionBetween(from, to);
+                                Require(found, $"Wire {verified} had no authoritative topology evidence.");
+                                log($"Wire {verified} {previous.fromId} → {previous.toId}: native registration verified. {director.LastStatus}");
+                            }
+                            int index = hub.CompletedSteps;
+                            if (index < wires.Length && performer.IsPerforming && seen.Add((index, performer.Stage, flight.IsFlying)))
+                            {
+                                var step = wires[index];
+                                bool cable = performer.TryMeasureHeldCable(out _, out float rest, out float route, out float extension);
+                                var target = starter.Layout.SceneBindings.TryGetTerminal(step.toId, out var destination)
+                                    ? destination.transform.position.ToString("F3") : "unresolved";
+                                log($"Wire {index + 1} {step.fromId} → {step.toId}: {performer.Stage}; " +
+                                    $"{(flight.IsFlying ? "flight" : agent.isActiveAndEnabled && agent.isOnNavMesh ? "ground" : "stationary")}; " +
+                                    $"root {character.transform.position:F3}, facing {character.transform.rotation.eulerAngles:F1}, " +
+                                    $"shoulder {character.GetAnchor("Shoulder_R").position:F3}, elbow {character.GetAnchor("Elbow_R").position:F3}, " +
+                                    $"wrist {character.GetAnchor("Wrist_R").position:F3}, destination {target}, reach {originalArms.MaximumReach:F3} m" +
+                                    (cable ? $"; cable {route:F3}/{rest:F3} m, extension {extension:F3}." : "."));
+                            }
+                            return !hub.IsExecuting;
+                        }, "complete Level 48 sequence", 540f);
+                        log("Final motion: " + flight.LastApproachReport);
+                        Require(verified == wires.Length, $"Level 48 stopped after {verified}/{wires.Length}: {hub.LastMessage} {director.LastStatus}");
+                    }
+                    else if (mission == 48 && !wire10Only)
                     {
                         var step = wires[3];
                         Require(step.toId == "SENSOR_GND" &&
@@ -154,7 +197,24 @@ namespace ProjectSpark.SparkV5.Pro.Editor
                             $"Wire 4 regression at {step.toId}: {hub.LastMessage} {director.LastStatus}");
                         log($"PASS Targeted Level 48 wire 4. Native circuit registered {step.fromId} → {step.toId} at {sensorGround.transform.position:F3}.");
                     }
+                    if (cableCase == "v20-level48")
+                    {
+                        Require(wires.Length >= 10, "Level 48 needs an authored wire 10.");
+                        var step = wires[9];
+                        Require(step.fromId == "DRIVER_MOTOR_MINUS" || step.toId == "DRIVER_MOTOR_MINUS",
+                            "Wire 10 no longer references the recorded connector.");
+                        await Wait(() => !hub.IsExecuting || hub.CompletedSteps >= 10, "the Level 48 wire 10", 280f);
+                        log(hub.CompletedSteps < 9 ? "Earlier native failure before wire 10: " + director.LastStatus :
+                            "Wire 10 native status: " + director.LastStatus);
+                        log("Wire 10 flight diagnostics: " + flight.LastApproachReport);
+                        Require(starter.Layout.SceneBindings.TryResolveLivePair(starter.Layout, step.fromId, step.toId,
+                            out var sourcePin, out var destinationPin, out error) &&
+                            manager.CircuitSystem.HasConnectionBetween(sourcePin, destinationPin),
+                            $"Level 48 wire 10 {step.fromId} → {step.toId}: {hub.LastMessage} {director.LastStatus}");
+                        log($"PASS Level 48 wire 10 {step.fromId} → {step.toId} registered in SparkCircuitSystem.");
+                    }
                     await Wait(() => !hub.IsExecuting, $"Level {mission}'s physical cables", mission == 1 ? 100f : 420f);
+                    if (wire10Only) log("Wire 10 native status: " + director.LastStatus + "\nFlight geometry: " + flight.LastApproachReport);
                     foreach (var step in wires)
                     {
                         Require(starter.Layout.SceneBindings.TryResolveLivePair(starter.Layout, step.fromId, step.toId,
@@ -162,6 +222,7 @@ namespace ProjectSpark.SparkV5.Pro.Editor
                         Require(manager.CircuitSystem.HasConnectionBetween(a, b), hub.LastMessage + " " + director.LastStatus);
                     }
                     log($"PASS Level {mission} exact command registered {wires.Length}/{wires.Length} native wires.");
+                    if (wire10Only) return;
                     if (mission == 1)
                     {
                         Require(starterSupply.SetOutput(true, interaction).Succeeded, "The starter supply did not turn on.");

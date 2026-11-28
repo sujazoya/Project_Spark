@@ -79,7 +79,10 @@ namespace ProjectSpark.SparkV5.Pro
             yield return new("wire.resume", circuit, "Resume drawing", "spark resume drawing", engineering, evidence: NexusEvidence.Resume, aliases: "spark resume automation|resume auto wiring");
             yield return new("wire.cancel", circuit, "Stop drawing", "spark stop drawing", engineering, evidence: NexusEvidence.CancelPlan, aliases: "spark cancel automation|cancel auto wiring|spark stop|cancel wire|stop wiring");
             yield return new("wire.status", circuit, "Drawing status", "spark drawing status", engineering);
-            yield return new("wire.explain", circuit, "Construction evidence", "spark explain current construction", engineering);
+            yield return new("wire.explain", circuit, "Construction evidence", "spark explain current construction", engineering, aliases: "spark inspect current level");
+            yield return new("wire.explain.next", circuit, "Explain the next action", "spark explain next action", engineering);
+            yield return new("wire.explain.failure", circuit, "Explain construction failure", "spark explain construction failure", engineering);
+            yield return new("wire.preview.construction", circuit, "Preview current construction", "spark preview construction", engineering);
             yield return new("wire.engineering", circuit, "Engineering status", "spark engineering status", engineering, aliases: "engineering status|auto wiring status");
             yield return new("wire.preview", circuit, "Preview reviewed plan", "spark preview practice plan", engineering, aliases: "preview wiring plan|preview approved wiring plan", related: "wire.suggest|wire.draw");
             yield return new("wire.suggest", circuit, "Suggest next wire", "spark suggest next wire", engineering, evidence: NexusEvidence.Suggestion, mode: NexusMode.Assisted, aliases: "spark suggest next step|spark suggest the next wire|spark inspect the next connection", related: "wire.source|wire.approve|wire.failure");
